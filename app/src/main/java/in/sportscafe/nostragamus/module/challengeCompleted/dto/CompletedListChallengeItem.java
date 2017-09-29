@@ -13,7 +13,7 @@ public class CompletedListChallengeItem {
     private String challengeName;
     private String challengeDesc;
     private String status;
-    private int sportsId;
+    private int[] sportIdArray;
     private int contestCount = 0;
     private String challengeStartTime;
     private String challengeEndTime;
@@ -52,12 +52,12 @@ public class CompletedListChallengeItem {
         this.status = status;
     }
 
-    public int getSportsId() {
-        return sportsId;
+    public int[] getSportIdArray() {
+        return sportIdArray;
     }
 
-    public void setSportsId(int sportsId) {
-        this.sportsId = sportsId;
+    public void setSportIdArray(int[] sportIdArray) {
+        this.sportIdArray = sportIdArray;
     }
 
     public int getContestCount() {

@@ -62,7 +62,7 @@ public class CompletedChallengeMatchesRecyclerAdapter extends RecyclerView.Adapt
 
         switch (viewType) {
             case MatchesAdapterItemType.TWO_PARTY_MATCH:
-                View v1 = inflater.inflate(R.layout.inplay_match_list_double_party_item, parent, false);
+                View v1 = inflater.inflate(R.layout.completed_match_list_double_party_item, parent, false);
                 viewHolder = new CompletedChallengeMatchesRecyclerAdapter.CompletedTwoPartyMatchItemViewHolder(v1);
                 break;
         }
@@ -155,22 +155,22 @@ public class CompletedChallengeMatchesRecyclerAdapter extends RecyclerView.Adapt
 
                 String matchStatus = match.getMatchStatus();
                 if (matchStatus.equalsIgnoreCase(Constants.MatchStatusStrings.DID_NOT_PLAY)) {
-                    mMatchAdapterListener.onMatchActionClicked(CompletedMatchAdapterAction.DID_NOT_PLAY, args);
+                    mMatchAdapterListener.onMatchActionClicked(MatchesAdapterAction.DID_NOT_PLAY, args);
 
                 } else if (matchStatus.equalsIgnoreCase(Constants.MatchStatusStrings.COMING_UP)) {
-                    mMatchAdapterListener.onMatchActionClicked(CompletedMatchAdapterAction.COMING_UP, args);
+                    mMatchAdapterListener.onMatchActionClicked(MatchesAdapterAction.COMING_UP, args);
 
                 } else if (matchStatus.equalsIgnoreCase(Constants.MatchStatusStrings.PLAY)) {
-                    mMatchAdapterListener.onMatchActionClicked(CompletedMatchAdapterAction.PLAY, args);
+                    mMatchAdapterListener.onMatchActionClicked(MatchesAdapterAction.PLAY, args);
 
                 } else if (matchStatus.equalsIgnoreCase(Constants.MatchStatusStrings.CONTINUE)) {
-                    mMatchAdapterListener.onMatchActionClicked(CompletedMatchAdapterAction.CONTINUE, args);
+                    mMatchAdapterListener.onMatchActionClicked(MatchesAdapterAction.CONTINUE, args);
 
                 } else if (matchStatus.equalsIgnoreCase(Constants.MatchStatusStrings.ANSWER)) {
-                    mMatchAdapterListener.onMatchActionClicked(CompletedMatchAdapterAction.ANSWER, args);
+                    mMatchAdapterListener.onMatchActionClicked(MatchesAdapterAction.ANSWER, args);
 
                 } else if (matchStatus.equalsIgnoreCase(Constants.MatchStatusStrings.POINTS)) {
-                    mMatchAdapterListener.onMatchActionClicked(CompletedMatchAdapterAction.POINTS, args);
+                    mMatchAdapterListener.onMatchActionClicked(MatchesAdapterAction.POINTS, args);
 
                 }
             }
@@ -194,14 +194,14 @@ public class CompletedChallengeMatchesRecyclerAdapter extends RecyclerView.Adapt
 
         public CompletedTwoPartyMatchItemViewHolder(View itemView) {
             super(itemView);
-            matchParentLayout = (LinearLayout) itemView.findViewById(R.id.inplay_match_item_parent);
-            dateTimeTextView = (TextView) itemView.findViewById(R.id.inplay_match_date_time_textView);
+            matchParentLayout = (LinearLayout) itemView.findViewById(R.id.completed_match_item_parent);
+            dateTimeTextView = (TextView) itemView.findViewById(R.id.completed_match_date_time_textView);
             party1ImageView = (HmImageView) itemView.findViewById(R.id.match_party_1_imgView);
             party1NameTextView = (TextView) itemView.findViewById(R.id.match_party_1_textView);
             party2ImageView = (HmImageView) itemView.findViewById(R.id.match_party_2_imgView);
             party2NameTextView = (TextView) itemView.findViewById(R.id.match_party_2_textView);
-            venueTextView = (TextView) itemView.findViewById(R.id.inplay_match_venue_textView);
-            actionButton = (Button) itemView.findViewById(R.id.inplay_match_action_button);
+            venueTextView = (TextView) itemView.findViewById(R.id.completed_match_venue_textView);
+            actionButton = (Button) itemView.findViewById(R.id.completed_match_action_button);
 
             matchParentLayout.setOnClickListener(this);
             actionButton.setOnClickListener(this);
@@ -212,8 +212,8 @@ public class CompletedChallengeMatchesRecyclerAdapter extends RecyclerView.Adapt
             switch (view.getId()) {
 
                 /* Since taking same action on both the clicks */
-                case R.id.inplay_match_item_parent:
-                case R.id.inplay_match_action_button:
+                case R.id.completed_match_item_parent:
+                case R.id.completed_match_action_button:
                     onActionButtonClicked(getAdapterPosition());
                     break;
             }

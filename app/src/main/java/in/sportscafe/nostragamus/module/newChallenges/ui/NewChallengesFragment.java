@@ -20,6 +20,7 @@ import java.util.List;
 
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
+import in.sportscafe.nostragamus.module.common.NostraBaseFragment;
 import in.sportscafe.nostragamus.module.navigation.wallet.WalletHelper;
 import in.sportscafe.nostragamus.module.newChallenges.dataProvider.NewChallengesDataProvider;
 import in.sportscafe.nostragamus.module.newChallenges.dataProvider.SportsDataProvider;
@@ -33,7 +34,7 @@ import in.sportscafe.nostragamus.module.popups.walletpopups.WalletBalancePopupAc
 /**
  * A simple {@link Fragment} subclass.
  */
-public class NewChallengesFragment extends BaseFragment implements View.OnClickListener {
+public class NewChallengesFragment extends NostraBaseFragment implements View.OnClickListener {
 
     private TextView mTvTBarWalletMoney;
     private TextView mTvTBarNumberOfChallenges;

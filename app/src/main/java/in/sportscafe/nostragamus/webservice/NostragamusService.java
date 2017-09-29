@@ -404,8 +404,8 @@ public interface NostragamusService {
     @POST("/v3/game/challenges/verifyJoinContest")
     Call<VerifyJoinContestResponse> verifyJoinContest(@Body VerifyJoinContestRequest request);
 
-    @GET("v3/game/challenges/inPlay")
-    Call<List<CompletedResponse>> getCompletedChallenges();
+    @GET("/v3/game/challenges/completed")
+    Call<List<CompletedResponse>> getCompletedChallenges(@Query("skip") int skip, @Query("limit") int limit);
 
     @GET("v3/game/challenges/getUserMatches")
     Call<CompletedMatchesResponse> getCompletedChallengeMatches(@Query("room_id") int roomId, @Query("challenge_id") int challengeId);

@@ -8,122 +8,128 @@
     android:id="@+id/new_challenge_frgmnt_parent"
     tools:context="in.sportscafe.nostragamus.module.newChallenges.ui.NewChallengesFragment">
 
-    <!-- Heading layout -->
-
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dim_40"
-        android:background="@drawable/toolbar_bg">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
+        <!-- Heading layout -->
         <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="@dimen/dim_16">
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_centerHorizontal="true">
-
-                <com.jeeva.android.widgets.customfont.CustomTextView
-                    android:id="@+id/toolbar_heading_one"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="Challenges"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/sp_14"
-                    app:typeface="lato_regular" />
-
-                <com.jeeva.android.widgets.customfont.CustomTextView
-                    android:id="@+id/toolbar_heading_two"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/dim_3"
-                    android:textColor="@color/white_60"
-                    android:textSize="@dimen/sp_13"
-                    app:typeface="lato_regular" />
-
-            </LinearLayout>
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dim_40"
+            android:background="@drawable/toolbar_bg">
 
             <RelativeLayout
-                android:id="@+id/toolbar_wallet_rl"
-                android:layout_width="@dimen/dim_70"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:paddingTop="@dimen/dim_6"
-                android:paddingBottom="@dimen/dim_6"
-                android:paddingRight="@dimen/dim_16">
-
-            <com.jeeva.android.widgets.customfont.CustomTextView
-                android:id="@+id/toolbar_wallet_money"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
+                android:layout_height="match_parent"
                 android:layout_centerVertical="true"
-                android:textColor="@color/white_70"
-                android:textSize="@dimen/sp_14"
-                app:typeface="lato_regular" />
+                android:layout_marginLeft="@dimen/dim_16">
 
-            <ImageView
-                android:id="@+id/toolbar_wallet_icon"
-                android:layout_width="@dimen/dim_16"
-                android:layout_height="@dimen/dim_16"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="@dimen/dim_6"
-                android:layout_toLeftOf="@+id/toolbar_wallet_money"
-                android:src="@drawable/toolbar_wallet_icon" />
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_centerHorizontal="true">
+
+                    <com.jeeva.android.widgets.customfont.CustomTextView
+                        android:id="@+id/toolbar_heading_one"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="Challenges"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/sp_14"
+                        app:typeface="lato_regular" />
+
+                    <com.jeeva.android.widgets.customfont.CustomTextView
+                        android:id="@+id/toolbar_heading_two"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/dim_3"
+                        android:textColor="@color/white_60"
+                        android:textSize="@dimen/sp_13"
+                        app:typeface="lato_regular" />
+
+                </LinearLayout>
+
+                <RelativeLayout
+                    android:id="@+id/toolbar_wallet_rl"
+                    android:layout_width="@dimen/dim_70"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:paddingTop="@dimen/dim_6"
+                    android:paddingBottom="@dimen/dim_6"
+                    android:paddingRight="@dimen/dim_16">
+
+                    <com.jeeva.android.widgets.customfont.CustomTextView
+                        android:id="@+id/toolbar_wallet_money"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:textColor="@color/white_70"
+                        android:textSize="@dimen/sp_14"
+                        app:typeface="lato_regular" />
+
+                    <ImageView
+                        android:id="@+id/toolbar_wallet_icon"
+                        android:layout_width="@dimen/dim_16"
+                        android:layout_height="@dimen/dim_16"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="@dimen/dim_6"
+                        android:layout_toLeftOf="@+id/toolbar_wallet_money"
+                        android:src="@drawable/toolbar_wallet_icon" />
+
+                </RelativeLayout>
 
             </RelativeLayout>
 
         </RelativeLayout>
 
-    </RelativeLayout>
-
-    <LinearLayout
-        android:id="@+id/newChallengeContentLayout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:visibility="gone">
-
-        <!-- Tabs Layout -->
-        <android.support.design.widget.TabLayout
-            android:id="@+id/challenge_tabs"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dim_56"
-            android:background="@color/new_challenge_tab_bg"
-            app:tabGravity="fill"
-            app:tabIndicatorColor="#008ad6"
-            app:tabIndicatorHeight="@dimen/dim_2"
-            app:tabMinWidth="@dimen/dim_66"
-            app:tabMode="scrollable"
-            app:tabPaddingStart="0dp"
-            app:tabPaddingEnd="0dp"/>
-
-        <!-- ViewPager -->
-        <in.sportscafe.nostragamus.module.common.CustomViewPager
-            android:id="@+id/challenge_viewPager"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-
-    </LinearLayout>
-
-    <!-- Loading View -->
-    <LinearLayout
-        android:id="@+id/newChallengeProgressBarLayout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:orientation="vertical">
-
-        <in.sportscafe.nostragamus.module.common.NostraProgressBar
+        <LinearLayout
+            android:id="@+id/newChallengeContentLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_gravity="center" />
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <!-- Tabs Layout -->
+            <android.support.design.widget.TabLayout
+                android:id="@+id/challenge_tabs"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dim_56"
+                android:background="@color/new_challenge_tab_bg"
+                app:tabGravity="fill"
+                app:tabIndicatorColor="#008ad6"
+                app:tabIndicatorHeight="@dimen/dim_2"
+                app:tabMinWidth="@dimen/dim_66"
+                app:tabMode="scrollable"
+                app:tabPaddingStart="0dp"
+                app:tabPaddingEnd="0dp"/>
+
+            <!-- ViewPager -->
+            <in.sportscafe.nostragamus.module.common.CustomViewPager
+                android:id="@+id/challenge_viewPager"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+        </LinearLayout>
+
+        <!-- Loading View -->
+        <LinearLayout
+            android:id="@+id/newChallengeProgressBarLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <in.sportscafe.nostragamus.module.common.NostraProgressBar
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center" />
+
+        </LinearLayout>
 
     </LinearLayout>
 
