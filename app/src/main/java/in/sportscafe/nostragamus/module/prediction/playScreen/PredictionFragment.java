@@ -643,8 +643,6 @@ public class PredictionFragment extends NostraBaseFragment implements View.OnCli
             @Override
             public void discarded(int index, int direction) {
 
-                onMatchCompleted();
-
                 int position = index - 1;   // Index position is not 0 based
 
                 boolean isMatchCompleted = false;
@@ -904,8 +902,8 @@ public class PredictionFragment extends NostraBaseFragment implements View.OnCli
                     updatePowerUpDetails(mPowerUp);
                     break;
 
-
                 case GAME_PLAY_HELP_ACTIVITY:
+                    // No action
                     break;
             }
         }
