@@ -368,7 +368,7 @@ public class MyResultsActivity extends NostragamusActivity implements MyResultsV
         if (mResultScreenData != null) {
             ContestScreenData screenData = new ContestScreenData();
             screenData.setChallengeId(mResultScreenData.getChallengeId());
-            screenData.setChallengeName(mResultScreenData.getSubTitle());   // Either ChallengeName or ContestName, Here it should be challenge name as per values passed
+            screenData.setChallengeName(mResultScreenData.getChallengeName());
 
             Bundle args = new Bundle();
             args.putParcelable(Constants.BundleKeys.CONTEST_SCREEN_DATA, Parcels.wrap(screenData));
