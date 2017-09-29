@@ -1,33 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
+    android:id="@+id/completed_completed_card_parent"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="@dimen/dim_6"
     android:layout_marginBottom="@dimen/dim_6"
     android:layout_marginLeft="@dimen/dim_12"
     android:layout_marginRight="@dimen/dim_12"
-    android:id="@+id/completed_completed_card_parent"
-    >
+    android:layout_marginTop="@dimen/dim_6"
+    android:orientation="vertical">
 
     <!-- Card Header bar -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/dim_52"
-        android:orientation="horizontal"
         android:background="@drawable/inplay_card_top_bg"
+        android:orientation="horizontal"
         android:paddingLeft="@dimen/dim_16"
         android:paddingRight="@dimen/dim_16"
-        android:paddingTop="@dimen/dim_10"
-        android:paddingBottom="@dimen/dim_10">
+        android:paddingTop="@dimen/dim_10">
 
         <!--  -->
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:layout_weight="4">
+            android:layout_weight="4"
+            android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -38,43 +36,45 @@
                     android:id="@+id/completed_completed_card_title_textView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:maxLines="1"
                     android:ellipsize="end"
+                    android:includeFontPadding="false"
+                    android:maxLines="1"
+                    android:text="Daily Double Up"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/sp_10"
-                    app:typeface="lato_regular"
-                    />
+                    android:textSize="@dimen/sp_13"
+                    app:typeface="lato_regular" />
 
                 <ImageView
                     android:id="@+id/completed_contest_card_header_mode_imgView"
                     android:layout_width="@dimen/dim_16"
                     android:layout_height="@dimen/dim_16"
-                    android:layout_marginLeft="@dimen/dim_5"/>
+                    android:layout_marginLeft="@dimen/dim_5"
+                    android:visibility="gone" />
 
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginTop="@dimen/dim_3">
+                android:layout_marginTop="@dimen/dim_1"
+                android:orientation="horizontal">
 
                 <com.jeeva.android.widgets.customfont.CustomTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:text="ENTRY FEE"
                     android:textColor="@color/white_999999"
                     android:textSize="@dimen/sp_9"
-                    app:typeface="lato_regular"
-                    android:text="ENTRY FEE"/>
+                    app:typeface="lato_regular" />
 
                 <com.jeeva.android.widgets.customfont.CustomTextView
                     android:id="@+id/completed_contest_card_header_entry_fee_textView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dim_5"
                     android:textColor="@color/white"
                     android:textSize="@dimen/sp_10"
-                    app:typeface="lato_bold"
-                    android:layout_marginLeft="@dimen/dim_5"/>
+                    app:typeface="lato_bold" />
 
             </LinearLayout>
 
@@ -84,25 +84,26 @@
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:layout_weight="2">
+            android:layout_weight="1.5"
+            android:background="?selectableItemBackgroundBorderless"
+            android:orientation="vertical">
 
             <com.jeeva.android.widgets.customfont.CustomTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/grey"
-                android:textSize="@dimen/sp_10"
-                app:typeface="lato_regular"
-                android:text="CURRENT RANK"/>
+                android:text="FINAL RANK"
+                android:textColor="@color/white_999999"
+                android:textSize="@dimen/sp_9"
+                app:typeface="lato_regular" />
 
             <com.jeeva.android.widgets.customfont.CustomTextView
                 android:id="@+id/completed_contest_card_header_current_rank_textView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dim_4"
                 android:textColor="@color/white"
                 android:textSize="@dimen/sp_10"
-                app:typeface="lato_regular"
-                android:layout_marginTop="@dimen/dim_3"/>
+                app:typeface="lato_bold" />
 
         </LinearLayout>
 
@@ -110,25 +111,27 @@
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:layout_weight="1">
+            android:layout_weight="1"
+            android:background="?selectableItemBackgroundBorderless"
+            android:orientation="vertical">
 
             <com.jeeva.android.widgets.customfont.CustomTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/grey"
-                android:textSize="@dimen/sp_10"
-                app:typeface="lato_regular"
-                android:text="PRIZES"/>
+                android:text="Winnings"
+                android:textAllCaps="true"
+                android:textColor="@color/white_999999"
+                android:textSize="@dimen/sp_9"
+                app:typeface="lato_regular" />
 
             <com.jeeva.android.widgets.customfont.CustomTextView
                 android:id="@+id/completed_contest_card_header_prizes_textView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/green_pea"
+                android:layout_marginTop="@dimen/dim_4"
+                android:textColor="#22b573"
                 android:textSize="@dimen/sp_10"
-                app:typeface="lato_regular"
-                android:layout_marginTop="@dimen/dim_3"/>
+                app:typeface="lato_bold" />
 
         </LinearLayout>
 
@@ -138,50 +141,52 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/dim_68"
-        android:orientation="vertical"
+        android:background="@drawable/inplay_card_content_bg"
         android:gravity="center_vertical"
-        android:paddingLeft="@dimen/dim_16"
-        android:paddingRight="@dimen/dim_16"
-        android:paddingTop="@dimen/dim_10"
+        android:orientation="vertical"
         android:paddingBottom="@dimen/dim_10"
-        android:background="@drawable/inplay_card_content_bg">
+        android:paddingLeft="@dimen/dim_10"
+        android:paddingRight="@dimen/dim_5"
+        android:paddingTop="@dimen/dim_10">
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:gravity="center_horizontal">
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
 
             <LinearLayout
                 android:id="@+id/completed_completed_card_timeline_heading_parent"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:layout_marginLeft="@dimen/dim_5"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
-                android:scrollbars="horizontal"
-                />
+                android:scrollbars="horizontal" />
 
             <LinearLayout
                 android:id="@+id/completed_completed_card_timeline_content_parent"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:layout_marginBottom="@dimen/dim_4"
+                android:layout_marginLeft="@dimen/dim_15"
+                android:layout_marginTop="@dimen/dim_4"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
-                android:scrollbars="horizontal"
-                android:layout_marginTop="@dimen/dim_4"
-                android:layout_marginBottom="@dimen/dim_4"/>
+                android:scrollbars="horizontal" />
 
             <LinearLayout
                 android:id="@+id/completed_completed_card_timeline_footer_parent"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="left"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
-                android:scrollbars="horizontal"/>
+                android:scrollbars="horizontal" />
 
         </LinearLayout>
-
-
     </LinearLayout>
 
 </LinearLayout>

@@ -88,50 +88,50 @@
 
         </RelativeLayout>
 
-    </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/newChallengeContentLayout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:visibility="gone">
-
-        <!-- Tabs Layout -->
-        <android.support.design.widget.TabLayout
-            android:id="@+id/challenge_tabs"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dim_56"
-            android:background="@color/new_challenge_tab_bg"
-            app:tabGravity="fill"
-            app:tabIndicatorColor="#008ad6"
-            app:tabIndicatorHeight="@dimen/dim_2"
-            app:tabMinWidth="@dimen/dim_66"
-            app:tabMode="scrollable"
-            app:tabPaddingEnd="0dp"
-            app:tabPaddingStart="0dp" />
-
-        <!-- ViewPager -->
-        <in.sportscafe.nostragamus.module.common.CustomViewPager
-            android:id="@+id/challenge_viewPager"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-
-    </LinearLayout>
-
-    <!-- Loading View -->
-    <LinearLayout
-        android:id="@+id/newChallengeProgressBarLayout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:orientation="vertical">
-
-        <in.sportscafe.nostragamus.module.common.NostraProgressBar
+        <LinearLayout
+            android:id="@+id/newChallengeContentLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_gravity="center" />
-    </LinearLayout>
+            android:orientation="vertical"
+            android:visibility="gone">
 
+            <!-- Tabs Layout -->
+            <android.support.design.widget.TabLayout
+                android:id="@+id/challenge_tabs"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dim_56"
+                android:background="@color/new_challenge_tab_bg"
+                app:tabGravity="fill"
+                app:tabIndicatorColor="#008ad6"
+                app:tabIndicatorHeight="@dimen/dim_2"
+                app:tabMinWidth="@dimen/dim_66"
+                app:tabMode="scrollable"
+                app:tabPaddingEnd="0dp"
+                app:tabPaddingStart="0dp" />
+
+            <!-- ViewPager -->
+            <in.sportscafe.nostragamus.module.common.CustomViewPager
+                android:id="@+id/challenge_viewPager"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+        </LinearLayout>
+
+        <!-- Loading View -->
+        <LinearLayout
+            android:id="@+id/newChallengeProgressBarLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <in.sportscafe.nostragamus.module.common.NostraProgressBar
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center" />
+        </LinearLayout>
+
+    </LinearLayout>
 
 </android.support.design.widget.CoordinatorLayout>
