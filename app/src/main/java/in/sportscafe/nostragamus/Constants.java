@@ -316,7 +316,6 @@ public interface Constants {
         String NEW_CHALLENGES_RESPONSE = "newChallengeResponse";
         String SCREEN_LAUNCHED_FROM_PARENT = "screenLaunchedFromParent";
         String JOIN_CONTEST_DATA = "joinContestData";
-        String MY_RESULT_SCREEN_DATA = "myResultScreenData";
         String SCREEN_LAUNCH_REQUEST = "screenLaunchRequest";
 
         /* Wallet */
@@ -344,6 +343,9 @@ public interface Constants {
         String PLAY_SCREEN_DATA = "playScreenData";
         String RESULTS_SCREEN_DATA = "resultsScreenData";
         String CONTEST_SCREEN_DATA = "contestScreenData";
+        String IS_HEADLESS_FLOW = "isHeadLessFlow";
+        String IS_PLAYING_PSEUDO_GAME = "isPlayingPseudoGame";
+        String HEADLESS_MATCH_SCREEN_DATA = "headlessMatchScreenData";
     }
 
     interface ParcelableKeys {

@@ -77,6 +77,8 @@ public class InPlayHeadLessMatchesAdapter extends RecyclerView.Adapter<RecyclerV
         if (mInPlayMatchList != null && mInPlayMatchList.size() > position) {
             InPlayMatch match = mInPlayMatchList.get(position);
 
+            match.setMatchStatus("play");
+
             if (shouldDisableMatchClickAction(match)) {
                 viewHolder.matchParentLayout.setEnabled(false);
                 viewHolder.actionButton.setVisibility(View.GONE);
@@ -108,13 +110,12 @@ public class InPlayHeadLessMatchesAdapter extends RecyclerView.Adapter<RecyclerV
     }
 
     private boolean shouldDisableMatchClickAction(InPlayMatch match) {
-        boolean shouldDisable = true;
+        boolean shouldDisable = false;
 
         String status = match.getMatchStatus();
         if (!TextUtils.isEmpty(status)) {
-            if (status.equalsIgnoreCase(Constants.MatchStatusStrings.PLAY) ||
-                    status.equalsIgnoreCase(Constants.MatchStatusStrings.CONTINUE)) {
-                shouldDisable = false;
+            if (status.equalsIgnoreCase(Constants.MatchStatusStrings.COMING_UP)) {
+                shouldDisable = true;
             }
         }
 
@@ -146,6 +147,7 @@ public class InPlayHeadLessMatchesAdapter extends RecyclerView.Adapter<RecyclerV
 
             if (match != null) {
                 args.putParcelable(Constants.BundleKeys.INPLAY_MATCH, Parcels.wrap(match));
+                args.putBoolean(Constants.BundleKeys.IS_HEADLESS_FLOW, true);
 
                 String matchStatus = match.getMatchStatus();
                 if (matchStatus.equalsIgnoreCase(Constants.MatchStatusStrings.DID_NOT_PLAY)) {
