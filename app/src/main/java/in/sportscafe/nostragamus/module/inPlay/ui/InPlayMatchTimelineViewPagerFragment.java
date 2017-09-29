@@ -294,6 +294,7 @@ public class InPlayMatchTimelineViewPagerFragment extends NostraBaseFragment {
             dataDto.setRoomId(contestDto.getRoomId());
             dataDto.setPowerUp(contestDto.getPowerUp());
             dataDto.setSubTitle(contestDto.getContestName());
+            dataDto.setMatchStatus(inPlayMatch.getMatchStatus());
 
             if (inPlayMatch.getMatchParties() != null && inPlayMatch.getMatchParties().size() == 2) {
                 dataDto.setMatchPartyTitle1(inPlayMatch.getMatchParties().get(0).getPartyName());
@@ -315,6 +316,7 @@ public class InPlayMatchTimelineViewPagerFragment extends NostraBaseFragment {
             dataDto.setRoomId(contestDto.getRoomId());
             dataDto.setSubTitle(contestDto.getContestName());
             dataDto.setChallengeName(contestDto.getChallengeName());
+            dataDto.setMatchStatus(inPlayMatch.getMatchStatus());
 
             if (inPlayMatch.getMatchParties() != null && inPlayMatch.getMatchParties().size() == 2) {
                 dataDto.setMatchPartyTitle1(inPlayMatch.getMatchParties().get(0).getPartyName());

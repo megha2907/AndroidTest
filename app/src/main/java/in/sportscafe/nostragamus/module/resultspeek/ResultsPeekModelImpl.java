@@ -14,6 +14,7 @@ import java.util.List;
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
+import in.sportscafe.nostragamus.module.feed.dto.Match;
 import in.sportscafe.nostragamus.module.play.myresults.MyResultsResponse;
 import in.sportscafe.nostragamus.module.play.prediction.dto.Question;
 import in.sportscafe.nostragamus.module.resultspeek.dto.ResultsPeek;
@@ -33,6 +34,8 @@ public class ResultsPeekModelImpl implements ResultsPeekModel {
     private Integer mPlayerUserId;
 
     private Integer mMatchId;
+
+    private Integer mRoomId;
 
     private String mPlayerPhoto;
 
@@ -63,19 +66,21 @@ public class ResultsPeekModelImpl implements ResultsPeekModel {
     @Override
     public void init(Bundle bundle) {
 
-        mPlayerUserId = bundle.getInt(Constants.BundleKeys.PLAYER_ID);
-        mMatchId = bundle.getInt(Constants.BundleKeys.MATCH_ID);
-        mPlayerPhoto = bundle.getString(Constants.BundleKeys.PLAYER_PHOTO);
-        mPlayerName = bundle.getString(Constants.BundleKeys.PLAYER_NAME);
-
-        mResultsPeekModelListener.setPlayerProfileData(mPlayerPhoto, mPlayerName);
-
-        callPlayerResultsApi();
-
+        if (bundle != null) {
+            mPlayerUserId = bundle.getInt(Constants.BundleKeys.PLAYER_ID);
+            mMatchId = bundle.getInt(Constants.BundleKeys.MATCH_ID);
+            mRoomId = bundle.getInt(Constants.BundleKeys.ROOM_ID);
+            mPlayerPhoto = bundle.getString(Constants.BundleKeys.PLAYER_PHOTO);
+            mPlayerName = bundle.getString(Constants.BundleKeys.PLAYER_NAME);
+            mResultsPeekModelListener.setPlayerProfileData(mPlayerPhoto, mPlayerName);
+            callPlayerResultsApi();
+        }else {
+            mResultsPeekModelListener.onFailedResults();
+        }
     }
 
     private void callPlayerResultsApi() {
-        MyWebService.getInstance().getPlayerResultRequest(mPlayerUserId, mMatchId).enqueue(
+        MyWebService.getInstance().getPlayerResultRequest(mPlayerUserId, mMatchId, mRoomId).enqueue(
                 new NostragamusCallBack<MyResultsResponse>() {
                     @Override
                     public void onResponse(Call<MyResultsResponse> call, Response<MyResultsResponse> response) {
@@ -83,14 +88,17 @@ public class ResultsPeekModelImpl implements ResultsPeekModel {
 
                         if (mResultsPeekModelListener.isThreadAlive()) {
                             if (response.isSuccessful()) {
-                                if (!response.body().getMyResults().isEmpty()) {
-                                    playerPoints = response.body().getMyResults().get(0).getMatchPoints();
-                                    mMatchStage = response.body().getMyResults().get(0).getStage();
-                                    mChallengeName = response.body().getMyResults().get(0).getChallengeName();
-                                    playerQuestionsList = response.body().getMyResults().get(0).getQuestions();
-                                    callMyResultsApi();
-                                } else {
-                                    mResultsPeekModelListener.onFailedResults();
+                                if (response.body() != null) {
+                                    Match match = response.body().getMyResults();
+                                    if (match != null) {
+                                        playerPoints = response.body().getMyResults().getMatchPoints();
+                                        mMatchStage = response.body().getMyResults().getStage();
+                                        mChallengeName = response.body().getMyResults().getChallengeName();
+                                        playerQuestionsList = response.body().getMyResults().getQuestions();
+                                        callMyResultsApi();
+                                    } else {
+                                        mResultsPeekModelListener.onFailedResults();
+                                    }
                                 }
                             } else {
                                 mResultsPeekModelListener.onFailedResults();
@@ -102,7 +110,7 @@ public class ResultsPeekModelImpl implements ResultsPeekModel {
     }
 
     private void callMyResultsApi() {
-        MyWebService.getInstance().getPlayerResultRequest(Integer.valueOf(NostragamusDataHandler.getInstance().getUserId()), mMatchId).enqueue(
+        MyWebService.getInstance().getPlayerResultRequest(Integer.valueOf(NostragamusDataHandler.getInstance().getUserId()), mMatchId, mRoomId).enqueue(
                 new NostragamusCallBack<MyResultsResponse>() {
                     @Override
                     public void onResponse(Call<MyResultsResponse> call, Response<MyResultsResponse> response) {
@@ -112,8 +120,8 @@ public class ResultsPeekModelImpl implements ResultsPeekModel {
                             if (response.isSuccessful()) {
                                 List<Question> myQuestionsList = new ArrayList<>();
                                 try {
-                                    myPoints = response.body().getMyResults().get(0).getMatchPoints();
-                                    myQuestionsList = response.body().getMyResults().get(0).getQuestions();
+                                    myPoints = response.body().getMyResults().getMatchPoints();
+                                    myQuestionsList = response.body().getMyResults().getQuestions();
                                 } catch (Exception e) {
                                     ExceptionTracker.track(e);
                                 }
@@ -125,7 +133,7 @@ public class ResultsPeekModelImpl implements ResultsPeekModel {
                                 ResultsPeek resultsPeek;
                                 for (Question question : playerQuestionsList) {
                                     resultsPeek = mResultPeekMap.get(question.getQuestionId());
-                                    if(null == resultsPeek) {
+                                    if (null == resultsPeek) {
                                         mResultPeekMap.put(question.getQuestionId(), resultsPeek = new ResultsPeek());
                                     }
                                     resultsPeek.setPlayerTwoQuestions(question);

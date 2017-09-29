@@ -29,7 +29,7 @@ public interface MyResultsView extends InAppView {
 
     void setToolbarHeading(String result);
 
-    void showResultsToBeDeclaredView(Boolean playedFirstMatch, Match match);
+    void showResultsToBeDeclaredView(Boolean playedFirstMatch, String matchEndTime);
 
     void updateAnswers(Match match);
 }

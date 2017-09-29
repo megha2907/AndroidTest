@@ -13,15 +13,16 @@ import in.sportscafe.nostragamus.module.feed.dto.Match;
 public class MyResultsResponse {
 
     @SerializedName("data")
-    private List<Match> myResults = new ArrayList<>();
+    private Match myResults;
 
     @SerializedName("data")
-    public List<Match> getMyResults() {
+    public Match getMyResults() {
         return myResults;
     }
 
     @SerializedName("data")
-    public void setMyResults(List<Match> myResults) {
+    public void setMyResults(Match myResults) {
         this.myResults = myResults;
     }
+
 }

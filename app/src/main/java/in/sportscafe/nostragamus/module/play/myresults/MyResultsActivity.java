@@ -274,7 +274,9 @@ public class MyResultsActivity extends NostragamusActivity implements MyResultsV
 
     @Override
     public void onBackPressed() {
-        Intent upIntent = NavUtils.getParentActivityIntent(this);
+        //todo change back flow
+
+   /*     Intent upIntent = NavUtils.getParentActivityIntent(this);
         if (shouldUpRecreateTask(this)) {
             TaskStackBuilder.create(this).addNextIntentWithParentStack(upIntent).startActivities();
             finish();
@@ -287,10 +289,13 @@ public class MyResultsActivity extends NostragamusActivity implements MyResultsV
 //            }
 
              /* Refresh only when coming from play screen to results awaiting , NOT for other like Results */
-            if (!mbundle.containsKey(BundleKeys.SCREEN)) {
+
+          /*  if (!mbundle.containsKey(BundleKeys.SCREEN)) {
                 sendReloadChallengeBroadcast();
             }
-        }
+        }  */
+
+          finish();
     }
 
     private final boolean shouldUpRecreateTask(Activity from) {
@@ -534,15 +539,15 @@ public class MyResultsActivity extends NostragamusActivity implements MyResultsV
     }
 
     @Override
-    public void showResultsToBeDeclaredView(Boolean playedFirstMatch, Match match) {
+    public void showResultsToBeDeclaredView(Boolean playedFirstMatch, String matchEndTime) {
         LinearLayout llResultsDeclaration = (LinearLayout) findViewById(R.id.my_results_declaration_rl);
         TextView tvResultsDeclarationHeading = (TextView) findViewById(R.id.my_results_declaration_tv_heading);
         TextView tvResultsDeclarationDesc = (TextView) findViewById(R.id.my_results_declaration_tv_desc);
         LinearLayout backButtonLayout = (LinearLayout) findViewById(R.id.my_results_challenge_back_btn_layout);
         backButtonLayout.setOnClickListener(this);
 
-        if (match != null) {
-            String endDateStr = match.getEndTime();
+        if (!TextUtils.isEmpty(matchEndTime)) {
+            String endDateStr = matchEndTime;
             if (!TextUtils.isEmpty(endDateStr)) {
                 llResultsDeclaration.setVisibility(View.VISIBLE);
 
@@ -615,12 +620,6 @@ public class MyResultsActivity extends NostragamusActivity implements MyResultsV
       refresh(match);
     }
 
-//    @Override
-//    public void changeEditToSaveAnswer() {
-//        mSaveAnswer = true;
-//        editAnswersBtn.setText("Save Answer");
-//        mIvEditAnswers.setBackground(getContext().getResources().getDrawable(R.drawable.edit_answers_tick));
-//    }
 
     private void collapseFab() {
         AnimatorSet animatorSet = new AnimatorSet();
@@ -679,61 +678,6 @@ public class MyResultsActivity extends NostragamusActivity implements MyResultsV
         });
         animatorSet.start();
     }
-
-
-    /*private void collapseShareFab() {
-        AnimatorSet animatorSet = new AnimatorSet();
-        animatorSet.playTogether(createCollapseAnimator(btnfbShare, offset3));
-        animatorSet.addListener(new Animator.AnimatorListener() {
-            @Override
-            public void onAnimationStart(Animator animation) {
-
-            }
-
-            @Override
-            public void onAnimationEnd(Animator animation) {
-                btnfbShare.setVisibility(View.INVISIBLE);
-            }
-
-            @Override
-            public void onAnimationCancel(Animator animation) {
-
-            }
-
-            @Override
-            public void onAnimationRepeat(Animator animation) {
-
-            }
-        });
-        animatorSet.start();
-    }
-
-    private void expandShareFab() {
-        AnimatorSet animatorSet = new AnimatorSet();
-        animatorSet.playTogether(createExpandAnimator(btnfbShare, offset3));
-        animatorSet.addListener(new Animator.AnimatorListener() {
-            @Override
-            public void onAnimationStart(Animator animation) {
-                btnfbShare.setVisibility(View.VISIBLE);
-            }
-
-            @Override
-            public void onAnimationEnd(Animator animation) {
-
-            }
-
-            @Override
-            public void onAnimationCancel(Animator animation) {
-
-            }
-
-            @Override
-            public void onAnimationRepeat(Animator animation) {
-
-            }
-        });
-        animatorSet.start();
-    }*/
 
     private static final String TRANSLATION_Y = "translationY";
 
