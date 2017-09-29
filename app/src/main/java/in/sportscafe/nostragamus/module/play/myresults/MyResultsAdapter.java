@@ -25,6 +25,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.jeeva.android.widgets.HmImageView;
+import com.jeeva.android.widgets.ShadowLayout;
 
 import org.parceler.Parcels;
 
