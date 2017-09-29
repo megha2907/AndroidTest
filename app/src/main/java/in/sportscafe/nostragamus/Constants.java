@@ -797,7 +797,7 @@ public interface Constants {
         String DID_NOT_PLAY = "Did Not Play";
         String PLAY = "Play";
         String CONTINUE = "Continue";
-        String ANSWER = "Answer";
+        String ANSWER = "Answers";
         String POINTS = "Points";
     }
 

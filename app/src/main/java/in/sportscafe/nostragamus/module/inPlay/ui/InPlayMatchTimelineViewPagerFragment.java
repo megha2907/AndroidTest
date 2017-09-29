@@ -204,11 +204,12 @@ public class InPlayMatchTimelineViewPagerFragment extends NostraBaseFragment {
                         break;
 
                     case MatchesAdapterAction.PLAY:
+                        launchPlayScreen(args);
                     case MatchesAdapterAction.CONTINUE:
                         launchPlayScreen(args);
                         break;
-
                     case MatchesAdapterAction.ANSWER:
+                        launchResultsScreen(args);
                     case MatchesAdapterAction.DID_NOT_PLAY:
                     case MatchesAdapterAction.POINTS:
                         launchResultsScreen(args);
@@ -237,7 +238,7 @@ public class InPlayMatchTimelineViewPagerFragment extends NostraBaseFragment {
                     Intent resultsIntent = new Intent(getActivity(), MyResultsActivity.class);
                     resultsIntent.putExtras(bundle);
                     resultsIntent.putExtra(Constants.BundleKeys.SCREEN_LAUNCHED_FROM_PARENT,
-                            MyResultsActivity.LaunchedFrom.IN_PLAY_SCREEN_MATCH_DID_NOT_PLAY);
+                            MyResultsActivity.LaunchedFrom.IN_PLAY_SCREEN_MATCH_AWAITING_RESULTS);
                     getActivity().startActivity(resultsIntent);
 
                 } else {

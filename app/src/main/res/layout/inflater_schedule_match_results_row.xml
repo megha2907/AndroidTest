@@ -37,7 +37,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_marginRight="@dimen/dim_2"
             android:text="NO RANK"
             android:textAllCaps="true"
             android:textColor="@color/white"
@@ -253,10 +252,10 @@
             android:layout_marginTop="@dimen/dp_12"
             android:drawablePadding="@dimen/dp_8"
             android:gravity="center"
-            android:textColor="@color/white_60"
-            android:textSize="@dimen/dp_13"
+            android:textColor="@color/grey6"
+            android:textSize="@dimen/sp_10"
             android:visibility="gone"
-            app:typeface="lato_regular" />
+            app:typeface="lato_bold" />
 
     </LinearLayout>
 
@@ -358,7 +357,6 @@
         android:layout_below="@+id/schedule_row_ll"
         android:layout_marginLeft="@dimen/dim_10"
         android:layout_marginRight="@dimen/dim_10"
-        android:layout_marginTop="@dimen/dim_8"
         android:padding="@dimen/dp_4">
 
         <LinearLayout
@@ -379,7 +377,8 @@
                     android:id="@+id/schedule_row_scores_ll"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/dim_60"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:layout_marginTop="@dimen/dim_8">
 
                     <RelativeLayout
                         android:id="@+id/schedule_row_rl_average_score"
