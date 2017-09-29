@@ -49,7 +49,6 @@ public class MyResultPresenterImpl implements MyResultsPresenter, MyResultsModel
     @Override
     public void onsetMatchDetails(Match match) {
         mResultsView.setMatchDetails(match);
-//        mResultsView.navigatetoPlay(Match);
     }
 
     @Override
@@ -72,8 +71,8 @@ public class MyResultPresenterImpl implements MyResultsPresenter, MyResultsModel
     }
 
     @Override
-    public void showResultsToBeDeclared(boolean playedFirstMatch, Match match) {
-        mResultsView.showResultsToBeDeclaredView(playedFirstMatch, match);
+    public void showResultsToBeDeclared(boolean playedFirstMatch) {
+        mResultsView.showResultsToBeDeclaredView(playedFirstMatch,mResultsModel.getMatchEndTime());
     }
 
     @Override

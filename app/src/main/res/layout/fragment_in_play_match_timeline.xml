@@ -30,6 +30,8 @@
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
                 android:scrollbars="horizontal"
+                android:paddingBottom="@dimen/dim_5"
+                android:paddingLeft="@dimen/dim_22"
                 android:layout_marginTop="@dimen/dim_16"/>
 
             <LinearLayout
@@ -46,6 +48,8 @@
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
+                android:paddingTop="@dimen/dim_5"
+                android:paddingLeft="@dimen/dim_8"
                 android:scrollbars="horizontal"/>
 
             <com.jeeva.android.widgets.customfont.CustomTextView

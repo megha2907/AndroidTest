@@ -32,6 +32,8 @@ public class OthersAnswersModelImpl implements OthersAnswersModel {
 
     private int mMatchId;
 
+    private int mRoomId;
+
     private Match mMatchDetails;
 
     private OthersAnswersAdapter mOthersAnswersAdapter;
@@ -63,6 +65,7 @@ public class OthersAnswersModelImpl implements OthersAnswersModel {
             if (bundle.containsKey(BundleKeys.MATCH_DETAILS)) {
                 mMatchDetails = Parcels.unwrap(bundle.getParcelable(BundleKeys.MATCH_DETAILS));
                 mMatchId = mMatchDetails.getId();
+                mRoomId =  mMatchDetails.getRoomId();
             }
 
             if (bundle.containsKey(BundleKeys.SHOW_ANSWER_PERCENTAGE)) {
@@ -97,7 +100,7 @@ public class OthersAnswersModelImpl implements OthersAnswersModel {
     }
 
     private void callPlayerResultsApi() {
-        MyWebService.getInstance().getPlayerResultRequest(mPlayerUserId, mMatchId).enqueue(
+        MyWebService.getInstance().getPlayerResultRequest(mPlayerUserId, mMatchId,mRoomId).enqueue(
                 new NostragamusCallBack<MyResultsResponse>() {
                     @Override
                     public void onResponse(Call<MyResultsResponse> call, Response<MyResultsResponse> response) {
@@ -115,13 +118,13 @@ public class OthersAnswersModelImpl implements OthersAnswersModel {
         );
     }
 
-    private void handleOthersAnswersResponse(List<Match> othersAnswers) {
-        if (othersAnswers.isEmpty()) {
+    private void handleOthersAnswersResponse(Match othersAnswers) {
+        if (othersAnswers!=null) {
             mOthersAnswersModelListener.onEmpty();
             return;
         }
 
-        mMatchDetails = othersAnswers.get(0);
+        mMatchDetails = othersAnswers;
         if(mShowAnswerPercentage) {
             callPlayerResultPercentageApi();
         } else {

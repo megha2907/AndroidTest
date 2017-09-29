@@ -111,7 +111,7 @@ public class Match {
     @SerializedName("count_match_powerups")
     private Integer countMatchPowerupsUsed;
 
-    @SerializedName("count_challenge_players")
+    @SerializedName("count_room_players")
     private Integer countPlayers;
 
     @SerializedName("count_match_players")
@@ -131,6 +131,9 @@ public class Match {
 
     @SerializedName("count_answers")
     private Integer noOfQuestionsAnswered = 0;
+
+    @SerializedName("room_id")
+    private int roomId;
 
 
     /**
@@ -497,12 +500,12 @@ public class Match {
         this.countPowerUps = countPowerUps;
     }
 
-    @SerializedName("count_challenge_players")
+    @SerializedName("count_room_players")
     public Integer getCountPlayers() {
         return countPlayers;
     }
 
-    @SerializedName("count_challenge_players")
+    @SerializedName("count_room_players")
     public void setCountPlayers(Integer countPlayers) {
         this.countPlayers = countPlayers;
     }
@@ -607,6 +610,14 @@ public class Match {
     @SerializedName("count_answers")
     public void setNoOfQuestionsAnswered(Integer noOfQuestionsAnswered) {
         this.noOfQuestionsAnswered = noOfQuestionsAnswered;
+    }
+
+    public int getRoomId() {
+        return roomId;
+    }
+
+    public void setRoomId(int roomId) {
+        this.roomId = roomId;
     }
 
 

@@ -17,6 +17,7 @@ public  class ResultsScreenDataDto {
     private String matchPartyTitle2;
     private String subTitle;
     private String challengeName;
+    private String matchStatus;
 
     public int getChallengeId() {
         return challengeId;
@@ -73,4 +74,13 @@ public  class ResultsScreenDataDto {
     public void setChallengeName(String challengeName) {
         this.challengeName = challengeName;
     }
+
+    public String getMatchStatus() {
+        return matchStatus;
+    }
+
+    public void setMatchStatus(String matchStatus) {
+        this.matchStatus = matchStatus;
+    }
+
 }

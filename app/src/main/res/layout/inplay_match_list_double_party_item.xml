@@ -89,14 +89,15 @@
                 <com.jeeva.android.widgets.customfont.CustomButton
                     android:id="@+id/inplay_match_action_button"
                     android:layout_width="wrap_content"
-                    android:layout_height="@dimen/dp_30"
+                    android:layout_height="@dimen/dim_30"
                     android:background="@drawable/tournament_ready_btn_bg"
                     android:gravity="center"
                     android:text="Select"
                     android:textAllCaps="true"
+                    android:paddingBottom="@dimen/dim_3"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/sp_13"
-                    app:typeface="roboto_condensed" />
+                    android:textSize="@dimen/sp_10"
+                    app:typeface="lato_regular" />
 
             </LinearLayout>
 

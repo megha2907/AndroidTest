@@ -15,6 +15,7 @@ public class PlayScreenDataDto {
     private String matchPartyTitle2;
     private String subTitle;
     private String challengeName;
+    private String matchStatus;
     private PowerUp powerUp;
 
     public int getChallengeId() {
@@ -79,5 +80,13 @@ public class PlayScreenDataDto {
 
     public void setPowerUp(PowerUp powerUp) {
         this.powerUp = powerUp;
+    }
+
+    public String getMatchStatus() {
+        return matchStatus;
+    }
+
+    public void setMatchStatus(String matchStatus) {
+        this.matchStatus = matchStatus;
     }
 }

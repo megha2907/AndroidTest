@@ -150,7 +150,7 @@ public class MyWebService extends AbstractWebService<NostragamusService> {
     }
 
     public Call<PredictionAllQuestionResponse> getAllPredictionQuestions(int matchId, int roomId) {
-        return mNostragamusService.getAllPredictionQuestions(matchId);
+        return mNostragamusService.getAllPredictionQuestions(matchId,roomId);
     }
 
     public Call<TournamentsResponse> getTournaments(boolean isCurrent, boolean groupbySport) {
@@ -187,8 +187,8 @@ public class MyWebService extends AbstractWebService<NostragamusService> {
         return mNostragamusService.leaveGroup(request);
     }
 
-    public Call<MyResultsResponse> getMyResultsRequest(Integer MatchId, Integer playerId) {
-        return mNostragamusService.getMyResults(MatchId, playerId);
+    public Call<MyResultsResponse> getMyResultsRequest(Integer matchId, Integer playerId, int roomId) {
+        return mNostragamusService.getMyResults(matchId, playerId,roomId);
     }
 
     public Call<LeaderBoardResponse> getLeaderBoardDetailRequest(Integer groupId,
@@ -248,8 +248,8 @@ public class MyWebService extends AbstractWebService<NostragamusService> {
         return mNostragamusService.fuzzyPlayers(key, matchId);
     }
 
-    public Call<MyResultsResponse> getPlayerResultRequest(Integer playerId, Integer matchId) {
-        return mNostragamusService.getPlayerResult(playerId, matchId);
+    public Call<MyResultsResponse> getPlayerResultRequest(Integer playerId, Integer matchId,Integer roomId) {
+        return mNostragamusService.getPlayerResult(playerId, matchId,roomId);
     }
 
     public Call<MatchAnswerStatsResponse> getPlayerResultPercentageRequest(Integer matchId) {

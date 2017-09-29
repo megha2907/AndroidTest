@@ -420,7 +420,7 @@
                             android:layout_height="@dimen/dim_6"
                             android:layout_below="@+id/schedule_row_tv_average_score"
                             android:layout_marginLeft="@dimen/dim_4"
-                            android:layout_marginTop="@dimen/dim_7"
+                            android:layout_marginTop="@dimen/dim_8"
                             android:layout_toRightOf="@+id/schedule_row_tv_average_score_txt"
                             android:alpha="0.6"
                             android:src="@drawable/timeline_points_arrow" />
@@ -500,7 +500,7 @@
                             android:layout_height="@dimen/dim_6"
                             android:layout_below="@+id/schedule_row_tv_highest_score"
                             android:layout_marginLeft="@dimen/dim_4"
-                            android:layout_marginTop="@dimen/dim_7"
+                            android:layout_marginTop="@dimen/dim_8"
                             android:layout_toRightOf="@+id/schedule_row_tv_highest_score_txt"
                             android:alpha="0.6"
                             android:src="@drawable/timeline_points_arrow" />
