@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import in.sportscafe.nostragamus.module.challengeCompleted.dto.CompletedResponse;
-import in.sportscafe.nostragamus.module.inPlay.dto.InPlayResponse;
 
 /**
  * Created by deepanshi on 9/27/17.
@@ -25,8 +24,14 @@ public class CompleteChallengeFilterHelper {
             filteredChallenges = new ArrayList<>();
 
             for (CompletedResponse completedResponse : completedResponseList) {
-                if (completedResponse.getSportsId() == sportFilterId) {
-                    filteredChallenges.add(completedResponse);
+                int[] sportsIdArray = completedResponse.getSportIdArray();
+
+                if (sportsIdArray != null) {
+                    for (int temp = 0; temp < sportsIdArray.length; temp++) {
+                        if (sportsIdArray[temp] == sportFilterId) {
+                            filteredChallenges.add(completedResponse);
+                        }
+                    }
                 }
             }
         }
@@ -41,8 +46,14 @@ public class CompleteChallengeFilterHelper {
             filteredChallenges = new ArrayList<>();
 
             for (CompletedResponse completedResponse : completedResponseList) {
-                if (completedResponse.getSportsId() == FILTER_MIX_SPORTS_ID) {
-                    filteredChallenges.add(completedResponse);
+                int[] sportsIdArray = completedResponse.getSportIdArray();
+
+                if (sportsIdArray != null) {
+                    for (int temp = 0; temp < sportsIdArray.length; temp++) {
+                        if (sportsIdArray[temp] == FILTER_MIX_SPORTS_ID) {
+                            filteredChallenges.add(completedResponse);
+                        }
+                    }
                 }
             }
         }

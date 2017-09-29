@@ -1,6 +1,5 @@
 package in.sportscafe.nostragamus.module.challengeCompleted.adapter;
 
-import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -10,8 +9,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
-import org.parceler.Parcels;
 
 import java.util.List;
 
@@ -23,8 +20,6 @@ import in.sportscafe.nostragamus.module.challengeCompleted.dto.CompletedContestM
 import in.sportscafe.nostragamus.module.challengeCompleted.dto.CompletedListChallengeItem;
 import in.sportscafe.nostragamus.module.challengeCompleted.dto.CompletedListItem;
 import in.sportscafe.nostragamus.module.customViews.TimelineHelper;
-import in.sportscafe.nostragamus.module.inPlay.dto.InPlay;
-import in.sportscafe.nostragamus.module.inPlay.dto.InPlayContestMatchDto;
 import in.sportscafe.nostragamus.module.newChallenges.helpers.DateTimeHelper;
 import in.sportscafe.nostragamus.utils.timeutils.TimeAgo;
 import in.sportscafe.nostragamus.utils.timeutils.TimeUnit;
@@ -62,13 +57,13 @@ public class CompletedChallengeRecyclerAdapter extends RecyclerView.Adapter<Recy
 
         switch (viewType) {
             case CompletedChallengeAdapterItemType.CHALLENGE_ITEM:
-                View challengeView = inflater.inflate(R.layout.in_play_challenge_item_layout, parent, false);
-                viewHolder = new CompletedChallengeRecyclerAdapter.CompletedChallengeItemViewHolder(challengeView);
+                View challengeView = inflater.inflate(R.layout.completed_challenge_item_layout, parent, false);
+                viewHolder = new CompletedChallengeItemViewHolder(challengeView);
                 break;
 
             case CompletedChallengeAdapterItemType.COMPLETED_CONTEST:
-                View v2 = inflater.inflate(R.layout.in_play_comepleted_card_layout, parent, false);
-                viewHolder = new CompletedChallengeRecyclerAdapter.CompletedItemViewHolder(v2);
+                View v2 = inflater.inflate(R.layout.completed_contest_card_layout, parent, false);
+                viewHolder = new CompletedContestItemViewHolder(v2);
                 break;
         }
 
@@ -153,7 +148,7 @@ public class CompletedChallengeRecyclerAdapter extends RecyclerView.Adapter<Recy
 
     private void bindCompletedValues(RecyclerView.ViewHolder holder, CompletedContestDto contest) {
         if (contest != null && contest.getMatches() != null) {
-            CompletedChallengeRecyclerAdapter.CompletedItemViewHolder viewHolder = (CompletedChallengeRecyclerAdapter.CompletedItemViewHolder) holder;
+            CompletedContestItemViewHolder viewHolder = (CompletedContestItemViewHolder) holder;
 
             viewHolder.contestTitleTextView.setText(contest.getContestName());
             viewHolder.contestModeImageView.setImageResource(R.drawable.add_members_icon);
@@ -231,7 +226,7 @@ public class CompletedChallengeRecyclerAdapter extends RecyclerView.Adapter<Recy
         return counter;
     }
 
-    private class CompletedItemViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    private class CompletedContestItemViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         LinearLayout root;
         LinearLayout timelineHeaderParent;
@@ -244,17 +239,17 @@ public class CompletedChallengeRecyclerAdapter extends RecyclerView.Adapter<Recy
         TextView prizesTextView;
 
 
-        public CompletedItemViewHolder(View itemView) {
+        public CompletedContestItemViewHolder(View itemView) {
             super(itemView);
-            root = (LinearLayout) itemView.findViewById(R.id.in_play_completed_card_parent);
-            timelineHeaderParent = (LinearLayout) itemView.findViewById(R.id.inplay_completed_card_timeline_heading_parent);
-            timelineContentParent = (LinearLayout) itemView.findViewById(R.id.inplay_completed_card_timeline_content_parent);
-            timelineFooterParent = (LinearLayout) itemView.findViewById(R.id.inplay_completed_card_timeline_footer_parent);
-            contestTitleTextView = (TextView) itemView.findViewById(R.id.inplay_completed_card_title_textView);
-            contestModeImageView = (ImageView) itemView.findViewById(R.id.inplay_contest_card_header_mode_imgView);
-            entryFeeTextView = (TextView) itemView.findViewById(R.id.inplay_contest_card_header_entry_fee_textView);
-            currentRankTextView = (TextView) itemView.findViewById(R.id.inplay_contest_card_header_current_rank_textView);
-            prizesTextView = (TextView) itemView.findViewById(R.id.inplay_contest_card_header_prizes_textView);
+            root = (LinearLayout) itemView.findViewById(R.id.completed_completed_card_parent);
+            timelineHeaderParent = (LinearLayout) itemView.findViewById(R.id.completed_completed_card_timeline_heading_parent);
+            timelineContentParent = (LinearLayout) itemView.findViewById(R.id.completed_completed_card_timeline_content_parent);
+            timelineFooterParent = (LinearLayout) itemView.findViewById(R.id.completed_completed_card_timeline_footer_parent);
+            contestTitleTextView = (TextView) itemView.findViewById(R.id.completed_completed_card_title_textView);
+            contestModeImageView = (ImageView) itemView.findViewById(R.id.completed_contest_card_header_mode_imgView);
+            entryFeeTextView = (TextView) itemView.findViewById(R.id.completed_contest_card_header_entry_fee_textView);
+            currentRankTextView = (TextView) itemView.findViewById(R.id.completed_contest_card_header_current_rank_textView);
+            prizesTextView = (TextView) itemView.findViewById(R.id.completed_contest_card_header_prizes_textView);
 
             root.setOnClickListener(this);
         }
@@ -262,7 +257,7 @@ public class CompletedChallengeRecyclerAdapter extends RecyclerView.Adapter<Recy
         @Override
         public void onClick(View view) {
             switch (view.getId()) {
-                case R.id.in_play_completed_card_parent:
+                case R.id.completed_completed_card_parent:
                     break;
             }
         }
@@ -273,39 +268,23 @@ public class CompletedChallengeRecyclerAdapter extends RecyclerView.Adapter<Recy
         TextView challengeNameTextView;
         TextView challengeCountTextView;
         TextView challengeTournamentTextView;
-        LinearLayout challengeButton;
         TextView challengeButtonTextView;
         TextView challengeDurationTextView;
         LinearLayout challengeButtonParent;
 
         public CompletedChallengeItemViewHolder(View itemView) {
             super(itemView);
-            challengeNameTextView = (TextView) itemView.findViewById(R.id.inplay_challenge_title_textView);
-            challengeCountTextView = (TextView) itemView.findViewById(R.id.inplay_challenge_count_textView);
-            challengeTournamentTextView = (TextView) itemView.findViewById(R.id.inplay_challenge_tournaments_textView);
-            challengeButtonTextView = (TextView) itemView.findViewById(R.id.inplay_challenge_button_textView);
-            challengeButton = (LinearLayout) itemView.findViewById(R.id.inplay_challenge_button);
-            challengeDurationTextView = (TextView) itemView.findViewById(R.id.inplay_challenge_duration_tv);
-            challengeButtonParent = (LinearLayout) itemView.findViewById(R.id.inplay_challenge_button);
-            challengeButton.setOnClickListener(this);
+            challengeNameTextView = (TextView) itemView.findViewById(R.id.completed_challenge_title_textView);
+            challengeCountTextView = (TextView) itemView.findViewById(R.id.completed_challenge_count_textView);
+            challengeTournamentTextView = (TextView) itemView.findViewById(R.id.completed_challenge_tournaments_textView);
+            challengeButtonTextView = (TextView) itemView.findViewById(R.id.completed_challenge_button_textView);
+            challengeDurationTextView = (TextView) itemView.findViewById(R.id.completed_challenge_duration_tv);
+            challengeButtonParent = (LinearLayout) itemView.findViewById(R.id.completed_challenge_button);
         }
 
         @Override
-        public void onClick(View view) {
-            switch (view.getId()) {
-                case R.id.inplay_challenge_button:
-//                    if (mCompletedAdapterListener != null) {
-//                        Bundle args = new Bundle();
-//                        CompletedListItem listItem = mItemsList.get(getAdapterPosition());
-//                        if (listItem != null && listItem.getCompletedAdapterItemType() == CompletedChallengeAdapterItemType.CHALLENGE_ITEM) {
-//                            CompletedListChallengeItem challengeItem = (CompletedListChallengeItem) listItem.getItemData();
-//                            args.putParcelable(Constants.BundleKeys.INPLAY_CHALLENGE_LIST_ITEM, Parcels.wrap(challengeItem));
-//                        }
-//
-//                        mCompletedAdapterListener.onJoinAnotherContestClicked(args);
-//                    }
-                    break;
-            }
+        public void onClick(View v) {
+
         }
     }
 }

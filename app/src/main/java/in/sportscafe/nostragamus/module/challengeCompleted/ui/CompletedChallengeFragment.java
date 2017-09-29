@@ -34,16 +34,16 @@ import in.sportscafe.nostragamus.module.newChallenges.dto.SportsTab;
  * Created by deepanshi on 9/27/17.
  */
 
-public class CompleteChallengeFragment extends NostraBaseFragment {
+public class CompletedChallengeFragment extends NostraBaseFragment {
 
-    public CompleteChallengeFragment() {}
+    public CompletedChallengeFragment() {}
 
     private Snackbar mSnackBar;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_in_play, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_completed_challenge, container, false);
         initView(rootView);
         return rootView;
     }
@@ -61,12 +61,10 @@ public class CompleteChallengeFragment extends NostraBaseFragment {
     }
 
     public void onInternetConnected() {
-        if (Nostragamus.getInstance().hasNetworkConnection()) {
             loadData();
             if (mSnackBar != null && mSnackBar.isShown()) {
                 mSnackBar.dismiss();
             }
-        }
     }
 
     @Override
@@ -79,7 +77,9 @@ public class CompleteChallengeFragment extends NostraBaseFragment {
     private void loadData() {
         showLoadingProgressBar();
         CompletedChallengeDataProvider dataProvider = new CompletedChallengeDataProvider();
-        dataProvider.getCompletedChallenges(getContext().getApplicationContext(), new CompletedChallengeDataProvider.CompletedChallengeDataProviderListener() {
+        dataProvider.getCompletedChallenges(getContext().getApplicationContext(),
+                0, 10, // TODO : pagination
+                new CompletedChallengeDataProvider.CompletedChallengeDataProviderListener() {
             @Override
             public void onData(int status, @Nullable List<CompletedResponse> completedResponseList) {
                 hideLoadingProgressBar();
@@ -136,8 +136,8 @@ public class CompleteChallengeFragment extends NostraBaseFragment {
 
     private void showDataOnUi(List<CompletedResponse> completedResponseList) {
         if (getView() != null && getActivity() != null && completedResponseList != null && completedResponseList.size() > 0) {
-            TabLayout completedTabLayout = (TabLayout) getView().findViewById(R.id.inplay_tabs);
-            ViewPager completedViewPager = (ViewPager) getView().findViewById(R.id.inplay_viewPager);
+            TabLayout completedTabLayout = (TabLayout) getView().findViewById(R.id.completed_tabs);
+            ViewPager completedViewPager = (ViewPager) getView().findViewById(R.id.completed_viewPager);
 
             SportsDataProvider sportsDataProvider = new SportsDataProvider();
             List<SportsTab> sportsTabList = sportsDataProvider.getInPlaySportsList();
@@ -198,15 +198,15 @@ public class CompleteChallengeFragment extends NostraBaseFragment {
 
     private void showLoadingProgressBar() {
         if (getView() != null) {
-            getView().findViewById(R.id.inplayContentLayout).setVisibility(View.GONE);
-            getView().findViewById(R.id.inPlayProgressBarLayout).setVisibility(View.VISIBLE);
+            getView().findViewById(R.id.completedContentLayout).setVisibility(View.GONE);
+            getView().findViewById(R.id.completedProgressBarLayout).setVisibility(View.VISIBLE);
         }
     }
 
     private void hideLoadingProgressBar() {
         if (getView() != null) {
-            getView().findViewById(R.id.inPlayProgressBarLayout).setVisibility(View.GONE);
-            getView().findViewById(R.id.inplayContentLayout).setVisibility(View.VISIBLE);
+            getView().findViewById(R.id.completedProgressBarLayout).setVisibility(View.GONE);
+            getView().findViewById(R.id.completedContentLayout).setVisibility(View.VISIBLE);
         }
     }
 

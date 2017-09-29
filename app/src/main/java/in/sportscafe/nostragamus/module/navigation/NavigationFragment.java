@@ -25,6 +25,7 @@ import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
+import in.sportscafe.nostragamus.module.common.NostraBaseFragment;
 import in.sportscafe.nostragamus.module.navigation.appupdate.AppUpdateActivity;
 import in.sportscafe.nostragamus.module.navigation.help.HelpActivity;
 import in.sportscafe.nostragamus.module.navigation.powerupbank.PowerUpBankActivity;
@@ -41,7 +42,7 @@ import in.sportscafe.nostragamus.module.user.login.UserInfoModelImpl;
 import in.sportscafe.nostragamus.module.user.login.dto.UserInfo;
 import in.sportscafe.nostragamus.module.user.myprofile.UserProfileActivity;
 
-public class NavigationFragment extends BaseFragment implements View.OnClickListener {
+public class NavigationFragment extends NostraBaseFragment implements View.OnClickListener {
 
     private static final String TAG = NavigationFragment.class.getSimpleName();
 
@@ -95,26 +96,28 @@ public class NavigationFragment extends BaseFragment implements View.OnClickList
     }
 
     private void showOrHideContentBasedOnAppType() {
+        if (getView() != null) {
         /* Hide wallet section for free (ps - play store) app */
-        if (!BuildConfig.IS_PAID_VERSION) {
-            if (getView() != null) {
-                getView().findViewById(R.id.navigation_wallet_layout).setVisibility(View.GONE);
-                getView().findViewById(R.id.navigation_refer_layout).setVisibility(View.GONE);
-                getView().findViewById(R.id.navigation_store_layout).setVisibility(View.GONE);
-                getView().findViewById(R.id.navigation_refer_separator).setVisibility(View.GONE);
-                getView().findViewById(R.id.navigation_powerup_bank_separator).setVisibility(View.GONE);
-                getView().findViewById(R.id.navigation_store_separator).setVisibility(View.GONE);
+            if (!BuildConfig.IS_PAID_VERSION) {
+                if (getView() != null) {
+                    getView().findViewById(R.id.navigation_wallet_layout).setVisibility(View.GONE);
+                    getView().findViewById(R.id.navigation_refer_layout).setVisibility(View.GONE);
+                    getView().findViewById(R.id.navigation_store_layout).setVisibility(View.GONE);
+                    getView().findViewById(R.id.navigation_refer_separator).setVisibility(View.GONE);
+                    getView().findViewById(R.id.navigation_powerup_bank_separator).setVisibility(View.GONE);
+                    getView().findViewById(R.id.navigation_store_separator).setVisibility(View.GONE);
 
                 /*change Earn More Money text to Earn More Powerups in playstore app */
-                TextView navEarnMore = (TextView) findViewById(R.id.navigation_earn_more_tv_two);
-                navEarnMore.setText(" powerups!");
-                ImageView navEarnMoreIcon = (ImageView) findViewById(R.id.navigation_earn_more_iv);
-                navEarnMoreIcon.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.navigation_powerup_icon));
+                    TextView navEarnMore = (TextView) getView().findViewById(R.id.navigation_earn_more_tv_two);
+                    navEarnMore.setText(" powerups!");
+                    ImageView navEarnMoreIcon = (ImageView) getView().findViewById(R.id.navigation_earn_more_iv);
+                    navEarnMoreIcon.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.navigation_powerup_icon));
 
+                }
+            } else {
+                ImageView navEarnMoreIcon = (ImageView) getView().findViewById(R.id.navigation_earn_more_iv);
+                navEarnMoreIcon.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.navigation_earn_more_icon));
             }
-        } else {
-            ImageView navEarnMoreIcon = (ImageView) findViewById(R.id.navigation_earn_more_iv);
-            navEarnMoreIcon.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.navigation_earn_more_icon));
         }
     }
 
@@ -134,14 +137,14 @@ public class NavigationFragment extends BaseFragment implements View.OnClickList
                 updateTextView.setTextColor(ContextCompat.getColor(updateTextView.getContext(), R.color.white));
                 updateTextView.setText("Update the App");
 
-                ImageView updateApp = (ImageView) findViewById(R.id.navigation_app_update_app_iv);
+                ImageView updateApp = (ImageView) view.findViewById(R.id.navigation_app_update_app_iv);
                 updateApp.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.navigation_update_app_icn));
 
             } else {
                 view.findViewById(R.id.navigation_app_update_layout).setOnClickListener(null);
                 view.findViewById(R.id.navigation_app_update_available_imageView).setVisibility(View.GONE);
 
-                ImageView updateApp = (ImageView) findViewById(R.id.navigation_app_update_app_iv);
+                ImageView updateApp = (ImageView) view.findViewById(R.id.navigation_app_update_app_iv);
                 TextView versionNameTextView = (TextView) view.findViewById(R.id.navigation_version_textView);
                 versionNameTextView.setText("Ver - " + Nostragamus.getInstance().getAppVersionName());
                 versionNameTextView.setTextColor(ContextCompat.getColor(getContext(), R.color.scrollbar_indicator));
