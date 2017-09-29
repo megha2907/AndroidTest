@@ -13,7 +13,6 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -26,9 +25,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.jeeva.android.widgets.HmImageView;
-import com.jeeva.android.widgets.ShadowLayout;
 
-import org.parceler.Parcel;
 import org.parceler.Parcels;
 
 import java.util.ArrayList;
@@ -43,17 +40,14 @@ import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
 import in.sportscafe.nostragamus.module.common.Adapter;
-import in.sportscafe.nostragamus.module.common.EnhancedLinkMovementMethod;
 import in.sportscafe.nostragamus.module.common.NostraTextViewLinkClickMovementMethod;
-import in.sportscafe.nostragamus.module.feed.FeedWebView;
-import in.sportscafe.nostragamus.module.feed.dto.Match;
 import in.sportscafe.nostragamus.module.othersanswers.OthersAnswersActivity;
-import in.sportscafe.nostragamus.module.play.prediction.dto.Question;
+import in.sportscafe.nostragamus.module.popups.inapppopups.LbLanding;
+import in.sportscafe.nostragamus.module.resultspeek.FeedWebView;
 import in.sportscafe.nostragamus.module.resultspeek.ResultsPeekActivity;
-import in.sportscafe.nostragamus.module.user.lblanding.LbLanding;
+import in.sportscafe.nostragamus.module.resultspeek.dto.Match;
+import in.sportscafe.nostragamus.module.resultspeek.dto.Question;
 import in.sportscafe.nostragamus.module.user.points.PointsActivity;
-import in.sportscafe.nostragamus.utils.timeutils.TimeAgo;
-import in.sportscafe.nostragamus.utils.timeutils.TimeUnit;
 import in.sportscafe.nostragamus.utils.timeutils.TimeUtils;
 
 /**

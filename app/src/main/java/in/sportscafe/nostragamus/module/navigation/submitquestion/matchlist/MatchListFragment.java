@@ -19,7 +19,7 @@ import java.util.List;
 import in.sportscafe.nostragamus.Constants.BundleKeys;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.NostragamusFragment;
-import in.sportscafe.nostragamus.module.feed.dto.Match;
+import in.sportscafe.nostragamus.module.resultspeek.dto.Match;
 
 /**
  * Created by Jeeva on 15/6/16.
@@ -27,7 +27,6 @@ import in.sportscafe.nostragamus.module.feed.dto.Match;
 public class MatchListFragment extends NostragamusFragment implements MatchListView {
 
     private RecyclerView mRcvMatchList;
-
     private MatchListPresenter mMatchListPresenter;
 
     public static MatchListFragment newInstance(List<Match> matchList) {

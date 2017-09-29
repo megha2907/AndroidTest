@@ -2,8 +2,8 @@ package in.sportscafe.nostragamus.module.navigation.help.dummygame;
 
 import com.jeeva.android.InAppView;
 
-import in.sportscafe.nostragamus.module.play.prediction.dto.Question;
-import in.sportscafe.nostragamus.module.play.tindercard.SwipeFlingAdapterView;
+import in.sportscafe.nostragamus.module.navigation.help.dummygame.tindercard.SwipeFlingAdapterView;
+import in.sportscafe.nostragamus.module.resultspeek.dto.Question;
 
 /**
  * Created by Jeeva on 20/5/16.

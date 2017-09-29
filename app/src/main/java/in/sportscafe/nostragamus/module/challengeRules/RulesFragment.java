@@ -1,7 +1,5 @@
 package in.sportscafe.nostragamus.module.challengeRules;
 
-import android.graphics.Color;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
@@ -12,24 +10,14 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.jeeva.android.BaseFragment;
-import com.jeeva.android.Log;
-
-import org.parceler.Parcels;
-
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
-import in.sportscafe.nostragamus.module.allchallenges.challenge.ChallengeFragment;
-import in.sportscafe.nostragamus.module.challengeRewards.RewardsApiModelImpl;
 import in.sportscafe.nostragamus.module.challengeRules.dto.Rules;
 import in.sportscafe.nostragamus.module.common.NostraBaseFragment;
-import in.sportscafe.nostragamus.module.contest.dto.Contest;
 import in.sportscafe.nostragamus.module.contest.dto.PowerUpInfo;
-import in.sportscafe.nostragamus.module.user.myprofile.dto.Tournament;
 
 /**
  * Created by deepanshi on 9/8/17.

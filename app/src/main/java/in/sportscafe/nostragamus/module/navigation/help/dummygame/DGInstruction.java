@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName;
 
 import org.parceler.Parcel;
 
-import in.sportscafe.nostragamus.module.play.prediction.dto.Question;
+import in.sportscafe.nostragamus.module.resultspeek.dto.Question;
 
 /**
  * Created by Jeeva on 11/03/17.

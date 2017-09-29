@@ -6,7 +6,8 @@ import org.parceler.Parcel;
 
 import java.util.List;
 
-import in.sportscafe.nostragamus.module.feed.dto.Topics;
+import in.sportscafe.nostragamus.module.resultspeek.dto.Topics;
+
 
 /**
  * Created by sandip on 30/08/17.

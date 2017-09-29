@@ -4,12 +4,11 @@ import android.os.Bundle;
 
 import org.parceler.Parcels;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 import in.sportscafe.nostragamus.Constants.BundleKeys;
 import in.sportscafe.nostragamus.Constants.Powerups;
-import in.sportscafe.nostragamus.module.user.powerups.PowerUp;
+import in.sportscafe.nostragamus.module.navigation.powerupbank.earnmorepowerups.PowerUp;
 
 /**
  * Created by Jeeva on 01/03/17.

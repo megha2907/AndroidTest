@@ -7,8 +7,8 @@ import java.util.List;
 
 import in.sportscafe.nostragamus.Constants.BundleKeys;
 import in.sportscafe.nostragamus.Nostragamus;
-import in.sportscafe.nostragamus.module.feed.dto.Match;
-import in.sportscafe.nostragamus.module.feed.dto.MatchesResponse;
+import in.sportscafe.nostragamus.module.common.dto.MatchesResponse;
+import in.sportscafe.nostragamus.module.resultspeek.dto.Match;
 import in.sportscafe.nostragamus.webservice.MyWebService;
 import in.sportscafe.nostragamus.webservice.NostragamusCallBack;
 import retrofit2.Call;

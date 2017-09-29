@@ -6,7 +6,6 @@ import org.parceler.Parcel;
 
 import java.util.HashMap;
 
-import in.sportscafe.nostragamus.module.allchallenges.dto.ConfigRewardDetails;
 
 /**
  * Created by deepanshi on 7/25/17.

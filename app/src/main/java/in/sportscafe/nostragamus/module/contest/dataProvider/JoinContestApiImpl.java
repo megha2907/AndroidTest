@@ -6,8 +6,6 @@ import android.util.Log;
 
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Nostragamus;
-import in.sportscafe.nostragamus.module.allchallenges.join.dto.JoinChallengeResponse;
-import in.sportscafe.nostragamus.module.contest.dto.JoinContestData;
 import in.sportscafe.nostragamus.module.contest.dto.JoinContestQueueRequest;
 import in.sportscafe.nostragamus.module.contest.dto.JoinContestQueueResponse;
 import in.sportscafe.nostragamus.module.contest.dto.VerifyJoinContestRequest;

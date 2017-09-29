@@ -21,10 +21,9 @@ import java.util.List;
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.Adapter;
-import in.sportscafe.nostragamus.module.play.prediction.dto.Question;
+import in.sportscafe.nostragamus.module.resultspeek.dto.Question;
 import in.sportscafe.nostragamus.module.resultspeek.dto.ResultsPeek;
 import in.sportscafe.nostragamus.module.user.playerprofile.dto.PlayerInfo;
-import in.sportscafe.nostragamus.module.user.powerups.PowerUp;
 
 /**
  * Created by deepanshi on 2/15/17.

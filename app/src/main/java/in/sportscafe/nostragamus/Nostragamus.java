@@ -11,7 +11,6 @@ import android.support.multidex.MultiDex;
 
 import com.crashlytics.android.Crashlytics;
 import com.jeeva.android.ExceptionTracker;
-import com.jeeva.android.Log;
 import com.jeeva.android.facebook.FacebookHandler;
 import com.jeeva.android.facebook.user.FacebookPermission;
 import com.jeeva.android.volley.Volley;
@@ -30,7 +29,6 @@ import in.sportscafe.nostragamus.module.crash.NostragamusUncaughtExceptionHandle
 import in.sportscafe.nostragamus.module.getstart.GetStartActivity;
 import in.sportscafe.nostragamus.module.notifications.NotificationCustom;
 import in.sportscafe.nostragamus.module.notifications.NotificationInboxAdapter;
-import in.sportscafe.nostragamus.module.offline.OfflineDataHandler;
 import in.sportscafe.nostragamus.module.settings.app.AppSettingsModelImpl;
 import in.sportscafe.nostragamus.module.user.login.RefreshTokenModelImpl;
 import in.sportscafe.nostragamus.webservice.MyWebService;
@@ -142,7 +140,6 @@ public class Nostragamus extends Application {
     private void initDataHandlers() {
         Context context = getApplicationContext();
         NostragamusDataHandler.getInstance().init(context);
-        OfflineDataHandler.getInstance().init(context);
     }
 
     private void initCustomFonts() {

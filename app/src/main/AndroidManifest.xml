@@ -35,9 +35,7 @@
         android:largeHeap="true"
         android:theme="@style/AppTheme"
         tools:node="replace">
-        <activity
-            android:name=".module.test.TestActivity"
-            android:screenOrientation="portrait" />
+
         <activity
             android:name=".module.navigation.submitquestion.tourlist.TourListActivity"
             android:screenOrientation="portrait" />
@@ -111,18 +109,15 @@
                     android:scheme="https" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".module.feed.FeedWebView"
-            android:screenOrientation="portrait" />
-        <activity android:name=".module.common.NostragamusWebView">
 
+        <activity
+            android:name=".module.resultspeek.FeedWebView"
+            android:screenOrientation="portrait" />
+
+        <activity android:name=".module.common.NostragamusWebView">
             <!-- <intent-filter> -->
             <!-- <action android:name="android.intent.action.VIEW" /> -->
-
-
             <!-- <category android:name="android.intent.category.DEFAULT" /> -->
-
-
             <!-- <data android:scheme="myscheme" /> -->
             <!-- <data android:scheme="https" /> -->
             <!-- <data android:scheme="http" /> -->
@@ -138,10 +133,6 @@
             android:name=".module.popups.inapppopups.InAppPopupActivity"
             android:theme="@style/AppTheme.PopupTheme" />
         <activity
-            android:name=".module.home.HomeActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden|adjustPan" />
-        <activity
             android:name=".module.user.playerprofile.PlayerProfileActivity"
             android:screenOrientation="portrait" />
         <activity
@@ -154,7 +145,7 @@
             android:name=".module.common.TermsConditions"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".module.user.referral.ReferralActivity"
+            android:name=".module.referral.ReferralActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".module.user.login.LogInActivity"
@@ -166,9 +157,6 @@
             android:name=".module.common.WebViewActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".module.feed.FeedActivity"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".module.user.myprofile.edit.EditProfileActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
@@ -176,35 +164,9 @@
             android:name=".module.navigation.edituserprofile.EditUserProfileActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
-        <!--
-            <activity
-            android:name=".module.user.sportselection.SportSelectionActivity"
-            android:screenOrientation="portrait" />
-        -->
-        <activity
-            android:name=".module.play.prediction.PredictionActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".module.play.prediction.AllDoneActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".module.play.myresults.MyResultsActivity"
-            android:parentActivityName=".module.newChallenges.ui.NewChallengesActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden|adjustPan">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".module.newChallenges.ui.NewChallengesActivity" />
-        </activity>
         <activity
             android:name=".module.resultspeek.ResultsPeekActivity"
             android:screenOrientation="portrait" />
-        <!--
-            <activity
-            android:name=".module.play.myresults.flipPowerup.FlipActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden|adjustPan" />
-        -->
         <activity
             android:name=".module.user.points.PointsActivity"
             android:screenOrientation="portrait" />
@@ -236,10 +198,6 @@
             android:name=".module.permission.PermissionsActivity"
             android:label="@string/app_name"
             android:theme="@style/Theme.AppCompat.Translucent" />
-        <activity
-            android:name=".module.feedback.GoogleFormActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
             android:name=".module.navigation.wallet.paytmAndBank.TestPaytmActivity"
             android:screenOrientation="portrait"

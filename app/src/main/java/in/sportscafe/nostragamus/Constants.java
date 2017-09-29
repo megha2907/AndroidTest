@@ -12,7 +12,6 @@ public interface Constants {
 
     interface ImageFolders {
         String MAIN = "Nostragamus_Images";
-
         String PROFILE = "Profile_Images";
     }
 
@@ -20,13 +19,6 @@ public interface Constants {
         String RESULTS_LEADERBOARD = "results_leaderboard";
         String FROM_NOTIFICATION = "fromNotification";
         String NEW_CHALLENGE_ID = "challenge_id";
-    }
-
-    interface Screens {
-        int CHALLENGES = 1;
-        int GROUP = 2;
-        int LEADER_BOARD = 3;
-        int PROFILE = 4;
     }
 
     interface SharedKeys {
@@ -348,9 +340,6 @@ public interface Constants {
         String HEADLESS_MATCH_SCREEN_DATA = "headlessMatchScreenData";
     }
 
-    interface ParcelableKeys {
-    }
-
     interface DateFormats {
         String CHAT_YYYY_MM_DD_HH_MM = "yyyy-MM-dd HH:mm";
         String SERVER_FORMAT = "EEE, dd MMM yyyy HH:mm:ss zzzz";
@@ -389,19 +378,6 @@ public interface Constants {
         String ACTION_INTERNET_STATE_CHANGED = "in.sportscafe.nostragamus.intent.action.INTERNET_STATE_CHANGED";
     }
 
-    interface LeaderBoardPeriods {
-        String ALL_TIME = "alltime";
-        String MONTH = "monthly";
-        String WEEK = "weekly";
-    }
-
-    interface MatchStatus {
-        String UPCOMING = "upcoming";
-        String LIVE = "live";
-        String PLAY = "play";
-        String CANCELLED = "cancelled";
-    }
-
     interface LBLandingType {
         String SPORT = "sport";
         String GROUP = "group";
@@ -429,8 +405,6 @@ public interface Constants {
         String AUDIENCE_POLL = "player_poll";
         String MATCH_REPLAY = "match_replay";
         String ANSWER_FLIP = "answer_flip";
-
-        int POWER_UP_TYPE_TAG = 11;
     }
 
     interface AnalyticsCategory {
@@ -492,15 +466,6 @@ public interface Constants {
         /* Refer */
         String REFER_NOW = "Refer Now";
 
-        /* Play screen */
-        String PLAY_BANK = "PowerUp Bank";
-        String PLAY_ASK_FRIEND = "Ask a Friend";
-        String PLAY_GAME_HELP = "Game-Help";
-        String SWIPE_VIEW = "Swipe View";
-        String LIST_VIEW = "List View";
-        String CHALLENGE_INFO = "NewChallengesResponse Info";
-        String CHALLENGE_JOIN = "NewChallengesResponse Join";
-        String CHALLENGE_REWARDS = "NewChallengesResponse Rewards";
         String OTHER_PROFILE = "Other Profile";
     }
 
@@ -650,7 +615,6 @@ public interface Constants {
     }
 
     interface AppPermissions {
-
         String[] STORAGE = new String[]{
                 Manifest.permission.READ_EXTERNAL_STORAGE,
                 Manifest.permission.WRITE_EXTERNAL_STORAGE
@@ -658,7 +622,6 @@ public interface Constants {
     }
 
     interface RequestCodes {
-
         int STORAGE_PERMISSION = 134;
     }
 
@@ -766,12 +729,6 @@ public interface Constants {
         String STORE = "Store";
     }
 
-    interface ChallengeTabs {
-        String NEW = "New";
-        String IN_PLAY = "In Play";
-        String COMPLETED = "Completed";
-    }
-
     interface ContestDetailsTabs {
         String MATCHES = "Games";
         String ENTRIES = "Entries";
@@ -780,18 +737,11 @@ public interface Constants {
         String LEADERBOARDS = "Leaderboard";
     }
 
-    interface PopUpType {
-        String Losers = "lost_first_challenge";
-        String Winners = "won_first_challenge";
-    }
-
     interface ContestType {
         String GUARANTEED = "g";
         String NON_GUARANTEED = "ng";
         String POOL = "pool";
     }
-
-
 
     interface WebPageUrls {
         String GAME_PLAY = "http://nostragamus.in/gameplayapp.html";
@@ -817,8 +767,6 @@ public interface Constants {
         int FAILURE = 0;
         int SUCCESS = 1;
     }
-
-    interface PowerupLocalId { int DOUBLER = 1; int NO_NEGATIVE = 2; int AUDIENCE_POLL = 3;}
 
     interface StoreBuyProductCategory {
         int POWER_UP_DOUBLER = 1;

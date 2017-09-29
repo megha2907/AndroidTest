@@ -29,8 +29,8 @@ import java.util.ArrayList;
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Constants.Powerups;
 import in.sportscafe.nostragamus.R;
-import in.sportscafe.nostragamus.module.play.prediction.dto.Question;
-import in.sportscafe.nostragamus.module.play.tindercard.FlingCardListener;
+import in.sportscafe.nostragamus.module.navigation.help.dummygame.tindercard.FlingCardListener;
+import in.sportscafe.nostragamus.module.resultspeek.dto.Question;
 import in.sportscafe.nostragamus.utils.ViewUtils;
 
 public class DGPlayAdapter extends ArrayAdapter<Question> {
