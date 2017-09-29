@@ -166,7 +166,7 @@ public interface NostragamusService {
     Call<ApiResponse> leaveGroup(@Body MembersRequest request);
 
     @GET("v1/game/users/results")
-    Call<MyResultsResponse> getMyResults(@Query("match_id") Integer matchId, @Query("player_id") Integer playerId);
+    Call<MyResultsResponse> getMyResults(@Query("match_id") Integer matchId, @Query("player_id") Integer playerId,@Query("room_id") Integer roomId);
 
     @GET("v1/game/leaderboard/detail")
     Call<LeaderBoardResponse> getLeaderBoardDetail(@Query("group_id") Integer groupId,
@@ -285,7 +285,7 @@ public interface NostragamusService {
                                                                @Query("skip") int skip,
                                                                @Query("limit") int limit);
 
-    @POST("v2/game/users/editAnswer")
+    @POST("v3/game/users/editAnswer")
     Call<ApiResponse> changeAnswer(@Body ChangeAnswer changeAnswer);
 
     @GET("v2/game/appUpdate")

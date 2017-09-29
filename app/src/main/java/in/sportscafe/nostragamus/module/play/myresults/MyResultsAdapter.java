@@ -310,7 +310,7 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
 
         List<Question> questions = match.getQuestions();
         for (Question question : questions) {
-            holder.mLlPredictionsParent.addView(getMyPrediction(holder.mLlPredictionsParent, question, position));
+            holder.mLlPredictionsParent.addView(getMyPrediction(holder.mLlPredictionsParent, question, position,match.getRoomId()));
         }
 
         if (match.isResultPublished() && mIsMyResults) {
@@ -457,7 +457,7 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
     }
 
 
-    private View getMyPrediction(final ViewGroup parent, final Question question, final int position) {
+    private View getMyPrediction(final ViewGroup parent, final Question question, final int position, int roomId) {
 
         final View convertView = getLayoutInflater().inflate(R.layout.inflater_my_predictions_row, parent, false);
         convertView.setId(position);    // A unique id of dynamically created view
@@ -734,7 +734,7 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
 
         /* edit Answer on click of Button and change edit Answer to save answer, If saving Answer ,callapi*/
         handleEditAnswerButtonClick(parent, question, convertView, tvOption1,
-                tvOption2, tvOption3);
+                tvOption2, tvOption3,roomId);
 
         return convertView;
     }
@@ -797,17 +797,17 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
 
     /**
      * Edit Answers clicks
-     *
-     * @param parent
+     *  @param parent
      * @param question
      * @param convertView
      * @param tvOption1
      * @param tvOption2
      * @param tvOption3
+     * @param roomId
      */
     private void handleEditAnswerButtonClick(final ViewGroup parent, final Question question,
                                              final View convertView, final TextView tvOption1,
-                                             final TextView tvOption2, final TextView tvOption3) {
+                                             final TextView tvOption2, final TextView tvOption3, final int roomId) {
 
         final Button editAnswersBtn = (Button) convertView.findViewById(R.id.my_results_btn_edit_answers);
         final ImageView mIvEditAnswers = (ImageView) convertView.findViewById(R.id.my_results_iv_edit_answers_icon);
@@ -843,7 +843,7 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
 
 
                         /* call save Answer Api */
-                            mResultsActionListener.saveUpdatedAnswer(question.getQuestionId(), selectedAnswerId);
+                            mResultsActionListener.saveUpdatedAnswer(question.getQuestionId(), selectedAnswerId,roomId);
 
                         /* change save Answer btn back to edit Answer */
                             editAnswersBtn.setText("Edit Answer");
@@ -1098,7 +1098,7 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
 
         void onClickEditAnswer(int selectedQuestionId, Question question);
 
-        void saveUpdatedAnswer(int QuestionId, int AnswerId);
+        void saveUpdatedAnswer(int QuestionId, int AnswerId, int roomId);
     }
 
     public void changeToEditAnswers(int selectedQuestionId, Question question) {

@@ -132,6 +132,9 @@ public class Match {
     @SerializedName("count_answers")
     private Integer noOfQuestionsAnswered = 0;
 
+    @SerializedName("room_id")
+    private int roomId;
+
 
     /**
      *
@@ -607,6 +610,14 @@ public class Match {
     @SerializedName("count_answers")
     public void setNoOfQuestionsAnswered(Integer noOfQuestionsAnswered) {
         this.noOfQuestionsAnswered = noOfQuestionsAnswered;
+    }
+
+    public int getRoomId() {
+        return roomId;
+    }
+
+    public void setRoomId(int roomId) {
+        this.roomId = roomId;
     }
 
 

@@ -187,8 +187,8 @@ public class MyWebService extends AbstractWebService<NostragamusService> {
         return mNostragamusService.leaveGroup(request);
     }
 
-    public Call<MyResultsResponse> getMyResultsRequest(Integer MatchId, Integer playerId) {
-        return mNostragamusService.getMyResults(MatchId, playerId);
+    public Call<MyResultsResponse> getMyResultsRequest(Integer MatchId, Integer playerId, int roomId) {
+        return mNostragamusService.getMyResults(MatchId, playerId,roomId);
     }
 
     public Call<LeaderBoardResponse> getLeaderBoardDetailRequest(Integer groupId,

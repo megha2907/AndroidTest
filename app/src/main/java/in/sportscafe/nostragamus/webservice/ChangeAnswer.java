@@ -14,9 +14,13 @@ public class ChangeAnswer {
     @SerializedName("answer")
     private Integer answerId;
 
-    public ChangeAnswer(Integer questionId, Integer answerId) {
+    @SerializedName("room_id")
+    private Integer roomId;
+
+    public ChangeAnswer(Integer questionId, Integer answerId,Integer roomId) {
         this.questionId = questionId;
         this.answerId = answerId;
+        this.roomId = roomId;
     }
 
     @SerializedName("question_id")
@@ -37,5 +41,13 @@ public class ChangeAnswer {
     @SerializedName("answer")
     public void setAnswerId(Integer answerId) {
         this.answerId = answerId;
+    }
+
+    public Integer getRoomId() {
+        return roomId;
+    }
+
+    public void setRoomId(Integer roomId) {
+        this.roomId = roomId;
     }
 }
