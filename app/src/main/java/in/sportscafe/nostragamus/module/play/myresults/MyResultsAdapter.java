@@ -285,7 +285,7 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
 
                 if (null != match.getUserRank()) {
                     holder.mTvLeaderBoardRank.setText(String.valueOf(match.getUserRank()));
-                    holder.mTvLeaderBoardTotalPlayers.setText("/ " + String.valueOf(match.getCountPlayers()));
+                    holder.mTvLeaderBoardTotalPlayers.setText("/" + String.valueOf(match.getCountPlayers()));
                 } else {
                     holder.mTvLeaderBoardRank.setText("No Rank");
                 }
@@ -363,7 +363,7 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
         TextView mTvHighestMatchPoints;
         TextView mTvNumberofPowerupsUsed;
         RelativeLayout mRlLeaderBoard;
-        LinearLayout mLlMatchScores;
+        ShadowLayout mLlMatchScores;
         TextView mTvMatchPointsTxt;
 
         LinearLayout mLlMultiParty;
@@ -405,7 +405,7 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
             mRlLeaderBoard = (RelativeLayout) V.findViewById(R.id.schedule_row_rl_leaderboard);
             mRlAvgMatchPoints = (RelativeLayout) V.findViewById(R.id.schedule_row_rl_average_score);
             mRlHighestMatchPoints = (RelativeLayout) V.findViewById(R.id.schedule_row_rl_highest_score);
-            mLlMatchScores = (LinearLayout) V.findViewById(R.id.schedule_row_scores_ll);
+            mLlMatchScores = (ShadowLayout) V.findViewById(R.id.schedule_row_scores_sl);
 
             mLlMultiParty = (LinearLayout) V.findViewById(R.id.schedule_row_ll);
 

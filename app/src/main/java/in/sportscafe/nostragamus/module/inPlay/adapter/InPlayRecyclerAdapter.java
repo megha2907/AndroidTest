@@ -313,13 +313,31 @@ public class InPlayRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                         match.getStatus(), TimelineHelper.MatchTimelineTypeEnum.IN_PLAY_JOINED, isPlayed);
 
                 if (match.getStatus().equalsIgnoreCase(Constants.InPlayMatchStatus.COMPLETED)) {
+
+                    String matchPoints;
+                    if (isPlayed) {
+                         matchPoints = String.valueOf(match.getScore()) + " Points";
+                    }else {
+                        matchPoints = "   DNP    ";
+                    }
+
                     /* Footer */
-                    TimelineHelper.addFooterTextNode(viewHolder.timelineFooterParent, String.valueOf(match.getScore()),
-                            contest.getMatches().size(), match.getStatus(), TimelineHelper.MatchTimelineTypeEnum.IN_PLAY_JOINED, isPlayed);
+                    TimelineHelper.addFooterTextNode(viewHolder.timelineFooterParent, matchPoints,
+                            contest.getMatches().size(), match.getStatus(),
+                            TimelineHelper.MatchTimelineTypeEnum.IN_PLAY_JOINED, isPlayed);
+
+                    LinearLayout.LayoutParams params = (LinearLayout.LayoutParams)viewHolder.timelineFooterParent.getLayoutParams();
+                    params.setMargins(10, 0, 0, 0);
+                    viewHolder.timelineFooterParent.setLayoutParams(params);
+
                 }else {
                       /* Footer */
                     TimelineHelper.addFooterTextNode(viewHolder.timelineFooterParent, DateTimeHelper.getInPlayMatchTime(match.getStartTime()),
                             contest.getMatches().size(), match.getStatus(), TimelineHelper.MatchTimelineTypeEnum.IN_PLAY_JOINED, isPlayed);
+
+                    LinearLayout.LayoutParams params = (LinearLayout.LayoutParams)viewHolder.timelineFooterParent.getLayoutParams();
+                    params.setMargins(0, 0, 0, 0);
+                    viewHolder.timelineFooterParent.setLayoutParams(params);
                 }
             }
         }

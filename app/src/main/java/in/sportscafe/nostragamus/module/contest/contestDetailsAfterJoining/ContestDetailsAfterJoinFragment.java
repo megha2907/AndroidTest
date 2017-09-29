@@ -109,7 +109,7 @@ public class ContestDetailsAfterJoinFragment extends NostraBaseFragment implemen
                 switch (launchScreen) {
 
                     case DetailScreensLaunchRequest.MATCHES_LEADER_BOARD_SCREEN:
-                        mViewPager.setCurrentItem(1);   // Second TAB is Leader board
+                        mViewPager.setCurrentItem(1);
                         break;
 
                     case DetailScreensLaunchRequest.MATCHES_REWARDS_SCREEN:

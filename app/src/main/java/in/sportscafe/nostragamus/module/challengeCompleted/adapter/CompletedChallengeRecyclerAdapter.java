@@ -182,17 +182,30 @@ public class CompletedChallengeRecyclerAdapter extends RecyclerView.Adapter<Recy
                 }
 
                     /* Content */
+                String matchPoints;
+                if (isPlayed) {
+                    matchPoints = String.valueOf(match.getScore()) + " Points";
+                }else {
+                    matchPoints = "   DNP    ";
+                }
+
+                       /* Content */
                 TimelineHelper.addNode(viewHolder.timelineContentParent, match.getStatus(), isPlayed,
                         isNodeLineRequired, TimelineHelper.MatchTimelineTypeEnum.IN_PLAY_JOINED, contest.getMatches().size());
+
 
                     /* Title */
                 TimelineHelper.addTextNode(viewHolder.timelineHeaderParent, "Game " + (temp + 1), contest.getMatches().size(), match.getStatus(),
                         TimelineHelper.MatchTimelineTypeEnum.IN_PLAY_JOINED, isPlayed);
 
                     /* Footer */
-                TimelineHelper.addTextNode(viewHolder.timelineFooterParent,
-                        DateTimeHelper.getInPlayMatchTime(match.getStartTime()),
-                        contest.getMatches().size(), match.getStatus(), TimelineHelper.MatchTimelineTypeEnum.IN_PLAY_JOINED, isPlayed);
+                TimelineHelper.addFooterTextNode(viewHolder.timelineFooterParent, matchPoints,
+                        contest.getMatches().size(), match.getStatus(),
+                        TimelineHelper.MatchTimelineTypeEnum.IN_PLAY_JOINED, isPlayed);
+
+                LinearLayout.LayoutParams params = (LinearLayout.LayoutParams)viewHolder.timelineFooterParent.getLayoutParams();
+                params.setMargins(10, 0, 0, 0);
+                viewHolder.timelineFooterParent.setLayoutParams(params);
             }
         }
     }
