@@ -252,6 +252,7 @@ public class InPlayMatchTimelineViewPagerFragment extends NostraBaseFragment {
         }
     }
 
+
     private void launchPlayScreen(Bundle matchArgs) {
         if (getView() != null && getActivity() != null && !getActivity().isFinishing()) {
 
@@ -311,7 +312,7 @@ public class InPlayMatchTimelineViewPagerFragment extends NostraBaseFragment {
             dataDto = new ResultsScreenDataDto();
 
             dataDto.setChallengeId(contestDto.getChallengeId());
-            dataDto.setMatchId(298);
+            dataDto.setMatchId(1826);
             dataDto.setRoomId(contestDto.getRoomId());
             dataDto.setSubTitle(contestDto.getContestName());
 

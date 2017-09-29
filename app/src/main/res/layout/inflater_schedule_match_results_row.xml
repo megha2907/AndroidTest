@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="@dimen/dp_5"
+    android:layout_marginBottom="@dimen/dim_5"
     android:background="@color/black"
     android:orientation="vertical">
 
@@ -37,10 +37,22 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_marginRight="@dimen/dim_20"
-            android:text="No Rank"
+            android:layout_marginRight="@dimen/dim_2"
+            android:text="NO RANK"
             android:textAllCaps="true"
             android:textColor="@color/white"
+            android:textSize="@dimen/sp_10"
+            android:layout_toLeftOf="@+id/schedule_row_tv_leaderboard_total_players"
+            app:typeface="lato_bold" />
+
+        <com.jeeva.android.widgets.customfont.CustomTextView
+            android:id="@+id/schedule_row_tv_leaderboard_total_players"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/dim_20"
+            android:textAllCaps="true"
+            android:textColor="#a1afbe"
             android:textSize="@dimen/sp_10"
             android:layout_alignParentRight="true"
             app:typeface="lato_bold" />
@@ -88,9 +100,9 @@
             android:layout_gravity="center"
             android:gravity="center"
             android:textAllCaps="false"
-            android:textColor="@color/white_80"
-            android:textSize="@dimen/dp_12"
-            app:typeface="lato_light" />
+            android:textColor="@color/grey6"
+            android:textSize="@dimen/sp_10"
+            app:typeface="lato_bold" />
 
         <RelativeLayout
             android:id="@+id/image_layout"
@@ -102,14 +114,14 @@
             <com.jeeva.android.widgets.customfont.CustomButton
                 android:id="@+id/schedule_row_btn_vs"
                 style="?android:attr/buttonStyleSmall"
-                android:layout_width="@dimen/dim_28"
-                android:layout_height="@dimen/dim_28"
+                android:layout_width="@dimen/dim_20"
+                android:layout_height="@dimen/dim_20"
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
                 android:background="@drawable/grey_border_box"
                 android:text="VS"
                 android:textColor="@color/white_80"
-                android:textSize="@dimen/sp_10"
+                android:textSize="@dimen/sp_8"
                 app:typeface="lato_regular" />
 
             <!-- NewChallengesResponse Left Image and Name -->
@@ -222,14 +234,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginLeft="@dimen/dp_10"
-            android:layout_marginRight="@dimen/dp_10"
-            android:layout_marginTop="@dimen/dp_12"
+            android:layout_marginLeft="@dimen/dim_10"
+            android:layout_marginRight="@dimen/dim_10"
+            android:layout_marginTop="@dimen/dim_12"
             android:gravity="center"
-            android:textColor="@color/white"
-            android:textSize="@dimen/dp_12"
+            android:textColor="@color/grey6"
+            android:textSize="@dimen/sp_10"
             android:visibility="visible"
-            app:typeface="lato_light" />
+            app:typeface="lato_bold" />
 
         <com.jeeva.android.widgets.customfont.CustomTextView
             android:id="@+id/schedule_row_tv_match_result_wait"
@@ -346,7 +358,7 @@
         android:layout_below="@+id/schedule_row_ll"
         android:layout_marginLeft="@dimen/dim_10"
         android:layout_marginRight="@dimen/dim_10"
-        android:layout_marginTop="@dimen/dim_12"
+        android:layout_marginTop="@dimen/dim_8"
         android:padding="@dimen/dp_4">
 
         <LinearLayout
@@ -381,6 +393,7 @@
                             android:id="@+id/schedule_row_tv_average_score"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:paddingLeft="@dimen/dim_4"
                             android:layout_centerHorizontal="true"
                             android:gravity="center"
                             android:text="0"
@@ -407,7 +420,7 @@
                             android:layout_height="@dimen/dim_6"
                             android:layout_below="@+id/schedule_row_tv_average_score"
                             android:layout_marginLeft="@dimen/dim_4"
-                            android:layout_marginTop="@dimen/dim_6"
+                            android:layout_marginTop="@dimen/dim_7"
                             android:layout_toRightOf="@+id/schedule_row_tv_average_score_txt"
                             android:alpha="0.6"
                             android:src="@drawable/timeline_points_arrow" />
@@ -440,7 +453,7 @@
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/schedule_row_tv_my_score"
                             android:layout_centerHorizontal="true"
-                            android:layout_marginTop="@dimen/dim_3"
+                            android:layout_marginTop="@dimen/dim_2"
                             android:gravity="center"
                             android:text="YOUR SCORE"
                             android:textColor="@color/grey_bbbbcc"
@@ -464,6 +477,7 @@
                             android:layout_centerHorizontal="true"
                             android:gravity="center"
                             android:text="0"
+                            android:paddingLeft="@dimen/dim_4"
                             android:textColor="@color/grey_bbbbcc"
                             android:textSize="@dimen/sp_16"
                             app:typeface="lato_regular" />
@@ -486,7 +500,7 @@
                             android:layout_height="@dimen/dim_6"
                             android:layout_below="@+id/schedule_row_tv_highest_score"
                             android:layout_marginLeft="@dimen/dim_4"
-                            android:layout_marginTop="@dimen/dim_6"
+                            android:layout_marginTop="@dimen/dim_7"
                             android:layout_toRightOf="@+id/schedule_row_tv_highest_score_txt"
                             android:alpha="0.6"
                             android:src="@drawable/timeline_points_arrow" />
@@ -503,7 +517,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dim_40"
                 android:layout_gravity="bottom"
-                android:layout_marginTop="@dimen/dim_14"
+                android:layout_marginTop="@dimen/dim_12"
                 android:background="@drawable/blue_border_box"
                 android:paddingBottom="@dimen/dim_12"
                 android:paddingTop="@dimen/dim_12">
@@ -540,7 +554,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/schedule_row_rl_points_summary"
-        android:layout_marginBottom="@dimen/dim_12"
+        android:layout_marginBottom="@dimen/dim_2"
         android:layout_marginTop="@dimen/dim_12">
 
         <com.jeeva.android.widgets.customfont.CustomTextView
@@ -548,21 +562,21 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_marginRight="@dimen/dp_3"
+            android:layout_marginRight="@dimen/dim_3"
             android:layout_toLeftOf="@+id/schedule_row_tv_no_of_powerups_used_iv"
             android:background="@android:color/transparent"
             android:textAllCaps="false"
-            android:textColor="@color/white_60"
-            android:textSize="@dimen/dp_12"
+            android:textColor="@color/white_999999"
+            android:textSize="@dimen/sp_12"
             android:visibility="visible"
             app:typeface="lato_regular" />
 
         <ImageView
             android:id="@+id/schedule_row_tv_no_of_powerups_used_iv"
-            android:layout_width="@dimen/dp_13"
-            android:layout_height="@dimen/dp_13"
+            android:layout_width="@dimen/dim_13"
+            android:layout_height="@dimen/dim_13"
             android:layout_marginRight="@dimen/dp_3"
-            android:layout_marginTop="@dimen/dp_2"
+            android:layout_marginTop="@dimen/dim_2"
             android:layout_toLeftOf="@+id/schedule_row_tv_no_of_powerups_used_txt"
             android:src="@drawable/powerup_grey_icon_small" />
 
@@ -572,12 +586,12 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:layout_marginRight="@dimen/dp_20"
+            android:layout_marginRight="@dimen/dim_14"
             android:background="@android:color/transparent"
             android:text="Powerups Used"
             android:textAllCaps="false"
-            android:textColor="@color/white_60"
-            android:textSize="@dimen/dp_12"
+            android:textColor="@color/white_999999"
+            android:textSize="@dimen/sp_12"
             android:visibility="visible"
             app:typeface="lato_regular" />
 
@@ -586,12 +600,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="@dimen/dp_20"
-            android:layout_marginRight="@dimen/dp_20"
+            android:layout_marginLeft="@dimen/dim_14"
+            android:layout_marginRight="@dimen/dim_14"
             android:gravity="left"
             android:maxLines="2"
-            android:textColor="@color/white_60"
-            android:textSize="@dimen/dp_12"
+            android:textColor="@color/white_999999"
+            android:textSize="@dimen/sp_12"
             android:visibility="visible"
             app:typeface="lato_regular" />
 

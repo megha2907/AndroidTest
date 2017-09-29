@@ -228,7 +228,8 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
                 holder.mRlHighestMatchPoints.setTag(match);
 
                 if (null != match.getUserRank()) {
-                    holder.mTvLeaderBoardRank.setText("Rank " + String.valueOf(match.getUserRank()) + "/" + String.valueOf(match.getCountPlayers()));
+                    holder.mTvLeaderBoardRank.setText(String.valueOf(match.getUserRank()));
+                    holder.mTvLeaderBoardTotalPlayers.setText("/ " + String.valueOf(match.getCountPlayers()));
                 } else {
                     holder.mTvLeaderBoardRank.setText("No Rank");
                 }
@@ -283,7 +284,8 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
                 holder.mTvResultCorrectCount.setText(String.valueOf(mAnsweredQuestionCount) + "/" + match.getMatchQuestionCount() + " Questions Answered");
 
                 if (null != match.getUserRank()) {
-                    holder.mTvLeaderBoardRank.setText("Rank " + String.valueOf(match.getUserRank()) + "/" + String.valueOf(match.getCountPlayers()));
+                    holder.mTvLeaderBoardRank.setText(String.valueOf(match.getUserRank()));
+                    holder.mTvLeaderBoardTotalPlayers.setText("/ " + String.valueOf(match.getCountPlayers()));
                 } else {
                     holder.mTvLeaderBoardRank.setText("No Rank");
                 }
@@ -359,7 +361,6 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
         TextView mTvAvgMatchPoints;
         RelativeLayout mRlHighestMatchPoints;
         TextView mTvHighestMatchPoints;
-        TextView mTvLeaderBoardRank;
         TextView mTvNumberofPowerupsUsed;
         RelativeLayout mRlLeaderBoard;
         LinearLayout mLlMatchScores;
@@ -374,6 +375,8 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
         TextView mTvOnePartyMatchResultWait;
         TextView mTvOnePartyMatchResult;
 
+        TextView mTvLeaderBoardRank;
+        TextView mTvLeaderBoardTotalPlayers;
 
         LinearLayout mLeaderBoardLayout;
 
@@ -414,6 +417,7 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
             mTvOnePartyMatchResult = (TextView) V.findViewById(R.id.schedule_row_one_party_tv_match_result);
 
             mLeaderBoardLayout = (LinearLayout) V.findViewById(R.id.schedule_row_rl_points_summary);
+            mTvLeaderBoardTotalPlayers = (TextView) V.findViewById(R.id.schedule_row_tv_leaderboard_total_players);
 
 
             mRlLeaderBoard.setOnClickListener(this);
@@ -478,7 +482,7 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
         if (question.getAnswerPoints() != null) {
 
             if (question.getAnswerPoints().equals(0)) {
-                setTextColor(tvAnswerPoints, R.color.white_60);
+                setTextColor(tvAnswerPoints, R.color.white_999999);
             }
 
             if (question.getAnswerPoints() > 0) {
@@ -512,10 +516,10 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
             if (answerId == 0) {
 
                 /* if question not answered then answerId=0 , set All Options Color as grey */
-                setTextColor(tvOption1, R.color.white_60);
-                setTextColor(tvOption2, R.color.white_60);
+                setTextColor(tvOption1, R.color.white_999999);
+                setTextColor(tvOption2, R.color.white_999999);
                 if (!TextUtils.isEmpty(question.getQuestionOption3())) {
-                    setTextColor(tvOption3, R.color.white_60);
+                    setTextColor(tvOption3, R.color.white_999999);
                 }
 
             } else {
@@ -523,19 +527,19 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
                 /* if answer is 1st option , set Option1 Color as white and other grey */
                 if (answerId == 1) {
                     setTextColor(tvOption1, R.color.white);
-                    setTextColor(tvOption2, R.color.white_60);
-                    setTextColor(tvOption3, R.color.white_60);
+                    setTextColor(tvOption2, R.color.white_999999);
+                    setTextColor(tvOption3, R.color.white_999999);
 
                 }  /* if answer is 2nd option , set Option2 Color as white and other grey */ else {
                     setTextColor(tvOption2, R.color.white);
-                    setTextColor(tvOption1, R.color.white_60);
-                    setTextColor(tvOption3, R.color.white_60);
+                    setTextColor(tvOption1, R.color.white_999999);
+                    setTextColor(tvOption3, R.color.white_999999);
                 }
 
                  /* if answer is 3rd option , set Option3 Color as white and others grey */
                 if (!TextUtils.isEmpty(question.getQuestionOption3()) && answerId == 3) {
-                    setTextColor(tvOption1, R.color.white_60);
-                    setTextColor(tvOption2, R.color.white_60);
+                    setTextColor(tvOption1, R.color.white_999999);
+                    setTextColor(tvOption2, R.color.white_999999);
                     setTextColor(tvOption3, R.color.white);
                 }
             }
@@ -556,11 +560,11 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
             if (!TextUtils.isEmpty(question.getQuestionOption3())) {
                 tvOption3.setVisibility(View.VISIBLE);
                 tvOption3.setText(question.getQuestionOption3());
-                setTextColor(tvOption3, R.color.white_60);
+                setTextColor(tvOption3, R.color.white_999999);
             }
 
-            setTextColor(tvOption1, R.color.white_60);
-            setTextColor(tvOption2, R.color.white_60);
+            setTextColor(tvOption1, R.color.white_999999);
+            setTextColor(tvOption2, R.color.white_999999);
 
             if (question.getQuestionAnswer() == 1 || question.getQuestionAnswer() == 2) {
                 if (question.getQuestionAnswer() == 1) {
@@ -599,13 +603,13 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
                 /* If your Answer = Option 1 , Set Option 1 color as green and tick icon next to option 1 */
                 if (question.getQuestionAnswer() == 1) {
                     setTextColor(tvOption1, R.color.greencolor);
-                    setTextColor(tvOption2, R.color.white_60);
+                    setTextColor(tvOption2, R.color.white_999999);
                     tvOption1.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.correct_ans_drawable, 0);
                     tvOption2.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.result_cross_icon, 0);
 
                 }   /* If your Answer = Option 2 , Set Option 2 color as green and tick icon next to option 2 */ else {
                     setTextColor(tvOption2, R.color.greencolor);
-                    setTextColor(tvOption1, R.color.white_60);
+                    setTextColor(tvOption1, R.color.white_999999);
                     tvOption2.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.correct_ans_drawable, 0);
                     tvOption1.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.result_cross_icon, 0);
                 }
@@ -619,8 +623,8 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
              /* If your Answer = Option 3 , Set Option 3 color as green and tick icon next to option 3 */
             if (answerId == 3) {
                 setTextColor(tvOption3, R.color.greencolor);
-                setTextColor(tvOption1, R.color.white_60);
-                setTextColor(tvOption2, R.color.white_60);
+                setTextColor(tvOption1, R.color.white_999999);
+                setTextColor(tvOption2, R.color.white_999999);
                 tvOption3.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.correct_ans_drawable, 0);
                 tvOption1.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.result_cross_icon, 0);
                 tvOption2.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.result_cross_icon, 0);
@@ -637,8 +641,8 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
             tvOption2.setVisibility(View.VISIBLE);
 
             /* Set All Options Color as grey */
-            setTextColor(tvOption1, R.color.white_60);
-            setTextColor(tvOption2, R.color.white_60);
+            setTextColor(tvOption1, R.color.white_999999);
+            setTextColor(tvOption2, R.color.white_999999);
 
              /* Set All Options Compound Drawables as null */
             tvOption1.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
@@ -647,7 +651,7 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
             if (!TextUtils.isEmpty(question.getQuestionOption3())) {
                 tvOption3.setText(question.getQuestionOption3());
                 tvOption3.setVisibility(View.VISIBLE);
-                setTextColor(tvOption3, R.color.white_60);
+                setTextColor(tvOption3, R.color.white_999999);
                 tvOption3.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
             }
 
@@ -673,31 +677,31 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
 
                 if (answerId == 1) {
                     setTextColor(tvOption1, R.color.tabcolor);
-                    setTextColor(tvOption2, R.color.white_60);
+                    setTextColor(tvOption2, R.color.white_999999);
                     tvOption1.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.result_cross_icon, 0);
                     tvOption2.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.correct_ans_drawable, 0);
                 } else {
                     setTextColor(tvOption2, R.color.tabcolor);
-                    setTextColor(tvOption1, R.color.white_60);
+                    setTextColor(tvOption1, R.color.white_999999);
                     tvOption1.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.correct_ans_drawable, 0);
                     tvOption2.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.result_cross_icon, 0);
                 }
 
                 if (!TextUtils.isEmpty(question.getQuestionOption3())) {
-                    setTextColor(tvOption3, R.color.white_60);
+                    setTextColor(tvOption3, R.color.white_999999);
                     tvOption3.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.result_cross_icon, 0);
                 }
             } else if (question.getQuestionAnswer() == 3) {
 
                 if (answerId == 1) {
                     setTextColor(tvOption1, R.color.tabcolor);
-                    setTextColor(tvOption2, R.color.white_60);
+                    setTextColor(tvOption2, R.color.white_999999);
                 } else {
                     setTextColor(tvOption2, R.color.tabcolor);
-                    setTextColor(tvOption1, R.color.white_60);
+                    setTextColor(tvOption1, R.color.white_999999);
                 }
 
-                setTextColor(tvOption3, R.color.white_60);
+                setTextColor(tvOption3, R.color.white_999999);
                 tvOption1.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.result_cross_icon, 0);
                 tvOption2.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.result_cross_icon, 0);
                 tvOption3.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.correct_ans_drawable, 0);
@@ -714,8 +718,8 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
                     tvOption1.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.result_cross_icon, 0);
                     tvOption2.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.correct_ans_drawable, 0);
                 }
-                setTextColor(tvOption1, R.color.white_60);
-                setTextColor(tvOption2, R.color.white_60);
+                setTextColor(tvOption1, R.color.white_999999);
+                setTextColor(tvOption2, R.color.white_999999);
                 setTextColor(tvOption3, R.color.tabcolor);
                 tvOption3.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.result_cross_icon, 0);
             }
@@ -913,25 +917,25 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
 
         if (selectedAnswerId == 1) {
             setTextColor(tvOption1, R.color.white);
-            setTextColor(tvOption2, R.color.white_60);
+            setTextColor(tvOption2, R.color.white_999999);
 
             if (!TextUtils.isEmpty(question.getQuestionOption3())) {
-                setTextColor(tvOption3, R.color.white_60);
+                setTextColor(tvOption3, R.color.white_999999);
             }
 
         } else if (selectedAnswerId == 2) {
 
-            setTextColor(tvOption1, R.color.white_60);
+            setTextColor(tvOption1, R.color.white_999999);
             setTextColor(tvOption2, R.color.white);
 
             if (!TextUtils.isEmpty(question.getQuestionOption3())) {
-                setTextColor(tvOption3, R.color.white_60);
+                setTextColor(tvOption3, R.color.white_999999);
             }
 
         } else if (selectedAnswerId == 3) {
 
-            setTextColor(tvOption1, R.color.white_60);
-            setTextColor(tvOption2, R.color.white_60);
+            setTextColor(tvOption1, R.color.white_999999);
+            setTextColor(tvOption2, R.color.white_999999);
 
             if (!TextUtils.isEmpty(question.getQuestionOption3())) {
                 setTextColor(tvOption3, R.color.white);
