@@ -8,7 +8,7 @@ import in.sportscafe.nostragamus.Constants.BundleKeys;
 import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.module.common.ApiResponse;
-import in.sportscafe.nostragamus.module.feed.dto.Match;
+import in.sportscafe.nostragamus.module.resultspeek.dto.Match;
 import in.sportscafe.nostragamus.module.user.login.dto.UserInfo;
 import in.sportscafe.nostragamus.webservice.MyWebService;
 import in.sportscafe.nostragamus.webservice.NostragamusCallBack;
@@ -21,7 +21,6 @@ import retrofit2.Response;
 public class AddQuestionModelImpl implements AddQuestionModel {
 
     private Match mMatchDetails;
-
     private OnAddQuestionModelListener mAddQuestionModelListener;
 
     private AddQuestionModelImpl(OnAddQuestionModelListener listener) {

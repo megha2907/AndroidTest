@@ -37,8 +37,6 @@ import in.sportscafe.nostragamus.Constants.AnalyticsLabels;
 import in.sportscafe.nostragamus.Constants.UserProperties;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.R;
-import in.sportscafe.nostragamus.module.allchallenges.info.ChallengeConfigsDialogFragment;
-
 
 /**
  * Created by deepanshu on 8/8/16.

@@ -18,8 +18,8 @@ import org.parceler.Parcels;
 import in.sportscafe.nostragamus.Constants.BundleKeys;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.NostragamusFragment;
-import in.sportscafe.nostragamus.module.play.prediction.dto.Question;
-import in.sportscafe.nostragamus.module.play.tindercard.SwipeFlingAdapterView;
+import in.sportscafe.nostragamus.module.navigation.help.dummygame.tindercard.SwipeFlingAdapterView;
+import in.sportscafe.nostragamus.module.resultspeek.dto.Question;
 
 
 public class DGPlayFragment extends NostragamusFragment implements DGPlayView, View.OnClickListener {

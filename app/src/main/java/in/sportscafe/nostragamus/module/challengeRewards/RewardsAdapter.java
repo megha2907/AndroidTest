@@ -1,43 +1,21 @@
 package in.sportscafe.nostragamus.module.challengeRewards;
 
 import android.content.Context;
-import android.content.Intent;
-import android.graphics.Color;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
-import android.text.Spannable;
-import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
 import android.text.method.LinkMovementMethod;
-import android.text.style.URLSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
-
-import com.jeeva.android.widgets.HmImageView;
 
 import java.util.List;
 
-import in.sportscafe.nostragamus.AppSnippet;
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
-import in.sportscafe.nostragamus.module.allchallenges.dto.Challenge;
-import in.sportscafe.nostragamus.module.allchallenges.dto.ChallengeConfig;
-import in.sportscafe.nostragamus.module.allchallenges.dto.RewardBreakUp;
-import in.sportscafe.nostragamus.module.allchallenges.dto.WinnersRewards;
-import in.sportscafe.nostragamus.module.allchallenges.info.ChallengeRewardAdapter;
 import in.sportscafe.nostragamus.module.challengeRewards.dto.Rewards;
-import in.sportscafe.nostragamus.module.common.Adapter;
-import in.sportscafe.nostragamus.module.feed.FeedWebView;
-import in.sportscafe.nostragamus.module.newChallenges.adapter.NewChallengeAdapterItemType;
-import in.sportscafe.nostragamus.module.newChallenges.adapter.NewChallengesRecyclerAdapter;
-import in.sportscafe.nostragamus.module.newChallenges.dto.NewChallengesResponse;
-import in.sportscafe.nostragamus.utils.ViewUtils;
-import in.sportscafe.nostragamus.utils.timeutils.TimeUtils;
 
 /**
  * Created by deepanshi on 9/6/17.

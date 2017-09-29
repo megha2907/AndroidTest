@@ -4,8 +4,8 @@ import com.fasterxml.jackson.core.type.TypeReference;
 
 import java.util.List;
 
-import in.sportscafe.nostragamus.module.feed.dto.Match;
-import in.sportscafe.nostragamus.module.play.prediction.dto.Question;
+import in.sportscafe.nostragamus.module.resultspeek.dto.Match;
+import in.sportscafe.nostragamus.module.resultspeek.dto.Question;
 import in.sportscafe.nostragamus.webservice.MyWebService;
 
 /**

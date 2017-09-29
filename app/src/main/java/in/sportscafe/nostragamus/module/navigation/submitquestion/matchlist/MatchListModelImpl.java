@@ -8,7 +8,7 @@ import org.parceler.Parcels;
 import java.util.List;
 
 import in.sportscafe.nostragamus.Constants.BundleKeys;
-import in.sportscafe.nostragamus.module.feed.dto.Match;
+import in.sportscafe.nostragamus.module.resultspeek.dto.Match;
 
 /**
  * Created by deepanshi on 10/5/16.

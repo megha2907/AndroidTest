@@ -7,7 +7,6 @@ import com.jeeva.android.Log;
 import java.util.List;
 
 import in.sportscafe.nostragamus.Nostragamus;
-import in.sportscafe.nostragamus.module.allchallenges.dto.ChallengeConfigsResponse;
 import in.sportscafe.nostragamus.webservice.MyWebService;
 import in.sportscafe.nostragamus.webservice.NostragamusCallBack;
 import in.sportscafe.nostragamus.webservice.UserReferralHistoryResponse;

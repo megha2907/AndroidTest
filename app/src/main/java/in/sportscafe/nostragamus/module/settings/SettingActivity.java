@@ -21,7 +21,7 @@ import in.sportscafe.nostragamus.module.common.WebViewActivity;
 import in.sportscafe.nostragamus.module.navigation.wallet.paytmAndBank.WalletOrBankConnectActivity;
 import in.sportscafe.nostragamus.module.navigation.help.dummygame.DummyGameActivity;
 import in.sportscafe.nostragamus.module.user.myprofile.edit.EditProfileActivity;
-import in.sportscafe.nostragamus.module.user.referral.ReferralActivity;
+import in.sportscafe.nostragamus.module.referral.ReferralActivity;
 
 /**
  * Created by deepanshi on 2/10/17.

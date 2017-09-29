@@ -2,7 +2,7 @@ package in.sportscafe.nostragamus.module.play.myresults;
 
 import com.jeeva.android.InAppView;
 
-import in.sportscafe.nostragamus.module.feed.dto.Match;
+import in.sportscafe.nostragamus.module.resultspeek.dto.Match;
 
 /**
  * Created by Jeeva on 15/6/16.

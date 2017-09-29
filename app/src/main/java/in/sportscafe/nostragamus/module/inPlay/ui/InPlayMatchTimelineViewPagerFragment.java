@@ -211,7 +211,6 @@ public class InPlayMatchTimelineViewPagerFragment extends NostraBaseFragment {
                     case MatchesAdapterAction.ANSWER:
                         launchResultsScreen(args);
                     case MatchesAdapterAction.DID_NOT_PLAY:
-                        launchResultsScreen(args);
                     case MatchesAdapterAction.POINTS:
                         launchResultsScreen(args);
                         break;
