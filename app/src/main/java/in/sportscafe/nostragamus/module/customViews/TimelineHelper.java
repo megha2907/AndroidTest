@@ -251,6 +251,19 @@ public class TimelineHelper {
                             titleView.setTypeface(faceRegular);
                         }
                         break;
+
+                    case IN_PLAY_MATCHES_SCREEN:
+                        if (status.equalsIgnoreCase(Constants.InPlayMatchStatus.ONGOING)) {
+                            titleView.setTextColor(ContextCompat.getColor(context, R.color.grey6));
+                            titleView.setTypeface(faceBold);
+                        } else if (status.equalsIgnoreCase(Constants.InPlayMatchStatus.UPCOMING)) {
+                            titleView.setTextColor(ContextCompat.getColor(context, R.color.white_999999));
+                            titleView.setTypeface(faceRegular);
+                        } else {
+                            titleView.setTextColor(ContextCompat.getColor(context, R.color.white_999999));
+                            titleView.setTypeface(faceRegular);
+                        }
+                        break;
                 }
 
                 parent.addView(titleView, parent.getChildCount(), new ViewGroup.LayoutParams(width, ViewGroup.LayoutParams.WRAP_CONTENT));
@@ -310,6 +323,19 @@ public class TimelineHelper {
                         }
                         break;
                     case IN_PLAY_JOINED:
+                        if (status.equalsIgnoreCase(Constants.InPlayMatchStatus.ONGOING)) {
+                            titleView.setTextColor(ContextCompat.getColor(context, R.color.grey6));
+                            titleView.setTypeface(faceBold);
+                        } else if (status.equalsIgnoreCase(Constants.InPlayMatchStatus.UPCOMING)) {
+                            titleView.setTextColor(ContextCompat.getColor(context, R.color.white_999999));
+                            titleView.setTypeface(faceRegular);
+                        } else {
+                            titleView.setTextColor(ContextCompat.getColor(context, R.color.white_999999));
+                            titleView.setTypeface(faceRegular);
+                        }
+                        break;
+
+                    case IN_PLAY_MATCHES_SCREEN:
                         if (status.equalsIgnoreCase(Constants.InPlayMatchStatus.ONGOING)) {
                             titleView.setTextColor(ContextCompat.getColor(context, R.color.grey6));
                             titleView.setTypeface(faceBold);

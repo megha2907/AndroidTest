@@ -123,9 +123,9 @@ public interface NostragamusService {
     @GET("v1/game/users/questions")
     Call<QuestionsResponse> getQuestions(@Query("match_id") int matchId);
 
-    @GET("v1/game/users/questions")
-    Call<PredictionAllQuestionResponse> getAllPredictionQuestions(@Query("match_id") int matchId/*,
-                                                                  @Query("room_id") int roomId*/);
+    @GET("v3/game/users/questions")
+    Call<PredictionAllQuestionResponse> getAllPredictionQuestions(@Query("match_id") int matchId,
+                                                                  @Query("room_id") int roomId);
 
     @GET("v1/game/users/tournaments")
     Call<TournamentsResponse> getTournaments(@Query("is_current") boolean isCurrent, @Query("group_by_sport") boolean groupbySport);
@@ -165,12 +165,15 @@ public interface NostragamusService {
     @HTTP(method = "DELETE", path = "v2/game/users/groups", hasBody = true)
     Call<ApiResponse> leaveGroup(@Body MembersRequest request);
 
-    @GET("v1/game/users/results")
-    Call<MyResultsResponse> getMyResults(@Query("match_id") Integer matchId, @Query("player_id") Integer playerId,@Query("room_id") Integer roomId);
+    @GET("v3/game/users/results")
+    Call<MyResultsResponse> getMyResults(@Query("match_id") Integer matchId,
+                                         @Query("player_id") Integer playerId,
+                                         @Query("room_id") Integer roomId);
 
     @GET("v1/game/leaderboard/detail")
     Call<LeaderBoardResponse> getLeaderBoardDetail(@Query("group_id") Integer groupId,
-                                                   @Query("challenge_id") Integer challengeId, @Query("match_id") Integer matchId);
+                                                   @Query("challenge_id") Integer challengeId,
+                                                   @Query("match_id") Integer matchId);
 
     @PUT("v2/game/groups/tournaments")
     Call<ApiResponse> updateGroupTournament(@Body GroupTournamentUpdateRequest request);
@@ -198,7 +201,9 @@ public interface NostragamusService {
                                                  @Query("match_id") Integer matchId);
 
     @GET("/v2/game/applyResultsPowerups")
-    Call<ReplayPowerupResponse> getFlipPowerup(@Query("powerup_id") String powerupId, @Query("match_id") Integer matchId, @Query("question_id") Integer questionId);
+    Call<ReplayPowerupResponse> getFlipPowerup(@Query("powerup_id") String powerupId,
+                                               @Query("match_id") Integer matchId,
+                                               @Query("question_id") Integer questionId);
 
     @GET("/v1/game/users/getPlayerProfile")
     Call<PlayerInfoResponse> getPlayerInfo(@Query("player_user_id") Integer playerId);
@@ -214,10 +219,12 @@ public interface NostragamusService {
     @GET("v1/game/users/getFuzzyPlayer")
     Call<FuzzyPlayerResponse> fuzzyPlayers(@Query("player_user_name") String key, @Query("match_id") Integer matchId);
 
-    @GET("v1/game/getPlayerResult")
-    Call<MyResultsResponse> getPlayerResult(@Query("player_id") Integer playerId, @Query("match_id") Integer matchId);
+    @GET("v3/game/getPlayerMatchResult")
+    Call<MyResultsResponse> getPlayerResult(@Query("player_id") Integer playerId,
+                                            @Query("match_id") Integer matchId,
+                                            @Query("room_id") Integer roomId);
 
-    @GET("v1/game/getMatchAnswersStats")
+    @GET("v3/game/getMatchAnswersStats")
     Call<MatchAnswerStatsResponse> playerResultPercentage(@Query("match_id") Integer matchId);
 
     @GET("v2/game/users/leaderboard/summary")

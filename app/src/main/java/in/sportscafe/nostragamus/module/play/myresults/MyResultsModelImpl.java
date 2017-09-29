@@ -37,11 +37,7 @@ import retrofit2.Response;
  */
 public class MyResultsModelImpl implements MyResultsModel, MyResultsAdapter.OnMyResultsActionListener, UserInfoModelImpl.OnGetUserInfoModelListener {
 
-    private static final int PAGINATION_START_AT = 5;
-
     private MyResultsAdapter.OnMyResultsActionListener mResultsActionListener;
-
-    private static final int LIMIT = 5;
 
     private int matchId = 0;
 
@@ -50,6 +46,8 @@ public class MyResultsModelImpl implements MyResultsModel, MyResultsAdapter.OnMy
     private MyResultsAdapter mResultAdapter;
 
     private Match match;
+
+    private String contestName = "";
 
     private Integer mPlayerUserId;
 
@@ -66,61 +64,32 @@ public class MyResultsModelImpl implements MyResultsModel, MyResultsAdapter.OnMy
     @Override
     public void init(Bundle bundle) {
 
-        if (bundle!=null) {
+        if (bundle != null) {
 
+            /* Get MatchId, Room Id and Player Id */
             if (bundle.containsKey(BundleKeys.RESULTS_SCREEN_DATA)) {
+
                 ResultsScreenDataDto resultsScreenData = Parcels.unwrap(bundle.getParcelable(BundleKeys.RESULTS_SCREEN_DATA));
                 matchId = resultsScreenData.getMatchId();
                 roomId = resultsScreenData.getRoomId();
-            }
+                contestName = resultsScreenData.getSubTitle();
+                String matchStatus = resultsScreenData.getMatchStatus();
 
-            /*
-            if (bundle.containsKey(BundleKeys.MATCH_LIST)) {
-                match = Parcels.unwrap(bundle.getParcelable(BundleKeys.MATCH_LIST));
-               // Match=Nostragamus.getInstance().getServerDataManager().getMatchInfo();
-                matchId = match.getId();
-                if (null == match.getResult() || match.getResult().isEmpty()) {
+                /* Check for Awaiting Results to Change Toolbar Heading */
+                if (matchStatus.equalsIgnoreCase(Constants.MatchStatusStrings.ANSWER)) {
                     mResultsModelListener.setToolbarHeading("Awaiting Results");
-
-                    Boolean playedFirstMatch = bundle.getBoolean(BundleKeys.PLAYED_FIRST_MATCH);
-
-                    if (playedFirstMatch){
-                        mResultsModelListener.showResultsToBeDeclared(true, match);
-                    }else {
-                        mResultsModelListener.showResultsToBeDeclared(false, match);
-                    }
-                }
-               if (bundle.containsKey(Constants.ScreenNames.PLAY)){
-
-
-                    Boolean playedFirstMatch = bundle.getBoolean(BundleKeys.PLAYED_FIRST_MATCH);
-                    if (playedFirstMatch){
-                       mResultsModelListener.showResultsToBeDeclared(true, Match);
-                    }else {
-                        mResultsModelListener.showResultsToBeDeclared(false, Match);
-                    }
                 }
 
-            } else if (bundle.containsKey(BundleKeys.MATCH_ID)) {
-                String match_id = bundle.getString(BundleKeys.MATCH_ID);
-                matchId = Integer.parseInt(match_id);
-            } else {
-                mResultsModelListener.onFailedMyResults(Constants.Alerts.RESULTS_INFO_ERROR);
+                /* Send Player Id to Api to check Other Person Results */
+                if (bundle.containsKey(BundleKeys.PLAYER_ID)) {
+                    mPlayerUserId = bundle.getInt(BundleKeys.PLAYER_ID);
+                }
             }
-
-            if (bundle.containsKey(BundleKeys.PLAYER_ID)) {
-                mPlayerUserId = bundle.getInt(BundleKeys.PLAYER_ID);
-            }
-
-           */
-
 
         } else {
             mResultsModelListener.onFailedMyResults(Constants.Alerts.RESULTS_INFO_ERROR);
         }
 
-        //no replay and flip powerup for now
-        //UserInfoModelImpl.newInstance(this).getUserInfo();
     }
 
     @Override
@@ -139,25 +108,20 @@ public class MyResultsModelImpl implements MyResultsModel, MyResultsAdapter.OnMy
     }
 
     private void callMyResultsApi() {
-        MyWebService.getInstance().getMyResultsRequest(matchId, mPlayerUserId,roomId).enqueue(
+        MyWebService.getInstance().getMyResultsRequest(matchId, mPlayerUserId, roomId).enqueue(
                 new NostragamusCallBack<MyResultsResponse>() {
                     @Override
                     public void onResponse(Call<MyResultsResponse> call, Response<MyResultsResponse> response) {
                         super.onResponse(call, response);
-                        if (response.isSuccessful()) {
-                            Context context = mResultsModelListener.getContext();
+                        Context context = mResultsModelListener.getContext();
+                        if (response.isSuccessful() && response.body() != null && response.body() != null) {
                             if (null != context) {
-
-                                Match myResults = response.body().getMyResults();
-
-                                if (myResults == null) {
-                                    mResultsModelListener.onFailedMyResults(response.message());
-                                } else {
+                                match = response.body().getMyResults();
+                                if (match != null) {
                                     destroyAdapter();
-                                    match = myResults;
-                                    mResultsModelListener.onSuccessMyResults(createAdapter(context));
-                                    mResultsModelListener.onsetMatchDetails(myResults);
-                                    loadAdapterData(myResults);
+                                    onResultsDataSuccess(match);
+                                } else {
+                                    mResultsModelListener.onFailedMyResults(response.message());
                                 }
                             }
                         } else {
@@ -166,6 +130,25 @@ public class MyResultsModelImpl implements MyResultsModel, MyResultsAdapter.OnMy
                     }
                 }
         );
+    }
+
+    private void onResultsDataSuccess(Match match) {
+        if (match != null) {
+            mResultsModelListener.onSuccessMyResults(createAdapter(mResultsModelListener.getContext()));
+            mResultsModelListener.onsetMatchDetails(match);
+            loadAdapterData(match);
+            //checkIfFirstMatchPlayed();
+        }
+    }
+
+    private void checkIfFirstMatchPlayed() {
+        /* Check if it's the First Match Played */
+        if (NostragamusDataHandler.getInstance().getMatchPlayedCount() == 0
+                && !NostragamusDataHandler.getInstance().isPlayedFirstMatch()) {
+            mResultsModelListener.showResultsToBeDeclared(true);
+        } else {
+            mResultsModelListener.showResultsToBeDeclared(false);
+        }
     }
 
     private MyResultsAdapter createAdapter(Context context) {
@@ -212,7 +195,7 @@ public class MyResultsModelImpl implements MyResultsModel, MyResultsAdapter.OnMy
 
     @Override
     public String getMatchName() {
-        return match.getChallengeName();
+        return match.getChallengeName() + "-" + contestName;
     }
 
     @Override
@@ -250,6 +233,11 @@ public class MyResultsModelImpl implements MyResultsModel, MyResultsAdapter.OnMy
                 });
     }
 
+    @Override
+    public String getMatchEndTime() {
+        return match.getEndTime();
+    }
+
 
     private void callReplayPowerupAppliedApi(final String powerupId, Integer matchId) {
         MyWebService.getInstance().getReplayPowerup(powerupId, matchId).enqueue(new NostragamusCallBack<ReplayPowerupResponse>() {
@@ -275,7 +263,7 @@ public class MyResultsModelImpl implements MyResultsModel, MyResultsAdapter.OnMy
 
     private void callChangeAnswerApi(Integer questionId, Integer answerId, int roomId) {
 
-        ChangeAnswer changeAnswer = new ChangeAnswer(questionId, answerId,roomId);
+        ChangeAnswer changeAnswer = new ChangeAnswer(questionId, answerId, roomId);
         mResultsModelListener.StartProgressbar();
         MyWebService.getInstance().getChangeAnswerRequest(changeAnswer).enqueue(new NostragamusCallBack<ApiResponse>() {
             @Override
@@ -308,7 +296,7 @@ public class MyResultsModelImpl implements MyResultsModel, MyResultsAdapter.OnMy
 
     @Override
     public void saveUpdatedAnswer(int QuestionId, int AnswerId, int roomId) {
-        callChangeAnswerApi(QuestionId, AnswerId,roomId);
+        callChangeAnswerApi(QuestionId, AnswerId, roomId);
     }
 
 
@@ -349,7 +337,7 @@ public class MyResultsModelImpl implements MyResultsModel, MyResultsAdapter.OnMy
 
         void setToolbarHeading(String result);
 
-        void showResultsToBeDeclared(boolean playedFirstMatchm, Match match);
+        void showResultsToBeDeclared(boolean playedFirstMatch);
 
         void onSuccessChangeAnswerResponse(Match match);
 

@@ -15,7 +15,6 @@ public class MyResultsResponse {
     @SerializedName("data")
     private Match myResults;
 
-
     @SerializedName("data")
     public Match getMyResults() {
         return myResults;
@@ -25,6 +24,5 @@ public class MyResultsResponse {
     public void setMyResults(Match myResults) {
         this.myResults = myResults;
     }
-
 
 }

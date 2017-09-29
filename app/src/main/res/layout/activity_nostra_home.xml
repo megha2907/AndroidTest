@@ -13,13 +13,9 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/dim_50"
         android:orientation="vertical"
-        android:background="@color/black"
+        android:paddingBottom="@dimen/dim_5"
+        android:background="@drawable/points_gradient_bg"
         android:layout_alignParentBottom="true">
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dim_0.5"
-            android:background="@color/grey"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -75,7 +71,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/dp_3"
-                    android:text="Join"
+                    android:text="In Play"
                     android:textColor="@drawable/menu_tv_selector"
                     android:textSize="@dimen/sp_11"
                     app:typeface="roboto_condensed" />
@@ -103,7 +99,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/dp_3"
-                    android:text="Group"
+                    android:text="History"
                     android:textColor="@drawable/menu_tv_selector"
                     android:textSize="@dimen/sp_11"
                     app:typeface="roboto_condensed" />

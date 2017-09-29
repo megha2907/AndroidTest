@@ -5,6 +5,8 @@ import android.os.Bundle;
 
 import java.io.File;
 
+import in.sportscafe.nostragamus.module.feed.dto.Match;
+
 /**
  * Created by Jeeva on 15/6/16.
  */
@@ -26,4 +28,5 @@ public interface MyResultsModel {
 
     void getShareText();
 
+    String getMatchEndTime();
 }

@@ -444,6 +444,7 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
                     Bundle bundle = new Bundle();
                     bundle.putInt(BundleKeys.PLAYER_ID, match.getHighestScorerId());
                     bundle.putInt(BundleKeys.MATCH_ID, match.getId());
+                    bundle.putInt(BundleKeys.ROOM_ID, match.getRoomId());
                     bundle.putString(BundleKeys.PLAYER_NAME, match.getHighestScorerName());
                     bundle.putString(BundleKeys.PLAYER_PHOTO, match.getHighestScorerPhoto());
                     navigateToResultsPeek(v.getContext(), bundle);

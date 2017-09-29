@@ -111,7 +111,7 @@ public class Match {
     @SerializedName("count_match_powerups")
     private Integer countMatchPowerupsUsed;
 
-    @SerializedName("count_challenge_players")
+    @SerializedName("count_room_players")
     private Integer countPlayers;
 
     @SerializedName("count_match_players")
@@ -500,12 +500,12 @@ public class Match {
         this.countPowerUps = countPowerUps;
     }
 
-    @SerializedName("count_challenge_players")
+    @SerializedName("count_room_players")
     public Integer getCountPlayers() {
         return countPlayers;
     }
 
-    @SerializedName("count_challenge_players")
+    @SerializedName("count_room_players")
     public void setCountPlayers(Integer countPlayers) {
         this.countPlayers = countPlayers;
     }
