@@ -17,6 +17,8 @@ import com.jeeva.android.BaseFragment;
 import com.jeeva.android.Log;
 import com.jeeva.android.widgets.HmImageView;
 
+import java.util.Set;
+
 import in.sportscafe.nostragamus.BuildConfig;
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Nostragamus;
@@ -255,7 +257,7 @@ public class NavigationFragment extends BaseFragment implements View.OnClickList
 
     private void onSettingsClicked() {
         if (getActivity() != null) {
-            Intent intent = new Intent(getActivity(), ContestDetailsPopupActivity.class);
+            Intent intent = new Intent(getActivity(), SettingsActivity.class);
             startActivity(intent);
         }
     }

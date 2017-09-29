@@ -10,7 +10,7 @@
 
     <!-- Heading layout -->
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/dim_40"
         android:background="@drawable/toolbar_bg">
@@ -81,7 +81,7 @@
 
         </RelativeLayout>
 
-    </RelativeLayout>
+    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/newChallengeContentLayout"
@@ -118,6 +118,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
+        android:visibility="gone"
         android:orientation="vertical">
 
         <in.sportscafe.nostragamus.module.common.NostraProgressBar
