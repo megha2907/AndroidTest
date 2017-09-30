@@ -309,6 +309,7 @@ public interface Constants {
         String SCREEN_LAUNCHED_FROM_PARENT = "screenLaunchedFromParent";
         String JOIN_CONTEST_DATA = "joinContestData";
         String SCREEN_LAUNCH_REQUEST = "screenLaunchRequest";
+        String CONTEST_ENTRIES_SCREEN_DATA = "contestEntriesScreenData";
 
         /* Wallet */
         String WALLET_WITHDRAWAL_AMT = "walletWithdrawAmt";

@@ -34,9 +34,9 @@ public class JoinContestApiImpl {
         if (Nostragamus.getInstance().hasNetworkConnection()) {
 
             final JoinContestQueueRequest request = new JoinContestQueueRequest();
-            request.setChallengeId(482);
+            request.setChallengeId(challengeId);
             request.setChallengeName(challengeName);
-            request.setContestId(8713);
+            request.setContestId(contestId);
 
             MyWebService.getInstance().joinContestQueue(request).enqueue(new ApiCallBack<JoinContestQueueResponse>() {
                 @Override

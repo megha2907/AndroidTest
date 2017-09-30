@@ -4,7 +4,6 @@ import com.google.gson.annotations.SerializedName;
 
 import org.parceler.Parcel;
 
-import java.util.ArrayList;
 import java.util.List;
 import in.sportscafe.nostragamus.module.newChallenges.adapter.NewChallengeAdapterItemType;
 
@@ -18,7 +17,7 @@ public class NewChallengesResponse {
     private int challengeAdapterItemType = NewChallengeAdapterItemType.CHALLENGE;
 
     @SerializedName("challenge_id")
-    private int id;
+    private int challengeId;
 
     @SerializedName("challenge_name")
     private String challengeName;
@@ -52,12 +51,12 @@ public class NewChallengesResponse {
         this.challengeAdapterItemType = challengeAdapterItemType;
     }
 
-    public int getId() {
-        return id;
+    public int getChallengeId() {
+        return challengeId;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setChallengeId(int challengeId) {
+        this.challengeId = challengeId;
     }
 
     public String getChallengeName() {
