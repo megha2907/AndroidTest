@@ -106,7 +106,7 @@ public class NewChallengesMatchesFragment extends BaseFragment implements View.O
     private void joinPseudoContest(final InPlayMatch match) {
         if (mNewChallengeResponse != null) {
             JoinPseudoContestApiModelImpl joinPseudoContestApiModel = new JoinPseudoContestApiModelImpl();
-            joinPseudoContestApiModel.joinPseudoContest(mNewChallengeResponse.getId(),
+            joinPseudoContestApiModel.joinPseudoContest(mNewChallengeResponse.getChallengeId(),
                     new JoinPseudoContestApiModelImpl.JoinPseudoContestApiListener() {
                 @Override
                 public void onData(int status, @Nullable JoinPseudoContestResponse responses) {
@@ -170,7 +170,7 @@ public class NewChallengesMatchesFragment extends BaseFragment implements View.O
     private void loadDataFromServer() {
         if (mNewChallengeResponse != null) {
             NewChallengesMatchesDataProvider dataProvider = new NewChallengesMatchesDataProvider();
-            dataProvider.getNewChallengesMatches(mNewChallengeResponse.getId(), new NewChallengesMatchesDataProvider.NewChallengesApiListener() {
+            dataProvider.getNewChallengesMatches(mNewChallengeResponse.getChallengeId(), new NewChallengesMatchesDataProvider.NewChallengesApiListener() {
                 @Override
                 public void onData(int status, @Nullable NewChallengeMatchesResponse responses) {
                     onSuccessMatchResponse(responses);
@@ -212,7 +212,7 @@ public class NewChallengesMatchesFragment extends BaseFragment implements View.O
     private void onJoinContestClicked() {
         if (mNewChallengeResponse != null && mNewChallengeMatchFragmentListener != null) {
             ContestScreenData screenData = new ContestScreenData();
-            screenData.setChallengeId(mNewChallengeResponse.getId());
+            screenData.setChallengeId(mNewChallengeResponse.getChallengeId());
             screenData.setChallengeName(mNewChallengeResponse.getChallengeName());
 
             Bundle args = new Bundle();
