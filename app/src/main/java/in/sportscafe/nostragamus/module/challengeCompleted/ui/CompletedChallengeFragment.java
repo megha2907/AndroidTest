@@ -14,7 +14,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import in.sportscafe.nostragamus.Constants;
-import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.challengeCompleted.dataProvider.CompletedChallengeDataProvider;
 import in.sportscafe.nostragamus.module.challengeCompleted.dto.CompletedResponse;
@@ -22,11 +21,7 @@ import in.sportscafe.nostragamus.module.challengeCompleted.helper.CompleteChalle
 import in.sportscafe.nostragamus.module.challengeCompleted.ui.viewPager.CompleteChallengeViewPagerAdapter;
 import in.sportscafe.nostragamus.module.challengeCompleted.ui.viewPager.CompleteChallengeViewPagerFragment;
 import in.sportscafe.nostragamus.module.common.NostraBaseFragment;
-import in.sportscafe.nostragamus.module.inPlay.dataProvider.InPlayDataProvider;
-import in.sportscafe.nostragamus.module.inPlay.dto.InPlayResponse;
 import in.sportscafe.nostragamus.module.inPlay.helper.InPlayFilterHelper;
-import in.sportscafe.nostragamus.module.inPlay.ui.viewPager.InPlayViewPagerAdapter;
-import in.sportscafe.nostragamus.module.inPlay.ui.viewPager.InPlayViewPagerFragment;
 import in.sportscafe.nostragamus.module.newChallenges.dataProvider.SportsDataProvider;
 import in.sportscafe.nostragamus.module.newChallenges.dto.SportsTab;
 
@@ -61,10 +56,10 @@ public class CompletedChallengeFragment extends NostraBaseFragment {
     }
 
     public void onInternetConnected() {
-            loadData();
-            if (mSnackBar != null && mSnackBar.isShown()) {
-                mSnackBar.dismiss();
-            }
+        loadData();
+        if (mSnackBar != null && mSnackBar.isShown()) {
+            mSnackBar.dismiss();
+        }
     }
 
     @Override
@@ -80,38 +75,43 @@ public class CompletedChallengeFragment extends NostraBaseFragment {
         dataProvider.getCompletedChallenges(getContext().getApplicationContext(),
                 0, 10, // TODO : pagination
                 new CompletedChallengeDataProvider.CompletedChallengeDataProviderListener() {
-            @Override
-            public void onData(int status, @Nullable List<CompletedResponse> completedResponseList) {
-                hideLoadingProgressBar();
-                onDataReceived(status, completedResponseList);
-            }
+                    @Override
+                    public void onData(int status, @Nullable List<CompletedResponse> completedResponseList) {
+                        hideLoadingProgressBar();
+                        onDataReceived(status, completedResponseList);
+                    }
 
-            @Override
-            public void onError(int status) {
-                hideLoadingProgressBar();
-                handleError(status);
-            }
-        });
+                    @Override
+                    public void onError(int status) {
+                        hideLoadingProgressBar();
+                        handleError(status);
+                    }
+                });
     }
 
     private void handleError(int status) {
         if (getView() != null && getActivity() != null && !getActivity().isFinishing()) {
             switch (status) {
                 case Constants.DataStatus.FROM_DATABASE_AS_NO_INTERNET:
-                    mSnackBar = Snackbar.make(getView(), Constants.Alerts.NO_NETWORK_CONNECTION, Snackbar.LENGTH_INDEFINITE);
-                    mSnackBar.show();
+                    mSnackBar = Snackbar.make(getView(), Constants.Alerts.NO_INTERNET_CONNECTION, Snackbar.LENGTH_INDEFINITE);
                     break;
 
                 case Constants.DataStatus.FROM_DATABASE_AS_SERVER_FAILED:
-                    mSnackBar = Snackbar.make(getView(), "Server Error!", Snackbar.LENGTH_LONG);
-                    mSnackBar.show();
+                    mSnackBar = Snackbar.make(getView(), Constants.Alerts.COULD_NOT_FETCH_DATA_FROM_SERVER, Snackbar.LENGTH_LONG);
                     break;
 
                 default:
-                    Snackbar.make(getView(), Constants.Alerts.SOMETHING_WRONG, Snackbar.LENGTH_LONG);
-                    mSnackBar.show();
+                    mSnackBar = Snackbar.make(getView(), Constants.Alerts.SOMETHING_WRONG, Snackbar.LENGTH_LONG);
                     break;
             }
+
+            mSnackBar.setAction("Retry", new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onInternetConnected();
+                }
+            });
+            mSnackBar.show();
         }
     }
 

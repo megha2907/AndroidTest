@@ -169,6 +169,7 @@ public class InPlayHeadLessMatchesFragment extends BaseFragment implements View.
                     data.setChallengeId(match.getChallengeId());
                     data.setRoomId(mHeadLessMatchScreenData.getRoomId());
                     data.setChallengeName(mHeadLessMatchScreenData.getChallengeName());
+                    data.setMatchStatus(match.getMatchStatus());
 
                     if (match.getMatchParties() != null && match.getMatchParties().size() == 2) {
                         data.setMatchPartyTitle1(match.getMatchParties().get(0).getPartyName());
