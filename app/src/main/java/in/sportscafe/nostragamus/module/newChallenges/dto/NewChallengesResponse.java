@@ -17,7 +17,7 @@ public class NewChallengesResponse {
 
     private int challengeAdapterItemType = NewChallengeAdapterItemType.CHALLENGE;
 
-    @SerializedName("id")
+    @SerializedName("challenge_id")
     private int id;
 
     @SerializedName("challenge_name")

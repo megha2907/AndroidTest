@@ -340,6 +340,9 @@
         <activity
             android:name=".module.inPlay.ui.headless.matches.InPlayHeadLessMatchActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".module.play.myresults.MyResultsActivity"
+            android:screenOrientation="portrait" />
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"

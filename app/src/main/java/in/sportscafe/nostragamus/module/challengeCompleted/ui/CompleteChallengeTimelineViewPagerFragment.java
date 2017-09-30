@@ -87,7 +87,7 @@ public class CompleteChallengeTimelineViewPagerFragment extends NostraBaseFragme
             showLoadingContent();
            CompletedChallengeMatchesDataProvider dataProvider = new CompletedChallengeMatchesDataProvider();
             dataProvider.getCompletedChallengeMatches(mInPlayContest.getRoomId(),
-                    /*mInPlayContest.getChallengeId()*/ 482 /* TODO: remove hardcoded value */,
+                    mInPlayContest.getChallengeId(),
                     new CompletedChallengeMatchesDataProvider.CompletedChallengeMatchesDataProviderListener() {
                         @Override
                         public void onData(int status, @Nullable CompletedMatchesResponse responses) {

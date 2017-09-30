@@ -185,11 +185,11 @@ public class NewChallengesFragment extends NostraBaseFragment implements View.On
                             break;
 
                         case NewChallengesFilterHelper.FILTER_DAILY_SPORTS_ID:
-                            challengesFiltered = getDailySports(newChallengesResponseData);
+                            challengesFiltered = filterHelper.getDailySports(newChallengesResponseData);
                             break;
 
                         case NewChallengesFilterHelper.FILTER_MIXED_SPORTS_ID:
-                            challengesFiltered = getMixSports(newChallengesResponseData);
+                            challengesFiltered = filterHelper.getMixSports(newChallengesResponseData);
                             break;
 
                         default:
@@ -226,31 +226,7 @@ public class NewChallengesFragment extends NostraBaseFragment implements View.On
         }
     }
 
-    private List<NewChallengesResponse> getDailySports(List<NewChallengesResponse> newChallengesResponseData) {
-        List<NewChallengesResponse> dailyChallenge = new ArrayList<>();
 
-        if (newChallengesResponseData != null && newChallengesResponseData.size() > 0) {
-            for (NewChallengesResponse newChallenge : newChallengesResponseData) {
-
-                // TODO
-            }
-        }
-
-        return dailyChallenge;
-    }
-
-    private List<NewChallengesResponse> getMixSports(List<NewChallengesResponse> newChallengesResponseData) {
-        List<NewChallengesResponse> mixChallenge = new ArrayList<>();
-
-        if (newChallengesResponseData != null && newChallengesResponseData.size() > 0) {
-            for (NewChallengesResponse newChallenge : newChallengesResponseData) {
-
-                // TODO
-            }
-        }
-
-        return mixChallenge;
-    }
 
     private void showLoadingProgressBar() {
         if (getView() != null) {

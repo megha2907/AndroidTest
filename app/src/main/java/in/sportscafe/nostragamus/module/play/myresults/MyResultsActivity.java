@@ -13,8 +13,6 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.NavUtils;
-import android.support.v4.app.TaskStackBuilder;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -51,6 +49,7 @@ import in.sportscafe.nostragamus.module.common.NostragamusActivity;
 import in.sportscafe.nostragamus.module.contest.dto.ContestScreenData;
 import in.sportscafe.nostragamus.module.contest.ui.ContestsActivity;
 import in.sportscafe.nostragamus.module.inPlay.ui.ResultsScreenDataDto;
+import in.sportscafe.nostragamus.module.nostraHome.NostraHomeActivity;
 import in.sportscafe.nostragamus.module.permission.PermissionsActivity;
 import in.sportscafe.nostragamus.module.permission.PermissionsChecker;
 import in.sportscafe.nostragamus.module.prediction.playScreen.PredictionActivity;
@@ -274,7 +273,8 @@ public class MyResultsActivity extends NostragamusActivity implements MyResultsV
 
     @Override
     public void onBackPressed() {
-        //todo change back flow
+
+        finishStackAndLaunchHomeInPlay();
 
    /*     Intent upIntent = NavUtils.getParentActivityIntent(this);
         if (shouldUpRecreateTask(this)) {
@@ -295,7 +295,22 @@ public class MyResultsActivity extends NostragamusActivity implements MyResultsV
             }
         }  */
 
-          finish();
+    }
+
+    private void finishStackAndLaunchHomeInPlay() {
+        Bundle args = null;
+        if (getIntent() != null && getIntent().getExtras() != null) {
+            args = getIntent().getExtras();
+        }
+
+        Intent clearTaskIntent = new Intent(getApplicationContext(), NostraHomeActivity.class);
+        clearTaskIntent.putExtra(Constants.BundleKeys.SCREEN_LAUNCH_REQUEST, NostraHomeActivity.LaunchedFrom.SHOW_IN_PLAY);
+        clearTaskIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+
+        if (args != null) {
+            clearTaskIntent.putExtras(args);
+        }
+        startActivity(clearTaskIntent);
     }
 
     private final boolean shouldUpRecreateTask(Activity from) {

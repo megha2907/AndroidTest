@@ -2,6 +2,7 @@ package in.sportscafe.nostragamus.module.play.myresults;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.text.TextUtils;
 
 import com.jeeva.android.ExceptionTracker;
 import com.jeeva.android.Log;
@@ -77,9 +78,11 @@ public class MyResultsModelImpl implements MyResultsModel, MyResultsAdapter.OnMy
                 String matchStatus = resultsScreenData.getMatchStatus();
 
                 /* Check for Awaiting Results to Change Toolbar Heading */
-                if (matchStatus.equalsIgnoreCase(Constants.MatchStatusStrings.ANSWER)
+                if (!TextUtils.isEmpty(matchStatus) && (
+                        matchStatus.equalsIgnoreCase(Constants.MatchStatusStrings.ANSWER)
                         || matchStatus.equalsIgnoreCase(Constants.MatchStatusStrings.CONTINUE)
-                        || matchStatus.equalsIgnoreCase(Constants.MatchStatusStrings.PLAY)) {
+                        || matchStatus.equalsIgnoreCase(Constants.MatchStatusStrings.PLAY))) {
+
                     mResultsModelListener.setToolbarHeading("Awaiting Results");
                 }
 
