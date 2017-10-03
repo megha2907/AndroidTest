@@ -29,9 +29,9 @@ import in.sportscafe.nostragamus.module.newChallenges.dto.SportsTab;
  * Created by deepanshi on 9/27/17.
  */
 
-public class CompletedChallengeFragment extends NostraBaseFragment {
+public class CompletedChallengeHistoryFragment extends NostraBaseFragment {
 
-    public CompletedChallengeFragment() {}
+    public CompletedChallengeHistoryFragment() {}
 
     private Snackbar mSnackBar;
 

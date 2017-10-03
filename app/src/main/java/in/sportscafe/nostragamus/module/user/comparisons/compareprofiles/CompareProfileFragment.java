@@ -13,7 +13,6 @@ import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.NostragamusFragment;
-import in.sportscafe.nostragamus.module.notifications.InboxFragment;
 
 /**
  * Created by deepanshi on 2/13/17.

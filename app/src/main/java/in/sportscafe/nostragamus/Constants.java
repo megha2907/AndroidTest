@@ -15,10 +15,20 @@ public interface Constants {
         String PROFILE = "Profile_Images";
     }
 
-    interface NotificationKeys {
-        String RESULTS_LEADERBOARD = "results_leaderboard";
-        String FROM_NOTIFICATION = "fromNotification";
-        String NEW_CHALLENGE_ID = "challenge_id";
+    interface Notifications {
+        String IS_LAUNCHED_FROM_NOTIFICATION = "isLaunchedFromNotification";
+        String NOSTRA_NOTIFICATION = "nostraNotification";
+
+        String SCREEN_NEW_CHALLENGE = "newChallenge";
+        String SCREEN_NEW_CHALLENGE_SPORT = "newChallengeSport";
+        String SCREEN_NEW_CHALLENGE_MATCHES = "newChallengeGames";
+        String SCREEN_IN_PLAY_MATCHES = "inPlayGames";
+        String SCREEN_RESULTS = "results";
+        String SCREEN_CHALLENGE_HISTORY = "challengeHistory";
+        String SCREEN_REFER_FRIEND = "referFriend";
+        String SCREEN_REFERRAL_CREDITS = "referralCredits";
+        String SCREEN_APP_UPDATE = "appUpdate";
+        String SCREEN_STORE = "store";
     }
 
     interface SharedKeys {
@@ -310,6 +320,7 @@ public interface Constants {
         String JOIN_CONTEST_DATA = "joinContestData";
         String SCREEN_LAUNCH_REQUEST = "screenLaunchRequest";
         String CONTEST_ENTRIES_SCREEN_DATA = "contestEntriesScreenData";
+        String NEW_CHALLENGE_MATCHES_SCREEN_DATA = "newChallengeMatchesScreenData";
 
         /* Wallet */
         String WALLET_WITHDRAWAL_AMT = "walletWithdrawAmt";
