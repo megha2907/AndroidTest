@@ -40,7 +40,7 @@ import in.sportscafe.nostragamus.AppSnippet;
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Constants.AppPermissions;
 import in.sportscafe.nostragamus.Constants.BundleKeys;
-import in.sportscafe.nostragamus.Constants.NotificationKeys;
+import in.sportscafe.nostragamus.Constants.Notifications;
 import in.sportscafe.nostragamus.Constants.Powerups;
 import in.sportscafe.nostragamus.Constants.RequestCodes;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
@@ -315,7 +315,7 @@ public class MyResultsActivity extends NostragamusActivity implements MyResultsV
 
     private final boolean shouldUpRecreateTask(Activity from) {
         Bundle bundle = from.getIntent().getExtras();
-        return null != bundle && bundle.getBoolean(NotificationKeys.FROM_NOTIFICATION);
+        return null != bundle && bundle.getBoolean(Notifications.IS_LAUNCHED_FROM_NOTIFICATION);
     }
 
     @Override

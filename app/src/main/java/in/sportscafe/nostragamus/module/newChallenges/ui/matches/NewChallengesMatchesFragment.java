@@ -30,7 +30,7 @@ import in.sportscafe.nostragamus.module.newChallenges.dataProvider.JoinPseudoCon
 import in.sportscafe.nostragamus.module.newChallenges.dataProvider.NewChallengesMatchesDataProvider;
 import in.sportscafe.nostragamus.module.newChallenges.dto.JoinPseudoContestResponse;
 import in.sportscafe.nostragamus.module.newChallenges.dto.NewChallengeMatchesResponse;
-import in.sportscafe.nostragamus.module.newChallenges.dto.NewChallengesResponse;
+import in.sportscafe.nostragamus.module.newChallenges.dto.NewChallengeMatchesScreenData;
 import in.sportscafe.nostragamus.module.prediction.playScreen.PredictionActivity;
 import in.sportscafe.nostragamus.module.prediction.playScreen.dto.PlayScreenDataDto;
 import in.sportscafe.nostragamus.utils.AlertsHelper;
@@ -46,7 +46,7 @@ public class NewChallengesMatchesFragment extends BaseFragment implements View.O
     private NewChallengeMatchFragmentListener mNewChallengeMatchFragmentListener;
     private RecyclerView mMatchesRecyclerView;
     private NewChallengeMatchesAdapter mMatchesAdapter;
-    private NewChallengesResponse mNewChallengeResponse;
+    private NewChallengeMatchesScreenData mScreenData;
 
     public NewChallengesMatchesFragment() {
     }
@@ -104,9 +104,9 @@ public class NewChallengesMatchesFragment extends BaseFragment implements View.O
     }
 
     private void joinPseudoContest(final InPlayMatch match) {
-        if (mNewChallengeResponse != null) {
+        if (mScreenData != null) {
             JoinPseudoContestApiModelImpl joinPseudoContestApiModel = new JoinPseudoContestApiModelImpl();
-            joinPseudoContestApiModel.joinPseudoContest(mNewChallengeResponse.getChallengeId(),
+            joinPseudoContestApiModel.joinPseudoContest(mScreenData.getChallengeId(),
                     new JoinPseudoContestApiModelImpl.JoinPseudoContestApiListener() {
                 @Override
                 public void onData(int status, @Nullable JoinPseudoContestResponse responses) {
@@ -123,13 +123,13 @@ public class NewChallengesMatchesFragment extends BaseFragment implements View.O
     }
 
     private void launchPlayScreen(InPlayMatch match, JoinPseudoContestResponse response) {
-        if (match != null && mNewChallengeResponse != null && response != null && response.getUserRoom() != null) {
+        if (match != null && mScreenData != null && response != null && response.getUserRoom() != null) {
             PlayScreenDataDto playData = new PlayScreenDataDto();
 
             playData.setChallengeId(match.getChallengeId());
             playData.setRoomId(response.getUserRoom().getRoomId());
             playData.setMatchId(match.getMatchId());
-            playData.setSubTitle(mNewChallengeResponse.getChallengeName());
+            playData.setSubTitle(mScreenData.getChallengeName());
             playData.setPowerUp(response.getUserRoom().getPowerUp());
 
             if (match.getMatchParties() != null && match.getMatchParties().size() == 2) {
@@ -163,14 +163,14 @@ public class NewChallengesMatchesFragment extends BaseFragment implements View.O
     private void initMembers() {
         Bundle args = getArguments();
         if (args != null) {
-            mNewChallengeResponse = Parcels.unwrap(args.getParcelable(Constants.BundleKeys.NEW_CHALLENGES_RESPONSE));
+            mScreenData = Parcels.unwrap(args.getParcelable(Constants.BundleKeys.NEW_CHALLENGE_MATCHES_SCREEN_DATA));
         }
     }
 
     private void loadDataFromServer() {
-        if (mNewChallengeResponse != null) {
+        if (mScreenData != null) {
             NewChallengesMatchesDataProvider dataProvider = new NewChallengesMatchesDataProvider();
-            dataProvider.getNewChallengesMatches(mNewChallengeResponse.getChallengeId(), new NewChallengesMatchesDataProvider.NewChallengesApiListener() {
+            dataProvider.getNewChallengesMatches(mScreenData.getChallengeId(), new NewChallengesMatchesDataProvider.NewChallengesApiListener() {
                 @Override
                 public void onData(int status, @Nullable NewChallengeMatchesResponse responses) {
                     onSuccessMatchResponse(responses);
@@ -210,10 +210,10 @@ public class NewChallengesMatchesFragment extends BaseFragment implements View.O
     }
 
     private void onJoinContestClicked() {
-        if (mNewChallengeResponse != null && mNewChallengeMatchFragmentListener != null) {
+        if (mScreenData != null && mNewChallengeMatchFragmentListener != null) {
             ContestScreenData screenData = new ContestScreenData();
-            screenData.setChallengeId(mNewChallengeResponse.getChallengeId());
-            screenData.setChallengeName(mNewChallengeResponse.getChallengeName());
+            screenData.setChallengeId(mScreenData.getChallengeId());
+            screenData.setChallengeName(mScreenData.getChallengeName());
 
             Bundle args = new Bundle();
             args.putParcelable(Constants.BundleKeys.CONTEST_SCREEN_DATA, Parcels.wrap(screenData));

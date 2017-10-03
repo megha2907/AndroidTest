@@ -1,6 +1,5 @@
 package in.sportscafe.nostragamus.module.onboard;
 
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.TypedValue;
@@ -18,7 +17,6 @@ import org.parceler.Parcels;
 
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.NostragamusFragment;
-import in.sportscafe.nostragamus.module.notifications.InboxFragment;
 
 /**
  * Created by Jeeva on 21/10/16.
