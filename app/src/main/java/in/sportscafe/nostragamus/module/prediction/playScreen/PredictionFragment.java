@@ -642,25 +642,22 @@ public class PredictionFragment extends NostraBaseFragment implements View.OnCli
 
             @Override
             public void discarded(int index, int direction) {
-
-                int position = index - 1;   // Index position is not 0 based
-
                 boolean isMatchCompleted = false;
-                if (position == (mQuestionsCardAdapter.getCount() - 1)) {
+                if (index == (mQuestionsCardAdapter.getCount() - 1)) {
                     isMatchCompleted = true;
                 }
 
                 switch (direction) {
                     case CardDirection.LEFT:
-                        saveAnswer(position, Constants.AnswerIds.LEFT, isMatchCompleted);
+                        saveAnswer(index, Constants.AnswerIds.LEFT, isMatchCompleted);
                         break;
 
                     case CardDirection.RIGHT:
-                        saveAnswer(position, Constants.AnswerIds.RIGHT, isMatchCompleted);
+                        saveAnswer(index, Constants.AnswerIds.RIGHT, isMatchCompleted);
                         break;
 
                     case CardDirection.UP:
-                        saveAnswer(position, Constants.AnswerIds.NEITHER, isMatchCompleted);
+                        saveAnswer(index, Constants.AnswerIds.NEITHER, isMatchCompleted);
                         break;
 
                     case CardDirection.DOWN:
@@ -671,7 +668,7 @@ public class PredictionFragment extends NostraBaseFragment implements View.OnCli
                         break;
                 }
 
-                if (position+1 == mQuestionsCardAdapter.getCount()-1) {
+                if ((index+1) == (mQuestionsCardAdapter.getCount()-1)) {
                     hideNextButton();
                 }
             }

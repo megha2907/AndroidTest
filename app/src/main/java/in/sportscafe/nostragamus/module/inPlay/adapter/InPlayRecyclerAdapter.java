@@ -1,6 +1,7 @@
 package in.sportscafe.nostragamus.module.inPlay.adapter;
 
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -70,11 +71,6 @@ public class InPlayRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                 viewHolder = new InPlayJoinedItemViewHolder(v1);
                 break;
 
-            case InPlayAdapterItemType.COMPLETED_CONTEST:
-                View v2 = inflater.inflate(R.layout.in_play_comepleted_card_layout, parent, false);
-                viewHolder = new InPlayCompletedItemViewHolder(v2);
-                break;
-
             case InPlayAdapterItemType.HEADLESS_CONTEST:
                 View v3 = inflater.inflate(R.layout.in_play_headless_card_layout, parent, false);
                 viewHolder = new InPlayHeadLessItemViewHolder(v3);
@@ -100,11 +96,6 @@ public class InPlayRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                     bindInPlayValues(holder, contest);
                     break;
 
-                case InPlayAdapterItemType.COMPLETED_CONTEST:
-                    contest = (InPlayContestDto) listItem.getItemData();
-                    bindCompletedValues(holder, contest);
-                    break;
-
                 case InPlayAdapterItemType.HEADLESS_CONTEST:
                     contest = (InPlayContestDto) listItem.getItemData();
                     bindHeadLessValues(holder, contest);
@@ -121,7 +112,7 @@ public class InPlayRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             viewHolder.challengeCountTextView.setText("(" + challengeItem.getContestCount() + ")");
             viewHolder.challengeTournamentTextView.setText(getTournamentString(challengeItem.getChallengeTournaments()));
 
-            if (getChallengeStarted(challengeItem.getChallengeStartTime())) {
+            if (isChallengeStarted(challengeItem.getChallengeStartTime())) {
                 viewHolder.challengeDurationTextView.setText(DateTimeHelper.getChallengeDuration(challengeItem.getChallengeStartTime(),
                         challengeItem.getChallengeEndTime()));
                 viewHolder.challengeButtonParent.setVisibility(View.GONE);
@@ -133,10 +124,8 @@ public class InPlayRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         }
     }
 
-    private boolean getChallengeStarted(String challengeStartTime) {
-
+    private boolean isChallengeStarted(String challengeStartTime) {
         boolean isChallengeStarted = false;
-
         if (!TextUtils.isEmpty(challengeStartTime)) {
             String startTime = challengeStartTime.replace("+00:00", ".000Z");
             long startTimeMs = TimeUtils.getMillisecondsFromDateString(
@@ -215,57 +204,6 @@ public class InPlayRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                 TimelineHelper.addFooterTextNode(viewHolder.timelineFooterParent,
                         DateTimeHelper.getInPlayMatchTime(match.getStartTime()),
                         contest.getMatches().size(), match.getStatus(), TimelineHelper.MatchTimelineTypeEnum.IN_PLAY_HEADLESS, isPlayed);
-            }
-        }
-    }
-
-    private void bindCompletedValues(RecyclerView.ViewHolder holder, InPlayContestDto contest) {
-        if (contest != null && contest.getMatches() != null) {
-            InPlayCompletedItemViewHolder viewHolder = (InPlayCompletedItemViewHolder) holder;
-
-            viewHolder.contestTitleTextView.setText(contest.getContestName());
-            viewHolder.contestModeImageView.setImageResource(R.drawable.add_members_icon);
-            viewHolder.entryFeeTextView.setText(Constants.RUPEE_SYMBOL + String.valueOf(contest.getEntryFee()));
-            viewHolder.prizesTextView.setText(Constants.RUPEE_SYMBOL + String.valueOf(contest.getWinningAmount()));
-            viewHolder.currentRankTextView.setText(contest.getRank() + "/" + contest.getTotalParticipants());
-
-            viewHolder.timelineHeaderParent.removeAllViews();
-            viewHolder.timelineContentParent.removeAllViews();
-            viewHolder.timelineFooterParent.removeAllViews();
-
-            /* Timeline */
-            int totalMatches = contest.getMatches().size();
-            for (int temp = 0; temp < totalMatches; temp++) {
-                InPlayContestMatchDto match = contest.getMatches().get(temp);
-
-                boolean isNodeLineRequired = true;
-                if (temp == (totalMatches - 1)) {
-                    isNodeLineRequired = false;
-                }
-
-                int matchAttemptedStatus = match.isPlayed();
-                boolean isMatchCompleted;
-                boolean isPlayed;
-                if (Constants.GameAttemptedStatus.COMPLETELY == matchAttemptedStatus) {
-                    isPlayed = true;
-                } else if (Constants.GameAttemptedStatus.PARTIALLY == matchAttemptedStatus) {
-                    isPlayed = false;
-                } else {
-                    isPlayed = false;
-                }
-
-                    /* Content */
-                TimelineHelper.addNode(viewHolder.timelineContentParent, match.getStatus(), isPlayed,
-                        isNodeLineRequired, TimelineHelper.MatchTimelineTypeEnum.IN_PLAY_JOINED, contest.getMatches().size());
-
-                    /* Title */
-                TimelineHelper.addTextNode(viewHolder.timelineHeaderParent, "Game " + (temp + 1), contest.getMatches().size(), match.getStatus(),
-                        TimelineHelper.MatchTimelineTypeEnum.IN_PLAY_JOINED, isPlayed);
-
-                    /* Footer */
-                TimelineHelper.addTextNode(viewHolder.timelineFooterParent,
-                        DateTimeHelper.getInPlayMatchTime(match.getStartTime()),
-                        contest.getMatches().size(), match.getStatus(), TimelineHelper.MatchTimelineTypeEnum.IN_PLAY_JOINED, isPlayed);
             }
         }
     }
@@ -443,43 +381,6 @@ public class InPlayRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                 args.putParcelable(Constants.BundleKeys.INPLAY_CONTEST, Parcels.wrap(contestDto));
             }
             return args;
-        }
-    }
-
-    private class InPlayCompletedItemViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-
-        LinearLayout root;
-        LinearLayout timelineHeaderParent;
-        LinearLayout timelineContentParent;
-        LinearLayout timelineFooterParent;
-        TextView contestTitleTextView;
-        ImageView contestModeImageView;
-        TextView entryFeeTextView;
-        TextView currentRankTextView;
-        TextView prizesTextView;
-
-
-        public InPlayCompletedItemViewHolder(View itemView) {
-            super(itemView);
-            root = (LinearLayout) itemView.findViewById(R.id.in_play_completed_card_parent);
-            timelineHeaderParent = (LinearLayout) itemView.findViewById(R.id.inplay_completed_card_timeline_heading_parent);
-            timelineContentParent = (LinearLayout) itemView.findViewById(R.id.inplay_completed_card_timeline_content_parent);
-            timelineFooterParent = (LinearLayout) itemView.findViewById(R.id.inplay_completed_card_timeline_footer_parent);
-            contestTitleTextView = (TextView) itemView.findViewById(R.id.inplay_completed_card_title_textView);
-            contestModeImageView = (ImageView) itemView.findViewById(R.id.inplay_contest_card_header_mode_imgView);
-            entryFeeTextView = (TextView) itemView.findViewById(R.id.inplay_contest_card_header_entry_fee_textView);
-            currentRankTextView = (TextView) itemView.findViewById(R.id.inplay_contest_card_header_current_rank_textView);
-            prizesTextView = (TextView) itemView.findViewById(R.id.inplay_contest_card_header_prizes_textView);
-
-            root.setOnClickListener(this);
-        }
-
-        @Override
-        public void onClick(View view) {
-            switch (view.getId()) {
-                case R.id.in_play_completed_card_parent:
-                    break;
-            }
         }
     }
 

@@ -89,11 +89,13 @@ public class ContestRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             if (contest != null) {
                 /* For joined contests, disable Join click action */
                 if (contest.isContestJoined()) {
-                    viewHolder.mRlContestLayout.setOnClickListener(null);
+                    viewHolder.mRlContestLayout.setEnabled(false);
+                    viewHolder.mRewardsPrizesLayout.setEnabled(false);
                     viewHolder.mBtnJoin.setEnabled(false);
                     viewHolder.mBtnJoin.setText("Joined");
                 } else {
-                    viewHolder.mRlContestLayout.setOnClickListener(viewHolder);
+                    viewHolder.mRlContestLayout.setEnabled(true);
+                    viewHolder.mRewardsPrizesLayout.setEnabled(true);
                     viewHolder.mBtnJoin.setEnabled(true);
                     viewHolder.mBtnJoin.setText("Join");
                 }

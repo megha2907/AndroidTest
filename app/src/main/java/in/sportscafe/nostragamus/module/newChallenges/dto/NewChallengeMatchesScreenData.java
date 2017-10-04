@@ -10,6 +10,7 @@ public class NewChallengeMatchesScreenData {
 
     private int challengeId;
     private String challengeName;
+    private String startTime;
 
     public int getChallengeId() {
         return challengeId;
@@ -25,5 +26,13 @@ public class NewChallengeMatchesScreenData {
 
     public void setChallengeName(String challengeName) {
         this.challengeName = challengeName;
+    }
+
+    public String getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(String startTime) {
+        this.startTime = startTime;
     }
 }

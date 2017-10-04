@@ -1,4 +1,4 @@
-package in.sportscafe.nostragamus.module.common;
+package in.sportscafe.nostragamus.module.nostraHome.dto;
 
 import com.google.gson.annotations.SerializedName;
 
