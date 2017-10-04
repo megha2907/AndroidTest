@@ -18,12 +18,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import in.sportscafe.nostragamus.Constants;
-import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.NostraBaseFragment;
-import in.sportscafe.nostragamus.module.contest.dto.Contest;
 import in.sportscafe.nostragamus.module.inPlay.dataProvider.InPlayDataProvider;
-import in.sportscafe.nostragamus.module.inPlay.dto.InPlayContestDto;
 import in.sportscafe.nostragamus.module.inPlay.dto.InPlayResponse;
 import in.sportscafe.nostragamus.module.inPlay.helper.InPlayFilterHelper;
 import in.sportscafe.nostragamus.module.inPlay.ui.headless.dto.HeadLessMatchScreenData;
@@ -33,7 +30,6 @@ import in.sportscafe.nostragamus.module.inPlay.ui.viewPager.InPlayViewPagerFragm
 import in.sportscafe.nostragamus.module.newChallenges.dataProvider.SportsDataProvider;
 import in.sportscafe.nostragamus.module.newChallenges.dto.SportsTab;
 import in.sportscafe.nostragamus.module.prediction.playScreen.dto.PlayScreenDataDto;
-import in.sportscafe.nostragamus.utils.AlertsHelper;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -211,11 +207,9 @@ public class InPlayFragment extends NostraBaseFragment {
 
             /* Handle Pseudo game play
             * If so, launch headless matches screen */
-
-            boolean isPlayingPsedoGame = args.getBoolean(Constants.BundleKeys.IS_PLAYING_PSEUDO_GAME, false);
-            if (isPlayingPsedoGame) {
-                PlayScreenDataDto playScreenDataDto = Parcels.unwrap(args.getParcelable(Constants.BundleKeys.PLAY_SCREEN_DATA));
-                if (playScreenDataDto != null && inPlayResponseList != null) {
+            PlayScreenDataDto playScreenDataDto = Parcels.unwrap(args.getParcelable(Constants.BundleKeys.PLAY_SCREEN_DATA));
+            if (playScreenDataDto != null && inPlayResponseList != null) {
+                if (playScreenDataDto.isPlayingPseudoGame()) {
 
                     HeadLessMatchScreenData data = new HeadLessMatchScreenData();
                     data.setChallengeName(playScreenDataDto.getSubTitle());
@@ -223,11 +217,16 @@ public class InPlayFragment extends NostraBaseFragment {
                     data.setPowerUp(playScreenDataDto.getPowerUp());
                     data.setContestName(playScreenDataDto.getSubTitle());
                     data.setRoomId(playScreenDataDto.getRoomId());
+                    data.setPlayingPseudoGame(playScreenDataDto.isPlayingPseudoGame());
 
-                    args.putParcelable(Constants.BundleKeys.HEADLESS_MATCH_SCREEN_DATA, Parcels.wrap(data));
+                    playScreenDataDto.setPlayingPseudoGame(false);  // Action is taken once so remove this flag
+
+                    /* New bundle as older one has unnecessary values which can lead improper flow */
+                    Bundle bundle = new Bundle();
+                    bundle.putParcelable(Constants.BundleKeys.HEADLESS_MATCH_SCREEN_DATA, Parcels.wrap(data));
 
                     Intent intent = new Intent(getActivity(), InPlayHeadLessMatchActivity.class);
-                    intent.putExtras(args);
+                    intent.putExtras(bundle);
                     getActivity().startActivity(intent);
                 }
             }

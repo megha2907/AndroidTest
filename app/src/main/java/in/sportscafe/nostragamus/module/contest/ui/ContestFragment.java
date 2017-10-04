@@ -76,6 +76,8 @@ public class ContestFragment extends NostraBaseFragment {
 
     private void loadData() {
         if (mContestScreenData != null) {
+            showLoadingProgressBar();
+
             ContestDataProvider dataProvider = new ContestDataProvider();
             final List<ContestType> contestTypeList = dataProvider.getContestTypeList();
 
@@ -83,6 +85,8 @@ public class ContestFragment extends NostraBaseFragment {
                     new ContestDataProvider.ContestDataProviderListener() {
                 @Override
                 public void onSuccessResponse(int status, ContestResponse response) {
+                    hideLoadingProgressBar();
+
                     switch (status) {
                         case Constants.DataStatus.FROM_SERVER_API_SUCCESS:
                             if (response != null && response.getData() != null && response.getData().getContests() != null) {
@@ -101,6 +105,7 @@ public class ContestFragment extends NostraBaseFragment {
 
                 @Override
                 public void onError(int status) {
+                    hideLoadingProgressBar();
                     handleError(status);
                 }
             });
@@ -144,13 +149,24 @@ public class ContestFragment extends NostraBaseFragment {
                 ContestFilterHelper filterHelper = new ContestFilterHelper();
                 ContestViewPagerFragment tabFragment = null;
 
+
+                /* For all the tabs */
                 for (ContestType contestType : contestTypeList) {
                     tabFragment = new ContestViewPagerFragment();
-                    List<Contest> contestFiltered = filterHelper.getFilteredContestByType(contestType.getId(), contestList);
+                    List<Contest> contestFiltered = null;
+
+                    switch (contestType.getId()) {
+                        case ContestDataProvider.JOINED_CONTEST_ID:
+                            contestFiltered = filterHelper.getJoinedContests(contestList);
+                            break;
+
+                        default:
+                            contestFiltered = filterHelper.getFilteredContestByType(contestType.getId(), contestList);
+                            break;
+                    }
 
                     if (contestFiltered != null) {
                         contestType.setContestCount(contestFiltered.size());
-
                         tabFragment.onContestData(contestFiltered);
                         tabFragment.setContestType(contestType);
                         fragmentList.add(tabFragment);
@@ -188,6 +204,20 @@ public class ContestFragment extends NostraBaseFragment {
                 contest.setChallengeName(mContestScreenData.getChallengeName());
                 contest.setChallengeId(mContestScreenData.getChallengeId());
             }
+        }
+    }
+
+    private void showLoadingProgressBar() {
+        if (getView() != null) {
+            getView().findViewById(R.id.contestsContentLayout).setVisibility(View.GONE);
+            getView().findViewById(R.id.contestsProgressBarLayout).setVisibility(View.VISIBLE);
+        }
+    }
+
+    private void hideLoadingProgressBar() {
+        if (getView() != null) {
+            getView().findViewById(R.id.contestsProgressBarLayout).setVisibility(View.GONE);
+            getView().findViewById(R.id.contestsContentLayout).setVisibility(View.VISIBLE);
         }
     }
 

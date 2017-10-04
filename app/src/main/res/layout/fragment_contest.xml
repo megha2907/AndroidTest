@@ -12,21 +12,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-    <!-- Heading layout -->
-
-    <!--<android.support.v7.widget.Toolbar-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:background="@drawable/toolbar_bg"-->
-        <!--android:contentInsetLeft="0dp"-->
-        <!--android:contentInsetStart="0dp"-->
-        <!--app:contentInsetLeft="0dp"-->
-        <!--app:contentInsetStart="0dp"-->
-        <!--android:contentInsetRight="0dp"-->
-        <!--android:contentInsetEnd="0dp"-->
-        <!--app:contentInsetRight="0dp"-->
-        <!--app:contentInsetEnd="0dp">-->
-
+        <!-- Heading layout -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -61,7 +47,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/toolbar_heading_one"
-                    android:text="India vs Australia T20 Challenge"
+                    android:text=""
                     android:textColor="@color/white_60"
                     android:textSize="@dimen/sp_12"
                     app:typeface="lato_regular" />
@@ -70,7 +56,7 @@
                     android:id="@+id/toolbar_wallet_money"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="120"
+                    android:text=""
                     android:layout_marginRight="@dimen/dim_16"
                     android:layout_centerVertical="true"
                     android:layout_alignParentRight="true"
@@ -91,34 +77,56 @@
 
         </LinearLayout>
 
-    <!--</android.support.v7.widget.Toolbar>-->
+        <!-- Contents  -->
+        <LinearLayout
+            android:id="@+id/contestsContentLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:visibility="gone">
 
-    <in.sportscafe.nostragamus.module.common.CustomTabLayout
-        android:id="@+id/contest_tabs"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dim_60"
-        android:layout_below="@+id/challenges_toolbar"
-        android:background="@color/new_challenge_tab_bg"
-        app:layout_collapseMode="pin"
-        app:selected_textSize="@dimen/sp_12"
-        app:selected_typeface="lato_regular"
-        app:tabBackground="@color/tab_background_selector"
-        app:tabGravity="center"
-        app:tabIndicatorColor="@android:color/transparent"
-        app:tabIndicatorHeight="@dimen/dp_0"
-        app:tabMaxWidth="@dimen/dim_80"
-        app:tabMode="scrollable"
-        app:tabSelectedTextColor="@color/white"
-        app:tabTextAppearance="@style/ChallengeTextAppearance"
-        app:tabTextColor="@color/white_60"
-        app:unselected_textSize="@dimen/sp_12"
-        app:unselected_typeface="lato_regular" />
+            <in.sportscafe.nostragamus.module.common.CustomTabLayout
+                android:id="@+id/contest_tabs"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dim_60"
+                android:layout_below="@+id/challenges_toolbar"
+                android:background="@color/new_challenge_tab_bg"
+                app:layout_collapseMode="pin"
+                app:selected_textSize="@dimen/sp_12"
+                app:selected_typeface="lato_regular"
+                app:tabBackground="@color/tab_background_selector"
+                app:tabGravity="center"
+                app:tabIndicatorColor="@android:color/transparent"
+                app:tabIndicatorHeight="@dimen/dp_0"
+                app:tabMaxWidth="@dimen/dim_80"
+                app:tabMode="scrollable"
+                app:tabSelectedTextColor="@color/white"
+                app:tabTextAppearance="@style/ChallengeTextAppearance"
+                app:tabTextColor="@color/white_60"
+                app:unselected_textSize="@dimen/sp_12"
+                app:unselected_typeface="lato_regular" />
 
-    <!-- ViewPager -->
-    <in.sportscafe.nostragamus.module.common.CustomViewPager
-        android:id="@+id/contest_viewPager"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+            <!-- ViewPager -->
+            <in.sportscafe.nostragamus.module.common.CustomViewPager
+                android:id="@+id/contest_viewPager"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+        </LinearLayout>
+
+        <!-- Loading View -->
+        <LinearLayout
+            android:id="@+id/contestsProgressBarLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <in.sportscafe.nostragamus.module.common.NostraProgressBar
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center" />
+        </LinearLayout>
 
     </LinearLayout>
 

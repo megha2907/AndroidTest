@@ -18,6 +18,7 @@ public  class ResultsScreenDataDto {
     private String subTitle;
     private String challengeName;
     private String matchStatus;
+    private boolean isPlayingPseudoGame = false;
 
     public int getChallengeId() {
         return challengeId;
@@ -83,4 +84,11 @@ public  class ResultsScreenDataDto {
         this.matchStatus = matchStatus;
     }
 
+    public boolean isPlayingPseudoGame() {
+        return isPlayingPseudoGame;
+    }
+
+    public void setPlayingPseudoGame(boolean playingPseudoGame) {
+        isPlayingPseudoGame = playingPseudoGame;
+    }
 }

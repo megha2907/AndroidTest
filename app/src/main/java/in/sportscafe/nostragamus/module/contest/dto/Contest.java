@@ -62,6 +62,9 @@ public class Contest {
     @SerializedName("powerups")
     private PowerUp powerUpInfo;
 
+    @SerializedName("joined_contest")
+    private boolean isContestJoined;
+
     private int contestItemType = ContestAdapterItemType.CONTEST;
 
     private int challengeId;
@@ -200,5 +203,13 @@ public class Contest {
 
     public void setChallengeId(int challengeId) {
         this.challengeId = challengeId;
+    }
+
+    public boolean isContestJoined() {
+        return isContestJoined;
+    }
+
+    public void setContestJoined(boolean contestJoined) {
+        isContestJoined = contestJoined;
     }
 }

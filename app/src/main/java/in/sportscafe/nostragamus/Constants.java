@@ -348,7 +348,6 @@ public interface Constants {
         String RESULTS_SCREEN_DATA = "resultsScreenData";
         String CONTEST_SCREEN_DATA = "contestScreenData";
         String IS_HEADLESS_FLOW = "isHeadLessFlow";
-        String IS_PLAYING_PSEUDO_GAME = "isPlayingPseudoGame";
         String HEADLESS_MATCH_SCREEN_DATA = "headlessMatchScreenData";
     }
 

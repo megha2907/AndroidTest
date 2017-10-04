@@ -16,6 +16,7 @@ public class HeadLessMatchScreenData {
     private String challengeName;
     private String contestName;
     private PowerUp powerUp;
+    private boolean isPlayingPseudoGame = false;
 
     public int getRoomId() {
         return roomId;
@@ -63,5 +64,13 @@ public class HeadLessMatchScreenData {
 
     public void setPowerUp(PowerUp powerUp) {
         this.powerUp = powerUp;
+    }
+
+    public boolean isPlayingPseudoGame() {
+        return isPlayingPseudoGame;
+    }
+
+    public void setPlayingPseudoGame(boolean playingPseudoGame) {
+        isPlayingPseudoGame = playingPseudoGame;
     }
 }

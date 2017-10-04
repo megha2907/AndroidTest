@@ -3,6 +3,7 @@ package in.sportscafe.nostragamus.module.contest.adapter;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -86,6 +87,16 @@ public class ContestRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             ContestViewHolder viewHolder = (ContestViewHolder) holder;
 
             if (contest != null) {
+                /* For joined contests, disable Join click action */
+                if (contest.isContestJoined()) {
+                    viewHolder.mRlContestLayout.setOnClickListener(null);
+                    viewHolder.mBtnJoin.setEnabled(false);
+                    viewHolder.mBtnJoin.setText("Joined");
+                } else {
+                    viewHolder.mRlContestLayout.setOnClickListener(viewHolder);
+                    viewHolder.mBtnJoin.setEnabled(true);
+                    viewHolder.mBtnJoin.setText("Join");
+                }
 
                 viewHolder.mTvPoolName.setText(contest.getConfigName());
 
@@ -108,7 +119,6 @@ public class ContestRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                 }
 
                 if (contest.isFreeEntry()) {
-
                     viewHolder.mTvEntryFee.setText("Free");
                     viewHolder.mTvEntryFee.setAllCaps(true);
 
@@ -117,14 +127,10 @@ public class ContestRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                     } else {
                         viewHolder.mTvMaxEntries.setText(String.valueOf(contest.getRoomSize()));
                     }
-
                 } else {
-
                     viewHolder.mTvEntryFee.setText(Constants.RUPEE_SYMBOL + String.valueOf(contest.getEntryFee()));
                     viewHolder.mTvMaxEntries.setText(String.valueOf(contest.getRoomSize()));
-
                 }
-
             }
         }
     }
@@ -147,7 +153,6 @@ public class ContestRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         public RelativeLayout mRlContestLayout;
         public ImageView mIvContestsType;
         LinearLayout mRewardsPrizesLayout;
-
 
         private ContestAdapterListener clickListener;
 

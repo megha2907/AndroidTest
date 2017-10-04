@@ -17,6 +17,7 @@ public class PlayScreenDataDto {
     private String challengeName;
     private String matchStatus;
     private PowerUp powerUp;
+    private boolean isPlayingPseudoGame = false;
 
     public int getChallengeId() {
         return challengeId;
@@ -88,5 +89,13 @@ public class PlayScreenDataDto {
 
     public void setMatchStatus(String matchStatus) {
         this.matchStatus = matchStatus;
+    }
+
+    public boolean isPlayingPseudoGame() {
+        return isPlayingPseudoGame;
+    }
+
+    public void setPlayingPseudoGame(boolean playingPseudoGame) {
+        isPlayingPseudoGame = playingPseudoGame;
     }
 }

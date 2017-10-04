@@ -21,7 +21,6 @@ import in.sportscafe.nostragamus.module.challengeRules.RulesFragment;
 import in.sportscafe.nostragamus.module.common.NostraBaseFragment;
 import in.sportscafe.nostragamus.module.contest.dto.Contest;
 import in.sportscafe.nostragamus.module.contest.dto.ContestEntriesScreenData;
-import in.sportscafe.nostragamus.module.contest.dto.ContestScreenData;
 import in.sportscafe.nostragamus.module.contest.ui.DetailScreensLaunchRequest;
 import in.sportscafe.nostragamus.module.contest.ui.ContestEntriesViewPagerFragment;
 import in.sportscafe.nostragamus.module.navigation.wallet.WalletHelper;
@@ -38,7 +37,7 @@ public class ContestDetailsBeforeJoinFragment extends NostraBaseFragment impleme
     private TextView mTvTBarHeading;
     private TextView mTvTBarSubHeading;
     private TextView mTvTBarWalletMoney;
-    private Button joinContest;
+    private Button mJoinContestButton;
     private ContestDetailsBJViewPagerAdapter mViewPagerAdapter;
     private ViewPager mViewPager;
 
@@ -69,10 +68,10 @@ public class ContestDetailsBeforeJoinFragment extends NostraBaseFragment impleme
         mTvTBarHeading = (TextView) rootView.findViewById(R.id.toolbar_heading_one);
         mTvTBarSubHeading = (TextView) rootView.findViewById(R.id.toolbar_heading_two);
         mTvTBarWalletMoney = (TextView) rootView.findViewById(R.id.toolbar_wallet_money);
-        joinContest = (Button) rootView.findViewById(R.id.join_contest_btn);
+        mJoinContestButton = (Button) rootView.findViewById(R.id.join_contest_btn);
         mViewPager = (ViewPager) rootView.findViewById(R.id.contest_details_viewPager);
 
-        joinContest.setOnClickListener(this);
+        mJoinContestButton.setOnClickListener(this);
         rootView.findViewById(R.id.contest_details_back_btn).setOnClickListener(this);
     }
 
@@ -80,7 +79,13 @@ public class ContestDetailsBeforeJoinFragment extends NostraBaseFragment impleme
         if (contest != null) {
             mTvTBarHeading.setText(contest.getConfigName());
             mTvTBarSubHeading.setText("");
-            joinContest.setText("Pay " + Constants.RUPEE_SYMBOL + String.valueOf(contest.getEntryFee()) + " and Join Contest");
+
+            if (contest.isContestJoined()) {
+                mJoinContestButton.setVisibility(View.GONE);
+            } else {
+                mJoinContestButton.setVisibility(View.VISIBLE);
+                mJoinContestButton.setText("Pay " + Constants.RUPEE_SYMBOL + String.valueOf(contest.getEntryFee()) + " and Join Contest");
+            }
         }
 
         int amount = (int) WalletHelper.getTotalBalance();

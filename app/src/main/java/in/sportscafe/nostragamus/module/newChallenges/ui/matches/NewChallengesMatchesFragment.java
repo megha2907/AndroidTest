@@ -131,6 +131,7 @@ public class NewChallengesMatchesFragment extends BaseFragment implements View.O
             playData.setMatchId(match.getMatchId());
             playData.setSubTitle(mScreenData.getChallengeName());
             playData.setPowerUp(response.getUserRoom().getPowerUp());
+            playData.setPlayingPseudoGame(true);
 
             if (match.getMatchParties() != null && match.getMatchParties().size() == 2) {
                 playData.setMatchPartyTitle1(match.getMatchParties().get(0).getPartyName());
@@ -139,7 +140,6 @@ public class NewChallengesMatchesFragment extends BaseFragment implements View.O
 
             Bundle bundle = new Bundle();
             bundle.putParcelable(Constants.BundleKeys.PLAY_SCREEN_DATA, Parcels.wrap(playData));
-            bundle.putBoolean(Constants.BundleKeys.IS_PLAYING_PSEUDO_GAME, true);
 
             Intent predictionIntent = new Intent(getActivity(), PredictionActivity.class);
             predictionIntent.putExtras(bundle);
