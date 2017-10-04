@@ -17,6 +17,7 @@ import java.util.List;
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.navigation.wallet.WalletHelper;
+import in.sportscafe.nostragamus.module.newChallenges.dto.NewChallengeMatchesScreenData;
 import in.sportscafe.nostragamus.module.newChallenges.dto.NewChallengesResponse;
 import in.sportscafe.nostragamus.module.newChallenges.helpers.DateTimeHelper;
 
@@ -144,7 +145,13 @@ public class NewChallengesRecyclerAdapter extends RecyclerView.Adapter<RecyclerV
 
             if (mChallengeListener != null && mNewChallengesResponseList != null && mNewChallengesResponseList.size() > adapterPos) {
                 Bundle args = new Bundle();
-                args.putParcelable(Constants.BundleKeys.NEW_CHALLENGES_RESPONSE, Parcels.wrap(mNewChallengesResponseList.get(adapterPos)));
+                NewChallengeMatchesScreenData screenData = new NewChallengeMatchesScreenData();
+                NewChallengesResponse newChallengesResponse = mNewChallengesResponseList.get(adapterPos);
+
+                screenData.setChallengeId(newChallengesResponse.getChallengeId());
+                screenData.setChallengeName(newChallengesResponse.getChallengeName());
+
+                args.putParcelable(Constants.BundleKeys.NEW_CHALLENGE_MATCHES_SCREEN_DATA, Parcels.wrap(screenData));
                 mChallengeListener.onChallengeClicked(args);
             }
         }

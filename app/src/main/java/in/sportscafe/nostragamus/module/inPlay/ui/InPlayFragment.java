@@ -217,29 +217,18 @@ public class InPlayFragment extends NostraBaseFragment {
                 PlayScreenDataDto playScreenDataDto = Parcels.unwrap(args.getParcelable(Constants.BundleKeys.PLAY_SCREEN_DATA));
                 if (playScreenDataDto != null && inPlayResponseList != null) {
 
-                    /*int roomId = -1;
-                    for (InPlayResponse inPlayResponse : inPlayResponseList) {
-                        for (InPlayContestDto contestDto : inPlayResponse.getContestList()) {
-                            if (contestDto.isHeadlessState() && contestDto.getChallengeId() == playScreenDataDto.getChallengeId()) {
-                                roomId = contestDto.getRoomId();
-                                break;
-                            }
-                        }
-                    }*/
+                    HeadLessMatchScreenData data = new HeadLessMatchScreenData();
+                    data.setChallengeName(playScreenDataDto.getSubTitle());
+                    data.setChallengeId(playScreenDataDto.getChallengeId());
+                    data.setPowerUp(playScreenDataDto.getPowerUp());
+                    data.setContestName(playScreenDataDto.getSubTitle());
+                    data.setRoomId(playScreenDataDto.getRoomId());
 
+                    args.putParcelable(Constants.BundleKeys.HEADLESS_MATCH_SCREEN_DATA, Parcels.wrap(data));
 
-                        HeadLessMatchScreenData data = new HeadLessMatchScreenData();
-                        data.setChallengeName(playScreenDataDto.getSubTitle());
-                        data.setChallengeId(playScreenDataDto.getChallengeId());
-                        data.setPowerUp(playScreenDataDto.getPowerUp());
-                        data.setContestName(playScreenDataDto.getSubTitle());
-                        data.setRoomId(playScreenDataDto.getRoomId());
-
-                        args.putParcelable(Constants.BundleKeys.HEADLESS_MATCH_SCREEN_DATA, Parcels.wrap(data));
-
-                        Intent intent = new Intent(getActivity(), InPlayHeadLessMatchActivity.class);
-                        intent.putExtras(args);
-                        getActivity().startActivity(intent);
+                    Intent intent = new Intent(getActivity(), InPlayHeadLessMatchActivity.class);
+                    intent.putExtras(args);
+                    getActivity().startActivity(intent);
                 }
             }
         }

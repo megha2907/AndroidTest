@@ -77,8 +77,6 @@ public class InPlayHeadLessMatchesAdapter extends RecyclerView.Adapter<RecyclerV
         if (mInPlayMatchList != null && mInPlayMatchList.size() > position) {
             InPlayMatch match = mInPlayMatchList.get(position);
 
-            match.setMatchStatus("play");
-
             if (shouldDisableMatchClickAction(match)) {
                 viewHolder.matchParentLayout.setEnabled(false);
                 viewHolder.actionButton.setVisibility(View.GONE);

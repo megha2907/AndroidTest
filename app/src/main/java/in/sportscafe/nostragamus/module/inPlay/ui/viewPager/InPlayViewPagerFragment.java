@@ -27,6 +27,7 @@ import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.contest.contestDetailsAfterJoining.ContestDetailsAfterJoinActivity;
+import in.sportscafe.nostragamus.module.contest.dto.ContestScreenData;
 import in.sportscafe.nostragamus.module.contest.dto.JoinContestData;
 import in.sportscafe.nostragamus.module.contest.ui.ContestsActivity;
 import in.sportscafe.nostragamus.module.inPlay.adapter.InPlayAdapterItemType;
@@ -257,18 +258,37 @@ public class InPlayViewPagerFragment extends BaseFragment {
 
     private void gotoContestScreen(Bundle args) {
         if (getActivity() != null && !getActivity().isFinishing()) {
-            if (Nostragamus.getInstance().hasNetworkConnection()) {
 
-                Intent intent = new Intent(getActivity(), ContestsActivity.class);
-                if (args != null) {
-                    intent.putExtras(args);
+            if (args != null && args.containsKey(Constants.BundleKeys.INPLAY_CHALLENGE_LIST_ITEM)) {
+                InPlayListChallengeItem listChallengeItem = Parcels.unwrap(args.getParcelable(Constants.BundleKeys.INPLAY_CHALLENGE_LIST_ITEM));
+                if (listChallengeItem != null) {
+
+                    ContestScreenData contestScreenData = new ContestScreenData();
+                    contestScreenData.setChallengeId(listChallengeItem.getChallengeId());
+                    contestScreenData.setChallengeName(listChallengeItem.getChallengeName());
+
+                    Bundle bundle = new Bundle();
+                    bundle.putParcelable(Constants.BundleKeys.CONTEST_SCREEN_DATA, Parcels.wrap(contestScreenData));
+
+                    if (Nostragamus.getInstance().hasNetworkConnection()) {
+                        Intent intent = new Intent(getActivity(), ContestsActivity.class);
+                        intent.putExtras(bundle);
+                        getActivity().startActivity(intent);
+
+                    } else {
+                        AlertsHelper.showAlert(getContext(), "No Internet", "Please turn ON internet to continue", null);
+                    }
+                } else {
+                    handleError(-1);
                 }
-                getActivity().startActivity(intent);
-
             } else {
-                AlertsHelper.showAlert(getContext(), "No Internet", "Please turn ON internet to continue", null);
+                handleError(-1);
             }
         }
+    }
+
+    private void handleError(int status) {
+        AlertsHelper.showAlert(getContext(), "Error!", Constants.Alerts.SOMETHING_WRONG, null);
     }
 
     private void goToNewMatchesTimeline(Bundle args) {

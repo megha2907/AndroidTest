@@ -2,7 +2,7 @@ package in.sportscafe.nostragamus.module.prediction.powerupBank.dto;
 
 import com.google.gson.annotations.SerializedName;
 
-import in.sportscafe.nostragamus.module.allchallenges.dto.ChallengeUserInfo;
+import in.sportscafe.nostragamus.module.common.dto.ChallengeUserInfo;
 
 public class BankTransfer {
 

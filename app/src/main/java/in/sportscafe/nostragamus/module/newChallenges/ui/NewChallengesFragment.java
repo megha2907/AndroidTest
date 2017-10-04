@@ -15,6 +15,8 @@ import android.widget.TextView;
 
 import com.jeeva.android.BaseFragment;
 
+import org.parceler.Parcels;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,6 +31,7 @@ import in.sportscafe.nostragamus.module.newChallenges.dto.SportsTab;
 import in.sportscafe.nostragamus.module.newChallenges.helpers.NewChallengesFilterHelper;
 import in.sportscafe.nostragamus.module.newChallenges.ui.viewPager.NewChallengesViewPagerAdapter;
 import in.sportscafe.nostragamus.module.newChallenges.ui.viewPager.NewChallengesViewPagerFragment;
+import in.sportscafe.nostragamus.module.notifications.NostraNotification;
 import in.sportscafe.nostragamus.module.popups.walletpopups.WalletBalancePopupActivity;
 
 /**
@@ -185,11 +188,11 @@ public class NewChallengesFragment extends NostraBaseFragment implements View.On
                             break;
 
                         case NewChallengesFilterHelper.FILTER_DAILY_SPORTS_ID:
-                            challengesFiltered = getDailySports(newChallengesResponseData);
+                            challengesFiltered = filterHelper.getDailySports(newChallengesResponseData);
                             break;
 
                         case NewChallengesFilterHelper.FILTER_MIXED_SPORTS_ID:
-                            challengesFiltered = getMixSports(newChallengesResponseData);
+                            challengesFiltered = filterHelper.getMixSports(newChallengesResponseData);
                             break;
 
                         default:
@@ -218,7 +221,8 @@ public class NewChallengesFragment extends NostraBaseFragment implements View.On
                     }
                 }
 
-
+                /* If launched from notification, the handle further flow */
+                handleNotification(challengesViewPager, fragmentList);
 
             } else {
                 // TODO: error page / no items found
@@ -226,31 +230,26 @@ public class NewChallengesFragment extends NostraBaseFragment implements View.On
         }
     }
 
-    private List<NewChallengesResponse> getDailySports(List<NewChallengesResponse> newChallengesResponseData) {
-        List<NewChallengesResponse> dailyChallenge = new ArrayList<>();
+    private void handleNotification(ViewPager viewPager, ArrayList<NewChallengesViewPagerFragment> viewPagerFragmentList) {
+        Bundle args = getArguments();
+        if (args != null && args.containsKey(Constants.Notifications.IS_LAUNCHED_FROM_NOTIFICATION)) {
+            boolean isFromNotification = args.getBoolean(Constants.Notifications.IS_LAUNCHED_FROM_NOTIFICATION, false);
+            NostraNotification nostraNotification = Parcels.unwrap(args.getParcelable(Constants.Notifications.NOSTRA_NOTIFICATION));
 
-        if (newChallengesResponseData != null && newChallengesResponseData.size() > 0) {
-            for (NewChallengesResponse newChallenge : newChallengesResponseData) {
+            if (isFromNotification && nostraNotification != null && nostraNotification.getData() != null && viewPagerFragmentList != null) {
+                int sportId = nostraNotification.getData().getSportId();
 
-                // TODO
+                for (int pos = 0; pos < viewPagerFragmentList.size(); pos++) {
+                    NewChallengesViewPagerFragment fragment = viewPagerFragmentList.get(pos);
+                    if (fragment.getTabDetails() != null && fragment.getTabDetails().getSportsId() == sportId ) {
+                        viewPager.setCurrentItem(pos);
+                        break;
+                    }
+                }
             }
         }
-
-        return dailyChallenge;
     }
 
-    private List<NewChallengesResponse> getMixSports(List<NewChallengesResponse> newChallengesResponseData) {
-        List<NewChallengesResponse> mixChallenge = new ArrayList<>();
-
-        if (newChallengesResponseData != null && newChallengesResponseData.size() > 0) {
-            for (NewChallengesResponse newChallenge : newChallengesResponseData) {
-
-                // TODO
-            }
-        }
-
-        return mixChallenge;
-    }
 
     private void showLoadingProgressBar() {
         if (getView() != null) {

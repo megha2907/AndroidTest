@@ -46,9 +46,10 @@ public class AllGroupsModelImpl implements AllGroupsModel {
         mAllGroups = bundle.getBoolean(BundleKeys.IS_ALL_GROUPS);
 
         if (!mAllGroups) {
-            mAllGroupsModelListener.onGetGroupsSuccess(
-                    ((PlayerInfo) Parcels.unwrap(bundle.getParcelable(BundleKeys.PLAYERINFO))).getMutualGroups()
-            );
+            PlayerInfo playerInfo = (PlayerInfo) Parcels.unwrap(bundle.getParcelable(BundleKeys.PLAYERINFO));
+            if (playerInfo != null && playerInfo.getMutualGroups() != null) {
+                mAllGroupsModelListener.onGetGroupsSuccess(playerInfo.getMutualGroups());
+            }
         }
 
         checkGroupCode();

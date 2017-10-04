@@ -78,8 +78,6 @@ public class NewChallengeMatchesAdapter extends RecyclerView.Adapter<RecyclerVie
         if (mInPlayMatchList != null && mInPlayMatchList.size() > position) {
             InPlayMatch match = mInPlayMatchList.get(position);
 
-            match.setMatchStatus("play"); //TODO - remove
-
             if (shouldDisableMatchClickAction(match)) {
                 viewHolder.matchParentLayout.setEnabled(false);
                 viewHolder.actionButton.setVisibility(View.GONE);

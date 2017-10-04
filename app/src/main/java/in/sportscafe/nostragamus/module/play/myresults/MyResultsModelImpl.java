@@ -2,6 +2,7 @@ package in.sportscafe.nostragamus.module.play.myresults;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.text.TextUtils;
 
 import com.jeeva.android.ExceptionTracker;
 import com.jeeva.android.Log;
@@ -17,10 +18,10 @@ import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
 import in.sportscafe.nostragamus.module.common.ApiResponse;
-import in.sportscafe.nostragamus.module.feed.dto.Match;
 import in.sportscafe.nostragamus.module.inPlay.ui.ResultsScreenDataDto;
 import in.sportscafe.nostragamus.module.play.myresults.dto.ReplayPowerupResponse;
-import in.sportscafe.nostragamus.module.play.prediction.dto.Question;
+import in.sportscafe.nostragamus.module.resultspeek.dto.Match;
+import in.sportscafe.nostragamus.module.resultspeek.dto.Question;
 import in.sportscafe.nostragamus.module.user.login.UserInfoModelImpl;
 import in.sportscafe.nostragamus.module.user.login.dto.UserInfo;
 import in.sportscafe.nostragamus.webservice.ChangeAnswer;
@@ -77,9 +78,11 @@ public class MyResultsModelImpl implements MyResultsModel, MyResultsAdapter.OnMy
                 String matchStatus = resultsScreenData.getMatchStatus();
 
                 /* Check for Awaiting Results to Change Toolbar Heading */
-                if (matchStatus.equalsIgnoreCase(Constants.MatchStatusStrings.ANSWER)
+                if (!TextUtils.isEmpty(matchStatus) && (
+                        matchStatus.equalsIgnoreCase(Constants.MatchStatusStrings.ANSWER)
                         || matchStatus.equalsIgnoreCase(Constants.MatchStatusStrings.CONTINUE)
-                        || matchStatus.equalsIgnoreCase(Constants.MatchStatusStrings.PLAY)) {
+                        || matchStatus.equalsIgnoreCase(Constants.MatchStatusStrings.PLAY))) {
+
                     mResultsModelListener.setToolbarHeading("Awaiting Results");
                 }
 

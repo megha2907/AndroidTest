@@ -1,11 +1,11 @@
 package in.sportscafe.nostragamus.module.navigation.wallet.paytmAndBank.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.gson.annotations.SerializedName;
 
 import org.parceler.Parcel;
 
-import in.sportscafe.nostragamus.module.allchallenges.dto.ChallengeUserInfo;
+import in.sportscafe.nostragamus.module.navigation.wallet.dto.ChallengeUserInfo;
+
 
 /**
  * Created by deepanshi on 4/12/17.

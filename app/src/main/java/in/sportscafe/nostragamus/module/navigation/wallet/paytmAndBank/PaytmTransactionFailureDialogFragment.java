@@ -10,13 +10,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import org.parceler.Parcels;
-
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
-import in.sportscafe.nostragamus.module.allchallenges.dto.Challenge;
-import in.sportscafe.nostragamus.module.common.NostragamusDialogFragment;
 import in.sportscafe.nostragamus.module.common.PopUpDialogFragment;
+import in.sportscafe.nostragamus.module.common.dto.Challenge;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -25,7 +22,6 @@ public class PaytmTransactionFailureDialogFragment extends PopUpDialogFragment i
 
     public interface IPaytmFailureActionListener {
         void onBackToAddMoney();
-
         void onRetryPayment();
     }
 

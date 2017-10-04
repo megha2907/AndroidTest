@@ -20,6 +20,8 @@ import in.sportscafe.nostragamus.module.challengeRewards.RewardsFragment;
 import in.sportscafe.nostragamus.module.challengeRules.RulesFragment;
 import in.sportscafe.nostragamus.module.common.NostraBaseFragment;
 import in.sportscafe.nostragamus.module.contest.dto.Contest;
+import in.sportscafe.nostragamus.module.contest.dto.ContestEntriesScreenData;
+import in.sportscafe.nostragamus.module.contest.dto.ContestScreenData;
 import in.sportscafe.nostragamus.module.contest.ui.DetailScreensLaunchRequest;
 import in.sportscafe.nostragamus.module.contest.ui.ContestEntriesViewPagerFragment;
 import in.sportscafe.nostragamus.module.navigation.wallet.WalletHelper;
@@ -125,12 +127,22 @@ public class ContestDetailsBeforeJoinFragment extends NostraBaseFragment impleme
         if (contest != null && getView() != null && mViewPager != null) {
             mViewPagerAdapter = new ContestDetailsBJViewPagerAdapter(getChildFragmentManager(), getContext());
 
+            /* Contest Entries screen */
+            ContestEntriesScreenData contestScreenData = new ContestEntriesScreenData();
+            contestScreenData.setChallengeId(contest.getChallengeId());
+            contestScreenData.setContestId(contest.getContestId());
+            Bundle args = new Bundle();
+            args.putParcelable(Constants.BundleKeys.CONTEST_ENTRIES_SCREEN_DATA, Parcels.wrap(contestScreenData));
+
             ContestEntriesViewPagerFragment contestEntriesViewPagerFragment = new ContestEntriesViewPagerFragment();
+            contestEntriesViewPagerFragment.setArguments(args);
             mViewPagerAdapter.addFragment(contestEntriesViewPagerFragment, Constants.ContestDetailsTabs.ENTRIES);
 
+            /* Rewards */
             RewardsFragment rewardsFragment = RewardsFragment.newInstance(contest.getContestId());
             mViewPagerAdapter.addFragment(rewardsFragment, Constants.ContestDetailsTabs.PRIZES);
 
+            /* Rules */
             RulesFragment rulesFragment = RulesFragment.newInstance(contest.getContestId());
             mViewPagerAdapter.addFragment(rulesFragment, Constants.ContestDetailsTabs.RULES);
 

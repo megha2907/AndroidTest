@@ -37,8 +37,6 @@ import in.sportscafe.nostragamus.Constants.AnalyticsLabels;
 import in.sportscafe.nostragamus.Constants.UserProperties;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.R;
-import in.sportscafe.nostragamus.module.allchallenges.info.ChallengeConfigsDialogFragment;
-
 
 /**
  * Created by deepanshu on 8/8/16.
@@ -70,11 +68,11 @@ public class NostragamusAnalytics {
 
     private boolean mAppOpeningTracked = false;
 
-    public NostragamusAnalytics init(Context context, boolean optOut) {
+    public NostragamusAnalytics init(Context context) {
         GoogleAnalytics ga = GoogleAnalytics.getInstance(context);
-        ga.setAppOptOut(optOut);
+        ga.setAppOptOut(BuildConfig.DEBUG);
 
-        if (!optOut) {
+        if (!BuildConfig.DEBUG) {
 
             // Initializing the google analytics
             this.mTracker = ga.newTracker(R.xml.app_tracker);
@@ -82,6 +80,7 @@ public class NostragamusAnalytics {
 
             // Initializing the MoEngage
             this.mMoEHelper = MoEHelper.getInstance(context);
+
 
             // Initializing the Amplitude
             this.mAmplitude = Amplitude.getInstance().initialize(context, context.getString(R.string.amplitude_api_key))
@@ -281,7 +280,6 @@ public class NostragamusAnalytics {
     /**
      * track leaderboards
      *
-     * @param actions - Tournament, group, challenges and sports
      */
     public void trackLeaderboard(String label) {
         track(AnalyticsCategory.LEADERBOARD, AnalyticsActions.LB_DETAIL, label, null);
@@ -341,7 +339,6 @@ public class NostragamusAnalytics {
     /**
      * track user profile
      *
-     * @param type - tabs
      * @param name - Sports, Groups
      */
     public void trackMyProfile(String name) {
@@ -351,7 +348,6 @@ public class NostragamusAnalytics {
     /**
      * track user profile
      *
-     * @param type - tabs
      * @param name - Sports, Groups
      */
     public void trackOtherProfile(String name) {

@@ -79,7 +79,7 @@ public class ContestFragment extends NostraBaseFragment {
             ContestDataProvider dataProvider = new ContestDataProvider();
             final List<ContestType> contestTypeList = dataProvider.getContestTypeList();
 
-            dataProvider.getContestDetails(/*mContestScreenData.getChallengeId()*/482 /* TODO */,
+            dataProvider.getContestDetails(mContestScreenData.getChallengeId(),
                     new ContestDataProvider.ContestDataProviderListener() {
                 @Override
                 public void onSuccessResponse(int status, ContestResponse response) {

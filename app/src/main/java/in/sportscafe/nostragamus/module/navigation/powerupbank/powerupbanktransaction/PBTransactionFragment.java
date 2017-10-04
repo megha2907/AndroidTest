@@ -23,9 +23,8 @@ import java.util.List;
 import in.sportscafe.nostragamus.BuildConfig;
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
+import in.sportscafe.nostragamus.module.navigation.powerupbank.earnmorepowerups.PowerUp;
 import in.sportscafe.nostragamus.module.navigation.powerupbank.powerupbanktransaction.dto.PBTransactionHistory;
-import in.sportscafe.nostragamus.module.navigation.referfriends.referralcredits.ReferralCreditFragment;
-import in.sportscafe.nostragamus.module.user.powerups.PowerUp;
 
 /**
  * Created by deepanshi on 7/13/17.
@@ -33,7 +32,7 @@ import in.sportscafe.nostragamus.module.user.powerups.PowerUp;
 
 public class PBTransactionFragment extends BaseFragment implements View.OnClickListener {
 
-    private static final String TAG = ReferralCreditFragment.class.getSimpleName();
+    private static final String TAG = PBTransactionFragment.class.getSimpleName();
 
     private PBTransactionFragmentListener mPBTransactionFragmentListener;
 

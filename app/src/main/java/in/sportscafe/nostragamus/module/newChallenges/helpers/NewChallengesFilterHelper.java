@@ -13,7 +13,7 @@ public class NewChallengesFilterHelper {
 
     public static final int FILTER_ALL_SPORTS_ID = -11;
     public static final int FILTER_DAILY_SPORTS_ID = -12;
-    public static final int FILTER_MIXED_SPORTS_ID = -13;
+    public static final int FILTER_MIXED_SPORTS_ID = 9; // Sent from server
 
     public NewChallengesFilterHelper() {}
 
@@ -31,5 +31,31 @@ public class NewChallengesFilterHelper {
         }
 
         return filteredChallenges;
+    }
+
+    public List<NewChallengesResponse> getDailySports(List<NewChallengesResponse> newChallengesResponseData) {
+        List<NewChallengesResponse> dailyChallenge = new ArrayList<>();
+
+        if (newChallengesResponseData != null && newChallengesResponseData.size() > 0) {
+            for (NewChallengesResponse newChallenge : newChallengesResponseData) {
+                // TODO
+            }
+        }
+
+        return dailyChallenge;
+    }
+
+    public List<NewChallengesResponse> getMixSports(List<NewChallengesResponse> newChallengesResponseData) {
+        List<NewChallengesResponse> mixChallenge = new ArrayList<>();
+
+        if (newChallengesResponseData != null && newChallengesResponseData.size() > 0) {
+            for (NewChallengesResponse newChallenge : newChallengesResponseData) {
+                if (newChallenge.getSportsId() == FILTER_MIXED_SPORTS_ID) {
+                    mixChallenge.add(newChallenge);
+                }
+            }
+        }
+
+        return mixChallenge;
     }
 }

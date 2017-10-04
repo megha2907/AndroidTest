@@ -5,18 +5,10 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.TextView;
 
-import org.parceler.Parcels;
-
-import java.util.HashMap;
-
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.NostragamusActivity;
-import in.sportscafe.nostragamus.module.navigation.referfriends.referralcredits.ReferralCreditFragment;
-import in.sportscafe.nostragamus.module.navigation.referfriends.referralcredits.ReferralCreditFragmentListener;
-import in.sportscafe.nostragamus.module.user.powerups.PowerUp;
 import in.sportscafe.nostragamus.utils.FragmentHelper;
-import in.sportscafe.nostragamus.webservice.UserReferralInfo;
 
 /**
  * Created by deepanshi on 7/13/17.
