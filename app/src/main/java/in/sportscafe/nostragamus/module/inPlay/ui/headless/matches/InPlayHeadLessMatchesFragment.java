@@ -48,6 +48,7 @@ public class InPlayHeadLessMatchesFragment extends BaseFragment implements View.
     private InPlayHeadLessMatchesAdapter mMatchesAdapter;
     private HeadLessMatchScreenData mHeadLessMatchScreenData;
     private TextView mTimerTextView;
+    private TextView mMatchesLeftTextView;
 
     public InPlayHeadLessMatchesFragment() {
     }
@@ -72,11 +73,8 @@ public class InPlayHeadLessMatchesFragment extends BaseFragment implements View.
     }
 
     private void initRootView(View rootView) {
-        TextView tvContestHeading = (TextView) rootView.findViewById(R.id.matches_timeline_heading);
-        TextView tvContestSubHeadingOne = (TextView) rootView.findViewById(R.id.matches_timeline_subheading_one);
-        TextView tvContestSubHeadingTwo = (TextView) rootView.findViewById(R.id.newchallenge_matches_subheading_two);
         Button joinContestBtn = (Button) rootView.findViewById(R.id.new_challenge_matches_join_button);
-        TextView tvMatchesLeft = (TextView) rootView.findViewById(R.id.matches_timeline_matches_left);
+        mMatchesLeftTextView = (TextView) rootView.findViewById(R.id.matches_timeline_matches_left);
         mTimerTextView = (TextView) rootView.findViewById(R.id.matches_timeline_match_expires_in);
 
         mMatchesRecyclerView = (RecyclerView)rootView.findViewById(R.id.match_timeline_rv);
@@ -230,8 +228,17 @@ public class InPlayHeadLessMatchesFragment extends BaseFragment implements View.
         super.onActivityCreated(savedInstanceState);
 
         initMembers();
+        setValues();
         setTimer();
         loadDataFromServer();
+    }
+
+    private void setValues() {
+        if (mHeadLessMatchScreenData != null) {
+            if (mHeadLessMatchScreenData.getTotalMatches() > 0) {
+                mMatchesLeftTextView.setText(mHeadLessMatchScreenData.getMatchesLeft() + "/" + mHeadLessMatchScreenData.getTotalMatches());
+            }
+        }
     }
 
     private void initMembers() {

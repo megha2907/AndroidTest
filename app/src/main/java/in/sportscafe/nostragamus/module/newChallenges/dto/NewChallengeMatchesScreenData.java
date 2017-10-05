@@ -11,6 +11,8 @@ public class NewChallengeMatchesScreenData {
     private int challengeId;
     private String challengeName;
     private String startTime;
+    private int matchesLeft;
+    private int totalMatches;
 
     public int getChallengeId() {
         return challengeId;
@@ -34,5 +36,21 @@ public class NewChallengeMatchesScreenData {
 
     public void setStartTime(String startTime) {
         this.startTime = startTime;
+    }
+
+    public int getMatchesLeft() {
+        return matchesLeft;
+    }
+
+    public void setMatchesLeft(int matchesLeft) {
+        this.matchesLeft = matchesLeft;
+    }
+
+    public int getTotalMatches() {
+        return totalMatches;
+    }
+
+    public void setTotalMatches(int totalMatches) {
+        this.totalMatches = totalMatches;
     }
 }
