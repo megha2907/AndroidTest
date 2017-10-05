@@ -177,6 +177,8 @@ public class NewChallengesRecyclerAdapter extends RecyclerView.Adapter<RecyclerV
                 screenData.setChallengeId(newChallengesResponse.getChallengeId());
                 screenData.setChallengeName(newChallengesResponse.getChallengeName());
                 screenData.setStartTime(newChallengesResponse.getChallengeStartTime());
+                screenData.setMatchesLeft(newChallengesResponse.getMatchesLeft());
+                screenData.setTotalMatches(newChallengesResponse.getTotalMatches());
 
                 args.putParcelable(Constants.BundleKeys.NEW_CHALLENGE_MATCHES_SCREEN_DATA, Parcels.wrap(screenData));
                 mChallengeListener.onChallengeClicked(args);

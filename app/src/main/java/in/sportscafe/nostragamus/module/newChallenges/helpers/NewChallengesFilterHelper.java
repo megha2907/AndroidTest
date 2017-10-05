@@ -24,8 +24,14 @@ public class NewChallengesFilterHelper {
             filteredChallenges = new ArrayList<>();
 
             for (NewChallengesResponse challenge : newChallengesResponses) {
-                if (challenge.getSportsId() == sportFilterId) {
-                    filteredChallenges.add(challenge);
+                int[] sportsIdArray = challenge.getSportsIdArray();
+
+                if (sportsIdArray != null) {
+                    for (int temp = 0; temp < sportsIdArray.length; temp++) {
+                        if (sportsIdArray[temp] == sportFilterId) {
+                            filteredChallenges.add(challenge);
+                        }
+                    }
                 }
             }
         }
@@ -38,7 +44,9 @@ public class NewChallengesFilterHelper {
 
         if (newChallengesResponseData != null && newChallengesResponseData.size() > 0) {
             for (NewChallengesResponse newChallenge : newChallengesResponseData) {
-                // TODO
+                if (newChallenge.isDaily()) {
+                    dailyChallenge.add(newChallenge);
+                }
             }
         }
 
@@ -50,8 +58,14 @@ public class NewChallengesFilterHelper {
 
         if (newChallengesResponseData != null && newChallengesResponseData.size() > 0) {
             for (NewChallengesResponse newChallenge : newChallengesResponseData) {
-                if (newChallenge.getSportsId() == FILTER_MIXED_SPORTS_ID) {
-                    mixChallenge.add(newChallenge);
+                int[] sportsIdArray = newChallenge.getSportsIdArray();
+
+                if (sportsIdArray != null) {
+                    for (int temp = 0; temp < sportsIdArray.length; temp++) {
+                        if (sportsIdArray[temp] == FILTER_MIXED_SPORTS_ID) {
+                            mixChallenge.add(newChallenge);
+                        }
+                    }
                 }
             }
         }

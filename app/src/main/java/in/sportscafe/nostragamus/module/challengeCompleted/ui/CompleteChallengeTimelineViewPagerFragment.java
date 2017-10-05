@@ -262,6 +262,7 @@ public class CompleteChallengeTimelineViewPagerFragment extends NostraBaseFragme
             dataDto.setRoomId(contestDto.getRoomId());
             dataDto.setPowerUp(contestDto.getPowerUp());
             dataDto.setSubTitle(contestDto.getContestName());
+            dataDto.setChallengeName(contestDto.getChallengeName());
 
             if (completedMatch.getMatchParties() != null && completedMatch.getMatchParties().size() == 2) {
                 dataDto.setMatchPartyTitle1(completedMatch.getMatchParties().get(0).getPartyName());

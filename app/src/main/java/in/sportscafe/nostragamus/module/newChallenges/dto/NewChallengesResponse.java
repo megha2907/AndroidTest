@@ -28,8 +28,8 @@ public class NewChallengesResponse {
     @SerializedName("end_time")
     private String challengeEndTime;
 
-    @SerializedName("sports_id")
-    private int sportsId;
+    @SerializedName("sports_id_arr")
+    private int[] sportsIdArray;
 
     @SerializedName("challenge_tournaments")
     private List<String> tournaments = null;
@@ -42,6 +42,9 @@ public class NewChallengesResponse {
 
     @SerializedName("prize_money")
     private int prizes;
+
+    @SerializedName("is_daily")
+    private boolean isDaily;
 
     public int getChallengeAdapterItemType() {
         return challengeAdapterItemType;
@@ -83,12 +86,12 @@ public class NewChallengesResponse {
         this.challengeEndTime = challengeEndTime;
     }
 
-    public int getSportsId() {
-        return sportsId;
+    public int[] getSportsIdArray() {
+        return sportsIdArray;
     }
 
-    public void setSportsId(int sportsId) {
-        this.sportsId = sportsId;
+    public void setSportsIdArray(int[] sportsIdArray) {
+        this.sportsIdArray = sportsIdArray;
     }
 
     public List<String> getTournaments() {
@@ -121,5 +124,13 @@ public class NewChallengesResponse {
 
     public void setPrizes(int prizes) {
         this.prizes = prizes;
+    }
+
+    public boolean isDaily() {
+        return isDaily;
+    }
+
+    public void setDaily(boolean daily) {
+        isDaily = daily;
     }
 }

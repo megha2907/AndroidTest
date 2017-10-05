@@ -328,6 +328,7 @@ public class InPlayMatchesPagerFragment extends NostraBaseFragment {
             dataDto.setPowerUp(contestDto.getPowerUp());
             dataDto.setSubTitle(contestDto.getContestName());
             dataDto.setMatchStatus(inPlayMatch.getMatchStatus());
+            dataDto.setChallengeName(contestDto.getChallengeName());
 
             if (inPlayMatch.getMatchParties() != null && inPlayMatch.getMatchParties().size() == 2) {
                 dataDto.setMatchPartyTitle1(inPlayMatch.getMatchParties().get(0).getPartyName());

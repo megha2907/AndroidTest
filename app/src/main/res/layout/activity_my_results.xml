@@ -100,7 +100,7 @@
                 android:id="@+id/my_results_declaration_rl"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/join_contest_rl"
+                android:layout_below="@+id/my_result_join_contest_layout"
                 android:orientation="vertical"
                 android:visibility="gone">
 
@@ -191,7 +191,7 @@
             </LinearLayout>
 
             <!-- Information Layout -->
-            <RelativeLayout
+            <!--<RelativeLayout
                 android:id="@+id/join_contest_rl"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -253,7 +253,89 @@
                     android:textSize="@dimen/sp_14"
                     app:typeface="lato_regular" />
 
-            </RelativeLayout>
+            </RelativeLayout>-->
+
+            <!-- Information Layout -->
+            <LinearLayout
+                android:id="@+id/my_result_join_contest_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:background="@color/colorBackground"
+                android:paddingBottom="@dimen/dim_16"
+                android:paddingTop="@dimen/dim_12"
+                android:paddingLeft="@dimen/dim_12"
+                android:paddingRight="@dimen/dim_12"
+                android:layout_margin="@dimen/dim_12"
+                android:visibility="gone">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:gravity="center">
+
+                        <ImageView
+                            android:id="@+id/games_info_icon_imgView"
+                            android:layout_width="@dimen/dim_36"
+                            android:layout_height="@dimen/dim_36"
+                            android:src="@drawable/play_contest_card"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_marginLeft="@dimen/dim_12">
+
+                        <com.jeeva.android.widgets.customfont.CustomTextView
+                            android:id="@+id/games_info_heading_textView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/bluecolor1"
+                            android:text="YOUR PREDICTIONS ARE SAVED"
+                            android:textAllCaps="true"
+                            android:layout_marginTop="@dimen/dim_10"
+                            android:textSize="@dimen/sp_12"
+                            app:typeface="lato_bold" />
+
+                        <com.jeeva.android.widgets.customfont.CustomTextView
+                            android:id="@+id/games_info_msg_textView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/grey6"
+                            android:text="Join a contest to play the challenge. You can only edit the predictions once you have joined contest"
+                            android:layout_marginTop="@dimen/dim_8"
+                            android:textSize="@dimen/sp_11"
+                            app:typeface="lato_regular" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <com.jeeva.android.widgets.customfont.CustomButton
+                    android:id="@+id/results_join_contest_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dim_40"
+                    android:layout_marginTop="@dimen/dim_12"
+                    android:background="@drawable/light_blue_button_selector"
+                    android:onClick="onClick"
+                    android:paddingBottom="@dimen/dp_4"
+                    android:text="Join a Contest"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/sp_14"
+                    app:typeface="lato_regular"/>
+
+            </LinearLayout>
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/my_results_rv"

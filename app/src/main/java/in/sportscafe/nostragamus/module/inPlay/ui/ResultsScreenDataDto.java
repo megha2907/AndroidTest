@@ -19,6 +19,7 @@ public  class ResultsScreenDataDto {
     private String challengeName;
     private String matchStatus;
     private boolean isPlayingPseudoGame = false;
+    private boolean isHeadLess = false;
 
     public int getChallengeId() {
         return challengeId;
@@ -90,5 +91,13 @@ public  class ResultsScreenDataDto {
 
     public void setPlayingPseudoGame(boolean playingPseudoGame) {
         isPlayingPseudoGame = playingPseudoGame;
+    }
+
+    public boolean isHeadLess() {
+        return isHeadLess;
+    }
+
+    public void setHeadLess(boolean headLess) {
+        isHeadLess = headLess;
     }
 }

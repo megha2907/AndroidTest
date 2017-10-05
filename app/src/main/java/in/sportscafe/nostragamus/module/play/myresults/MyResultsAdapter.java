@@ -42,6 +42,7 @@ import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
 import in.sportscafe.nostragamus.module.common.Adapter;
 import in.sportscafe.nostragamus.module.common.NostraTextViewLinkClickMovementMethod;
+import in.sportscafe.nostragamus.module.inPlay.ui.ResultsScreenDataDto;
 import in.sportscafe.nostragamus.module.othersanswers.OthersAnswersActivity;
 import in.sportscafe.nostragamus.module.popups.inapppopups.LbLanding;
 import in.sportscafe.nostragamus.module.resultspeek.FeedWebView;
@@ -73,10 +74,12 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
 
     private boolean mIsMatchStarted = false;
     private long mMatchStartTimeMs = 0;
+    private ResultsScreenDataDto mResultScreenData;
 
-    public MyResultsAdapter(Context context, boolean isMyResults) {
+    public MyResultsAdapter(Context context, boolean isMyResults, ResultsScreenDataDto resultsScreenData) {
         super(context);
         this.mIsMyResults = isMyResults;
+        mResultScreenData = resultsScreenData;
     }
 
     public void setResultsActionListener(OnMyResultsActionListener mResultsActionListener) {
@@ -751,7 +754,7 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
     private void showOrHideEditAnswerButton() {
 
         if (BuildConfig.IS_PAID_VERSION) {
-            if (mIsMatchStarted && mRlEditAnswers != null) {
+            if ((mIsMatchStarted && mRlEditAnswers != null) || isPlayingPseudoGame() || isHeadlessFlow()) {
                 // If Match started, answers can not be edited
                 mRlEditAnswers.setVisibility(View.GONE);
             }
@@ -759,6 +762,22 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
             // If Playstore App , answers can not be edited
             mRlEditAnswers.setVisibility(View.GONE);
         }
+    }
+
+    private boolean isHeadlessFlow() {
+        boolean isHeadLess = false;
+        if (mResultScreenData != null && mResultScreenData.isHeadLess() ) {
+            isHeadLess = true;
+        }
+        return isHeadLess;
+    }
+
+    private boolean isPlayingPseudoGame() {
+        boolean isPseudoGame = false;
+        if (mResultScreenData != null && mResultScreenData.isPlayingPseudoGame()) {
+            isPseudoGame = true;
+        }
+        return isPseudoGame;
     }
 
     private void showOrHidePowerUps(Question question, View convertView) {

@@ -34,6 +34,7 @@ import in.sportscafe.nostragamus.module.inPlay.adapter.InPlayAdapterItemType;
 import in.sportscafe.nostragamus.module.inPlay.adapter.InPlayAdapterListener;
 import in.sportscafe.nostragamus.module.inPlay.adapter.InPlayRecyclerAdapter;
 import in.sportscafe.nostragamus.module.inPlay.dto.InPlayContestDto;
+import in.sportscafe.nostragamus.module.inPlay.dto.InPlayContestMatchDto;
 import in.sportscafe.nostragamus.module.inPlay.dto.InPlayListChallengeItem;
 import in.sportscafe.nostragamus.module.inPlay.dto.InPlayListItem;
 import in.sportscafe.nostragamus.module.inPlay.dto.InPlayResponse;
@@ -41,8 +42,6 @@ import in.sportscafe.nostragamus.module.inPlay.helper.InPlayFilterHelper;
 import in.sportscafe.nostragamus.module.inPlay.ui.headless.dto.HeadLessMatchScreenData;
 import in.sportscafe.nostragamus.module.inPlay.ui.headless.matches.InPlayHeadLessMatchActivity;
 import in.sportscafe.nostragamus.module.newChallenges.dto.SportsTab;
-import in.sportscafe.nostragamus.module.newChallenges.helpers.NewChallengesFilterHelper;
-import in.sportscafe.nostragamus.module.newChallenges.ui.matches.NewChallengesMatchActivity;
 import in.sportscafe.nostragamus.utils.AlertsHelper;
 
 /**
@@ -199,7 +198,7 @@ public class InPlayViewPagerFragment extends BaseFragment {
             challengeItem.setChallengeStartTime(response.getChallengeStartTime());
             challengeItem.setChallengeEndTime(response.getChallengeEndTime());
             challengeItem.setStatus(response.getStatus());
-            challengeItem.setSportsId(response.getSportsId());
+            challengeItem.setSportsIdArray(response.getSportsIdArray());
             challengeItem.setContestCount((response.getContestList() != null) ? response.getContestList().size() : 0);
         }
         return challengeItem;
@@ -246,6 +245,8 @@ public class InPlayViewPagerFragment extends BaseFragment {
                 data.setContestName(inPlayContestDto.getContestName());
                 data.setRoomId(inPlayContestDto.getRoomId());
                 data.setStartTime(inPlayContestDto.getChallengeStartTime());
+                data.setMatchesLeft(getMatchesLeft(inPlayContestDto.getMatches()));
+                data.setTotalMatches(inPlayContestDto.getMatches().size());
 
                 args.putParcelable(Constants.BundleKeys.HEADLESS_MATCH_SCREEN_DATA, Parcels.wrap(data));
 
@@ -256,6 +257,20 @@ public class InPlayViewPagerFragment extends BaseFragment {
                 AlertsHelper.showAlert(getContext(), "No Internet", "Please turn ON internet to continue", null);
             }
         }
+    }
+
+    private int getMatchesLeft(List<InPlayContestMatchDto> matchDtos) {
+        int left = 0;
+
+        if (matchDtos != null) {
+            for (InPlayContestMatchDto matchDto : matchDtos) {
+                if (matchDto.getStatus().equalsIgnoreCase(Constants.InPlayMatchStatus.COMPLETED)) {
+                    left++;
+                }
+            }
+        }
+
+        return left;
     }
 
     private void gotoContestScreen(Bundle args) {

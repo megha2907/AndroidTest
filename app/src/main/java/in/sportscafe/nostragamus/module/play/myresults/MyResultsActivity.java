@@ -163,7 +163,7 @@ public class MyResultsActivity extends NostragamusActivity implements MyResultsV
 
         /* If headless flow, show join contest layout */
         if (isHeadlessFlow() || isPlayingPseudoGame()) {
-            RelativeLayout cardLayout = (RelativeLayout) findViewById(R.id.join_contest_rl);
+            LinearLayout cardLayout = (LinearLayout) findViewById(R.id.my_result_join_contest_layout);
             cardLayout.setVisibility(View.VISIBLE);
 
             Button btnJoinContest = (Button) findViewById(R.id.results_join_contest_button);
