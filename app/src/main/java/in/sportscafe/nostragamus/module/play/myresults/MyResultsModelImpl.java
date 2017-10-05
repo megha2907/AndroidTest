@@ -73,6 +73,8 @@ public class MyResultsModelImpl implements MyResultsModel, MyResultsAdapter.OnMy
             if (bundle.containsKey(BundleKeys.RESULTS_SCREEN_DATA)) {
 
                 mResultsScreenData = Parcels.unwrap(bundle.getParcelable(BundleKeys.RESULTS_SCREEN_DATA));
+                mResultsScreenData.setHeadLess(bundle.getBoolean(BundleKeys.IS_HEADLESS_FLOW, false));
+
                 matchId = mResultsScreenData.getMatchId();
                 roomId = mResultsScreenData.getRoomId();
                 contestName = mResultsScreenData.getSubTitle();

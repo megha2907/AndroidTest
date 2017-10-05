@@ -754,7 +754,7 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
     private void showOrHideEditAnswerButton() {
 
         if (BuildConfig.IS_PAID_VERSION) {
-            if ((mIsMatchStarted && mRlEditAnswers != null) || isPlayingPseudoGame()) {
+            if ((mIsMatchStarted && mRlEditAnswers != null) || isPlayingPseudoGame() || isHeadlessFlow()) {
                 // If Match started, answers can not be edited
                 mRlEditAnswers.setVisibility(View.GONE);
             }
@@ -762,6 +762,14 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
             // If Playstore App , answers can not be edited
             mRlEditAnswers.setVisibility(View.GONE);
         }
+    }
+
+    private boolean isHeadlessFlow() {
+        boolean isHeadLess = false;
+        if (mResultScreenData != null && mResultScreenData.isHeadLess() ) {
+            isHeadLess = true;
+        }
+        return isHeadLess;
     }
 
     private boolean isPlayingPseudoGame() {
