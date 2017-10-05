@@ -1,6 +1,7 @@
 package in.sportscafe.nostragamus.module.newChallenges.ui.matches;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -20,6 +21,7 @@ import com.jeeva.android.BaseFragment;
 
 import org.parceler.Parcels;
 
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -43,6 +45,7 @@ import in.sportscafe.nostragamus.module.newChallenges.dataProvider.NewChallenges
 import in.sportscafe.nostragamus.module.newChallenges.dto.JoinPseudoContestResponse;
 import in.sportscafe.nostragamus.module.newChallenges.dto.NewChallengeMatchesResponse;
 import in.sportscafe.nostragamus.module.newChallenges.dto.NewChallengeMatchesScreenData;
+import in.sportscafe.nostragamus.module.nostraHome.helper.TimerHelper;
 import in.sportscafe.nostragamus.module.prediction.playScreen.PredictionActivity;
 import in.sportscafe.nostragamus.module.prediction.playScreen.dto.PlayScreenDataDto;
 import in.sportscafe.nostragamus.utils.AlertsHelper;
@@ -102,18 +105,16 @@ public class NewChallengesMatchesFragment extends BaseFragment implements View.O
 
     private void setTimer() {
         if (mScreenData != null && !TextUtils.isEmpty(mScreenData.getStartTime())) {
-            long startTimeMs = TimeUtils.getMillisecondsFromDateString(mScreenData.getStartTime(), Constants.DateFormats.FORMAT_DATE_T_TIME_ZONE, Constants.DateFormats.GMT);
-            TimeAgo timeAgo = TimeUtils.calcTimeAgo(Nostragamus.getInstance().getServerTime(), startTimeMs);
+            long futureTime = TimerHelper.getCountDownFutureTime(mScreenData.getStartTime());
 
-            CountDownTimer countDownTimer = new CountDownTimer(timeAgo.totalDiff, 1000) {
+            CountDownTimer countDownTimer = new CountDownTimer(futureTime, 1000) {
                 @Override
                 public void onTick(long millisUntilFinished) {
-                    mContestTimerTextView.setText(TimeUtils.getDateStringFromDate(new Date(millisUntilFinished), "HH:mm:ss"));
+                    mContestTimerTextView.setText(TimerHelper.getTimerFormatFromMillis(millisUntilFinished));
                 }
 
                 @Override
                 public void onFinish() {
-
                     onMatchStarted();
                 }
             };
@@ -122,7 +123,16 @@ public class NewChallengesMatchesFragment extends BaseFragment implements View.O
     }
 
     private void onMatchStarted() {
-        // TODO
+        String msg = "Please join other challenges as " + mScreenData.getChallengeName() +
+                " already started";
+        AlertsHelper.showAlert(getContext(), "Challenge Started!", msg, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                if (mNewChallengeMatchFragmentListener != null) {
+                    mNewChallengeMatchFragmentListener.onBackClicked();
+                }
+            }
+        });
     }
 
     @NonNull

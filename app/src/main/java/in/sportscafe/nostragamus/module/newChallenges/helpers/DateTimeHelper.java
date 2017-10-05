@@ -6,6 +6,7 @@ import java.util.Calendar;
 
 import in.sportscafe.nostragamus.AppSnippet;
 import in.sportscafe.nostragamus.Constants;
+import in.sportscafe.nostragamus.module.nostraHome.helper.TimerHelper;
 import in.sportscafe.nostragamus.utils.timeutils.TimeUtils;
 
 /**
@@ -44,6 +45,22 @@ public class DateTimeHelper {
             }
         }
         return startTimeStr;
+    }
+
+    public static synchronized boolean isTimerRequired(String startTime) {
+        boolean isTimerRequired = false;
+
+        if (!TextUtils.isEmpty(startTime)) {
+            long millis = TimeUtils.getMillisecondsFromDateString(startTime);
+            if (millis > 0) {
+                long days = TimeUtils.getDaysDifference(millis - Calendar.getInstance().getTimeInMillis());
+                if (days <= 1) {
+                    isTimerRequired = true;
+                }
+            }
+        }
+
+        return isTimerRequired;
     }
 
     public static String getInPlayMatchTime(String time) {
