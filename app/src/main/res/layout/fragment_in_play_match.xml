@@ -5,7 +5,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:background="@color/black"
-    tools:context="in.sportscafe.nostragamus.module.inPlay.ui.InPlayMatchTimelineViewPagerFragment">
+    tools:context="in.sportscafe.nostragamus.module.inPlay.ui.InPlayMatchesPagerFragment">
 
     <LinearLayout
         android:id="@+id/inplay_matches_content_View"

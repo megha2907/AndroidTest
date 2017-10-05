@@ -248,7 +248,7 @@ public class AddMoneyWalletHelper {
                     }
                     if (fragment instanceof AddMoneyOnLowBalanceFragment) {
                         /*AddMoneyOnLowBalanceFragmentListener fragmentListener = ((AddMoneyOnLowBalanceFragment) fragment).getFragmentListener();
-                        fragmentListener.onSuccess();*/
+                        fragmentListener.onTimerSuccess();*/
 
                         ((AddMoneyOnLowBalanceFragment) fragment).onAddMoneySuccess();
                     }

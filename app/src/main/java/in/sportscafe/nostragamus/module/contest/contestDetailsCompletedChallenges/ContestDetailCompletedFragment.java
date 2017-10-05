@@ -21,7 +21,6 @@ import in.sportscafe.nostragamus.module.challengeRewards.RewardsFragment;
 import in.sportscafe.nostragamus.module.challengeRules.RulesFragment;
 import in.sportscafe.nostragamus.module.common.NostraBaseFragment;
 import in.sportscafe.nostragamus.module.contest.ui.DetailScreensLaunchRequest;
-import in.sportscafe.nostragamus.module.inPlay.ui.InPlayMatchTimelineViewPagerFragment;
 import in.sportscafe.nostragamus.module.user.leaderboard.LeaderBoardFragment;
 
 /**

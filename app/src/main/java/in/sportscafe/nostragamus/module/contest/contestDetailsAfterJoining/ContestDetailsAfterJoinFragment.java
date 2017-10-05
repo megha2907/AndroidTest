@@ -20,8 +20,7 @@ import in.sportscafe.nostragamus.module.challengeRules.RulesFragment;
 import in.sportscafe.nostragamus.module.common.NostraBaseFragment;
 import in.sportscafe.nostragamus.module.contest.ui.DetailScreensLaunchRequest;
 import in.sportscafe.nostragamus.module.inPlay.dto.InPlayContestDto;
-import in.sportscafe.nostragamus.module.inPlay.ui.InPlayMatchTimelineViewPagerFragment;
-import in.sportscafe.nostragamus.module.navigation.wallet.WalletHelper;
+import in.sportscafe.nostragamus.module.inPlay.ui.InPlayMatchesPagerFragment;
 import in.sportscafe.nostragamus.module.user.leaderboard.LeaderBoardFragment;
 
 /**
@@ -123,7 +122,7 @@ public class ContestDetailsAfterJoinFragment extends NostraBaseFragment implemen
         if (getView() != null && contestDto != null && mViewPager != null) {
             mViewPagerAdapter = new ContestDetailsAfterJoinViewPagerAdapter(getChildFragmentManager(), getContext());
 
-            InPlayMatchTimelineViewPagerFragment matchTimelineViewPagerFragment = new InPlayMatchTimelineViewPagerFragment();
+            InPlayMatchesPagerFragment matchTimelineViewPagerFragment = new InPlayMatchesPagerFragment();
             if (getArguments() != null) {
                 matchTimelineViewPagerFragment.setArguments(getArguments());
             }

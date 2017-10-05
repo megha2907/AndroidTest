@@ -29,14 +29,8 @@ import in.sportscafe.nostragamus.module.challengeCompleted.dto.CompletedMatch;
 import in.sportscafe.nostragamus.module.challengeCompleted.dto.CompletedMatchesResponse;
 import in.sportscafe.nostragamus.module.common.NostraBaseFragment;
 import in.sportscafe.nostragamus.module.customViews.TimelineHelper;
-import in.sportscafe.nostragamus.module.inPlay.adapter.InPlayMatchAdapterListener;
-import in.sportscafe.nostragamus.module.inPlay.adapter.InPlayMatchesRecyclerAdapter;
 import in.sportscafe.nostragamus.module.inPlay.adapter.MatchesAdapterAction;
-import in.sportscafe.nostragamus.module.inPlay.dataProvider.InPlayMatchesDataProvider;
 import in.sportscafe.nostragamus.module.inPlay.dto.InPlayContestDto;
-import in.sportscafe.nostragamus.module.inPlay.dto.InPlayMatch;
-import in.sportscafe.nostragamus.module.inPlay.dto.InPlayMatchesResponse;
-import in.sportscafe.nostragamus.module.inPlay.ui.InPlayMatchTimelineViewPagerFragment;
 import in.sportscafe.nostragamus.module.prediction.playScreen.PredictionActivity;
 import in.sportscafe.nostragamus.module.prediction.playScreen.dto.PlayScreenDataDto;
 import in.sportscafe.nostragamus.utils.AlertsHelper;
@@ -57,7 +51,7 @@ public class CompleteChallengeTimelineViewPagerFragment extends NostraBaseFragme
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_in_play_match_timeline, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_in_play_match, container, false);
         initRootView(rootView);
         return rootView;
     }

@@ -162,7 +162,7 @@ public class MyResultsActivity extends NostragamusActivity implements MyResultsV
         powerupMainFab.setVisibility(View.GONE);
 
         /* If headless flow, show join contest layout */
-        if (isHeadlessFlow()) {
+        if (isHeadlessFlow() || isPlayingPseudoGame()) {
             RelativeLayout cardLayout = (RelativeLayout) findViewById(R.id.join_contest_rl);
             cardLayout.setVisibility(View.VISIBLE);
 
@@ -238,6 +238,14 @@ public class MyResultsActivity extends NostragamusActivity implements MyResultsV
             isHeadLess = true;
         }
         return isHeadLess;
+    }
+
+    private boolean isPlayingPseudoGame() {
+        boolean isPseudoGame = false;
+        if (mResultScreenData != null && mResultScreenData.isPlayingPseudoGame()) {
+            isPseudoGame = true;
+        }
+        return isPseudoGame;
     }
 
     @Override

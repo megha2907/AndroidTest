@@ -1,13 +1,16 @@
 package in.sportscafe.nostragamus.module.inPlay.ui.headless.matches;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,9 +33,11 @@ import in.sportscafe.nostragamus.module.inPlay.dto.InPlayMatch;
 import in.sportscafe.nostragamus.module.inPlay.dto.InPlayMatchesResponse;
 import in.sportscafe.nostragamus.module.inPlay.ui.ResultsScreenDataDto;
 import in.sportscafe.nostragamus.module.inPlay.ui.headless.dto.HeadLessMatchScreenData;
+import in.sportscafe.nostragamus.module.nostraHome.helper.TimerHelper;
 import in.sportscafe.nostragamus.module.play.myresults.MyResultsActivity;
 import in.sportscafe.nostragamus.module.prediction.playScreen.PredictionActivity;
 import in.sportscafe.nostragamus.module.prediction.playScreen.dto.PlayScreenDataDto;
+import in.sportscafe.nostragamus.utils.AlertsHelper;
 
 public class InPlayHeadLessMatchesFragment extends BaseFragment implements View.OnClickListener {
 
@@ -42,6 +47,7 @@ public class InPlayHeadLessMatchesFragment extends BaseFragment implements View.
     private RecyclerView mMatchesRecyclerView;
     private InPlayHeadLessMatchesAdapter mMatchesAdapter;
     private HeadLessMatchScreenData mHeadLessMatchScreenData;
+    private TextView mTimerTextView;
 
     public InPlayHeadLessMatchesFragment() {
     }
@@ -71,13 +77,43 @@ public class InPlayHeadLessMatchesFragment extends BaseFragment implements View.
         TextView tvContestSubHeadingTwo = (TextView) rootView.findViewById(R.id.newchallenge_matches_subheading_two);
         Button joinContestBtn = (Button) rootView.findViewById(R.id.new_challenge_matches_join_button);
         TextView tvMatchesLeft = (TextView) rootView.findViewById(R.id.matches_timeline_matches_left);
-        TextView tvContestExpiry = (TextView) rootView.findViewById(R.id.matches_timeline_match_expires_in);
+        mTimerTextView = (TextView) rootView.findViewById(R.id.matches_timeline_match_expires_in);
 
         mMatchesRecyclerView = (RecyclerView)rootView.findViewById(R.id.match_timeline_rv);
         mMatchesRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         mMatchesRecyclerView.setHasFixedSize(true);
 
         joinContestBtn.setOnClickListener(this);
+
+    }
+
+    private void setTimer() {
+        if (mHeadLessMatchScreenData != null && !TextUtils.isEmpty(mHeadLessMatchScreenData.getStartTime())) {
+            CountDownTimer countDownTimer = new CountDownTimer(TimerHelper.getCountDownFutureTime(mHeadLessMatchScreenData.getStartTime()), 1000) {
+                @Override
+                public void onTick(long millisUntilFinished) {
+                    mTimerTextView.setText(TimerHelper.getTimerFormatFromMillis(millisUntilFinished));
+                }
+
+                @Override
+                public void onFinish() {
+                    onMatchStarted();
+                }
+            };
+            countDownTimer.start();
+        }
+    }
+
+    private void onMatchStarted() {
+        String msg = String.format(Constants.Alerts.CHALLENGE_STARTED_ALERT_FOR_TIMER, mHeadLessMatchScreenData.getChallengeName());
+        AlertsHelper.showAlert(getContext(), "Challenge Started!", msg, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                if (mInPlayHeadLessMatchFragmentListener != null) {
+                    mInPlayHeadLessMatchFragmentListener.onBackClicked();
+                }
+            }
+        });
     }
 
     @NonNull
@@ -194,6 +230,7 @@ public class InPlayHeadLessMatchesFragment extends BaseFragment implements View.
         super.onActivityCreated(savedInstanceState);
 
         initMembers();
+        setTimer();
         loadDataFromServer();
     }
 
