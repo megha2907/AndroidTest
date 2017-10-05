@@ -180,6 +180,7 @@ public class InPlayHeadLessMatchesFragment extends BaseFragment implements View.
             dataDto.setRoomId(mHeadLessMatchScreenData.getRoomId());
             dataDto.setPowerUp(mHeadLessMatchScreenData.getPowerUp());
             dataDto.setSubTitle(mHeadLessMatchScreenData.getContestName());
+            dataDto.setChallengeName(mHeadLessMatchScreenData.getChallengeName());
 
             if (inPlayMatch.getMatchParties() != null && inPlayMatch.getMatchParties().size() == 2) {
                 dataDto.setMatchPartyTitle1(inPlayMatch.getMatchParties().get(0).getPartyName());

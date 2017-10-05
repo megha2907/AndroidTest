@@ -180,6 +180,7 @@ public class NewChallengesMatchesFragment extends BaseFragment implements View.O
             playData.setSubTitle(mScreenData.getChallengeName());
             playData.setPowerUp(response.getUserRoom().getPowerUp());
             playData.setPlayingPseudoGame(true);
+            playData.setChallengeName(mScreenData.getChallengeName());
 
             if (match.getMatchParties() != null && match.getMatchParties().size() == 2) {
                 playData.setMatchPartyTitle1(match.getMatchParties().get(0).getPartyName());
