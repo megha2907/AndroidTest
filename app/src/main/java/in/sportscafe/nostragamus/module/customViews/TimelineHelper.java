@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.jeeva.android.Log;
+
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
 
@@ -23,7 +25,7 @@ public class TimelineHelper {
     }
 
 
-    private static View getLineView(Context context, String matchStatus, MatchTimelineTypeEnum typeEnum) {
+    private static View getLineView(Context context, String matchStatus,boolean played, MatchTimelineTypeEnum typeEnum) {
         View view = View.inflate(context, R.layout.match_timeline_line_view, null);
 
         switch (typeEnum) {
@@ -38,7 +40,13 @@ public class TimelineHelper {
             case IN_PLAY_JOINED:
                 if (matchStatus.equalsIgnoreCase(Constants.InPlayMatchStatus.COMPLETED)) {
                     view.setBackground(ContextCompat.getDrawable(context, R.drawable.games_timeline_yellow_line));
-                } else {
+                }else if (matchStatus.equals(Constants.InPlayMatchStatus.LIVE)){
+                    if(played){
+                        view.setBackground(ContextCompat.getDrawable(context, R.drawable.games_timeline_grey_line));
+                    }else {
+                        view.setBackground(ContextCompat.getDrawable(context, R.drawable.games_timeline_yellow_line));
+                    }
+                }else {
                     view.setBackground(ContextCompat.getDrawable(context, R.drawable.games_timeline_grey_line));
 
                 }
@@ -46,8 +54,15 @@ public class TimelineHelper {
             case IN_PLAY_MATCHES_SCREEN:
                 if (matchStatus.equalsIgnoreCase(Constants.InPlayMatchStatus.COMPLETED)) {
                     view.setBackground(ContextCompat.getDrawable(context, R.drawable.games_timeline_yellow_line));
-                } else {
+                }else if (matchStatus.equals(Constants.InPlayMatchStatus.LIVE)){
+                    if(played){
+                        view.setBackground(ContextCompat.getDrawable(context, R.drawable.games_timeline_grey_line));
+                    }else {
+                        view.setBackground(ContextCompat.getDrawable(context, R.drawable.games_timeline_yellow_line));
+                    }
+                }else {
                     view.setBackground(ContextCompat.getDrawable(context, R.drawable.games_timeline_grey_line));
+
                 }
                 break;
         }
@@ -68,8 +83,13 @@ public class TimelineHelper {
                         view.setBackgroundResource(R.drawable.timeline_lock_grey);
                     }
                 } else if (matchStatus.equalsIgnoreCase(Constants.InPlayMatchStatus.ONGOING)) {
-
                     //todo for partially played add icon
+                    if (played) {
+                        view.setBackgroundResource(R.drawable.timeline_grey_tick_dot);
+                    } else {
+                        view.setBackgroundResource(R.drawable.timeline_lock_grey);
+                    }
+                }else if (matchStatus.equalsIgnoreCase(Constants.InPlayMatchStatus.LIVE)) {
                     if (played) {
                         view.setBackgroundResource(R.drawable.timeline_grey_tick_dot);
                     } else {
@@ -96,19 +116,23 @@ public class TimelineHelper {
                     }
 
                 } else if (matchStatus.equalsIgnoreCase(Constants.InPlayMatchStatus.ONGOING)) {
-
                     if (played) {
                         view.setBackgroundResource(R.drawable.timeline_blue_tick);
                     } else {
                         view.setBackgroundResource(R.drawable.timeline_blue_dot);
                     }
 
-                } else if (matchStatus.equalsIgnoreCase(Constants.InPlayMatchStatus.UPCOMING)) {
+                }else if (matchStatus.equalsIgnoreCase(Constants.InPlayMatchStatus.LIVE)) {
+                    if (played) {
+                        view.setBackgroundResource(R.drawable.timeline_blue_tick);
+                    } else {
+                        view.setBackgroundResource(R.drawable.timeline_yellow_cross_ring);
+                    }
 
+                } else if (matchStatus.equalsIgnoreCase(Constants.InPlayMatchStatus.UPCOMING)) {
                     view.setBackgroundResource(R.drawable.timeline_grey_dot);
 
                 } else {
-
                     view.setBackgroundResource(R.drawable.timeline_grey_dot);
 
                 }
@@ -119,6 +143,14 @@ public class TimelineHelper {
 
                     if (played) {
                         view.setBackgroundResource(R.drawable.timeline_tick_yellow_dot);
+                    } else {
+                        view.setBackgroundResource(R.drawable.timeline_yellow_cross_ring);
+                    }
+
+                }else if (matchStatus.equalsIgnoreCase(Constants.InPlayMatchStatus.LIVE)) {
+
+                    if (played) {
+                        view.setBackgroundResource(R.drawable.timeline_blue_tick);
                     } else {
                         view.setBackgroundResource(R.drawable.timeline_yellow_cross_ring);
                     }
@@ -183,7 +215,7 @@ public class TimelineHelper {
             }
 
             if (isNodeWithLine) {
-                view = getLineView(context, matchStatus, typeEnum);
+                view = getLineView(context, matchStatus,isPlayed, typeEnum);
                 if (view != null) {
                     parent.addView(view, parent.getChildCount(), new ViewGroup.LayoutParams(lineWidth, lineHeight));
                 }

@@ -2,6 +2,7 @@ package in.sportscafe.nostragamus.module.inPlay.adapter;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -98,6 +99,9 @@ public class InPlayMatchesRecyclerAdapter extends RecyclerView.Adapter<RecyclerV
             if (!TextUtils.isEmpty(matchStatus)) {
                 if (matchStatus.equalsIgnoreCase(Constants.MatchStatusStrings.POINTS)) {
                     matchStatus = match.getMatchPoints() + " " + matchStatus;
+                    viewHolder.actionButton.setTextColor(ContextCompat.getColor(viewHolder.actionButton.getContext(),R.color.black));
+                    viewHolder.actionButton.setBackground(ContextCompat.getDrawable(viewHolder.actionButton.getContext(),R.drawable.btn_points_bg));
+
                 }
                 viewHolder.actionButton.setText(matchStatus);
             }

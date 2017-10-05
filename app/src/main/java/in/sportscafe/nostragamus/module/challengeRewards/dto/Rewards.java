@@ -18,7 +18,7 @@ public class Rewards {
     @SerializedName("amount")
     private Integer amount;
 
-    @SerializedName("userName")
+    @SerializedName("user_nick")
     private String userName;
 
     public String getRank() {

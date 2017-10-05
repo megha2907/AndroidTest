@@ -1,5 +1,6 @@
 package in.sportscafe.nostragamus.module.challengeCompleted.adapter;
 
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -10,6 +11,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import org.parceler.Parcels;
+
 import java.util.List;
 
 import in.sportscafe.nostragamus.Constants;
@@ -19,7 +22,12 @@ import in.sportscafe.nostragamus.module.challengeCompleted.dto.CompletedContestD
 import in.sportscafe.nostragamus.module.challengeCompleted.dto.CompletedContestMatchDto;
 import in.sportscafe.nostragamus.module.challengeCompleted.dto.CompletedListChallengeItem;
 import in.sportscafe.nostragamus.module.challengeCompleted.dto.CompletedListItem;
+import in.sportscafe.nostragamus.module.contest.ui.DetailScreensLaunchRequest;
 import in.sportscafe.nostragamus.module.customViews.TimelineHelper;
+import in.sportscafe.nostragamus.module.inPlay.adapter.InPlayAdapterItemType;
+import in.sportscafe.nostragamus.module.inPlay.dto.InPlayContestDto;
+import in.sportscafe.nostragamus.module.inPlay.dto.InPlayListChallengeItem;
+import in.sportscafe.nostragamus.module.inPlay.dto.InPlayListItem;
 import in.sportscafe.nostragamus.module.newChallenges.helpers.DateTimeHelper;
 import in.sportscafe.nostragamus.utils.timeutils.TimeAgo;
 import in.sportscafe.nostragamus.utils.timeutils.TimeUnit;
@@ -263,16 +271,50 @@ public class CompletedChallengeRecyclerAdapter extends RecyclerView.Adapter<Recy
             entryFeeTextView = (TextView) itemView.findViewById(R.id.completed_contest_card_header_entry_fee_textView);
             currentRankTextView = (TextView) itemView.findViewById(R.id.completed_contest_card_header_current_rank_textView);
             prizesTextView = (TextView) itemView.findViewById(R.id.completed_contest_card_header_prizes_textView);
-
+            itemView.findViewById(R.id.completed_challenge_rank_layout).setOnClickListener(this);
+            itemView.findViewById(R.id.completed_challenge_winnings_layout).setOnClickListener(this);
             root.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View view) {
             switch (view.getId()) {
+
                 case R.id.completed_completed_card_parent:
+                    if (mCompletedAdapterListener != null) {
+                        Bundle args = getContestDataBundle();
+                        mCompletedAdapterListener.onCompletedCardClicked(args);
+                    }
                     break;
+
+                case R.id.completed_challenge_rank_layout:
+                    if (mCompletedAdapterListener != null) {
+                        Bundle args = getContestDataBundle();
+                        args.putInt(Constants.BundleKeys.SCREEN_LAUNCH_REQUEST, DetailScreensLaunchRequest.MATCHES_LEADER_BOARD_SCREEN);
+                        mCompletedAdapterListener.onCompletedContestCurrentRankClicked(args);
+                    }
+                    break;
+
+                case R.id.completed_challenge_winnings_layout:
+                    if (mCompletedAdapterListener != null) {
+                        Bundle args = getContestDataBundle();
+                        args.putInt(Constants.BundleKeys.SCREEN_LAUNCH_REQUEST, DetailScreensLaunchRequest.MATCHES_REWARDS_SCREEN);
+                        mCompletedAdapterListener.onCompletedWinningClicked(args);
+                    }
+                    break;
+
             }
+        }
+
+        @NonNull
+        private Bundle getContestDataBundle() {
+            Bundle args = new Bundle();
+            CompletedListItem listItem = mItemsList.get(getAdapterPosition());
+            if (listItem != null && listItem.getCompletedAdapterItemType() == CompletedChallengeAdapterItemType.COMPLETED_CONTEST) {
+                CompletedContestDto contestDto = (CompletedContestDto) listItem.getItemData();
+                args.putParcelable(Constants.BundleKeys.COMPLETED_CONTEST, Parcels.wrap(contestDto));
+            }
+            return args;
         }
     }
 
@@ -296,8 +338,10 @@ public class CompletedChallengeRecyclerAdapter extends RecyclerView.Adapter<Recy
         }
 
         @Override
-        public void onClick(View v) {
-
+        public void onClick(View view) {
+            switch (view.getId()) {
+                case R.id.inplay_challenge_button:
+            }
         }
     }
 }

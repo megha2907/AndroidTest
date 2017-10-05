@@ -102,7 +102,7 @@
         android:layout_height="@dimen/dp_60"
         android:layout_alignParentBottom="true"
         android:background="@drawable/points_user_blue_bg"
-        android:onClick="onClick"
+        android:clickable="false"
         android:visibility="gone">
 
         <LinearLayout

@@ -19,9 +19,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:gravity="center"
-            android:minHeight="@dimen/dim_100"
-            >
+            android:paddingTop="@dimen/dim_10"
+            android:gravity="center">
 
             <LinearLayout
                 android:id="@+id/match_status_timeline_title_parent"
@@ -29,10 +28,10 @@
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
+                android:layout_gravity="left"
                 android:scrollbars="horizontal"
-                android:paddingBottom="@dimen/dim_5"
-                android:paddingLeft="@dimen/dim_22"
-                android:layout_marginTop="@dimen/dim_16"/>
+                android:layout_marginLeft="@dimen/dim_5"
+                />
 
             <LinearLayout
                 android:id="@+id/match_status_timeline"
@@ -40,7 +39,11 @@
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
-                android:scrollbars="horizontal"/>
+                android:scrollbars="horizontal"
+                android:layout_gravity="left"
+                android:layout_marginLeft="@dimen/dim_15"
+                android:layout_marginTop="@dimen/dim_4"
+                android:layout_marginBottom="@dimen/dim_4"/>
 
             <LinearLayout
                 android:id="@+id/match_status_timeline_bottom_parent"
@@ -48,8 +51,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
-                android:paddingTop="@dimen/dim_5"
-                android:paddingLeft="@dimen/dim_8"
+                android:layout_gravity="left"
                 android:scrollbars="horizontal"/>
 
             <com.jeeva.android.widgets.customfont.CustomTextView
@@ -80,6 +82,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
+        android:visibility="visible"
         android:gravity="center">
 
         <in.sportscafe.nostragamus.module.common.NostraProgressBar

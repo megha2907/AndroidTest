@@ -349,6 +349,7 @@ public interface Constants {
         String CONTEST_SCREEN_DATA = "contestScreenData";
         String IS_HEADLESS_FLOW = "isHeadLessFlow";
         String HEADLESS_MATCH_SCREEN_DATA = "headlessMatchScreenData";
+        String COMPLETED_CHALLENGE_LIST_ITEM = "CompletedChallengeListItem";
     }
 
     interface DateFormats {
@@ -744,6 +745,7 @@ public interface Constants {
         String MATCHES = "Games";
         String ENTRIES = "Entries";
         String PRIZES = "Prizes";
+        String WINNERS = "Winners";
         String RULES = "Rules";
         String LEADERBOARDS = "Leaderboard";
     }
@@ -817,5 +819,6 @@ public interface Constants {
         String UPCOMING = "upcoming";
         String ONGOING = "ongoing";
         String COMPLETED = "completed";
+        String LIVE = "live";
     }
 }

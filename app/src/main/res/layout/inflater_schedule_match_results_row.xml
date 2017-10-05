@@ -370,7 +370,7 @@
                 android:layout_height="wrap_content"
                 android:paddingBottom="@dimen/dp_4"
                 app:sl_cornerRadius="@dimen/dp_8"
-                app:sl_fillColor="@color/chathams_blue"
+                app:sl_fillColor="@color/black"
                 app:sl_shadowRadius="@dimen/dp_4">
 
                 <LinearLayout

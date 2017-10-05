@@ -1,4 +1,4 @@
-package in.sportscafe.nostragamus.module.inPlay.ui;
+package in.sportscafe.nostragamus.module.challengeCompleted.ui.viewPager;
 
 
 import android.content.Intent;
@@ -24,6 +24,7 @@ import in.sportscafe.nostragamus.AppSnippet;
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.challengeCompleted.dto.CompletedContestDto;
+import in.sportscafe.nostragamus.module.challengeCompleted.dto.CompletedContestMatchDto;
 import in.sportscafe.nostragamus.module.common.NostraBaseFragment;
 import in.sportscafe.nostragamus.module.customViews.TimelineHelper;
 import in.sportscafe.nostragamus.module.inPlay.adapter.MatchesAdapterAction;
@@ -34,6 +35,7 @@ import in.sportscafe.nostragamus.module.inPlay.dto.InPlayContestDto;
 import in.sportscafe.nostragamus.module.inPlay.dto.InPlayContestMatchDto;
 import in.sportscafe.nostragamus.module.inPlay.dto.InPlayMatch;
 import in.sportscafe.nostragamus.module.inPlay.dto.InPlayMatchesResponse;
+import in.sportscafe.nostragamus.module.inPlay.ui.ResultsScreenDataDto;
 import in.sportscafe.nostragamus.module.newChallenges.helpers.DateTimeHelper;
 import in.sportscafe.nostragamus.module.play.myresults.MyResultsActivity;
 import in.sportscafe.nostragamus.module.prediction.playScreen.PredictionActivity;
@@ -44,14 +46,13 @@ import in.sportscafe.nostragamus.utils.timeutils.TimeUtils;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class InPlayMatchTimelineViewPagerFragment extends NostraBaseFragment {
+public class CompletedMatchTimelineViewPagerFragment extends NostraBaseFragment {
 
-    private static final String TAG = InPlayMatchTimelineViewPagerFragment.class.getSimpleName();
+    private static final String TAG = CompletedMatchTimelineViewPagerFragment.class.getSimpleName();
     private RecyclerView mMatchRecyclerView;
+    private CompletedContestDto mCompletedContestDto;
 
-    private InPlayContestDto mInPlayContestDto;
-
-    public InPlayMatchTimelineViewPagerFragment() {}
+    public CompletedMatchTimelineViewPagerFragment() {}
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -76,48 +77,48 @@ public class InPlayMatchTimelineViewPagerFragment extends NostraBaseFragment {
     private void getContestFromArgs() {
         Bundle args = getArguments();
         if (args != null) {
-            if (args.containsKey(Constants.BundleKeys.INPLAY_CONTEST)) {
-                mInPlayContestDto = Parcels.unwrap(args.getParcelable(Constants.BundleKeys.INPLAY_CONTEST));
-                loadData(mInPlayContestDto);
+            if (args.containsKey(Constants.BundleKeys.COMPLETED_CONTEST)) {
+                mCompletedContestDto = Parcels.unwrap(args.getParcelable(Constants.BundleKeys.COMPLETED_CONTEST));
+                loadData(mCompletedContestDto);
+                }
             }
-        }
     }
 
-    private void loadData(InPlayContestDto inPlayContestDto) {
-        if (inPlayContestDto != null) {
+    private void loadData(CompletedContestDto completedContestDto) {
+        if (completedContestDto != null) {
             showLoadingContent();
             InPlayMatchesDataProvider dataProvider = new InPlayMatchesDataProvider();
-            dataProvider.getInPlayMatches(inPlayContestDto.getRoomId(),
-                    inPlayContestDto.getChallengeId(),
+            dataProvider.getInPlayMatches(completedContestDto.getRoomId(),
+                    completedContestDto.getChallengeId(),
                     new InPlayMatchesDataProvider.InPlayMatchesDataProviderListener() {
-                @Override
-                public void onData(int status, @Nullable InPlayMatchesResponse responses) {
-                    hideLoadingContent();
+                        @Override
+                        public void onData(int status, @Nullable InPlayMatchesResponse responses) {
+                            hideLoadingContent();
 
-                    switch (status) {
-                        case Constants.DataStatus.FROM_SERVER_API_SUCCESS:
-                            onDataResponse(responses);
-                            break;
+                            switch (status) {
+                                case Constants.DataStatus.FROM_SERVER_API_SUCCESS:
+                                    onDataResponse(responses);
+                                    break;
 
-                        default:
+                                default:
+                                    handleError(status);
+                                    break;
+                            }
+                        }
+
+                        @Override
+                        public void onError(int status) {
+                            hideLoadingContent();
                             handleError(status);
-                            break;
-                    }
-                }
-
-                @Override
-                public void onError(int status) {
-                    hideLoadingContent();
-                    handleError(status);
-                }
-            });
+                        }
+                    });
         }
     }
 
     private void onDataResponse(InPlayMatchesResponse responses) {
         if (mMatchRecyclerView != null && responses != null && responses.getData() != null &&
                 responses.getData().getInPlayMatchList() != null) {
-            setInPlayMatchesTimeLine(responses);
+            setCompletedMatchesTimeLine(responses);
 
             InPlayMatchesRecyclerAdapter adapter = new InPlayMatchesRecyclerAdapter(
                     responses.getData().getInPlayMatchList(), getMatchesAdapterListener());
@@ -126,78 +127,78 @@ public class InPlayMatchTimelineViewPagerFragment extends NostraBaseFragment {
         }
     }
 
-    private void setInPlayMatchesTimeLine(InPlayMatchesResponse responses) {
+    private void setCompletedMatchesTimeLine(InPlayMatchesResponse responses) {
 
-        if (mInPlayContestDto != null && responses != null &&
+        if (mCompletedContestDto != null && responses != null &&
                 responses.getData() != null && responses.getData().getInPlayMatchList() != null
                 && getView() != null) {
 
-                String gamesLeftStr = getGamesLeftCount(responses.getData().getInPlayMatchList()) + "/" + responses.getData().getInPlayMatchList().size() + " GAMES LEFT";
-                TextView gamesLeftTextView = (TextView) getView().findViewById(R.id.inplay_match_timeline_games_left_textView);
-                gamesLeftTextView.setText(gamesLeftStr);
+            String gamesLeftStr = getGamesLeftCount(responses.getData().getInPlayMatchList()) + "/" + responses.getData().getInPlayMatchList().size() + " GAMES LEFT";
+            TextView gamesLeftTextView = (TextView) getView().findViewById(R.id.inplay_match_timeline_games_left_textView);
+            gamesLeftTextView.setText(gamesLeftStr);
 
             /* Timeline */
-                LinearLayout parent = (LinearLayout) getView().findViewById(R.id.match_status_timeline);
-                LinearLayout titleParent = (LinearLayout) getView().findViewById(R.id.match_status_timeline_title_parent);
-                LinearLayout bottomParent = (LinearLayout) getView().findViewById(R.id.match_status_timeline_bottom_parent);
+            LinearLayout parent = (LinearLayout) getView().findViewById(R.id.match_status_timeline);
+            LinearLayout titleParent = (LinearLayout) getView().findViewById(R.id.match_status_timeline_title_parent);
+            LinearLayout bottomParent = (LinearLayout) getView().findViewById(R.id.match_status_timeline_bottom_parent);
 
 
              /* Timeline */
-                int totalMatches = mInPlayContestDto.getMatches().size();
-                for (int temp = 0; temp < totalMatches; temp++) {
-                    InPlayContestMatchDto match = mInPlayContestDto.getMatches().get(temp);
+            int totalMatches = mCompletedContestDto.getMatches().size();
+            for (int temp = 0; temp < totalMatches; temp++) {
+                CompletedContestMatchDto match = mCompletedContestDto.getMatches().get(temp);
 
-                    boolean isNodeLineRequired = true;
-                    if (temp == (totalMatches - 1)) {
-                        isNodeLineRequired = false;
-                    }
+                boolean isNodeLineRequired = true;
+                if (temp == (totalMatches - 1)) {
+                    isNodeLineRequired = false;
+                }
 
-                    int matchAttemptedStatus = match.isPlayed();
-                    boolean isPlayed;
-                    if (Constants.GameAttemptedStatus.COMPLETELY == matchAttemptedStatus) {
-                        isPlayed = true;
-                    } else if (Constants.GameAttemptedStatus.PARTIALLY == matchAttemptedStatus) {
-                        isPlayed = false;
-                    } else {
-                        isPlayed = false;
-                    }
+                int matchAttemptedStatus = match.isPlayed();
+                boolean isPlayed;
+                if (Constants.GameAttemptedStatus.COMPLETELY == matchAttemptedStatus) {
+                    isPlayed = true;
+                } else if (Constants.GameAttemptedStatus.PARTIALLY == matchAttemptedStatus) {
+                    isPlayed = false;
+                } else {
+                    isPlayed = false;
+                }
 
                     /* Content */
-                    TimelineHelper.addNode(parent, match.getStatus(), isPlayed,
-                            isNodeLineRequired, TimelineHelper.MatchTimelineTypeEnum.IN_PLAY_MATCHES_SCREEN, mInPlayContestDto.getMatches().size());
+                TimelineHelper.addNode(parent, match.getStatus(), isPlayed,
+                        isNodeLineRequired, TimelineHelper.MatchTimelineTypeEnum.IN_PLAY_MATCHES_SCREEN, mCompletedContestDto.getMatches().size());
 
                     /* Title */
-                    TimelineHelper.addTextNode(titleParent, "Game " + (temp + 1), mInPlayContestDto.getMatches().size(),
-                            match.getStatus(), TimelineHelper.MatchTimelineTypeEnum.IN_PLAY_MATCHES_SCREEN, isPlayed);
+                TimelineHelper.addTextNode(titleParent, "Game " + (temp + 1), mCompletedContestDto.getMatches().size(),
+                        match.getStatus(), TimelineHelper.MatchTimelineTypeEnum.IN_PLAY_MATCHES_SCREEN, isPlayed);
 
-                    if (match.getStatus().equalsIgnoreCase(Constants.InPlayMatchStatus.COMPLETED)) {
+                if (match.getStatus().equalsIgnoreCase(Constants.InPlayMatchStatus.COMPLETED)) {
 
-                        String matchPoints;
-                        if (isPlayed) {
-                            matchPoints = String.valueOf(match.getScore()) + " Points";
-                        } else {
-                            matchPoints = "   DNP    ";
-                        }
+                    String matchPoints;
+                    if (isPlayed) {
+                        matchPoints = String.valueOf(match.getScore()) + " Points";
+                    } else {
+                        matchPoints = "   DNP    ";
+                    }
 
                     /* Footer */
-                        TimelineHelper.addFooterTextNode(bottomParent, matchPoints,
-                                mInPlayContestDto.getMatches().size(), match.getStatus(),
-                                TimelineHelper.MatchTimelineTypeEnum.IN_PLAY_MATCHES_SCREEN, isPlayed);
+                    TimelineHelper.addFooterTextNode(bottomParent, matchPoints,
+                            mCompletedContestDto.getMatches().size(), match.getStatus(),
+                            TimelineHelper.MatchTimelineTypeEnum.IN_PLAY_MATCHES_SCREEN, isPlayed);
 
-                        LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) bottomParent.getLayoutParams();
-                        params.setMargins(10, 0, 0, 0);
-                        bottomParent.setLayoutParams(params);
+                    LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) bottomParent.getLayoutParams();
+                    params.setMargins(10, 0, 0, 0);
+                    bottomParent.setLayoutParams(params);
 
-                    } else {
+                } else {
                       /* Footer */
-                        TimelineHelper.addFooterTextNode(bottomParent, DateTimeHelper.getInPlayMatchTime(match.getStartTime()),
-                                mInPlayContestDto.getMatches().size(), match.getStatus(), TimelineHelper.MatchTimelineTypeEnum.IN_PLAY_MATCHES_SCREEN, isPlayed);
+                    TimelineHelper.addFooterTextNode(bottomParent, DateTimeHelper.getInPlayMatchTime(match.getStartTime()),
+                            mCompletedContestDto.getMatches().size(), match.getStatus(), TimelineHelper.MatchTimelineTypeEnum.IN_PLAY_MATCHES_SCREEN, isPlayed);
 
-                        LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) bottomParent.getLayoutParams();
-                        params.setMargins(0, 0, 0, 0);
-                        bottomParent.setLayoutParams(params);
-                    }
+                    LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) bottomParent.getLayoutParams();
+                    params.setMargins(0, 0, 0, 0);
+                    bottomParent.setLayoutParams(params);
                 }
+            }
         }
     }
 
@@ -239,15 +240,6 @@ public class InPlayMatchTimelineViewPagerFragment extends NostraBaseFragment {
                 Log.d(TAG, "action button clicked : " + action);
 
                 switch (action) {
-                    case MatchesAdapterAction.COMING_UP:
-                        /* Disabled - No action */
-                        break;
-
-                    case MatchesAdapterAction.PLAY:
-                        launchPlayScreen(args);
-                    case MatchesAdapterAction.CONTINUE:
-                        launchPlayScreen(args);
-                        break;
                     case MatchesAdapterAction.ANSWER:
                         launchResultsScreen(args);
                     case MatchesAdapterAction.DID_NOT_PLAY:
@@ -265,11 +257,11 @@ public class InPlayMatchTimelineViewPagerFragment extends NostraBaseFragment {
 
             Bundle argument = getArguments();
             Bundle bundle = new Bundle();
-            if (argument != null && argument.containsKey(Constants.BundleKeys.INPLAY_CONTEST) &&
+            if (argument != null && argument.containsKey(Constants.BundleKeys.COMPLETED_CONTEST) &&
                     matchArgs != null && matchArgs.containsKey(Constants.BundleKeys.INPLAY_MATCH)) {
 
                 InPlayMatch match = Parcels.unwrap(matchArgs.getParcelable(Constants.BundleKeys.INPLAY_MATCH));
-                InPlayContestDto contestDto = Parcels.unwrap(argument.getParcelable(Constants.BundleKeys.INPLAY_CONTEST));
+                CompletedContestDto contestDto = Parcels.unwrap(argument.getParcelable(Constants.BundleKeys.COMPLETED_CONTEST));
 
                 ResultsScreenDataDto resultsScreenData = getResultsScreenData(match, contestDto);
                 if (resultsScreenData != null) {
@@ -292,60 +284,7 @@ public class InPlayMatchTimelineViewPagerFragment extends NostraBaseFragment {
         }
     }
 
-    private void launchPlayScreen(Bundle matchArgs) {
-        if (getView() != null && getActivity() != null && !getActivity().isFinishing()) {
-
-            Bundle argument = getArguments();
-            Bundle bundle = new Bundle();
-            if (argument != null && argument.containsKey(Constants.BundleKeys.INPLAY_CONTEST) &&
-                    matchArgs != null && matchArgs.containsKey(Constants.BundleKeys.INPLAY_MATCH)) {
-
-                InPlayMatch match = Parcels.unwrap(matchArgs.getParcelable(Constants.BundleKeys.INPLAY_MATCH));
-                InPlayContestDto contestDto = Parcels.unwrap(argument.getParcelable(Constants.BundleKeys.INPLAY_CONTEST));
-
-                PlayScreenDataDto playData = getPlayScreenData(match, contestDto);
-                if (playData != null) {
-                    bundle.putParcelable(Constants.BundleKeys.PLAY_SCREEN_DATA, Parcels.wrap(playData));
-
-                    Intent predictionIntent = new Intent(getActivity(), PredictionActivity.class);
-                    predictionIntent.putExtras(bundle);
-                    predictionIntent.putExtra(Constants.BundleKeys.SCREEN_LAUNCHED_FROM_PARENT,
-                            PredictionActivity.LaunchedFrom.IN_PLAY_SCREEN_PLAY_MATCH);
-                    getActivity().startActivity(predictionIntent);
-
-                } else {
-                    handleError(-1);
-                }
-            } else {
-                Log.e(TAG, "No Contest in Bundle to launch Play screen");
-                handleError(-1);
-            }
-        }
-    }
-
-    private PlayScreenDataDto getPlayScreenData(InPlayMatch inPlayMatch, InPlayContestDto contestDto) {
-        PlayScreenDataDto dataDto = null;
-
-        if (inPlayMatch != null && contestDto != null) {
-            dataDto = new PlayScreenDataDto();
-
-            dataDto.setChallengeId(contestDto.getChallengeId());
-            dataDto.setMatchId(inPlayMatch.getMatchId());
-            dataDto.setRoomId(contestDto.getRoomId());
-            dataDto.setPowerUp(contestDto.getPowerUp());
-            dataDto.setSubTitle(contestDto.getContestName());
-            dataDto.setMatchStatus(inPlayMatch.getMatchStatus());
-
-            if (inPlayMatch.getMatchParties() != null && inPlayMatch.getMatchParties().size() == 2) {
-                dataDto.setMatchPartyTitle1(inPlayMatch.getMatchParties().get(0).getPartyName());
-                dataDto.setMatchPartyTitle2(inPlayMatch.getMatchParties().get(1).getPartyName());
-            }
-        }
-
-        return dataDto;
-    }
-
-    private ResultsScreenDataDto getResultsScreenData(InPlayMatch inPlayMatch, InPlayContestDto contestDto) {
+    private ResultsScreenDataDto getResultsScreenData(InPlayMatch inPlayMatch, CompletedContestDto contestDto) {
         ResultsScreenDataDto dataDto = null;
 
         if (inPlayMatch != null && contestDto != null) {
