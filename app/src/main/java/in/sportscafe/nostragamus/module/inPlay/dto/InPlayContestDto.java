@@ -53,6 +53,7 @@ public class InPlayContestDto {
 
     private int challengeId;
     private String challengeName;
+    private String challengeStartTime;
 
     public int getContestId() {
         return contestId;
@@ -164,5 +165,13 @@ public class InPlayContestDto {
 
     public void setChallengeName(String challengeName) {
         this.challengeName = challengeName;
+    }
+
+    public String getChallengeStartTime() {
+        return challengeStartTime;
+    }
+
+    public void setChallengeStartTime(String challengeStartTime) {
+        this.challengeStartTime = challengeStartTime;
     }
 }

@@ -123,8 +123,7 @@ public class NewChallengesMatchesFragment extends BaseFragment implements View.O
     }
 
     private void onMatchStarted() {
-        String msg = "Please join other challenges as " + mScreenData.getChallengeName() +
-                " already started";
+        String msg = String.format(Constants.Alerts.CHALLENGE_STARTED_ALERT_FOR_TIMER, mScreenData.getChallengeName());
         AlertsHelper.showAlert(getContext(), "Challenge Started!", msg, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {

@@ -41,19 +41,7 @@ public class TimerHelper {
         long minute = (millis / (1000 * 60)) % 60;
         long hour = (millis / (1000 * 60 * 60));   //(millisUntilFinished / (1000 * 60 * 60)) % 60; (If 24 hrs based result required)
 
-        str = String.format("%02d:%02d:%02d", hour, minute, second);
-
-        return str;
-    }
-
-    public synchronized static String getNewChallnegeCardTimerFormatFromMillis(long millis) {
-        String str = "";
-
-        long second = (millis / 1000) % 60;
-        long minute = (millis / (1000 * 60)) % 60;
-        long hour = (millis / (1000 * 60 * 60));   //(millisUntilFinished / (1000 * 60 * 60)) % 60; (If 24 hrs based result required)
-
-        str = String.format("%02dh %02dh %02dh", hour, minute, second);
+        str = String.format("%02dh %02dm %02ds", hour, minute, second);
 
         return str;
     }

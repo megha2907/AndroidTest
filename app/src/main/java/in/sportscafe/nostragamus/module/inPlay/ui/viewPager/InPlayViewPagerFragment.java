@@ -157,6 +157,7 @@ public class InPlayViewPagerFragment extends BaseFragment {
 
                             contestDto.setChallengeId(inplay.getChallengeId());     // To identify every contest that which challenge it belongs
                             contestDto.setChallengeName(inplay.getChallengeName());
+                            contestDto.setChallengeStartTime(inplay.getChallengeStartTime());
 
                             listItem = new InPlayListItem();
                             listItem.setItemData(contestDto);
@@ -244,6 +245,7 @@ public class InPlayViewPagerFragment extends BaseFragment {
                 data.setPowerUp(inPlayContestDto.getPowerUp());
                 data.setContestName(inPlayContestDto.getContestName());
                 data.setRoomId(inPlayContestDto.getRoomId());
+                data.setStartTime(inPlayContestDto.getChallengeStartTime());
 
                 args.putParcelable(Constants.BundleKeys.HEADLESS_MATCH_SCREEN_DATA, Parcels.wrap(data));
 

@@ -1,6 +1,7 @@
 package in.sportscafe.nostragamus.module.inPlay.adapter;
 
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
@@ -22,7 +23,10 @@ import in.sportscafe.nostragamus.AppSnippet;
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.inPlay.dto.InPlayMatch;
+import in.sportscafe.nostragamus.module.newChallenges.adapter.NewChallengeMatchesAdapter;
 import in.sportscafe.nostragamus.module.newChallenges.dto.MatchParty;
+import in.sportscafe.nostragamus.module.newChallenges.helpers.DateTimeHelper;
+import in.sportscafe.nostragamus.module.nostraHome.helper.TimerHelper;
 import in.sportscafe.nostragamus.utils.timeutils.TimeUtils;
 
 /**
@@ -43,7 +47,6 @@ public class InPlayMatchesRecyclerAdapter extends RecyclerView.Adapter<RecyclerV
     public int getItemViewType(int position) {
         int viewType = MatchesAdapterItemType.TWO_PARTY_MATCH;
 
-        // TODO : change if other type introduced
         /*if (mInPlayMatchList != null && mInPlayMatchList.size() > position && mInPlayMatchList.get(position) != null) {
             if (mInPlayMatchList.get(position).getMatchType().equalsIgnoreCase("parties")) {
                 viewType = MatchesAdapterItemType.SINGLE_PARTY_MATCH;
@@ -91,7 +94,16 @@ public class InPlayMatchesRecyclerAdapter extends RecyclerView.Adapter<RecyclerV
                 viewHolder.actionButton.setEnabled(false);
             }
 
-            viewHolder.dateTimeTextView.setText(getDateTimeValue(match.getMatchStartTime()));
+            /* Set timer */
+            String matchStartTime = match.getMatchStartTime();
+            if (!TextUtils.isEmpty(matchStartTime)) {
+                if (DateTimeHelper.isTimerRequired(matchStartTime)) {
+                    setTimer(viewHolder, matchStartTime);
+                } else {
+                    viewHolder.dateTimeTextView.setText(getDateTimeValue(matchStartTime));
+                }
+            }
+
             viewHolder.venueTextView.setText(match.getMatchVenue());
 
             /* Match status */
@@ -121,6 +133,20 @@ public class InPlayMatchesRecyclerAdapter extends RecyclerView.Adapter<RecyclerV
                 }
             }
         }
+    }
+
+    private void setTimer(final InPlayTwoPartyMatchItemViewHolder viewHolder, final String matchStartTime) {
+        CountDownTimer countDownTimer = new CountDownTimer(TimerHelper.getCountDownFutureTime(matchStartTime), 1000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                viewHolder.dateTimeTextView.setText(TimerHelper.getTimerFormatFromMillis(millisUntilFinished));
+            }
+
+            @Override
+            public void onFinish() {
+            }
+        };
+        countDownTimer.start();
     }
 
     private boolean shouldDisableMatchClickAction(InPlayMatch match) {

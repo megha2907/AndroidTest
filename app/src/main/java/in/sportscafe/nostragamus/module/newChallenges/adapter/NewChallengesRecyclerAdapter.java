@@ -106,7 +106,7 @@ public class NewChallengesRecyclerAdapter extends RecyclerView.Adapter<RecyclerV
         CountDownTimer countDownTimer = new CountDownTimer(TimerHelper.getCountDownFutureTime(startTimeStr), 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
-                newChallengesItemViewHolder.startTimeTextView.setText(TimerHelper.getNewChallnegeCardTimerFormatFromMillis(millisUntilFinished));
+                newChallengesItemViewHolder.startTimeTextView.setText(TimerHelper.getTimerFormatFromMillis(millisUntilFinished));
             }
 
             @Override

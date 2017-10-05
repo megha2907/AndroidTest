@@ -15,6 +15,7 @@ public class HeadLessMatchScreenData {
     private int matchId;
     private String challengeName;
     private String contestName;
+    private String startTime;
     private PowerUp powerUp;
     private boolean isPlayingPseudoGame = false;
 
@@ -72,5 +73,13 @@ public class HeadLessMatchScreenData {
 
     public void setPlayingPseudoGame(boolean playingPseudoGame) {
         isPlayingPseudoGame = playingPseudoGame;
+    }
+
+    public String getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(String startTime) {
+        this.startTime = startTime;
     }
 }

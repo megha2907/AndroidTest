@@ -203,7 +203,9 @@ public class InPlayRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                     /* Footer */
                 TimelineHelper.addFooterTextNode(viewHolder.timelineFooterParent,
                         DateTimeHelper.getInPlayMatchTime(match.getStartTime()),
-                        contest.getMatches().size(), match.getStatus(), TimelineHelper.MatchTimelineTypeEnum.IN_PLAY_HEADLESS, isPlayed);
+                        contest.getMatches().size(), match.getStatus(),
+                        TimelineHelper.MatchTimelineTypeEnum.IN_PLAY_HEADLESS,
+                        isPlayed, match.getStartTime());
             }
         }
     }
@@ -242,6 +244,9 @@ public class InPlayRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                     isPlayed = false;
                 }
 
+                LinearLayout.LayoutParams params = (LinearLayout.LayoutParams)viewHolder.timelineFooterParent.getLayoutParams();
+                params.setMargins(0, 0, 0, 0);
+
                     /* Content */
                 TimelineHelper.addNode(viewHolder.timelineContentParent, match.getStatus(), isPlayed,
                         isNodeLineRequired, TimelineHelper.MatchTimelineTypeEnum.IN_PLAY_JOINED, contest.getMatches().size());
@@ -250,33 +255,23 @@ public class InPlayRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                 TimelineHelper.addTextNode(viewHolder.timelineHeaderParent, "Game " + (temp + 1), contest.getMatches().size(),
                         match.getStatus(), TimelineHelper.MatchTimelineTypeEnum.IN_PLAY_JOINED, isPlayed);
 
+                /* Footer */
+                String footerStr = DateTimeHelper.getInPlayMatchTime(match.getStartTime());
                 if (match.getStatus().equalsIgnoreCase(Constants.InPlayMatchStatus.COMPLETED)) {
-
-                    String matchPoints;
                     if (isPlayed) {
-                         matchPoints = String.valueOf(match.getScore()) + " Points";
-                    }else {
-                        matchPoints = "   DNP    ";
+                         footerStr = String.valueOf(match.getScore()) + " Points";
+                    } else {
+                        footerStr = "   DNP    ";
                     }
-
-                    /* Footer */
-                    TimelineHelper.addFooterTextNode(viewHolder.timelineFooterParent, matchPoints,
-                            contest.getMatches().size(), match.getStatus(),
-                            TimelineHelper.MatchTimelineTypeEnum.IN_PLAY_JOINED, isPlayed);
-
-                    LinearLayout.LayoutParams params = (LinearLayout.LayoutParams)viewHolder.timelineFooterParent.getLayoutParams();
                     params.setMargins(10, 0, 0, 0);
-                    viewHolder.timelineFooterParent.setLayoutParams(params);
-
-                }else {
-                      /* Footer */
-                    TimelineHelper.addFooterTextNode(viewHolder.timelineFooterParent, DateTimeHelper.getInPlayMatchTime(match.getStartTime()),
-                            contest.getMatches().size(), match.getStatus(), TimelineHelper.MatchTimelineTypeEnum.IN_PLAY_JOINED, isPlayed);
-
-                    LinearLayout.LayoutParams params = (LinearLayout.LayoutParams)viewHolder.timelineFooterParent.getLayoutParams();
-                    params.setMargins(0, 0, 0, 0);
-                    viewHolder.timelineFooterParent.setLayoutParams(params);
                 }
+                TimelineHelper.addFooterTextNode(viewHolder.timelineFooterParent, footerStr,
+                        contest.getMatches().size(), match.getStatus(),
+                        TimelineHelper.MatchTimelineTypeEnum.IN_PLAY_JOINED,
+                        isPlayed, match.getStartTime());
+
+                /* Layout params */
+                viewHolder.timelineFooterParent.setLayoutParams(params);
             }
         }
     }
