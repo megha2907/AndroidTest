@@ -100,7 +100,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_below="@+id/question_linear"
-                android:layout_marginLeft="@dimen/dim_20"
+                android:layout_marginLeft="@dimen/dim_16"
                 android:layout_marginBottom="@dimen/dim_8"
                 android:gravity="left"
                 android:text="@string/split_str"
@@ -126,8 +126,8 @@
             android:id="@+id/answer_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingBottom="@dimen/dim_5"
-            android:layout_below="@+id/my_predictions_row_rl_question">
+            android:layout_below="@+id/my_predictions_row_rl_question"
+            android:paddingBottom="@dimen/dp_10">
 
             <!-- Answers Row -->
             <RelativeLayout
@@ -135,9 +135,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="left"
-                android:layout_marginLeft="@dimen/dim_16"
-                android:layout_marginRight="@dimen/dim_16"
-                android:layout_marginTop="@dimen/dim_10"
+                android:layout_marginLeft="@dimen/dp_18"
+                android:layout_marginRight="@dimen/dp_20"
+                android:layout_marginTop="@dimen/dp_10"
                 android:animateLayoutChanges="true">
 
                 <com.jeeva.android.widgets.customfont.CustomTextView
@@ -145,40 +145,39 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical"
-                    android:minHeight="@dimen/dim_24"
                     android:maxLines="1"
-                    android:textColor="@color/white_999999"
-                    android:textSize="@dimen/sp_12"
+                    android:textColor="@color/white_60"
+                    android:textSize="@dimen/dp_13"
                     app:typeface="lato_regular"
-                    android:drawablePadding="@dimen/dim_3"/>
+                    android:drawablePadding="@dimen/dp_3"/>
 
                 <com.jeeva.android.widgets.customfont.CustomTextView
                     android:id="@+id/my_predictions_row_tv_option2_answer"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/my_predictions_row_tv_option1_answer"
-                    android:minHeight="@dimen/dim_24"
+                    android:layout_marginTop="@dimen/dp_5"
                     android:gravity="center_vertical"
                     android:maxLines="1"
-                    android:textColor="@color/white_999999"
-                    android:textSize="@dimen/sp_12"
+                    android:textColor="@color/white_60"
+                    android:textSize="@dimen/dp_13"
                     android:visibility="gone"
                     app:typeface="lato_regular"
-                    android:drawablePadding="@dimen/dim_3"/>
+                    android:drawablePadding="@dimen/dp_3"/>
 
                 <com.jeeva.android.widgets.customfont.CustomTextView
                     android:id="@+id/my_predictions_row_tv_option3_answer"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:minHeight="@dimen/dim_24"
                     android:layout_below="@+id/my_predictions_row_tv_option2_answer"
+                    android:layout_marginTop="@dimen/dp_5"
                     android:gravity="center_vertical"
                     android:maxLines="1"
-                    android:textColor="@color/white_999999"
-                    android:textSize="@dimen/sp_12"
+                    android:textColor="@color/white_60"
+                    android:textSize="@dimen/dp_13"
                     android:visibility="gone"
                     app:typeface="lato_regular"
-                    android:drawablePadding="@dimen/dim_3"/>
+                    android:drawablePadding="@dimen/dp_3"/>
 
             </RelativeLayout>
 
@@ -188,9 +187,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="left"
-                android:layout_marginLeft="@dimen/dim_16"
-                android:layout_marginRight="@dimen/dim_16"
-                android:layout_marginTop="@dimen/dim_10"
+                android:layout_marginLeft="@dimen/dp_14"
+                android:layout_marginRight="@dimen/dp_20"
+                android:layout_marginTop="@dimen/dp_10"
                 android:animateLayoutChanges="true">
 
                 <RadioGroup
@@ -203,32 +202,29 @@
                         android:id="@+id/my_predictions_row_rb_answer"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:minHeight="@dimen/dim_24"
                         android:button="@drawable/sort_radio_icon"
                         android:textColor="@drawable/radio_btn_tv_selector"
-                        android:textSize="@dimen/sp_12"/>
+                        android:textSize="@dimen/dp_13"/>
 
                     <RadioButton
                         android:id="@+id/my_predictions_row_rb_correct_answer"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:minHeight="@dimen/dim_24"
                         android:button="@drawable/sort_radio_icon"
                         android:layout_marginTop="@dimen/dp_5"
                         android:layout_below="@+id/my_predictions_row_tv_answer"
                         android:textColor="@drawable/radio_btn_tv_selector"
-                        android:textSize="@dimen/sp_12"/>
+                        android:textSize="@dimen/dp_13"/>
 
                     <RadioButton
                         android:id="@+id/my_predictions_row_rb_neither_answer"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:minHeight="@dimen/dim_24"
                         android:button="@drawable/sort_radio_icon"
                         android:layout_marginTop="@dimen/dp_5"
                         android:layout_below="@+id/my_predictions_row_tv_correct_answer"
                         android:textColor="@drawable/radio_btn_tv_selector"
-                        android:textSize="@dimen/sp_12"
+                        android:textSize="@dimen/dp_13"
                         android:visibility="gone"/>
 
                 </RadioGroup>
@@ -240,56 +236,56 @@
         <!-- Percentage graph - option 1 -->
         <com.jeeva.android.widgets.customfont.CustomTextView
             android:id="@+id/my_predictions_row_tv_perc_1"
-            android:layout_width="@dimen/dim_150"
-            android:layout_height="@dimen/dim_24"
+            android:layout_width="@dimen/dp_150"
+            android:layout_height="@dimen/dp_22"
             android:layout_alignParentRight="true"
             android:layout_alignTop="@+id/answer_layout"
             android:layout_below="@+id/my_predictions_row_rl_question"
-            android:drawablePadding="@dimen/dim_3"
+            android:drawablePadding="@dimen/dp_3"
             android:drawableRight="@drawable/average_leaderboard_icon"
             android:gravity="right|center_vertical"
             android:maxLines="1"
-            android:paddingRight="@dimen/dim_10"
+            android:paddingRight="@dimen/dp_10"
             android:textColor="@color/white_60"
-            android:textSize="@dimen/sp_12"
+            android:textSize="@dimen/dp_12"
             android:visibility="invisible"
-            android:layout_marginTop="@dimen/dim_7"
+            android:layout_marginTop="@dimen/dp_7"
             app:typeface="lato_regular" />
 
         <!-- Percentage graph - option 2 -->
         <com.jeeva.android.widgets.customfont.CustomTextView
             android:id="@+id/my_predictions_row_tv_perc_2"
-            android:layout_width="@dimen/dim_150"
-            android:layout_height="@dimen/dim_22"
+            android:layout_width="@dimen/dp_150"
+            android:layout_height="@dimen/dp_22"
             android:layout_alignParentRight="true"
             android:layout_below="@+id/my_predictions_row_tv_perc_1"
-            android:layout_marginTop="@dimen/dim_2"
-            android:drawablePadding="@dimen/dim_3"
+            android:layout_marginTop="@dimen/dp_2"
+            android:drawablePadding="@dimen/dp_3"
             android:drawableRight="@drawable/average_leaderboard_icon"
             android:gravity="right|center_vertical"
             android:maxLines="1"
-            android:paddingRight="@dimen/dim_10"
+            android:paddingRight="@dimen/dp_10"
             android:textColor="@color/white_60"
-            android:textSize="@dimen/sp_12"
+            android:textSize="@dimen/dp_12"
             android:visibility="invisible"
             app:typeface="lato_regular" />
 
         <!-- Percentage graph - option 3 -->
         <com.jeeva.android.widgets.customfont.CustomTextView
             android:id="@+id/my_predictions_row_tv_perc_3"
-            android:layout_width="@dimen/dim_150"
-            android:layout_height="@dimen/dim_24"
+            android:layout_width="@dimen/dp_150"
+            android:layout_height="@dimen/dp_22"
             android:layout_alignParentRight="true"
             android:layout_below="@+id/my_predictions_row_tv_perc_2"
-            android:layout_marginTop="@dimen/dim_2"
+            android:layout_marginTop="@dimen/dp_2"
             android:background="@color/radical_red"
-            android:drawablePadding="@dimen/dim_3"
+            android:drawablePadding="@dimen/dp_3"
             android:drawableRight="@drawable/average_leaderboard_icon"
             android:gravity="right|center_vertical"
             android:maxLines="1"
-            android:paddingRight="@dimen/dim_10"
+            android:paddingRight="@dimen/dp_10"
             android:textColor="@color/white_60"
-            android:textSize="@dimen/sp_12"
+            android:textSize="@dimen/dp_12"
             android:visibility="invisible"
             app:typeface="lato_regular" />
 
