@@ -1,4 +1,4 @@
-package in.sportscafe.nostragamus.module.contest.contestDetailsAfterJoining;
+package in.sportscafe.nostragamus.module.contest.contestDetailsCompletedChallenges;
 
 import android.content.Context;
 import android.content.Intent;
@@ -15,38 +15,38 @@ import org.parceler.Parcels;
 
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
+import in.sportscafe.nostragamus.module.challengeCompleted.dto.CompletedContestDto;
+import in.sportscafe.nostragamus.module.challengeCompleted.ui.viewPager.CompletedMatchTimelineViewPagerFragment;
 import in.sportscafe.nostragamus.module.challengeRewards.RewardsFragment;
 import in.sportscafe.nostragamus.module.challengeRules.RulesFragment;
 import in.sportscafe.nostragamus.module.common.NostraBaseFragment;
 import in.sportscafe.nostragamus.module.contest.ui.DetailScreensLaunchRequest;
-import in.sportscafe.nostragamus.module.inPlay.dto.InPlayContestDto;
 import in.sportscafe.nostragamus.module.inPlay.ui.InPlayMatchTimelineViewPagerFragment;
-import in.sportscafe.nostragamus.module.navigation.wallet.WalletHelper;
 import in.sportscafe.nostragamus.module.user.leaderboard.LeaderBoardFragment;
 
 /**
- * Created by deepanshi on 9/13/17.
+ * Created by sc on 4/10/17.
  */
 
-public class ContestDetailsAfterJoinFragment extends NostraBaseFragment implements View.OnClickListener {
+public class ContestDetailCompletedFragment  extends NostraBaseFragment implements View.OnClickListener {
 
-    private static final String TAG = ContestDetailsAfterJoinFragment.class.getSimpleName();
+    private static final String TAG = ContestDetailCompletedFragment.class.getSimpleName();
 
-    public ContestDetailsAfterJoinFragment() {
+    public ContestDetailCompletedFragment() {
     }
 
-    private ContestDetailsAJFragmentListener mContestDetailsAJFragmentListener;
+    private ContestDetailCompletedFragmentListener mContestDetailCompletedFragmentListener;
     private TextView mTvTBarHeading;
     private TextView mTvTBarSubHeading;
     private ViewPager mViewPager;
-    private ContestDetailsAfterJoinViewPagerAdapter mViewPagerAdapter;
+    private ContestDetailsCompletedViewPagerAdapter mViewPagerAdapter;
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
 
-        if (context instanceof ContestDetailsAfterJoinActivity) {
-            mContestDetailsAJFragmentListener = (ContestDetailsAJFragmentListener) context;
+        if (context instanceof ContestDetailCompletedActivity) {
+            mContestDetailCompletedFragmentListener = (ContestDetailCompletedFragmentListener) context;
         } else {
             throw new RuntimeException("Activity must implement " + TAG);
         }  }
@@ -68,11 +68,11 @@ public class ContestDetailsAfterJoinFragment extends NostraBaseFragment implemen
         rootView.findViewById(R.id.contest_details_back_btn).setOnClickListener(this);
     }
 
-    private void setInfo(InPlayContestDto inPlayContestDto) {
+    private void setInfo(CompletedContestDto completedContestDto) {
 
-        if (inPlayContestDto != null) {
-            mTvTBarHeading.setText(inPlayContestDto.getContestName());
-            mTvTBarSubHeading.setText(inPlayContestDto.getContestName());   // TODO change as per need
+        if (completedContestDto != null) {
+            mTvTBarHeading.setText(completedContestDto.getContestName());
+            mTvTBarSubHeading.setText(completedContestDto.getContestName());   // TODO change as per need
         }
 
         /*int amount = (int) WalletHelper.getTotalBalance();
@@ -91,9 +91,9 @@ public class ContestDetailsAfterJoinFragment extends NostraBaseFragment implemen
 
     private void openBundle(Bundle arguments) {
         if (arguments != null) {
-            InPlayContestDto inplayContest = Parcels.unwrap(arguments.getParcelable(Constants.BundleKeys.INPLAY_CONTEST));
-            createAdapter(inplayContest);
-            setInfo(inplayContest);
+            CompletedContestDto completedContestDto = Parcels.unwrap(arguments.getParcelable(Constants.BundleKeys.COMPLETED_CONTEST));
+            createAdapter(completedContestDto);
+            setInfo(completedContestDto);
 
             showRequestedTabScreen();
         }
@@ -119,23 +119,23 @@ public class ContestDetailsAfterJoinFragment extends NostraBaseFragment implemen
         }
     }
 
-    private void createAdapter(InPlayContestDto contestDto) {
-        if (getView() != null && contestDto != null && mViewPager != null) {
-            mViewPagerAdapter = new ContestDetailsAfterJoinViewPagerAdapter(getChildFragmentManager(), getContext());
+    private void createAdapter(CompletedContestDto completedContestDto) {
+        if (getView() != null && completedContestDto != null && mViewPager != null) {
+            mViewPagerAdapter = new ContestDetailsCompletedViewPagerAdapter(getChildFragmentManager(), getContext());
 
-            InPlayMatchTimelineViewPagerFragment matchTimelineViewPagerFragment = new InPlayMatchTimelineViewPagerFragment();
+            CompletedMatchTimelineViewPagerFragment matchTimelineViewPagerFragment = new CompletedMatchTimelineViewPagerFragment();
             if (getArguments() != null) {
                 matchTimelineViewPagerFragment.setArguments(getArguments());
             }
             mViewPagerAdapter.addFragment(matchTimelineViewPagerFragment, Constants.ContestDetailsTabs.MATCHES);
 
-            LeaderBoardFragment leaderBoardFragment = LeaderBoardFragment.newInstance(contestDto.getRoomId());
+            LeaderBoardFragment leaderBoardFragment = LeaderBoardFragment.newInstance(completedContestDto.getRoomId());
             mViewPagerAdapter.addFragment(leaderBoardFragment, Constants.ContestDetailsTabs.LEADERBOARDS);
 
-            RewardsFragment rewardsFragment = RewardsFragment.newInstance(contestDto.getRoomId());
-            mViewPagerAdapter.addFragment(rewardsFragment, Constants.ContestDetailsTabs.PRIZES);
+            RewardsFragment rewardsFragment = RewardsFragment.newInstance(completedContestDto.getRoomId());
+            mViewPagerAdapter.addFragment(rewardsFragment, Constants.ContestDetailsTabs.WINNERS);
 
-            RulesFragment rulesFragment = RulesFragment.newInstance(contestDto.getContestId());
+            RulesFragment rulesFragment = RulesFragment.newInstance(completedContestDto.getContestId());
             mViewPagerAdapter.addFragment(rulesFragment, Constants.ContestDetailsTabs.RULES);
 
             mViewPager.setAdapter(mViewPagerAdapter);
@@ -166,11 +166,12 @@ public class ContestDetailsAfterJoinFragment extends NostraBaseFragment implemen
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.contest_details_back_btn:
-                if (mContestDetailsAJFragmentListener != null) {
-                    mContestDetailsAJFragmentListener.onBackClicked();
+                if (mContestDetailCompletedFragmentListener != null) {
+                    mContestDetailCompletedFragmentListener.onBackClicked();
                 }
                 break;
 
         }
     }
+
 }

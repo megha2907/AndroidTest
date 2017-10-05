@@ -1,5 +1,6 @@
 package in.sportscafe.nostragamus.module.challengeCompleted.ui.viewPager;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -15,6 +16,7 @@ import com.jeeva.android.BaseFragment;
 import java.util.ArrayList;
 import java.util.List;
 
+import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.challengeCompleted.adapter.CompletedChallengeAdapterItemType;
 import in.sportscafe.nostragamus.module.challengeCompleted.adapter.CompletedChallengeAdapterListener;
@@ -23,8 +25,11 @@ import in.sportscafe.nostragamus.module.challengeCompleted.dto.CompletedContestD
 import in.sportscafe.nostragamus.module.challengeCompleted.dto.CompletedListChallengeItem;
 import in.sportscafe.nostragamus.module.challengeCompleted.dto.CompletedListItem;
 import in.sportscafe.nostragamus.module.challengeCompleted.dto.CompletedResponse;
+import in.sportscafe.nostragamus.module.contest.contestDetailsAfterJoining.ContestDetailsAfterJoinActivity;
+import in.sportscafe.nostragamus.module.contest.contestDetailsCompletedChallenges.ContestDetailCompletedActivity;
 import in.sportscafe.nostragamus.module.inPlay.helper.InPlayFilterHelper;
 import in.sportscafe.nostragamus.module.newChallenges.dto.SportsTab;
+import in.sportscafe.nostragamus.utils.AlertsHelper;
 
 /**
  * Created by deepanshi on 9/27/17.
@@ -143,16 +148,35 @@ public class CompleteChallengeViewPagerFragment extends BaseFragment {
 
             @Override
             public void onCompletedCardClicked(Bundle args) {
-
-
+                goToHistoryDetails(args);
             }
 
             @Override
             public void onCompletedWinningClicked(Bundle args) {
+                goToHistoryDetails(args);
+            }
 
+            @Override
+            public void onCompletedContestCurrentRankClicked(Bundle args) {
+                goToHistoryDetails(args);
             }
 
         };
+    }
+
+    private void goToHistoryDetails(Bundle args) {
+        if (Nostragamus.getInstance().hasNetworkConnection()) {
+            if (getActivity() != null && !getActivity().isFinishing()) {
+                Intent intent = new Intent(getActivity(), ContestDetailCompletedActivity.class);
+                if (args != null) {
+                    intent.putExtras(args);
+                }
+
+                getActivity().startActivity(intent);
+            }
+        } else {
+            AlertsHelper.showAlert(getContext(), "No Internet", "Please turn ON internet to continue", null);
+        }
     }
 
 

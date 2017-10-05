@@ -2,6 +2,8 @@ package in.sportscafe.nostragamus.module.challengeCompleted.dto;
 
 import com.google.gson.annotations.SerializedName;
 
+import org.parceler.Parcel;
+
 import java.util.List;
 
 import in.sportscafe.nostragamus.module.inPlay.dto.InPlayContestMatchDto;
@@ -11,6 +13,7 @@ import in.sportscafe.nostragamus.module.prediction.playScreen.dto.PowerUp;
  * Created by deepanshi on 9/27/17.
  */
 
+@Parcel
 public class CompletedContestDto {
 
     @SerializedName("contest_id")
@@ -24,6 +27,9 @@ public class CompletedContestDto {
 
     @SerializedName("config_name")
     private String contestName;
+
+    @SerializedName("challenge_name")
+    private String challengeName;
 
     @SerializedName("rank")
     private int rank;
@@ -81,6 +87,14 @@ public class CompletedContestDto {
 
     public void setContestName(String contestName) {
         this.contestName = contestName;
+    }
+
+    public String getChallengeName() {
+        return challengeName;
+    }
+
+    public void setChallengeName(String challengeName) {
+        this.challengeName = challengeName;
     }
 
     public int getRank() {

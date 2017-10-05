@@ -33,7 +33,6 @@
         android:ellipsize="end"
         android:maxWidth="@dimen/dim_150"
         android:layout_centerHorizontal="true"
-        android:visibility="visible"
         android:layout_below="@+id/reward_row_tv_rank"
         android:textColor="@color/white_90"
         android:textSize="@dimen/sp_11"

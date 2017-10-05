@@ -2,10 +2,12 @@ package in.sportscafe.nostragamus.module.challengeCompleted.dto;
 
 import com.google.gson.annotations.SerializedName;
 
+import org.parceler.Parcel;
+
 /**
  * Created by deepanshi on 9/27/17.
  */
-
+@Parcel
 public class CompletedContestMatchDto {
 
     @SerializedName("is_played")
