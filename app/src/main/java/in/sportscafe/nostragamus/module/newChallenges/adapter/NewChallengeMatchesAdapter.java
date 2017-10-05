@@ -1,6 +1,7 @@
 package in.sportscafe.nostragamus.module.newChallenges.adapter;
 
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -24,6 +25,8 @@ import in.sportscafe.nostragamus.module.inPlay.adapter.MatchesAdapterAction;
 import in.sportscafe.nostragamus.module.inPlay.adapter.MatchesAdapterItemType;
 import in.sportscafe.nostragamus.module.inPlay.dto.InPlayMatch;
 import in.sportscafe.nostragamus.module.newChallenges.dto.MatchParty;
+import in.sportscafe.nostragamus.module.newChallenges.helpers.DateTimeHelper;
+import in.sportscafe.nostragamus.module.nostraHome.helper.TimerHelper;
 import in.sportscafe.nostragamus.utils.timeutils.TimeUtils;
 
 public class NewChallengeMatchesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
@@ -88,7 +91,16 @@ public class NewChallengeMatchesAdapter extends RecyclerView.Adapter<RecyclerVie
                 viewHolder.vsTextView.setVisibility(View.GONE);
             }
 
-            viewHolder.dateTimeTextView.setText(getDateTimeValue(match.getMatchStartTime()));
+            /* Timer - match start */
+            String matchStartTime = match.getMatchStartTime();
+            if (!TextUtils.isEmpty(matchStartTime)) {
+                if (DateTimeHelper.isTimerRequired(matchStartTime)) {
+                    setTimer(viewHolder, matchStartTime);
+                } else {
+                    viewHolder.dateTimeTextView.setText(getDateTimeValue(matchStartTime));
+                }
+            }
+
             viewHolder.venueTextView.setText(match.getMatchVenue());
             viewHolder.actionButton.setText(match.getMatchStatus());
 
@@ -106,6 +118,20 @@ public class NewChallengeMatchesAdapter extends RecyclerView.Adapter<RecyclerVie
                 }
             }
         }
+    }
+
+    private void setTimer(final TwoPartyMatchItemViewHolder viewHolder, final String matchStartTime) {
+        CountDownTimer countDownTimer = new CountDownTimer(TimerHelper.getCountDownFutureTime(matchStartTime), 1000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                viewHolder.dateTimeTextView.setText(TimerHelper.getTimerFormatFromMillis(millisUntilFinished));
+            }
+
+            @Override
+            public void onFinish() {
+            }
+        };
+        countDownTimer.start();
     }
 
     private boolean shouldDisableMatchClickAction(InPlayMatch match) {

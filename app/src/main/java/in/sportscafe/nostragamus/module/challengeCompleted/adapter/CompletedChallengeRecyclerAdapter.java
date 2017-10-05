@@ -209,7 +209,8 @@ public class CompletedChallengeRecyclerAdapter extends RecyclerView.Adapter<Recy
                     /* Footer */
                 TimelineHelper.addFooterTextNode(viewHolder.timelineFooterParent, matchPoints,
                         contest.getMatches().size(), match.getStatus(),
-                        TimelineHelper.MatchTimelineTypeEnum.IN_PLAY_JOINED, isPlayed);
+                        TimelineHelper.MatchTimelineTypeEnum.IN_PLAY_JOINED, isPlayed,
+                        match.getStartTime());
 
                 LinearLayout.LayoutParams params = (LinearLayout.LayoutParams)viewHolder.timelineFooterParent.getLayoutParams();
                 params.setMargins(10, 0, 0, 0);

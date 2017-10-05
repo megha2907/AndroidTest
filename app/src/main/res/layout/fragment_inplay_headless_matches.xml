@@ -19,7 +19,6 @@
             android:layout_height="wrap_content"
             android:textColor="@color/white"
             android:layout_centerVertical="true"
-            android:text="5/10"
             android:layout_marginLeft="@dimen/dim_20"
             android:textSize="@dimen/sp_12"
             app:typeface="lato_bold" />
@@ -44,7 +43,7 @@
             android:layout_centerVertical="true"
             android:layout_alignParentRight="true"
             android:textAllCaps="false"
-            android:text="70h 12m 15s"
+            android:text=""
             android:layout_marginRight="@dimen/dim_20"
             android:textColor="@color/white"
             android:textSize="@dimen/sp_12"

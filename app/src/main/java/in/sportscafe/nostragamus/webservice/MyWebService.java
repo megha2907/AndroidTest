@@ -10,7 +10,7 @@ import in.sportscafe.nostragamus.module.challengeCompleted.dto.CompletedResponse
 import in.sportscafe.nostragamus.module.challengeRewards.dto.RewardsResponse;
 import in.sportscafe.nostragamus.module.challengeRules.dto.RulesResponse;
 import in.sportscafe.nostragamus.module.common.ApiResponse;
-import in.sportscafe.nostragamus.module.common.TimeResponse;
+import in.sportscafe.nostragamus.module.nostraHome.dto.TimeResponse;
 import in.sportscafe.nostragamus.module.common.dto.MatchesResponse;
 import in.sportscafe.nostragamus.module.contest.dto.ContestEntriesRequest;
 import in.sportscafe.nostragamus.module.contest.dto.ContestEntriesResponse;

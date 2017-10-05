@@ -2,7 +2,9 @@ package in.sportscafe.nostragamus.module.customViews;
 
 import android.content.Context;
 import android.graphics.Typeface;
+import android.os.CountDownTimer;
 import android.support.v4.content.ContextCompat;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -12,6 +14,8 @@ import com.jeeva.android.Log;
 
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
+import in.sportscafe.nostragamus.module.newChallenges.helpers.DateTimeHelper;
+import in.sportscafe.nostragamus.module.nostraHome.helper.TimerHelper;
 
 
 /**
@@ -305,7 +309,7 @@ public class TimelineHelper {
     }
 
     public static void addFooterTextNode(LinearLayout parent, String title, int matchSize, String status,
-                                         MatchTimelineTypeEnum typeEnum, boolean isPlayed) {
+                                         MatchTimelineTypeEnum typeEnum, boolean isPlayed, String startTimeForTimer) {
         if (parent != null) {
             Context context = parent.getContext();
 
@@ -333,7 +337,7 @@ public class TimelineHelper {
             int width = maxLineWidth / matchSizeNew;
             //int width = (int)context.getResources().getDimension(R.dimen.dim_80);
 
-            TextView titleView = (TextView) View.inflate(context, R.layout.games_status_timeline_title, null);
+            final TextView titleView = (TextView) View.inflate(context, R.layout.games_status_timeline_title, null);
             if (title != null) {
 
                 titleView.setText(title);
@@ -381,10 +385,33 @@ public class TimelineHelper {
                         break;
                 }
 
+                /* Timer or date */
+                if (!TextUtils.isEmpty(startTimeForTimer)) {
+                    if (DateTimeHelper.isTimerRequired(startTimeForTimer)) {
+                        setTimer(startTimeForTimer, titleView);
+                    } else {
+                        titleView.setText(title);
+                    }
+                }
+
                 parent.addView(titleView, parent.getChildCount(), new ViewGroup.LayoutParams(width, ViewGroup.LayoutParams.WRAP_CONTENT));
             }
 
         }
+    }
+
+    private static void setTimer(final String title, final TextView titleView) {
+        CountDownTimer countDownTimer = new CountDownTimer(TimerHelper.getCountDownFutureTime(title), 1000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                titleView.setText(TimerHelper.getTimerFormatFromMillis(millisUntilFinished));
+            }
+
+            @Override
+            public void onFinish() {
+            }
+        };
+        countDownTimer.start();
     }
 
 

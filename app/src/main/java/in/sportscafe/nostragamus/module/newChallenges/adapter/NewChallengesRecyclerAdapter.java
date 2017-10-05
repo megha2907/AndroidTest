@@ -2,8 +2,10 @@ package in.sportscafe.nostragamus.module.newChallenges.adapter;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +22,7 @@ import in.sportscafe.nostragamus.module.navigation.wallet.WalletHelper;
 import in.sportscafe.nostragamus.module.newChallenges.dto.NewChallengeMatchesScreenData;
 import in.sportscafe.nostragamus.module.newChallenges.dto.NewChallengesResponse;
 import in.sportscafe.nostragamus.module.newChallenges.helpers.DateTimeHelper;
+import in.sportscafe.nostragamus.module.nostraHome.helper.TimerHelper;
 
 /**
  * Created by sandip on 23/08/17.
@@ -77,7 +80,7 @@ public class NewChallengesRecyclerAdapter extends RecyclerView.Adapter<RecyclerV
     private void bindChallengeValues(RecyclerView.ViewHolder holder, int position) {
         if (mNewChallengesResponseList != null && mNewChallengesResponseList.size() > position) {
             NewChallengesResponse newChallengesResponse = mNewChallengesResponseList.get(position);
-            NewChallengesItemViewHolder newChallengesItemViewHolder = (NewChallengesItemViewHolder) holder;
+            final NewChallengesItemViewHolder newChallengesItemViewHolder = (NewChallengesItemViewHolder) holder;
 
             if (newChallengesResponse != null) {
                 newChallengesItemViewHolder.challengeNameTextView.setText(newChallengesResponse.getChallengeName());
@@ -85,9 +88,32 @@ public class NewChallengesRecyclerAdapter extends RecyclerView.Adapter<RecyclerV
                 newChallengesItemViewHolder.challengeDateTextView.setText(DateTimeHelper.getChallengeDuration(newChallengesResponse.getChallengeStartTime(), newChallengesResponse.getChallengeEndTime()));
                 newChallengesItemViewHolder.gameLeftTextView.setText(newChallengesResponse.getMatchesLeft() + "/" + newChallengesResponse.getTotalMatches());
                 newChallengesItemViewHolder.prizeTextView.setText(Constants.RUPEE_SYMBOL+String.valueOf(newChallengesResponse.getPrizes()));
-                newChallengesItemViewHolder.startTimeTextView.setText(DateTimeHelper.getStartTime(newChallengesResponse.getChallengeStartTime()));
+
+                String startTimeStr = newChallengesResponse.getChallengeStartTime();
+                if (!TextUtils.isEmpty(startTimeStr)) {
+                    if (DateTimeHelper.isTimerRequired(startTimeStr)) {
+                        setTimer(newChallengesItemViewHolder, startTimeStr);
+                    } else {
+                        newChallengesItemViewHolder.startTimeTextView.setText(DateTimeHelper.getStartTime(startTimeStr));
+                    }
+                }
+
             }
         }
+    }
+
+    private void setTimer(final NewChallengesItemViewHolder newChallengesItemViewHolder, final String startTimeStr) {
+        CountDownTimer countDownTimer = new CountDownTimer(TimerHelper.getCountDownFutureTime(startTimeStr), 1000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                newChallengesItemViewHolder.startTimeTextView.setText(TimerHelper.getTimerFormatFromMillis(millisUntilFinished));
+            }
+
+            @Override
+            public void onFinish() {
+            }
+        };
+        countDownTimer.start();
     }
 
     private String getTournamentString(List<String> tournamentList) {
@@ -150,6 +176,7 @@ public class NewChallengesRecyclerAdapter extends RecyclerView.Adapter<RecyclerV
 
                 screenData.setChallengeId(newChallengesResponse.getChallengeId());
                 screenData.setChallengeName(newChallengesResponse.getChallengeName());
+                screenData.setStartTime(newChallengesResponse.getChallengeStartTime());
 
                 args.putParcelable(Constants.BundleKeys.NEW_CHALLENGE_MATCHES_SCREEN_DATA, Parcels.wrap(screenData));
                 mChallengeListener.onChallengeClicked(args);

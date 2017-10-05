@@ -271,7 +271,7 @@ public class CardStack extends RelativeLayout {
                             public void onAnimationEnd(Animator arg0) {
                                 mCardAnimator.initLayout();
                                 mIndex++;
-                                mEventListener.discarded(mIndex, direction);
+                                mEventListener.discarded(mIndex - 1, direction);
 
                                 //mIndex = mIndex%mAdapter.getCount();
                                 loadLast();

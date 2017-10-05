@@ -25,6 +25,7 @@ import retrofit2.Response;
 public class ContestDataProvider {
 
     private static final String TAG = ContestDataProvider.class.getSimpleName();
+    public static final int JOINED_CONTEST_ID = -1;
 
     public ContestDataProvider() {}
 
@@ -93,10 +94,16 @@ public class ContestDataProvider {
         free.setName("Free Contests");
         free.setTagLine("Finish on the Top Half of the leaderboards to win");
 
+        ContestType joinedContest = new ContestType();
+        joinedContest.setId(JOINED_CONTEST_ID);
+        joinedContest.setName("Joined Contests");
+        joinedContest.setTagLine("Join more contests to Win more!");
+
         contestTypes.add(h2h);
         contestTypes.add(doubleUp);
         contestTypes.add(glory);
         contestTypes.add(free);
+        contestTypes.add(joinedContest);
 
         return contestTypes;
     }

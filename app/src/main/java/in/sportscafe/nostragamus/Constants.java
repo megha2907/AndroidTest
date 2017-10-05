@@ -200,6 +200,7 @@ public interface Constants {
         String FORCE_UPDATE_PROFILE_MSG_FOR_PAID_VERSION = "Please update your profile";
         String NO_INTERNET_CONNECTION = "No internet connection";
         String COULD_NOT_FETCH_DATA_FROM_SERVER = "Could not fetch data from Server!";
+        String CHALLENGE_STARTED_ALERT_FOR_TIMER = "Please join other challenges as %s already started";
 
         /*--- Paytm Msg ---*/
         String PAYTM_AUTHENTICATION_FAILED = "Could not transact, please try again";
@@ -348,7 +349,6 @@ public interface Constants {
         String RESULTS_SCREEN_DATA = "resultsScreenData";
         String CONTEST_SCREEN_DATA = "contestScreenData";
         String IS_HEADLESS_FLOW = "isHeadLessFlow";
-        String IS_PLAYING_PSEUDO_GAME = "isPlayingPseudoGame";
         String HEADLESS_MATCH_SCREEN_DATA = "headlessMatchScreenData";
         String COMPLETED_CHALLENGE_LIST_ITEM = "CompletedChallengeListItem";
     }

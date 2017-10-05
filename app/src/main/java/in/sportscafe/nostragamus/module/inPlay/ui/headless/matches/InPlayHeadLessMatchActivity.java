@@ -56,6 +56,11 @@ public class InPlayHeadLessMatchActivity extends NostraBaseActivity implements I
     }
 
     @Override
+    public void onBackClicked() {
+        onBackPressed();
+    }
+
+    @Override
     public void launchContestActivity(int launchedFrom, Bundle args) {
         Intent intent = new Intent(this, ContestsActivity.class);
         if (args != null) {

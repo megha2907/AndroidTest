@@ -31,15 +31,11 @@ import in.sportscafe.nostragamus.module.inPlay.adapter.MatchesAdapterAction;
 import in.sportscafe.nostragamus.module.inPlay.adapter.InPlayMatchAdapterListener;
 import in.sportscafe.nostragamus.module.inPlay.adapter.InPlayMatchesRecyclerAdapter;
 import in.sportscafe.nostragamus.module.inPlay.dataProvider.InPlayMatchesDataProvider;
-import in.sportscafe.nostragamus.module.inPlay.dto.InPlayContestDto;
-import in.sportscafe.nostragamus.module.inPlay.dto.InPlayContestMatchDto;
 import in.sportscafe.nostragamus.module.inPlay.dto.InPlayMatch;
 import in.sportscafe.nostragamus.module.inPlay.dto.InPlayMatchesResponse;
 import in.sportscafe.nostragamus.module.inPlay.ui.ResultsScreenDataDto;
 import in.sportscafe.nostragamus.module.newChallenges.helpers.DateTimeHelper;
 import in.sportscafe.nostragamus.module.play.myresults.MyResultsActivity;
-import in.sportscafe.nostragamus.module.prediction.playScreen.PredictionActivity;
-import in.sportscafe.nostragamus.module.prediction.playScreen.dto.PlayScreenDataDto;
 import in.sportscafe.nostragamus.utils.AlertsHelper;
 import in.sportscafe.nostragamus.utils.timeutils.TimeUtils;
 
@@ -57,7 +53,7 @@ public class CompletedMatchTimelineViewPagerFragment extends NostraBaseFragment 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_in_play_match_timeline, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_in_play_match, container, false);
         initRootView(rootView);
         return rootView;
     }
@@ -183,7 +179,8 @@ public class CompletedMatchTimelineViewPagerFragment extends NostraBaseFragment 
                     /* Footer */
                     TimelineHelper.addFooterTextNode(bottomParent, matchPoints,
                             mCompletedContestDto.getMatches().size(), match.getStatus(),
-                            TimelineHelper.MatchTimelineTypeEnum.IN_PLAY_MATCHES_SCREEN, isPlayed);
+                            TimelineHelper.MatchTimelineTypeEnum.IN_PLAY_MATCHES_SCREEN, isPlayed,
+                            match.getStartTime());
 
                     LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) bottomParent.getLayoutParams();
                     params.setMargins(10, 0, 0, 0);
@@ -192,7 +189,9 @@ public class CompletedMatchTimelineViewPagerFragment extends NostraBaseFragment 
                 } else {
                       /* Footer */
                     TimelineHelper.addFooterTextNode(bottomParent, DateTimeHelper.getInPlayMatchTime(match.getStartTime()),
-                            mCompletedContestDto.getMatches().size(), match.getStatus(), TimelineHelper.MatchTimelineTypeEnum.IN_PLAY_MATCHES_SCREEN, isPlayed);
+                            mCompletedContestDto.getMatches().size(), match.getStatus(),
+                            TimelineHelper.MatchTimelineTypeEnum.IN_PLAY_MATCHES_SCREEN, isPlayed,
+                            match.getStartTime());
 
                     LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) bottomParent.getLayoutParams();
                     params.setMargins(0, 0, 0, 0);
