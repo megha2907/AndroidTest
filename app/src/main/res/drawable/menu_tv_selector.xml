@@ -4,5 +4,5 @@
         android:color="@color/tabcolor" /> <!-- pressed -->
     <item android:state_focused="true"
         android:color="@color/tabcolor" /> <!-- focused -->
-    <item android:color="@color/textcolorlight" /> <!-- default -->
+    <item android:color="@color/white_999999" /> <!-- default -->
 </selector>
