@@ -330,9 +330,13 @@
             
             android:screenOrientation="portrait" />
         <activity
-            android:name=".module.contest.contestDetailsAfterJoining.ContestDetailsAfterJoinActivity"
-            
+        android:name=".module.contest.contestDetailsAfterJoining.ContestDetailsAfterJoinActivity"
+        android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".module.contest.contestDetailsCompletedChallenges.ContestDetailCompletedActivity"
             android:screenOrientation="portrait" />
+
         <activity
             android:name=".module.prediction.playScreen.PredictionActivity"
             

@@ -31,7 +31,7 @@ public class RewardsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     private static final int TYPE_ITEM = 1;
     private static final int TYPE_FOOTER = 2;
 
-    public RewardsAdapter(Context csontext, List<Rewards> rewardsList, String ChallengeEndTime) {
+    public RewardsAdapter(Context context, List<Rewards> rewardsList, String ChallengeEndTime) {
 
         mChallengeEndTime = ChallengeEndTime;
         mRewardsList = rewardsList;

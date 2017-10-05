@@ -85,10 +85,11 @@
         <!-- Current rank -->
         <LinearLayout
             android:id="@+id/inplay_contest_list_current_rank_layout"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:layout_weight="2"
+            android:minWidth="@dimen/dim_55"
+            android:paddingRight="@dimen/dim_30"
             android:background="?selectableItemBackgroundBorderless">
 
             <com.jeeva.android.widgets.customfont.CustomTextView
@@ -113,10 +114,11 @@
         <!-- Prizes -->
         <LinearLayout
             android:id="@+id/inplay_contest_list_prizes_layout"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:layout_weight="0.75"
+            android:minWidth="@dimen/dim_50"
+            android:gravity="right"
             android:background="?selectableItemBackgroundBorderless">
 
             <com.jeeva.android.widgets.customfont.CustomTextView

@@ -11,4 +11,6 @@ public interface CompletedChallengeAdapterListener {
     /* Completed Card Item */
     void onCompletedCardClicked(Bundle args);
     void onCompletedWinningClicked(Bundle args);
+
+    void onCompletedContestCurrentRankClicked(Bundle args);
 }

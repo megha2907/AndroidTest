@@ -198,9 +198,6 @@ public class LeaderBoardFragment extends BaseFragment implements LeaderBoardView
 //                        LeaderBoardModelImpl.SORT_TYPE = 2;
 //                    }
                 break;
-            case R.id.points_user_rl:
-                mLeaderBoardPresenter.onClickUserPoints();
-                break;
         }
     }
 

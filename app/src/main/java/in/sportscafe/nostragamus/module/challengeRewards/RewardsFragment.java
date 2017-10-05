@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,10 +14,13 @@ import java.util.List;
 
 import in.sportscafe.nostragamus.AppSnippet;
 import in.sportscafe.nostragamus.Constants;
+import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.challengeRewards.dto.Rewards;
 import in.sportscafe.nostragamus.module.common.NostraBaseFragment;
 import in.sportscafe.nostragamus.utils.AlertsHelper;
+import in.sportscafe.nostragamus.utils.timeutils.TimeAgo;
+import in.sportscafe.nostragamus.utils.timeutils.TimeUnit;
 import in.sportscafe.nostragamus.utils.timeutils.TimeUtils;
 
 /**
@@ -119,12 +123,35 @@ public class RewardsFragment extends NostraBaseFragment implements RewardsApiMod
         String prizesHandOutDate = dayOfMonthinEndTime + AppSnippet.ordinalOnly(dayOfMonthinEndTime) + " of " +
                 TimeUtils.getDateStringFromMs(endTimeMs, "MMM");
 
-        // Setting end date of the challenge
-        mChallengeEndTime.setText("The challenge will end on "+prizesHandOutDate+".Prizes will be handed out within a few hours of challenge completion.");
+        if (getChallengeOver(challengeEndTime)) {
+            /* set when challenge is over */
+            mChallengeEndTime.setText("Prizes were handed out on "+prizesHandOutDate+".");
+        }else {
+            // Setting end date of the challenge
+            mChallengeEndTime.setText("The challenge will end on " + prizesHandOutDate + ". Prizes will be handed out within a few hours of challenge completion.");
+        }
 
-        /* set when challenge is over */
-       // mChallengeEndTime.setText("Prizes were handed out on 15th of Sept.");
+    }
 
+    private boolean getChallengeOver(String challengeEndTime) {
+
+        boolean isChallengeOver = false;
+
+        if (!TextUtils.isEmpty(challengeEndTime)) {
+            String startTime = challengeEndTime.replace("+00:00", ".000Z");
+            long startTimeMs = TimeUtils.getMillisecondsFromDateString(
+                    startTime,
+                    Constants.DateFormats.FORMAT_DATE_T_TIME_ZONE,
+                    Constants.DateFormats.GMT
+            );
+            TimeAgo timeAgo = TimeUtils.calcTimeAgo(Nostragamus.getInstance().getServerTime(), startTimeMs);
+
+            isChallengeOver = timeAgo.timeDiff <= 0
+                    || timeAgo.timeUnit == TimeUnit.MILLISECOND
+                    || timeAgo.timeUnit == TimeUnit.SECOND;
+        }
+
+        return isChallengeOver;
     }
 
     @Override
