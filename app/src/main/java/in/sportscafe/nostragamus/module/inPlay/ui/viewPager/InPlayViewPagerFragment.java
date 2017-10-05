@@ -42,8 +42,6 @@ import in.sportscafe.nostragamus.module.inPlay.helper.InPlayFilterHelper;
 import in.sportscafe.nostragamus.module.inPlay.ui.headless.dto.HeadLessMatchScreenData;
 import in.sportscafe.nostragamus.module.inPlay.ui.headless.matches.InPlayHeadLessMatchActivity;
 import in.sportscafe.nostragamus.module.newChallenges.dto.SportsTab;
-import in.sportscafe.nostragamus.module.newChallenges.helpers.NewChallengesFilterHelper;
-import in.sportscafe.nostragamus.module.newChallenges.ui.matches.NewChallengesMatchActivity;
 import in.sportscafe.nostragamus.utils.AlertsHelper;
 
 /**
@@ -200,7 +198,7 @@ public class InPlayViewPagerFragment extends BaseFragment {
             challengeItem.setChallengeStartTime(response.getChallengeStartTime());
             challengeItem.setChallengeEndTime(response.getChallengeEndTime());
             challengeItem.setStatus(response.getStatus());
-            challengeItem.setSportsId(response.getSportsId());
+            challengeItem.setSportsIdArray(response.getSportsIdArray());
             challengeItem.setContestCount((response.getContestList() != null) ? response.getContestList().size() : 0);
         }
         return challengeItem;
