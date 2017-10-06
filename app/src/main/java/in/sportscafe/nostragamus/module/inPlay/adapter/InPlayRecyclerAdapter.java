@@ -215,10 +215,17 @@ public class InPlayRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             InPlayJoinedItemViewHolder viewHolder = (InPlayJoinedItemViewHolder) holder;
 
             viewHolder.contestTitleTextView.setText(contest.getContestName());
-            viewHolder.contestModeImageView.setImageResource(R.drawable.add_members_icon);
             viewHolder.entryFeeTextView.setText(Constants.RUPEE_SYMBOL + String.valueOf(contest.getEntryFee()));
             viewHolder.prizesTextView.setText(Constants.RUPEE_SYMBOL + String.valueOf(contest.getWinningAmount()));
             viewHolder.currentRankTextView.setText(contest.getRank() + "/" + contest.getTotalParticipants());
+
+            if (contest.getContestMode().equalsIgnoreCase(Constants.ContestType.GUARANTEED)) {
+                viewHolder.contestModeImageView.setBackgroundResource(R.drawable.guaranteed_icon);
+            } else if (contest.getContestMode().equalsIgnoreCase(Constants.ContestType.POOL)) {
+                viewHolder.contestModeImageView.setBackgroundResource(R.drawable.pool_icon);
+            }else if (contest.getContestMode().equalsIgnoreCase(Constants.ContestType.NON_GUARANTEED)) {
+                viewHolder.contestModeImageView.setBackgroundResource(R.drawable.no_guarantee_icon);
+            }
 
             viewHolder.timelineHeaderParent.removeAllViews();
             viewHolder.timelineContentParent.removeAllViews();

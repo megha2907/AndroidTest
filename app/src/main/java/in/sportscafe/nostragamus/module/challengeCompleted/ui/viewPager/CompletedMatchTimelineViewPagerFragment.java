@@ -11,6 +11,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -36,6 +37,7 @@ import in.sportscafe.nostragamus.module.inPlay.dto.InPlayMatchesResponse;
 import in.sportscafe.nostragamus.module.inPlay.ui.ResultsScreenDataDto;
 import in.sportscafe.nostragamus.module.newChallenges.helpers.DateTimeHelper;
 import in.sportscafe.nostragamus.module.play.myresults.MyResultsActivity;
+import in.sportscafe.nostragamus.module.prediction.playScreen.dto.PowerUp;
 import in.sportscafe.nostragamus.utils.AlertsHelper;
 import in.sportscafe.nostragamus.utils.timeutils.TimeUtils;
 
@@ -129,9 +131,15 @@ public class CompletedMatchTimelineViewPagerFragment extends NostraBaseFragment 
                 responses.getData() != null && responses.getData().getInPlayMatchList() != null
                 && getView() != null) {
 
-            String gamesLeftStr = getGamesLeftCount(responses.getData().getInPlayMatchList()) + "/" + responses.getData().getInPlayMatchList().size() + " GAMES LEFT";
-            TextView gamesLeftTextView = (TextView) getView().findViewById(R.id.inplay_match_timeline_games_left_textView);
+             /* Set Games Left */
+            String gamesLeftStr = getGamesLeftCount(responses.getData().getInPlayMatchList()) + "/" + responses.getData().getInPlayMatchList().size();
+            TextView gamesLeftTextView = (TextView) getView().findViewById(R.id.inplay_match_timeline_games_left_textview);
+            TextView gamesLeftTextViewText = (TextView) getView().findViewById(R.id.inplay_match_timeline_games_left);
             gamesLeftTextView.setText(gamesLeftStr);
+            gamesLeftTextViewText.setText(" GAMES LEFT");
+
+             /* Set Powerups */
+            showOrHidePowerUps(responses.getData().getPowerUp());
 
             /* Timeline */
             LinearLayout parent = (LinearLayout) getView().findViewById(R.id.match_status_timeline);
@@ -196,6 +204,58 @@ public class CompletedMatchTimelineViewPagerFragment extends NostraBaseFragment 
                     LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) bottomParent.getLayoutParams();
                     params.setMargins(0, 0, 0, 0);
                     bottomParent.setLayoutParams(params);
+                }
+            }
+        }
+    }
+
+    private void showOrHidePowerUps(PowerUp powerUp) {
+
+        LinearLayout powerUpLayout = (LinearLayout)getView().findViewById(R.id.powerup_top_layout);
+        ImageView powerUp2xImageView = (ImageView)getView(). findViewById(R.id.in_play_2x_iv);
+        ImageView powerUpNoNegativeImageView = (ImageView) getView().findViewById(R.id.in_play_no_neg_iv);
+        ImageView powerUpAudienceImageView = (ImageView) getView().findViewById(R.id.in_play_player_poll_iv);
+
+        TextView powerUp2xTextView = (TextView) getView().findViewById(R.id.in_play_2x_count_tv);
+        TextView powerUpNoNegativeTextView = (TextView) getView().findViewById(R.id.in_play_no_neg_count_tv);
+        TextView powerUpAudienceTextView = (TextView) getView().findViewById(R.id.in_play_player_poll_count_tv);
+
+        if (powerUp!=null) {
+
+            int powerUp2xCount = powerUp.getDoubler();
+            int powerUpNonNegsCount = powerUp.getNoNegative();
+            int powerUpPlayerPollCount = powerUp.getPlayerPoll();
+
+            if (powerUp2xCount == 0 && powerUpNonNegsCount == 0 && powerUpPlayerPollCount == 0) {
+                powerUpLayout.setVisibility(View.GONE);
+            } else {
+                powerUpLayout.setVisibility(View.VISIBLE);
+
+                if (powerUp2xCount != 0) {
+                    powerUp2xImageView.setBackgroundResource(R.drawable.double_powerup_small);
+                    powerUp2xImageView.setVisibility(View.VISIBLE);
+                    powerUp2xTextView.setText(String.valueOf(powerUp2xCount));
+                } else {
+                    powerUp2xImageView.setVisibility(View.GONE);
+                    powerUp2xTextView.setVisibility(View.GONE);
+                }
+
+                if (powerUpNonNegsCount != 0) {
+                    powerUpNoNegativeImageView.setBackgroundResource(R.drawable.no_negative_powerup_small);
+                    powerUpNoNegativeImageView.setVisibility(View.VISIBLE);
+                    powerUpNoNegativeTextView.setText(String.valueOf(powerUpNonNegsCount));
+                } else {
+                    powerUpNoNegativeImageView.setVisibility(View.GONE);
+                    powerUpNoNegativeTextView.setVisibility(View.GONE);
+                }
+
+                if (powerUpPlayerPollCount != 0) {
+                    powerUpAudienceImageView.setBackgroundResource(R.drawable.audience_poll_powerup_small);
+                    powerUpAudienceImageView.setVisibility(View.VISIBLE);
+                    powerUpAudienceTextView.setText(String.valueOf(powerUpPlayerPollCount));
+                } else {
+                    powerUpAudienceImageView.setVisibility(View.GONE);
+                    powerUpAudienceTextView.setVisibility(View.GONE);
                 }
             }
         }
