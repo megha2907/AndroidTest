@@ -29,7 +29,7 @@ public class TimelineHelper {
     }
 
 
-    private static View getLineView(Context context, String matchStatus,boolean played, MatchTimelineTypeEnum typeEnum) {
+    private static View getLineView(Context context, String matchStatus, boolean played, MatchTimelineTypeEnum typeEnum) {
         View view = View.inflate(context, R.layout.match_timeline_line_view, null);
 
         switch (typeEnum) {
@@ -44,13 +44,9 @@ public class TimelineHelper {
             case IN_PLAY_JOINED:
                 if (matchStatus.equalsIgnoreCase(Constants.InPlayMatchStatus.COMPLETED)) {
                     view.setBackground(ContextCompat.getDrawable(context, R.drawable.games_timeline_yellow_line));
-                }else if (matchStatus.equals(Constants.InPlayMatchStatus.LIVE)){
-                    if(played){
-                        view.setBackground(ContextCompat.getDrawable(context, R.drawable.games_timeline_grey_line));
-                    }else {
-                        view.setBackground(ContextCompat.getDrawable(context, R.drawable.games_timeline_yellow_line));
-                    }
-                }else {
+                } else if (matchStatus.equals(Constants.InPlayMatchStatus.LIVE)) {
+                    view.setBackground(ContextCompat.getDrawable(context, R.drawable.games_timeline_grey_line));
+                } else {
                     view.setBackground(ContextCompat.getDrawable(context, R.drawable.games_timeline_grey_line));
 
                 }
@@ -58,13 +54,9 @@ public class TimelineHelper {
             case IN_PLAY_MATCHES_SCREEN:
                 if (matchStatus.equalsIgnoreCase(Constants.InPlayMatchStatus.COMPLETED)) {
                     view.setBackground(ContextCompat.getDrawable(context, R.drawable.games_timeline_yellow_line));
-                }else if (matchStatus.equals(Constants.InPlayMatchStatus.LIVE)){
-                    if(played){
-                        view.setBackground(ContextCompat.getDrawable(context, R.drawable.games_timeline_grey_line));
-                    }else {
-                        view.setBackground(ContextCompat.getDrawable(context, R.drawable.games_timeline_yellow_line));
-                    }
-                }else {
+                } else if (matchStatus.equals(Constants.InPlayMatchStatus.LIVE)) {
+                    view.setBackground(ContextCompat.getDrawable(context, R.drawable.games_timeline_grey_line));
+                } else {
                     view.setBackground(ContextCompat.getDrawable(context, R.drawable.games_timeline_grey_line));
 
                 }
@@ -93,7 +85,7 @@ public class TimelineHelper {
                     } else {
                         view.setBackgroundResource(R.drawable.timeline_lock_grey);
                     }
-                }else if (matchStatus.equalsIgnoreCase(Constants.InPlayMatchStatus.LIVE)) {
+                } else if (matchStatus.equalsIgnoreCase(Constants.InPlayMatchStatus.LIVE)) {
                     if (played) {
                         view.setBackgroundResource(R.drawable.timeline_grey_tick_dot);
                     } else {
@@ -126,7 +118,7 @@ public class TimelineHelper {
                         view.setBackgroundResource(R.drawable.timeline_blue_dot);
                     }
 
-                }else if (matchStatus.equalsIgnoreCase(Constants.InPlayMatchStatus.LIVE)) {
+                } else if (matchStatus.equalsIgnoreCase(Constants.InPlayMatchStatus.LIVE)) {
                     if (played) {
                         view.setBackgroundResource(R.drawable.timeline_blue_tick);
                     } else {
@@ -151,7 +143,7 @@ public class TimelineHelper {
                         view.setBackgroundResource(R.drawable.timeline_yellow_cross_ring);
                     }
 
-                }else if (matchStatus.equalsIgnoreCase(Constants.InPlayMatchStatus.LIVE)) {
+                } else if (matchStatus.equalsIgnoreCase(Constants.InPlayMatchStatus.LIVE)) {
 
                     if (played) {
                         view.setBackgroundResource(R.drawable.timeline_blue_tick);
@@ -213,17 +205,17 @@ public class TimelineHelper {
             int lineWidth = maxLineWidth / matchSizeNew;
             int lineHeight = (int) context.getResources().getDimension(R.dimen.dim_4);
 
-            View view = getNodeView(parent.getContext(), matchStatus, isPlayed, typeEnum);
-            if (view != null) {
-                parent.addView(view, parent.getChildCount(), new ViewGroup.LayoutParams(nodeWidthHeight, nodeWidthHeight));
-            }
 
             if (isNodeWithLine) {
-                view = getLineView(context, matchStatus,isPlayed, typeEnum);
+                View view = getLineView(context, matchStatus, isPlayed, typeEnum);
                 if (view != null) {
                     parent.addView(view, parent.getChildCount(), new ViewGroup.LayoutParams(lineWidth, lineHeight));
                 }
             }
+
+            View view = getNodeView(parent.getContext(), matchStatus, isPlayed, typeEnum);
+            parent.addView(view, parent.getChildCount(), new ViewGroup.LayoutParams(nodeWidthHeight, nodeWidthHeight));
+
         }
     }
 

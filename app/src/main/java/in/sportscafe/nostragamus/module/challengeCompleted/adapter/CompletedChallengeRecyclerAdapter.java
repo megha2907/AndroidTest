@@ -13,6 +13,8 @@ import android.widget.TextView;
 
 import org.parceler.Parcels;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import in.sportscafe.nostragamus.Constants;
@@ -26,6 +28,7 @@ import in.sportscafe.nostragamus.module.contest.ui.DetailScreensLaunchRequest;
 import in.sportscafe.nostragamus.module.customViews.TimelineHelper;
 import in.sportscafe.nostragamus.module.inPlay.adapter.InPlayAdapterItemType;
 import in.sportscafe.nostragamus.module.inPlay.dto.InPlayContestDto;
+import in.sportscafe.nostragamus.module.inPlay.dto.InPlayContestMatchDto;
 import in.sportscafe.nostragamus.module.inPlay.dto.InPlayListChallengeItem;
 import in.sportscafe.nostragamus.module.inPlay.dto.InPlayListItem;
 import in.sportscafe.nostragamus.module.newChallenges.helpers.DateTimeHelper;
@@ -181,8 +184,8 @@ public class CompletedChallengeRecyclerAdapter extends RecyclerView.Adapter<Recy
                 CompletedContestMatchDto match = contest.getMatches().get(temp);
 
                 boolean isNodeLineRequired = true;
-                if (temp == (totalMatches - 1)) {
-                    isNodeLineRequired = false;
+                if (temp == 0){
+                    isNodeLineRequired =false;
                 }
 
                 int matchAttemptedStatus = match.isPlayed();

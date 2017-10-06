@@ -19,6 +19,8 @@ import com.jeeva.android.Log;
 
 import org.parceler.Parcels;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import in.sportscafe.nostragamus.AppSnippet;
@@ -32,6 +34,7 @@ import in.sportscafe.nostragamus.module.inPlay.adapter.MatchesAdapterAction;
 import in.sportscafe.nostragamus.module.inPlay.adapter.InPlayMatchAdapterListener;
 import in.sportscafe.nostragamus.module.inPlay.adapter.InPlayMatchesRecyclerAdapter;
 import in.sportscafe.nostragamus.module.inPlay.dataProvider.InPlayMatchesDataProvider;
+import in.sportscafe.nostragamus.module.inPlay.dto.InPlayContestMatchDto;
 import in.sportscafe.nostragamus.module.inPlay.dto.InPlayMatch;
 import in.sportscafe.nostragamus.module.inPlay.dto.InPlayMatchesResponse;
 import in.sportscafe.nostragamus.module.inPlay.ui.ResultsScreenDataDto;
@@ -136,7 +139,7 @@ public class CompletedMatchTimelineViewPagerFragment extends NostraBaseFragment 
             TextView gamesLeftTextView = (TextView) getView().findViewById(R.id.inplay_match_timeline_games_left_textview);
             TextView gamesLeftTextViewText = (TextView) getView().findViewById(R.id.inplay_match_timeline_games_left);
             gamesLeftTextView.setText(gamesLeftStr);
-            gamesLeftTextViewText.setText(" GAMES LEFT");
+            gamesLeftTextViewText.setText("GAMES LEFT ");
 
              /* Set Powerups */
             showOrHidePowerUps(responses.getData().getPowerUp());
@@ -144,8 +147,6 @@ public class CompletedMatchTimelineViewPagerFragment extends NostraBaseFragment 
             /* Timeline */
             LinearLayout parent = (LinearLayout) getView().findViewById(R.id.match_status_timeline);
             LinearLayout titleParent = (LinearLayout) getView().findViewById(R.id.match_status_timeline_title_parent);
-            LinearLayout bottomParent = (LinearLayout) getView().findViewById(R.id.match_status_timeline_bottom_parent);
-
 
              /* Timeline */
             int totalMatches = mCompletedContestDto.getMatches().size();
@@ -153,7 +154,7 @@ public class CompletedMatchTimelineViewPagerFragment extends NostraBaseFragment 
                 CompletedContestMatchDto match = mCompletedContestDto.getMatches().get(temp);
 
                 boolean isNodeLineRequired = true;
-                if (temp == (totalMatches - 1)) {
+                if (temp == 0){
                     isNodeLineRequired = false;
                 }
 
@@ -175,36 +176,6 @@ public class CompletedMatchTimelineViewPagerFragment extends NostraBaseFragment 
                 TimelineHelper.addTextNode(titleParent, "Game " + (temp + 1), mCompletedContestDto.getMatches().size(),
                         match.getStatus(), TimelineHelper.MatchTimelineTypeEnum.IN_PLAY_MATCHES_SCREEN, isPlayed);
 
-                if (match.getStatus().equalsIgnoreCase(Constants.InPlayMatchStatus.COMPLETED)) {
-
-                    String matchPoints;
-                    if (isPlayed) {
-                        matchPoints = String.valueOf(match.getScore()) + " Points";
-                    } else {
-                        matchPoints = "   DNP    ";
-                    }
-
-                    /* Footer */
-                    TimelineHelper.addFooterTextNode(bottomParent, matchPoints,
-                            mCompletedContestDto.getMatches().size(), match.getStatus(),
-                            TimelineHelper.MatchTimelineTypeEnum.IN_PLAY_MATCHES_SCREEN, isPlayed,
-                            match.getStartTime());
-
-                    LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) bottomParent.getLayoutParams();
-                    params.setMargins(10, 0, 0, 0);
-                    bottomParent.setLayoutParams(params);
-
-                } else {
-                      /* Footer */
-                    TimelineHelper.addFooterTextNode(bottomParent, DateTimeHelper.getInPlayMatchTime(match.getStartTime()),
-                            mCompletedContestDto.getMatches().size(), match.getStatus(),
-                            TimelineHelper.MatchTimelineTypeEnum.IN_PLAY_MATCHES_SCREEN, isPlayed,
-                            match.getStartTime());
-
-                    LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) bottomParent.getLayoutParams();
-                    params.setMargins(0, 0, 0, 0);
-                    bottomParent.setLayoutParams(params);
-                }
             }
         }
     }

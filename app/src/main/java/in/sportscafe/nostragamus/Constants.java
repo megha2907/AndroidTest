@@ -813,6 +813,7 @@ public interface Constants {
         String CONTINUE = "Continue";
         String ANSWER = "Answers";
         String POINTS = "Points";
+        String CANCELLED = "Cancelled";
     }
 
     interface InPlayMatchStatus {

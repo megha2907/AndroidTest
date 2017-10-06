@@ -71,7 +71,7 @@ public class ContestDetailCompletedFragment  extends NostraBaseFragment implemen
 
         if (completedContestDto != null) {
             mTvTBarHeading.setText(completedContestDto.getContestName());
-            mTvTBarSubHeading.setText(completedContestDto.getContestName());   // TODO change as per need
+            mTvTBarSubHeading.setText(completedContestDto.getChallengeName());
         }
 
         /*int amount = (int) WalletHelper.getTotalBalance();
