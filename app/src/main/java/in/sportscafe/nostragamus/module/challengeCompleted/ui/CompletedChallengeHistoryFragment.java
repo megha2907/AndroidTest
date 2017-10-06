@@ -11,6 +11,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import in.sportscafe.nostragamus.Constants;
@@ -22,6 +25,7 @@ import in.sportscafe.nostragamus.module.challengeCompleted.ui.viewPager.Complete
 import in.sportscafe.nostragamus.module.challengeCompleted.ui.viewPager.CompleteChallengeViewPagerFragment;
 import in.sportscafe.nostragamus.module.common.NostraBaseFragment;
 import in.sportscafe.nostragamus.module.inPlay.helper.InPlayFilterHelper;
+import in.sportscafe.nostragamus.module.inPlay.ui.viewPager.InPlayViewPagerFragment;
 import in.sportscafe.nostragamus.module.newChallenges.dataProvider.SportsDataProvider;
 import in.sportscafe.nostragamus.module.newChallenges.dto.SportsTab;
 
@@ -140,7 +144,7 @@ public class CompletedChallengeHistoryFragment extends NostraBaseFragment {
             ViewPager completedViewPager = (ViewPager) getView().findViewById(R.id.completed_viewPager);
 
             SportsDataProvider sportsDataProvider = new SportsDataProvider();
-            List<SportsTab> sportsTabList = sportsDataProvider.getInPlaySportsList();
+            List<SportsTab> sportsTabList = sportsDataProvider.getSportsList();
 
             ArrayList<CompleteChallengeViewPagerFragment> fragmentList = new ArrayList<>();
             CompleteChallengeFilterHelper filterHelper = new CompleteChallengeFilterHelper();
@@ -153,15 +157,15 @@ public class CompletedChallengeHistoryFragment extends NostraBaseFragment {
                 int sportId = sportsTab.getSportsId();
                 List<CompletedResponse> completedFilteredList = null;
                 switch (sportId) {
-                    case InPlayFilterHelper.FILTER_ALL_SPORTS_ID:
+                    case SportsDataProvider.FILTER_ALL_SPORTS_ID:
                         completedFilteredList = completedResponseList;
                         break;
 
-                    case InPlayFilterHelper.FILTER_DAILY_SPORTS_ID:
+                    case SportsDataProvider.FILTER_DAILY_SPORTS_ID:
                         completedFilteredList = filterHelper.getDailyCompletedChallenges(completedResponseList);
                         break;
 
-                    case InPlayFilterHelper.FILTER_MIX_SPORTS_ID:
+                    case SportsDataProvider.FILTER_MIXED_SPORTS_ID:
                         completedFilteredList = filterHelper.getCompletedMixedSportsChallengesFilteredOn(completedResponseList);
                         break;
 
@@ -178,6 +182,27 @@ public class CompletedChallengeHistoryFragment extends NostraBaseFragment {
                 }
             }
 
+            /* Sort tabs */
+            Collections.sort(fragmentList, new Comparator<CompleteChallengeViewPagerFragment>() {
+                @Override
+                public int compare(CompleteChallengeViewPagerFragment fragment1, CompleteChallengeViewPagerFragment fragment2) {
+                    int sportId = fragment1.getTabDetails().getSportsId();
+                    if (sportId == SportsDataProvider.FILTER_ALL_SPORTS_ID ||
+                            sportId == SportsDataProvider.FILTER_DAILY_SPORTS_ID ||
+                            sportId == SportsDataProvider.FILTER_MIXED_SPORTS_ID) {
+                        return 0;
+                    }
+
+                    if (fragment1.getTabDetails().getChallengeCount() < fragment2.getTabDetails().getChallengeCount()) {
+                        return 1;
+                    } else if (fragment1.getTabDetails().getChallengeCount() == fragment2.getTabDetails().getChallengeCount()) {
+                        return 0;
+                    }
+                    return -1;
+                }
+            });
+
+            /* create adapter */
             CompleteChallengeViewPagerAdapter viewPagerAdapter = new CompleteChallengeViewPagerAdapter
                     (getActivity().getSupportFragmentManager(), fragmentList);
             completedViewPager.setAdapter(viewPagerAdapter);

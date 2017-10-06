@@ -41,6 +41,7 @@ import in.sportscafe.nostragamus.module.inPlay.dto.InPlayResponse;
 import in.sportscafe.nostragamus.module.inPlay.helper.InPlayFilterHelper;
 import in.sportscafe.nostragamus.module.inPlay.ui.headless.dto.HeadLessMatchScreenData;
 import in.sportscafe.nostragamus.module.inPlay.ui.headless.matches.InPlayHeadLessMatchActivity;
+import in.sportscafe.nostragamus.module.newChallenges.dataProvider.SportsDataProvider;
 import in.sportscafe.nostragamus.module.newChallenges.dto.SportsTab;
 import in.sportscafe.nostragamus.utils.AlertsHelper;
 
@@ -79,20 +80,19 @@ public class InPlayViewPagerFragment extends BaseFragment {
 
     private void loadData() {
         if (mRecyclerView != null && mFilteredContests != null) {
-
             List<InPlayListItem> inPlayListItemList = getInPlayItemList(mFilteredContests);
-            if (inPlayListItemList != null) {
+            if (inPlayListItemList != null && !inPlayListItemList.isEmpty()) {
                 mRecyclerView.setAdapter(new InPlayRecyclerAdapter(inPlayListItemList, getAdapterListener()));
 
                 if (mSportsTab != null) {
                     switch (mSportsTab.getSportsId()) {
-                        case InPlayFilterHelper.FILTER_ALL_SPORTS_ID:
+                        case SportsDataProvider.FILTER_ALL_SPORTS_ID:
                             scrollToContest();
                             break;
                     }
                 }
             } else {
-                // No list UI
+                // TODO
             }
         }
     }

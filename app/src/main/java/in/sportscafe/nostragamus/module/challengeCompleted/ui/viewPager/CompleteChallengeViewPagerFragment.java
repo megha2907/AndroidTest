@@ -28,6 +28,7 @@ import in.sportscafe.nostragamus.module.challengeCompleted.dto.CompletedResponse
 import in.sportscafe.nostragamus.module.contest.contestDetailsAfterJoining.ContestDetailsAfterJoinActivity;
 import in.sportscafe.nostragamus.module.contest.contestDetailsCompletedChallenges.ContestDetailCompletedActivity;
 import in.sportscafe.nostragamus.module.inPlay.helper.InPlayFilterHelper;
+import in.sportscafe.nostragamus.module.newChallenges.dataProvider.SportsDataProvider;
 import in.sportscafe.nostragamus.module.newChallenges.dto.SportsTab;
 import in.sportscafe.nostragamus.utils.AlertsHelper;
 
@@ -74,12 +75,12 @@ public class CompleteChallengeViewPagerFragment extends BaseFragment {
 
                 if (mSportsTab != null) {
                     switch (mSportsTab.getSportsId()) {
-                        case InPlayFilterHelper.FILTER_ALL_SPORTS_ID:
+                        case SportsDataProvider.FILTER_ALL_SPORTS_ID:
                             break;
                     }
                 }
             } else {
-                // No list UI
+                // TODO
             }
         }
     }

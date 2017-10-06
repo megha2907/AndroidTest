@@ -5,10 +5,13 @@ import android.support.annotation.NonNull;
 import com.jeeva.android.Log;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Nostragamus;
+import in.sportscafe.nostragamus.module.contest.dto.Contest;
 import in.sportscafe.nostragamus.module.contest.dto.ContestRequest;
 import in.sportscafe.nostragamus.module.contest.dto.ContestResponse;
 import in.sportscafe.nostragamus.module.contest.dto.ContestType;
@@ -104,6 +107,21 @@ public class ContestDataProvider {
         contestTypes.add(glory);
         contestTypes.add(free);
         contestTypes.add(joinedContest);
+
+        return contestTypes;
+    }
+
+    public List<ContestType> getContestTypeList(List<Contest> contestList) {
+        List<ContestType> contestTypes = null;
+
+        if (contestList != null) {
+            contestTypes = new ArrayList<>();
+
+            Set<String> contestSet = new HashSet<>();
+            /*for (Contest contest : contestList) {
+                contestSet.add(contest.getContestId())
+            }*/
+        }
 
         return contestTypes;
     }
