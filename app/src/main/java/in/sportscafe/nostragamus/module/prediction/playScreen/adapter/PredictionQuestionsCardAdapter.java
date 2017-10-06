@@ -109,8 +109,10 @@ public class PredictionQuestionsCardAdapter extends ArrayAdapter<PredictionQuest
                 if (question.getPlayersPollList() != null && question.getPlayersPollList().size() == 2) {
                     List<PlayersPoll> playersPollList = question.getPlayersPollList();
 
-                    int pollPercentForOption1 = Integer.parseInt(playersPollList.get(0).getAnswerPercentage());
-                    int pollPercentForOption2 = Integer.parseInt(playersPollList.get(1).getAnswerPercentage());
+                    String option1 = playersPollList.get(0).getAnswerPercentage().replaceAll("%", "");
+                    String option2 = playersPollList.get(1).getAnswerPercentage().replaceAll("%", "");
+                    int pollPercentForOption1 = Integer.parseInt(option1);
+                    int pollPercentForOption2 = Integer.parseInt(option2);
 
                     if (pollPercentForOption1 > 0 && pollPercentForOption2 > 0) {
                         playerPollOption1TextView.setText(pollPercentForOption1);
@@ -149,21 +151,34 @@ public class PredictionQuestionsCardAdapter extends ArrayAdapter<PredictionQuest
 
             switch (powerUpEnum) {
                 case DOUBLER:
-                    powerUp.setDoubler((shouldAdd) ? 1 : 0);
-
-                    // Update points
-                    if (question.getPositivePoints() > 0) {
-                        question.setPositivePoints(question.getPositivePoints() * 2);
-                    }
-                    if (question.getNegativePoints() > 0) {
-                        question.setNegativePoints(question.getNegativePoints() * 2);
+                    if (shouldAdd) {
+                        powerUp.setDoubler(1);
+                        question.setPositivePoints(Constants.PredictionPoints.POSITIVE_POINTS * 2);
+                        question.setNegativePoints(Constants.PredictionPoints.NEGATIVE_POINTS * 2);
+                    } else {
+                        powerUp.setDoubler(0);
+                        question.setPositivePoints(Constants.PredictionPoints.POSITIVE_POINTS);
+                        if (powerUp.getNoNegative() == 1) {
+                            question.setNegativePoints(0);
+                        } else {
+                            question.setNegativePoints(Constants.PredictionPoints.NEGATIVE_POINTS);
+                        }
                     }
                     break;
 
                 case NO_NEGATIVE:
-                    powerUp.setNoNegative((shouldAdd) ? 1 : 0);
+                    if (shouldAdd) {
+                        powerUp.setNoNegative(1);
+                        question.setNegativePoints(0);  // No negative points, positive as they are
+                    } else {
+                        powerUp.setNoNegative(0);
+                        if (powerUp.getDoubler() == 1) {
+                            question.setNegativePoints(Constants.PredictionPoints.NEGATIVE_POINTS * 2);
+                        } else {
+                            question.setNegativePoints(Constants.PredictionPoints.NEGATIVE_POINTS);
+                        }
+                    }
 
-                    question.setNegativePoints(0);  // No negative points, positive as they are
                     break;
 
                 case PLAYER_POLL:
@@ -175,24 +190,6 @@ public class PredictionQuestionsCardAdapter extends ArrayAdapter<PredictionQuest
                     break;
             }
         }
-    }
-
-    /**
-     * Removes question from adapter list & adds at last pos
-     * Shuffle
-     * @param question
-     */
-    public void onShuffleQuestion(PredictionQuestion question) {
-        this.remove(question);
-        this.add(question);
-    }
-
-    /**
-     * On every success response of prediction question, remove it from adapter list
-     * @param question
-     */
-    public void onSuccessfulAnswer(PredictionQuestion question) {
-        this.remove(question);
     }
 
 }

@@ -129,26 +129,4 @@ public class PowerupBankTransferToPlayActivity extends NostragamusActivity imple
             }
         }
     }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        LocalBroadcastManager.getInstance(this).registerReceiver(mFinishActivityReceiver,
-                new IntentFilter(Constants.IntentActions.ACTION_FINISH_POWER_UP_BANK_ACTIVITY));
-    }
-
-    @Override
-    public void onStop() {
-        LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(mFinishActivityReceiver);
-        super.onStop();
-    }
-
-    BroadcastReceiver mFinishActivityReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            if (!isFinishing()) {
-                finishActivity();
-            }
-        }
-    };
 }

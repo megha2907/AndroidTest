@@ -25,9 +25,10 @@ public class PowerupBankStatusApiModelImpl {
         return new PowerupBankStatusApiModelImpl(listener);
     }
 
-    public void performApiCall(int challengeId) {
+    public void performApiCall(int challengeId, int roomId) {
         PowerupBankStatusRequest request = new PowerupBankStatusRequest();
         request.setChallengeId(challengeId);
+        request.setRoomId(roomId);
 
         MyWebService.getInstance().getPowerupBankStatus(request).enqueue(
                 new NostragamusCallBack<PowerUpBankStatusResponse>() {

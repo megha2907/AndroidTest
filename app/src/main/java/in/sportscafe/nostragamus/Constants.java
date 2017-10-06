@@ -829,4 +829,9 @@ public interface Constants {
         String STATE_HEADLESS = "headless";
         String STATE_NOT_JOINED = "not-joined";
     }
+
+    interface PredictionPoints {
+        int POSITIVE_POINTS = 10;
+        int NEGATIVE_POINTS = -4;
+    }
 }

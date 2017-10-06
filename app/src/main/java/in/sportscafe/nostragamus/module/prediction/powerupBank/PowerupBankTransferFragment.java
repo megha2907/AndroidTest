@@ -89,7 +89,7 @@ public class PowerupBankTransferFragment extends BaseFragment implements View.On
             if (Nostragamus.getInstance().hasNetworkConnection()) {
                 showProgressbar();
                 PowerupBankStatusApiModelImpl apiModel = PowerupBankStatusApiModelImpl.newInstance(getApiListener());
-                apiModel.performApiCall(mPlayScreenData.getChallengeId());
+                apiModel.performApiCall(mPlayScreenData.getChallengeId(), mPlayScreenData.getRoomId());
             } else {
                 showMessage(Constants.Alerts.NO_NETWORK_CONNECTION);
             }
@@ -513,6 +513,9 @@ public class PowerupBankTransferFragment extends BaseFragment implements View.On
     private void onPowerupTransferred(TransferPowerUpFromBankResponse response) {
         broadcastPowerUpUpdated(response);
         updatePowerUpDetailsOnUi();
+        if (mFragmentListener != null) {
+            mFragmentListener.finishActivity();
+        }
     }
 
     private void broadcastPowerUpUpdated(TransferPowerUpFromBankResponse response) {

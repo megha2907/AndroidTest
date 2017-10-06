@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.LocalBroadcastManager;
 import android.text.TextUtils;
@@ -210,7 +211,7 @@ public class PredictionFragment extends NostraBaseFragment implements View.OnCli
 
             @Override
             public void onError(int status) {
-                handleError(status);
+                handleError(null, status);
             }
         };
     }
@@ -396,27 +397,16 @@ public class PredictionFragment extends NostraBaseFragment implements View.OnCli
                     @Override
                     public void onError(int status) {
                         hideProgress();
-                        handleError(status);
+                        handleError(null, status);
                     }
                 });
             } else {
                 Log.e(TAG, "QuestionId / roomId can not be found for players-poll info");
-                handleError(-1);
+                handleError(null, -1);
             }
         } else {
-            showAlertAsNoPowerUp();
+            onPowerUpBankClicked();
         }
-    }
-
-    private void showAlertAsNoPowerUp() {
-        AlertsHelper.showYesNoAlert(getContext(),
-                "No Powerup!", "Do you want to add more?",
-                new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                onPowerUpBankClicked();
-            }
-        }, null);
     }
 
     private boolean canApplyPowerUp(PowerUpEnum powerUpEnum) {
@@ -425,7 +415,7 @@ public class PredictionFragment extends NostraBaseFragment implements View.OnCli
         if (mPowerUp != null) {
             switch (powerUpEnum) {
                 case DOUBLER:
-                    if (mPowerUp.getPlayerPoll() > 0) {
+                    if (mPowerUp.getDoubler() > 0) {
                         canApply = true;
                     }
                     break;
@@ -508,7 +498,7 @@ public class PredictionFragment extends NostraBaseFragment implements View.OnCli
                 }
             }
         }  else {
-            handleError(-1);
+            handleError(null, -1);
         }
     }
 
@@ -525,7 +515,7 @@ public class PredictionFragment extends NostraBaseFragment implements View.OnCli
                 }
             }
         } else {
-            showAlertAsNoPowerUp();
+            onPowerUpBankClicked();
         }
     }
 
@@ -542,7 +532,7 @@ public class PredictionFragment extends NostraBaseFragment implements View.OnCli
                 }
             }
         } else {
-            showAlertAsNoPowerUp();
+            onPowerUpBankClicked();
         }
     }
 
@@ -657,13 +647,21 @@ public class PredictionFragment extends NostraBaseFragment implements View.OnCli
                         break;
 
                     case CardDirection.UP:
-                        saveAnswer(index, Constants.AnswerIds.NEITHER, isMatchCompleted);
+                        if (shouldAllowThirdOption(index)) {
+                            saveAnswer(index, Constants.AnswerIds.NEITHER, isMatchCompleted);
+                        } else {
+                            mCardStack.undo();
+                            showQuestionsCounter();
+                            showNeitherIfRequired();
+                        }
                         break;
 
                     case CardDirection.DOWN:
                         if (mQuestionsCardAdapter != null && mCardStack != null) {
                             PredictionQuestion question = mQuestionsCardAdapter.getItem(index);
                             mCardStack.shuffle(question);
+                            showQuestionsCounter();
+                            showNeitherIfRequired();
                         }
                         break;
                 }
@@ -678,6 +676,17 @@ public class PredictionFragment extends NostraBaseFragment implements View.OnCli
                 Log.d("Card", "Top card tapped");
             }
         };
+    }
+
+    private boolean shouldAllowThirdOption(int index) {
+        boolean isThirdOption = false;
+        if (mQuestionsCardAdapter != null && mCardStack != null) {
+            PredictionQuestion question = mQuestionsCardAdapter.getItem(index);
+            if (!TextUtils.isEmpty(question.getQuestionOption3())) {
+                isThirdOption = true;
+            }
+        }
+        return isThirdOption;
     }
 
     private void hideNextButton() {
@@ -756,31 +765,22 @@ public class PredictionFragment extends NostraBaseFragment implements View.OnCli
                             @Override
                             public void onError(int status) {
                                 hideProgress();
-
-                                AlertsHelper.showAlert(getContext(), "Error", "Could not save your prediction, try again!",
-                                        new DialogInterface.OnClickListener() {
-                                            @Override
-                                            public void onClick(DialogInterface dialog, int which) {
-                                                /* Undo drag as answer is failed to save */
-                                                if (mCardStack != null) {
-                                                    mCardStack.undo();
-                                                }
-                                            }
-                                        });
+                                /* Undo card */
+                                if (mCardStack != null) {
+                                    mCardStack.undo();
+                                }
+                                handleError("Could not save your prediction, try again!", -1);
                             }
                         });
             }
         } else {
             Log.e(TAG, "Can not save answer without required info");
-            handleError(-1);
+            handleError(null, -1);
         }
     }
 
     private void onAnswerSavedSuccessfully(boolean isMatchCompleted, AnswerResponse answerResponse) {
         if (answerResponse != null && answerResponse.getAnswerResponseData() != null && mQuestionsCardAdapter != null) {
-            /* Remove Question from Adapter-list */
-//            mQuestionsCardAdapter.onSuccessfulAnswer(mQuestionsCardAdapter.getItem(getTopVisibleCardPosition()));
-
             if (isMatchCompleted) {
                 /* On success response for the last question only allows to consider match as completed */
                 onMatchCompleted();
@@ -797,15 +797,28 @@ public class PredictionFragment extends NostraBaseFragment implements View.OnCli
         }
     }
 
-    private void handleError(int status) {
-        switch (status) {
-            case Constants.DataStatus.NO_INTERNET:
-                AlertsHelper.showAlert(getContext(), "No Internet", "Please tern ON internet to continue", null);
-                break;
+    /**
+     * If msg is passed then msg will be shown ;
+     * else status should be passed
+     * @param msg
+     * @param status
+     */
+    private void handleError(String msg, int status) {
+        if (getView() != null && getActivity() != null && !getActivity().isFinishing()) {
+            if (!TextUtils.isEmpty(msg)) {
+                Snackbar.make(getView(), msg, Snackbar.LENGTH_LONG).show();
 
-            default:
-                AlertsHelper.showAlert(getContext(), "Error", Constants.Alerts.SOMETHING_WRONG, null);
-                break;
+            } else {
+                switch (status) {
+                    case Constants.DataStatus.NO_INTERNET:
+                        Snackbar.make(getView(), Constants.Alerts.NO_INTERNET_CONNECTION, Snackbar.LENGTH_LONG).show();
+                        break;
+
+                    default:
+                        Snackbar.make(getView(), Constants.Alerts.SOMETHING_WRONG, Snackbar.LENGTH_LONG).show();
+                        break;
+                }
+            }
         }
     }
 
