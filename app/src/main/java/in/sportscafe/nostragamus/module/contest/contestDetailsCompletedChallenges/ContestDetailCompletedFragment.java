@@ -54,7 +54,7 @@ public class ContestDetailCompletedFragment  extends NostraBaseFragment implemen
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_aj_contest_details, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_inplay_contest_details, container, false);
         initView(rootView);
         return rootView;
     }

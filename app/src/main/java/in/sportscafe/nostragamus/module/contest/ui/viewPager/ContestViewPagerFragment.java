@@ -29,8 +29,9 @@ import in.sportscafe.nostragamus.module.common.NostraBaseFragment;
 import in.sportscafe.nostragamus.module.contest.adapter.ContestAdapterListener;
 import in.sportscafe.nostragamus.module.contest.adapter.ContestRecyclerAdapter;
 import in.sportscafe.nostragamus.module.contest.contestDetailsBeforeJoining.CompletePaymentDialogFragment;
-import in.sportscafe.nostragamus.module.contest.contestDetailsBeforeJoining.ContestDetailsBeforeJoinedActivity;
+import in.sportscafe.nostragamus.module.contest.contestDetailsBeforeJoining.ContestDetailsActivity;
 import in.sportscafe.nostragamus.module.contest.dto.Contest;
+import in.sportscafe.nostragamus.module.contest.dto.ContestScreenData;
 import in.sportscafe.nostragamus.module.contest.dto.ContestType;
 import in.sportscafe.nostragamus.module.contest.dto.JoinContestData;
 import in.sportscafe.nostragamus.module.contest.helper.JoinContestHelper;
@@ -52,6 +53,7 @@ public class ContestViewPagerFragment extends NostraBaseFragment {
     private List<Contest> mContestList;
     private TextView mTvContestName;
     private TextView mTvContestDesc;
+    private ContestScreenData mContestScreenData;
 
     public ContestViewPagerFragment() {}
 
@@ -111,13 +113,12 @@ public class ContestViewPagerFragment extends NostraBaseFragment {
 
     private void performJoinContest(Bundle args) {
         if (args != null) {
-            JoinContestData joinContestData = null;
+            JoinContestData joinContestData = new JoinContestData();;
 
             /* Received contest when join button clicked on contest card */
             if (args.containsKey(Constants.BundleKeys.CONTEST)) {
                 final Contest contest = Parcels.unwrap(args.getParcelable(Constants.BundleKeys.CONTEST));
                 if (contest != null) {
-                    joinContestData = new JoinContestData();
                     joinContestData.setContestId(contest.getContestId());
                     joinContestData.setChallengeId(contest.getChallengeId());
                     joinContestData.setChallengeName(contest.getChallengeName());
@@ -131,62 +132,64 @@ public class ContestViewPagerFragment extends NostraBaseFragment {
                 joinContestData = Parcels.unwrap(args.getParcelable(Constants.BundleKeys.JOIN_CONTEST_DATA));
             }
 
-            if (joinContestData != null) {
-                if (Nostragamus.getInstance().hasNetworkConnection()) {
-                    CustomProgressbar.getProgressbar(getContext()).show();
+            /* For InPlay Headless flow, send pseudoRoomId */
+            if (mContestScreenData != null && mContestScreenData.isHeadLessFlow()) {
+                joinContestData.setShouldSendPseudoRoomId(true);
+                joinContestData.setPseudoRoomId(mContestScreenData.getPseudoRoomId());
+            }
 
-                    JoinContestHelper joinContestHelper = new JoinContestHelper();
-                    joinContestHelper.JoinContest(joinContestData, (AppCompatActivity) this.getActivity(),
-                            new JoinContestHelper.JoinContestProcessListener() {
-                                @Override
-                                public void noInternet() {
-                                    CustomProgressbar.getProgressbar(getContext()).dismissProgress();
-                                    handleError(Constants.DataStatus.NO_INTERNET);
+            if (Nostragamus.getInstance().hasNetworkConnection()) {
+                CustomProgressbar.getProgressbar(getContext()).show();
+
+                JoinContestHelper joinContestHelper = new JoinContestHelper();
+                joinContestHelper.JoinContest(joinContestData, (AppCompatActivity) this.getActivity(),
+                        new JoinContestHelper.JoinContestProcessListener() {
+                            @Override
+                            public void noInternet() {
+                                CustomProgressbar.getProgressbar(getContext()).dismissProgress();
+                                handleError(Constants.DataStatus.NO_INTERNET);
+                            }
+
+                            @Override
+                            public void lowWalletBalance(JoinContestData joinContestData) {
+                                CustomProgressbar.getProgressbar(getContext()).dismissProgress();
+                                launchLowBalanceActivity(joinContestData);
+                            }
+
+                            @Override
+                            public void joinContestSuccess(JoinContestData contestJoinedSuccessfully) {
+                                CustomProgressbar.getProgressbar(getContext()).dismissProgress();
+                                onContestJoinedSuccessfully(contestJoinedSuccessfully);
+                            }
+
+                            @Override
+                            public void onApiFailure() {
+                                CustomProgressbar.getProgressbar(getContext()).dismissProgress();
+                                handleError(Constants.DataStatus.FROM_SERVER_API_FAILED);
+                            }
+
+                            @Override
+                            public void onServerReturnedError(String msg) {
+                                CustomProgressbar.getProgressbar(getContext()).dismissProgress();
+                                if (TextUtils.isEmpty(msg)) {
+                                    msg = Constants.Alerts.SOMETHING_WRONG;
                                 }
+                                AlertsHelper.showAlert(getContext(), "Error!", msg, null);
+                            }
 
-                                @Override
-                                public void lowWalletBalance(JoinContestData joinContestData) {
-                                    CustomProgressbar.getProgressbar(getContext()).dismissProgress();
-                                    launchLowBalanceActivity(joinContestData);
-                                }
+                            @Override
+                            public void hideProgressBar() {
+                                CustomProgressbar.getProgressbar(getContext()).dismissProgress();
+                            }
 
-                                @Override
-                                public void joinContestSuccess(JoinContestData contestJoinedSuccessfully) {
-                                    CustomProgressbar.getProgressbar(getContext()).dismissProgress();
-                                    onContestJoinedSuccessfully(contestJoinedSuccessfully);
-                                }
+                            @Override
+                            public void showProgressBar() {
+                                CustomProgressbar.getProgressbar(getContext()).show();
+                            }
+                        });
 
-                                @Override
-                                public void onApiFailure() {
-                                    CustomProgressbar.getProgressbar(getContext()).dismissProgress();
-                                    handleError(Constants.DataStatus.FROM_SERVER_API_FAILED);
-                                }
-
-                                @Override
-                                public void onServerReturnedError(String msg) {
-                                    CustomProgressbar.getProgressbar(getContext()).dismissProgress();
-                                    if (TextUtils.isEmpty(msg)) {
-                                        msg = Constants.Alerts.SOMETHING_WRONG;
-                                    }
-                                    AlertsHelper.showAlert(getContext(), "Error!", msg, null);
-                                }
-
-                                @Override
-                                public void hideProgressBar() {
-                                    CustomProgressbar.getProgressbar(getContext()).dismissProgress();
-                                }
-
-                                @Override
-                                public void showProgressBar() {
-                                    CustomProgressbar.getProgressbar(getContext()).show();
-                                }
-                            });
-
-                } else {
-                    handleError(Constants.DataStatus.NO_INTERNET);
-                }
             } else {
-                handleError(-1);
+                handleError(Constants.DataStatus.NO_INTERNET);
             }
         }
     }
@@ -251,7 +254,9 @@ public class ContestViewPagerFragment extends NostraBaseFragment {
                 args = new Bundle();
             }
             args.putInt(Constants.BundleKeys.SCREEN_LAUNCH_REQUEST, screenLaunchRequest);
-            Intent intent = new Intent(getActivity(), ContestDetailsBeforeJoinedActivity.class);
+            args.putParcelable(Constants.BundleKeys.CONTEST_SCREEN_DATA, Parcels.wrap(mContestScreenData));
+
+            Intent intent = new Intent(getActivity(), ContestDetailsActivity.class);
             intent.putExtras(args);
             getActivity().startActivity(intent);
         }
@@ -265,7 +270,8 @@ public class ContestViewPagerFragment extends NostraBaseFragment {
         this.contestType = contestType;
     }
 
-    public void onContestData(List<Contest> contests) {
+    public void onContestData(List<Contest> contests, ContestScreenData contestScreenData) {
         mContestList = contests;
+        mContestScreenData = contestScreenData;
     }
 }

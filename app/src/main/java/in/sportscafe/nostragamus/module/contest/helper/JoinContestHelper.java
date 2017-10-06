@@ -157,7 +157,9 @@ public class JoinContestHelper {
         if (Nostragamus.getInstance().hasNetworkConnection()) {
             joinContestApi.joinContestQueue(joinContestData.getContestId(),
                     joinContestData.getChallengeId(),
-                    joinContestData.getChallengeName());
+                    joinContestData.getChallengeName(),
+                    joinContestData.isShouldSendPseudoRoomId(),
+                    joinContestData.getPseudoRoomId());
         } else {
             if (mListener != null) {
                 mListener.noInternet();

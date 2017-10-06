@@ -140,7 +140,10 @@ public class InPlayHeadLessMatchesAdapter extends RecyclerView.Adapter<RecyclerV
 
         String status = match.getMatchStatus();
         if (!TextUtils.isEmpty(status)) {
-            if (status.equalsIgnoreCase(Constants.MatchStatusStrings.COMING_UP)) {
+            if (status.equalsIgnoreCase(Constants.MatchStatusStrings.COMING_UP) ||
+                    status.equalsIgnoreCase(Constants.MatchStatusStrings.PLAY) ||
+                    status.equalsIgnoreCase(Constants.MatchStatusStrings.DID_NOT_PLAY) ||
+                    status.equalsIgnoreCase(Constants.MatchStatusStrings.POINTS)) {
                 shouldDisable = true;
             }
         }

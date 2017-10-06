@@ -29,10 +29,7 @@ import in.sportscafe.nostragamus.module.contest.dto.ContestType;
 import in.sportscafe.nostragamus.module.contest.helper.ContestFilterHelper;
 import in.sportscafe.nostragamus.module.contest.ui.viewPager.ContestViewPagerAdapter;
 import in.sportscafe.nostragamus.module.contest.ui.viewPager.ContestViewPagerFragment;
-import in.sportscafe.nostragamus.module.inPlay.dto.InPlayListChallengeItem;
 import in.sportscafe.nostragamus.module.navigation.wallet.WalletHelper;
-import in.sportscafe.nostragamus.module.newChallenges.dto.NewChallengesResponse;
-import in.sportscafe.nostragamus.utils.AlertsHelper;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -70,7 +67,7 @@ public class ContestFragment extends NostraBaseFragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        getRequiredDataFromBundle();
+        initMembers();
         loadData();
     }
 
@@ -111,7 +108,7 @@ public class ContestFragment extends NostraBaseFragment {
         }
     }
 
-    private void getRequiredDataFromBundle() {
+    private void initMembers() {
         Bundle args = getArguments();
         if (args != null) {
             if (args.containsKey(Constants.BundleKeys.CONTEST_SCREEN_DATA)) {
@@ -162,7 +159,7 @@ public class ContestFragment extends NostraBaseFragment {
 
                     if (contestFiltered != null) {
                         contestType.setContestCount(contestFiltered.size());
-                        tabFragment.onContestData(contestFiltered);
+                        tabFragment.onContestData(contestFiltered, mContestScreenData);
                         tabFragment.setContestType(contestType);
                         fragmentList.add(tabFragment);
                     }
