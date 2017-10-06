@@ -78,8 +78,7 @@ public class ContestFragment extends NostraBaseFragment {
         if (mContestScreenData != null) {
             showLoadingProgressBar();
 
-            ContestDataProvider dataProvider = new ContestDataProvider();
-            final List<ContestType> contestTypeList = dataProvider.getContestTypeList();
+            final ContestDataProvider dataProvider = new ContestDataProvider();
 
             dataProvider.getContestDetails(mContestScreenData.getChallengeId(),
                     new ContestDataProvider.ContestDataProviderListener() {
@@ -90,7 +89,7 @@ public class ContestFragment extends NostraBaseFragment {
                     switch (status) {
                         case Constants.DataStatus.FROM_SERVER_API_SUCCESS:
                             if (response != null && response.getData() != null && response.getData().getContests() != null) {
-                                showOnUi(contestTypeList, response.getData().getContests());
+                                showOnUi(dataProvider.getContestTypeList(response.getData().getContests()), response.getData().getContests());
 
                             } else {
                                 handleError(-1);
@@ -155,14 +154,10 @@ public class ContestFragment extends NostraBaseFragment {
                     tabFragment = new ContestViewPagerFragment();
                     List<Contest> contestFiltered = null;
 
-                    switch (contestType.getId()) {
-                        case ContestDataProvider.JOINED_CONTEST_ID:
-                            contestFiltered = filterHelper.getJoinedContests(contestList);
-                            break;
-
-                        default:
-                            contestFiltered = filterHelper.getFilteredContestByType(contestType.getId(), contestList);
-                            break;
+                    if (contestType.getCategoryName().equalsIgnoreCase(ContestFilterHelper.JOINED_CONTEST)) {
+                        contestFiltered = filterHelper.getJoinedContests(contestList);
+                    } else {
+                        contestFiltered = filterHelper.getFilteredContestByType(contestType.getCategoryName(), contestList);
                     }
 
                     if (contestFiltered != null) {

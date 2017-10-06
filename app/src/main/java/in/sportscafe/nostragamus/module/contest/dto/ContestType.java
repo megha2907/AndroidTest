@@ -1,38 +1,48 @@
 package in.sportscafe.nostragamus.module.contest.dto;
 
+import com.google.gson.annotations.SerializedName;
+
+import org.parceler.Parcel;
+
 /**
  * Created by sandip on 01/09/17.
  */
-
+@Parcel
 public class ContestType {
 
-    private int id;
-    private String name;
-    private String tagLine;
+    @SerializedName("category_name")
+    private String categoryName;
+
+    @SerializedName("category_desc")
+    private String categoryDesc;
+
+    @SerializedName("priority")
+    private int priority;
+
     private int contestCount;
 
-    public int getId() {
-        return id;
+    public String getCategoryName() {
+        return categoryName;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName;
     }
 
-    public String getName() {
-        return name;
+    public String getCategoryDesc() {
+        return categoryDesc;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setCategoryDesc(String categoryDesc) {
+        this.categoryDesc = categoryDesc;
     }
 
-    public String getTagLine() {
-        return tagLine;
+    public int getPriority() {
+        return priority;
     }
 
-    public void setTagLine(String tagLine) {
-        this.tagLine = tagLine;
+    public void setPriority(int priority) {
+        this.priority = priority;
     }
 
     public int getContestCount() {

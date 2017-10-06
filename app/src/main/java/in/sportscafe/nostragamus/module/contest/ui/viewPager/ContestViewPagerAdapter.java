@@ -50,7 +50,7 @@ public class ContestViewPagerAdapter extends FragmentStatePagerAdapter {
                 contestCountTextView.setText(String.valueOf(contestType.getContestCount()));
 
                 TextView contestTypeTextView = (TextView) parentLayout.findViewById(R.id.contest_type_tab_textView);
-                contestTypeTextView.setText(contestType.getName());
+                contestTypeTextView.setText(contestType.getCategoryName());
 
                 return parentLayout;
             }

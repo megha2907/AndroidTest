@@ -85,8 +85,8 @@ public class ContestViewPagerFragment extends NostraBaseFragment {
         if (mRecyclerView != null && mContestList != null) {
             mRecyclerView.setAdapter(new ContestRecyclerAdapter(mRecyclerView.getContext(), mContestList,
                     getContestAdapterListener()));
-            mTvContestName.setText(getContestType().getName());
-            mTvContestDesc.setText(getContestType().getTagLine());
+            mTvContestName.setText(getContestType().getCategoryName());
+            mTvContestDesc.setText(getContestType().getCategoryDesc());
         }
     }
 

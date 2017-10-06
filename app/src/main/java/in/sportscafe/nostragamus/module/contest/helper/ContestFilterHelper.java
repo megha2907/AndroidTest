@@ -11,13 +11,15 @@ import in.sportscafe.nostragamus.module.contest.dto.Contest;
 
 public class ContestFilterHelper {
 
-    public List<Contest> getFilteredContestByType(int filterTypeId, List<Contest> list) {
+    public static final String JOINED_CONTEST = "Joined Contest";
+
+    public List<Contest> getFilteredContestByType(String filterTypeName, List<Contest> list) {
         List<Contest> filteredList = null;
 
         if (list != null && list.size() > 0) {
             filteredList = new ArrayList<>();
             for (Contest contest : list) {
-                if (filterTypeId == contest.getContestTypeInfo().getId() &&
+                if (filterTypeName.equalsIgnoreCase(contest.getContestType().getCategoryName()) &&
                         !contest.isContestJoined()) {           /* Contest should not be joined and contestId filter */
                     filteredList.add(contest);
                 }
