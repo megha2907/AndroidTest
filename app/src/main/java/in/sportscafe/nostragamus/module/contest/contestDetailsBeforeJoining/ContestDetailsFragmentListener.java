@@ -6,7 +6,7 @@ import android.os.Bundle;
  * Created by deepanshi on 9/12/17.
  */
 
-public interface ContestDetailsBJFragmentListener {
+public interface ContestDetailsFragmentListener {
     void onJoinContestClicked(Bundle args);
     void onBackBtnClicked();
 }

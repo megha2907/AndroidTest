@@ -29,6 +29,7 @@ public interface Constants {
         String SCREEN_REFERRAL_CREDITS = "referralCredits";
         String SCREEN_APP_UPDATE = "appUpdate";
         String SCREEN_STORE = "store";
+        String SCREEN_WALLET_HISTORY = "walletHistory";
     }
 
     interface SharedKeys {

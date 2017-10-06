@@ -1,7 +1,5 @@
 package in.sportscafe.nostragamus.module.contest.dto;
 
-import android.support.v7.app.AppCompatActivity;
-
 import org.parceler.Parcel;
 
 /**
@@ -15,6 +13,8 @@ public class JoinContestData {
     private int joiContestDialogLaunchMode;
     private double entryFee;
     private String challengeName;
+    private boolean shouldSendPseudoRoomId = false;
+    private int pseudoRoomId;
 
     public int getChallengeId() {
         return challengeId;
@@ -56,4 +56,19 @@ public class JoinContestData {
         this.entryFee = entryFee;
     }
 
+    public boolean isShouldSendPseudoRoomId() {
+        return shouldSendPseudoRoomId;
+    }
+
+    public void setShouldSendPseudoRoomId(boolean shouldSendPseudoRoomId) {
+        this.shouldSendPseudoRoomId = shouldSendPseudoRoomId;
+    }
+
+    public int getPseudoRoomId() {
+        return pseudoRoomId;
+    }
+
+    public void setPseudoRoomId(int pseudoRoomId) {
+        this.pseudoRoomId = pseudoRoomId;
+    }
 }

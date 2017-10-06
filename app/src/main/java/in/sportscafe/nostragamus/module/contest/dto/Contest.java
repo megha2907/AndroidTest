@@ -33,7 +33,7 @@ public class Contest {
     private int prizes;
 
     @SerializedName("contest_type")
-    private ContestTypeInfo contestTypeInfo;
+    private ContestType contestType;
 
     @SerializedName("mode")
     private String contestMode;
@@ -160,12 +160,12 @@ public class Contest {
         this.prizes = prizes;
     }
 
-    public ContestTypeInfo getContestTypeInfo() {
-        return contestTypeInfo;
+    public ContestType getContestType() {
+        return contestType;
     }
 
-    public void setContestTypeInfo(ContestTypeInfo contestTypeInfo) {
-        this.contestTypeInfo = contestTypeInfo;
+    public void setContestType(ContestType contestType) {
+        this.contestType = contestType;
     }
 //
 //    public void setRoomSize(Integer roomSize) {

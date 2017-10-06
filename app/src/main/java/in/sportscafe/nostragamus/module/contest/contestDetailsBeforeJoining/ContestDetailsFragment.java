@@ -29,27 +29,27 @@ import in.sportscafe.nostragamus.module.navigation.wallet.WalletHelper;
  * Created by deepanshi on 9/10/17.
  */
 
-public class ContestDetailsBeforeJoinFragment extends NostraBaseFragment implements View.OnClickListener {
+public class ContestDetailsFragment extends NostraBaseFragment implements View.OnClickListener {
 
-    private static final String TAG = ContestDetailsBeforeJoinFragment.class.getSimpleName();
+    private static final String TAG = ContestDetailsFragment.class.getSimpleName();
 
-    private ContestDetailsBJFragmentListener mContestDetailsBJFragmentListener;
+    private ContestDetailsFragmentListener mContestDetailsFragmentListener;
     private TextView mTvTBarHeading;
     private TextView mTvTBarSubHeading;
     private TextView mTvTBarWalletMoney;
     private Button mJoinContestButton;
-    private ContestDetailsBJViewPagerAdapter mViewPagerAdapter;
+    private ContestDetailsViewPagerAdapter mContestDetailsViewPagerAdapter;
     private ViewPager mViewPager;
 
-    public ContestDetailsBeforeJoinFragment() {
+    public ContestDetailsFragment() {
     }
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
 
-        if (context instanceof ContestDetailsBeforeJoinedActivity) {
-            mContestDetailsBJFragmentListener = (ContestDetailsBJFragmentListener) context;
+        if (context instanceof ContestDetailsActivity) {
+            mContestDetailsFragmentListener = (ContestDetailsFragmentListener) context;
         } else {
             throw new RuntimeException("Activity must implement " + TAG);
         }
@@ -130,7 +130,7 @@ public class ContestDetailsBeforeJoinFragment extends NostraBaseFragment impleme
 
     private void createAdapter(Contest contest) {
         if (contest != null && getView() != null && mViewPager != null) {
-            mViewPagerAdapter = new ContestDetailsBJViewPagerAdapter(getChildFragmentManager(), getContext());
+            mContestDetailsViewPagerAdapter = new ContestDetailsViewPagerAdapter(getChildFragmentManager(), getContext());
 
             /* Contest Entries screen */
             ContestEntriesScreenData contestScreenData = new ContestEntriesScreenData();
@@ -141,17 +141,17 @@ public class ContestDetailsBeforeJoinFragment extends NostraBaseFragment impleme
 
             ContestEntriesViewPagerFragment contestEntriesViewPagerFragment = new ContestEntriesViewPagerFragment();
             contestEntriesViewPagerFragment.setArguments(args);
-            mViewPagerAdapter.addFragment(contestEntriesViewPagerFragment, Constants.ContestDetailsTabs.ENTRIES);
+            mContestDetailsViewPagerAdapter.addFragment(contestEntriesViewPagerFragment, Constants.ContestDetailsTabs.ENTRIES);
 
             /* Rewards */
             RewardsFragment rewardsFragment = RewardsFragment.newInstance(contest.getContestId());
-            mViewPagerAdapter.addFragment(rewardsFragment, Constants.ContestDetailsTabs.PRIZES);
+            mContestDetailsViewPagerAdapter.addFragment(rewardsFragment, Constants.ContestDetailsTabs.PRIZES);
 
             /* Rules */
             RulesFragment rulesFragment = RulesFragment.newInstance(contest.getContestId());
-            mViewPagerAdapter.addFragment(rulesFragment, Constants.ContestDetailsTabs.RULES);
+            mContestDetailsViewPagerAdapter.addFragment(rulesFragment, Constants.ContestDetailsTabs.RULES);
 
-            mViewPager.setAdapter(mViewPagerAdapter);
+            mViewPager.setAdapter(mContestDetailsViewPagerAdapter);
             mViewPager.setOffscreenPageLimit(3);
 
             setTabLayout(mViewPager);
@@ -159,14 +159,14 @@ public class ContestDetailsBeforeJoinFragment extends NostraBaseFragment impleme
     }
 
     private void setTabLayout(ViewPager mViewPager) {
-        if (getView() != null && mViewPagerAdapter != null) {
+        if (getView() != null && mContestDetailsViewPagerAdapter != null) {
             TabLayout contestTabLayout = (TabLayout) getView().findViewById(R.id.contest_details_tabs);
             contestTabLayout.setupWithViewPager(mViewPager);
 
             for (int temp = 0; temp < contestTabLayout.getTabCount(); temp++) {
                 TabLayout.Tab tab = contestTabLayout.getTabAt(temp);
                 if (tab != null) {
-                    tab.setCustomView(mViewPagerAdapter.getTabView(temp));
+                    tab.setCustomView(mContestDetailsViewPagerAdapter.getTabView(temp));
                 }
             }
         }
@@ -176,13 +176,13 @@ public class ContestDetailsBeforeJoinFragment extends NostraBaseFragment impleme
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.join_contest_btn:
-                if (mContestDetailsBJFragmentListener != null) {
-                    mContestDetailsBJFragmentListener.onJoinContestClicked(getArguments());
+                if (mContestDetailsFragmentListener != null) {
+                    mContestDetailsFragmentListener.onJoinContestClicked(getArguments());
                 }
                 break;
             case R.id.contest_details_back_btn:
-                if (mContestDetailsBJFragmentListener != null) {
-                    mContestDetailsBJFragmentListener.onBackBtnClicked();
+                if (mContestDetailsFragmentListener != null) {
+                    mContestDetailsFragmentListener.onBackBtnClicked();
                 }
                 break;
 

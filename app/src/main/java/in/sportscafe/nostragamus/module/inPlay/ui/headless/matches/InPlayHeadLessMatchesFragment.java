@@ -122,18 +122,25 @@ public class InPlayHeadLessMatchesFragment extends BaseFragment implements View.
             public void onMatchActionClicked(int actionType, Bundle args) {
                 switch (actionType) {
                     case MatchesAdapterAction.COMING_UP:
-                        /* Disabled - No action */
+                        /* Not possible as headless state is only created only match is played  */
                         break;
 
                     case MatchesAdapterAction.PLAY:
+                        /* Playing new Match from headless state can not be allowed */
+                        break;
+
                     case MatchesAdapterAction.CONTINUE:
                         launchPlayScreen(args);
                         break;
 
                     case MatchesAdapterAction.ANSWER:
+                        launchResultsScreen(args);
+                        break;
+
                     case MatchesAdapterAction.DID_NOT_PLAY:
                     case MatchesAdapterAction.POINTS:
-                        launchResultsScreen(args);
+                        /* As points are possible only after results announce, since user did not join contest and into headless state,
+                         * This scenario not going to happen in this case, as challenge/headless state will be removed from inplay */
                         break;
                 }
             }
@@ -302,6 +309,8 @@ handleError(status);
             ContestScreenData screenData = new ContestScreenData();
             screenData.setChallengeId(mHeadLessMatchScreenData.getChallengeId());
             screenData.setChallengeName(mHeadLessMatchScreenData.getChallengeName());
+            screenData.setHeadLessFlow(true);
+            screenData.setPseudoRoomId(mHeadLessMatchScreenData.getRoomId());   // For Headless contest to join, pass room Id as pseudoRoomId
 
             Bundle args = new Bundle();
             args.putParcelable(Constants.BundleKeys.CONTEST_SCREEN_DATA, Parcels.wrap(screenData));

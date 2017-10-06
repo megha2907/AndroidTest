@@ -17,6 +17,10 @@ public class JoinContestQueueRequest {
     @SerializedName("config_id")
     private int contestId;
 
+    /* NOTE: only required in InPlay - headless state joining */
+    @SerializedName("pseudo_room_id")
+    private int pseudoRoomId;
+
     public int getChallengeId() {
         return challengeId;
     }
@@ -39,5 +43,13 @@ public class JoinContestQueueRequest {
 
     public void setContestId(int contestId) {
         this.contestId = contestId;
+    }
+
+    public int getPseudoRoomId() {
+        return pseudoRoomId;
+    }
+
+    public void setPseudoRoomId(int pseudoRoomId) {
+        this.pseudoRoomId = pseudoRoomId;
     }
 }

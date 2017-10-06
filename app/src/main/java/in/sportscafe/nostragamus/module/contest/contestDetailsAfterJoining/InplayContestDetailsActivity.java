@@ -11,17 +11,17 @@ import in.sportscafe.nostragamus.utils.FragmentHelper;
  * Created by deepanshi on 9/13/17.
  */
 
-public class ContestDetailsAfterJoinActivity extends NostraBaseActivity implements ContestDetailsAJFragmentListener {
+public class InplayContestDetailsActivity extends NostraBaseActivity implements ContestDetailsAJFragmentListener {
 
-    private static final String TAG = ContestDetailsAfterJoinActivity.class.getSimpleName();
+    private static final String TAG = InplayContestDetailsActivity.class.getSimpleName();
 
-    private ContestDetailsAfterJoinFragment mContestDetailsAfterJoinFragment;
+    private InPlayContestDetailsFragment mInPlayContestDetailsFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setShouldAnimateActivity(true);
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_aj_contest_details);
+        setContentView(R.layout.activity_inplay_contest_details);
         loadFragment();
     }
 
@@ -31,12 +31,12 @@ public class ContestDetailsAfterJoinActivity extends NostraBaseActivity implemen
             args = getIntent().getExtras();
         }
 
-        mContestDetailsAfterJoinFragment = new ContestDetailsAfterJoinFragment();
+        mInPlayContestDetailsFragment = new InPlayContestDetailsFragment();
         if (args != null) {
-            mContestDetailsAfterJoinFragment.setArguments(args);
+            mInPlayContestDetailsFragment.setArguments(args);
         }
 
-        FragmentHelper.replaceFragment(this, R.id.fragment_container, mContestDetailsAfterJoinFragment);
+        FragmentHelper.replaceFragment(this, R.id.fragment_container, mInPlayContestDetailsFragment);
     }
 
     @Override
@@ -47,8 +47,8 @@ public class ContestDetailsAfterJoinActivity extends NostraBaseActivity implemen
     }
 
     private void passIntentToFragment(Intent intent) {
-        if (intent != null && mContestDetailsAfterJoinFragment != null) {
-            mContestDetailsAfterJoinFragment.onNewIntent(intent);
+        if (intent != null && mInPlayContestDetailsFragment != null) {
+            mInPlayContestDetailsFragment.onNewIntent(intent);
         }
     }
 

@@ -27,11 +27,11 @@ import in.sportscafe.nostragamus.module.user.leaderboard.LeaderBoardFragment;
  * Created by deepanshi on 9/13/17.
  */
 
-public class ContestDetailsAfterJoinFragment extends NostraBaseFragment implements View.OnClickListener {
+public class InPlayContestDetailsFragment extends NostraBaseFragment implements View.OnClickListener {
 
-    private static final String TAG = ContestDetailsAfterJoinFragment.class.getSimpleName();
+    private static final String TAG = InPlayContestDetailsFragment.class.getSimpleName();
 
-    public ContestDetailsAfterJoinFragment() {
+    public InPlayContestDetailsFragment() {
     }
 
     private ContestDetailsAJFragmentListener mContestDetailsAJFragmentListener;
@@ -44,7 +44,7 @@ public class ContestDetailsAfterJoinFragment extends NostraBaseFragment implemen
     public void onAttach(Context context) {
         super.onAttach(context);
 
-        if (context instanceof ContestDetailsAfterJoinActivity) {
+        if (context instanceof InplayContestDetailsActivity) {
             mContestDetailsAJFragmentListener = (ContestDetailsAJFragmentListener) context;
         } else {
             throw new RuntimeException("Activity must implement " + TAG);
@@ -54,7 +54,7 @@ public class ContestDetailsAfterJoinFragment extends NostraBaseFragment implemen
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_aj_contest_details, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_inplay_contest_details, container, false);
         initView(rootView);
         return rootView;
     }

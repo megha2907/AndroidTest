@@ -15,6 +15,8 @@ import android.view.ViewGroup;
 import org.parceler.Parcels;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import in.sportscafe.nostragamus.Constants;
@@ -143,7 +145,7 @@ public class InPlayFragment extends NostraBaseFragment {
             ViewPager inPlayViewPager = (ViewPager) getView().findViewById(R.id.inplay_viewPager);
 
             SportsDataProvider sportsDataProvider = new SportsDataProvider();
-            List<SportsTab> sportsTabList = sportsDataProvider.getInPlaySportsList();
+            List<SportsTab> sportsTabList = sportsDataProvider.getSportsList();
 
             ArrayList<InPlayViewPagerFragment> fragmentList = new ArrayList<>();
             InPlayFilterHelper filterHelper = new InPlayFilterHelper();
@@ -156,15 +158,15 @@ public class InPlayFragment extends NostraBaseFragment {
                 int sportId = sportsTab.getSportsId();
                 List<InPlayResponse> inPlayFilteredList = null;
                 switch (sportId) {
-                    case InPlayFilterHelper.FILTER_ALL_SPORTS_ID:
+                    case SportsDataProvider.FILTER_ALL_SPORTS_ID:
                         inPlayFilteredList = inPlayResponseList;
                         break;
 
-                    case InPlayFilterHelper.FILTER_DAILY_SPORTS_ID:
+                    case SportsDataProvider.FILTER_DAILY_SPORTS_ID:
                         inPlayFilteredList = filterHelper.getDailyInPlayChallenges(inPlayResponseList);
                         break;
 
-                    case InPlayFilterHelper.FILTER_MIX_SPORTS_ID:
+                    case SportsDataProvider.FILTER_MIXED_SPORTS_ID:
                         inPlayFilteredList = filterHelper.getInPlayMixedSportsChallengesFilteredOn(inPlayResponseList);
                         break;
 
@@ -181,6 +183,27 @@ public class InPlayFragment extends NostraBaseFragment {
                 }
             }
 
+            /* Sort tabs */
+            Collections.sort(fragmentList, new Comparator<InPlayViewPagerFragment>() {
+                @Override
+                public int compare(InPlayViewPagerFragment fragment1, InPlayViewPagerFragment fragment2) {
+                    int sportId = fragment1.getTabDetails().getSportsId();
+                    if (sportId == SportsDataProvider.FILTER_ALL_SPORTS_ID ||
+                            sportId == SportsDataProvider.FILTER_DAILY_SPORTS_ID ||
+                            sportId == SportsDataProvider.FILTER_MIXED_SPORTS_ID) {
+                        return 0;
+                    }
+
+                    if (fragment1.getTabDetails().getChallengeCount() < fragment2.getTabDetails().getChallengeCount()) {
+                        return 1;
+                    } else if (fragment1.getTabDetails().getChallengeCount() == fragment2.getTabDetails().getChallengeCount()) {
+                        return 0;
+                    }
+                    return -1;
+                }
+            });
+
+            /* create adapter */
             InPlayViewPagerAdapter viewPagerAdapter = new InPlayViewPagerAdapter
                     (getActivity().getSupportFragmentManager(), fragmentList);
             inPlayViewPager.setAdapter(viewPagerAdapter);

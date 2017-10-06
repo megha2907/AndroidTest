@@ -21,7 +21,7 @@ public class ContestDetailCompletedActivity extends NostraBaseActivity implement
     protected void onCreate(Bundle savedInstanceState) {
         setShouldAnimateActivity(true);
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_aj_contest_details);
+        setContentView(R.layout.activity_inplay_contest_details);
         loadFragment();
     }
 

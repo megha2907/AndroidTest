@@ -4,16 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import in.sportscafe.nostragamus.module.challengeCompleted.dto.CompletedResponse;
+import in.sportscafe.nostragamus.module.newChallenges.dataProvider.SportsDataProvider;
 
 /**
  * Created by deepanshi on 9/27/17.
  */
 
 public class CompleteChallengeFilterHelper {
-
-    public static final int FILTER_ALL_SPORTS_ID = -11;
-    public static final int FILTER_DAILY_SPORTS_ID = -12;
-    public static final int FILTER_MIX_SPORTS_ID = 9;   // MIX-SPORTS sport id
 
     public CompleteChallengeFilterHelper() {}
 
@@ -50,7 +47,7 @@ public class CompleteChallengeFilterHelper {
 
                 if (sportsIdArray != null) {
                     for (int temp = 0; temp < sportsIdArray.length; temp++) {
-                        if (sportsIdArray[temp] == FILTER_MIX_SPORTS_ID) {
+                        if (sportsIdArray[temp] == SportsDataProvider.FILTER_MIXED_SPORTS_ID) {
                             filteredChallenges.add(completedResponse);
                         }
                     }

@@ -30,13 +30,20 @@ public class JoinContestApiImpl {
         this.mListener = listener;
     }
 
-    public void joinContestQueue(int contestId, int challengeId, String challengeName) {
+    public void joinContestQueue(int contestId, int challengeId, String challengeName,
+                                 boolean shouldSendPseudoRoomId, int pseudoRoomId) {
         if (Nostragamus.getInstance().hasNetworkConnection()) {
 
             final JoinContestQueueRequest request = new JoinContestQueueRequest();
             request.setChallengeId(challengeId);
             request.setChallengeName(challengeName);
             request.setContestId(contestId);
+
+            /* Should send pseudoRoomId / roomId ONLY in headless flow of inPlay
+             * else should pass 0 */
+            if (shouldSendPseudoRoomId) {
+                request.setPseudoRoomId(pseudoRoomId);
+            }
 
             MyWebService.getInstance().joinContestQueue(request).enqueue(new ApiCallBack<JoinContestQueueResponse>() {
                 @Override
