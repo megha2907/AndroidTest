@@ -26,7 +26,7 @@ import java.util.List;
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.R;
-import in.sportscafe.nostragamus.module.contest.contestDetailsAfterJoining.ContestDetailsAfterJoinActivity;
+import in.sportscafe.nostragamus.module.contest.contestDetailsAfterJoining.InplayContestDetailsActivity;
 import in.sportscafe.nostragamus.module.contest.dto.ContestScreenData;
 import in.sportscafe.nostragamus.module.contest.dto.JoinContestData;
 import in.sportscafe.nostragamus.module.contest.ui.ContestsActivity;
@@ -38,9 +38,9 @@ import in.sportscafe.nostragamus.module.inPlay.dto.InPlayContestMatchDto;
 import in.sportscafe.nostragamus.module.inPlay.dto.InPlayListChallengeItem;
 import in.sportscafe.nostragamus.module.inPlay.dto.InPlayListItem;
 import in.sportscafe.nostragamus.module.inPlay.dto.InPlayResponse;
-import in.sportscafe.nostragamus.module.inPlay.helper.InPlayFilterHelper;
 import in.sportscafe.nostragamus.module.inPlay.ui.headless.dto.HeadLessMatchScreenData;
 import in.sportscafe.nostragamus.module.inPlay.ui.headless.matches.InPlayHeadLessMatchActivity;
+import in.sportscafe.nostragamus.module.newChallenges.dataProvider.SportsDataProvider;
 import in.sportscafe.nostragamus.module.newChallenges.dto.SportsTab;
 import in.sportscafe.nostragamus.utils.AlertsHelper;
 
@@ -79,20 +79,19 @@ public class InPlayViewPagerFragment extends BaseFragment {
 
     private void loadData() {
         if (mRecyclerView != null && mFilteredContests != null) {
-
             List<InPlayListItem> inPlayListItemList = getInPlayItemList(mFilteredContests);
-            if (inPlayListItemList != null) {
+            if (inPlayListItemList != null && !inPlayListItemList.isEmpty()) {
                 mRecyclerView.setAdapter(new InPlayRecyclerAdapter(inPlayListItemList, getAdapterListener()));
 
                 if (mSportsTab != null) {
                     switch (mSportsTab.getSportsId()) {
-                        case InPlayFilterHelper.FILTER_ALL_SPORTS_ID:
+                        case SportsDataProvider.FILTER_ALL_SPORTS_ID:
                             scrollToContest();
                             break;
                     }
                 }
             } else {
-                // No list UI
+                // TODO
             }
         }
     }
@@ -311,7 +310,7 @@ public class InPlayViewPagerFragment extends BaseFragment {
     private void goToNewMatchesTimeline(Bundle args) {
         if (Nostragamus.getInstance().hasNetworkConnection()) {
             if (getActivity() != null && !getActivity().isFinishing()) {
-                Intent intent = new Intent(getActivity(), ContestDetailsAfterJoinActivity.class);
+                Intent intent = new Intent(getActivity(), InplayContestDetailsActivity.class);
                 if (args != null) {
                     intent.putExtras(args);
                 }

@@ -10,6 +10,8 @@ public class ContestScreenData {
 
     private int challengeId;
     private String challengeName;
+    private boolean isHeadLessFlow = false;
+    private int pseudoRoomId;
 
     public int getChallengeId() {
         return challengeId;
@@ -25,5 +27,21 @@ public class ContestScreenData {
 
     public void setChallengeName(String challengeName) {
         this.challengeName = challengeName;
+    }
+
+    public boolean isHeadLessFlow() {
+        return isHeadLessFlow;
+    }
+
+    public void setHeadLessFlow(boolean headLessFlow) {
+        isHeadLessFlow = headLessFlow;
+    }
+
+    public int getPseudoRoomId() {
+        return pseudoRoomId;
+    }
+
+    public void setPseudoRoomId(int pseudoRoomId) {
+        this.pseudoRoomId = pseudoRoomId;
     }
 }

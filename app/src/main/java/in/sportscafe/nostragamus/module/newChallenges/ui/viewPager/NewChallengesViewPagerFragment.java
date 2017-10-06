@@ -32,6 +32,7 @@ import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.contest.dto.JoinContestData;
 import in.sportscafe.nostragamus.module.newChallenges.adapter.NewChallengeAdapterListener;
 import in.sportscafe.nostragamus.module.newChallenges.adapter.NewChallengesRecyclerAdapter;
+import in.sportscafe.nostragamus.module.newChallenges.dataProvider.SportsDataProvider;
 import in.sportscafe.nostragamus.module.newChallenges.dto.NewChallengesResponse;
 import in.sportscafe.nostragamus.module.newChallenges.dto.SportsTab;
 import in.sportscafe.nostragamus.module.newChallenges.helpers.NewChallengesFilterHelper;
@@ -100,7 +101,7 @@ public class NewChallengesViewPagerFragment extends BaseFragment implements View
 
         if (mSportsTab != null) {
             switch (mSportsTab.getSportsId()) {
-                case NewChallengesFilterHelper.FILTER_ALL_SPORTS_ID:
+                case SportsDataProvider.FILTER_ALL_SPORTS_ID:
                     scrollToChallenge();
                     break;
             }
@@ -110,8 +111,6 @@ public class NewChallengesViewPagerFragment extends BaseFragment implements View
     private void scrollToChallenge() {
 
     }
-
-
 
     @NonNull
     private NewChallengeAdapterListener getChallengeAdapterListener() {
@@ -166,4 +165,5 @@ public class NewChallengesViewPagerFragment extends BaseFragment implements View
             mRecyclerView.getAdapter().notifyDataSetChanged();
         }
     }
+
 }

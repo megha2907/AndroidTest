@@ -29,10 +29,7 @@ import in.sportscafe.nostragamus.module.contest.dto.ContestType;
 import in.sportscafe.nostragamus.module.contest.helper.ContestFilterHelper;
 import in.sportscafe.nostragamus.module.contest.ui.viewPager.ContestViewPagerAdapter;
 import in.sportscafe.nostragamus.module.contest.ui.viewPager.ContestViewPagerFragment;
-import in.sportscafe.nostragamus.module.inPlay.dto.InPlayListChallengeItem;
 import in.sportscafe.nostragamus.module.navigation.wallet.WalletHelper;
-import in.sportscafe.nostragamus.module.newChallenges.dto.NewChallengesResponse;
-import in.sportscafe.nostragamus.utils.AlertsHelper;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -70,7 +67,7 @@ public class ContestFragment extends NostraBaseFragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        getRequiredDataFromBundle();
+        initMembers();
         loadData();
     }
 
@@ -78,8 +75,7 @@ public class ContestFragment extends NostraBaseFragment {
         if (mContestScreenData != null) {
             showLoadingProgressBar();
 
-            ContestDataProvider dataProvider = new ContestDataProvider();
-            final List<ContestType> contestTypeList = dataProvider.getContestTypeList();
+            final ContestDataProvider dataProvider = new ContestDataProvider();
 
             dataProvider.getContestDetails(mContestScreenData.getChallengeId(),
                     new ContestDataProvider.ContestDataProviderListener() {
@@ -90,7 +86,7 @@ public class ContestFragment extends NostraBaseFragment {
                     switch (status) {
                         case Constants.DataStatus.FROM_SERVER_API_SUCCESS:
                             if (response != null && response.getData() != null && response.getData().getContests() != null) {
-                                showOnUi(contestTypeList, response.getData().getContests());
+                                showOnUi(dataProvider.getContestTypeList(response.getData().getContests()), response.getData().getContests());
 
                             } else {
                                 handleError(-1);
@@ -112,7 +108,7 @@ public class ContestFragment extends NostraBaseFragment {
         }
     }
 
-    private void getRequiredDataFromBundle() {
+    private void initMembers() {
         Bundle args = getArguments();
         if (args != null) {
             if (args.containsKey(Constants.BundleKeys.CONTEST_SCREEN_DATA)) {
@@ -155,19 +151,15 @@ public class ContestFragment extends NostraBaseFragment {
                     tabFragment = new ContestViewPagerFragment();
                     List<Contest> contestFiltered = null;
 
-                    switch (contestType.getId()) {
-                        case ContestDataProvider.JOINED_CONTEST_ID:
-                            contestFiltered = filterHelper.getJoinedContests(contestList);
-                            break;
-
-                        default:
-                            contestFiltered = filterHelper.getFilteredContestByType(contestType.getId(), contestList);
-                            break;
+                    if (contestType.getCategoryName().equalsIgnoreCase(ContestFilterHelper.JOINED_CONTEST)) {
+                        contestFiltered = filterHelper.getJoinedContests(contestList);
+                    } else {
+                        contestFiltered = filterHelper.getFilteredContestByType(contestType.getCategoryName(), contestList);
                     }
 
                     if (contestFiltered != null) {
                         contestType.setContestCount(contestFiltered.size());
-                        tabFragment.onContestData(contestFiltered);
+                        tabFragment.onContestData(contestFiltered, mContestScreenData);
                         tabFragment.setContestType(contestType);
                         fragmentList.add(tabFragment);
                     }

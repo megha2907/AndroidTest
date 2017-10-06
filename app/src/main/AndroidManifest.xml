@@ -322,7 +322,7 @@
             
             android:screenOrientation="portrait" />
         <activity
-            android:name=".module.contest.contestDetailsBeforeJoining.ContestDetailsBeforeJoinedActivity"
+            android:name=".module.contest.contestDetailsBeforeJoining.ContestDetailsActivity"
             
             android:screenOrientation="portrait" />
         <activity
@@ -330,7 +330,7 @@
             
             android:screenOrientation="portrait" />
         <activity
-        android:name=".module.contest.contestDetailsAfterJoining.ContestDetailsAfterJoinActivity"
+        android:name=".module.contest.contestDetailsAfterJoining.InplayContestDetailsActivity"
         android:screenOrientation="portrait" />
 
         <activity

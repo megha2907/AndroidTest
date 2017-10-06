@@ -1,17 +1,25 @@
 package in.sportscafe.nostragamus.module.contest.dataProvider;
 
 import android.support.annotation.NonNull;
+import android.text.TextUtils;
 
 import com.jeeva.android.Log;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Nostragamus;
+import in.sportscafe.nostragamus.module.contest.dto.Contest;
 import in.sportscafe.nostragamus.module.contest.dto.ContestRequest;
 import in.sportscafe.nostragamus.module.contest.dto.ContestResponse;
 import in.sportscafe.nostragamus.module.contest.dto.ContestType;
+import in.sportscafe.nostragamus.module.contest.helper.ContestFilterHelper;
 import in.sportscafe.nostragamus.module.newChallenges.dto.NewChallengesResponse;
 import in.sportscafe.nostragamus.webservice.ApiCallBack;
 import in.sportscafe.nostragamus.webservice.MyWebService;
@@ -71,39 +79,48 @@ public class ContestDataProvider {
 
     }
 
-    public List<ContestType> getContestTypeList () {
+    public List<ContestType> getContestTypeList(List<Contest> contestList) {
         List<ContestType> contestTypes = new ArrayList<>();
 
-        ContestType h2h = new ContestType();
-        h2h.setId(0);
-        h2h.setName("H 2 H Contests");
-        h2h.setTagLine("Finish on the Top Half of the leaderboards to win");
+        Set<String> contestSet = new HashSet<>();
+        if (contestList != null) {
+            /* Create a list of unique contest-names (Set will not keep duplicate values) */
+            for (Contest contest : contestList) {
+                if (contest.getContestType() != null && !TextUtils.isEmpty(contest.getContestType().getCategoryName())) {
+                    contestSet.add(contest.getContestType().getCategoryName());
+                }
+            }
 
-        ContestType doubleUp = new ContestType();
-        doubleUp.setId(1);
-        doubleUp.setName("Double Up Contests");
-        doubleUp.setTagLine("Finish on the Top Half of the leaderboards to win");
+            /* create list of all contest-types based on contest-names  */
+            for (String contestName : contestSet) {
+                for (Contest contest : contestList) {
+                    if (contestName.equalsIgnoreCase(contest.getContestType().getCategoryName())) {
+                        contestTypes.add(contest.getContestType());
+                        break;
+                    }
+                }
+            }
 
-        ContestType glory = new ContestType();
-        glory.setId(2);
-        glory.setName("Glory Contests");
-        glory.setTagLine("Finish on the Top Half of the leaderboards to win");
+            Collections.sort(contestTypes, new Comparator<ContestType>() {
+                @Override
+                public int compare(ContestType contestType1, ContestType contestType2) {
+                    if (contestType1.getPriority() < contestType2.getPriority()) {
+                        return 1;
+                    } else if (contestType1.getPriority() == contestType2.getPriority()) {
+                        return 0;
+                    }
+                    return -1;
+                }
+            });
+            
+            /* Add joined-contest always at end  */
+            ContestType joinedContestType = new ContestType();
+            joinedContestType.setCategoryName(ContestFilterHelper.JOINED_CONTEST);
+            joinedContestType.setCategoryDesc("Join more contests to win more!");
+            joinedContestType.setPriority(-1);
 
-        ContestType free = new ContestType();
-        free.setId(3);
-        free.setName("Free Contests");
-        free.setTagLine("Finish on the Top Half of the leaderboards to win");
-
-        ContestType joinedContest = new ContestType();
-        joinedContest.setId(JOINED_CONTEST_ID);
-        joinedContest.setName("Joined Contests");
-        joinedContest.setTagLine("Join more contests to Win more!");
-
-        contestTypes.add(h2h);
-        contestTypes.add(doubleUp);
-        contestTypes.add(glory);
-        contestTypes.add(free);
-        contestTypes.add(joinedContest);
+            contestTypes.add(joinedContestType);
+        }
 
         return contestTypes;
     }

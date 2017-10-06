@@ -3,6 +3,7 @@ package in.sportscafe.nostragamus.module.newChallenges.helpers;
 import java.util.ArrayList;
 import java.util.List;
 
+import in.sportscafe.nostragamus.module.newChallenges.dataProvider.SportsDataProvider;
 import in.sportscafe.nostragamus.module.newChallenges.dto.NewChallengesResponse;
 
 /**
@@ -10,10 +11,6 @@ import in.sportscafe.nostragamus.module.newChallenges.dto.NewChallengesResponse;
  */
 
 public class NewChallengesFilterHelper {
-
-    public static final int FILTER_ALL_SPORTS_ID = -11;
-    public static final int FILTER_DAILY_SPORTS_ID = -12;
-    public static final int FILTER_MIXED_SPORTS_ID = 9; // Sent from server
 
     public NewChallengesFilterHelper() {}
 
@@ -62,7 +59,7 @@ public class NewChallengesFilterHelper {
 
                 if (sportsIdArray != null) {
                     for (int temp = 0; temp < sportsIdArray.length; temp++) {
-                        if (sportsIdArray[temp] == FILTER_MIXED_SPORTS_ID) {
+                        if (sportsIdArray[temp] == SportsDataProvider.FILTER_MIXED_SPORTS_ID) {
                             mixChallenge.add(newChallenge);
                         }
                     }
