@@ -166,6 +166,9 @@ public class NostraHomeActivity extends NostraBaseActivity implements View.OnCli
 
                 } else if (screenName.equalsIgnoreCase(Constants.Notifications.SCREEN_APP_UPDATE)) {
                     startActivity(notificationHelper.getAppUpdateScreenIntent(this, notification));
+
+                } else if (screenName.equalsIgnoreCase(Constants.Notifications.SCREEN_WALLET_HISTORY)) {
+                    startActivity(notificationHelper.getWalletHistoryScreenIntent(this, notification));
                 }
 
             } else {

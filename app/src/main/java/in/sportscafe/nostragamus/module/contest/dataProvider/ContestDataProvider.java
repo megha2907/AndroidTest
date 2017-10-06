@@ -6,6 +6,9 @@ import android.text.TextUtils;
 import com.jeeva.android.Log;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -98,6 +101,18 @@ public class ContestDataProvider {
                 }
             }
 
+            Collections.sort(contestTypes, new Comparator<ContestType>() {
+                @Override
+                public int compare(ContestType contestType1, ContestType contestType2) {
+                    if (contestType1.getPriority() < contestType2.getPriority()) {
+                        return 1;
+                    } else if (contestType1.getPriority() == contestType2.getPriority()) {
+                        return 0;
+                    }
+                    return -1;
+                }
+            });
+            
             /* Add joined-contest always at end  */
             ContestType joinedContestType = new ContestType();
             joinedContestType.setCategoryName(ContestFilterHelper.JOINED_CONTEST);
