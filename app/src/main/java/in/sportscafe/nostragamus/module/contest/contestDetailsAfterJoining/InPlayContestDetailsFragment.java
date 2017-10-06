@@ -71,7 +71,7 @@ public class InPlayContestDetailsFragment extends NostraBaseFragment implements 
 
         if (inPlayContestDto != null) {
             mTvTBarHeading.setText(inPlayContestDto.getContestName());
-            mTvTBarSubHeading.setText(inPlayContestDto.getContestName());   // TODO change as per need
+            mTvTBarSubHeading.setText(inPlayContestDto.getChallengeName());
         }
 
         /*int amount = (int) WalletHelper.getTotalBalance();

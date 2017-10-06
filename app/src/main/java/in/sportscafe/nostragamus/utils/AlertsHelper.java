@@ -21,11 +21,13 @@ public class AlertsHelper {
             };
         }
 
-        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(context);
-        dialogBuilder.setTitle(title);
-        dialogBuilder.setMessage(message);
-        dialogBuilder.setPositiveButton(android.R.string.ok, clickListener);
-        dialogBuilder.show();
+        if (context!=null) {
+            AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(context);
+            dialogBuilder.setTitle(title);
+            dialogBuilder.setMessage(message);
+            dialogBuilder.setPositiveButton(android.R.string.ok, clickListener);
+            dialogBuilder.show();
+        }
     }
 
     public static void showYesNoAlert(Context context, String title, String message,

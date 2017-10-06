@@ -34,7 +34,6 @@ public class LeaderBoardPresenterImpl implements LeaderBoardPresenter, LeaderBoa
     public void checkSortType() {
         mLeaderBoardModel.sortAndRefreshLeaderBoard();
         //mLeaderBoardView.moveAdapterPosition(mLeaderBoardModel.getUserPosition());
-        //mLeaderBoardModel.setSortType(0);
     }
 
     @Override

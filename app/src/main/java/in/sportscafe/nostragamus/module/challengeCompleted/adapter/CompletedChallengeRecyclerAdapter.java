@@ -13,6 +13,8 @@ import android.widget.TextView;
 
 import org.parceler.Parcels;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import in.sportscafe.nostragamus.Constants;
@@ -26,6 +28,7 @@ import in.sportscafe.nostragamus.module.contest.ui.DetailScreensLaunchRequest;
 import in.sportscafe.nostragamus.module.customViews.TimelineHelper;
 import in.sportscafe.nostragamus.module.inPlay.adapter.InPlayAdapterItemType;
 import in.sportscafe.nostragamus.module.inPlay.dto.InPlayContestDto;
+import in.sportscafe.nostragamus.module.inPlay.dto.InPlayContestMatchDto;
 import in.sportscafe.nostragamus.module.inPlay.dto.InPlayListChallengeItem;
 import in.sportscafe.nostragamus.module.inPlay.dto.InPlayListItem;
 import in.sportscafe.nostragamus.module.newChallenges.helpers.DateTimeHelper;
@@ -159,10 +162,17 @@ public class CompletedChallengeRecyclerAdapter extends RecyclerView.Adapter<Recy
             CompletedContestItemViewHolder viewHolder = (CompletedContestItemViewHolder) holder;
 
             viewHolder.contestTitleTextView.setText(contest.getContestName());
-            viewHolder.contestModeImageView.setImageResource(R.drawable.add_members_icon);
             viewHolder.entryFeeTextView.setText(Constants.RUPEE_SYMBOL + String.valueOf(contest.getEntryFee()));
             viewHolder.prizesTextView.setText(Constants.RUPEE_SYMBOL + String.valueOf(contest.getWinningAmount()));
             viewHolder.currentRankTextView.setText(contest.getRank() + "/" + contest.getTotalParticipants());
+
+            if (contest.getContestMode().equalsIgnoreCase(Constants.ContestType.GUARANTEED)) {
+                viewHolder.contestModeImageView.setBackgroundResource(R.drawable.guaranteed_icon);
+            } else if (contest.getContestMode().equalsIgnoreCase(Constants.ContestType.POOL)) {
+                viewHolder.contestModeImageView.setBackgroundResource(R.drawable.pool_icon);
+            }else if (contest.getContestMode().equalsIgnoreCase(Constants.ContestType.NON_GUARANTEED)) {
+                viewHolder.contestModeImageView.setBackgroundResource(R.drawable.no_guarantee_icon);
+            }
 
             viewHolder.timelineHeaderParent.removeAllViews();
             viewHolder.timelineContentParent.removeAllViews();
@@ -174,8 +184,8 @@ public class CompletedChallengeRecyclerAdapter extends RecyclerView.Adapter<Recy
                 CompletedContestMatchDto match = contest.getMatches().get(temp);
 
                 boolean isNodeLineRequired = true;
-                if (temp == (totalMatches - 1)) {
-                    isNodeLineRequired = false;
+                if (temp == 0){
+                    isNodeLineRequired =false;
                 }
 
                 int matchAttemptedStatus = match.isPlayed();
