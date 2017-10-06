@@ -54,6 +54,7 @@ public class MyResultsModelImpl implements MyResultsModel, MyResultsAdapter.OnMy
     private Integer mPlayerUserId;
 
     private OnMyResultsModelListener mResultsModelListener;
+    private ResultsScreenDataDto mResultsScreenData;
 
     private MyResultsModelImpl(OnMyResultsModelListener listener) {
         this.mResultsModelListener = listener;
@@ -71,11 +72,13 @@ public class MyResultsModelImpl implements MyResultsModel, MyResultsAdapter.OnMy
             /* Get MatchId, Room Id and Player Id */
             if (bundle.containsKey(BundleKeys.RESULTS_SCREEN_DATA)) {
 
-                ResultsScreenDataDto resultsScreenData = Parcels.unwrap(bundle.getParcelable(BundleKeys.RESULTS_SCREEN_DATA));
-                matchId = resultsScreenData.getMatchId();
-                roomId = resultsScreenData.getRoomId();
-                contestName = resultsScreenData.getSubTitle();
-                String matchStatus = resultsScreenData.getMatchStatus();
+                mResultsScreenData = Parcels.unwrap(bundle.getParcelable(BundleKeys.RESULTS_SCREEN_DATA));
+                mResultsScreenData.setHeadLess(bundle.getBoolean(BundleKeys.IS_HEADLESS_FLOW, false));
+
+                matchId = mResultsScreenData.getMatchId();
+                roomId = mResultsScreenData.getRoomId();
+                contestName = mResultsScreenData.getSubTitle();
+                String matchStatus = mResultsScreenData.getMatchStatus();
 
                 /* Check for Awaiting Results to Change Toolbar Heading */
                 if (!TextUtils.isEmpty(matchStatus) && (
@@ -158,7 +161,7 @@ public class MyResultsModelImpl implements MyResultsModel, MyResultsAdapter.OnMy
     }
 
     private MyResultsAdapter createAdapter(Context context) {
-        mResultAdapter = new MyResultsAdapter(context, null == mPlayerUserId);
+        mResultAdapter = new MyResultsAdapter(context, null == mPlayerUserId, mResultsScreenData);
         mResultAdapter.setResultsActionListener(this);
         return mResultAdapter;
     }

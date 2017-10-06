@@ -18,6 +18,8 @@ public class HeadLessMatchScreenData {
     private String startTime;
     private PowerUp powerUp;
     private boolean isPlayingPseudoGame = false;
+    private int matchesLeft;
+    private int totalMatches;
 
     public int getRoomId() {
         return roomId;
@@ -81,5 +83,21 @@ public class HeadLessMatchScreenData {
 
     public void setStartTime(String startTime) {
         this.startTime = startTime;
+    }
+
+    public int getMatchesLeft() {
+        return matchesLeft;
+    }
+
+    public void setMatchesLeft(int matchesLeft) {
+        this.matchesLeft = matchesLeft;
+    }
+
+    public int getTotalMatches() {
+        return totalMatches;
+    }
+
+    public void setTotalMatches(int totalMatches) {
+        this.totalMatches = totalMatches;
     }
 }

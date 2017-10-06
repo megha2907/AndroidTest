@@ -15,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.jeeva.android.BaseFragment;
@@ -65,6 +66,8 @@ public class NewChallengesMatchesFragment extends BaseFragment implements View.O
     private NewChallengeMatchesAdapter mMatchesAdapter;
     private NewChallengeMatchesScreenData mScreenData;
     private TextView mContestTimerTextView;
+    private TextView mMatchesLeftTextView;
+    private Button mJoinContestButton;
 
     public NewChallengesMatchesFragment() {
     }
@@ -89,18 +92,15 @@ public class NewChallengesMatchesFragment extends BaseFragment implements View.O
     }
 
     private void initRootView(View rootView) {
-        TextView tvContestHeading = (TextView) rootView.findViewById(R.id.matches_timeline_heading);
-        TextView tvContestSubHeadingOne = (TextView) rootView.findViewById(R.id.matches_timeline_subheading_one);
-        TextView tvContestSubHeadingTwo = (TextView) rootView.findViewById(R.id.newchallenge_matches_subheading_two);
-        Button joinContestBtn = (Button) rootView.findViewById(R.id.new_challenge_matches_join_button);
-        TextView tvMatchesLeft = (TextView) rootView.findViewById(R.id.matches_timeline_matches_left);
+        mJoinContestButton = (Button) rootView.findViewById(R.id.new_challenge_matches_join_button);
+        mMatchesLeftTextView = (TextView) rootView.findViewById(R.id.matches_timeline_matches_left);
         mContestTimerTextView = (TextView) rootView.findViewById(R.id.matches_timeline_match_expires_in);
 
         mMatchesRecyclerView = (RecyclerView)rootView.findViewById(R.id.match_timeline_rv);
         mMatchesRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         mMatchesRecyclerView.setHasFixedSize(true);
 
-        joinContestBtn.setOnClickListener(this);
+        mJoinContestButton.setOnClickListener(this);
     }
 
     private void setTimer() {
@@ -156,17 +156,17 @@ public class NewChallengesMatchesFragment extends BaseFragment implements View.O
             JoinPseudoContestApiModelImpl joinPseudoContestApiModel = new JoinPseudoContestApiModelImpl();
             joinPseudoContestApiModel.joinPseudoContest(mScreenData.getChallengeId(),
                     new JoinPseudoContestApiModelImpl.JoinPseudoContestApiListener() {
-                @Override
-                public void onData(int status, @Nullable JoinPseudoContestResponse responses) {
-                    launchPlayScreen(match, responses);
-                }
+                        @Override
+                        public void onData(int status, @Nullable JoinPseudoContestResponse responses) {
+                            launchPlayScreen(match, responses);
+                        }
 
-                @Override
-                public void onError(int status) {
-                    Log.d(TAG, "Join pseudo contest failed");
-                    AlertsHelper.showAlert(getContext(), "Error!", Constants.Alerts.SOMETHING_WRONG, null);
-                }
-            });
+                        @Override
+                        public void onError(int status) {
+                            Log.d(TAG, "Join pseudo contest failed");
+                            AlertsHelper.showAlert(getContext(), "Error!", Constants.Alerts.SOMETHING_WRONG, null);
+                        }
+                    });
         }
     }
 
@@ -180,6 +180,7 @@ public class NewChallengesMatchesFragment extends BaseFragment implements View.O
             playData.setSubTitle(mScreenData.getChallengeName());
             playData.setPowerUp(response.getUserRoom().getPowerUp());
             playData.setPlayingPseudoGame(true);
+            playData.setChallengeName(mScreenData.getChallengeName());
 
             if (match.getMatchParties() != null && match.getMatchParties().size() == 2) {
                 playData.setMatchPartyTitle1(match.getMatchParties().get(0).getPartyName());
@@ -205,8 +206,17 @@ public class NewChallengesMatchesFragment extends BaseFragment implements View.O
         super.onActivityCreated(savedInstanceState);
 
         initMembers();
+        setValues();
         setTimer();
         loadDataFromServer();
+    }
+
+    private void setValues() {
+        if (mScreenData != null) {
+            if (mScreenData.getTotalMatches() > 0) {
+                mMatchesLeftTextView.setText(mScreenData.getMatchesLeft() + "/" + mScreenData.getTotalMatches());
+            }
+        }
     }
 
     private void initMembers() {
@@ -242,9 +252,37 @@ public class NewChallengesMatchesFragment extends BaseFragment implements View.O
     }
 
     private void onSuccessMatchResponse(NewChallengeMatchesResponse responses) {
+        setChallengeInfoAsPerUserPerspective(responses);
         if (responses != null && mMatchesRecyclerView != null && responses.getMatchList() != null) {
             mMatchesAdapter = new NewChallengeMatchesAdapter(responses.getMatchList(), getmatchAdapterListener());
             mMatchesRecyclerView.setAdapter(mMatchesAdapter);
+        }
+    }
+
+    private void setChallengeInfoAsPerUserPerspective(NewChallengeMatchesResponse responses) {
+        if (responses != null && getView() != null && !getActivity().isFinishing()) {
+            String state = responses.getState();
+            if (!TextUtils.isEmpty(state)) {
+                ImageView imgView = (ImageView) getView().findViewById(R.id.games_info_icon_imgView);
+                TextView infoHeadingTextView = (TextView) getView().findViewById(R.id.games_info_heading_textView);
+                TextView infoMsgTextView = (TextView) getView().findViewById(R.id.games_info_msg_textView);
+
+                if (state.equalsIgnoreCase(Constants.NewUserChallengeState.STATE_JOINED)) {
+
+                    mJoinContestButton.setText("Join Another Contest");
+                    imgView.setImageResource(R.drawable.win_more);
+                    infoHeadingTextView.setText("Join more contests, to win more!");
+                    infoMsgTextView.setText("You can play all contests you joined in the In Play tab. Join more to win even more prize money!");
+
+                } else if (state.equalsIgnoreCase(Constants.NewUserChallengeState.STATE_HEADLESS)) {
+
+                    mJoinContestButton.setText("Join Another Contest");
+                    imgView.setImageResource(R.drawable.play_contest_card);
+                    infoHeadingTextView.setText("You predictions are in play!");
+                    infoMsgTextView.setText("You predictions are saved in In Play Tab. Join a contest using them, or join a fresh contest below");
+
+                }
+            }
         }
     }
 

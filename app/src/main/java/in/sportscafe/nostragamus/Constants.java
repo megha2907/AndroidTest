@@ -822,4 +822,10 @@ public interface Constants {
         String COMPLETED = "completed";
         String LIVE = "live";
     }
+
+    interface NewUserChallengeState {
+        String STATE_JOINED = "joined";
+        String STATE_HEADLESS = "headless";
+        String STATE_NOT_JOINED = "not-joined";
+    }
 }

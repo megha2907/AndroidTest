@@ -15,7 +15,7 @@ public class InPlayListChallengeItem {
     private String challengeName;
     private String challengeDesc;
     private String status;
-    private int sportsId;
+    private int[] sportsIdArray;
     private int contestCount = 0;
     private String challengeStartTime;
     private String challengeEndTime;
@@ -54,12 +54,12 @@ public class InPlayListChallengeItem {
         this.status = status;
     }
 
-    public int getSportsId() {
-        return sportsId;
+    public int[] getSportsIdArray() {
+        return sportsIdArray;
     }
 
-    public void setSportsId(int sportsId) {
-        this.sportsId = sportsId;
+    public void setSportsIdArray(int[] sportsIdArray) {
+        this.sportsIdArray = sportsIdArray;
     }
 
     public int getContestCount() {

@@ -4,11 +4,7 @@ import com.google.gson.annotations.SerializedName;
 
 import org.parceler.Parcel;
 
-import java.util.ArrayList;
 import java.util.List;
-
-import in.sportscafe.nostragamus.module.contest.dto.Contest;
-import in.sportscafe.nostragamus.module.inPlay.adapter.InPlayAdapterItemType;
 
 /**
  * Created by deepanshi on 9/6/17.
@@ -35,8 +31,8 @@ public class InPlayResponse {
     @SerializedName("status")
     private String status = "ongoing";
 
-    @SerializedName("sports_id")
-    private int sportsId;
+    @SerializedName("sports_id_arr")
+    private int[] sportsIdArray;
 
     @SerializedName("is_daily_challenge")
     private boolean isDailyChallenge;
@@ -80,12 +76,12 @@ public class InPlayResponse {
         this.status = status;
     }
 
-    public int getSportsId() {
-        return sportsId;
+    public int[] getSportsIdArray() {
+        return sportsIdArray;
     }
 
-    public void setSportsId(int sportsId) {
-        this.sportsId = sportsId;
+    public void setSportsIdArray(int[] sportsIdArray) {
+        this.sportsIdArray = sportsIdArray;
     }
 
     public boolean isDailyChallenge() {
