@@ -144,7 +144,7 @@ public class ContestDetailsFragment extends NostraBaseFragment implements View.O
             mContestDetailsViewPagerAdapter.addFragment(contestEntriesViewPagerFragment, Constants.ContestDetailsTabs.ENTRIES);
 
             /* Rewards */
-            RewardsFragment rewardsFragment = RewardsFragment.newInstance(contest.getContestId());
+            RewardsFragment rewardsFragment = RewardsFragment.newInstance(-1,contest.getContestId());
             mContestDetailsViewPagerAdapter.addFragment(rewardsFragment, Constants.ContestDetailsTabs.PRIZES);
 
             /* Rules */

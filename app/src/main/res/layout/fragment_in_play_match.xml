@@ -26,8 +26,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/dim_16"
-                android:layout_marginRight="@dimen/dim_16"
+                android:layout_marginLeft="@dimen/dim_12"
+                android:layout_marginRight="@dimen/dim_12"
                 android:background="@color/colorPrimary"
                 android:gravity="center_vertical"
                 android:minHeight="@dimen/dim_32"
@@ -67,7 +67,7 @@
                         android:layout_height="wrap_content"
                         android:textColor="@color/white"
                         android:textSize="@dimen/sp_12"
-                        android:layout_marginLeft="@dimen/dim_8"
+                        android:layout_marginLeft="@dimen/dim_6"
                         app:typeface="lato_regular" />
 
                     <com.jeeva.android.widgets.HmImageView
@@ -84,7 +84,7 @@
                         android:id="@+id/in_play_no_neg_count_tv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/dim_8"
+                        android:layout_marginLeft="@dimen/dim_6"
                         android:textColor="@color/white"
                         android:textSize="@dimen/sp_12"
                         app:typeface="lato_regular" />
@@ -103,7 +103,7 @@
                         android:id="@+id/in_play_player_poll_count_tv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/dim_8"
+                        android:layout_marginLeft="@dimen/dim_6"
                         android:textColor="@color/white"
                         android:textSize="@dimen/sp_12"
                         app:typeface="lato_regular" />
@@ -118,9 +118,9 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/dim_22"
-            android:layout_marginRight="@dimen/dim_20"
-            android:layout_marginTop="@dimen/dim_14">
+            android:layout_marginLeft="@dimen/dim_18"
+            android:layout_marginRight="@dimen/dim_16"
+            android:layout_marginTop="@dimen/dim_12">
 
             <!-- Matches status timeline -->
             <LinearLayout
@@ -128,18 +128,6 @@
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
                 android:orientation="vertical">
-
-                <LinearLayout
-                    android:id="@+id/match_status_timeline"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="left"
-                    android:layout_marginBottom="@dimen/dim_4"
-                    android:layout_marginLeft="@dimen/dim_15"
-                    android:layout_marginTop="@dimen/dim_4"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal"
-                    android:scrollbars="horizontal" />
 
                 <LinearLayout
                     android:id="@+id/match_status_timeline_title_parent"
@@ -152,10 +140,21 @@
                     android:scrollbars="horizontal" />
 
                 <LinearLayout
+                    android:id="@+id/match_status_timeline"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:layout_marginLeft="@dimen/dim_15"
+                    android:layout_marginTop="@dimen/dim_4"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:scrollbars="horizontal" />
+
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/dim_10"
-                    android:layout_marginTop="@dimen/dim_12"
+                    android:layout_marginTop="@dimen/dim_14"
                     android:gravity="center"
                     android:orientation="horizontal">
 

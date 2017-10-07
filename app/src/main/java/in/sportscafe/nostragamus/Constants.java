@@ -352,6 +352,7 @@ public interface Constants {
         String IS_HEADLESS_FLOW = "isHeadLessFlow";
         String HEADLESS_MATCH_SCREEN_DATA = "headlessMatchScreenData";
         String COMPLETED_CHALLENGE_LIST_ITEM = "CompletedChallengeListItem";
+        String CONFIG_ID = "configId";
     }
 
     interface DateFormats {

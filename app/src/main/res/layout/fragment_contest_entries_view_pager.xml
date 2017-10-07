@@ -1,74 +1,144 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
-    tools:context="in.sportscafe.nostragamus.module.contest.ui.ContestEntriesViewPagerFragment">
+    android:background="@color/black"
+    android:fillViewport="true">
 
-
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/black5"
-        android:minHeight="@dimen/dim_48"
-        android:orientation="horizontal">
+        android:orientation="vertical">
 
-        <View
+        <RelativeLayout
+            android:id="@+id/contest_filling_rl"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dim_1"
-            android:layout_centerVertical="true"
-            android:layout_toLeftOf="@+id/contest_filled_ll"
-            android:background="@color/line_separator" />
-
-        <LinearLayout
-            android:id="@+id/contest_filled_ll"
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:layout_marginLeft="@dimen/dim_10"
-            android:layout_marginRight="@dimen/dim_10">
+            android:background="@color/black5"
+            android:minHeight="@dimen/dim_48"
+            android:visibility="gone"
+            android:orientation="horizontal">
 
-            <com.jeeva.android.widgets.customfont.CustomTextView
-                android:id="@+id/contest_filled_tv"
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dim_1"
+                android:layout_centerVertical="true"
+                android:layout_toLeftOf="@+id/contest_filling_ll"
+                android:background="@color/line_separator" />
+
+            <LinearLayout
+                android:id="@+id/contest_filling_ll"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="80"
-                android:textColor="@color/white"
-                android:textSize="@dimen/sp_14"
-                app:typeface="lato_bold"/>
+                android:layout_centerInParent="true"
+                android:layout_marginLeft="@dimen/dim_10"
+                android:layout_marginRight="@dimen/dim_10">
 
-            <com.jeeva.android.widgets.customfont.CustomTextView
-                android:id="@+id/contest_filled_tv_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/dim_2"
-                android:text=" Filled Contests"
-                android:textColor="@color/white"
-                android:textSize="@dimen/sp_14"
-                app:typeface="lato_regular"/>
+                <com.jeeva.android.widgets.customfont.CustomTextView
+                    android:id="@+id/contest_filling_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/sp_14"
+                    app:typeface="lato_bold" />
 
-        </LinearLayout>
+                <com.jeeva.android.widgets.customfont.CustomTextView
+                    android:id="@+id/contest_filling_tv_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dim_2"
+                    android:text=" Filling Contests"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/sp_14"
+                    app:typeface="lato_regular" />
 
-        <View
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dim_1"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@+id/contest_filling_ll"
+                android:background="@color/line_separator" />
+
+        </RelativeLayout>
+
+        <ExpandableListView
+            android:id="@+id/challengesFillingEntriesExpandableListView"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dim_1"
-            android:layout_centerVertical="true"
-            android:layout_toRightOf="@+id/contest_filled_ll"
-            android:background="@color/line_separator" />
+            android:layout_height="wrap_content"
+            android:animateLayoutChanges="true"
+            android:background="@color/black5"
+            android:childDivider="@android:color/transparent"
+            android:clipToPadding="false"
+            android:divider="@null"
+            android:groupIndicator="@null" />
 
-    </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/contest_filled_rl"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/black5"
+            android:minHeight="@dimen/dim_48"
+            android:visibility="gone"
+            android:orientation="horizontal">
 
-    <ExpandableListView
-        android:id="@+id/challengesEntriesExpandableListView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:animateLayoutChanges="true"
-        android:background="@color/black5"
-        android:childDivider="@android:color/transparent"
-        android:clipToPadding="false"
-        android:divider="@null"
-        android:groupIndicator="@null"
-        android:paddingBottom="@dimen/dim_90" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dim_1"
+                android:layout_centerVertical="true"
+                android:layout_toLeftOf="@+id/contest_filled_ll"
+                android:background="@color/line_separator" />
 
-</LinearLayout>
+            <LinearLayout
+                android:id="@+id/contest_filled_ll"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_marginLeft="@dimen/dim_10"
+                android:layout_marginRight="@dimen/dim_10">
+
+                <com.jeeva.android.widgets.customfont.CustomTextView
+                    android:id="@+id/contest_filled_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/sp_14"
+                    app:typeface="lato_bold" />
+
+                <com.jeeva.android.widgets.customfont.CustomTextView
+                    android:id="@+id/contest_filled_tv_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dim_2"
+                    android:text=" Filled Contests"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/sp_14"
+                    app:typeface="lato_regular" />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dim_1"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@+id/contest_filled_ll"
+                android:background="@color/line_separator" />
+
+        </RelativeLayout>
+
+        <ExpandableListView
+            android:id="@+id/challengesFilledEntriesExpandableListView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:animateLayoutChanges="true"
+            android:background="@color/black5"
+            android:childDivider="@android:color/transparent"
+            android:clipToPadding="false"
+            android:divider="@null"
+            android:groupIndicator="@null"
+            android:paddingBottom="@dimen/dim_90" />
+
+    </LinearLayout>
+</ScrollView>

@@ -8,10 +8,10 @@ import com.google.gson.annotations.SerializedName;
 
 public class ContestRoomEntryDto {
 
-    @SerializedName("user_name")
+    @SerializedName("user_nick")
     private String userName;
 
-    @SerializedName("user_pic_url")
+    @SerializedName("user_photo")
     private String userPicUrl;
 
     public String getUserName() {

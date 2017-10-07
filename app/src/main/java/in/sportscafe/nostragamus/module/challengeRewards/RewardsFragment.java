@@ -32,7 +32,9 @@ public class RewardsFragment extends NostraBaseFragment implements RewardsApiMod
 
     private static final String TAG = RewardsFragment.class.getSimpleName();
 
-    private int mRoomId=0;
+    private int mRoomId = -1;
+
+    private int mConfigId = -1;
 
     private RewardsAdapter mConfigAdapter;
 
@@ -44,10 +46,11 @@ public class RewardsFragment extends NostraBaseFragment implements RewardsApiMod
 
     }
 
-    public static RewardsFragment newInstance(int roomId) {
+    public static RewardsFragment newInstance(int roomId,int configId) {
 
         Bundle bundle = new Bundle();
         bundle.putInt(Constants.BundleKeys.ROOM_ID, roomId);
+        bundle.putInt(Constants.BundleKeys.CONFIG_ID, configId);
 
         RewardsFragment fragment = new RewardsFragment();
         fragment.setArguments(bundle);
@@ -72,6 +75,7 @@ public class RewardsFragment extends NostraBaseFragment implements RewardsApiMod
     private void openBundle(Bundle bundle) {
         if (bundle != null) {
             mRoomId = bundle.getInt(Constants.BundleKeys.ROOM_ID);
+            mConfigId = bundle.getInt(Constants.BundleKeys.CONFIG_ID);
             getRewardsData();
         }
     }
@@ -86,7 +90,7 @@ public class RewardsFragment extends NostraBaseFragment implements RewardsApiMod
     }
 
     private void getRewardsData() {
-        new RewardsApiModelImpl().getRewardsData(mRoomId,this);
+        new RewardsApiModelImpl().getRewardsData(mRoomId,mConfigId,this);
     }
 
     private RewardsAdapter createAdapter(List<Rewards> rewardsList,String challengeEndTime) {

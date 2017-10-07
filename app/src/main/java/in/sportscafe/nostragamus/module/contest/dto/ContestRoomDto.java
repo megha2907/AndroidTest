@@ -19,7 +19,7 @@ public class ContestRoomDto {
     @SerializedName("room_status")
     private String roomStatus;
 
-    @SerializedName("room_title")
+    @SerializedName("room_name")
     private String roomTitle;
 
     @SerializedName("entries")

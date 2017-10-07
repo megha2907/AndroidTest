@@ -139,7 +139,7 @@ public class CompletedMatchTimelineViewPagerFragment extends NostraBaseFragment 
             TextView gamesLeftTextView = (TextView) getView().findViewById(R.id.inplay_match_timeline_games_left_textview);
             TextView gamesLeftTextViewText = (TextView) getView().findViewById(R.id.inplay_match_timeline_games_left);
             gamesLeftTextView.setText(gamesLeftStr);
-            gamesLeftTextViewText.setText("GAMES LEFT ");
+            gamesLeftTextViewText.setText("GAMES LEFT  ");
 
              /* Set Powerups */
             showOrHidePowerUps(responses.getData().getPowerUp());
