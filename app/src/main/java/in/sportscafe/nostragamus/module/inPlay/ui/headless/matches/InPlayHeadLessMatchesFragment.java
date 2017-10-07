@@ -164,7 +164,7 @@ public class InPlayHeadLessMatchesFragment extends BaseFragment implements View.
                     predictionIntent.putExtras(bundle);
                     predictionIntent.putExtra(Constants.BundleKeys.SCREEN_LAUNCHED_FROM_PARENT,
                             PredictionActivity.LaunchedFrom.IN_PLAY_SCREEN_PLAY_MATCH);
-                    getActivity().startActivity(predictionIntent);
+                    startActivity(predictionIntent);
 
                 } else {
                     handleError(-1);

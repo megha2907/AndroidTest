@@ -13,44 +13,38 @@ import org.parceler.Parcel;
 public class ProductSaleInfo {
 
     @SerializedName("sale")
-    private Boolean saleOn;
+    private boolean saleOn;
 
     @SerializedName("sale_price")
-    private Integer salePrice;
+    private int salePrice;
 
     @SerializedName("sale_percentage")
-    private Integer salePercentage;
+    private int salePercentage;
 
     @SerializedName("sale_description")
     private String saleDesc;
 
-    public Boolean getSaleOn() {
-        if (saleOn==null){
-            return saleOn = false;
-        }
+    public boolean getSaleOn() {
         return saleOn;
     }
 
-    public void setSaleOn(Boolean saleOn) {
+    public void setSaleOn(boolean saleOn) {
         this.saleOn = saleOn;
     }
 
-    public Integer getSalePrice() {
+    public int getSalePrice() {
         return salePrice;
     }
 
-    public void setSalePrice(Integer salePrice) {
+    public void setSalePrice(int salePrice) {
         this.salePrice = salePrice;
     }
 
-    public Integer getSalePercentage() {
-        if (salePercentage==null){
-            return salePercentage = 0;
-        }
+    public int getSalePercentage() {
         return salePercentage;
     }
 
-    public void setSalePercentage(Integer salePercentage) {
+    public void setSalePercentage(int salePercentage) {
         this.salePercentage = salePercentage;
     }
 

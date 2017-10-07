@@ -103,7 +103,7 @@ public class PredictionUiHelper {
         }
     }
 
-    public void hidePowerupBankAndHelpButtons(final View powerupView, final View helpView) {
+    public void hidePowerUpBankAndHelpButtons(final View powerupView, final View helpView) {
         AlphaAnimation animation = new AlphaAnimation(1f, 0f);
         animation.setDuration(500);
         animation.setAnimationListener(new Animation.AnimationListener() {
@@ -126,5 +126,27 @@ public class PredictionUiHelper {
         helpView.startAnimation(animation);
     }
 
+    public void showPowerUpBankAndHelpButtons(final View powerupView, final View helpView) {
+        AlphaAnimation animation = new AlphaAnimation(0f, 1f);
+        animation.setDuration(500);
+        animation.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                powerupView.setVisibility(View.VISIBLE);
+                helpView.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+        });
+        powerupView.startAnimation(animation);
+        helpView.startAnimation(animation);
+    }
 
 }

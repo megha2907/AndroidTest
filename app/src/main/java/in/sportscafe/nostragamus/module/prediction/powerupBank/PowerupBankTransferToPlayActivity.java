@@ -86,15 +86,9 @@ public class PowerupBankTransferToPlayActivity extends NostragamusActivity imple
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.powerup_bank_close_imgView:
-                onBackPressed();
+                finishActivity(new Bundle());
                 break;
         }
-    }
-
-    @Override
-    public void onBackPressed() {
-        setResult(RESULT_OK);
-        super.onBackPressed();
     }
 
     @Override
@@ -105,7 +99,8 @@ public class PowerupBankTransferToPlayActivity extends NostragamusActivity imple
     }
 
     @Override
-    public void finishActivity() {
+    public void finishActivity(Bundle args) {
+        setResult(RESULT_OK, new Intent().putExtras(args));
         onBackPressed();
     }
 

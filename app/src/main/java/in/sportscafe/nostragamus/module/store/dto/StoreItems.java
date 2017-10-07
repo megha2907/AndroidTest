@@ -6,6 +6,8 @@ import org.parceler.Parcel;
 
 import java.util.HashMap;
 
+import in.sportscafe.nostragamus.module.prediction.playScreen.dto.PowerUp;
+
 
 /**
  * Created by deepanshi on 7/25/17.
@@ -15,7 +17,7 @@ import java.util.HashMap;
 public class StoreItems {
 
     @SerializedName("product_id")
-    private Integer productId;
+    private int productId;
 
     @SerializedName("product_name")
     private String productName;
@@ -30,22 +32,22 @@ public class StoreItems {
     private String productCategory;
 
     @SerializedName("product_price")
-    private Integer productPrice;
+    private int productPrice;
 
     @SerializedName("product")
-    private HashMap<String, Integer> powerUps = new HashMap<>();
+    private PowerUp powerUp;
 
 //    @SerializedName("inventory")
-//    private Integer productInventory;
+//    private int productInventory;
 
     @SerializedName("sale_info")
     private ProductSaleInfo productSaleInfo;
 
-    public Integer getProductId() {
+    public int getProductId() {
         return productId;
     }
 
-    public void setProductId(Integer productId) {
+    public void setProductId(int productId) {
         this.productId = productId;
     }
 
@@ -82,19 +84,19 @@ public class StoreItems {
         this.productCategory = productCategory;
     }
 
-    public Integer getProductPrice() {
+    public int getProductPrice() {
         return productPrice;
     }
 
-    public void setProductPrice(Integer productPrice) {
+    public void setProductPrice(int productPrice) {
         this.productPrice = productPrice;
     }
 
-//    public Integer getProductInventory() {
+//    public int getProductInventory() {
 //        return productInventory;
 //    }
 //
-//    public void setProductInventory(Integer productInventory) {
+//    public void setProductInventory(int productInventory) {
 //        this.productInventory = productInventory;
 //    }
 
@@ -106,12 +108,11 @@ public class StoreItems {
         this.productSaleInfo = productSaleInfo;
     }
 
-    public HashMap<String, Integer> getPowerUps() {
-        return powerUps;
+    public PowerUp getPowerUps() {
+        return powerUp;
     }
 
-    public void setPowerUps(HashMap<String, Integer> powerUps) {
-        this.powerUps = powerUps;
+    public void setPowerUps(PowerUp powerUp) {
+        this.powerUp = powerUp;
     }
-
 }

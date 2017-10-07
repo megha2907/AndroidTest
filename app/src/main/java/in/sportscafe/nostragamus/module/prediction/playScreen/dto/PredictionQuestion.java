@@ -6,7 +6,7 @@ import org.parceler.Parcel;
 
 import java.util.List;
 
-import in.sportscafe.nostragamus.module.prediction.playScreen.PredictionConstants;
+import in.sportscafe.nostragamus.Constants;
 
 /**
  * Created by sandip on 15/09/17.
@@ -54,9 +54,10 @@ public class PredictionQuestion {
     private List<PlayersPoll> playersPollList;
 
     private int minorityAnswerId = -1;
-    private int positivePoints = PredictionConstants.DefaultPoints.POSITIVE_POINTS;
-    private int negativePoints = PredictionConstants.DefaultPoints.NEGATIVE_POINTS;
+    private int positivePoints = Constants.PredictionPoints.POSITIVE_POINTS;
+    private int negativePoints = Constants.PredictionPoints.NEGATIVE_POINTS;
     private PowerUp powerUp = new PowerUp();
+    private boolean isAnsweredSuccessfully = false;
 
     /* ------------------------------------------------------------------- */
 
@@ -203,5 +204,13 @@ public class PredictionQuestion {
 
     public void setNegativePoints(int negativePoints) {
         this.negativePoints = negativePoints;
+    }
+
+    public boolean isAnsweredSuccessfully() {
+        return isAnsweredSuccessfully;
+    }
+
+    public void setAnsweredSuccessfully(boolean answeredSuccessfully) {
+        isAnsweredSuccessfully = answeredSuccessfully;
     }
 }
