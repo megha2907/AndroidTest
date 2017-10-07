@@ -27,18 +27,33 @@ public class RewardsApiModelImpl {
     public RewardsApiModelImpl() {
     }
 
-    public void getRewardsData(int roomId, RewardsApiModelImpl.RewardsDataListener listener) {
+    public void getRewardsData(int roomId, int configId, RewardsDataListener listener) {
         if (Nostragamus.getInstance().hasNetworkConnection()) {
-            loadRewardsData(roomId, listener);
+            loadRewardsData(roomId, configId ,listener);
         } else {
             Log.d(TAG, "No Network connection");
             listener.onNoInternet();
         }
     }
 
-    private void loadRewardsData(int roomId, final RewardsDataListener listener) {
+    private void loadRewardsData(int roomId, int configId, final RewardsDataListener listener) {
 
-        MyWebService.getInstance().getRewardsDetails(roomId).enqueue(new ApiCallBack<RewardsResponse>() {
+        /* Before Joining Room send Config Id , After Joining Room send roomId */
+        Integer finalRoomId;
+        if (roomId == -1) {
+            finalRoomId = null;
+        }else {
+            finalRoomId = roomId;
+        }
+
+        Integer finalConfigId;
+        if (configId == -1) {
+            finalConfigId = null;
+        }else {
+            finalConfigId = configId;
+        }
+
+        MyWebService.getInstance().getRewardsDetails(finalRoomId,finalConfigId).enqueue(new ApiCallBack<RewardsResponse>() {
             @Override
             public void onResponse(Call<RewardsResponse> call, Response<RewardsResponse> response) {
                 super.onResponse(call, response);

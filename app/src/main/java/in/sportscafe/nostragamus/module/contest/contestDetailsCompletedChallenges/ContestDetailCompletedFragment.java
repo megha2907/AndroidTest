@@ -71,7 +71,7 @@ public class ContestDetailCompletedFragment  extends NostraBaseFragment implemen
 
         if (completedContestDto != null) {
             mTvTBarHeading.setText(completedContestDto.getContestName());
-            mTvTBarSubHeading.setText(completedContestDto.getContestName());   // TODO change as per need
+            mTvTBarSubHeading.setText(completedContestDto.getChallengeName());
         }
 
         /*int amount = (int) WalletHelper.getTotalBalance();
@@ -131,7 +131,7 @@ public class ContestDetailCompletedFragment  extends NostraBaseFragment implemen
             LeaderBoardFragment leaderBoardFragment = LeaderBoardFragment.newInstance(completedContestDto.getRoomId());
             mViewPagerAdapter.addFragment(leaderBoardFragment, Constants.ContestDetailsTabs.LEADERBOARDS);
 
-            RewardsFragment rewardsFragment = RewardsFragment.newInstance(completedContestDto.getRoomId());
+            RewardsFragment rewardsFragment = RewardsFragment.newInstance(completedContestDto.getRoomId(),-1);
             mViewPagerAdapter.addFragment(rewardsFragment, Constants.ContestDetailsTabs.WINNERS);
 
             RulesFragment rulesFragment = RulesFragment.newInstance(completedContestDto.getContestId());

@@ -316,10 +316,10 @@ public interface NostragamusService {
     Call<List<InPlayResponse>> getInPlayChallenges();
 
     @GET("v3/game/challenges/rewards")
-    Call<RewardsResponse> getRewardDetails(@Query("room_id") int roomId);
+    Call<RewardsResponse> getRewardDetails(@Query("room_id") Integer roomId,@Query("config_id") Integer configId);
 
-    @POST("v3/game/temp/getContestRooms")
-    Call<ContestEntriesResponse> getContestEntries(@Body ContestEntriesRequest request);
+    @GET("v3/game/challenges/contestRooms")
+    Call<ContestEntriesResponse> getContestEntries(@Query("config_id") Integer contestId);
 
     @GET("v3/game/challenges/getUserMatches")
     Call<InPlayMatchesResponse> getInPlayMatches(@Query("room_id") int roomId, @Query("challenge_id") int challengeId);

@@ -35,13 +35,15 @@ public class ContestEntriesExpandableListAdapter extends BaseExpandableListAdapt
     public ContestEntriesExpandableListAdapter(Context context, List<ContestRoomDto> rooms) {
         mLayoutInflater = LayoutInflater.from(context);
         mRoomsList = new ArrayList<>();
-
         filterRooms(rooms);
     }
 
     private void filterRooms(List<ContestRoomDto> rooms) {
         ContestEntriesFilterHelper filterHelper = new ContestEntriesFilterHelper();
         if (rooms != null) {
+            mRoomsList.addAll(rooms);
+
+         /*
             // Filtering and putting into list at top - all filling rooms
             List<ContestRoomDto> tempList = filterHelper.getFillingRoomsFileterredList(rooms);
             if (tempList != null && !tempList.isEmpty()) {
@@ -54,7 +56,7 @@ public class ContestEntriesExpandableListAdapter extends BaseExpandableListAdapt
             if (tempList != null && !tempList.isEmpty()) {
                 mRoomsList.addAll(tempList);
                 mFilledRooms = tempList.size();
-            }
+            } */
         }
     }
 
@@ -134,18 +136,16 @@ public class ContestEntriesExpandableListAdapter extends BaseExpandableListAdapt
 
         if (mRoomsList != null && mRoomsList.size() > groupPosition) {
             ContestRoomDto roomDto = mRoomsList.get(groupPosition);
-
-            /*String status = roomDto.getRoomStatus();
-            if (!TextUtils.isEmpty(status)) {
-                if (status.equalsIgnoreCase("filling")) {
-                    holder.groupTitleTextView.setText("Filling");
-                } else {
-                    holder.groupTitleTextView.setText("Filled");
-                }
-            }*/
-
-            holder.groupTitleTextView.setText("Daily 50/50 Contest 1");
+            holder.groupTitleTextView.setText(roomDto.getRoomTitle());
             holder.groupSizeTextView.setText(String.valueOf(roomDto.getEntries().size()));
+
+            if (roomDto.getEntries().size()==0){
+                holder.groupIndicatorImageView.setVisibility(View.GONE);
+                convertView.setOnClickListener(null);
+            }else {
+                holder.groupIndicatorImageView.setVisibility(View.VISIBLE);
+            }
+
         }
 
         return convertView;
@@ -179,7 +179,7 @@ public class ContestEntriesExpandableListAdapter extends BaseExpandableListAdapt
                 if (entry != null) {
                     holder.nameTextView.setText(!TextUtils.isEmpty(entry.getUserName()) ? entry.getUserName() : "");
                     if (!TextUtils.isEmpty(entry.getUserPicUrl())) {
-                      //  holder.photoImageView.setImageUrl(entry.getUserPicUrl());
+                       holder.photoImageView.setImageUrl(entry.getUserPicUrl());
                     }
                 }
             }

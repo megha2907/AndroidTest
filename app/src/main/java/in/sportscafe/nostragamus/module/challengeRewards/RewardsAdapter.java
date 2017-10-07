@@ -1,6 +1,7 @@
 package in.sportscafe.nostragamus.module.challengeRewards;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
@@ -16,6 +17,10 @@ import java.util.List;
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.challengeRewards.dto.Rewards;
+import in.sportscafe.nostragamus.module.common.NostraTextViewLinkClickMovementMethod;
+import in.sportscafe.nostragamus.module.common.NostragamusActivity;
+import in.sportscafe.nostragamus.module.common.NostragamusWebView;
+import in.sportscafe.nostragamus.module.resultspeek.FeedWebView;
 
 /**
  * Created by deepanshi on 9/6/17.
@@ -78,7 +83,7 @@ public class RewardsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(final RecyclerView.ViewHolder holder, int position) {
 
         if (holder != null) {
 
@@ -93,10 +98,24 @@ public class RewardsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 setRewardsItem(holder, position - 1);
             } else if (holder instanceof RewardsFooterVH) {
                 ((RewardsFooterVH) holder).mTvDisclaimer.setText(Html.fromHtml(((RewardsFooterVH) holder).mTvDisclaimer.getResources().getString(R.string.prize_money_disclaimer)));
-                ((RewardsFooterVH) holder).mTvDisclaimer.setMovementMethod(LinkMovementMethod.getInstance());
+                ((RewardsFooterVH) holder).mTvDisclaimer.setMovementMethod(new NostraTextViewLinkClickMovementMethod() {
+                    @Override
+                    public void onLinkClick(String url) {
+                        OpenWebView(((RewardsFooterVH) holder).mTvDisclaimer,url);
+                    }
+                });
             }
         }
 
+    }
+
+    /**
+     * On on click of link open NostragamusWebView Activity for handling links
+     */
+    private void OpenWebView(View view,String url) {
+        if (url != null) {
+            view.getContext().startActivity(new Intent(view.getContext(), FeedWebView.class).putExtra("url", url));
+        }
     }
 
 

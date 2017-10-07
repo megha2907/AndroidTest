@@ -168,6 +168,9 @@ public class LeaderBoardModelImpl implements LeaderBoardModel {
         mLeaderBoardAdapter.clear();
         mLeaderBoardAdapter.setPositionSelected(SORT_TYPE);
         mLeaderBoardAdapter.notifyDataSetChanged();
+        if (SORT_TYPE == 0){
+            onLeaderBoardModelListener.setSortSelectedPos(0);
+        }
         refreshUserPosition();
         checkEmpty();
 

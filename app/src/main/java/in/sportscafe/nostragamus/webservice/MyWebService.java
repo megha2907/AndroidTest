@@ -344,12 +344,12 @@ public class MyWebService extends AbstractWebService<NostragamusService> {
         return mNostragamusService.getInPlayChallenges();
     }
 
-    public Call<RewardsResponse> getRewardsDetails(int rewardsRequest) {
-        return mNostragamusService.getRewardDetails(rewardsRequest);
+    public Call<RewardsResponse> getRewardsDetails(Integer rewardsRequest, Integer configId) {
+        return mNostragamusService.getRewardDetails(rewardsRequest,configId);
     }
 
-    public Call<ContestEntriesResponse> getContestEntries(ContestEntriesRequest request) {
-        return mNostragamusService.getContestEntries(request);
+    public Call<ContestEntriesResponse> getContestEntries(int contestId) {
+        return mNostragamusService.getContestEntries(contestId);
     }
 
     public Call<InPlayMatchesResponse> getInPlayMatches(int roomId, int challengeId) {

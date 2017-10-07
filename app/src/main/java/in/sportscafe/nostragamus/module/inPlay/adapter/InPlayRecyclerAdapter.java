@@ -14,6 +14,9 @@ import android.widget.TextView;
 
 import org.parceler.Parcels;
 
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import in.sportscafe.nostragamus.Constants;
@@ -177,8 +180,8 @@ public class InPlayRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                 InPlayContestMatchDto match = contest.getMatches().get(temp);
 
                 boolean isNodeLineRequired = true;
-                if (temp == (totalMatches - 1)) {
-                    isNodeLineRequired = false;
+                if (temp == 0){
+                    isNodeLineRequired =false;
                 }
 
                 int matchAttemptedStatus = match.isPlayed();
@@ -215,10 +218,17 @@ public class InPlayRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             InPlayJoinedItemViewHolder viewHolder = (InPlayJoinedItemViewHolder) holder;
 
             viewHolder.contestTitleTextView.setText(contest.getContestName());
-            viewHolder.contestModeImageView.setImageResource(R.drawable.add_members_icon);
             viewHolder.entryFeeTextView.setText(Constants.RUPEE_SYMBOL + String.valueOf(contest.getEntryFee()));
             viewHolder.prizesTextView.setText(Constants.RUPEE_SYMBOL + String.valueOf(contest.getWinningAmount()));
             viewHolder.currentRankTextView.setText(contest.getRank() + "/" + contest.getTotalParticipants());
+
+            if (contest.getContestMode().equalsIgnoreCase(Constants.ContestType.GUARANTEED)) {
+                viewHolder.contestModeImageView.setBackgroundResource(R.drawable.guaranteed_icon);
+            } else if (contest.getContestMode().equalsIgnoreCase(Constants.ContestType.POOL)) {
+                viewHolder.contestModeImageView.setBackgroundResource(R.drawable.pool_icon);
+            }else if (contest.getContestMode().equalsIgnoreCase(Constants.ContestType.NON_GUARANTEED)) {
+                viewHolder.contestModeImageView.setBackgroundResource(R.drawable.no_guarantee_icon);
+            }
 
             viewHolder.timelineHeaderParent.removeAllViews();
             viewHolder.timelineContentParent.removeAllViews();
@@ -230,8 +240,8 @@ public class InPlayRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                 InPlayContestMatchDto match = contest.getMatches().get(temp);
 
                 boolean isNodeLineRequired = true;
-                if (temp == (totalMatches - 1)) {
-                    isNodeLineRequired = false;
+                if (temp == 0){
+                    isNodeLineRequired =false;
                 }
 
                 int matchAttemptedStatus = match.isPlayed();
@@ -264,7 +274,10 @@ public class InPlayRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                         footerStr = "   DNP    ";
                     }
                     params.setMargins(10, 0, 0, 0);
+                }else if (match.getStatus().equalsIgnoreCase(Constants.InPlayMatchStatus.LIVE)){
+                    footerStr = "In Progress";
                 }
+
                 TimelineHelper.addFooterTextNode(viewHolder.timelineFooterParent, footerStr,
                         contest.getMatches().size(), match.getStatus(),
                         TimelineHelper.MatchTimelineTypeEnum.IN_PLAY_JOINED,
