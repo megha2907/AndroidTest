@@ -9,6 +9,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ExpandableListView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import org.parceler.Parcel;
 import org.parceler.Parcels;
@@ -29,8 +31,13 @@ public class ContestEntriesViewPagerFragment extends NostraBaseFragment {
 
     private static final String TAG = ContestEntriesViewPagerFragment.class.getSimpleName();
 
-    private ExpandableListView mExpandableListView;
+    private ExpandableListView mFilledExpandableListView;
+    private ExpandableListView mFillingExpandableListView;
     private ContestEntriesScreenData mContestEntryScreenData;
+    private RelativeLayout mRlContestFilling;
+    private RelativeLayout mRlContestFilled;
+    private TextView mTvContestFillingCount;
+    private TextView mTvContestFilledCount;
 
     public ContestEntriesViewPagerFragment() {}
 
@@ -43,7 +50,12 @@ public class ContestEntriesViewPagerFragment extends NostraBaseFragment {
     }
 
     private void initView(View rootView) {
-        mExpandableListView = (ExpandableListView) rootView.findViewById(R.id.challengesEntriesExpandableListView);
+        mFilledExpandableListView = (ExpandableListView) rootView.findViewById(R.id.challengesFilledEntriesExpandableListView);
+        mFillingExpandableListView = (ExpandableListView) rootView.findViewById(R.id.challengesFillingEntriesExpandableListView);
+        mRlContestFilled = (RelativeLayout)rootView.findViewById(R.id.contest_filled_rl);
+        mRlContestFilling = (RelativeLayout)rootView.findViewById(R.id.contest_filling_rl);
+        mTvContestFilledCount = (TextView) rootView.findViewById(R.id.contest_filled_tv);
+        mTvContestFillingCount = (TextView) rootView.findViewById(R.id.contest_filling_tv);
     }
 
     @Override
@@ -86,11 +98,37 @@ public class ContestEntriesViewPagerFragment extends NostraBaseFragment {
     }
 
     private void onContestDataSuccess(ContestEntriesResponse response) {
-        if (response != null && mExpandableListView != null) {
-            ContestEntriesExpandableListAdapter adapter = new ContestEntriesExpandableListAdapter(getContext(), response.getRooms());
-            mExpandableListView.setAdapter(adapter);
+        if (response != null){
 
-            mExpandableListView.expandGroup(0, true);
+            if (mFillingExpandableListView != null && response.getFillingRooms()!=null){
+                if (!response.getFillingRooms().isEmpty()) {
+                    mRlContestFilling.setVisibility(View.VISIBLE);
+                    mFillingExpandableListView.setVisibility(View.VISIBLE);
+                    mTvContestFillingCount.setText(String.valueOf(response.getFillingRooms().size()));
+                    ContestEntriesExpandableListAdapter adapter = new ContestEntriesExpandableListAdapter(getContext(), response.getFillingRooms());
+                    mFillingExpandableListView.setAdapter(adapter);
+                    mFillingExpandableListView.expandGroup(0, true);
+                }else {
+                    /* Hide Filling Rooms Header */
+                    mRlContestFilling.setVisibility(View.GONE);
+                    mFillingExpandableListView.setVisibility(View.GONE);
+                }
+            }
+
+            if (mFilledExpandableListView!=null && response.getFilledRooms()!=null){
+                if (!response.getFilledRooms().isEmpty()) {
+                    mRlContestFilled.setVisibility(View.VISIBLE);
+                    mFilledExpandableListView.setVisibility(View.VISIBLE);
+                    mTvContestFilledCount.setText(String.valueOf(response.getFilledRooms().size()));
+                    ContestEntriesExpandableListAdapter adapter = new ContestEntriesExpandableListAdapter(getContext(), response.getFilledRooms());
+                    mFilledExpandableListView.setAdapter(adapter);
+                    mFilledExpandableListView.expandGroup(0, true);
+                }else {
+                    /* Hide Filled Rooms Header */
+                    mRlContestFilled.setVisibility(View.GONE);
+                    mFilledExpandableListView.setVisibility(View.GONE);
+                }
+            }
         }
     }
 }

@@ -10,47 +10,25 @@ import java.util.List;
 
 public class ContestEntriesResponse {
 
-    @SerializedName("challenge_id")
-    private int challengeId;
+    @SerializedName("filled")
+    private List<ContestRoomDto> filledRooms = null;
 
-    @SerializedName("challenge_name")
-    private String challengeName;
+    @SerializedName("filling")
+    private List<ContestRoomDto> fillingRooms = null;
 
-    @SerializedName("contest_id")
-    private int contestId;
-
-    @SerializedName("rooms")
-    private List<ContestRoomDto> rooms = null;
-
-    public int getChallengeId() {
-        return challengeId;
+    public List<ContestRoomDto> getFilledRooms() {
+        return filledRooms;
     }
 
-    public void setChallengeId(int challengeId) {
-        this.challengeId = challengeId;
+    public void setFilledRooms(List<ContestRoomDto> filledRooms) {
+        this.filledRooms = filledRooms;
     }
 
-    public String getChallengeName() {
-        return challengeName;
+    public List<ContestRoomDto> getFillingRooms() {
+        return fillingRooms;
     }
 
-    public void setChallengeName(String challengeName) {
-        this.challengeName = challengeName;
-    }
-
-    public int getContestId() {
-        return contestId;
-    }
-
-    public void setContestId(int contestId) {
-        this.contestId = contestId;
-    }
-
-    public List<ContestRoomDto> getRooms() {
-        return rooms;
-    }
-
-    public void setRooms(List<ContestRoomDto> rooms) {
-        this.rooms = rooms;
+    public void setFillingRooms(List<ContestRoomDto> fillingRooms) {
+        this.fillingRooms = fillingRooms;
     }
 }

@@ -131,7 +131,7 @@ public class ContestDetailCompletedFragment  extends NostraBaseFragment implemen
             LeaderBoardFragment leaderBoardFragment = LeaderBoardFragment.newInstance(completedContestDto.getRoomId());
             mViewPagerAdapter.addFragment(leaderBoardFragment, Constants.ContestDetailsTabs.LEADERBOARDS);
 
-            RewardsFragment rewardsFragment = RewardsFragment.newInstance(completedContestDto.getRoomId());
+            RewardsFragment rewardsFragment = RewardsFragment.newInstance(completedContestDto.getRoomId(),-1);
             mViewPagerAdapter.addFragment(rewardsFragment, Constants.ContestDetailsTabs.WINNERS);
 
             RulesFragment rulesFragment = RulesFragment.newInstance(completedContestDto.getContestId());
