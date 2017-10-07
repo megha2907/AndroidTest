@@ -382,7 +382,7 @@ public class MyWebService extends AbstractWebService<NostragamusService> {
     }
 
     public Call<JoinPseudoContestResponse> joinPseudoContest(JoinPseudoContestRequest request) {
-        return mNostragamusService.joinPsuedoContest(request);
+        return mNostragamusService.joinPseudoContest(request);
     }
 
     public Call<JoinContestQueueResponse> joinContestQueue(JoinContestQueueRequest request) {

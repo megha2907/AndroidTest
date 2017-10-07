@@ -1,9 +1,7 @@
 package in.sportscafe.nostragamus.module.store;
 
 import android.content.Context;
-import android.graphics.Paint;
 import android.support.annotation.NonNull;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -27,6 +25,7 @@ import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
 import in.sportscafe.nostragamus.module.common.WordUtils;
 import in.sportscafe.nostragamus.module.navigation.wallet.WalletHelper;
+import in.sportscafe.nostragamus.module.prediction.playScreen.dto.PowerUp;
 import in.sportscafe.nostragamus.module.store.dto.ProductSaleInfo;
 import in.sportscafe.nostragamus.module.store.dto.StoreItems;
 import in.sportscafe.nostragamus.module.store.dto.StoreSections;
@@ -110,28 +109,16 @@ public class StoreAdapter extends RecyclerView.Adapter<StoreAdapter.StoreVH> imp
     private boolean bundleWithDifferentPowerUps(StoreSections storeSections) {
 
         if (storeSections != null) {
-
             List<StoreItems> storeItemsList = storeSections.getStoreItemsList();
-
             if (storeItemsList != null || !storeItemsList.isEmpty()) {
+                if (storeItemsList.get(0) != null && storeItemsList.get(0).getPowerUps() != null) {
 
-                if (storeItemsList.get(0) != null) {
-
-                    if (storeItemsList.get(0).getPowerUps() != null) {
-
-                        HashMap<String, Integer> powerUpMap = storeItemsList.get(0).getPowerUps();
-
-                        Integer powerUp2xCount = powerUpMap.get(Constants.Powerups.XX);
-                        Integer powerUpNonNegsCount = powerUpMap.get(Constants.Powerups.NO_NEGATIVE);
-                        Integer powerUpPlayerPollCount = powerUpMap.get(Constants.Powerups.AUDIENCE_POLL);
-
-                        if (powerUp2xCount != null && powerUpNonNegsCount != null && powerUpPlayerPollCount != null) {
-                            if (!allEqual(powerUp2xCount, powerUpNonNegsCount, powerUpPlayerPollCount)) {
+                        PowerUp powerUp = storeItemsList.get(0).getPowerUps();
+                        if (powerUp != null) {
+                            if (!allEqual(powerUp.getDoubler(), powerUp.getNoNegative(), powerUp.getPlayerPoll())) {
                                 return true;
                             }
                         }
-
-                    }
                 }
             }
         }
@@ -139,9 +126,12 @@ public class StoreAdapter extends RecyclerView.Adapter<StoreAdapter.StoreVH> imp
         return false;
     }
 
-    public boolean allEqual(Object key, Object... objs) {
-        for (Object o : objs) if (!o.equals(key)) return false;
-        return true;
+    public boolean allEqual(/*Object key, Object... objs*/ int doubler, int noNeg, int playerPoll) {
+
+        return  (doubler == noNeg && noNeg == playerPoll);
+
+        /*for (Object o : objs) if (!o.equals(key)) return false;
+        return true;*/
     }
 
     @Override
@@ -208,7 +198,7 @@ public class StoreAdapter extends RecyclerView.Adapter<StoreAdapter.StoreVH> imp
             storeLine.setVisibility(View.GONE);
         }
 
-        if (storeItem.getProductPrice() != null) {
+        if (storeItem.getProductPrice() > 0) {
             btnStoreItemPrice.setText(WalletHelper.getFormattedStringOfAmount(storeItem.getProductPrice()));
         } else {
             btnStoreItemPrice.setText(Constants.RUPEE_SYMBOL + "0");
@@ -236,7 +226,7 @@ public class StoreAdapter extends RecyclerView.Adapter<StoreAdapter.StoreVH> imp
 
                 if (productSaleInfo.getSalePercentage() != 0) {
                     btnSalePercentage.setVisibility(View.VISIBLE);
-                    btnSalePercentage.setText(productSaleInfo.getSalePercentage().toString() + "% off");
+                    btnSalePercentage.setText(productSaleInfo.getSalePercentage() + "% off");
                 }
 
                 int savePrice = 0;
@@ -278,24 +268,11 @@ public class StoreAdapter extends RecyclerView.Adapter<StoreAdapter.StoreVH> imp
         TextView powerUpNoNegativeTextView = (TextView) storeItemView.findViewById(R.id.powerup_noNeg_count);
         TextView powerUpAudienceTextView = (TextView) storeItemView.findViewById(R.id.powerup_audience_count);
 
-        HashMap<String, Integer> powerUpMap = storeItem.getPowerUps();
-
-        if (powerUpMap != null) {
-            Integer powerUp2xCount = powerUpMap.get(Constants.Powerups.XX);
-            Integer powerUpNonNegsCount = powerUpMap.get(Constants.Powerups.NO_NEGATIVE);
-            Integer powerUpPlayerPollCount = powerUpMap.get(Constants.Powerups.AUDIENCE_POLL);
-
-            if (null == powerUp2xCount) {
-                powerUp2xCount = 0;
-            }
-
-            if (null == powerUpNonNegsCount) {
-                powerUpNonNegsCount = 0;
-            }
-
-            if (null == powerUpPlayerPollCount) {
-                powerUpPlayerPollCount = 0;
-            }
+        PowerUp powerUp = storeItem.getPowerUps();
+        if (powerUp != null) {
+            int powerUp2xCount = powerUp.getDoubler();
+            int powerUpNonNegsCount = powerUp.getNoNegative();
+            int powerUpPlayerPollCount = powerUp.getPlayerPoll();
 
             if (powerUp2xCount == 0 && powerUpNonNegsCount == 0 && powerUpPlayerPollCount == 0) {
                 powerUpLayout.setVisibility(View.GONE);
@@ -337,7 +314,8 @@ public class StoreAdapter extends RecyclerView.Adapter<StoreAdapter.StoreVH> imp
         switch (view.getId()) {
             case R.id.store_item_buy:
                 onBuyButtonClicked(view);
-                NostragamusAnalytics.getInstance().trackClickEvent(Constants.AnalyticsCategory.STORE_SCREEN, Constants.AnalyticsClickLabels.BUY_PRODUCT);
+                NostragamusAnalytics.getInstance().trackClickEvent(Constants.AnalyticsCategory.STORE_SCREEN,
+                        Constants.AnalyticsClickLabels.BUY_PRODUCT);
                 break;
         }
     }
@@ -357,7 +335,6 @@ public class StoreAdapter extends RecyclerView.Adapter<StoreAdapter.StoreVH> imp
         TextView mTvCategoryDesc;
         LinearLayout mLlStoreItemsHolder;
         RelativeLayout mRlStoreHolder;
-
 
         public StoreVH(View view) {
             super(view);

@@ -194,7 +194,7 @@ public class NewChallengesMatchesFragment extends BaseFragment implements View.O
             predictionIntent.putExtras(bundle);
             predictionIntent.putExtra(Constants.BundleKeys.SCREEN_LAUNCHED_FROM_PARENT,
                     PredictionActivity.LaunchedFrom.NEW_CHALLENGES_SCREEN_PSEUDO_PLAY);
-            getActivity().startActivity(predictionIntent);
+            startActivity(predictionIntent);
 
         } else {
             AlertsHelper.showAlert(getContext(), "Error", Constants.Alerts.SOMETHING_WRONG, null);

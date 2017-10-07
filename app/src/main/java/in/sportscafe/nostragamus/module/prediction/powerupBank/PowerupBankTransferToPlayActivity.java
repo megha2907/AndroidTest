@@ -86,15 +86,9 @@ public class PowerupBankTransferToPlayActivity extends NostragamusActivity imple
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.powerup_bank_close_imgView:
-                onBackPressed();
+                finishActivity(new Bundle());
                 break;
         }
-    }
-
-    @Override
-    public void onBackPressed() {
-        setResult(RESULT_OK);
-        super.onBackPressed();
     }
 
     @Override
@@ -105,7 +99,8 @@ public class PowerupBankTransferToPlayActivity extends NostragamusActivity imple
     }
 
     @Override
-    public void finishActivity() {
+    public void finishActivity(Bundle args) {
+        setResult(RESULT_OK, new Intent().putExtras(args));
         onBackPressed();
     }
 
@@ -129,26 +124,4 @@ public class PowerupBankTransferToPlayActivity extends NostragamusActivity imple
             }
         }
     }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        LocalBroadcastManager.getInstance(this).registerReceiver(mFinishActivityReceiver,
-                new IntentFilter(Constants.IntentActions.ACTION_FINISH_POWER_UP_BANK_ACTIVITY));
-    }
-
-    @Override
-    public void onStop() {
-        LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(mFinishActivityReceiver);
-        super.onStop();
-    }
-
-    BroadcastReceiver mFinishActivityReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            if (!isFinishing()) {
-                finishActivity();
-            }
-        }
-    };
 }

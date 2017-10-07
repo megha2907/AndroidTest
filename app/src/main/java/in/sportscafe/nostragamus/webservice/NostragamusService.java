@@ -294,7 +294,7 @@ public interface NostragamusService {
     @GET("/v2/game/store/getProductsByCategory")
     Call<StoreApiResponse> getStoreDetails(@Query("category") String category);
 
-    @POST("/v2/game/users/powerupTransferStats")
+    @POST("/v3/game/users/powerupTransferStats")
     Call<PowerUpBankStatusResponse> powerupTransferStatus(@Body PowerupBankStatusRequest request);
 
     @GET("v2/game/store/getPowerupTransaction")
@@ -347,7 +347,7 @@ public interface NostragamusService {
     Call<TransferPowerUpFromBankResponse> transferPowerUpsFromBank(@Body TransferPowerUpFromBankRequest request);
 
     @POST("/v3/game/challenges/joinPseudoContest")
-    Call<JoinPseudoContestResponse> joinPsuedoContest(@Body JoinPseudoContestRequest request);
+    Call<JoinPseudoContestResponse> joinPseudoContest(@Body JoinPseudoContestRequest request);
 
     @POST("/v3/game/challenges/joinContestQueue")
     Call<JoinContestQueueResponse> joinContestQueue(@Body JoinContestQueueRequest request);

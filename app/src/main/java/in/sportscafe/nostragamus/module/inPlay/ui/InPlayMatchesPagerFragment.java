@@ -278,12 +278,11 @@ public class InPlayMatchesPagerFragment extends NostraBaseFragment {
                         break;
 
                     case MatchesAdapterAction.PLAY:
-                        launchPlayScreen(args);
                     case MatchesAdapterAction.CONTINUE:
                         launchPlayScreen(args);
                         break;
+
                     case MatchesAdapterAction.ANSWER:
-                        launchResultsScreen(args);
                     case MatchesAdapterAction.DID_NOT_PLAY:
                     case MatchesAdapterAction.POINTS:
                         launchResultsScreen(args);
@@ -345,7 +344,7 @@ public class InPlayMatchesPagerFragment extends NostraBaseFragment {
                     predictionIntent.putExtras(bundle);
                     predictionIntent.putExtra(Constants.BundleKeys.SCREEN_LAUNCHED_FROM_PARENT,
                             PredictionActivity.LaunchedFrom.IN_PLAY_SCREEN_PLAY_MATCH);
-                    getActivity().startActivity(predictionIntent);
+                    startActivity(predictionIntent);
 
                 } else {
                     handleError(-1);

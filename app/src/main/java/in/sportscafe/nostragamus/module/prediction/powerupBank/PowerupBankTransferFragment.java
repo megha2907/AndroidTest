@@ -89,7 +89,7 @@ public class PowerupBankTransferFragment extends BaseFragment implements View.On
             if (Nostragamus.getInstance().hasNetworkConnection()) {
                 showProgressbar();
                 PowerupBankStatusApiModelImpl apiModel = PowerupBankStatusApiModelImpl.newInstance(getApiListener());
-                apiModel.performApiCall(mPlayScreenData.getChallengeId());
+                apiModel.performApiCall(mPlayScreenData.getChallengeId(), mPlayScreenData.getRoomId());
             } else {
                 showMessage(Constants.Alerts.NO_NETWORK_CONNECTION);
             }
@@ -504,24 +504,31 @@ public class PowerupBankTransferFragment extends BaseFragment implements View.On
         }
         NostragamusDataHandler.getInstance().setUserInfo(userInfo);*/
 
-        if (response != null && response.getBalancePowerUp() != null) {
-            mApiResponse.setUserBalance(response.getBalancePowerUp());
-            mApiResponseForReset.setUserBalance(response.getBalancePowerUp());
+        if (response != null && response.getData() != null && response.getData().getBalancePowerUp() != null) {
+            mApiResponse.setUserBalance(response.getData().getBalancePowerUp());
+            mApiResponseForReset.setUserBalance(response.getData().getBalancePowerUp());
         }
     }
 
     private void onPowerupTransferred(TransferPowerUpFromBankResponse response) {
         broadcastPowerUpUpdated(response);
         updatePowerUpDetailsOnUi();
+
+        if (mFragmentListener != null) {
+            Bundle args = new Bundle();
+            mFragmentListener.finishActivity(args);
+        }
     }
 
     private void broadcastPowerUpUpdated(TransferPowerUpFromBankResponse response) {
-        Intent intent = new Intent(Constants.IntentActions.ACTION_POWERUPS_UPDATED);
-        if (response != null && response.getBalancePowerUp() != null) {
-            Bundle args = new Bundle();
-            args.putParcelable(Constants.BundleKeys.POWERUPS, Parcels.wrap(response.getBalancePowerUp()));
-            intent.putExtras(args);
+        Bundle args = new Bundle();
+        if (response != null && response.getData() != null && response.getData().getTransferredFromBankPowerUp() != null) {
+            args.putParcelable(Constants.BundleKeys.BANK_TRANSFER_POWERUPS,
+                    Parcels.wrap(response.getData().getTransferredFromBankPowerUp()));
         }
+
+        Intent intent = new Intent(Constants.IntentActions.ACTION_POWERUPS_UPDATED);
+        intent.putExtras(args);
         LocalBroadcastManager.getInstance(getContext()).sendBroadcast(intent);
     }
 

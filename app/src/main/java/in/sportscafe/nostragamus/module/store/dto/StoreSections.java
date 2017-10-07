@@ -14,7 +14,7 @@ import java.util.List;
 public class StoreSections {
 
     @SerializedName("section_id")
-    private Integer sectionId;
+    private int sectionId;
 
     @SerializedName("section_name")
     private String sectionName;
@@ -26,12 +26,12 @@ public class StoreSections {
     private List<StoreItems> storeItemsList = new ArrayList<>();
 
     @SerializedName("section_id")
-    public Integer getSectionId() {
+    public int getSectionId() {
         return sectionId;
     }
 
     @SerializedName("section_id")
-    public void setSectionId(Integer sectionId) {
+    public void setSectionId(int sectionId) {
         this.sectionId = sectionId;
     }
 

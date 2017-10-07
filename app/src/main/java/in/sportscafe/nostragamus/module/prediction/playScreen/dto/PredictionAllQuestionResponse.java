@@ -13,6 +13,9 @@ public class PredictionAllQuestionResponse {
     @SerializedName("data")
     private List<PredictionQuestion> questions = null;
 
+    @SerializedName("powerups")
+    private PowerUp powerUp;
+
     @SerializedName("data")
     public List<PredictionQuestion> getQuestions() {
         return questions;
@@ -23,4 +26,11 @@ public class PredictionAllQuestionResponse {
         this.questions = questions;
     }
 
+    public PowerUp getPowerUp() {
+        return powerUp;
+    }
+
+    public void setPowerUp(PowerUp powerUp) {
+        this.powerUp = powerUp;
+    }
 }

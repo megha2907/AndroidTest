@@ -8,6 +8,6 @@ import android.os.Bundle;
 
 public interface PowerUpBankTransferFragmentListener {
     void updatePowerUpInfoDetails(Bundle args);
-    void finishActivity();
+    void finishActivity(Bundle args);
     void launchStore(Bundle args);
 }
