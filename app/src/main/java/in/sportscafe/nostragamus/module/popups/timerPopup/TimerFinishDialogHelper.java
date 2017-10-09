@@ -6,7 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 
 import in.sportscafe.nostragamus.Constants;
-import in.sportscafe.nostragamus.module.nostraHome.NostraHomeActivity;
+import in.sportscafe.nostragamus.module.nostraHome.ui.NostraHomeActivity;
 import in.sportscafe.nostragamus.module.nostraHome.helper.TimerHelper;
 
 /**

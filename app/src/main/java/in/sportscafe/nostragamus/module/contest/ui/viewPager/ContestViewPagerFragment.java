@@ -4,6 +4,7 @@ package in.sportscafe.nostragamus.module.contest.ui.viewPager;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
@@ -21,7 +22,6 @@ import com.jeeva.android.widgets.CustomProgressbar;
 
 import org.parceler.Parcels;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import in.sportscafe.nostragamus.Constants;
@@ -40,11 +40,9 @@ import in.sportscafe.nostragamus.module.contest.dto.JoinContestData;
 import in.sportscafe.nostragamus.module.contest.helper.JoinContestHelper;
 import in.sportscafe.nostragamus.module.contest.ui.DetailScreensLaunchRequest;
 import in.sportscafe.nostragamus.module.navigation.wallet.addMoney.lowBalance.AddMoneyOnLowBalanceActivity;
-import in.sportscafe.nostragamus.module.nostraHome.NostraHomeActivity;
 import in.sportscafe.nostragamus.module.nostraHome.helper.TimerHelper;
+import in.sportscafe.nostragamus.module.nostraHome.ui.NostraHomeActivity;
 import in.sportscafe.nostragamus.module.popups.timerPopup.TimerFinishDialogHelper;
-import in.sportscafe.nostragamus.module.popups.timerPopup.TimerFinishedDialogFragment;
-import in.sportscafe.nostragamus.utils.AlertsHelper;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -55,10 +53,11 @@ public class ContestViewPagerFragment extends NostraBaseFragment {
     public static final int ADD_MONEY_ON_LOW_BALANCE_REQUEST_CODE = 1101;
 
     private RecyclerView mRecyclerView;
-    private ContestType contestType;
+    private ContestType mContestType;
     private List<Contest> mContestList;
     private TextView mTvContestName;
     private TextView mTvContestDesc;
+    private TextView mTimerTextView;
     private ContestScreenData mContestScreenData;
 
     public ContestViewPagerFragment() {}
@@ -75,27 +74,63 @@ public class ContestViewPagerFragment extends NostraBaseFragment {
         mRecyclerView = (RecyclerView) rootView.findViewById(R.id.contest_recycler);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(mRecyclerView.getContext(), LinearLayoutManager.VERTICAL, false));
         mRecyclerView.setHasFixedSize(true);
+
         mTvContestName = (TextView) rootView.findViewById(R.id.contest_name);
         mTvContestDesc = (TextView) rootView.findViewById(R.id.contest_desc);
+        mTimerTextView = (TextView) rootView.findViewById(R.id.contest_timer_textView);
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        initMembers();
+        initValues();
+        setTimer();
         populateDataOnUi();
     }
 
-    private void initMembers() {
+    private void initValues() {
+        if (mContestType != null) {
+            mTvContestName.setText(mContestType.getCategoryName());
+            mTvContestDesc.setText(mContestType.getCategoryDesc());
+        }
     }
 
     private void populateDataOnUi() {
-        if (mRecyclerView != null && mContestList != null) {
+        if (mContestList != null && !mContestList.isEmpty()) {
             mRecyclerView.setAdapter(new ContestRecyclerAdapter(mRecyclerView.getContext(),
                     getContestListPreparedForAdapterItemTypes(mContestList),
                     getContestAdapterListener()));
-            mTvContestName.setText(getContestType().getCategoryName());
-            mTvContestDesc.setText(getContestType().getCategoryDesc());
+
+        } else {
+            showEmptyListMsg();
+        }
+    }
+
+    private void showEmptyListMsg() {
+        if (getView() != null) {
+            mRecyclerView.setVisibility(View.GONE);
+            TextView emptyTextView = (TextView)  getView().findViewById(R.id.empty_list_textView);
+            emptyTextView.setText("You haven't joined any contest yet!");   // As contest-tabs are created dynamically, this is possible only in 'Joined-Contest' tab
+            emptyTextView.setVisibility(View.VISIBLE);
+        }
+    }
+
+    private void setTimer() {
+        if (mContestScreenData != null && !TextUtils.isEmpty(mContestScreenData.getChallengeStartTime())) {
+            long futureTime = TimerHelper.getCountDownFutureTime(mContestScreenData.getChallengeStartTime());
+
+            CountDownTimer countDownTimer = new CountDownTimer(futureTime, 1000) {
+                @Override
+                public void onTick(long millisUntilFinished) {
+                    mTimerTextView.setText(TimerHelper.getTimerFormatFromMillis(millisUntilFinished));
+                }
+
+                @Override
+                public void onFinish() {
+
+                }
+            };
+            countDownTimer.start();
         }
     }
 
@@ -293,11 +328,11 @@ public class ContestViewPagerFragment extends NostraBaseFragment {
     }
 
     public ContestType getContestType() {
-        return contestType;
+        return mContestType;
     }
 
     public void setContestType(ContestType contestType) {
-        this.contestType = contestType;
+        this.mContestType = contestType;
     }
 
     public void onContestData(List<Contest> contests, ContestScreenData contestScreenData) {

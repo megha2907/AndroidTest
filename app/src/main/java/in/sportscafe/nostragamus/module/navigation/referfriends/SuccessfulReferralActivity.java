@@ -13,7 +13,7 @@ import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
 import in.sportscafe.nostragamus.module.common.NostragamusActivity;
 import in.sportscafe.nostragamus.module.common.WordUtils;
 import in.sportscafe.nostragamus.module.navigation.wallet.WalletHelper;
-import in.sportscafe.nostragamus.module.nostraHome.NostraHomeActivity;
+import in.sportscafe.nostragamus.module.nostraHome.ui.NostraHomeActivity;
 
 /**
  * Created by deepanshi on 6/30/17.

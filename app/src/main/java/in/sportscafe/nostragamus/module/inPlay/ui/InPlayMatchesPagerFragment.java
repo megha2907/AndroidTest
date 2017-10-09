@@ -79,17 +79,23 @@ public class InPlayMatchesPagerFragment extends NostraBaseFragment {
         if (args != null) {
             if (args.containsKey(Constants.BundleKeys.INPLAY_CONTEST)) {
                 mInPlayContestDto = Parcels.unwrap(args.getParcelable(Constants.BundleKeys.INPLAY_CONTEST));
-                loadData(mInPlayContestDto);
             }
         }
     }
 
-    private void loadData(InPlayContestDto inPlayContestDto) {
-        if (inPlayContestDto != null) {
+    @Override
+    public void onResume() {
+        super.onResume();
+        loadData();
+    }
+
+    private void loadData() {
+        if (mInPlayContestDto != null) {
             showLoadingContent();
             InPlayMatchesDataProvider dataProvider = new InPlayMatchesDataProvider();
-            dataProvider.getInPlayMatches(inPlayContestDto.getRoomId(),
-                    inPlayContestDto.getChallengeId(),
+
+            dataProvider.getInPlayMatches(mInPlayContestDto.getRoomId(),
+                    mInPlayContestDto.getChallengeId(),
                     new InPlayMatchesDataProvider.InPlayMatchesDataProviderListener() {
                 @Override
                 public void onData(int status, @Nullable InPlayMatchesResponse responses) {

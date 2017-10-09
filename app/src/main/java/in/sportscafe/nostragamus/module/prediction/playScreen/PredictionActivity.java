@@ -8,7 +8,7 @@ import org.parceler.Parcels;
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.NostraBaseActivity;
-import in.sportscafe.nostragamus.module.nostraHome.NostraHomeActivity;
+import in.sportscafe.nostragamus.module.nostraHome.ui.NostraHomeActivity;
 import in.sportscafe.nostragamus.module.play.myresults.MyResultsActivity;
 import in.sportscafe.nostragamus.module.prediction.playScreen.dto.PlayScreenDataDto;
 import in.sportscafe.nostragamus.utils.FragmentHelper;

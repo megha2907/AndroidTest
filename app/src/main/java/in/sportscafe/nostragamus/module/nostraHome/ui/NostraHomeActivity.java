@@ -1,4 +1,4 @@
-package in.sportscafe.nostragamus.module.nostraHome;
+package in.sportscafe.nostragamus.module.nostraHome.ui;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -37,7 +37,7 @@ import in.sportscafe.nostragamus.module.user.myprofile.edit.EditProfileActivity;
 import in.sportscafe.nostragamus.module.user.myprofile.verify.VerifyProfileActivity;
 import in.sportscafe.nostragamus.utils.FragmentHelper;
 
-public class NostraHomeActivity extends NostraBaseActivity implements View.OnClickListener {
+public class NostraHomeActivity extends NostraBaseActivity implements View.OnClickListener, NostraHomeActivityListener {
 
     private static final String TAG = NostraHomeActivity.class.getSimpleName();
     public static final int DOUBLE_BACK_PRESSED_DELAY_ALLOWED = 3000;
@@ -481,5 +481,13 @@ public class NostraHomeActivity extends NostraBaseActivity implements View.OnCli
             intent.putExtra(Constants.BundleKeys.SCREEN, Constants.ScreenNames.WHATS_NEW);
             startActivity(intent);
         }
+    }
+
+    @Override
+    public void showNewChallenges(Bundle args) {
+        if (args == null) {
+            args = getIntent().getExtras();
+        }
+        onNewChallengesClicked(args);
     }
 }
