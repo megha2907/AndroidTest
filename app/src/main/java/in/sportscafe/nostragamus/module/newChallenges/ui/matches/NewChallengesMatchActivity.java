@@ -21,7 +21,7 @@ import in.sportscafe.nostragamus.utils.FragmentHelper;
  * Created by deepanshi on 9/1/17.
  */
 
-public class NewChallengesMatchActivity extends NostraBaseActivity implements NewChallengeMatchFragmentListener, View.OnClickListener {
+public class NewChallengesMatchActivity extends NostraBaseActivity implements NewChallengeMatchFragmentListener{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,25 +29,7 @@ public class NewChallengesMatchActivity extends NostraBaseActivity implements Ne
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_matches_timeline);
 
-        initialize();
         loadMatchesTimelineFragment();
-    }
-
-
-    private void initialize() {
-        initToolbar();
-    }
-
-    private void initToolbar() {
-        TextView toolbarHeadingOne = (TextView) findViewById(R.id.toolbar_heading_one);
-        TextView toolbarHeadingTwo = (TextView) findViewById(R.id.toolbar_heading_two);
-        TextView toolbarWalletMoney = (TextView) findViewById(R.id.toolbar_wallet_money);
-        ImageView mBackBtn = (ImageView)findViewById(R.id.newchallenge_matches_back_btn);
-        mBackBtn.setOnClickListener(this);
-
-        toolbarHeadingOne.setText("Games");
-        int amount = (int) WalletHelper.getTotalBalance();
-        toolbarWalletMoney.setText(String.valueOf(amount));
     }
 
     private void loadMatchesTimelineFragment() {
@@ -74,12 +56,4 @@ public class NewChallengesMatchActivity extends NostraBaseActivity implements Ne
         startActivity(intent);
     }
 
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.newchallenge_matches_back_btn:
-                onBackClicked();
-                break;
-        }
-    }
 }

@@ -242,6 +242,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:gravity="center"
+                android:visibility="gone"
                 android:background="@drawable/information_card_bg"
                 android:paddingBottom="@dimen/dim_16"
                 android:paddingTop="@dimen/dim_12"
