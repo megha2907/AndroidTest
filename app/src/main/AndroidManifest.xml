@@ -315,7 +315,7 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.PopupTheme" />
         <activity
-            android:name=".module.nostraHome.NostraHomeActivity"
+            android:name=".module.nostraHome.ui.NostraHomeActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".module.newChallenges.ui.matches.NewChallengesMatchActivity"

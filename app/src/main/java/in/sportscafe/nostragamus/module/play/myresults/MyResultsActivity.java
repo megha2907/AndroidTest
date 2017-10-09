@@ -49,7 +49,7 @@ import in.sportscafe.nostragamus.module.common.NostragamusActivity;
 import in.sportscafe.nostragamus.module.contest.dto.ContestScreenData;
 import in.sportscafe.nostragamus.module.contest.ui.ContestsActivity;
 import in.sportscafe.nostragamus.module.inPlay.ui.ResultsScreenDataDto;
-import in.sportscafe.nostragamus.module.nostraHome.NostraHomeActivity;
+import in.sportscafe.nostragamus.module.nostraHome.ui.NostraHomeActivity;
 import in.sportscafe.nostragamus.module.permission.PermissionsActivity;
 import in.sportscafe.nostragamus.module.permission.PermissionsChecker;
 import in.sportscafe.nostragamus.module.popups.timerPopup.TimerFinishDialogHelper;

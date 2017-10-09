@@ -34,7 +34,7 @@ import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
 import in.sportscafe.nostragamus.module.common.ApiResponse;
 import in.sportscafe.nostragamus.module.common.OnDismissListener;
 import in.sportscafe.nostragamus.module.common.ViewPagerAdapter;
-import in.sportscafe.nostragamus.module.nostraHome.NostraHomeActivity;
+import in.sportscafe.nostragamus.module.nostraHome.ui.NostraHomeActivity;
 import in.sportscafe.nostragamus.module.permission.PermissionsActivity;
 import in.sportscafe.nostragamus.module.permission.PermissionsChecker;
 import in.sportscafe.nostragamus.service.NostraFileDownloadService;

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="in.sportscafe.nostragamus.module.nostraHome.NostraHomeActivity">
+    tools:context="in.sportscafe.nostragamus.module.nostraHome.ui.NostraHomeActivity">
 
     <!-- Bottom Layout -->
     <LinearLayout

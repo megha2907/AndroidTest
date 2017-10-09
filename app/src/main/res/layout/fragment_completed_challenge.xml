@@ -19,7 +19,7 @@
             android:layout_gravity="center"
             android:gravity="center"
             android:minHeight="@dimen/dim_40">
-            
+
             <com.jeeva.android.widgets.customfont.CustomTextView
                 android:id="@+id/toolbar_heading_one"
                 android:layout_width="wrap_content"
@@ -62,12 +62,19 @@
                 app:tabPaddingStart="0dp"
                 app:tabPaddingEnd="0dp"/>
 
-
             <!-- ViewPager -->
             <in.sportscafe.nostragamus.module.common.CustomViewPager
                 android:id="@+id/completed_viewPager"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
+
+            <!-- Empty screen -->
+            <include
+                android:id="@+id/history_empty_screen"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                layout="@layout/history_challenge_empty_screen"
+                android:visibility="gone"/>
 
         </LinearLayout>
 

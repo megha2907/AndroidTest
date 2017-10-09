@@ -136,7 +136,7 @@ public class ContestRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     private void bindJoinedContestValues(RecyclerView.ViewHolder holder, int position) {
         if (mContestList != null && mContestList.size() > position) {
             Contest contest = mContestList.get(position);
-            ContestViewHolder viewHolder = (ContestViewHolder) holder;
+            JoinedContestViewHolder viewHolder = (JoinedContestViewHolder) holder;
 
             if (contest != null) {
 
@@ -149,8 +149,6 @@ public class ContestRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                 }
 
                 viewHolder.mTvNumberOfPrizes.setText("(" + contest.getSubtitle() + ")");
-                viewHolder.mTvFilledContests.setText(String.valueOf(contest.getFilledRooms()));
-                viewHolder.mTvContestsAvailable.setText(String.valueOf(contest.getFillingRooms()));
 
                 if (contest.getContestMode().equalsIgnoreCase(Constants.ContestType.GUARANTEED)) {
                     viewHolder.mIvContestsType.setBackgroundResource(R.drawable.guaranteed_icon);

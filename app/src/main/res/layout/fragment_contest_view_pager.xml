@@ -39,7 +39,7 @@
                 app:typeface="lato_regular" />
 
             <com.jeeva.android.widgets.customfont.CustomTextView
-                android:id="@+id/contest_expiry"
+                android:id="@+id/contest_timer_textView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/white"
@@ -53,6 +53,19 @@
             android:id="@+id/contest_recycler"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
+
+        <!-- Empty list -->
+        <com.jeeva.android.widgets.customfont.CustomTextView
+            android:id="@+id/empty_list_textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:textColor="@color/grey_999999"
+            android:text="No contest!"
+            android:textSize="@dimen/sp_11"
+            app:typeface="lato_regular"
+            android:visibility="gone"
+            android:layout_marginTop="@dimen/dim_20"/>
 
     </LinearLayout>
 

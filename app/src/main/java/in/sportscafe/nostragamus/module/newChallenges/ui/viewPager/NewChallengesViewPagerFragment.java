@@ -88,8 +88,10 @@ public class NewChallengesViewPagerFragment extends BaseFragment implements View
     }
 
     private void loadData() {
-        if (mRecyclerView != null && mFilteredChallenges != null) {
+        if (mFilteredChallenges != null && !mFilteredChallenges.isEmpty()) {
             mRecyclerView.setAdapter(new NewChallengesRecyclerAdapter(mRecyclerView.getContext(), mFilteredChallenges, getChallengeAdapterListener()));
+        } else {
+            showEmptyListMsg();
         }
 
         if (mSportsTab != null) {
@@ -98,6 +100,13 @@ public class NewChallengesViewPagerFragment extends BaseFragment implements View
                     scrollToChallenge();
                     break;
             }
+        }
+    }
+
+    private void showEmptyListMsg() {
+        if (getView() != null) {
+            mRecyclerView.setVisibility(View.GONE);
+            getView().findViewById(R.id.empty_list_textView).setVisibility(View.VISIBLE);
         }
     }
 

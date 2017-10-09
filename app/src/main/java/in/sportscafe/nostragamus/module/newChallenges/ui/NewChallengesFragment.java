@@ -1,6 +1,7 @@
 package in.sportscafe.nostragamus.module.newChallenges.ui;
 
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -31,6 +32,7 @@ import in.sportscafe.nostragamus.module.newChallenges.dto.SportsTab;
 import in.sportscafe.nostragamus.module.newChallenges.helpers.NewChallengesFilterHelper;
 import in.sportscafe.nostragamus.module.newChallenges.ui.viewPager.NewChallengesViewPagerAdapter;
 import in.sportscafe.nostragamus.module.newChallenges.ui.viewPager.NewChallengesViewPagerFragment;
+import in.sportscafe.nostragamus.module.nostraHome.ui.NostraHomeActivityListener;
 import in.sportscafe.nostragamus.module.notifications.NostraNotification;
 import in.sportscafe.nostragamus.module.popups.walletpopups.WalletBalancePopupActivity;
 
@@ -39,11 +41,20 @@ import in.sportscafe.nostragamus.module.popups.walletpopups.WalletBalancePopupAc
  */
 public class NewChallengesFragment extends NostraBaseFragment implements View.OnClickListener {
 
+    private NostraHomeActivityListener mFragmentListener;
     private TextView mTvTBarWalletMoney;
     private TextView mTvTBarNumberOfChallenges;
     private Snackbar mSnackBar;
 
     public NewChallengesFragment() {
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof NostraHomeActivityListener) {
+            mFragmentListener = (NostraHomeActivityListener) context;
+        }
     }
 
     @Override

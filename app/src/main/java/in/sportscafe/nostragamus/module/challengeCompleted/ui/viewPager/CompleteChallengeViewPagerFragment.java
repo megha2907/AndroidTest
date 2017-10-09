@@ -66,7 +66,7 @@ public class CompleteChallengeViewPagerFragment extends BaseFragment {
     }
 
     private void loadData() {
-        if (mRecyclerView != null && mFilteredContests != null) {
+        if (mFilteredContests != null && !mFilteredContests.isEmpty()) {
 
             List<CompletedListItem> completedListItemList = getCompletedItemList(mFilteredContests);
             if (completedListItemList != null) {
@@ -79,11 +79,19 @@ public class CompleteChallengeViewPagerFragment extends BaseFragment {
                     }
                 }
             } else {
-                // TODO
+                showEmptyListMsg();
             }
+        } else {
+            showEmptyListMsg();
         }
     }
 
+    private void showEmptyListMsg() {
+        if (getView() != null) {
+            mRecyclerView.setVisibility(View.GONE);
+            getView().findViewById(R.id.empty_list_textView).setVisibility(View.VISIBLE);
+        }
+    }
 
     private List<CompletedListItem> getCompletedItemList(List<CompletedResponse> completedResponses) {
         List<CompletedListItem> itemList = null;

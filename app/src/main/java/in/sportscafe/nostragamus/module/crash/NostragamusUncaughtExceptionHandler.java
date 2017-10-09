@@ -7,7 +7,7 @@ import in.sportscafe.nostragamus.AppSnippet;
 import in.sportscafe.nostragamus.BuildConfig;
 import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
-import in.sportscafe.nostragamus.module.nostraHome.NostraHomeActivity;
+import in.sportscafe.nostragamus.module.nostraHome.ui.NostraHomeActivity;
 import in.sportscafe.nostragamus.module.user.login.LogInActivity;
 
 /**
