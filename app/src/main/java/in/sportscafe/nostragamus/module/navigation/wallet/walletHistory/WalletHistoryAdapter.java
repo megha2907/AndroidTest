@@ -106,8 +106,26 @@ public abstract class WalletHistoryAdapter extends RecyclerView.Adapter<WalletHi
                 } else if (transactionType.equalsIgnoreCase(Constants.WalletHistory.TRANSACTION_TYPE_BUY)) {
                     populateBuyDetails(holder, transaction);
 
+                } else if (transactionType.equalsIgnoreCase(Constants.WalletHistory.TRANSACTION_TYPE_REFUNDED)) {
+                    populateRefundedDetails(holder, transaction);
+
                 }
             }
+        }
+    }
+
+    private void populateRefundedDetails(WalletHistoryViewHolder holder, WalletHistoryTransaction transaction) {
+        if (transaction != null) {
+            holder.txnImageView.setImageResource(R.drawable.wallet_join_challenge_icn);
+            double amount = transaction.getAmount();
+            String title = "Refunded " + WalletHelper.getFormattedStringOfAmount(amount);
+            holder.titleTextView.setText(title);
+
+            String detailMsg = "";
+            if (!TextUtils.isEmpty(transaction.getMessage())) {
+                detailMsg = transaction.getMessage();
+            }
+            holder.detailsTextView.setText(detailMsg);
         }
     }
 

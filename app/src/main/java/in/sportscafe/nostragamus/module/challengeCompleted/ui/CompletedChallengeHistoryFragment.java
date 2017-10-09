@@ -95,7 +95,7 @@ public class CompletedChallengeHistoryFragment extends NostraBaseFragment implem
         showLoadingProgressBar();
         CompletedChallengeDataProvider dataProvider = new CompletedChallengeDataProvider();
         dataProvider.getCompletedChallenges(getContext().getApplicationContext(),
-                0, 10, // TODO : pagination
+                0, 20, // TODO : pagination
                 new CompletedChallengeDataProvider.CompletedChallengeDataProviderListener() {
                     @Override
                     public void onData(int status, @Nullable List<CompletedResponse> completedResponseList) {

@@ -249,6 +249,11 @@ public class InPlayHeadLessMatchesFragment extends BaseFragment implements View.
         initMembers();
         setValues();
         setTimer();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
         loadDataFromServer();
     }
 

@@ -221,6 +221,11 @@ public class NewChallengesMatchesFragment extends BaseFragment implements View.O
         initMembers();
         setValues();
         setTimer();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
         loadDataFromServer();
     }
 
