@@ -197,13 +197,13 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:gravity="center"
-                android:background="@color/colorBackground"
+                android:background="@drawable/information_card_bg"
                 android:paddingBottom="@dimen/dim_16"
                 android:paddingTop="@dimen/dim_12"
                 android:paddingLeft="@dimen/dim_12"
                 android:paddingRight="@dimen/dim_12"
                 android:layout_margin="@dimen/dim_12"
-                android:visibility="gone">
+                >
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -238,7 +238,6 @@
                             android:textColor="@color/bluecolor1"
                             android:text="YOUR PREDICTIONS ARE SAVED"
                             android:textAllCaps="true"
-                            android:layout_marginTop="@dimen/dim_10"
                             android:textSize="@dimen/sp_12"
                             app:typeface="lato_bold" />
 

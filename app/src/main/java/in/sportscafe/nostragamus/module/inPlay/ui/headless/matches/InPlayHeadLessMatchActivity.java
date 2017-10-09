@@ -19,30 +19,7 @@ public class InPlayHeadLessMatchActivity extends NostraBaseActivity implements I
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inplay_headless_matches);
 
-        initialize();
         loadMatchesTimelineFragment();
-    }
-
-    private void initialize() {
-        initToolbar();
-    }
-
-    private void initToolbar() {
-        Toolbar toolbar = (Toolbar) findViewById(R.id.matches_timeline_toolbar);
-        TextView tvToolbar = (TextView) findViewById(R.id.matches_timeline_toolbar_tv);
-        tvToolbar.setText("Matches");
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
-
-        toolbar.setNavigationIcon(R.drawable.back_icon_grey);
-        toolbar.setNavigationOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        finish();
-                    }
-                }
-        );
     }
 
     private void loadMatchesTimelineFragment() {

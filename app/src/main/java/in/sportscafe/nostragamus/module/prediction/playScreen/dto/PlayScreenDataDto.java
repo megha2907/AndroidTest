@@ -15,6 +15,7 @@ public class PlayScreenDataDto {
     private String matchPartyTitle2;
     private String subTitle;
     private String challengeName;
+    private String challengeStartTime;
     private String matchStatus;
     private PowerUp powerUp;
     private boolean isPlayingPseudoGame = false;
@@ -73,6 +74,14 @@ public class PlayScreenDataDto {
 
     public void setChallengeName(String challengeName) {
         this.challengeName = challengeName;
+    }
+
+    public String getChallengeStartTime() {
+        return challengeStartTime;
+    }
+
+    public void setChallengeStartTime(String challengeStartTime) {
+        this.challengeStartTime = challengeStartTime;
     }
 
     public PowerUp getPowerUp() {

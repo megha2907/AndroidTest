@@ -52,9 +52,9 @@ import in.sportscafe.nostragamus.module.inPlay.ui.ResultsScreenDataDto;
 import in.sportscafe.nostragamus.module.nostraHome.NostraHomeActivity;
 import in.sportscafe.nostragamus.module.permission.PermissionsActivity;
 import in.sportscafe.nostragamus.module.permission.PermissionsChecker;
+import in.sportscafe.nostragamus.module.popups.timerPopup.TimerFinishDialogHelper;
 import in.sportscafe.nostragamus.module.prediction.playScreen.PredictionActivity;
 import in.sportscafe.nostragamus.module.resultspeek.dto.Match;
-import in.sportscafe.nostragamus.utils.AlertsHelper;
 import in.sportscafe.nostragamus.utils.timeutils.TimeUtils;
 
 /**
@@ -397,6 +397,7 @@ public class MyResultsActivity extends NostragamusActivity implements MyResultsV
             ContestScreenData screenData = new ContestScreenData();
             screenData.setChallengeId(mResultScreenData.getChallengeId());
             screenData.setChallengeName(mResultScreenData.getChallengeName());
+            screenData.setChallengeStartTime(mResultScreenData.getChallengeStartTime());
             if (isHeadlessFlow()) {
                 screenData.setHeadLessFlow(true);
                 screenData.setPseudoRoomId(mResultScreenData.getRoomId());
@@ -412,7 +413,6 @@ public class MyResultsActivity extends NostragamusActivity implements MyResultsV
 
         } else {
             Log.d(TAG, "No screen data !");
-            AlertsHelper.showAlert(this, "Error!", Constants.Alerts.SOMETHING_WRONG, null);
         }
     }
 
@@ -479,11 +479,17 @@ public class MyResultsActivity extends NostragamusActivity implements MyResultsV
 
     @Override
     public void navigatetoPlay(Match match) {
-        Bundle bundle = new Bundle();
-        bundle.putParcelable(BundleKeys.MATCH_LIST, Parcels.wrap(match));
-        Intent intent = new Intent(this, PredictionActivity.class);
-        intent.putExtras(bundle);
-        startActivity(intent);
+        if (TimerFinishDialogHelper.canPlayGame(match.getStartTime())) {
+
+            Bundle bundle = new Bundle();
+            bundle.putParcelable(BundleKeys.MATCH_LIST, Parcels.wrap(match));
+            Intent intent = new Intent(this, PredictionActivity.class);
+            intent.putExtras(bundle);
+            startActivity(intent);
+
+        } else {
+            TimerFinishDialogHelper.showCanNotPlayGameTimerOutDialog(getSupportFragmentManager());
+        }
     }
 
     @Override

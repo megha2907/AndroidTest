@@ -15,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.jeeva.android.BaseFragment;
@@ -33,8 +34,10 @@ import in.sportscafe.nostragamus.module.inPlay.dto.InPlayMatch;
 import in.sportscafe.nostragamus.module.inPlay.dto.InPlayMatchesResponse;
 import in.sportscafe.nostragamus.module.inPlay.ui.ResultsScreenDataDto;
 import in.sportscafe.nostragamus.module.inPlay.ui.headless.dto.HeadLessMatchScreenData;
+import in.sportscafe.nostragamus.module.navigation.wallet.WalletHelper;
 import in.sportscafe.nostragamus.module.nostraHome.helper.TimerHelper;
 import in.sportscafe.nostragamus.module.play.myresults.MyResultsActivity;
+import in.sportscafe.nostragamus.module.popups.timerPopup.TimerFinishDialogHelper;
 import in.sportscafe.nostragamus.module.prediction.playScreen.PredictionActivity;
 import in.sportscafe.nostragamus.module.prediction.playScreen.dto.PlayScreenDataDto;
 import in.sportscafe.nostragamus.utils.AlertsHelper;
@@ -76,6 +79,8 @@ public class InPlayHeadLessMatchesFragment extends BaseFragment implements View.
         Button joinContestBtn = (Button) rootView.findViewById(R.id.new_challenge_matches_join_button);
         mMatchesLeftTextView = (TextView) rootView.findViewById(R.id.matches_timeline_matches_left);
         mTimerTextView = (TextView) rootView.findViewById(R.id.matches_timeline_match_expires_in);
+        ImageView backButtonImgView = (ImageView) rootView.findViewById(R.id.back_button);
+        backButtonImgView.setOnClickListener(this);
 
         mMatchesRecyclerView = (RecyclerView)rootView.findViewById(R.id.match_timeline_rv);
         mMatchesRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
@@ -156,18 +161,22 @@ public class InPlayHeadLessMatchesFragment extends BaseFragment implements View.
                 InPlayMatch match = Parcels.unwrap(matchArgs.getParcelable(Constants.BundleKeys.INPLAY_MATCH));
                 PlayScreenDataDto playData = getPlayScreenData(match);
 
-                if (playData != null) {
-                    bundle.putParcelable(Constants.BundleKeys.PLAY_SCREEN_DATA, Parcels.wrap(playData));
-                    bundle.putBoolean(Constants.BundleKeys.IS_HEADLESS_FLOW, true);
+                if (TimerFinishDialogHelper.canPlayGame(match.getMatchStartTime())) {
 
-                    Intent predictionIntent = new Intent(getActivity(), PredictionActivity.class);
-                    predictionIntent.putExtras(bundle);
-                    predictionIntent.putExtra(Constants.BundleKeys.SCREEN_LAUNCHED_FROM_PARENT,
-                            PredictionActivity.LaunchedFrom.IN_PLAY_SCREEN_PLAY_MATCH);
-                    startActivity(predictionIntent);
+                    if (playData != null) {
+                        bundle.putParcelable(Constants.BundleKeys.PLAY_SCREEN_DATA, Parcels.wrap(playData));
+                        bundle.putBoolean(Constants.BundleKeys.IS_HEADLESS_FLOW, true);
+
+                        Intent predictionIntent = new Intent(getActivity(), PredictionActivity.class);
+                        predictionIntent.putExtras(bundle);
+                        predictionIntent.putExtra(Constants.BundleKeys.SCREEN_LAUNCHED_FROM_PARENT,
+                                PredictionActivity.LaunchedFrom.IN_PLAY_SCREEN_PLAY_MATCH);
+                        startActivity(predictionIntent);
+
+                    }
 
                 } else {
-                    handleError(-1);
+                    TimerFinishDialogHelper.showCanNotPlayGameTimerOutDialog(getChildFragmentManager());
                 }
             } else {
                 com.jeeva.android.Log.e(TAG, "No Contest in Bundle to launch Play screen");
@@ -188,6 +197,7 @@ public class InPlayHeadLessMatchesFragment extends BaseFragment implements View.
             dataDto.setPowerUp(mHeadLessMatchScreenData.getPowerUp());
             dataDto.setSubTitle(mHeadLessMatchScreenData.getContestName());
             dataDto.setChallengeName(mHeadLessMatchScreenData.getChallengeName());
+            dataDto.setChallengeStartTime(mHeadLessMatchScreenData.getStartTime());
 
             if (inPlayMatch.getMatchParties() != null && inPlayMatch.getMatchParties().size() == 2) {
                 dataDto.setMatchPartyTitle1(inPlayMatch.getMatchParties().get(0).getPartyName());
@@ -212,6 +222,7 @@ public class InPlayHeadLessMatchesFragment extends BaseFragment implements View.
                     data.setRoomId(mHeadLessMatchScreenData.getRoomId());
                     data.setChallengeName(mHeadLessMatchScreenData.getChallengeName());
                     data.setMatchStatus(match.getMatchStatus());
+                    data.setChallengeStartTime(mHeadLessMatchScreenData.getStartTime());
 
                     if (match.getMatchParties() != null && match.getMatchParties().size() == 2) {
                         data.setMatchPartyTitle1(match.getMatchParties().get(0).getPartyName());
@@ -242,9 +253,16 @@ public class InPlayHeadLessMatchesFragment extends BaseFragment implements View.
     }
 
     private void setValues() {
-        if (mHeadLessMatchScreenData != null) {
+        View rootView = getView();
+        if (mHeadLessMatchScreenData != null && rootView != null) {
+            TextView titleTextView = (TextView) rootView.findViewById(R.id.toolbar_heading_one);
+            TextView walletAmtTextView = (TextView) rootView.findViewById(R.id.toolbar_wallet_money);
+
+            titleTextView.setText(mHeadLessMatchScreenData.getChallengeName());
+            walletAmtTextView.setText(String.valueOf(WalletHelper.getTotalBalance()));
+
             if (mHeadLessMatchScreenData.getTotalMatches() > 0) {
-                mMatchesLeftTextView.setText(mHeadLessMatchScreenData.getMatchesLeft() + "/" + mHeadLessMatchScreenData.getTotalMatches());
+                mMatchesLeftTextView.setText(String.valueOf(mHeadLessMatchScreenData.getTotalMatches()));
             }
         }
     }
@@ -269,7 +287,7 @@ public class InPlayHeadLessMatchesFragment extends BaseFragment implements View.
 
                         @Override
                         public void onError(int status) {
-handleError(status);
+                            handleError(status);
                         }
                     });
         }
@@ -278,6 +296,10 @@ handleError(status);
     private void handleError(int status) {
         if (getView() != null) {
             switch (status) {
+                case Constants.DataStatus.NO_INTERNET:
+                    Snackbar.make(getView(), Constants.Alerts.NO_INTERNET_CONNECTION, Snackbar.LENGTH_LONG).show();
+                    break;
+
                 default:
                     Snackbar.make(getView(), Constants.Alerts.SOMETHING_WRONG, Snackbar.LENGTH_LONG).show();
                     break;
@@ -301,6 +323,16 @@ handleError(status);
             case R.id.new_challenge_matches_join_button:
                 onJoinContestClicked();
                 break;
+
+            case R.id.back_button:
+                onBackButtonClicked();
+                break;
+        }
+    }
+
+    private void onBackButtonClicked() {
+        if (mInPlayHeadLessMatchFragmentListener != null) {
+            mInPlayHeadLessMatchFragmentListener.onBackClicked();
         }
     }
 
@@ -309,6 +341,7 @@ handleError(status);
             ContestScreenData screenData = new ContestScreenData();
             screenData.setChallengeId(mHeadLessMatchScreenData.getChallengeId());
             screenData.setChallengeName(mHeadLessMatchScreenData.getChallengeName());
+            screenData.setChallengeStartTime(mHeadLessMatchScreenData.getStartTime());
             screenData.setHeadLessFlow(true);
             screenData.setPseudoRoomId(mHeadLessMatchScreenData.getRoomId());   // For Headless contest to join, pass room Id as pseudoRoomId
 

@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.LinearSmoothScroller;
@@ -42,7 +43,6 @@ import in.sportscafe.nostragamus.module.inPlay.ui.headless.dto.HeadLessMatchScre
 import in.sportscafe.nostragamus.module.inPlay.ui.headless.matches.InPlayHeadLessMatchActivity;
 import in.sportscafe.nostragamus.module.newChallenges.dataProvider.SportsDataProvider;
 import in.sportscafe.nostragamus.module.newChallenges.dto.SportsTab;
-import in.sportscafe.nostragamus.utils.AlertsHelper;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -252,8 +252,9 @@ public class InPlayViewPagerFragment extends BaseFragment {
                 Intent intent = new Intent(getActivity(), InPlayHeadLessMatchActivity.class);
                 intent.putExtras(args);
                 getActivity().startActivity(intent);
+
             } else {
-                AlertsHelper.showAlert(getContext(), "No Internet", "Please turn ON internet to continue", null);
+                handleError(Constants.DataStatus.NO_INTERNET);
             }
         }
     }
@@ -282,6 +283,7 @@ public class InPlayViewPagerFragment extends BaseFragment {
                     ContestScreenData contestScreenData = new ContestScreenData();
                     contestScreenData.setChallengeId(listChallengeItem.getChallengeId());
                     contestScreenData.setChallengeName(listChallengeItem.getChallengeName());
+                    contestScreenData.setChallengeStartTime(listChallengeItem.getChallengeStartTime());
 
                     Bundle bundle = new Bundle();
                     bundle.putParcelable(Constants.BundleKeys.CONTEST_SCREEN_DATA, Parcels.wrap(contestScreenData));
@@ -292,10 +294,8 @@ public class InPlayViewPagerFragment extends BaseFragment {
                         getActivity().startActivity(intent);
 
                     } else {
-                        AlertsHelper.showAlert(getContext(), "No Internet", "Please turn ON internet to continue", null);
+                        handleError(Constants.DataStatus.NO_INTERNET);
                     }
-                } else {
-                    handleError(-1);
                 }
             } else {
                 handleError(-1);
@@ -304,7 +304,17 @@ public class InPlayViewPagerFragment extends BaseFragment {
     }
 
     private void handleError(int status) {
-        AlertsHelper.showAlert(getContext(), "Error!", Constants.Alerts.SOMETHING_WRONG, null);
+        if (getView() != null && getActivity() != null && !getActivity().isFinishing()) {
+            switch (status) {
+                case Constants.DataStatus.NO_INTERNET:
+                    Snackbar.make(getView(), Constants.Alerts.NO_INTERNET_CONNECTION, Snackbar.LENGTH_LONG).show();
+                    break;
+
+                default:
+                    Snackbar.make(getView(), Constants.Alerts.SOMETHING_WRONG, Snackbar.LENGTH_LONG);
+                    break;
+            }
+        }
     }
 
     private void goToNewMatchesTimeline(Bundle args) {
@@ -318,7 +328,7 @@ public class InPlayViewPagerFragment extends BaseFragment {
                 getActivity().startActivity(intent);
             }
         } else {
-            AlertsHelper.showAlert(getContext(), "No Internet", "Please turn ON internet to continue", null);
+            handleError(Constants.DataStatus.NO_INTERNET);
         }
     }
 

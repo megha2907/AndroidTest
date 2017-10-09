@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -22,23 +23,13 @@ import com.jeeva.android.BaseFragment;
 
 import org.parceler.Parcels;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.concurrent.TimeUnit;
-
 import in.sportscafe.nostragamus.Constants;
-import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.contest.dto.ContestScreenData;
 import in.sportscafe.nostragamus.module.contest.ui.ContestsActivity;
 import in.sportscafe.nostragamus.module.inPlay.adapter.MatchesAdapterAction;
 import in.sportscafe.nostragamus.module.inPlay.dto.InPlayMatch;
+import in.sportscafe.nostragamus.module.navigation.wallet.WalletHelper;
 import in.sportscafe.nostragamus.module.newChallenges.adapter.NewChallengeMatchAdapterListener;
 import in.sportscafe.nostragamus.module.newChallenges.adapter.NewChallengeMatchesAdapter;
 import in.sportscafe.nostragamus.module.newChallenges.dataProvider.JoinPseudoContestApiModelImpl;
@@ -47,11 +38,10 @@ import in.sportscafe.nostragamus.module.newChallenges.dto.JoinPseudoContestRespo
 import in.sportscafe.nostragamus.module.newChallenges.dto.NewChallengeMatchesResponse;
 import in.sportscafe.nostragamus.module.newChallenges.dto.NewChallengeMatchesScreenData;
 import in.sportscafe.nostragamus.module.nostraHome.helper.TimerHelper;
+import in.sportscafe.nostragamus.module.popups.timerPopup.TimerFinishDialogHelper;
 import in.sportscafe.nostragamus.module.prediction.playScreen.PredictionActivity;
 import in.sportscafe.nostragamus.module.prediction.playScreen.dto.PlayScreenDataDto;
 import in.sportscafe.nostragamus.utils.AlertsHelper;
-import in.sportscafe.nostragamus.utils.timeutils.TimeAgo;
-import in.sportscafe.nostragamus.utils.timeutils.TimeUtils;
 
 /**
  * Created by deepanshi on 9/1/17.
@@ -95,12 +85,14 @@ public class NewChallengesMatchesFragment extends BaseFragment implements View.O
         mJoinContestButton = (Button) rootView.findViewById(R.id.new_challenge_matches_join_button);
         mMatchesLeftTextView = (TextView) rootView.findViewById(R.id.matches_timeline_matches_left);
         mContestTimerTextView = (TextView) rootView.findViewById(R.id.matches_timeline_match_expires_in);
+        ImageView backButtonImgView = (ImageView) rootView.findViewById(R.id.back_button);
 
         mMatchesRecyclerView = (RecyclerView)rootView.findViewById(R.id.match_timeline_rv);
         mMatchesRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         mMatchesRecyclerView.setHasFixedSize(true);
 
         mJoinContestButton.setOnClickListener(this);
+        backButtonImgView.setOnClickListener(this);
     }
 
     private void setTimer() {
@@ -135,7 +127,7 @@ public class NewChallengesMatchesFragment extends BaseFragment implements View.O
     }
 
     @NonNull
-    private NewChallengeMatchAdapterListener getmatchAdapterListener() {
+    private NewChallengeMatchAdapterListener getMatchAdapterListener() {
         return new NewChallengeMatchAdapterListener() {
 
             @Override
@@ -164,9 +156,23 @@ public class NewChallengesMatchesFragment extends BaseFragment implements View.O
                         @Override
                         public void onError(int status) {
                             Log.d(TAG, "Join pseudo contest failed");
-                            AlertsHelper.showAlert(getContext(), "Error!", Constants.Alerts.SOMETHING_WRONG, null);
+                            handleError(status);
                         }
                     });
+        }
+    }
+
+    private void handleError(int status) {
+        if (getView() != null && getActivity() != null && !getActivity().isFinishing()) {
+            switch (status) {
+                case Constants.DataStatus.NO_INTERNET:
+                    Snackbar.make(getView(), Constants.Alerts.NO_INTERNET_CONNECTION, Snackbar.LENGTH_LONG).show();
+                    break;
+
+                default:
+                    Snackbar.make(getView(), Constants.Alerts.SOMETHING_WRONG, Snackbar.LENGTH_LONG);
+                    break;
+            }
         }
     }
 
@@ -181,6 +187,7 @@ public class NewChallengesMatchesFragment extends BaseFragment implements View.O
             playData.setPowerUp(response.getUserRoom().getPowerUp());
             playData.setPlayingPseudoGame(true);
             playData.setChallengeName(mScreenData.getChallengeName());
+            playData.setChallengeStartTime(mScreenData.getStartTime());
 
             if (match.getMatchParties() != null && match.getMatchParties().size() == 2) {
                 playData.setMatchPartyTitle1(match.getMatchParties().get(0).getPartyName());
@@ -190,14 +197,20 @@ public class NewChallengesMatchesFragment extends BaseFragment implements View.O
             Bundle bundle = new Bundle();
             bundle.putParcelable(Constants.BundleKeys.PLAY_SCREEN_DATA, Parcels.wrap(playData));
 
-            Intent predictionIntent = new Intent(getActivity(), PredictionActivity.class);
-            predictionIntent.putExtras(bundle);
-            predictionIntent.putExtra(Constants.BundleKeys.SCREEN_LAUNCHED_FROM_PARENT,
-                    PredictionActivity.LaunchedFrom.NEW_CHALLENGES_SCREEN_PSEUDO_PLAY);
-            startActivity(predictionIntent);
+            if (TimerFinishDialogHelper.canPlayGame(match.getMatchStartTime())) {
+
+                Intent predictionIntent = new Intent(getActivity(), PredictionActivity.class);
+                predictionIntent.putExtras(bundle);
+                predictionIntent.putExtra(Constants.BundleKeys.SCREEN_LAUNCHED_FROM_PARENT,
+                        PredictionActivity.LaunchedFrom.NEW_CHALLENGES_SCREEN_PSEUDO_PLAY);
+                startActivity(predictionIntent);
+
+            } else {
+                TimerFinishDialogHelper.showCanNotPlayGameTimerOutDialog(getChildFragmentManager());
+            }
 
         } else {
-            AlertsHelper.showAlert(getContext(), "Error", Constants.Alerts.SOMETHING_WRONG, null);
+            handleError(-1);
         }
     }
 
@@ -212,11 +225,22 @@ public class NewChallengesMatchesFragment extends BaseFragment implements View.O
     }
 
     private void setValues() {
-        if (mScreenData != null) {
+        View view = getView();
+        if (mScreenData != null && view != null) {
+
+            TextView titleTextView = (TextView) view.findViewById(R.id.toolbar_heading_one);
+            TextView walletAmtTextView = (TextView) view.findViewById(R.id.toolbar_wallet_money);
+
+            titleTextView.setText(mScreenData.getChallengeName());
+            walletAmtTextView.setText(String.valueOf(WalletHelper.getTotalBalance()));
+
+            /* Games */
             if (mScreenData.getTotalMatches() > 0) {
-                mMatchesLeftTextView.setText(mScreenData.getMatchesLeft() + "/" + mScreenData.getTotalMatches());
+                mMatchesLeftTextView.setText(String.valueOf(mScreenData.getTotalMatches()));
             }
         }
+
+
     }
 
     private void initMembers() {
@@ -243,18 +267,10 @@ public class NewChallengesMatchesFragment extends BaseFragment implements View.O
         }
     }
 
-    private void handleError(int status) {
-        switch (status) {
-            default:
-                AlertsHelper.showAlert(getContext(), "Error", Constants.Alerts.SOMETHING_WRONG, null);
-                break;
-        }
-    }
-
     private void onSuccessMatchResponse(NewChallengeMatchesResponse responses) {
         setChallengeInfoAsPerUserPerspective(responses);
         if (responses != null && mMatchesRecyclerView != null && responses.getMatchList() != null) {
-            mMatchesAdapter = new NewChallengeMatchesAdapter(responses.getMatchList(), getmatchAdapterListener());
+            mMatchesAdapter = new NewChallengeMatchesAdapter(responses.getMatchList(), getMatchAdapterListener());
             mMatchesRecyclerView.setAdapter(mMatchesAdapter);
         }
     }
@@ -292,6 +308,17 @@ public class NewChallengesMatchesFragment extends BaseFragment implements View.O
             case R.id.new_challenge_matches_join_button:
                 onJoinContestClicked();
                 break;
+
+            case R.id.back_button:
+                onBackButtonClicked();
+                break;
+
+        }
+    }
+
+    private void onBackButtonClicked() {
+        if (mNewChallengeMatchFragmentListener != null) {
+            mNewChallengeMatchFragmentListener.onBackClicked();
         }
     }
 
@@ -300,6 +327,7 @@ public class NewChallengesMatchesFragment extends BaseFragment implements View.O
             ContestScreenData screenData = new ContestScreenData();
             screenData.setChallengeId(mScreenData.getChallengeId());
             screenData.setChallengeName(mScreenData.getChallengeName());
+            screenData.setChallengeStartTime(mScreenData.getStartTime());
 
             Bundle args = new Bundle();
             args.putParcelable(Constants.BundleKeys.CONTEST_SCREEN_DATA, Parcels.wrap(screenData));
