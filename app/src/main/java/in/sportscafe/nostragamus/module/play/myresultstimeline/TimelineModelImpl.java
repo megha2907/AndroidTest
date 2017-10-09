@@ -30,7 +30,7 @@ public class TimelineModelImpl implements TimelineModel {
 
     private String mPlayerName;
 
-    private Integer mChallengeId;
+    private Integer mRoomId;
 
     private int mClosestDatePosition = 0;
 
@@ -59,8 +59,8 @@ public class TimelineModelImpl implements TimelineModel {
                 mPlayerPhoto = bundle.getString(BundleKeys.PLAYER_PHOTO);
             }
 
-            if (bundle.containsKey(BundleKeys.CHALLENGE_ID)) {
-                mChallengeId = bundle.getInt(BundleKeys.CHALLENGE_ID);
+            if (bundle.containsKey(BundleKeys.ROOM_ID)) {
+                mRoomId = bundle.getInt(BundleKeys.ROOM_ID);
             }
         }
     }
@@ -100,7 +100,7 @@ public class TimelineModelImpl implements TimelineModel {
 
     @Override
     public String getChallengeNameIfAvailable() {
-        if (null != mChallengeId && null != mTimelineAdapter && mTimelineAdapter.getItemCount() > 0) {
+        if (null != mRoomId && null != mTimelineAdapter && mTimelineAdapter.getItemCount() > 0) {
             return mTimelineAdapter.getItem(0).getChallengeName();
         }
         return null;
@@ -108,7 +108,7 @@ public class TimelineModelImpl implements TimelineModel {
 
     @Override
     public void clearChallengeDetails() {
-        mChallengeId = null;
+        mRoomId = null;
     }
 
     @Override
@@ -124,7 +124,7 @@ public class TimelineModelImpl implements TimelineModel {
 
         mTimelineLoading = true;
 
-        MyWebService.getInstance().getTimelinesRequest(mChallengeId, mPlayerUserId, skip, limit)
+        MyWebService.getInstance().getTimelinesRequest(mRoomId, mPlayerUserId, skip, limit)
                 .enqueue(new NostragamusCallBack<MatchesResponse>() {
                     @Override
                     public void onResponse(Call<MatchesResponse> call, Response<MatchesResponse> response) {

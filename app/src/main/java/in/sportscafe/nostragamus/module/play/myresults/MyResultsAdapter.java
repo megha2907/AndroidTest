@@ -156,58 +156,6 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
             );
         }
 
-
-//        if (null == Match.getResult() || Match.getResult().isEmpty()) {
-//            holder.mTvMatchResult.setVisibility(View.GONE);
-//            holder.mTvResultWait.setVisibility(View.VISIBLE);
-//            holder.mTvResultWait.setText(Match.getStage()+" - "+"Awaiting Results");
-//            holder.mTvResultWait.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
-//            holder.mTvResultCorrectCount.setText(Match.getQuestions().size() +"/" + Match.getMatchQuestionCount() + " Questions Answered");
-//
-//            if (null != Match.getUserRank()) {
-//                holder.mTvLeaderBoardRank.setText("Rank " + String.valueOf(Match.getUserRank()) + "/" + String.valueOf(Match.getCountPlayers()));
-//            }else {
-//                holder.mTvLeaderBoardRank.setText("No Rank");
-//            }
-//
-//            if (null != Match.getCountPowerUps()) {
-//                holder.mTvNumberofPowerupsUsed.setText(String.valueOf(Match.getCountPowerUps()));
-//            }else {
-//                holder.mTvNumberofPowerupsUsed.setText("0");
-//            }
-//
-//        } else {
-//            holder.mTvMatchResult.setVisibility(View.VISIBLE);
-//            holder.mTvMatchResult.setText(Match.getStage()+" - "+Match.getResult());
-//        }
-//
-//
-//        if (null == Match.getMatchPoints()) {
-//
-//            holder.mBtnMatchPoints.setVisibility(View.GONE);
-//            holder.mLlMatchScores.setVisibility(View.GONE);
-//
-//        } else {
-//            holder.mBtnMatchPoints.setVisibility(View.VISIBLE);
-//            holder.mTvResultCorrectCount.setVisibility(View.VISIBLE);
-//            holder.mTvResultWait.setVisibility(View.GONE);
-//            holder.mBtnMatchPoints.setText(Match.getMatchPoints().toString());
-//            holder.mTvResultCorrectCount.setText(Match.getCorrectCount() + "/" + Match.getMatchQuestionCount() + " Answered Correctly");
-//            holder.mTvAvgMatchPoints.setText(String.valueOf(Match.getAvgMatchPoints().intValue()));
-//            holder.mTvHighestMatchPoints.setText(String.valueOf(Match.getHighestMatchPoints()));
-//
-//            if (null != Match.getUserRank()) {
-//                holder.mTvLeaderBoardRank.setText("Rank " + String.valueOf(Match.getUserRank()) + "/" + String.valueOf(Match.getCountPlayers()));
-//            }else {
-//                holder.mTvLeaderBoardRank.setText("No Rank");
-//            }
-//
-//
-//            holder.mTvNumberofPowerupsUsed.setText(String.valueOf(Match.getCountPowerUps()));
-//            holder.mRlHighestMatchPoints.setTag(Match);
-//        }
-
-
         Integer attemptedStatus = match.getisAttempted();
 
         if (match.getMatchQuestionCount() > 0) {
@@ -225,12 +173,12 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
                 holder.mTvHighestMatchPoints.setText(String.valueOf(match.getHighestMatchPoints()));
                 holder.mRlHighestMatchPoints.setTag(match);
 
-                if (null != match.getUserRank()) {
+                /* if (null != match.getUserRank()) {
                     holder.mTvLeaderBoardRank.setText(String.valueOf(match.getUserRank()));
                     holder.mTvLeaderBoardTotalPlayers.setText("/ " + String.valueOf(match.getCountPlayers()));
                 } else {
                     holder.mTvLeaderBoardRank.setText("No Rank");
-                }
+                } */
 
 
                 //if not attempted
@@ -249,7 +197,7 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
                     holder.mTvResultCorrectCount.setVisibility(View.VISIBLE);
                     holder.mTvResultWait.setVisibility(View.GONE);
                     holder.mBtnMatchPoints.setText(match.getMatchPoints().toString());
-                    holder.mTvResultCorrectCount.setText(match.getCorrectCount() + "/" + match.getMatchQuestionCount() + " Answered Correctly");
+                    holder.mTvResultCorrectCount.setText(match.getCorrectCount() + "/" + match.getMatchQuestionCount() + " Correct Predictions");
                     holder.mTvNumberofPowerupsUsed.setText(String.valueOf(match.getCountPowerUps()));
 
                 }
@@ -858,7 +806,7 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
 
 
                         /* call save Answer Api */
-                            mResultsActionListener.saveUpdatedAnswer(question.getQuestionId(), selectedAnswerId,roomId);
+                            mResultsActionListener.saveUpdatedAnswer(question.getMatchId(),question.getQuestionId(), selectedAnswerId,roomId);
 
                         /* change save Answer btn back to edit Answer */
                             editAnswersBtn.setText("Edit Answer");
@@ -1113,7 +1061,7 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
 
         void onClickEditAnswer(int selectedQuestionId, Question question);
 
-        void saveUpdatedAnswer(int QuestionId, int AnswerId, int roomId);
+        void saveUpdatedAnswer(int matchId,int QuestionId, int AnswerId, int roomId);
     }
 
     public void changeToEditAnswers(int selectedQuestionId, Question question) {

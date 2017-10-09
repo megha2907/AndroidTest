@@ -127,7 +127,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/my_predictions_row_rl_question"
-            android:paddingBottom="@dimen/dp_10">
+            android:paddingBottom="@dimen/dp_10"
+            >
 
             <!-- Answers Row -->
             <RelativeLayout
@@ -287,7 +288,8 @@
             android:textColor="@color/white_60"
             android:textSize="@dimen/dp_12"
             android:visibility="invisible"
-            app:typeface="lato_regular" />
+            app:typeface="lato_regular"
+            android:layout_marginBottom="@dimen/dp_10"/>
 
         <!-- Powerups layout at bottom -->
         <LinearLayout

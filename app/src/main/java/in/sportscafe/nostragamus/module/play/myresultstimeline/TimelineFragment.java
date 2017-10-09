@@ -48,9 +48,9 @@ public class TimelineFragment extends NostragamusFragment implements TimelineVie
 
     private OnHomeActionListener mOnHomeActionListener;
 
-    public static TimelineFragment newInstance(Integer challengeId) {
+    public static TimelineFragment newInstance(int roomId) {
         TimelineFragment fragment = new TimelineFragment();
-        fragment.setArguments(getBundle(null, challengeId));
+        fragment.setArguments(getBundle(null, roomId));
         return fragment;
     }
 
@@ -60,7 +60,7 @@ public class TimelineFragment extends NostragamusFragment implements TimelineVie
         return fragment;
     }
 
-    private static Bundle getBundle(PlayerInfo playerInfo, Integer challengeId) {
+    private static Bundle getBundle(PlayerInfo playerInfo, int roomId) {
         Bundle args = new Bundle();
 
         if(null != playerInfo) {
@@ -68,10 +68,8 @@ public class TimelineFragment extends NostragamusFragment implements TimelineVie
             args.putString(BundleKeys.PLAYER_PHOTO, playerInfo.getPhoto());
             args.putString(BundleKeys.PLAYER_NAME, playerInfo.getUserNickName());
         }
+            args.putInt(BundleKeys.ROOM_ID, roomId);
 
-        if (null != challengeId) {
-            args.putInt(BundleKeys.CHALLENGE_ID, challengeId);
-        }
         return args;
     }
 

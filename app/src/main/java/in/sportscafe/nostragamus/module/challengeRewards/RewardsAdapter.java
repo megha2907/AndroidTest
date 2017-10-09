@@ -14,13 +14,18 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import in.sportscafe.nostragamus.AppSnippet;
 import in.sportscafe.nostragamus.Constants;
+import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.challengeRewards.dto.Rewards;
 import in.sportscafe.nostragamus.module.common.NostraTextViewLinkClickMovementMethod;
 import in.sportscafe.nostragamus.module.common.NostragamusActivity;
 import in.sportscafe.nostragamus.module.common.NostragamusWebView;
 import in.sportscafe.nostragamus.module.resultspeek.FeedWebView;
+import in.sportscafe.nostragamus.utils.timeutils.TimeAgo;
+import in.sportscafe.nostragamus.utils.timeutils.TimeUnit;
+import in.sportscafe.nostragamus.utils.timeutils.TimeUtils;
 
 /**
  * Created by deepanshi on 9/6/17.
@@ -87,10 +92,15 @@ public class RewardsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
         if (holder != null) {
 
+
             //alternate row color
             if (position % 2 == 0) {
                 holder.itemView.setBackgroundColor(ContextCompat.getColor(holder.itemView.getContext(), R.color.black4));
             } else {
+                holder.itemView.setBackgroundColor(ContextCompat.getColor(holder.itemView.getContext(), R.color.black5));
+            }
+
+            if (position==0){
                 holder.itemView.setBackgroundColor(ContextCompat.getColor(holder.itemView.getContext(), R.color.black5));
             }
 
@@ -104,9 +114,51 @@ public class RewardsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                         OpenWebView(((RewardsFooterVH) holder).mTvDisclaimer,url);
                     }
                 });
+            }else if (holder instanceof RewardsHeaderVH){
+
+                String endTime = mChallengeEndTime;
+                long endTimeMs = TimeUtils.getMillisecondsFromDateString(
+                        endTime,
+                        Constants.DateFormats.FORMAT_DATE_T_TIME_ZONE,
+                        Constants.DateFormats.GMT
+                );
+
+                int dayOfMonthinEndTime = Integer.parseInt(TimeUtils.getDateStringFromMs(endTimeMs, "d"));
+
+                String prizesHandOutDate = dayOfMonthinEndTime + AppSnippet.ordinalOnly(dayOfMonthinEndTime) + " of " +
+                        TimeUtils.getDateStringFromMs(endTimeMs, "MMM");
+
+                if (getChallengeOver(mChallengeEndTime)) {
+                    /* set when challenge is over */
+                    ((RewardsHeaderVH) holder).mTvChallengeEndTime.setText("Prizes were handed out on "+prizesHandOutDate+".");
+                }else {
+                    // Setting end date of the challenge
+                    ((RewardsHeaderVH) holder).mTvChallengeEndTime.setText("The challenge will end on " + prizesHandOutDate + ". Prizes will be handed out within a few hours of challenge completion.");
+                }
             }
         }
 
+    }
+
+    private boolean getChallengeOver(String challengeEndTime) {
+
+        boolean isChallengeOver = false;
+
+        if (!TextUtils.isEmpty(challengeEndTime)) {
+            String startTime = challengeEndTime.replace("+00:00", ".000Z");
+            long startTimeMs = TimeUtils.getMillisecondsFromDateString(
+                    startTime,
+                    Constants.DateFormats.FORMAT_DATE_T_TIME_ZONE,
+                    Constants.DateFormats.GMT
+            );
+            TimeAgo timeAgo = TimeUtils.calcTimeAgo(Nostragamus.getInstance().getServerTime(), startTimeMs);
+
+            isChallengeOver = timeAgo.timeDiff <= 0
+                    || timeAgo.timeUnit == TimeUnit.MILLISECOND
+                    || timeAgo.timeUnit == TimeUnit.SECOND;
+        }
+
+        return isChallengeOver;
     }
 
     /**
@@ -188,8 +240,11 @@ public class RewardsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     private class RewardsHeaderVH extends RecyclerView.ViewHolder {
 
+        TextView mTvChallengeEndTime;
+
         public RewardsHeaderVH(View itemView) {
             super(itemView);
+            mTvChallengeEndTime = (TextView)itemView.findViewById(R.id.rewards_challenge_end_time);
         }
 
     }

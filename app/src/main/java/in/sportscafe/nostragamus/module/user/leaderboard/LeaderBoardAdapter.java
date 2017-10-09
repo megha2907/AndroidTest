@@ -30,13 +30,13 @@ import in.sportscafe.nostragamus.utils.ViewUtils;
  */
 public class LeaderBoardAdapter extends Adapter<UserLeaderBoard, LeaderBoardAdapter.ViewHolder> {
 
-    private Integer mChallengeId;
+    private Integer mRoomId;
 
     private Integer mSelectedPos = 0;
 
-    public LeaderBoardAdapter(Context context, Integer challengeId) {
+    public LeaderBoardAdapter(Context context, Integer roomId) {
         super(context);
-        mChallengeId = challengeId;
+        mRoomId = roomId;
     }
 
     @Override
@@ -215,8 +215,8 @@ public class LeaderBoardAdapter extends Adapter<UserLeaderBoard, LeaderBoardAdap
                     intent.putExtra(BundleKeys.PLAYER_ID, playerId);
                 }
 
-                if(null != mChallengeId) {
-                    intent.putExtra(BundleKeys.CHALLENGE_ID, mChallengeId);
+                if(null != mRoomId) {
+                    intent.putExtra(BundleKeys.ROOM_ID,mRoomId);
                 }
                 context.startActivity(intent);
 

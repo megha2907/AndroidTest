@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.text.TextUtils;
 
 import com.jeeva.android.ExceptionTracker;
-import com.jeeva.android.Log;
 
 import org.parceler.Parcels;
 
@@ -204,7 +203,7 @@ public class MyResultsModelImpl implements MyResultsModel, MyResultsAdapter.OnMy
 
     @Override
     public String getMatchName() {
-        return match.getChallengeName() + "-" + contestName;
+        return match.getChallengeName() + " - " + contestName;
     }
 
     @Override
@@ -247,6 +246,11 @@ public class MyResultsModelImpl implements MyResultsModel, MyResultsAdapter.OnMy
         return match.getEndTime();
     }
 
+    @Override
+    public Match getMatch() {
+        return match;
+    }
+
 
     private void callReplayPowerupAppliedApi(final String powerupId, Integer matchId) {
         MyWebService.getInstance().getReplayPowerup(powerupId, matchId).enqueue(new NostragamusCallBack<ReplayPowerupResponse>() {
@@ -270,9 +274,9 @@ public class MyResultsModelImpl implements MyResultsModel, MyResultsAdapter.OnMy
 
     }
 
-    private void callChangeAnswerApi(Integer questionId, Integer answerId, int roomId) {
+    private void callChangeAnswerApi(Integer matchId,Integer questionId, Integer answerId, int roomId) {
 
-        ChangeAnswer changeAnswer = new ChangeAnswer(questionId, answerId, roomId);
+        ChangeAnswer changeAnswer = new ChangeAnswer(matchId,questionId, answerId, roomId);
         mResultsModelListener.StartProgressbar();
         MyWebService.getInstance().getChangeAnswerRequest(changeAnswer).enqueue(new NostragamusCallBack<ApiResponse>() {
             @Override
@@ -304,8 +308,8 @@ public class MyResultsModelImpl implements MyResultsModel, MyResultsAdapter.OnMy
     }
 
     @Override
-    public void saveUpdatedAnswer(int QuestionId, int AnswerId, int roomId) {
-        callChangeAnswerApi(QuestionId, AnswerId, roomId);
+    public void saveUpdatedAnswer(int matchId,int QuestionId, int AnswerId, int roomId) {
+        callChangeAnswerApi(matchId,QuestionId, AnswerId, roomId);
     }
 
 

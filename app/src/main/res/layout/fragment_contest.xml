@@ -20,6 +20,7 @@
             android:background="@drawable/toolbar_bg">
 
             <ImageView
+                android:id="@+id/contest_back_btn"
                 android:layout_width="@dimen/dp_32"
                 android:layout_height="@dimen/dp_32"
                 android:layout_gravity="center"

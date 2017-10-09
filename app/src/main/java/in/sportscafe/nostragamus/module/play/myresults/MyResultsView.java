@@ -32,4 +32,6 @@ public interface MyResultsView extends InAppView {
     void showResultsToBeDeclaredView(Boolean playedFirstMatch, String matchEndTime);
 
     void updateAnswers(Match match);
+
+    void setUserRank(Match match);
 }

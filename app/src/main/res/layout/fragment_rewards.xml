@@ -1,66 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/black5">
-
-    <com.jeeva.android.widgets.customfont.CustomTextView
-        android:id="@+id/rewards_challenge_end_time"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        app:typeface="lato_regular"
-        android:layout_marginRight="@dimen/dim_30"
-        android:layout_marginLeft="@dimen/dim_30"
-        android:lineSpacingExtra="@dimen/dim_1"
-        android:textSize="@dimen/sp_12"
-        android:textColor="@color/grey6"
-        android:paddingTop="@dimen/dim_12"
-        android:paddingBottom="@dimen/dim_12" />
+    android:background="@color/black5"
+    android:orientation="vertical">
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rewards_rcv"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:paddingBottom="@dimen/dim_90"
         android:clipToPadding="false"
-        android:layout_below="@+id/rewards_challenge_end_time"
-        android:paddingTop="@dimen/dp_5" />
-
-    <com.jeeva.android.widgets.customfont.CustomTextView
-        android:id="@+id/rewards_disclaimer"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="The prize money for this contest might vary with the participation of players.To know more"
-        app:typeface="lato_regular"
-        android:visibility="gone"
-        android:layout_below="@+id/rewards_rcv"
-        android:layout_marginRight="@dimen/dim_30"
-        android:layout_marginLeft="@dimen/dim_30"
-        android:lineSpacingExtra="@dimen/dim_1"
-        android:textSize="@dimen/sp_12"
-        android:textColor="@color/grey6"
-        android:paddingTop="@dimen/dim_12" />
-
-    <com.jeeva.android.widgets.customfont.CustomTextView
-        android:id="@+id/rewards_disclaimer_link"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        app:typeface="lato_regular"
-        android:text="CLICK HERE"
-        android:visibility="gone"
-        android:layout_below="@+id/rewards_disclaimer"
-        android:layout_marginRight="@dimen/dim_30"
-        android:layout_marginLeft="@dimen/dim_30"
-        android:lineSpacingExtra="@dimen/dim_1"
-        android:textSize="@dimen/sp_12"
-        android:textColor="@color/hyperlink_color"
-        android:paddingTop="@dimen/dim_4"
-        android:paddingBottom="@dimen/dim_12"/>
-
+        android:visibility="gone" />
 
     <!-- Loading View -->
     <LinearLayout
@@ -68,8 +19,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:gravity="center"
-        android:visibility="gone">
+        android:gravity="center">
 
         <in.sportscafe.nostragamus.module.common.NostraProgressBar
             android:layout_width="match_parent"
@@ -78,4 +28,4 @@
 
     </LinearLayout>
 
-</RelativeLayout>
+</LinearLayout>

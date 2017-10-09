@@ -171,13 +171,14 @@ public interface NostragamusService {
     @GET("/v1/game/users/getPlayerProfile")
     Call<PlayerInfoResponse> getPlayerInfo(@Query("player_user_id") Integer playerId);
 
-    @GET("v1/game/users/matches/timeline")
+    @GET("v3/game/users/matches/timeline")
     Call<MatchesResponse> getTimelines(
-            @Query("challenge_id") Integer challengeId,
+            @Query("room_id") Integer roomId,
             @Query("player_id") Integer playerUserId,
             @Query("skip") int skip,
             @Query("limit") int limit
     );
+
 /*
 
     @GET("v1/game/users/getFuzzyPlayer")

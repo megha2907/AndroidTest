@@ -1,6 +1,7 @@
 package in.sportscafe.nostragamus.module.contest.ui;
 
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -11,6 +12,7 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import org.parceler.Parcels;
@@ -29,14 +31,18 @@ import in.sportscafe.nostragamus.module.contest.dto.ContestType;
 import in.sportscafe.nostragamus.module.contest.helper.ContestFilterHelper;
 import in.sportscafe.nostragamus.module.contest.ui.viewPager.ContestViewPagerAdapter;
 import in.sportscafe.nostragamus.module.contest.ui.viewPager.ContestViewPagerFragment;
+import in.sportscafe.nostragamus.module.navigation.referfriends.ReferFriendActivity;
+import in.sportscafe.nostragamus.module.navigation.referfriends.ReferFriendFragmentListener;
 import in.sportscafe.nostragamus.module.navigation.wallet.WalletHelper;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ContestFragment extends NostraBaseFragment {
+public class ContestFragment extends NostraBaseFragment implements View.OnClickListener {
 
     private static final String TAG = ContestFragment.class.getSimpleName();
+
+    private ContestsFragmentListener mContestsFragmentListener;
 
     public ContestFragment() {
     }
@@ -45,6 +51,17 @@ public class ContestFragment extends NostraBaseFragment {
     private TextView mTvTBarSubHeading;
     private TextView mTvTBarWalletMoney;
     private ContestScreenData mContestScreenData;
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+
+        if (context instanceof ContestsActivity) {
+            mContestsFragmentListener = (ContestsFragmentListener) context;
+        } else {
+            throw new RuntimeException("Activity must implement " + TAG);
+        }
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -58,6 +75,7 @@ public class ContestFragment extends NostraBaseFragment {
         mTvTBarHeading = (TextView) rootView.findViewById(R.id.toolbar_heading_one);
         mTvTBarSubHeading = (TextView) rootView.findViewById(R.id.toolbar_heading_two);
         mTvTBarWalletMoney = (TextView) rootView.findViewById(R.id.toolbar_wallet_money);
+        rootView.findViewById(R.id.contest_back_btn).setOnClickListener(this);
     }
 
     public void onNewIntent(Intent intent) {
@@ -213,4 +231,12 @@ public class ContestFragment extends NostraBaseFragment {
         }
     }
 
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.contest_back_btn:
+                mContestsFragmentListener.onBackClicked();
+                break;
+        }
+    }
 }

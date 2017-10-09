@@ -86,6 +86,8 @@ public class MyResultsActivity extends NostragamusActivity implements MyResultsV
 
     private Button shareResultsBtn;
     private RelativeLayout mRlshareResults;
+    TextView mTvLeaderBoardRank;
+    TextView mTvLeaderBoardTotalPlayers;
 
     private float offset1;
     private float offset2;
@@ -127,6 +129,8 @@ public class MyResultsActivity extends NostragamusActivity implements MyResultsV
         powerupReplayFab = findViewById(R.id.fab_fl_replay);
         powerupFlipFab = findViewById(R.id.fab_fl_flip);
         fabContainer = findViewById(R.id.fab_container);
+        mTvLeaderBoardRank = (TextView)findViewById(R.id.schedule_row_tv_leaderboard_rank);
+        mTvLeaderBoardTotalPlayers = (TextView) findViewById(R.id.schedule_row_tv_leaderboard_total_players);
 
         fab_open = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.powerup_fab_open);
         fab_close = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.powerup_fab_close);
@@ -169,57 +173,6 @@ public class MyResultsActivity extends NostragamusActivity implements MyResultsV
             Button btnJoinContest = (Button) findViewById(R.id.results_join_contest_button);
             btnJoinContest.setOnClickListener(this);
         }
-
-       /* Bundle mbundle = new Bundle();
-        mbundle = getIntent().getExtras();
-        Match Match = Parcels.unwrap(mbundle.getParcelable(Constants.BundleKeys.MATCH_LIST));
-
-        long startTimeMs = TimeUtils.getMillisecondsFromDateString(
-                Match.getStartTime(),
-                Constants.DateFormats.FORMAT_DATE_T_TIME_ZONE,
-                Constants.DateFormats.GMT
-        );
-
-        TimeAgo timeAgo = TimeUtils.calcTimeAgo(Calendar.newInstance().getTimeInMillis(), startTimeMs);
-        boolean isMatchStarted = timeAgo.timeDiff <= 0
-                || timeAgo.timeUnit == TimeUnit.MILLISECOND
-                || timeAgo.timeUnit == TimeUnit.SECOND;
-
-
-        if (Match.isResultPublished() || isMatchStarted){
-            powerupMainFab.setVisibility(View.GONE);
-        }else {
-            powerupMainFab.setVisibility(View.VISIBLE);
-        } */
-
-        /*this.mRvMyResults.addOnScrollListener(new RecyclerView.OnScrollListener()
-        {
-
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy)
-            {
-                if (dy < 0) {
-                    shareFab.show();
-
-                    if (isShareFabOpen) {
-                        btnfbShare.setVisibility(View.VISIBLE);
-                    }
-
-                    // Recycle view scrolling up...
-
-                } else if (dy > 0) {
-                    shareFab.hide();
-
-                    if (isShareFabOpen) {
-                        btnfbShare.setVisibility(View.INVISIBLE);
-                    }
-                    // Recycle view scrolling down...
-                }
-
-
-            }
-
-        });*/
 
     }
 
@@ -281,28 +234,7 @@ public class MyResultsActivity extends NostragamusActivity implements MyResultsV
 
     @Override
     public void onBackPressed() {
-
         finishStackAndLaunchHomeInPlay();
-
-   /*     Intent upIntent = NavUtils.getParentActivityIntent(this);
-        if (shouldUpRecreateTask(this)) {
-            TaskStackBuilder.create(this).addNextIntentWithParentStack(upIntent).startActivities();
-            finish();
-        } else {
-            super.onBackPressed();
-
-
-//            if (! mTitle.getText().toString().equalsIgnoreCase(getString(R.string.match_results))) {
-//                sendReloadChallengeBroadcast();
-//            }
-
-             /* Refresh only when coming from play screen to results awaiting , NOT for other like Results */
-
-          /*  if (!mbundle.containsKey(BundleKeys.SCREEN)) {
-                sendReloadChallengeBroadcast();
-            }
-        }  */
-
     }
 
     private void finishStackAndLaunchHomeInPlay() {
@@ -645,6 +577,20 @@ public class MyResultsActivity extends NostragamusActivity implements MyResultsV
     @Override
     public void updateAnswers(Match match) {
       refresh(match);
+    }
+
+    @Override
+    public void setUserRank(Match match) {
+        if (null != match) {
+            if (null != match.getUserRank() && null != match.getCountPlayers()) {
+                mTvLeaderBoardRank.setText(AppSnippet.ordinal(match.getUserRank()));
+                mTvLeaderBoardTotalPlayers.setText(" / " + String.valueOf(match.getCountPlayers()));
+            } else {
+                mTvLeaderBoardRank.setText("NA");
+            }
+        }else {
+            mTvLeaderBoardRank.setText("NA");
+        }
     }
 
 

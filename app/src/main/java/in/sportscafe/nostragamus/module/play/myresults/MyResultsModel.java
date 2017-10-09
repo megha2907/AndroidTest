@@ -3,6 +3,9 @@ package in.sportscafe.nostragamus.module.play.myresults;
 import android.content.Context;
 import android.os.Bundle;
 
+import in.sportscafe.nostragamus.module.resultspeek.dto.Match;
+
+
 /**
  * Created by Jeeva on 15/6/16.
  */
@@ -25,4 +28,6 @@ public interface MyResultsModel {
     void getShareText();
 
     String getMatchEndTime();
+
+    Match getMatch();
 }
