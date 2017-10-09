@@ -8,7 +8,7 @@ import in.sportscafe.nostragamus.module.common.NostraBaseActivity;
 import in.sportscafe.nostragamus.module.newChallenges.ui.matches.NewChallengeMatchFragmentListener;
 import in.sportscafe.nostragamus.utils.FragmentHelper;
 
-public class ContestsActivity extends NostraBaseActivity {
+public class ContestsActivity extends NostraBaseActivity implements ContestsFragmentListener {
 
     private static final String TAG = ContestsActivity.class.getSimpleName();
 
@@ -54,6 +54,11 @@ public class ContestsActivity extends NostraBaseActivity {
         if (intent != null && mContestFragment != null) {
             mContestFragment.onNewIntent(intent);
         }
+    }
+
+    @Override
+    public void onBackClicked() {
+      onBackPressed();
     }
 
 }

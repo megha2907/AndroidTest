@@ -123,6 +123,7 @@ public class MyResultPresenterImpl implements MyResultsPresenter, MyResultsModel
         mResultsView.dismissProgressbar();
         mResultsView.setAdapter(myResultsAdapter);
         mResultsView.setMatchName(mResultsModel.getMatchName());
+        mResultsView.setUserRank(mResultsModel.getMatch());
     }
 
     @Override

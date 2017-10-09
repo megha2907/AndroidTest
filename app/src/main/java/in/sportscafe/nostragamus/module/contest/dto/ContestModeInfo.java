@@ -11,10 +11,10 @@ import org.parceler.Parcel;
 @Parcel
 public class ContestModeInfo {
 
-    @SerializedName("name")
+    @SerializedName("mode_name")
     private String name;
 
-    @SerializedName("desc")
+    @SerializedName("mode_desc")
     private String description;
 
     public String getName() {

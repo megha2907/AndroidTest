@@ -757,7 +757,7 @@ public interface Constants {
     interface ContestType {
         String GUARANTEED = "g";
         String NON_GUARANTEED = "ng";
-        String POOL = "pool";
+        String POOL = "p";
     }
 
     interface WebPageUrls {

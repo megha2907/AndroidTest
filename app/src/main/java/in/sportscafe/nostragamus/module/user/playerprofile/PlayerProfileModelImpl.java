@@ -17,7 +17,7 @@ import retrofit2.Response;
 
 public class PlayerProfileModelImpl implements PlayerProfileModel {
 
-    private Integer mChallengeId;
+    private Integer mRoomId;
 
     private PlayerInfo mPlayerInfo;
 
@@ -33,8 +33,8 @@ public class PlayerProfileModelImpl implements PlayerProfileModel {
 
     @Override
     public void getProfileDetails(Bundle bundle) {
-        if(bundle.containsKey(BundleKeys.CHALLENGE_ID)) {
-            mChallengeId = bundle.getInt(BundleKeys.CHALLENGE_ID);
+        if(bundle.containsKey(BundleKeys.ROOM_ID)) {
+            mRoomId = bundle.getInt(BundleKeys.ROOM_ID);
         }
 
         getPlayerInfoFromServer(bundle.getInt(BundleKeys.PLAYER_ID));
@@ -66,8 +66,8 @@ public class PlayerProfileModelImpl implements PlayerProfileModel {
     }
 
     @Override
-    public Integer getChallengeId() {
-        return mChallengeId;
+    public Integer getRoomId() {
+        return mRoomId;
     }
 
     public interface OnProfileModelListener {
