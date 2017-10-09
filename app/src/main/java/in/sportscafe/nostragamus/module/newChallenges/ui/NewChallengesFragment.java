@@ -22,9 +22,12 @@ import java.util.Comparator;
 import java.util.List;
 
 import in.sportscafe.nostragamus.Constants;
+import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.NostraBaseFragment;
+import in.sportscafe.nostragamus.module.navigation.wallet.WalletApiModelImpl;
 import in.sportscafe.nostragamus.module.navigation.wallet.WalletHelper;
+import in.sportscafe.nostragamus.module.navigation.wallet.dto.UserWalletResponse;
 import in.sportscafe.nostragamus.module.newChallenges.dataProvider.NewChallengesDataProvider;
 import in.sportscafe.nostragamus.module.newChallenges.dataProvider.SportsDataProvider;
 import in.sportscafe.nostragamus.module.newChallenges.dto.NewChallengesResponse;
@@ -94,18 +97,26 @@ public class NewChallengesFragment extends NostraBaseFragment implements View.On
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        initMembers();
         setWalletBalance();
         loadData();
     }
 
-    private void initMembers() {
-
-    }
-
     private void setWalletBalance() {
-        int amount = (int) WalletHelper.getTotalBalance();
-        mTvTBarWalletMoney.setText(String.valueOf(amount));
+        if (Nostragamus.getInstance().hasNetworkConnection()) {
+            WalletApiModelImpl.newInstance(new WalletApiModelImpl.WalletApiListener() {
+                @Override
+                public void noInternet() {}
+
+                @Override
+                public void onApiFailed() {}
+
+                @Override
+                public void onSuccessResponse(UserWalletResponse response) {
+                    int amount = (int) WalletHelper.getTotalBalance();
+                    mTvTBarWalletMoney.setText(String.valueOf(amount));
+                }
+            }).performApiCall();
+        }
     }
 
     private void loadData() {
@@ -115,6 +126,7 @@ public class NewChallengesFragment extends NostraBaseFragment implements View.On
             @Override
             public void onData(int status, @Nullable List<NewChallengesResponse> newChallengesResponseData) {
                 hideLoadingProgressBar();
+                setWalletBalance();
                 onDataReceived(status, newChallengesResponseData);
             }
 
