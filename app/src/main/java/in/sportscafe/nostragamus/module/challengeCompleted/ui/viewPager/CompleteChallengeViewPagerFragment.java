@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -16,6 +17,7 @@ import com.jeeva.android.BaseFragment;
 import java.util.ArrayList;
 import java.util.List;
 
+import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.challengeCompleted.adapter.CompletedChallengeAdapterItemType;
@@ -28,7 +30,6 @@ import in.sportscafe.nostragamus.module.challengeCompleted.dto.CompletedResponse
 import in.sportscafe.nostragamus.module.contest.contestDetailsCompletedChallenges.ContestDetailCompletedActivity;
 import in.sportscafe.nostragamus.module.newChallenges.dataProvider.SportsDataProvider;
 import in.sportscafe.nostragamus.module.newChallenges.dto.SportsTab;
-import in.sportscafe.nostragamus.utils.AlertsHelper;
 
 /**
  * Created by deepanshi on 9/27/17.
@@ -174,10 +175,23 @@ public class CompleteChallengeViewPagerFragment extends BaseFragment {
                 getActivity().startActivity(intent);
             }
         } else {
-            AlertsHelper.showAlert(getContext(), "No Internet", "Please turn ON internet to continue", null);
+            handleError(Constants.DataStatus.NO_INTERNET);
         }
     }
 
+    private void handleError(int status) {
+        if (getView() != null && getActivity() != null && !getActivity().isFinishing()) {
+            switch (status) {
+                case Constants.DataStatus.NO_INTERNET:
+                    Snackbar.make(getView(), Constants.Alerts.NO_INTERNET_CONNECTION, Snackbar.LENGTH_LONG).show();
+                    break;
+
+                default:
+                    Snackbar.make(getView(), Constants.Alerts.SOMETHING_WRONG, Snackbar.LENGTH_LONG);
+                    break;
+            }
+        }
+    }
 
     public void setTabDetails(SportsTab sportsTab) {
         mSportsTab = sportsTab;

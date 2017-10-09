@@ -36,6 +36,9 @@ public class NostraNotificationData {
     @SerializedName("refer_friend")
     private UserReferralInfo referFriend;
 
+    @SerializedName("challenge_starttime")
+    private String challengeStartTime;
+
     public int getChallengeId() {
         return challengeId;
     }
@@ -98,5 +101,13 @@ public class NostraNotificationData {
 
     public void setSportId(int sportId) {
         this.sportId = sportId;
+    }
+
+    public String getChallengeStartTime() {
+        return challengeStartTime;
+    }
+
+    public void setChallengeStartTime(String challengeStartTime) {
+        this.challengeStartTime = challengeStartTime;
     }
 }

@@ -17,6 +17,7 @@ public  class ResultsScreenDataDto {
     private String matchPartyTitle2;
     private String subTitle;
     private String challengeName;
+    private String challengeStartTime;
     private String matchStatus;
     private boolean isPlayingPseudoGame = false;
     private boolean isHeadLess = false;
@@ -99,5 +100,13 @@ public  class ResultsScreenDataDto {
 
     public void setHeadLess(boolean headLess) {
         isHeadLess = headLess;
+    }
+
+    public String getChallengeStartTime() {
+        return challengeStartTime;
+    }
+
+    public void setChallengeStartTime(String challengeStartTime) {
+        this.challengeStartTime = challengeStartTime;
     }
 }

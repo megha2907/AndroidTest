@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<android.support.design.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
@@ -7,135 +7,197 @@
     android:layout_height="match_parent"
     android:background="@color/black">
 
-    <!-- Top layout -->
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dim_30"
-        android:background="@color/blue_104468">
-
-        <com.jeeva.android.widgets.customfont.CustomTextView
-            android:id="@+id/matches_timeline_matches_left"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/white"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="@dimen/dim_20"
-            android:textSize="@dimen/sp_12"
-            app:typeface="lato_bold" />
-
-        <com.jeeva.android.widgets.customfont.CustomTextView
-            android:id="@+id/matches_timeline_matches_left_txt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/white_60"
-            android:text="Games Left"
-            android:textAllCaps="true"
-            android:layout_toRightOf="@+id/matches_timeline_matches_left"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="@dimen/dim_6"
-            android:textSize="@dimen/sp_10"
-            app:typeface="lato_regular" />
-
-        <com.jeeva.android.widgets.customfont.CustomTextView
-            android:id="@+id/matches_timeline_match_expires_in"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_alignParentRight="true"
-            android:textAllCaps="false"
-            android:text=""
-            android:layout_marginRight="@dimen/dim_20"
-            android:textColor="@color/white"
-            android:textSize="@dimen/sp_12"
-            app:typeface="lato_bold" />
-
-    </RelativeLayout>
-
-    <!-- Information Layout -->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:gravity="center"
-        android:background="@color/colorBackground"
-        android:paddingBottom="@dimen/dim_16"
-        android:paddingTop="@dimen/dim_12"
-        android:paddingLeft="@dimen/dim_12"
-        android:paddingRight="@dimen/dim_12"
-        android:layout_margin="@dimen/dim_12">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
+        <!-- Heading layout -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center">
+            android:minHeight="@dimen/dim_40"
+            android:background="@drawable/toolbar_bg">
 
-            <LinearLayout
+            <ImageView
+                android:id="@+id/back_button"
+                android:layout_width="@dimen/dp_32"
+                android:layout_height="@dimen/dp_32"
+                android:layout_gravity="center"
+                android:padding="@dimen/dim_10"
+                android:layout_marginLeft="@dimen/dim_6"
+                android:src="@drawable/back_icon_grey" />
+
+            <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:gravity="center">
-
-                <ImageView
-                    android:id="@+id/games_info_icon_imgView"
-                    android:layout_width="@dimen/dim_36"
-                    android:layout_height="@dimen/dim_36"
-                    android:src="@drawable/play_contest_card"/>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_marginLeft="@dimen/dim_12">
+                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/dim_6">
 
                 <com.jeeva.android.widgets.customfont.CustomTextView
-                    android:id="@+id/games_info_heading_textView"
+                    android:id="@+id/toolbar_heading_one"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/bluecolor1"
-                    android:text="YOUR PREDICTIONS ARE SAVED"
-                    android:textAllCaps="true"
-                    android:layout_marginTop="@dimen/dim_10"
-                    android:textSize="@dimen/sp_12"
-                    app:typeface="lato_bold" />
-
-                <com.jeeva.android.widgets.customfont.CustomTextView
-                    android:id="@+id/games_info_msg_textView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/grey6"
-                    android:text="Join a contest to play the challenge. You can only edit the predictions once you have joined contest"
-                    android:layout_marginTop="@dimen/dim_8"
-                    android:textSize="@dimen/sp_11"
+                    android:text="Challenge"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/sp_14"
                     app:typeface="lato_regular" />
 
-            </LinearLayout>
+                <com.jeeva.android.widgets.customfont.CustomTextView
+                    android:id="@+id/toolbar_wallet_money"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:layout_marginRight="@dimen/dim_16"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true"
+                    android:textColor="@color/white_60"
+                    android:textSize="@dimen/sp_14"
+                    app:typeface="lato_regular" />
+
+                <ImageView
+                    android:id="@+id/toolbar_wallet_icon"
+                    android:layout_width="@dimen/dim_14"
+                    android:layout_height="@dimen/dim_14"
+                    android:layout_centerVertical="true"
+                    android:layout_toLeftOf="@+id/toolbar_wallet_money"
+                    android:layout_marginRight="@dimen/dim_4"
+                    android:src="@drawable/toolbar_wallet_icon"/>
+
+            </RelativeLayout>
 
         </LinearLayout>
 
-        <com.jeeva.android.widgets.customfont.CustomButton
-            android:id="@+id/new_challenge_matches_join_button"
+        <!-- Games strip -->
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dim_40"
-            android:layout_marginTop="@dimen/dim_12"
-            android:background="@drawable/light_blue_button_selector"
-            android:onClick="onClick"
-            android:paddingBottom="@dimen/dp_4"
-            android:text="Join a Contest"
-            android:textAllCaps="false"
-            android:textColor="@color/white"
-            android:textSize="@dimen/sp_14"
-            app:typeface="lato_regular"/>
+            android:layout_height="@dimen/dim_30"
+            android:background="#0f2a48">
+
+            <com.jeeva.android.widgets.customfont.CustomTextView
+                android:id="@+id/matches_timeline_matches_left_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white_60"
+                android:text="Games"
+                android:textAllCaps="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/dim_20"
+                android:textSize="@dimen/sp_10"
+                app:typeface="lato_regular" />
+
+            <com.jeeva.android.widgets.customfont.CustomTextView
+                android:id="@+id/matches_timeline_matches_left"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/dim_6"
+                android:textSize="@dimen/sp_12"
+                app:typeface="lato_bold"
+                android:layout_toRightOf="@id/matches_timeline_matches_left_txt"/>
+
+            <com.jeeva.android.widgets.customfont.CustomTextView
+                android:id="@+id/matches_timeline_match_expires_in"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:textAllCaps="false"
+                android:text=""
+                android:layout_marginRight="@dimen/dim_20"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp_12"
+                app:typeface="lato_bold" />
+
+        </RelativeLayout>
+
+        <!-- Information Layout -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:background="@drawable/information_card_bg"
+            android:paddingBottom="@dimen/dim_16"
+            android:paddingTop="@dimen/dim_12"
+            android:paddingLeft="@dimen/dim_12"
+            android:paddingRight="@dimen/dim_12"
+            android:layout_margin="@dimen/dim_12">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="center">
+
+                    <ImageView
+                        android:id="@+id/games_info_icon_imgView"
+                        android:layout_width="@dimen/dim_36"
+                        android:layout_height="@dimen/dim_36"
+                        android:src="@drawable/play_contest_card"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginLeft="@dimen/dim_12">
+
+                    <com.jeeva.android.widgets.customfont.CustomTextView
+                        android:id="@+id/games_info_heading_textView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/bluecolor1"
+                        android:text="YOUR PREDICTIONS ARE SAVED"
+                        android:textAllCaps="true"
+                        android:textSize="@dimen/sp_12"
+                        app:typeface="lato_bold" />
+
+                    <com.jeeva.android.widgets.customfont.CustomTextView
+                        android:id="@+id/games_info_msg_textView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/grey6"
+                        android:text="Join a contest to play the challenge. You can only edit the predictions once you have joined contest"
+                        android:layout_marginTop="@dimen/dim_8"
+                        android:textSize="@dimen/sp_11"
+                        app:typeface="lato_regular" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <com.jeeva.android.widgets.customfont.CustomButton
+                android:id="@+id/new_challenge_matches_join_button"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dim_40"
+                android:layout_marginTop="@dimen/dim_12"
+                android:background="@drawable/light_blue_button_selector"
+                android:onClick="onClick"
+                android:paddingBottom="@dimen/dp_4"
+                android:text="Join a Contest"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp_14"
+                app:typeface="lato_regular"/>
+
+        </LinearLayout>
+
+        <!-- Matches Layout -->
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/match_timeline_rv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/challenge_timeline_tv_match_left"/>
 
     </LinearLayout>
 
-    <!-- Matches Layout -->
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/match_timeline_rv"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/challenge_timeline_tv_match_left"/>
-
-</LinearLayout>
+</android.support.design.widget.CoordinatorLayout>

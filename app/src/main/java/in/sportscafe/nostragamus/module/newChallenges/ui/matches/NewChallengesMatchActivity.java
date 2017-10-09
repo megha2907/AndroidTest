@@ -23,11 +23,6 @@ import in.sportscafe.nostragamus.utils.FragmentHelper;
 
 public class NewChallengesMatchActivity extends NostraBaseActivity implements NewChallengeMatchFragmentListener, View.OnClickListener {
 
-    /*@Override
-    public String getScreenName() {
-        return Constants.ScreenNames.MATCHES_TIMELINE;
-    }*/
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setShouldAnimateActivity(true);
@@ -37,6 +32,7 @@ public class NewChallengesMatchActivity extends NostraBaseActivity implements Ne
         initialize();
         loadMatchesTimelineFragment();
     }
+
 
     private void initialize() {
         initToolbar();

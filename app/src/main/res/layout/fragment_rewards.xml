@@ -1,31 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/black5"
-    android:orientation="vertical">
+    android:background="@color/black5">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/rewards_rcv"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:paddingBottom="@dimen/dim_90"
-        android:clipToPadding="false"
-        android:visibility="gone" />
+        android:layout_height="match_parent">
 
-    <!-- Loading View -->
-    <LinearLayout
-        android:id="@+id/rewards_progress_bar_layout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:gravity="center">
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rewards_rcv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="@dimen/dim_90"
+            android:clipToPadding="false"
+            android:layout_below="@+id/rewards_challenge_end_time"
+            android:paddingTop="@dimen/dp_5" />
 
-        <in.sportscafe.nostragamus.module.common.NostraProgressBar
+        <!-- Loading View -->
+        <LinearLayout
+            android:id="@+id/rewards_progress_bar_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_gravity="center"/>
+            android:orientation="vertical"
+            android:gravity="center"
+            android:visibility="gone">
 
-    </LinearLayout>
+            <in.sportscafe.nostragamus.module.common.NostraProgressBar
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"/>
 
-</LinearLayout>
+        </LinearLayout>
+
+    </RelativeLayout>
+
+</android.support.design.widget.CoordinatorLayout>

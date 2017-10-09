@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -19,8 +20,6 @@ import com.jeeva.android.Log;
 
 import org.parceler.Parcels;
 
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 import in.sportscafe.nostragamus.AppSnippet;
@@ -30,18 +29,15 @@ import in.sportscafe.nostragamus.module.challengeCompleted.dto.CompletedContestD
 import in.sportscafe.nostragamus.module.challengeCompleted.dto.CompletedContestMatchDto;
 import in.sportscafe.nostragamus.module.common.NostraBaseFragment;
 import in.sportscafe.nostragamus.module.customViews.TimelineHelper;
-import in.sportscafe.nostragamus.module.inPlay.adapter.MatchesAdapterAction;
 import in.sportscafe.nostragamus.module.inPlay.adapter.InPlayMatchAdapterListener;
 import in.sportscafe.nostragamus.module.inPlay.adapter.InPlayMatchesRecyclerAdapter;
+import in.sportscafe.nostragamus.module.inPlay.adapter.MatchesAdapterAction;
 import in.sportscafe.nostragamus.module.inPlay.dataProvider.InPlayMatchesDataProvider;
-import in.sportscafe.nostragamus.module.inPlay.dto.InPlayContestMatchDto;
 import in.sportscafe.nostragamus.module.inPlay.dto.InPlayMatch;
 import in.sportscafe.nostragamus.module.inPlay.dto.InPlayMatchesResponse;
 import in.sportscafe.nostragamus.module.inPlay.ui.ResultsScreenDataDto;
-import in.sportscafe.nostragamus.module.newChallenges.helpers.DateTimeHelper;
 import in.sportscafe.nostragamus.module.play.myresults.MyResultsActivity;
 import in.sportscafe.nostragamus.module.prediction.playScreen.dto.PowerUp;
-import in.sportscafe.nostragamus.utils.AlertsHelper;
 import in.sportscafe.nostragamus.utils.timeutils.TimeUtils;
 
 /**
@@ -339,11 +335,11 @@ public class CompletedMatchTimelineViewPagerFragment extends NostraBaseFragment 
     private void handleError(int status) {
         switch (status) {
             case Constants.DataStatus.NO_INTERNET:
-                AlertsHelper.showAlert(getContext(), "No Internet", "Please tern ON internet to continue", null);
+                Snackbar.make(getView(), Constants.Alerts.NO_INTERNET_CONNECTION, Snackbar.LENGTH_LONG).show();
                 break;
 
             default:
-                AlertsHelper.showAlert(getContext(), "Error", Constants.Alerts.SOMETHING_WRONG, null);
+                Snackbar.make(getView(), Constants.Alerts.SOMETHING_WRONG, Snackbar.LENGTH_LONG);
                 break;
         }
     }

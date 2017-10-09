@@ -2,6 +2,7 @@ package in.sportscafe.nostragamus.module.challengeRewards;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -18,7 +19,6 @@ import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.challengeRewards.dto.Rewards;
 import in.sportscafe.nostragamus.module.common.NostraBaseFragment;
-import in.sportscafe.nostragamus.utils.AlertsHelper;
 import in.sportscafe.nostragamus.utils.timeutils.TimeAgo;
 import in.sportscafe.nostragamus.utils.timeutils.TimeUnit;
 import in.sportscafe.nostragamus.utils.timeutils.TimeUtils;
@@ -98,12 +98,12 @@ public class RewardsFragment extends NostraBaseFragment implements RewardsApiMod
 
     @Override
     public void onEmpty() {
-       // showMessage(Constants.Alerts.POLL_LIST_EMPTY);
+        // showMessage(Constants.Alerts.POLL_LIST_EMPTY);
     }
 
     @Override
     public void onFailedConfigsApi() {
-       // showMessage(Constants.Alerts.API_FAIL);
+        // showMessage(Constants.Alerts.API_FAIL);
     }
 
     @Override
@@ -116,12 +116,26 @@ public class RewardsFragment extends NostraBaseFragment implements RewardsApiMod
 
     @Override
     public void onError(int status) {
-
+        handleError(status);
     }
 
     @Override
     public void onNoInternet() {
-        AlertsHelper.showAlert(getContext(),"Internet Problem", Constants.Alerts.NO_NETWORK_CONNECTION, null);
+        handleError(Constants.DataStatus.NO_INTERNET);
+    }
+
+    private void handleError(int status) {
+        if (getView() != null && getActivity() != null && !getActivity().isFinishing()) {
+            switch (status) {
+                case Constants.DataStatus.NO_INTERNET:
+                    Snackbar.make(getView(), Constants.Alerts.NO_INTERNET_CONNECTION, Snackbar.LENGTH_LONG).show();
+                    break;
+
+                default:
+                    Snackbar.make(getView(), Constants.Alerts.SOMETHING_WRONG, Snackbar.LENGTH_LONG);
+                    break;
+            }
+        }
     }
 
     private void showLoadingProgressBar() {

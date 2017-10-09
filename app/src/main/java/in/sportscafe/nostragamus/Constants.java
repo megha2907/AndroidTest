@@ -323,6 +323,7 @@ public interface Constants {
         String SCREEN_LAUNCH_REQUEST = "screenLaunchRequest";
         String CONTEST_ENTRIES_SCREEN_DATA = "contestEntriesScreenData";
         String NEW_CHALLENGE_MATCHES_SCREEN_DATA = "newChallengeMatchesScreenData";
+        String TIMER_FINISHED_SCREEN_DATA = "timerFinishedScreenData";
 
         /* Wallet */
         String WALLET_WITHDRAWAL_AMT = "walletWithdrawAmt";
@@ -835,5 +836,10 @@ public interface Constants {
     interface PredictionPoints {
         int POSITIVE_POINTS = 10;
         int NEGATIVE_POINTS = -4;
+    }
+
+    interface TimerOutDialogRequestCode {
+        int CAN_NOT_JOIN = 3111;
+        int CAN_NOT_PLAY_GAME = 3112;
     }
 }

@@ -12,6 +12,7 @@ public class ContestScreenData {
     private String challengeName;
     private boolean isHeadLessFlow = false;
     private int pseudoRoomId;
+    private String challengeStartTime;
 
     public int getChallengeId() {
         return challengeId;
@@ -43,5 +44,13 @@ public class ContestScreenData {
 
     public void setPseudoRoomId(int pseudoRoomId) {
         this.pseudoRoomId = pseudoRoomId;
+    }
+
+    public String getChallengeStartTime() {
+        return challengeStartTime;
+    }
+
+    public void setChallengeStartTime(String challengeStartTime) {
+        this.challengeStartTime = challengeStartTime;
     }
 }
