@@ -18,7 +18,8 @@
         android:layout_height="@dimen/dim_30"
         android:layout_alignParentTop="true"
         android:background="#0f2a48"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:visibility="gone">
 
         <com.jeeva.android.widgets.customfont.CustomTextView
             android:id="@+id/schedule_row_tv_leaderboard_rank_txt"

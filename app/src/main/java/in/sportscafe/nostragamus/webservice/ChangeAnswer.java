@@ -8,6 +8,9 @@ import com.google.gson.annotations.SerializedName;
 
 public class ChangeAnswer {
 
+    @SerializedName("match_id")
+    private Integer matchId;
+
     @SerializedName("question_id")
     private Integer questionId;
 
@@ -17,7 +20,8 @@ public class ChangeAnswer {
     @SerializedName("room_id")
     private Integer roomId;
 
-    public ChangeAnswer(Integer questionId, Integer answerId,Integer roomId) {
+    public ChangeAnswer(Integer matchId,Integer questionId, Integer answerId,Integer roomId) {
+        this.matchId = matchId;
         this.questionId = questionId;
         this.answerId = answerId;
         this.roomId = roomId;
@@ -49,5 +53,13 @@ public class ChangeAnswer {
 
     public void setRoomId(Integer roomId) {
         this.roomId = roomId;
+    }
+
+    public Integer getMatchId() {
+        return matchId;
+    }
+
+    public void setMatchId(Integer matchId) {
+        this.matchId = matchId;
     }
 }

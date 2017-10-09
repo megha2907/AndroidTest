@@ -306,10 +306,10 @@ public class PlayerProfileActivity extends NostragamusActivity implements Player
 
 
     @Override
-    public void initMyPosition(PlayerInfo playerInfo, Integer challengeId) {
+    public void initMyPosition(PlayerInfo playerInfo, int roomId) {
         mViewPager = (CustomViewPager) findViewById(R.id.tab_vp);
         mViewPager.setOffscreenPageLimit(5);
-        mpagerAdapter = getAdapter(playerInfo, challengeId);
+        mpagerAdapter = getAdapter(playerInfo, roomId);
         mViewPager.setAdapter(mpagerAdapter);
 
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -342,10 +342,10 @@ public class PlayerProfileActivity extends NostragamusActivity implements Player
 
     }
 
-    private ViewPagerAdapter getAdapter(PlayerInfo playerInfo, Integer challengeId) {
+    private ViewPagerAdapter getAdapter(PlayerInfo playerInfo, int roomId) {
         ViewPagerAdapter pagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
 
-        pagerAdapter.addFragment(TimelineFragment.newInstance(playerInfo, challengeId), "Matches");
+        pagerAdapter.addFragment(TimelineFragment.newInstance(playerInfo, roomId), "Matches");
 
         if (groupsCount == "1") {
             pagerAdapter.addFragment(AllGroupsFragment.newMutualGroupInstance(playerInfo), "Mutual Group");

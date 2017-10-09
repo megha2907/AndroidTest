@@ -31,7 +31,7 @@ public interface PlayerProfileView extends InAppView {
 
     void setBadgesCount(int badgesCount, List<Badge> badgeList);
 
-    void initMyPosition(PlayerInfo playerInfo, Integer challengeId);
+    void initMyPosition(PlayerInfo playerInfo, int roomId);
 
     void setPredictionCount(Integer predictionCount);
 

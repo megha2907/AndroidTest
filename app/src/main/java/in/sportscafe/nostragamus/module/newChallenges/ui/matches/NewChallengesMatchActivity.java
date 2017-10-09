@@ -4,18 +4,24 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import org.parceler.Parcels;
+
+import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.NostraBaseActivity;
 import in.sportscafe.nostragamus.module.contest.ui.ContestsActivity;
+import in.sportscafe.nostragamus.module.inPlay.dto.InPlayMatch;
+import in.sportscafe.nostragamus.module.navigation.wallet.WalletHelper;
 import in.sportscafe.nostragamus.utils.FragmentHelper;
 
 /**
  * Created by deepanshi on 9/1/17.
  */
 
-public class NewChallengesMatchActivity extends NostraBaseActivity implements NewChallengeMatchFragmentListener {
+public class NewChallengesMatchActivity extends NostraBaseActivity implements NewChallengeMatchFragmentListener{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,4 +55,5 @@ public class NewChallengesMatchActivity extends NostraBaseActivity implements Ne
         }
         startActivity(intent);
     }
+
 }

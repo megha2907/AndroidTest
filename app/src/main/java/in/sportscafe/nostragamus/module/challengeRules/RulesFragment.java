@@ -132,7 +132,8 @@ public class RulesFragment extends NostraBaseFragment implements RulesApiModelIm
     }
 
     private void showContestRuleTwo(Rules rules) {
-        TvContestRuleTwo.setText("You can make and edit your predictions half an hr before the matches start");
+        TvContestRuleTwo.setText("Games have timers counting down to the start of the live match. Make your predictions" +
+                " before the timer runs out as predictions are frozen once the live match starts!");
     }
 
     private void showContestRuleThree(Rules rules) {

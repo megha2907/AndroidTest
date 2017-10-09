@@ -40,8 +40,6 @@ public class RewardsFragment extends NostraBaseFragment implements RewardsApiMod
 
     private RecyclerView mRcvRewards;
 
-    private TextView mChallengeEndTime;
-
     public RewardsFragment() {
 
     }
@@ -85,11 +83,10 @@ public class RewardsFragment extends NostraBaseFragment implements RewardsApiMod
         this.mRcvRewards.setLayoutManager(new LinearLayoutManager(getContext(),
                 LinearLayoutManager.VERTICAL, false));
         this.mRcvRewards.setHasFixedSize(true);
-
-        mChallengeEndTime = (TextView)rootView.findViewById(R.id.rewards_challenge_end_time);
     }
 
     private void getRewardsData() {
+        showLoadingProgressBar();
         new RewardsApiModelImpl().getRewardsData(mRoomId,mConfigId,this);
     }
 
@@ -111,51 +108,10 @@ public class RewardsFragment extends NostraBaseFragment implements RewardsApiMod
 
     @Override
     public void onData(@Nullable List<Rewards> rewardsList,String challengeEndTime) {
+        hideLoadingProgressBar();
         mConfigAdapter = createAdapter(rewardsList,challengeEndTime);
         mRcvRewards.setAdapter(mConfigAdapter);
-
-
-        String endTime = challengeEndTime;
-        long endTimeMs = TimeUtils.getMillisecondsFromDateString(
-                endTime,
-                Constants.DateFormats.FORMAT_DATE_T_TIME_ZONE,
-                Constants.DateFormats.GMT
-        );
-
-        int dayOfMonthinEndTime = Integer.parseInt(TimeUtils.getDateStringFromMs(endTimeMs, "d"));
-
-        String prizesHandOutDate = dayOfMonthinEndTime + AppSnippet.ordinalOnly(dayOfMonthinEndTime) + " of " +
-                TimeUtils.getDateStringFromMs(endTimeMs, "MMM");
-
-        if (getChallengeOver(challengeEndTime)) {
-            /* set when challenge is over */
-            mChallengeEndTime.setText("Prizes were handed out on "+prizesHandOutDate+".");
-        }else {
-            // Setting end date of the challenge
-            mChallengeEndTime.setText("The challenge will end on " + prizesHandOutDate + ". Prizes will be handed out within a few hours of challenge completion.");
-        }
-
-    }
-
-    private boolean getChallengeOver(String challengeEndTime) {
-
-        boolean isChallengeOver = false;
-
-        if (!TextUtils.isEmpty(challengeEndTime)) {
-            String startTime = challengeEndTime.replace("+00:00", ".000Z");
-            long startTimeMs = TimeUtils.getMillisecondsFromDateString(
-                    startTime,
-                    Constants.DateFormats.FORMAT_DATE_T_TIME_ZONE,
-                    Constants.DateFormats.GMT
-            );
-            TimeAgo timeAgo = TimeUtils.calcTimeAgo(Nostragamus.getInstance().getServerTime(), startTimeMs);
-
-            isChallengeOver = timeAgo.timeDiff <= 0
-                    || timeAgo.timeUnit == TimeUnit.MILLISECOND
-                    || timeAgo.timeUnit == TimeUnit.SECOND;
-        }
-
-        return isChallengeOver;
+        mRcvRewards.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -184,15 +140,15 @@ public class RewardsFragment extends NostraBaseFragment implements RewardsApiMod
 
     private void showLoadingProgressBar() {
         if (getView() != null) {
-            getView().findViewById(R.id.newChallengeContentLayout).setVisibility(View.GONE);
-            getView().findViewById(R.id.newChallengeProgressBarLayout).setVisibility(View.VISIBLE);
+            getView().findViewById(R.id.rewards_rcv).setVisibility(View.GONE);
+            getView().findViewById(R.id.rewards_progress_bar_layout).setVisibility(View.VISIBLE);
         }
     }
 
     private void hideLoadingProgressBar() {
         if (getView() != null) {
-            getView().findViewById(R.id.newChallengeProgressBarLayout).setVisibility(View.GONE);
-            getView().findViewById(R.id.newChallengeContentLayout).setVisibility(View.VISIBLE);
+            getView().findViewById(R.id.rewards_progress_bar_layout).setVisibility(View.GONE);
+            getView().findViewById(R.id.rewards_rcv).setVisibility(View.VISIBLE);
         }
     }
 

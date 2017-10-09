@@ -1,217 +1,211 @@
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/black"
-    android:orientation="vertical"
-    tools:context="in.sportscafe.nostragamus.module.inPlay.ui.InPlayMatchesPagerFragment">
+    android:background="@color/black">
 
     <LinearLayout
+        android:id="@+id/inplay_matches_content_View"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:visibility="gone">
 
+        <!-- Powerups layout at Top -->
         <LinearLayout
-            android:id="@+id/inplay_matches_content_View"
+            android:id="@+id/powerup_top_layout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dim_16"
             android:orientation="vertical"
-            android:visibility="visible">
+            android:visibility="visible"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-            <!-- Powerups layout at Top -->
             <LinearLayout
-                android:id="@+id/powerup_top_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dim_16"
-                android:orientation="vertical"
-                android:visibility="visible">
+                android:layout_marginLeft="@dimen/dim_12"
+                android:layout_marginRight="@dimen/dim_12"
+                android:background="@color/colorPrimary"
+                android:gravity="center_vertical"
+                android:minHeight="@dimen/dim_32"
+                android:orientation="horizontal"
+                android:paddingLeft="@dimen/dim_16"
+                android:paddingRight="@dimen/dim_16">
+
+                <com.jeeva.android.widgets.customfont.CustomTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingRight="@dimen/dim_20"
+                    android:text="Powerups Left"
+                    android:textAllCaps="true"
+                    android:textColor="@color/grey6"
+                    android:textSize="@dimen/sp_11"
+                    app:typeface="lato_regular" />
 
                 <LinearLayout
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/dim_12"
-                    android:layout_marginRight="@dimen/dim_12"
-                    android:background="@color/colorPrimary"
-                    android:gravity="center_vertical"
-                    android:minHeight="@dimen/dim_32"
-                    android:orientation="horizontal"
-                    android:paddingLeft="@dimen/dim_16"
-                    android:paddingRight="@dimen/dim_16">
+                    android:layout_weight="1"
+                    android:gravity="right"
+                    android:orientation="horizontal">
+
+                    <com.jeeva.android.widgets.HmImageView
+                        android:id="@+id/in_play_2x_iv"
+                        android:layout_width="@dimen/dim_14"
+                        android:layout_height="@dimen/dim_14"
+                        android:layout_marginTop="@dimen/dim_1"
+                        android:background="@android:color/transparent"
+                        android:src="@drawable/double_powerup_small"
+                        android:visibility="gone" />
 
                     <com.jeeva.android.widgets.customfont.CustomTextView
+                        android:id="@+id/in_play_2x_count_tv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:paddingRight="@dimen/dim_20"
-                        android:text="Powerups Left"
-                        android:textAllCaps="true"
-                        android:textColor="@color/grey6"
-                        android:textSize="@dimen/sp_11"
+                        android:layout_marginLeft="@dimen/dim_6"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/sp_12"
                         app:typeface="lato_regular" />
 
-                    <LinearLayout
-                        android:layout_width="0dp"
+                    <com.jeeva.android.widgets.HmImageView
+                        android:id="@+id/in_play_no_neg_iv"
+                        android:layout_width="@dimen/dim_14"
+                        android:layout_height="@dimen/dim_14"
+                        android:layout_marginLeft="@dimen/dim_16"
+                        android:layout_marginTop="@dimen/dim_1"
+                        android:background="@android:color/transparent"
+                        android:src="@drawable/no_negative_powerup_small"
+                        android:visibility="gone" />
+
+                    <com.jeeva.android.widgets.customfont.CustomTextView
+                        android:id="@+id/in_play_no_neg_count_tv"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="right"
-                        android:orientation="horizontal">
+                        android:layout_marginLeft="@dimen/dim_6"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/sp_12"
+                        app:typeface="lato_regular" />
 
-                        <com.jeeva.android.widgets.HmImageView
-                            android:id="@+id/in_play_2x_iv"
-                            android:layout_width="@dimen/dim_14"
-                            android:layout_height="@dimen/dim_14"
-                            android:layout_marginTop="@dimen/dim_1"
-                            android:background="@android:color/transparent"
-                            android:src="@drawable/double_powerup_small"
-                            android:visibility="gone" />
+                    <com.jeeva.android.widgets.HmImageView
+                        android:id="@+id/in_play_player_poll_iv"
+                        android:layout_width="@dimen/dim_14"
+                        android:layout_height="@dimen/dim_14"
+                        android:layout_marginLeft="@dimen/dim_16"
+                        android:layout_marginTop="@dimen/dim_1"
+                        android:background="@android:color/transparent"
+                        android:src="@drawable/audience_poll_powerup_small"
+                        android:visibility="gone" />
 
-                        <com.jeeva.android.widgets.customfont.CustomTextView
-                            android:id="@+id/in_play_2x_count_tv"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textColor="@color/white"
-                            android:textSize="@dimen/sp_12"
-                            android:layout_marginLeft="@dimen/dim_6"
-                            app:typeface="lato_regular" />
-
-                        <com.jeeva.android.widgets.HmImageView
-                            android:id="@+id/in_play_no_neg_iv"
-                            android:layout_width="@dimen/dim_14"
-                            android:layout_height="@dimen/dim_14"
-                            android:layout_marginLeft="@dimen/dim_16"
-                            android:layout_marginTop="@dimen/dim_1"
-                            android:background="@android:color/transparent"
-                            android:src="@drawable/no_negative_powerup_small"
-                            android:visibility="gone" />
-
-                        <com.jeeva.android.widgets.customfont.CustomTextView
-                            android:id="@+id/in_play_no_neg_count_tv"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/dim_6"
-                            android:textColor="@color/white"
-                            android:textSize="@dimen/sp_12"
-                            app:typeface="lato_regular" />
-
-                        <com.jeeva.android.widgets.HmImageView
-                            android:id="@+id/in_play_player_poll_iv"
-                            android:layout_width="@dimen/dim_14"
-                            android:layout_height="@dimen/dim_14"
-                            android:layout_marginTop="@dimen/dim_1"
-                            android:layout_marginLeft="@dimen/dim_16"
-                            android:background="@android:color/transparent"
-                            android:src="@drawable/audience_poll_powerup_small"
-                            android:visibility="gone" />
-
-                        <com.jeeva.android.widgets.customfont.CustomTextView
-                            android:id="@+id/in_play_player_poll_count_tv"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/dim_6"
-                            android:textColor="@color/white"
-                            android:textSize="@dimen/sp_12"
-                            app:typeface="lato_regular" />
-
-                    </LinearLayout>
+                    <com.jeeva.android.widgets.customfont.CustomTextView
+                        android:id="@+id/in_play_player_poll_count_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/dim_6"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/sp_12"
+                        app:typeface="lato_regular" />
 
                 </LinearLayout>
 
             </LinearLayout>
 
+        </LinearLayout>
 
-            <RelativeLayout
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dim_18"
+            android:layout_marginRight="@dimen/dim_16"
+            android:layout_marginTop="@dimen/dim_12"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+            <!-- Matches status timeline -->
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/dim_18"
-                android:layout_marginRight="@dimen/dim_16"
-                android:layout_marginTop="@dimen/dim_12">
+                android:layout_centerInParent="true"
+                android:orientation="vertical">
 
-                <!-- Matches status timeline -->
+                <LinearLayout
+                    android:id="@+id/match_status_timeline_title_parent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:layout_marginLeft="@dimen/dim_5"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:scrollbars="horizontal" />
+
+                <LinearLayout
+                    android:id="@+id/match_status_timeline"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:layout_marginLeft="@dimen/dim_15"
+                    android:layout_marginTop="@dimen/dim_4"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:scrollbars="horizontal" />
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:orientation="vertical">
+                    android:layout_marginBottom="@dimen/dim_10"
+                    android:layout_marginTop="@dimen/dim_14"
+                    android:gravity="center"
+                    android:orientation="horizontal">
 
-                    <LinearLayout
-                        android:id="@+id/match_status_timeline_title_parent"
+                    <com.jeeva.android.widgets.customfont.CustomTextView
+                        android:id="@+id/inplay_match_timeline_games_left"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="left"
-                        android:layout_marginLeft="@dimen/dim_5"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal"
-                        android:scrollbars="horizontal" />
+                        android:textAllCaps="true"
+                        android:textColor="@color/white_999999"
+                        android:textSize="@dimen/sp_12"
+                        app:typeface="lato_regular" />
 
-                    <LinearLayout
-                        android:id="@+id/match_status_timeline"
+                    <com.jeeva.android.widgets.customfont.CustomTextView
+                        android:id="@+id/inplay_match_timeline_games_left_textview"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="left"
-                        android:layout_marginLeft="@dimen/dim_15"
-                        android:layout_marginTop="@dimen/dim_4"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal"
-                        android:scrollbars="horizontal" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="@dimen/dim_10"
-                        android:layout_marginTop="@dimen/dim_14"
-                        android:gravity="center"
-                        android:orientation="horizontal">
-
-                        <com.jeeva.android.widgets.customfont.CustomTextView
-                            android:id="@+id/inplay_match_timeline_games_left"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textAllCaps="true"
-                            android:textColor="@color/white_999999"
-                            android:textSize="@dimen/sp_12"
-                            app:typeface="lato_regular" />
-
-                        <com.jeeva.android.widgets.customfont.CustomTextView
-                            android:id="@+id/inplay_match_timeline_games_left_textview"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textAllCaps="true"
-                            android:textColor="@color/white"
-                            android:textSize="@dimen/sp_12"
-                            app:typeface="lato_bold" />
-
-                    </LinearLayout>
-
+                        android:textAllCaps="true"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/sp_12"
+                        app:typeface="lato_bold" />
 
                 </LinearLayout>
 
-            </RelativeLayout>
 
-            <!-- List -->
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/inPlay_matches_recyclerView"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+            </LinearLayout>
 
-        </LinearLayout>
+        </RelativeLayout>
 
-        <!-- Loading View -->
-        <LinearLayout
-            android:id="@+id/inplay_matches_loading_View"
+        <!-- List -->
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/inPlay_matches_recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </LinearLayout>
+
+    <!-- Loading View -->
+    <LinearLayout
+        android:id="@+id/inplay_matches_loading_View"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="visible">
+
+        <in.sportscafe.nostragamus.module.common.NostraProgressBar
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:gravity="center"
-            android:orientation="vertical"
-            android:visibility="gone">
-
-            <in.sportscafe.nostragamus.module.common.NostraProgressBar
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_gravity="center" />
-
-        </LinearLayout>
+            android:layout_gravity="center" />
 
     </LinearLayout>
 
 </android.support.design.widget.CoordinatorLayout>
+
+

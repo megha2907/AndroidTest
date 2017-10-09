@@ -200,8 +200,8 @@ public class MyWebService extends AbstractWebService<NostragamusService> {
         return mNostragamusService.getFlipPowerup(powerupId, matchId, questionId);
     }
 
-    public Call<MatchesResponse> getTimelinesRequest(Integer challengeId, Integer playerUserId, int skip, int limit) {
-        return mNostragamusService.getTimelines(challengeId, playerUserId, skip, limit);
+    public Call<MatchesResponse> getTimelinesRequest(Integer roomId, Integer playerUserId, int skip, int limit) {
+        return mNostragamusService.getTimelines(roomId, playerUserId, skip, limit);
     }
 
     public Call<MyResultsResponse> getPlayerResultRequest(Integer playerId, Integer matchId,Integer roomId) {
