@@ -77,8 +77,6 @@ public class ContestEntriesViewPagerFragment extends NostraBaseFragment {
             ContestEntriesDataProvider dataProvider = new ContestEntriesDataProvider();
             dataProvider.getContestEntries(mContestEntryScreenData.getChallengeId(),
                     mContestEntryScreenData.getContestId(), getDataProviderListener());
-        } else {
-            AlertsHelper.showAlert(getContext(),"Error!", Constants.Alerts.SOMETHING_WRONG, null);
         }
     }
 

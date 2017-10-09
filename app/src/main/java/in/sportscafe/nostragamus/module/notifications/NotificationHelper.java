@@ -86,6 +86,7 @@ public class NotificationHelper {
             screenData.setMatchStatus(notification.getData().getMatchStatus());
             screenData.setMatchId(notification.getData().getMatchId());
             screenData.setRoomId(notification.getData().getRoomId());
+            screenData.setChallengeStartTime(notification.getData().getChallengeStartTime());
 
             args.putBoolean(Constants.Notifications.IS_LAUNCHED_FROM_NOTIFICATION, true);
             args.putParcelable(Constants.Notifications.NOSTRA_NOTIFICATION, Parcels.wrap(notification));

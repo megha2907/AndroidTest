@@ -16,28 +16,21 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 
 import com.jeeva.android.BaseFragment;
 import com.jeeva.android.Log;
-
-import org.parceler.Parcels;
 
 import java.util.List;
 
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.R;
-import in.sportscafe.nostragamus.module.contest.dto.JoinContestData;
 import in.sportscafe.nostragamus.module.newChallenges.adapter.NewChallengeAdapterListener;
 import in.sportscafe.nostragamus.module.newChallenges.adapter.NewChallengesRecyclerAdapter;
 import in.sportscafe.nostragamus.module.newChallenges.dataProvider.SportsDataProvider;
 import in.sportscafe.nostragamus.module.newChallenges.dto.NewChallengesResponse;
 import in.sportscafe.nostragamus.module.newChallenges.dto.SportsTab;
-import in.sportscafe.nostragamus.module.newChallenges.helpers.NewChallengesFilterHelper;
 import in.sportscafe.nostragamus.module.newChallenges.ui.matches.NewChallengesMatchActivity;
-import in.sportscafe.nostragamus.utils.AlertsHelper;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -135,9 +128,24 @@ public class NewChallengesViewPagerFragment extends BaseFragment implements View
                 getActivity().startActivity(intent);
             }
         } else {
-            AlertsHelper.showAlert(getContext(), "No Internet", "Please turn ON internet to continue", null);
+            handleError(Constants.DataStatus.NO_INTERNET);
         }
     }
+
+    private void handleError(int status) {
+        if (getView() != null && getActivity() != null && !getActivity().isFinishing()) {
+            switch (status) {
+                case Constants.DataStatus.NO_INTERNET:
+                    Snackbar.make(getView(), Constants.Alerts.NO_INTERNET_CONNECTION, Snackbar.LENGTH_LONG).show();
+                    break;
+
+                default:
+                    Snackbar.make(getView(), Constants.Alerts.SOMETHING_WRONG, Snackbar.LENGTH_LONG);
+                    break;
+            }
+        }
+    }
+
 
     @Override
     public void onClick(View view) {
