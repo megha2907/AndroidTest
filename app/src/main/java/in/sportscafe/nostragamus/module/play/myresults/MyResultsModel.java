@@ -3,6 +3,7 @@ package in.sportscafe.nostragamus.module.play.myresults;
 import android.content.Context;
 import android.os.Bundle;
 
+import in.sportscafe.nostragamus.module.inPlay.dto.InPlayContestDto;
 import in.sportscafe.nostragamus.module.resultspeek.dto.Match;
 
 
@@ -22,6 +23,8 @@ public interface MyResultsModel {
     String getMatchResult();
 
     int getMatchPoints();
+
+    InPlayContestDto getInPlayContest();
 
     String getMatchName();
 

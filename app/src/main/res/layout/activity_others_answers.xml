@@ -11,7 +11,7 @@
         android:id="@+id/others_answers_toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorMedium"
+        android:background="@drawable/toolbar_bg"
         android:elevation="@dimen/dp_4"
         android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
@@ -25,15 +25,16 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/white"
-                android:textSize="@dimen/dp_14"
-                app:typeface="roboto_condensed"/>
+                android:textSize="@dimen/sp_14"
+                app:typeface="lato_regular"/>
 
             <com.jeeva.android.widgets.customfont.CustomTextView
                 android:id="@+id/toolbar_match_stage"
                 android:layout_width="@dimen/dp_240"
                 android:layout_height="wrap_content"
-                android:textColor="@color/white_60"
-                android:textSize="@dimen/dp_12"
+                android:textColor="#a1afbe"
+                android:textSize="@dimen/sp_12"
+                android:layout_marginTop="@dimen/dim_2"
                 android:layout_below="@+id/toolbar_title"
                 app:typeface="lato_regular"/>
 

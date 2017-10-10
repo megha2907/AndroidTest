@@ -16,7 +16,9 @@ import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
+import in.sportscafe.nostragamus.module.challengeCompleted.dto.CompletedContestDto;
 import in.sportscafe.nostragamus.module.common.ApiResponse;
+import in.sportscafe.nostragamus.module.inPlay.dto.InPlayContestDto;
 import in.sportscafe.nostragamus.module.inPlay.ui.ResultsScreenDataDto;
 import in.sportscafe.nostragamus.module.play.myresults.dto.ReplayPowerupResponse;
 import in.sportscafe.nostragamus.module.resultspeek.dto.Match;
@@ -45,6 +47,10 @@ public class MyResultsModelImpl implements MyResultsModel, MyResultsAdapter.OnMy
     private int roomId = 0;
 
     private MyResultsAdapter mResultAdapter;
+
+    private InPlayContestDto mInPlayContest=null;
+
+    private CompletedContestDto mCompletedContestDto =null;
 
     private Match match;
 
@@ -92,6 +98,14 @@ public class MyResultsModelImpl implements MyResultsModel, MyResultsAdapter.OnMy
                 if (bundle.containsKey(BundleKeys.PLAYER_ID)) {
                     mPlayerUserId = bundle.getInt(BundleKeys.PLAYER_ID);
                 }
+            }
+
+            if (bundle.containsKey(BundleKeys.INPLAY_CONTEST)){
+                 mInPlayContest = Parcels.unwrap(bundle.getParcelable(Constants.BundleKeys.INPLAY_CONTEST));
+            }
+
+            if (bundle.containsKey(BundleKeys.COMPLETED_CONTEST)){
+                mCompletedContestDto = Parcels.unwrap(bundle.getParcelable(BundleKeys.COMPLETED_CONTEST));
             }
 
         } else {
@@ -160,7 +174,8 @@ public class MyResultsModelImpl implements MyResultsModel, MyResultsAdapter.OnMy
     }
 
     private MyResultsAdapter createAdapter(Context context) {
-        mResultAdapter = new MyResultsAdapter(context, null == mPlayerUserId, mResultsScreenData);
+        mResultAdapter = new MyResultsAdapter(context, null == mPlayerUserId,
+                mResultsScreenData,mInPlayContest,mCompletedContestDto);
         mResultAdapter.setResultsActionListener(this);
         return mResultAdapter;
     }
@@ -199,6 +214,11 @@ public class MyResultsModelImpl implements MyResultsModel, MyResultsAdapter.OnMy
     @Override
     public int getMatchPoints() {
         return match.getMatchPoints();
+    }
+
+    @Override
+    public InPlayContestDto getInPlayContest() {
+        return mInPlayContest;
     }
 
     @Override

@@ -39,6 +39,7 @@ import in.sportscafe.nostragamus.module.newChallenges.dto.NewChallengeMatchesRes
 import in.sportscafe.nostragamus.module.newChallenges.dto.NewChallengeMatchesScreenData;
 import in.sportscafe.nostragamus.module.nostraHome.helper.TimerHelper;
 import in.sportscafe.nostragamus.module.popups.timerPopup.TimerFinishDialogHelper;
+import in.sportscafe.nostragamus.module.popups.walletpopups.WalletBalancePopupActivity;
 import in.sportscafe.nostragamus.module.prediction.playScreen.PredictionActivity;
 import in.sportscafe.nostragamus.module.prediction.playScreen.dto.PlayScreenDataDto;
 import in.sportscafe.nostragamus.utils.AlertsHelper;
@@ -82,17 +83,20 @@ public class NewChallengesMatchesFragment extends BaseFragment implements View.O
     }
 
     private void initRootView(View rootView) {
-        mJoinContestButton = (Button) rootView.findViewById(R.id.new_challenge_matches_join_button);
-        mMatchesLeftTextView = (TextView) rootView.findViewById(R.id.matches_timeline_matches_left);
-        mContestTimerTextView = (TextView) rootView.findViewById(R.id.matches_timeline_match_expires_in);
-        ImageView backButtonImgView = (ImageView) rootView.findViewById(R.id.back_button);
+        if (rootView!=null) {
+            mJoinContestButton = (Button) rootView.findViewById(R.id.new_challenge_matches_join_button);
+            mMatchesLeftTextView = (TextView) rootView.findViewById(R.id.matches_timeline_matches_left);
+            mContestTimerTextView = (TextView) rootView.findViewById(R.id.matches_timeline_match_expires_in);
+            ImageView backButtonImgView = (ImageView) rootView.findViewById(R.id.back_button);
 
-        mMatchesRecyclerView = (RecyclerView)rootView.findViewById(R.id.match_timeline_rv);
-        mMatchesRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
-        mMatchesRecyclerView.setHasFixedSize(true);
+            mMatchesRecyclerView = (RecyclerView) rootView.findViewById(R.id.match_timeline_rv);
+            mMatchesRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+            mMatchesRecyclerView.setHasFixedSize(true);
 
-        mJoinContestButton.setOnClickListener(this);
-        backButtonImgView.setOnClickListener(this);
+            mJoinContestButton.setOnClickListener(this);
+            backButtonImgView.setOnClickListener(this);
+            rootView.findViewById(R.id.toolbar_wallet_rl).setOnClickListener(this);
+        }
     }
 
     private void setTimer() {
@@ -318,6 +322,16 @@ public class NewChallengesMatchesFragment extends BaseFragment implements View.O
                 onBackButtonClicked();
                 break;
 
+            case R.id.toolbar_wallet_rl:
+                onWalletClicked();
+                break;
+
+        }
+    }
+
+    private void onWalletClicked() {
+        if (mNewChallengeMatchFragmentListener != null) {
+            mNewChallengeMatchFragmentListener.onWalletClicked();
         }
     }
 

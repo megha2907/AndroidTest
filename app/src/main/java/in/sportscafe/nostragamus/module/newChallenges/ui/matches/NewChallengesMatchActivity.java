@@ -15,6 +15,7 @@ import in.sportscafe.nostragamus.module.common.NostraBaseActivity;
 import in.sportscafe.nostragamus.module.contest.ui.ContestsActivity;
 import in.sportscafe.nostragamus.module.inPlay.dto.InPlayMatch;
 import in.sportscafe.nostragamus.module.navigation.wallet.WalletHelper;
+import in.sportscafe.nostragamus.module.popups.walletpopups.WalletBalancePopupActivity;
 import in.sportscafe.nostragamus.utils.FragmentHelper;
 
 /**
@@ -53,6 +54,12 @@ public class NewChallengesMatchActivity extends NostraBaseActivity implements Ne
         if (args != null) {
             intent.putExtras(args);
         }
+        startActivity(intent);
+    }
+
+    @Override
+    public void onWalletClicked() {
+        Intent intent = new Intent(this, WalletBalancePopupActivity.class);
         startActivity(intent);
     }
 
