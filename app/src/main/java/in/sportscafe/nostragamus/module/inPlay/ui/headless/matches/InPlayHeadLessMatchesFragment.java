@@ -131,9 +131,6 @@ public class InPlayHeadLessMatchesFragment extends BaseFragment implements View.
                         break;
 
                     case MatchesAdapterAction.PLAY:
-                        /* Playing new Match from headless state can not be allowed */
-                        break;
-
                     case MatchesAdapterAction.CONTINUE:
                         launchPlayScreen(args);
                         break;
@@ -264,7 +261,7 @@ public class InPlayHeadLessMatchesFragment extends BaseFragment implements View.
             TextView walletAmtTextView = (TextView) rootView.findViewById(R.id.toolbar_wallet_money);
 
             titleTextView.setText(mHeadLessMatchScreenData.getChallengeName());
-            walletAmtTextView.setText(String.valueOf(WalletHelper.getTotalBalance()));
+            walletAmtTextView.setText(String.valueOf((int)WalletHelper.getTotalBalance()));
 
             if (mHeadLessMatchScreenData.getTotalMatches() > 0) {
                 mMatchesLeftTextView.setText(String.valueOf(mHeadLessMatchScreenData.getTotalMatches()));
