@@ -39,6 +39,7 @@ import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.NostraBaseFragment;
 import in.sportscafe.nostragamus.module.inPlay.ui.ResultsScreenDataDto;
+import in.sportscafe.nostragamus.module.nostraHome.ui.NostraHomeActivity;
 import in.sportscafe.nostragamus.module.prediction.gamePlayHelp.GamePlayHelpActivity;
 import in.sportscafe.nostragamus.module.prediction.playScreen.adapter.PredictionQuestionAdapterListener;
 import in.sportscafe.nostragamus.module.prediction.playScreen.adapter.PredictionQuestionsCardAdapter;
@@ -802,6 +803,7 @@ public class PredictionFragment extends NostraBaseFragment implements View.OnCli
             args = new Bundle();
         }
         args.putParcelable(Constants.BundleKeys.RESULTS_SCREEN_DATA, Parcels.wrap(data));
+        args.putInt(Constants.BundleKeys.SCREEN_LAUNCH_REQUEST, NostraHomeActivity.LaunchedFrom.SHOW_IN_PLAY);
 
         if (mFragmentListener != null) {
             mFragmentListener.onMatchCompleted(args);

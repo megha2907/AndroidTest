@@ -43,6 +43,7 @@ import in.sportscafe.nostragamus.module.inPlay.ui.headless.dto.HeadLessMatchScre
 import in.sportscafe.nostragamus.module.inPlay.ui.headless.matches.InPlayHeadLessMatchActivity;
 import in.sportscafe.nostragamus.module.newChallenges.dataProvider.SportsDataProvider;
 import in.sportscafe.nostragamus.module.newChallenges.dto.SportsTab;
+import in.sportscafe.nostragamus.module.popups.challengepopups.ContestDetailsPopupActivity;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -240,7 +241,19 @@ public class InPlayViewPagerFragment extends BaseFragment {
             public void onHeadLessContestCardClicked(Bundle args, InPlayContestDto inPlayContestDto) {
                 launchHeadLessMatchesScreen(args, inPlayContestDto);
             }
+
+            @Override
+            public void onContestModeClicked() {
+                launchContestModeDetailsScreen();
+            }
         };
+    }
+
+    private void launchContestModeDetailsScreen() {
+        if (getActivity() != null && !getActivity().isFinishing()){
+            Intent intent = new Intent(getActivity(), ContestDetailsPopupActivity.class);
+            getActivity().startActivity(intent);
+        }
     }
 
     private void launchHeadLessMatchesScreen(Bundle args, InPlayContestDto inPlayContestDto) {

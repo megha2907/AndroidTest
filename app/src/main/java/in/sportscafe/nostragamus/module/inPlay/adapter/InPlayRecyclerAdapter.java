@@ -220,7 +220,12 @@ public class InPlayRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             viewHolder.contestTitleTextView.setText(contest.getContestName());
             viewHolder.entryFeeTextView.setText(Constants.RUPEE_SYMBOL + String.valueOf(contest.getEntryFee()));
             viewHolder.prizesTextView.setText(Constants.RUPEE_SYMBOL + String.valueOf(contest.getWinningAmount()));
-            viewHolder.currentRankTextView.setText(contest.getRank() + "/" + contest.getTotalParticipants());
+
+            if (contest.getRank() > 0 && contest.getTotalParticipants() > 0) {
+                viewHolder.currentRankTextView.setText(contest.getRank() + "/" + contest.getTotalParticipants());
+            }else {
+                viewHolder.currentRankTextView.setText("NA");
+            }
 
             if (contest.getContestMode().equalsIgnoreCase(Constants.ContestType.GUARANTEED)) {
                 viewHolder.contestModeImageView.setBackgroundResource(R.drawable.guaranteed_icon);
@@ -350,6 +355,7 @@ public class InPlayRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             root.setOnClickListener(this);
             currentRankLayout.setOnClickListener(this);
             prizesLayout.setOnClickListener(this);
+            contestModeImageView.setOnClickListener(this);
         }
 
         @Override
@@ -375,6 +381,12 @@ public class InPlayRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                         Bundle args = getContestDataBundle();
                         args.putInt(Constants.BundleKeys.SCREEN_LAUNCH_REQUEST, DetailScreensLaunchRequest.MATCHES_REWARDS_SCREEN);
                         mInPlayAdapterListener.onJoinedContestPrizesClicked(args);
+                    }
+                    break;
+
+                case R.id.inplay_contest_card_header_mode_imgView:
+                    if (mInPlayAdapterListener != null) {
+                        mInPlayAdapterListener.onContestModeClicked();
                     }
                     break;
             }
