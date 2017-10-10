@@ -56,6 +56,7 @@ import in.sportscafe.nostragamus.module.prediction.playScreen.dto.PredictionAllQ
 import in.sportscafe.nostragamus.module.prediction.playScreen.dto.PredictionQuestion;
 import in.sportscafe.nostragamus.module.prediction.playScreen.helper.PredictionUiHelper;
 import in.sportscafe.nostragamus.module.prediction.powerupBank.PowerupBankTransferToPlayActivity;
+import in.sportscafe.nostragamus.module.resultspeek.FeedWebView;
 import in.sportscafe.nostragamus.utils.AlertsHelper;
 import in.sportscafe.nostragamus.utils.timeutils.TimeUtils;
 
@@ -148,6 +149,11 @@ public class PredictionFragment extends NostraBaseFragment implements View.OnCli
                 if (mCardStack != null) {
                     mCardStack.discardTopOnButtonClick(CardDirection.RIGHT);
                 }
+            }
+
+            @Override
+            public void onWebLinkClicked(String url) {
+                openWebView(url);
             }
         };
     }
@@ -981,7 +987,7 @@ public class PredictionFragment extends NostraBaseFragment implements View.OnCli
                 TextView negativeTextView = (TextView) view.findViewById(R.id.prediction_card_negative_textView);
 
                 positiveTextView.setText("+ " + String.valueOf(question.getPositivePoints()) + " PTS");
-                negativeTextView.setText("- " + String.valueOf(question.getNegativePoints()) + " PTS");
+                negativeTextView.setText(String.valueOf(question.getNegativePoints()) + " PTS");
             }
         }
     }
@@ -1036,6 +1042,18 @@ public class PredictionFragment extends NostraBaseFragment implements View.OnCli
                 mCurrentPowerUp = transferredPowerUp;
             }
             updatePowerUpDetails(mCurrentPowerUp);
+        }
+    }
+
+    private void openWebView(String url) {
+        if (!TextUtils.isEmpty(url) && getActivity() != null && !getActivity().isFinishing()) {
+
+            Intent webLinkIntent = new Intent(getActivity(), FeedWebView.class);
+            webLinkIntent.putExtra("url", url);
+            getActivity().startActivity(webLinkIntent);
+
+        } else {
+            com.jeeva.android.Log.d(TAG, "Url empty");
         }
     }
 

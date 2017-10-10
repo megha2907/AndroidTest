@@ -19,7 +19,7 @@
             android:orientation="horizontal"
             android:background="#252525"
             android:layout_alignParentTop="true"
-            >
+            android:visibility="gone">
 
             <ImageView
                 android:id="@+id/prediction_back_btn"
@@ -162,7 +162,7 @@
             android:background="#252525"
             android:layout_alignParentBottom="true"
             android:gravity="center"
-            >
+            android:visibility="gone">
 
             <ImageView
                 android:id="@+id/prediction_powerup_bank_imgView"

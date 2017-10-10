@@ -174,7 +174,7 @@ public class NewChallengesMatchesFragment extends BaseFragment implements View.O
                     break;
 
                 default:
-                    Snackbar.make(getView(), Constants.Alerts.SOMETHING_WRONG, Snackbar.LENGTH_LONG);
+                    Snackbar.make(getView(), Constants.Alerts.SOMETHING_WRONG, Snackbar.LENGTH_LONG).show();
                     break;
             }
         }
@@ -241,7 +241,7 @@ public class NewChallengesMatchesFragment extends BaseFragment implements View.O
             TextView walletAmtTextView = (TextView) view.findViewById(R.id.toolbar_wallet_money);
 
             titleTextView.setText(mScreenData.getChallengeName());
-            walletAmtTextView.setText(String.valueOf(WalletHelper.getTotalBalance()));
+            walletAmtTextView.setText(String.valueOf((int)WalletHelper.getTotalBalance()));
 
             /* Games */
             if (mScreenData.getTotalMatches() > 0) {
