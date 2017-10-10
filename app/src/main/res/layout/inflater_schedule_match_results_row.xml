@@ -530,7 +530,7 @@
                     android:layout_marginTop="@dimen/dp_1"
                     android:gravity="bottom"
                     android:text="LEADERBOARDS"
-                    android:textColor="@color/bluecolor2"
+                    android:textColor="@drawable/leaderbord_text_selector"
                     android:textSize="@dimen/dp_12"
                     app:typeface="lato_bold" />
 

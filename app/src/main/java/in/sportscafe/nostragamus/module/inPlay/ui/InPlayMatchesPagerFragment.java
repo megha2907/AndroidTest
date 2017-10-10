@@ -303,7 +303,7 @@ public class InPlayMatchesPagerFragment extends NostraBaseFragment {
                 ResultsScreenDataDto resultsScreenData = getResultsScreenData(match, contestDto);
                 if (resultsScreenData != null) {
                     bundle.putParcelable(Constants.BundleKeys.RESULTS_SCREEN_DATA, Parcels.wrap(resultsScreenData));
-
+                    bundle.putParcelable(Constants.BundleKeys.INPLAY_CONTEST,Parcels.wrap(contestDto));
                     Intent resultsIntent = new Intent(getActivity(), MyResultsActivity.class);
                     resultsIntent.putExtras(bundle);
                     resultsIntent.putExtra(Constants.BundleKeys.SCREEN_LAUNCHED_FROM_PARENT,

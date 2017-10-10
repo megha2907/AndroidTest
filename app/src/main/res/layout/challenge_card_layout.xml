@@ -38,6 +38,8 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="2"
                     android:text=""
+                    android:maxLines="1"
+                    android:ellipsize="end"
                     android:textAllCaps="false"
                     android:textColor="@color/white"
                     android:textSize="@dimen/sp_14"
@@ -98,9 +100,9 @@
 
                 <!--Prizes -->
                 <LinearLayout
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1.5"
+                    android:minWidth="@dimen/dim_120"
                     android:orientation="vertical">
 
                     <com.jeeva.android.widgets.customfont.CustomTextView
@@ -126,9 +128,9 @@
 
                 <!-- Games left-->
                 <LinearLayout
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1.5"
+                    android:minWidth="@dimen/dim_100"
                     android:orientation="vertical">
 
                     <com.jeeva.android.widgets.customfont.CustomTextView
@@ -152,18 +154,24 @@
 
                 </LinearLayout>
 
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_weight="1">
+
                 <!-- start time -->
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="right"
+                    android:layout_gravity="right"
                     android:orientation="vertical">
 
                     <com.jeeva.android.widgets.customfont.CustomTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="STARTS IN"
-                        android:layout_gravity="left"
                         android:textColor="@color/grey_999999"
                         android:textSize="@dimen/sp_10"
                         app:typeface="lato_regular" />
@@ -178,6 +186,8 @@
                         android:textColor="@color/white"
                         android:textSize="@dimen/sp_12"
                         app:typeface="lato_bold" />
+
+                </LinearLayout>
 
                 </LinearLayout>
 

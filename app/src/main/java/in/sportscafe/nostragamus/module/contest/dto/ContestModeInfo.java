@@ -11,6 +11,9 @@ import org.parceler.Parcel;
 @Parcel
 public class ContestModeInfo {
 
+    @SerializedName("mode_id")
+    private String modeId;
+
     @SerializedName("mode_name")
     private String name;
 
@@ -31,5 +34,13 @@ public class ContestModeInfo {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getModeId() {
+        return modeId;
+    }
+
+    public void setModeId(String modeId) {
+        this.modeId = modeId;
     }
 }
