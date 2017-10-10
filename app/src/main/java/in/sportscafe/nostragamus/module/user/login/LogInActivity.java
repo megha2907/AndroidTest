@@ -32,7 +32,7 @@ import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.NostragamusActivity;
 import in.sportscafe.nostragamus.module.common.NostragamusDialogBox;
 import in.sportscafe.nostragamus.module.common.TermsConditions;
-import in.sportscafe.nostragamus.module.nostraHome.NostraHomeActivity;
+import in.sportscafe.nostragamus.module.nostraHome.ui.NostraHomeActivity;
 import in.sportscafe.nostragamus.module.onboard.OnBoardingFragment;
 import in.sportscafe.nostragamus.module.user.myprofile.edit.EditProfileActivity;
 

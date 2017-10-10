@@ -78,8 +78,9 @@ public class InPlayViewPagerFragment extends BaseFragment {
     }
 
     private void loadData() {
-        if (mRecyclerView != null && mFilteredContests != null) {
+        if (mFilteredContests != null && !mFilteredContests.isEmpty()) {
             List<InPlayListItem> inPlayListItemList = getInPlayItemList(mFilteredContests);
+
             if (inPlayListItemList != null && !inPlayListItemList.isEmpty()) {
                 mRecyclerView.setAdapter(new InPlayRecyclerAdapter(inPlayListItemList, getAdapterListener()));
 
@@ -91,8 +92,17 @@ public class InPlayViewPagerFragment extends BaseFragment {
                     }
                 }
             } else {
-                // TODO
+                showEmptyListMsg();
             }
+        } else {
+            showEmptyListMsg();
+        }
+    }
+
+    private void showEmptyListMsg() {
+        if (getView() != null) {
+            mRecyclerView.setVisibility(View.GONE);
+            getView().findViewById(R.id.empty_list_textView).setVisibility(View.VISIBLE);
         }
     }
 

@@ -3,7 +3,7 @@ package in.sportscafe.nostragamus.module.user.group;
 import android.content.Intent;
 import android.os.Bundle;
 
-import in.sportscafe.nostragamus.module.nostraHome.NostraHomeActivity;
+import in.sportscafe.nostragamus.module.nostraHome.ui.NostraHomeActivity;
 
 public class GroupActivity extends NostraHomeActivity {
 

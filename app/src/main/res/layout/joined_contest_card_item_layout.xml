@@ -151,13 +151,13 @@
                                 android:textSize="@dimen/sp_10"
                                 app:typeface="lato_bold" />
 
-                            <ImageView
+                            <!--<ImageView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="@dimen/dim_2"
                                 android:layout_marginTop="@dimen/dim_3"
                                 android:layout_toRightOf="@+id/pool_row_tv_reward"
-                                android:src="@drawable/contest_prizes_arrow"/>
+                                android:src="@drawable/contest_prizes_arrow"/>-->
 
                         </RelativeLayout>
 

@@ -3,6 +3,7 @@ package in.sportscafe.nostragamus.webservice;
 
 import java.util.List;
 
+import in.sportscafe.nostragamus.BuildConfig;
 import in.sportscafe.nostragamus.module.challengeCompleted.dto.CompletedMatchesResponse;
 import in.sportscafe.nostragamus.module.challengeCompleted.dto.CompletedResponse;
 import in.sportscafe.nostragamus.module.challengeRewards.dto.RewardsResponse;
@@ -311,7 +312,8 @@ public interface NostragamusService {
     Call<List<NewChallengesResponse>> getNewHomeChallenges();
 
     @GET("v3/game/challenges/getContests")
-    Call<ContestResponse> getContests(@Query("challenge_id") int challengeId);
+    Call<ContestResponse> getContests(@Query("challenge_id") int challengeId,
+                                      @Query("flavor") String flavor);
 
     @GET("v3/game/challenges/inPlay")
     Call<List<InPlayResponse>> getInPlayChallenges();

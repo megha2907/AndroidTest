@@ -337,7 +337,11 @@ public class MyWebService extends AbstractWebService<NostragamusService> {
     }
 
     public Call<ContestResponse> getContests(int challengeId) {
-        return mNostragamusService.getContests(challengeId);
+        String flavor = "PS";
+        if (BuildConfig.IS_PAID_VERSION) {
+            flavor = "Pro";
+        }
+        return mNostragamusService.getContests(challengeId, flavor);
     }
 
     public Call<List<InPlayResponse>> getInPlayChallenges() {

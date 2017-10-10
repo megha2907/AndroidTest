@@ -25,7 +25,7 @@ public class WalletApiModelImpl {
         this.mListener = listener;
     }
 
-    public static WalletApiModelImpl newInstance(@NonNull WalletApiListener listener) {
+    public static WalletApiModelImpl newInstance(WalletApiListener listener) {
         return new WalletApiModelImpl(listener);
     }
 
