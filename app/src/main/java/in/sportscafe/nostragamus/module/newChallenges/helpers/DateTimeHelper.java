@@ -38,7 +38,7 @@ public class DateTimeHelper {
             if (millis > 0) {
                 long days = TimeUtils.getDaysDifference(millis - Calendar.getInstance().getTimeInMillis());
                 if (days > 1) {
-                    startTimeStr = String.valueOf(days + " days");
+                    startTimeStr = String.valueOf(days + " days left");
                 } else {
                     startTimeStr = TimeUtils.getDateStringFromMs(millis, Constants.DateFormats.CHALLENGE_START_TIME_FORMAT);
                 }

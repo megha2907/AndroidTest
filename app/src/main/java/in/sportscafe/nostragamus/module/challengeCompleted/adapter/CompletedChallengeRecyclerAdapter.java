@@ -164,7 +164,12 @@ public class CompletedChallengeRecyclerAdapter extends RecyclerView.Adapter<Recy
             viewHolder.contestTitleTextView.setText(contest.getContestName());
             viewHolder.entryFeeTextView.setText(Constants.RUPEE_SYMBOL + String.valueOf(contest.getEntryFee()));
             viewHolder.prizesTextView.setText(Constants.RUPEE_SYMBOL + String.valueOf(contest.getWinningAmount()));
-            viewHolder.currentRankTextView.setText(contest.getRank() + "/" + contest.getTotalParticipants());
+
+            if (contest.getRank() > 0 && contest.getTotalParticipants() > 0) {
+                viewHolder.currentRankTextView.setText(contest.getRank() + "/" + contest.getTotalParticipants());
+            }else {
+                viewHolder.currentRankTextView.setText("NA");
+            }
 
             if (contest.getContestMode().equalsIgnoreCase(Constants.ContestType.GUARANTEED)) {
                 viewHolder.contestModeImageView.setBackgroundResource(R.drawable.guaranteed_icon);

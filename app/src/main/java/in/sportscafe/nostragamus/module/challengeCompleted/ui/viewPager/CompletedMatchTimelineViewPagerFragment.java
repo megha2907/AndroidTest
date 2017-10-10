@@ -144,6 +144,9 @@ public class CompletedMatchTimelineViewPagerFragment extends NostraBaseFragment 
             LinearLayout parent = (LinearLayout) getView().findViewById(R.id.match_status_timeline);
             LinearLayout titleParent = (LinearLayout) getView().findViewById(R.id.match_status_timeline_title_parent);
 
+            parent.removeAllViews();
+            titleParent.removeAllViews();
+
              /* Timeline */
             int totalMatches = mCompletedContestDto.getMatches().size();
             for (int temp = 0; temp < totalMatches; temp++) {
@@ -198,32 +201,18 @@ public class CompletedMatchTimelineViewPagerFragment extends NostraBaseFragment 
             } else {
                 powerUpLayout.setVisibility(View.VISIBLE);
 
-                if (powerUp2xCount != 0) {
                     powerUp2xImageView.setBackgroundResource(R.drawable.double_powerup_small);
                     powerUp2xImageView.setVisibility(View.VISIBLE);
                     powerUp2xTextView.setText(String.valueOf(powerUp2xCount));
-                } else {
-                    powerUp2xImageView.setVisibility(View.GONE);
-                    powerUp2xTextView.setVisibility(View.GONE);
-                }
 
-                if (powerUpNonNegsCount != 0) {
                     powerUpNoNegativeImageView.setBackgroundResource(R.drawable.no_negative_powerup_small);
                     powerUpNoNegativeImageView.setVisibility(View.VISIBLE);
                     powerUpNoNegativeTextView.setText(String.valueOf(powerUpNonNegsCount));
-                } else {
-                    powerUpNoNegativeImageView.setVisibility(View.GONE);
-                    powerUpNoNegativeTextView.setVisibility(View.GONE);
-                }
 
-                if (powerUpPlayerPollCount != 0) {
                     powerUpAudienceImageView.setBackgroundResource(R.drawable.audience_poll_powerup_small);
                     powerUpAudienceImageView.setVisibility(View.VISIBLE);
                     powerUpAudienceTextView.setText(String.valueOf(powerUpPlayerPollCount));
-                } else {
-                    powerUpAudienceImageView.setVisibility(View.GONE);
-                    powerUpAudienceTextView.setVisibility(View.GONE);
-                }
+
             }
         }
     }

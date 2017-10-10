@@ -234,7 +234,25 @@ public class MyResultsActivity extends NostragamusActivity implements MyResultsV
 
     @Override
     public void onBackPressed() {
-        finishStackAndLaunchHomeInPlay();
+
+        Bundle args = null;
+        if (getIntent() != null && getIntent().getExtras() != null) {
+            args = getIntent().getExtras();
+            if (args.containsKey(Constants.BundleKeys.SCREEN_LAUNCH_REQUEST)){
+                if (args.getInt(Constants.BundleKeys.SCREEN_LAUNCH_REQUEST)
+                        == (NostraHomeActivity.LaunchedFrom.SHOW_IN_PLAY)){
+
+                    finishStackAndLaunchHomeInPlay();
+                }else {
+                    finish();
+                }
+            }else {
+                finish();
+            }
+        }else {
+            finish();
+        }
+
     }
 
     private void finishStackAndLaunchHomeInPlay() {
