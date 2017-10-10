@@ -52,7 +52,8 @@ public class InPlayMatchesPagerFragment extends NostraBaseFragment {
 
     private InPlayContestDto mInPlayContestDto;
 
-    public InPlayMatchesPagerFragment() {}
+    public InPlayMatchesPagerFragment() {
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -97,27 +98,27 @@ public class InPlayMatchesPagerFragment extends NostraBaseFragment {
             dataProvider.getInPlayMatches(mInPlayContestDto.getRoomId(),
                     mInPlayContestDto.getChallengeId(),
                     new InPlayMatchesDataProvider.InPlayMatchesDataProviderListener() {
-                @Override
-                public void onData(int status, @Nullable InPlayMatchesResponse responses) {
-                    hideLoadingContent();
+                        @Override
+                        public void onData(int status, @Nullable InPlayMatchesResponse responses) {
+                            hideLoadingContent();
 
-                    switch (status) {
-                        case Constants.DataStatus.FROM_SERVER_API_SUCCESS:
-                            onDataResponse(responses);
-                            break;
+                            switch (status) {
+                                case Constants.DataStatus.FROM_SERVER_API_SUCCESS:
+                                    onDataResponse(responses);
+                                    break;
 
-                        default:
+                                default:
+                                    handleError(status);
+                                    break;
+                            }
+                        }
+
+                        @Override
+                        public void onError(int status) {
+                            hideLoadingContent();
                             handleError(status);
-                            break;
-                    }
-                }
-
-                @Override
-                public void onError(int status) {
-                    hideLoadingContent();
-                    handleError(status);
-                }
-            });
+                        }
+                    });
         }
     }
 
@@ -140,55 +141,58 @@ public class InPlayMatchesPagerFragment extends NostraBaseFragment {
                 && getView() != null) {
 
             /* Set Games Left */
-                String gamesLeftStr = getGamesLeftCount(responses.getData().getInPlayMatchList()) + "/" + responses.getData().getInPlayMatchList().size();
-                TextView gamesLeftTextView = (TextView) getView().findViewById(R.id.inplay_match_timeline_games_left_textview);
-                TextView gamesLeftTextViewText = (TextView) getView().findViewById(R.id.inplay_match_timeline_games_left);
-                gamesLeftTextView.setText(gamesLeftStr);
-                gamesLeftTextViewText.setText("GAMES LEFT  ");
+            String gamesLeftStr = getGamesLeftCount(responses.getData().getInPlayMatchList()) + "/" + responses.getData().getInPlayMatchList().size();
+            TextView gamesLeftTextView = (TextView) getView().findViewById(R.id.inplay_match_timeline_games_left_textview);
+            TextView gamesLeftTextViewText = (TextView) getView().findViewById(R.id.inplay_match_timeline_games_left);
+            gamesLeftTextView.setText(gamesLeftStr);
+            gamesLeftTextViewText.setText("GAMES LEFT  ");
 
             /* Set Powerups */
-               showOrHidePowerUps(responses.getData().getPowerUp());
+            showOrHidePowerUps(responses.getData().getPowerUp());
 
             /* Timeline */
-                LinearLayout parent = (LinearLayout) getView().findViewById(R.id.match_status_timeline);
-                LinearLayout titleParent = (LinearLayout) getView().findViewById(R.id.match_status_timeline_title_parent);
+            LinearLayout parent = (LinearLayout) getView().findViewById(R.id.match_status_timeline);
+            LinearLayout titleParent = (LinearLayout) getView().findViewById(R.id.match_status_timeline_title_parent);
+
+            parent.removeAllViews();
+            titleParent.removeAllViews();
 
              /* Timeline */
-                int totalMatches = mInPlayContestDto.getMatches().size();
-                for (int temp = 0; temp < totalMatches; temp++) {
-                    InPlayContestMatchDto match = mInPlayContestDto.getMatches().get(temp);
+            int totalMatches = mInPlayContestDto.getMatches().size();
+            for (int temp = 0; temp < totalMatches; temp++) {
+                InPlayContestMatchDto match = mInPlayContestDto.getMatches().get(temp);
 
-                    boolean isNodeLineRequired = true;
-                    if (temp == 0){
-                        isNodeLineRequired =false;
-                    }
+                boolean isNodeLineRequired = true;
+                if (temp == 0) {
+                    isNodeLineRequired = false;
+                }
 
-                    int matchAttemptedStatus = match.isPlayed();
-                    boolean isPlayed;
-                    if (Constants.GameAttemptedStatus.COMPLETELY == matchAttemptedStatus) {
-                        isPlayed = true;
-                    } else if (Constants.GameAttemptedStatus.PARTIALLY == matchAttemptedStatus) {
-                        isPlayed = false;
-                    } else {
-                        isPlayed = false;
-                    }
+                int matchAttemptedStatus = match.isPlayed();
+                boolean isPlayed;
+                if (Constants.GameAttemptedStatus.COMPLETELY == matchAttemptedStatus) {
+                    isPlayed = true;
+                } else if (Constants.GameAttemptedStatus.PARTIALLY == matchAttemptedStatus) {
+                    isPlayed = false;
+                } else {
+                    isPlayed = false;
+                }
 
                     /* Content */
-                    TimelineHelper.addNode(parent, match.getStatus(), isPlayed,
-                            isNodeLineRequired, TimelineHelper.MatchTimelineTypeEnum.IN_PLAY_MATCHES_SCREEN, mInPlayContestDto.getMatches().size());
+                TimelineHelper.addNode(parent, match.getStatus(), isPlayed,
+                        isNodeLineRequired, TimelineHelper.MatchTimelineTypeEnum.IN_PLAY_MATCHES_SCREEN, mInPlayContestDto.getMatches().size());
 
                     /* Title */
-                    TimelineHelper.addTextNode(titleParent, "Game " + (temp + 1), mInPlayContestDto.getMatches().size(),
-                            match.getStatus(), TimelineHelper.MatchTimelineTypeEnum.IN_PLAY_MATCHES_SCREEN, isPlayed);
+                TimelineHelper.addTextNode(titleParent, "Game " + (temp + 1), mInPlayContestDto.getMatches().size(),
+                        match.getStatus(), TimelineHelper.MatchTimelineTypeEnum.IN_PLAY_MATCHES_SCREEN, isPlayed);
 
-                }
+            }
         }
     }
 
     private void showOrHidePowerUps(PowerUp powerUp) {
 
-        LinearLayout powerUpLayout = (LinearLayout)getView().findViewById(R.id.powerup_top_layout);
-        ImageView powerUp2xImageView = (ImageView)getView(). findViewById(R.id.in_play_2x_iv);
+        LinearLayout powerUpLayout = (LinearLayout) getView().findViewById(R.id.powerup_top_layout);
+        ImageView powerUp2xImageView = (ImageView) getView().findViewById(R.id.in_play_2x_iv);
         ImageView powerUpNoNegativeImageView = (ImageView) getView().findViewById(R.id.in_play_no_neg_iv);
         ImageView powerUpAudienceImageView = (ImageView) getView().findViewById(R.id.in_play_player_poll_iv);
 
@@ -196,7 +200,7 @@ public class InPlayMatchesPagerFragment extends NostraBaseFragment {
         TextView powerUpNoNegativeTextView = (TextView) getView().findViewById(R.id.in_play_no_neg_count_tv);
         TextView powerUpAudienceTextView = (TextView) getView().findViewById(R.id.in_play_player_poll_count_tv);
 
-        if (powerUp!=null) {
+        if (powerUp != null) {
 
             int powerUp2xCount = powerUp.getDoubler();
             int powerUpNonNegsCount = powerUp.getNoNegative();
@@ -207,32 +211,18 @@ public class InPlayMatchesPagerFragment extends NostraBaseFragment {
             } else {
                 powerUpLayout.setVisibility(View.VISIBLE);
 
-                if (powerUp2xCount != 0) {
-                    powerUp2xImageView.setBackgroundResource(R.drawable.double_powerup_small);
-                    powerUp2xImageView.setVisibility(View.VISIBLE);
-                    powerUp2xTextView.setText(String.valueOf(powerUp2xCount));
-                } else {
-                    powerUp2xImageView.setVisibility(View.GONE);
-                    powerUp2xTextView.setVisibility(View.GONE);
-                }
+                powerUp2xImageView.setBackgroundResource(R.drawable.double_powerup_small);
+                powerUp2xImageView.setVisibility(View.VISIBLE);
+                powerUp2xTextView.setText(String.valueOf(powerUp2xCount));
 
-                if (powerUpNonNegsCount != 0) {
-                    powerUpNoNegativeImageView.setBackgroundResource(R.drawable.no_negative_powerup_small);
-                    powerUpNoNegativeImageView.setVisibility(View.VISIBLE);
-                    powerUpNoNegativeTextView.setText(String.valueOf(powerUpNonNegsCount));
-                } else {
-                    powerUpNoNegativeImageView.setVisibility(View.GONE);
-                    powerUpNoNegativeTextView.setVisibility(View.GONE);
-                }
+                powerUpNoNegativeImageView.setBackgroundResource(R.drawable.no_negative_powerup_small);
+                powerUpNoNegativeImageView.setVisibility(View.VISIBLE);
+                powerUpNoNegativeTextView.setText(String.valueOf(powerUpNonNegsCount));
 
-                if (powerUpPlayerPollCount != 0) {
-                    powerUpAudienceImageView.setBackgroundResource(R.drawable.audience_poll_powerup_small);
-                    powerUpAudienceImageView.setVisibility(View.VISIBLE);
-                    powerUpAudienceTextView.setText(String.valueOf(powerUpPlayerPollCount));
-                } else {
-                    powerUpAudienceImageView.setVisibility(View.GONE);
-                    powerUpAudienceTextView.setVisibility(View.GONE);
-                }
+                powerUpAudienceImageView.setBackgroundResource(R.drawable.audience_poll_powerup_small);
+                powerUpAudienceImageView.setVisibility(View.VISIBLE);
+                powerUpAudienceTextView.setText(String.valueOf(powerUpPlayerPollCount));
+
             }
         }
     }
@@ -309,7 +299,7 @@ public class InPlayMatchesPagerFragment extends NostraBaseFragment {
                 ResultsScreenDataDto resultsScreenData = getResultsScreenData(match, contestDto);
                 if (resultsScreenData != null) {
                     bundle.putParcelable(Constants.BundleKeys.RESULTS_SCREEN_DATA, Parcels.wrap(resultsScreenData));
-                    bundle.putParcelable(Constants.BundleKeys.INPLAY_CONTEST,Parcels.wrap(contestDto));
+                    bundle.putParcelable(Constants.BundleKeys.INPLAY_CONTEST, Parcels.wrap(contestDto));
                     Intent resultsIntent = new Intent(getActivity(), MyResultsActivity.class);
                     resultsIntent.putExtras(bundle);
                     resultsIntent.putExtra(Constants.BundleKeys.SCREEN_LAUNCHED_FROM_PARENT,
