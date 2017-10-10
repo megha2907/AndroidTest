@@ -321,7 +321,7 @@ public class InPlayViewPagerFragment extends BaseFragment {
                     break;
 
                 default:
-                    Snackbar.make(getView(), Constants.Alerts.SOMETHING_WRONG, Snackbar.LENGTH_LONG);
+                    Snackbar.make(getView(), Constants.Alerts.SOMETHING_WRONG, Snackbar.LENGTH_LONG).show();
                     break;
             }
         }

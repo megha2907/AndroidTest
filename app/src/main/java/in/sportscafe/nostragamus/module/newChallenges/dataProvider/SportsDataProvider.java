@@ -28,13 +28,13 @@ public class SportsDataProvider {
         all.setSportIconUnSelectedDrawable(R.drawable.sport_all_grey);
 
         SportsTab daily = new SportsTab();
-        daily.setSportsId(FILTER_ALL_SPORTS_ID);
+        daily.setSportsId(FILTER_DAILY_SPORTS_ID);
         daily.setSportsName("Daily");
         daily.setSportIconDrawable(R.drawable.sport_daily);
         daily.setSportIconUnSelectedDrawable(R.drawable.sport_daily_grey);
 
         SportsTab mixed = new SportsTab();
-        mixed.setSportsId(FILTER_ALL_SPORTS_ID);
+        mixed.setSportsId(FILTER_MIXED_SPORTS_ID);
         mixed.setSportsName("Mixed");
         mixed.setSportIconDrawable(R.drawable.sport_mix);
         mixed.setSportIconUnSelectedDrawable(R.drawable.sport_mix_grey);
