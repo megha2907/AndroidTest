@@ -19,7 +19,7 @@ import in.sportscafe.nostragamus.module.user.login.dto.UserInfo;
  */
 public class ProfileModelImpl implements ProfileModel, UserInfoModelImpl.OnGetUserInfoModelListener {
 
-    private Integer mChallengeId;
+    private Integer mRoomId;
 
     private boolean mSeparateScreen = false;
 
@@ -36,8 +36,8 @@ public class ProfileModelImpl implements ProfileModel, UserInfoModelImpl.OnGetUs
     @Override
     public void init(Bundle bundle) {
         if(null != bundle) {
-            if(bundle.containsKey(BundleKeys.CHALLENGE_ID)) {
-                mChallengeId = bundle.getInt(BundleKeys.CHALLENGE_ID);
+            if(bundle.containsKey(BundleKeys.ROOM_ID)) {
+                mRoomId = bundle.getInt(BundleKeys.ROOM_ID);
             }
 
             mSeparateScreen = bundle.getBoolean(BundleKeys.IS_SEPARATE_SCREEN);
@@ -59,7 +59,7 @@ public class ProfileModelImpl implements ProfileModel, UserInfoModelImpl.OnGetUs
         ViewPagerAdapter pagerAdapter = new ViewPagerAdapter(fm);
 
         UserInfo userInfo = getUserInfo();
-        pagerAdapter.addFragment(TimelineFragment.newInstance(mChallengeId), "Matches");
+        pagerAdapter.addFragment(TimelineFragment.newInstance(mRoomId), "Matches");
 
         // Wallet should NOT be displayed for free app version
         /*if (BuildConfig.IS_PAID_VERSION) {

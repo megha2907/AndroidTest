@@ -9,6 +9,7 @@ import android.graphics.Paint;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
@@ -40,8 +41,13 @@ import in.sportscafe.nostragamus.Constants.LBLandingType;
 import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
+import in.sportscafe.nostragamus.module.challengeCompleted.dto.CompletedContestDto;
 import in.sportscafe.nostragamus.module.common.Adapter;
 import in.sportscafe.nostragamus.module.common.NostraTextViewLinkClickMovementMethod;
+import in.sportscafe.nostragamus.module.contest.contestDetailsAfterJoining.InplayContestDetailsActivity;
+import in.sportscafe.nostragamus.module.contest.contestDetailsCompletedChallenges.ContestDetailCompletedActivity;
+import in.sportscafe.nostragamus.module.contest.ui.DetailScreensLaunchRequest;
+import in.sportscafe.nostragamus.module.inPlay.dto.InPlayContestDto;
 import in.sportscafe.nostragamus.module.inPlay.ui.ResultsScreenDataDto;
 import in.sportscafe.nostragamus.module.othersanswers.OthersAnswersActivity;
 import in.sportscafe.nostragamus.module.popups.inapppopups.LbLanding;
@@ -64,6 +70,10 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
 
     private int answerId;
 
+    private InPlayContestDto mInPlayContestDto = null;
+
+    private CompletedContestDto mCompletedContestDto = null;
+
     private RadioGroup mRadioGroup;
 
     private int mAnsweredQuestionCount = 0;
@@ -76,10 +86,15 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
     private long mMatchStartTimeMs = 0;
     private ResultsScreenDataDto mResultScreenData;
 
-    public MyResultsAdapter(Context context, boolean isMyResults, ResultsScreenDataDto resultsScreenData) {
+    public MyResultsAdapter(Context context, boolean isMyResults,
+                            ResultsScreenDataDto resultsScreenData,
+                            InPlayContestDto inPlayContestDto,
+                            CompletedContestDto completedContestDto) {
         super(context);
         this.mIsMyResults = isMyResults;
         mResultScreenData = resultsScreenData;
+        mInPlayContestDto = inPlayContestDto;
+        mCompletedContestDto = completedContestDto;
     }
 
     public void setResultsActionListener(OnMyResultsActionListener mResultsActionListener) {
@@ -256,7 +271,7 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
 
         List<Question> questions = match.getQuestions();
         for (Question question : questions) {
-            holder.mLlPredictionsParent.addView(getMyPrediction(holder.mLlPredictionsParent, question, position,match.getRoomId()));
+            holder.mLlPredictionsParent.addView(getMyPrediction(holder.mLlPredictionsParent, question, position, match.getRoomId()));
         }
 
         if (match.isResultPublished() && mIsMyResults) {
@@ -681,7 +696,7 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
 
         /* edit Answer on click of Button and change edit Answer to save answer, If saving Answer ,callapi*/
         handleEditAnswerButtonClick(parent, question, convertView, tvOption1,
-                tvOption2, tvOption3,roomId);
+                tvOption2, tvOption3, roomId);
 
         return convertView;
     }
@@ -714,7 +729,7 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
 
     private boolean isHeadlessFlow() {
         boolean isHeadLess = false;
-        if (mResultScreenData != null && mResultScreenData.isHeadLess() ) {
+        if (mResultScreenData != null && mResultScreenData.isHeadLess()) {
             isHeadLess = true;
         }
         return isHeadLess;
@@ -760,7 +775,8 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
 
     /**
      * Edit Answers clicks
-     *  @param parent
+     *
+     * @param parent
      * @param question
      * @param convertView
      * @param tvOption1
@@ -806,7 +822,7 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
 
 
                         /* call save Answer Api */
-                            mResultsActionListener.saveUpdatedAnswer(question.getMatchId(),question.getQuestionId(), selectedAnswerId,roomId);
+                            mResultsActionListener.saveUpdatedAnswer(question.getMatchId(), question.getQuestionId(), selectedAnswerId, roomId);
 
                         /* change save Answer btn back to edit Answer */
                             editAnswersBtn.setText("Edit Answer");
@@ -988,7 +1004,7 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
             tvcommentary.setMovementMethod(new NostraTextViewLinkClickMovementMethod() {
                 @Override
                 public void onLinkClick(String url) {
-                    OpenWebView(tvcommentary,url);
+                    OpenWebView(tvcommentary, url);
                 }
             });
         }
@@ -1021,20 +1037,37 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
     }
 
     private void navigateToLeaderboards(Context context) {
-        Match match = getItem(0);
 
-        LbLanding lbLanding = new LbLanding(
-                match.getChallengeId(), 0, //groupid=0
-                match.getChallengeName(),
-                match.getChallengeImgUrl(),
-                LBLandingType.CHALLENGE
-        );
+       if (mInPlayContestDto!=null) {
+           Bundle args = new Bundle();
+           args.putParcelable(Constants.BundleKeys.INPLAY_CONTEST, Parcels.wrap(mInPlayContestDto));
+           args.putInt(Constants.BundleKeys.SCREEN_LAUNCH_REQUEST, DetailScreensLaunchRequest.MATCHES_LEADER_BOARD_SCREEN);
 
-        Intent intent = new Intent(context, PointsActivity.class);
-        intent.putExtra(BundleKeys.LB_LANDING_DATA, Parcels.wrap(lbLanding));
-        intent.putExtra(BundleKeys.MATCH_ID, match.getId());
-//        intent.putExtra(BundleKeys.TOURNAMENT_ID, Match.getTournamentId());
-        context.startActivity(intent);
+           if (context != null) {
+               Intent intent = new Intent(context, InplayContestDetailsActivity.class);
+               if (args != null) {
+                   intent.putExtras(args);
+               }
+               context.startActivity(intent);
+           }
+       }else if (mCompletedContestDto!=null){
+
+           Bundle args = new Bundle();
+           args.putParcelable(BundleKeys.COMPLETED_CONTEST, Parcels.wrap(mCompletedContestDto));
+           args.putInt(Constants.BundleKeys.SCREEN_LAUNCH_REQUEST, DetailScreensLaunchRequest.MATCHES_LEADER_BOARD_SCREEN);
+
+           if (context != null) {
+               Intent intent = new Intent(context, ContestDetailCompletedActivity.class);
+               if (args != null) {
+                   intent.putExtras(args);
+               }
+               context.startActivity(intent);
+           }
+
+       } else {
+           Toast.makeText(context, Constants.Alerts.SOMETHING_WRONG, Toast.LENGTH_SHORT).show();
+       }
+
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
@@ -1061,7 +1094,7 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
 
         void onClickEditAnswer(int selectedQuestionId, Question question);
 
-        void saveUpdatedAnswer(int matchId,int QuestionId, int AnswerId, int roomId);
+        void saveUpdatedAnswer(int matchId, int QuestionId, int AnswerId, int roomId);
     }
 
     public void changeToEditAnswers(int selectedQuestionId, Question question) {
@@ -1071,7 +1104,7 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
     /**
      * On on click of link open NostragamusWebView Activity for handling links
      */
-    private void OpenWebView(View view,String url) {
+    private void OpenWebView(View view, String url) {
         if (url != null) {
             view.getContext().startActivity(new Intent(view.getContext(), FeedWebView.class).putExtra("url", url));
         }

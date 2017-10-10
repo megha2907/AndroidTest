@@ -24,11 +24,11 @@
                 android:id="@+id/question_linear"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:minHeight="@dimen/dim_36"
                 android:orientation="horizontal"
-                android:layout_marginTop="@dimen/dp_8"
-                android:layout_marginLeft="@dimen/dp_20"
-                android:layout_marginRight="@dimen/dp_10"
-                android:layout_marginBottom="@dimen/dp_8">
+                android:layout_marginLeft="@dimen/dim_12"
+                android:layout_marginRight="@dimen/dim_12"
+                android:animateLayoutChanges="true">
 
                 <com.jeeva.android.widgets.customfont.CustomTextView
                     android:id="@+id/my_predictions_row_tv_question"
@@ -37,7 +37,8 @@
                     android:layout_weight="4"
                     android:layout_gravity="center_vertical"
                     android:textColor="@color/white"
-                    app:typeface="roboto_condensed" />
+                    android:textSize="@dimen/sp_12"
+                    app:typeface="lato_regular" />
 
                 <com.jeeva.android.widgets.customfont.CustomTextView
                     android:id="@+id/my_predictions_row_tv_answer_points"
@@ -45,47 +46,48 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:textColor="@color/white_60"
-                    android:textSize="@dimen/dp_12"
+                    android:textSize="@dimen/sp_12"
                     android:visibility="gone"
                     app:typeface="lato_regular"
-                    android:layout_gravity="right"
+                    android:layout_gravity="right|center_vertical"
                     android:gravity="right"/>
 
                 <RelativeLayout
                     android:id="@+id/my_results_rl_edit_answers"
-                    android:layout_width="@dimen/dp_115"
-                    android:layout_height="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/dim_30"
+                    android:layout_weight="2"
                     android:layout_gravity="right|center_vertical"
                     android:visibility="gone"
-                    android:layout_marginRight="@dimen/dp_8">
-
+                    android:animateLayoutChanges="true">
 
                     <com.jeeva.android.widgets.customfont.CustomButton
                         android:id="@+id/my_results_btn_edit_answers"
-                        android:layout_width="@dimen/dp_92"
-                        android:layout_height="@dimen/dp_25"
+                        android:layout_width="@dimen/dim_90"
+                        android:layout_height="@dimen/dim_24"
                         android:layout_alignBaseline="@+id/my_results_iv_edit_answers_icon"
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
-                        android:background="@drawable/compare_btn_bg"
+                        android:background="#353535"
                         android:gravity="center"
                         android:textAllCaps="false"
                         android:onClick="onClick"
                         android:paddingLeft="@dimen/dp_18"
                         android:stateListAnimator="@null"
                         android:text="Edit Answer"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/dp_11"
+                        android:elevation="@dimen/dim_5"
+                        android:textColor="@color/grey6"
+                        android:textSize="@dimen/sp_11"
                         app:typeface="lato_regular" />
 
                     <ImageView
                         android:id="@+id/my_results_iv_edit_answers_icon"
-                        android:layout_width="@dimen/dp_27"
-                        android:layout_height="@dimen/dp_27"
+                        android:layout_width="@dimen/dim_24"
+                        android:layout_height="@dimen/dim_24"
                         android:layout_alignParentRight="true"
-                        android:layout_marginRight="@dimen/dp_70"
-                        android:paddingTop="@dimen/dp_1"
-                        android:elevation="@dimen/dp_2" />
+                        android:layout_marginRight="@dimen/dim_70"
+                        android:layout_centerVertical="true"
+                        android:elevation="@dimen/dim_5" />
 
                 </RelativeLayout>
 
@@ -97,24 +99,23 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_below="@+id/question_linear"
-                android:layout_marginLeft="@dimen/dp_20"
-                android:layout_marginBottom="@dimen/dp_8"
+                android:layout_marginLeft="@dimen/dim_16"
+                android:layout_marginBottom="@dimen/dim_8"
                 android:gravity="left"
                 android:text="@string/split_str"
                 android:textColor="#8f8f8f"
-                android:textSize="@dimen/dp_11"
+                android:textSize="@dimen/sp_11"
                 android:visibility="gone"
                 app:typeface="lato_regular" />
-
 
             <View
                 android:id="@+id/results_peek_row_view"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_0.5"
+                android:layout_height="@dimen/dim_0.5"
                 android:layout_below="@+id/my_predictions_row_splitView"
-                android:layout_marginLeft="@dimen/dp_12"
-                android:layout_marginRight="@dimen/dp_12"
-                android:background="@color/linecolor"
+                android:layout_marginLeft="@dimen/dim_12"
+                android:layout_marginRight="@dimen/dim_12"
+                android:background="@color/line_separator"
                 android:visibility="visible" />
 
         </RelativeLayout>
@@ -217,37 +218,6 @@
 
         </RelativeLayout>
 
-
-        <!--<com.jeeva.android.widgets.customfont.CustomTextView
-            android:id="@+id/my_predictions_row_tv_answer_points"
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/dp_22"
-            android:layout_alignParentRight="true"
-            android:layout_below="@+id/my_predictions_row_rl_question"
-            android:layout_gravity="left"
-            android:layout_marginLeft="@dimen/dp_10"
-            android:layout_marginRight="@dimen/dp_18"
-            android:layout_marginTop="@dimen/dp_12"
-            android:maxLines="1"
-            android:textColor="@color/white_60"
-            android:textSize="@dimen/dp_12"
-            app:typeface="lato_regular" />-->
-
-        <!--<com.jeeva.android.widgets.customfont.CustomTextView
-            android:id="@+id/my_predictions_row_splitView"
-            android:layout_width="@dimen/dp_150"
-            android:layout_height="@dimen/dp_22"
-            android:layout_alignParentRight="true"
-            android:layout_below="@+id/my_predictions_row_tv_answer_points"
-            android:layout_marginTop="@dimen/dp_2"
-            android:gravity="right|center_vertical"
-            android:layout_marginRight="@dimen/dp_18"
-            android:text="@string/split_str"
-            android:textColor="@color/white_60"
-            android:textSize="@dimen/dp_8"
-            android:visibility="gone"
-            app:typeface="lato_regular" />-->
-
         <com.jeeva.android.widgets.customfont.CustomTextView
             android:id="@+id/my_predictions_row_tv_perc_1"
             android:layout_width="@dimen/dp_150"
@@ -298,7 +268,8 @@
             android:textColor="@color/white_60"
             android:textSize="@dimen/dp_12"
             android:visibility="invisible"
-            app:typeface="lato_regular" />
+            app:typeface="lato_regular"
+            android:layout_marginBottom="@dimen/dp_10"/>
 
         <ImageView
             android:id="@+id/powerup_flip"
@@ -326,7 +297,7 @@
                 android:layout_height="@dimen/dp_0.5"
                 android:layout_marginLeft="@dimen/dp_12"
                 android:layout_marginRight="@dimen/dp_12"
-                android:background="@color/linecolor"
+                android:background="@color/line_separator"
                 android:visibility="visible"
                 android:layout_marginTop="@dimen/dp_8"/>
 

@@ -149,7 +149,7 @@ public class RulesFragment extends NostraBaseFragment implements RulesApiModelIm
                 }
 
                 if (rules.getContestModeInfo().getDescription() != null) {
-                    TvContestRuleThree.setText(rules.getContestModeInfo().getName()
+                    TvContestRuleThree.setText(rules.getContestModeInfo().getModeId()
                             + " - " + rules.getContestModeInfo().getDescription());
                 }
             }

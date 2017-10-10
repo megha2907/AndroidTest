@@ -5,10 +5,11 @@
 <item android:state_pressed="true">
     <layer-list>
         <item>
-            <shape android:shape="rectangle">
-                    <solid android:color="#176589" />
-                    <corners android:radius="@dimen/dim_2" />
-                </shape>
+            <shape xmlns:android="http://schemas.android.com/apk/res/android"
+                android:shape="rectangle">
+                <stroke android:color="#176589" android:width="@dimen/dim_1"/>
+                <corners android:radius="@dimen/dim_2" />
+            </shape>
         </item>
     </layer-list>
 </item>

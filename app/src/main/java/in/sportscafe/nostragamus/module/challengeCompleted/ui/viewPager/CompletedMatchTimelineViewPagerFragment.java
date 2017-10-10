@@ -292,6 +292,7 @@ public class CompletedMatchTimelineViewPagerFragment extends NostraBaseFragment 
                 ResultsScreenDataDto resultsScreenData = getResultsScreenData(match, contestDto);
                 if (resultsScreenData != null) {
                     bundle.putParcelable(Constants.BundleKeys.RESULTS_SCREEN_DATA, Parcels.wrap(resultsScreenData));
+                    bundle.putParcelable(Constants.BundleKeys.COMPLETED_CONTEST,Parcels.wrap(contestDto));
 
                     Intent resultsIntent = new Intent(getActivity(), MyResultsActivity.class);
                     resultsIntent.putExtras(bundle);
