@@ -401,25 +401,28 @@ public class StoreFragment extends BaseFragment {
     }
 
     private void setPowerUpCount(TextView textView, int count, boolean runningLow, String powerUp) {
-        textView.setText(String.valueOf(count));
-        if (runningLow) {
-            textView.setTextColor(ContextCompat.getColor(getContext(), R.color.white_999999));
+        if (textView != null) {
+            textView.setText(String.valueOf(count));
+            Context textViewContext = textView.getContext();
+            if (runningLow) {
+                textView.setTextColor(ContextCompat.getColor(textViewContext, R.color.white_999999));
 
-            if (powerUp.equalsIgnoreCase(Constants.Powerups.XX)) {
-                ivPBPowerup2x.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.double_grey_powerup));
-            } else if (powerUp.equalsIgnoreCase(Constants.Powerups.NO_NEGATIVE)) {
-                ivPBPowerupNoneg.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.no_negative_grey_powerup));
-            } else if (powerUp.equalsIgnoreCase(Constants.Powerups.AUDIENCE_POLL)) {
-                ivPBPowerupPlayerPoll.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.audience_poll_grey_powerup));
-            }
-        } else {
-            textView.setTextColor(ContextCompat.getColor(getContext(), R.color.white));
-            if (powerUp.equalsIgnoreCase(Constants.Powerups.XX)) {
-                ivPBPowerup2x.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.double_powerup));
-            } else if (powerUp.equalsIgnoreCase(Constants.Powerups.NO_NEGATIVE)) {
-                ivPBPowerupNoneg.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.no_negative_powerup));
-            } else if (powerUp.equalsIgnoreCase(Constants.Powerups.AUDIENCE_POLL)) {
-                ivPBPowerupPlayerPoll.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.audience_poll_powerup));
+                if (powerUp.equalsIgnoreCase(Constants.Powerups.XX)) {
+                    ivPBPowerup2x.setBackground(ContextCompat.getDrawable(textViewContext, R.drawable.double_grey_powerup));
+                } else if (powerUp.equalsIgnoreCase(Constants.Powerups.NO_NEGATIVE)) {
+                    ivPBPowerupNoneg.setBackground(ContextCompat.getDrawable(textViewContext, R.drawable.no_negative_grey_powerup));
+                } else if (powerUp.equalsIgnoreCase(Constants.Powerups.AUDIENCE_POLL)) {
+                    ivPBPowerupPlayerPoll.setBackground(ContextCompat.getDrawable(textViewContext, R.drawable.audience_poll_grey_powerup));
+                }
+            } else {
+                textView.setTextColor(ContextCompat.getColor(textViewContext, R.color.white));
+                if (powerUp.equalsIgnoreCase(Constants.Powerups.XX)) {
+                    ivPBPowerup2x.setBackground(ContextCompat.getDrawable(textViewContext, R.drawable.double_powerup));
+                } else if (powerUp.equalsIgnoreCase(Constants.Powerups.NO_NEGATIVE)) {
+                    ivPBPowerupNoneg.setBackground(ContextCompat.getDrawable(textViewContext, R.drawable.no_negative_powerup));
+                } else if (powerUp.equalsIgnoreCase(Constants.Powerups.AUDIENCE_POLL)) {
+                    ivPBPowerupPlayerPoll.setBackground(ContextCompat.getDrawable(textViewContext, R.drawable.audience_poll_powerup));
+                }
             }
         }
     }

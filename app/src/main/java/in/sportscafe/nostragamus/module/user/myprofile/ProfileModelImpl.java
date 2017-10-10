@@ -19,7 +19,7 @@ import in.sportscafe.nostragamus.module.user.login.dto.UserInfo;
  */
 public class ProfileModelImpl implements ProfileModel, UserInfoModelImpl.OnGetUserInfoModelListener {
 
-    private Integer mRoomId;
+    private int mRoomId = 0;
 
     private boolean mSeparateScreen = false;
 
@@ -37,7 +37,7 @@ public class ProfileModelImpl implements ProfileModel, UserInfoModelImpl.OnGetUs
     public void init(Bundle bundle) {
         if(null != bundle) {
             if(bundle.containsKey(BundleKeys.ROOM_ID)) {
-                mRoomId = bundle.getInt(BundleKeys.ROOM_ID);
+                mRoomId = bundle.getInt(BundleKeys.ROOM_ID, 0);
             }
 
             mSeparateScreen = bundle.getBoolean(BundleKeys.IS_SEPARATE_SCREEN);
