@@ -9,7 +9,9 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import org.parceler.Parcels;
@@ -19,8 +21,10 @@ import java.util.List;
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.navigation.wallet.WalletHelper;
+import in.sportscafe.nostragamus.module.newChallenges.dataProvider.SportsDataProvider;
 import in.sportscafe.nostragamus.module.newChallenges.dto.NewChallengeMatchesScreenData;
 import in.sportscafe.nostragamus.module.newChallenges.dto.NewChallengesResponse;
+import in.sportscafe.nostragamus.module.newChallenges.dto.SportsTab;
 import in.sportscafe.nostragamus.module.newChallenges.helpers.DateTimeHelper;
 import in.sportscafe.nostragamus.module.nostraHome.helper.TimerHelper;
 
@@ -98,6 +102,42 @@ public class NewChallengesRecyclerAdapter extends RecyclerView.Adapter<RecyclerV
                     }
                 }
 
+                setSportsIcons(((NewChallengesItemViewHolder) holder).gameIconLinearLayout,newChallengesResponse.getSportsIdArray());
+
+            }
+        }
+    }
+
+    private void setSportsIcons(LinearLayout gameIconLinearLayout, int[] sportsIdArray) {
+
+        gameIconLinearLayout.removeAllViews();
+        LinearLayout layout2 = new LinearLayout(gameIconLinearLayout.getContext());
+        layout2.setLayoutParams(new LinearLayout.LayoutParams
+                (LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+        gameIconLinearLayout.setOrientation(LinearLayout.VERTICAL);
+        gameIconLinearLayout.addView(layout2);
+
+        SportsDataProvider sportsDataProvider = new SportsDataProvider();
+        List<SportsTab> sportsTabList = sportsDataProvider.getSportsList();
+
+        for (SportsTab sportsTab : sportsTabList) {
+            if (sportsIdArray != null) {
+                for (int temp = 0; temp < sportsIdArray.length; temp++) {
+
+                    if (sportsIdArray[temp] == sportsTab.getSportsId()) {
+
+                        ImageView imageView = new ImageView(gameIconLinearLayout.getContext());
+                        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams
+                                (LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                        lp.setMargins(16,0,0,0);
+                        imageView.setLayoutParams(lp);
+                        imageView.getLayoutParams().height = (int) gameIconLinearLayout.getContext().getResources().getDimension(R.dimen.dim_12);
+                        imageView.getLayoutParams().width = (int) gameIconLinearLayout.getContext().getResources().getDimension(R.dimen.dim_12);
+                        imageView.setBackgroundResource(sportsTab.getSportIconDrawable());
+                        layout2.addView(imageView);
+
+                    }
+                }
             }
         }
     }

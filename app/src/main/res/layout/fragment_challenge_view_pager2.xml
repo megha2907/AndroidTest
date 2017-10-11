@@ -22,8 +22,7 @@
         <android.support.v7.widget.RecyclerView
             android:id="@+id/challenge_recycler"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:paddingTop="@dimen/dim_6" />
+            android:layout_height="match_parent" />
 
         <!-- Empty list -->
         <com.jeeva.android.widgets.customfont.CustomTextView
