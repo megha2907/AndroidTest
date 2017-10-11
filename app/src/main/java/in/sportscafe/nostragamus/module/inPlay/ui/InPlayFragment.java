@@ -286,6 +286,7 @@ public class InPlayFragment extends NostraBaseFragment implements View.OnClickLi
                     data.setContestName(playScreenDataDto.getSubTitle());
                     data.setRoomId(playScreenDataDto.getRoomId());
                     data.setPlayingPseudoGame(playScreenDataDto.isPlayingPseudoGame());
+                    data.setInPlayContestDto(playScreenDataDto.getInPlayContestDto());
 
                     playScreenDataDto.setPlayingPseudoGame(false);  // Action is taken once so remove this flag
 

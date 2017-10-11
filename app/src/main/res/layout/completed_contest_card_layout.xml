@@ -25,7 +25,8 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="4"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:background="?attr/selectableItemBackgroundBorderless">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -80,7 +81,6 @@
             </LinearLayout>
 
         </LinearLayout>
-
         <!-- Current rank -->
             <LinearLayout
                 android:id="@+id/completed_challenge_rank_layout"
@@ -159,7 +159,8 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:gravity="center_horizontal"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:background="?attr/selectableItemBackgroundBorderless">
 
             <LinearLayout
                 android:id="@+id/completed_completed_card_timeline_heading_parent"
@@ -193,6 +194,7 @@
                 android:scrollbars="horizontal" />
 
         </LinearLayout>
+
     </LinearLayout>
 
 </LinearLayout>

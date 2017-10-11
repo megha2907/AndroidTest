@@ -84,6 +84,7 @@ public class MyResultsModelImpl implements MyResultsModel, MyResultsAdapter.OnMy
                 roomId = mResultsScreenData.getRoomId();
                 contestName = mResultsScreenData.getSubTitle();
                 String matchStatus = mResultsScreenData.getMatchStatus();
+                mInPlayContest = mResultsScreenData.getInPlayContestDto();
 
                 /* Check for Awaiting Results to Change Toolbar Heading */
                 if (!TextUtils.isEmpty(matchStatus) && (
@@ -174,9 +175,19 @@ public class MyResultsModelImpl implements MyResultsModel, MyResultsAdapter.OnMy
     }
 
     private MyResultsAdapter createAdapter(Context context) {
+        InPlayContestDto contestDto = mInPlayContest;
+        if (contestDto == null) {
+            if (mResultsScreenData.getInPlayContestDto() != null) {
+                contestDto = mResultsScreenData.getInPlayContestDto();
+            }
+        }
+
         mResultAdapter = new MyResultsAdapter(context, null == mPlayerUserId,
-                mResultsScreenData,mInPlayContest,mCompletedContestDto);
+                mResultsScreenData,
+                contestDto,
+                mCompletedContestDto);
         mResultAdapter.setResultsActionListener(this);
+
         return mResultAdapter;
     }
 

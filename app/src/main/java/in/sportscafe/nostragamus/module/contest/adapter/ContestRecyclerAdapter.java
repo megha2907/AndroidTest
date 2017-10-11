@@ -3,7 +3,6 @@ package in.sportscafe.nostragamus.module.contest.adapter;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -57,7 +56,7 @@ public class ContestRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
         switch (viewType) {
             case ContestAdapterItemType.CONTEST:
-                View v1 = inflater.inflate(R.layout.inflater_pool_new_row, parent, false);
+                View v1 = inflater.inflate(R.layout.contest_card_item_layout, parent, false);
                 viewHolder = new ContestViewHolder(v1, mContestAdapterListener);
                 break;
 

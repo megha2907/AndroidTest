@@ -2,6 +2,7 @@ package in.sportscafe.nostragamus.module.inPlay.ui.headless.dto;
 
 import org.parceler.Parcel;
 
+import in.sportscafe.nostragamus.module.inPlay.dto.InPlayContestDto;
 import in.sportscafe.nostragamus.module.prediction.playScreen.dto.PowerUp;
 
 /**
@@ -20,6 +21,7 @@ public class HeadLessMatchScreenData {
     private boolean isPlayingPseudoGame = false;
     private int matchesLeft;
     private int totalMatches;
+    private InPlayContestDto inPlayContestDto;
 
     public int getRoomId() {
         return roomId;
@@ -99,5 +101,13 @@ public class HeadLessMatchScreenData {
 
     public void setTotalMatches(int totalMatches) {
         this.totalMatches = totalMatches;
+    }
+
+    public InPlayContestDto getInPlayContestDto() {
+        return inPlayContestDto;
+    }
+
+    public void setInPlayContestDto(InPlayContestDto inPlayContestDto) {
+        this.inPlayContestDto = inPlayContestDto;
     }
 }
