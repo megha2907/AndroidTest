@@ -149,12 +149,11 @@ public class NewChallengesViewPagerFragment extends BaseFragment implements View
                     break;
 
                 default:
-                    Snackbar.make(getView(), Constants.Alerts.SOMETHING_WRONG, Snackbar.LENGTH_LONG);
+                    Snackbar.make(getView(), Constants.Alerts.SOMETHING_WRONG, Snackbar.LENGTH_LONG).show();
                     break;
             }
         }
     }
-
 
     @Override
     public void onClick(View view) {

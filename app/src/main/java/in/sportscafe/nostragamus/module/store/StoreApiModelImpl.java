@@ -9,9 +9,8 @@ import java.util.List;
 import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.module.store.dto.StoreApiResponse;
 import in.sportscafe.nostragamus.module.store.dto.StoreSections;
+import in.sportscafe.nostragamus.webservice.ApiCallBack;
 import in.sportscafe.nostragamus.webservice.MyWebService;
-import in.sportscafe.nostragamus.webservice.NostragamusCallBack;
-import in.sportscafe.nostragamus.webservice.UserReferralHistoryResponse;
 import retrofit2.Call;
 import retrofit2.Response;
 
@@ -36,7 +35,7 @@ public class StoreApiModelImpl {
 
         if (Nostragamus.getInstance().hasNetworkConnection()) {
 
-            MyWebService.getInstance().getStoreDetails(category).enqueue(new NostragamusCallBack<StoreApiResponse>() {
+            MyWebService.getInstance().getStoreDetails(category).enqueue(new ApiCallBack<StoreApiResponse>() {
                 @Override
                 public void onResponse(Call<StoreApiResponse> call, Response<StoreApiResponse> response) {
                     super.onResponse(call, response);
@@ -54,6 +53,15 @@ public class StoreApiModelImpl {
                         if (mListener != null) {
                             mListener.onApiFailed();
                         }
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<StoreApiResponse> call, Throwable t) {
+                    super.onFailure(call, t);
+                    Log.d(TAG, "Api failure");
+                    if (mListener != null) {
+                        mListener.onApiFailed();
                     }
                 }
             });

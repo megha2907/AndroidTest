@@ -183,7 +183,7 @@ public class ContestFragment extends NostraBaseFragment implements View.OnClickL
                     }
                 }
 
-                mTvTBarHeading.setText(String.valueOf(contestTypeList.size()) + " Contests Available");
+                mTvTBarHeading.setText(String.valueOf(contestList.size()) + " Contests Available");
                 mTvTBarSubHeading.setText(mContestScreenData.getChallengeName());
 
                 int amount = (int) WalletHelper.getTotalBalance();
@@ -203,7 +203,7 @@ public class ContestFragment extends NostraBaseFragment implements View.OnClickL
                 }
 
             } else {
-                // TODO: error page / no items found
+                handleError(-1);
             }
         }
     }

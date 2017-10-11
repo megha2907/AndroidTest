@@ -1,7 +1,10 @@
 package in.sportscafe.nostragamus.module.prediction.playScreen.adapter;
 
 import android.content.Context;
+import android.os.Build;
 import android.support.annotation.NonNull;
+import android.text.Html;
+import android.text.Spanned;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +18,7 @@ import java.util.List;
 
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
+import in.sportscafe.nostragamus.module.common.NostraTextViewLinkClickMovementMethod;
 import in.sportscafe.nostragamus.module.prediction.playScreen.dto.PlayersPoll;
 import in.sportscafe.nostragamus.module.prediction.playScreen.dto.PowerUp;
 import in.sportscafe.nostragamus.module.prediction.playScreen.dto.PowerUpEnum;
@@ -54,6 +58,8 @@ public class PredictionQuestionsCardAdapter extends ArrayAdapter<PredictionQuest
 
             setActionListeners(position, option1Layout, option2Layout);
 
+            setWebLinkListener(questionDescriptionTextView);
+
             /* Populate data on ui */
             PredictionQuestion question = getItem(position);
 
@@ -69,6 +75,17 @@ public class PredictionQuestionsCardAdapter extends ArrayAdapter<PredictionQuest
             contentView = new View(parent.getContext());    // Just to handle null warning, not much important as contentView can not be null anytime
         }
         return contentView;
+    }
+
+    private void setWebLinkListener(TextView questionDescriptionTextView) {
+        questionDescriptionTextView.setMovementMethod(new NostraTextViewLinkClickMovementMethod() {
+            @Override
+            public void onLinkClick(String url) {
+                if (mAdapterListener != null) {
+                    mAdapterListener.onWebLinkClicked(url);
+                }
+            }
+        });
     }
 
     private void setActionListeners(final int position, LinearLayout option1Layout, LinearLayout option2Layout) {
@@ -100,7 +117,11 @@ public class PredictionQuestionsCardAdapter extends ArrayAdapter<PredictionQuest
                 questionTitleTextView.setText(question.getQuestionText());
             }
             if (!TextUtils.isEmpty(question.getQuestionContext())) {
-                questionDescriptionTextView.setText(question.getQuestionContext());
+                Spanned spanned = Html.fromHtml(question.getQuestionContext());
+                if (Build.VERSION.SDK_INT >= 24) {
+                    spanned = Html.fromHtml(question.getQuestionContext(), Html.FROM_HTML_MODE_LEGACY);
+                }
+                questionDescriptionTextView.setText(spanned);
             }
             if (!TextUtils.isEmpty(question.getQuestionImage1())) {
                 option1ImgView.setImageUrl(question.getQuestionImage1());

@@ -19,7 +19,7 @@ public class ProductSaleInfo {
     private int salePrice;
 
     @SerializedName("sale_percentage")
-    private int salePercentage;
+    private float salePercentage;
 
     @SerializedName("sale_description")
     private String saleDesc;
@@ -40,11 +40,11 @@ public class ProductSaleInfo {
         this.salePrice = salePrice;
     }
 
-    public int getSalePercentage() {
+    public float getSalePercentage() {
         return salePercentage;
     }
 
-    public void setSalePercentage(int salePercentage) {
+    public void setSalePercentage(float salePercentage) {
         this.salePercentage = salePercentage;
     }
 

@@ -7,19 +7,23 @@ import android.view.View;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
+import com.jeeva.android.widgets.CustomProgressbar;
+
 import in.sportscafe.nostragamus.R;
+import in.sportscafe.nostragamus.module.common.NostraBaseActivity;
 
 /**
  * Created by deepanshi on 12/5/16.
  */
 
-public class FeedWebView extends AppCompatActivity {
+public class FeedWebView extends NostraBaseActivity {
 
     private WebView webView;
     private Toolbar mtoolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        setShouldAnimateActivity(true);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_feed_webview);
 
@@ -50,11 +54,7 @@ public class FeedWebView extends AppCompatActivity {
 
             }
             public void onPageFinished(WebView view, String url) {
-                try{
-
-                }catch(Exception exception){
-                    exception.printStackTrace();
-                }
+                CustomProgressbar.getProgressbar(FeedWebView.this).dismissProgress();
             }
 
         });
@@ -64,6 +64,7 @@ public class FeedWebView extends AppCompatActivity {
 
 
         //Load url in webview
+        CustomProgressbar.getProgressbar(FeedWebView.this).show();
         webView.loadUrl(url);
 
         initToolBar();

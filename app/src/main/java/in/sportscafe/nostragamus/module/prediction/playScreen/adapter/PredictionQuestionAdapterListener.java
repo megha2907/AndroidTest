@@ -7,4 +7,5 @@ package in.sportscafe.nostragamus.module.prediction.playScreen.adapter;
 public interface PredictionQuestionAdapterListener {
     void onLeftOptionClicked(int pos);
     void onRightOptionClicked(int pos);
+    void onWebLinkClicked(String url);
 }
