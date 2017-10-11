@@ -141,7 +141,8 @@
 
                     <!-- Image option 1 -->
                     <FrameLayout
-                        android:layout_width="@dimen/dim_170"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
                         android:layout_height="@dimen/dim_170">
 
                         <com.jeeva.android.widgets.HmImageView
@@ -165,7 +166,8 @@
 
                     <!-- Image option 2 -->
                     <FrameLayout
-                        android:layout_width="@dimen/dim_170"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
                         android:layout_height="@dimen/dim_170">
 
                         <com.jeeva.android.widgets.HmImageView

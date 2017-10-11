@@ -165,29 +165,25 @@ public class ContestFragment extends NostraBaseFragment implements View.OnClickL
 
 
                 /* For all the tabs */
-                for (ContestType contestType : contestTypeList) {
+                for (int temp = 0; temp < contestTypeList.size(); temp++) {
+                    ContestType contestType = contestTypeList.get(temp);
                     tabFragment = new ContestViewPagerFragment();
                     List<Contest> contestFiltered = null;
 
                     if (contestType.getCategoryName().equalsIgnoreCase(ContestFilterHelper.JOINED_CONTEST)) {
                         contestFiltered = filterHelper.getJoinedContests(contestList);
+
                     } else {
                         contestFiltered = filterHelper.getFilteredContestByType(contestType.getCategoryName(), contestList);
                     }
 
-                    if (contestFiltered != null) {
+                    if (contestFiltered != null && contestFiltered.size() > 0) {
                         contestType.setContestCount(contestFiltered.size());
                         tabFragment.onContestData(contestFiltered, mContestScreenData);
                         tabFragment.setContestType(contestType);
                         fragmentList.add(tabFragment);
                     }
                 }
-
-                mTvTBarHeading.setText(String.valueOf(contestList.size()) + " Contests Available");
-                mTvTBarSubHeading.setText(mContestScreenData.getChallengeName());
-
-                int amount = (int) WalletHelper.getTotalBalance();
-                mTvTBarWalletMoney.setText(String.valueOf(amount));
 
                 ContestViewPagerAdapter viewPagerAdapter = new ContestViewPagerAdapter(
                         getActivity().getSupportFragmentManager(), fragmentList);
@@ -202,10 +198,35 @@ public class ContestFragment extends NostraBaseFragment implements View.OnClickL
                     }
                 }
 
+                setValues(contestList);
+
             } else {
                 handleError(-1);
             }
         }
+    }
+
+    private void setValues(List<Contest> contestList) {
+        int contestsAvailable = getAvailableContestCount(contestList);
+        if (contestsAvailable > 0) {
+            mTvTBarHeading.setText(contestsAvailable + " Contests Available");
+        }
+        mTvTBarSubHeading.setText(mContestScreenData.getChallengeName());
+        mTvTBarWalletMoney.setText(String.valueOf((int) WalletHelper.getTotalBalance()));
+    }
+
+    private int getAvailableContestCount(List<Contest> contestList) {
+        int count = 0;
+
+        if (contestList != null) {
+            for (Contest contest : contestList) {
+                if (!contest.isContestJoined()) {
+                    count++;
+                }
+            }
+        }
+
+        return count;
     }
 
     private void addChallengeDetailsIntoContest(List<Contest> contestList) {

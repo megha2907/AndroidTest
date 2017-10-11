@@ -13,24 +13,23 @@
         android:layout_marginTop="@dimen/dim_6"
         app:cardCornerRadius="@dimen/dp_1"
         app:cardUseCompatPadding="true"
-        android:background="?android:attr/selectableItemBackground">
+        >
 
         <RelativeLayout
             android:id="@+id/pool_rl_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            >
+            android:background="@drawable/dark_grey_gradient_bg">
 
             <RelativeLayout
                 android:id="@+id/pool_layout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/dark_grey_gradient_bg"
                 android:paddingBottom="@dimen/dim_8"
                 android:paddingLeft="@dimen/dim_15"
                 android:paddingRight="@dimen/dim_15"
                 android:paddingTop="@dimen/dim_12"
-                >
+                android:background="?selectableItemBackgroundBorderless">
 
                 <RelativeLayout
                     android:id="@+id/pool_row_rl_detail_layout"

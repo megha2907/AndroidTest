@@ -12,6 +12,7 @@ import in.sportscafe.nostragamus.module.common.NostragamusActivity;
 import in.sportscafe.nostragamus.module.navigation.wallet.WalletHomeActivity;
 import in.sportscafe.nostragamus.module.navigation.wallet.withdrawMoney.WithdrawApiDialogListener;
 import in.sportscafe.nostragamus.module.navigation.wallet.withdrawMoney.WithdrawInitiatedDialogFragment;
+import in.sportscafe.nostragamus.utils.AlertsHelper;
 import in.sportscafe.nostragamus.utils.FragmentHelper;
 
 public class WithdrawPayoutChoiceActivity extends NostragamusActivity implements WithdrawPayoutChoiceFragmentListener {
@@ -89,7 +90,12 @@ public class WithdrawPayoutChoiceActivity extends NostragamusActivity implements
         WithdrawInitiatedDialogFragment dialogFragment =
                 WithdrawInitiatedDialogFragment.newInstance(getDialogListener());
         dialogFragment.setArguments(args);
-        dialogFragment.show(getSupportFragmentManager(), "WITHDRAW_DIALOG");
+
+        try {
+            dialogFragment.show(getSupportFragmentManager(), "WITHDRAW_DIALOG");
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
     }
 
     private WithdrawApiDialogListener getDialogListener() {

@@ -13,7 +13,7 @@
         android:layout_marginTop="@dimen/dim_6"
         app:cardCornerRadius="@dimen/dp_1"
         app:cardUseCompatPadding="true"
-        android:background="?android:attr/selectableItemBackground">
+        >
 
         <RelativeLayout
             android:id="@+id/pool_rl_layout"

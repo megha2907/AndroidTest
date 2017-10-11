@@ -213,8 +213,7 @@ public class NewChallengeMatchesAdapter extends RecyclerView.Adapter<RecyclerVie
 
         String status = match.getMatchStatus();
         if (!TextUtils.isEmpty(status)) {
-            if (status.equalsIgnoreCase(Constants.MatchStatusStrings.PLAY) ||
-                    status.equalsIgnoreCase(Constants.MatchStatusStrings.CONTINUE)) {
+            if (status.equalsIgnoreCase(Constants.MatchStatusStrings.PLAY)) {
                 shouldDisable = false;
             }
         }

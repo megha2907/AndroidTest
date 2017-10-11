@@ -221,6 +221,8 @@ public class InPlayMatchesRecyclerAdapter extends RecyclerView.Adapter<RecyclerV
             if (matchStatus.equalsIgnoreCase(Constants.MatchStatusStrings.COMING_UP)) {
                 shouldDisable = true;
             }
+        } else {
+            shouldDisable = true;
         }
 
         return shouldDisable;

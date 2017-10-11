@@ -131,9 +131,6 @@ public class InPlayHeadLessMatchesFragment extends BaseFragment implements View.
                         break;
 
                     case MatchesAdapterAction.PLAY:
-                        /* Playing new Match from headless state can not be allowed */
-                        break;
-
                     case MatchesAdapterAction.CONTINUE:
                         launchPlayScreen(args);
                         break;
@@ -198,6 +195,7 @@ public class InPlayHeadLessMatchesFragment extends BaseFragment implements View.
             dataDto.setSubTitle(mHeadLessMatchScreenData.getContestName());
             dataDto.setChallengeName(mHeadLessMatchScreenData.getChallengeName());
             dataDto.setChallengeStartTime(mHeadLessMatchScreenData.getStartTime());
+            dataDto.setInPlayContestDto(mHeadLessMatchScreenData.getInPlayContestDto());
 
             if (inPlayMatch.getMatchParties() != null && inPlayMatch.getMatchParties().size() == 2) {
                 dataDto.setMatchPartyTitle1(inPlayMatch.getMatchParties().get(0).getPartyName());
@@ -223,6 +221,7 @@ public class InPlayHeadLessMatchesFragment extends BaseFragment implements View.
                     data.setChallengeName(mHeadLessMatchScreenData.getChallengeName());
                     data.setMatchStatus(match.getMatchStatus());
                     data.setChallengeStartTime(mHeadLessMatchScreenData.getStartTime());
+                    data.setInPlayContestDto(mHeadLessMatchScreenData.getInPlayContestDto());
 
                     if (match.getMatchParties() != null && match.getMatchParties().size() == 2) {
                         data.setMatchPartyTitle1(match.getMatchParties().get(0).getPartyName());
@@ -264,7 +263,7 @@ public class InPlayHeadLessMatchesFragment extends BaseFragment implements View.
             TextView walletAmtTextView = (TextView) rootView.findViewById(R.id.toolbar_wallet_money);
 
             titleTextView.setText(mHeadLessMatchScreenData.getChallengeName());
-            walletAmtTextView.setText(String.valueOf(WalletHelper.getTotalBalance()));
+            walletAmtTextView.setText(String.valueOf((int)WalletHelper.getTotalBalance()));
 
             if (mHeadLessMatchScreenData.getTotalMatches() > 0) {
                 mMatchesLeftTextView.setText(String.valueOf(mHeadLessMatchScreenData.getTotalMatches()));

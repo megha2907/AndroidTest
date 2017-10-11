@@ -39,7 +39,6 @@ import in.sportscafe.nostragamus.module.newChallenges.dto.NewChallengeMatchesRes
 import in.sportscafe.nostragamus.module.newChallenges.dto.NewChallengeMatchesScreenData;
 import in.sportscafe.nostragamus.module.nostraHome.helper.TimerHelper;
 import in.sportscafe.nostragamus.module.popups.timerPopup.TimerFinishDialogHelper;
-import in.sportscafe.nostragamus.module.popups.walletpopups.WalletBalancePopupActivity;
 import in.sportscafe.nostragamus.module.prediction.playScreen.PredictionActivity;
 import in.sportscafe.nostragamus.module.prediction.playScreen.dto.PlayScreenDataDto;
 import in.sportscafe.nostragamus.utils.AlertsHelper;
@@ -286,27 +285,22 @@ public class NewChallengesMatchesFragment extends BaseFragment implements View.O
 
     private void setChallengeInfoAsPerUserPerspective(NewChallengeMatchesResponse responses) {
         if (responses != null && getView() != null && !getActivity().isFinishing()) {
-            String state = responses.getState();
-            if (!TextUtils.isEmpty(state)) {
-                ImageView imgView = (ImageView) getView().findViewById(R.id.games_info_icon_imgView);
-                TextView infoHeadingTextView = (TextView) getView().findViewById(R.id.games_info_heading_textView);
-                TextView infoMsgTextView = (TextView) getView().findViewById(R.id.games_info_msg_textView);
+            ImageView imgView = (ImageView) getView().findViewById(R.id.games_info_icon_imgView);
+            TextView infoHeadingTextView = (TextView) getView().findViewById(R.id.games_info_heading_textView);
+            TextView infoMsgTextView = (TextView) getView().findViewById(R.id.games_info_msg_textView);
 
-                if (state.equalsIgnoreCase(Constants.NewUserChallengeState.STATE_JOINED)) {
+            if (responses.getContestJoined() > 0) {
+                mJoinContestButton.setText("Join Another Contest");
+                imgView.setImageResource(R.drawable.win_more);
+                infoHeadingTextView.setText("Join more contests, to win more!");
+                infoMsgTextView.setText("You can play "+ responses.getContestJoined() +" contests you joined in the In Play tab. Join more to win even more prize money!");
 
-                    mJoinContestButton.setText("Join Another Contest");
-                    imgView.setImageResource(R.drawable.win_more);
-                    infoHeadingTextView.setText("Join more contests, to win more!");
-                    infoMsgTextView.setText("You can play all contests you joined in the In Play tab. Join more to win even more prize money!");
+            } else if (responses.getHeadLessJoined() > 0) {
+                mJoinContestButton.setText("Join Another Contest");
+                imgView.setImageResource(R.drawable.play_contest_card);
+                infoHeadingTextView.setText("You predictions are in play!");
+                infoMsgTextView.setText("You predictions are saved in In Play Tab. Join a contest using them, or join a fresh contest below");
 
-                } else if (state.equalsIgnoreCase(Constants.NewUserChallengeState.STATE_HEADLESS)) {
-
-                    mJoinContestButton.setText("Join Another Contest");
-                    imgView.setImageResource(R.drawable.play_contest_card);
-                    infoHeadingTextView.setText("You predictions are in play!");
-                    infoMsgTextView.setText("You predictions are saved in In Play Tab. Join a contest using them, or join a fresh contest below");
-
-                }
             }
         }
     }

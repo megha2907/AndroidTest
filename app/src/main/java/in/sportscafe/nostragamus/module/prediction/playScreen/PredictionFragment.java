@@ -531,6 +531,8 @@ public class PredictionFragment extends NostraBaseFragment implements View.OnCli
      * @param playersPolls
      */
     private void onPlayerPollSuccess(PlayerPollResponse playersPolls) {
+        /* NOTE: same logic for PredictionCardAdapter.preFillIfPlayerPollAlreadyApplied() tobe followed */
+
         if (getView() != null && getActivity() != null && playersPolls != null &&
                 playersPolls.getPlayersPollList() != null &&
                 playersPolls.getPlayersPollList().size() == 2) {    // for both the options
@@ -802,6 +804,7 @@ public class PredictionFragment extends NostraBaseFragment implements View.OnCli
             data.setChallengeName(mPlayScreenData.getChallengeName());
             data.setPlayingPseudoGame(mPlayScreenData.isPlayingPseudoGame());
             data.setChallengeStartTime(mPlayScreenData.getChallengeStartTime());
+            data.setInPlayContestDto(mPlayScreenData.getInPlayContestDto());
         }
 
         Bundle args = getArguments();

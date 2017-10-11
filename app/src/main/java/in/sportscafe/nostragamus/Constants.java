@@ -828,12 +828,6 @@ public interface Constants {
         String LIVE = "live";
     }
 
-    interface NewUserChallengeState {
-        String STATE_JOINED = "joined";
-        String STATE_HEADLESS = "headless";
-        String STATE_NOT_JOINED = "not-joined";
-    }
-
     interface PredictionPoints {
         int POSITIVE_POINTS = 10;
         int NEGATIVE_POINTS = -4;

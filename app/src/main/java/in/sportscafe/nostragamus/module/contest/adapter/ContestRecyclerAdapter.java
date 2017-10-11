@@ -3,8 +3,8 @@ package in.sportscafe.nostragamus.module.contest.adapter;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -56,7 +56,7 @@ public class ContestRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
         switch (viewType) {
             case ContestAdapterItemType.CONTEST:
-                View v1 = inflater.inflate(R.layout.inflater_pool_new_row, parent, false);
+                View v1 = inflater.inflate(R.layout.contest_card_item_layout, parent, false);
                 viewHolder = new ContestViewHolder(v1, mContestAdapterListener);
                 break;
 
@@ -139,7 +139,6 @@ public class ContestRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             JoinedContestViewHolder viewHolder = (JoinedContestViewHolder) holder;
 
             if (contest != null) {
-
                 viewHolder.mTvPoolName.setText(contest.getConfigName());
 
                 if (contest.noPrizes()) {
@@ -148,14 +147,19 @@ public class ContestRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                     viewHolder.mTvPrizes.setText(Constants.RUPEE_SYMBOL + String.valueOf(contest.getPrizes()));
                 }
 
-                viewHolder.mTvNumberOfPrizes.setText("(" + contest.getSubtitle() + ")");
+                if (!TextUtils.isEmpty(contest.getSubtitle())) {
+                    viewHolder.mTvNumberOfPrizes.setText("(" + contest.getSubtitle() + ")");
+                }
 
-                if (contest.getContestMode().equalsIgnoreCase(Constants.ContestType.GUARANTEED)) {
-                    viewHolder.mIvContestsType.setBackgroundResource(R.drawable.guaranteed_icon);
-                } else if (contest.getContestMode().equalsIgnoreCase(Constants.ContestType.POOL)) {
-                    viewHolder.mIvContestsType.setBackgroundResource(R.drawable.pool_icon);
-                }else if (contest.getContestMode().equalsIgnoreCase(Constants.ContestType.NON_GUARANTEED)) {
-                    viewHolder.mIvContestsType.setBackgroundResource(R.drawable.no_guarantee_icon);
+                String contestMode = contest.getContestMode();
+                if (!TextUtils.isEmpty(contestMode)) {
+                    if (contestMode.equalsIgnoreCase(Constants.ContestType.GUARANTEED)){
+                        viewHolder.mIvContestsType.setBackgroundResource(R.drawable.guaranteed_icon);
+                    } else if (contestMode.equalsIgnoreCase(Constants.ContestType.POOL)) {
+                        viewHolder.mIvContestsType.setBackgroundResource(R.drawable.pool_icon);
+                    } else if (contestMode.equalsIgnoreCase(Constants.ContestType.NON_GUARANTEED)) {
+                        viewHolder.mIvContestsType.setBackgroundResource(R.drawable.no_guarantee_icon);
+                    }
                 }
 
                 if (contest.isFreeEntry()) {

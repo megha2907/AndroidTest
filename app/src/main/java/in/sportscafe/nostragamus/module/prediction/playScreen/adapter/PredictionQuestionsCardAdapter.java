@@ -142,6 +142,7 @@ public class PredictionQuestionsCardAdapter extends ArrayAdapter<PredictionQuest
 
     private void preFillIfPlayerPollAlreadyApplied(int position, TextView playerPollOption1TextView,
                                                    TextView playerPollOption2TextView, PredictionQuestion question) {
+        /* NOTE: Same logic for PredictionFragment.onPlayerPollSuccess() tobe followed */
 
         if (question != null && question.getPlayersPollList() != null && question.getPlayersPollList().size() == 2) {
             List<PlayersPoll> playersPollList = question.getPlayersPollList();
@@ -152,8 +153,8 @@ public class PredictionQuestionsCardAdapter extends ArrayAdapter<PredictionQuest
             int pollPercentForOption2 = Integer.parseInt(option2);
 
             if (pollPercentForOption1 > 0 && pollPercentForOption2 > 0) {
-                playerPollOption1TextView.setText(pollPercentForOption1);
-                playerPollOption2TextView.setText(pollPercentForOption2);
+                playerPollOption1TextView.setText(playersPollList.get(0).getAnswerPercentage());
+                playerPollOption2TextView.setText(playersPollList.get(1).getAnswerPercentage());
 
                 playerPollOption1TextView.setVisibility(View.VISIBLE);
                 playerPollOption2TextView.setVisibility(View.VISIBLE);

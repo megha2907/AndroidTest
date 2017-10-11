@@ -2,6 +2,7 @@ package in.sportscafe.nostragamus.module.inPlay.ui;
 
 import org.parceler.Parcel;
 
+import in.sportscafe.nostragamus.module.inPlay.dto.InPlayContestDto;
 import in.sportscafe.nostragamus.module.prediction.playScreen.dto.PowerUp;
 
 /**
@@ -21,6 +22,7 @@ public  class ResultsScreenDataDto {
     private String matchStatus;
     private boolean isPlayingPseudoGame = false;
     private boolean isHeadLess = false;
+    private InPlayContestDto inPlayContestDto;
 
     public int getChallengeId() {
         return challengeId;
@@ -108,5 +110,13 @@ public  class ResultsScreenDataDto {
 
     public void setChallengeStartTime(String challengeStartTime) {
         this.challengeStartTime = challengeStartTime;
+    }
+
+    public InPlayContestDto getInPlayContestDto() {
+        return inPlayContestDto;
+    }
+
+    public void setInPlayContestDto(InPlayContestDto inPlayContestDto) {
+        this.inPlayContestDto = inPlayContestDto;
     }
 }

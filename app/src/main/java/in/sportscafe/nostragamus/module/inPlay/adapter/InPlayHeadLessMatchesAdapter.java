@@ -3,6 +3,7 @@ package in.sportscafe.nostragamus.module.inPlay.adapter;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -102,8 +103,81 @@ public class InPlayHeadLessMatchesAdapter extends RecyclerView.Adapter<RecyclerV
             }
 
             viewHolder.venueTextView.setText(match.getMatchVenue());
-            viewHolder.actionButton.setText(match.getMatchStatus());
 
+            /* Action Button */
+            String matchStatus = match.getMatchStatus();
+            if (!TextUtils.isEmpty(matchStatus)) {
+
+                if (matchStatus.equalsIgnoreCase(Constants.MatchStatusStrings.POINTS)) {
+                    viewHolder.actionButton.setClickable(true);
+                    matchStatus = match.getMatchPoints() + " " + matchStatus;
+                    viewHolder.actionButton.setTextColor(ContextCompat.getColor(viewHolder.actionButton.getContext(), R.color.black));
+                    viewHolder.actionButton.setBackground(ContextCompat.getDrawable(viewHolder.actionButton.getContext(), R.drawable.btn_points_bg));
+                    viewHolder.actionButton.setLayoutParams(new LinearLayout.LayoutParams
+                            (viewHolder.actionButton.getResources().getDimensionPixelSize(R.dimen.dim_90)
+                                    , viewHolder.actionButton.getResources().getDimensionPixelSize(R.dimen.dim_32)));
+
+                } else if (matchStatus.equalsIgnoreCase(Constants.MatchStatusStrings.PLAY)) {
+                    viewHolder.actionButton.setClickable(true);
+                    viewHolder.actionButton.setTextColor(ContextCompat.getColor(viewHolder.actionButton.getContext(), R.color.white));
+                    viewHolder.actionButton.setBackground(ContextCompat.getDrawable(viewHolder.actionButton.getContext(), R.drawable.btn_play_bg));
+                    viewHolder.actionButton.setLayoutParams(new LinearLayout.LayoutParams
+                            (viewHolder.actionButton.getResources().getDimensionPixelSize(R.dimen.dim_90)
+                                    , viewHolder.actionButton.getResources().getDimensionPixelSize(R.dimen.dim_32)));
+
+                } else if (matchStatus.equalsIgnoreCase(Constants.MatchStatusStrings.DID_NOT_PLAY)) {
+                    viewHolder.actionButton.setClickable(true);
+                    viewHolder.actionButton.setTextColor(ContextCompat.getColor(viewHolder.actionButton.getContext(), R.color.black));
+                    viewHolder.actionButton.setBackground(ContextCompat.getDrawable(viewHolder.actionButton.getContext(), R.drawable.btn_did_not_play_bg));
+                    viewHolder.actionButton.setLayoutParams(new LinearLayout.LayoutParams
+                            (viewHolder.actionButton.getResources().getDimensionPixelSize(R.dimen.dim_100)
+                                    , viewHolder.actionButton.getResources().getDimensionPixelSize(R.dimen.dim_32)));
+
+                } else if (matchStatus.equalsIgnoreCase(Constants.MatchStatusStrings.COMING_UP)) {
+                    viewHolder.actionButton.setClickable(false);
+                    viewHolder.actionButton.setTextColor(ContextCompat.getColor(viewHolder.actionButton.getContext(), R.color.grey_a1a1a1));
+                    viewHolder.actionButton.setBackground(ContextCompat.getDrawable(viewHolder.actionButton.getContext(), R.drawable.btn_coming_up_bg));
+                    viewHolder.actionButton.setLayoutParams(new LinearLayout.LayoutParams
+                            (viewHolder.actionButton.getResources().getDimensionPixelSize(R.dimen.dim_90)
+                                    , viewHolder.actionButton.getResources().getDimensionPixelSize(R.dimen.dim_32)));
+
+                }else if (matchStatus.equalsIgnoreCase(Constants.MatchStatusStrings.ANSWER)) {
+                    viewHolder.actionButton.setClickable(true);
+                    viewHolder.actionButton.setTextColor(ContextCompat.getColor(viewHolder.actionButton.getContext(), R.color.white));
+                    viewHolder.actionButton.setBackground(ContextCompat.getDrawable(viewHolder.actionButton.getContext(), R.drawable.btn_play_bg));
+                    viewHolder.actionButton.setLayoutParams(new LinearLayout.LayoutParams
+                            (viewHolder.actionButton.getResources().getDimensionPixelSize(R.dimen.dim_90)
+                                    , viewHolder.actionButton.getResources().getDimensionPixelSize(R.dimen.dim_32)));
+
+                }else if (matchStatus.equalsIgnoreCase(Constants.MatchStatusStrings.CONTINUE)) {
+                    viewHolder.actionButton.setClickable(true);
+                    viewHolder.actionButton.setTextColor(ContextCompat.getColor(viewHolder.actionButton.getContext(), R.color.white));
+                    viewHolder.actionButton.setBackground(ContextCompat.getDrawable(viewHolder.actionButton.getContext(), R.drawable.btn_play_bg));
+                    viewHolder.actionButton.setLayoutParams(new LinearLayout.LayoutParams
+                            (viewHolder.actionButton.getResources().getDimensionPixelSize(R.dimen.dim_90)
+                                    , viewHolder.actionButton.getResources().getDimensionPixelSize(R.dimen.dim_32)));
+
+                }else if (matchStatus.equalsIgnoreCase(Constants.MatchStatusStrings.CANCELLED)) {
+                    viewHolder.actionButton.setClickable(false);
+                    viewHolder.actionButton.setTextColor(ContextCompat.getColor(viewHolder.actionButton.getContext(), R.color.black));
+                    viewHolder.actionButton.setBackground(ContextCompat.getDrawable(viewHolder.actionButton.getContext(), R.drawable.btn_did_not_play_bg));
+                    viewHolder.actionButton.setLayoutParams(new LinearLayout.LayoutParams
+                            (viewHolder.actionButton.getResources().getDimensionPixelSize(R.dimen.dim_100)
+                                    , viewHolder.actionButton.getResources().getDimensionPixelSize(R.dimen.dim_32)));
+
+                }else {
+                    viewHolder.actionButton.setClickable(true);
+                    viewHolder.actionButton.setTextColor(ContextCompat.getColor(viewHolder.actionButton.getContext(), R.color.white));
+                    viewHolder.actionButton.setBackground(ContextCompat.getDrawable(viewHolder.actionButton.getContext(), R.drawable.btn_play_bg));
+                    viewHolder.actionButton.setLayoutParams(new LinearLayout.LayoutParams
+                            (viewHolder.actionButton.getResources().getDimensionPixelSize(R.dimen.dim_90)
+                                    , viewHolder.actionButton.getResources().getDimensionPixelSize(R.dimen.dim_32)));
+                }
+
+                viewHolder.actionButton.setText(matchStatus);
+            }
+
+            /*  Parties */
             if (match.getMatchParties() != null)  {
                 MatchParty party1 = match.getMatchParties().get(0);
                 if (party1 != null) {
@@ -141,11 +215,12 @@ public class InPlayHeadLessMatchesAdapter extends RecyclerView.Adapter<RecyclerV
         String status = match.getMatchStatus();
         if (!TextUtils.isEmpty(status)) {
             if (status.equalsIgnoreCase(Constants.MatchStatusStrings.COMING_UP) ||
-                    status.equalsIgnoreCase(Constants.MatchStatusStrings.PLAY) ||
                     status.equalsIgnoreCase(Constants.MatchStatusStrings.DID_NOT_PLAY) ||
                     status.equalsIgnoreCase(Constants.MatchStatusStrings.POINTS)) {
                 shouldDisable = true;
             }
+        } else {
+            shouldDisable = true;
         }
 
         return shouldDisable;
