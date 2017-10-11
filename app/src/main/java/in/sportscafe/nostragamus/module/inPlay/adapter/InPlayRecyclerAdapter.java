@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import org.parceler.Parcels;
@@ -28,6 +29,8 @@ import in.sportscafe.nostragamus.module.inPlay.dto.InPlayContestDto;
 import in.sportscafe.nostragamus.module.inPlay.dto.InPlayContestMatchDto;
 import in.sportscafe.nostragamus.module.inPlay.dto.InPlayListChallengeItem;
 import in.sportscafe.nostragamus.module.inPlay.dto.InPlayListItem;
+import in.sportscafe.nostragamus.module.newChallenges.dataProvider.SportsDataProvider;
+import in.sportscafe.nostragamus.module.newChallenges.dto.SportsTab;
 import in.sportscafe.nostragamus.module.newChallenges.helpers.DateTimeHelper;
 import in.sportscafe.nostragamus.utils.timeutils.TimeAgo;
 import in.sportscafe.nostragamus.utils.timeutils.TimeUnit;
@@ -119,11 +122,14 @@ public class InPlayRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                 viewHolder.challengeDurationTextView.setText(DateTimeHelper.getChallengeDuration(challengeItem.getChallengeStartTime(),
                         challengeItem.getChallengeEndTime()));
                 viewHolder.challengeButtonParent.setVisibility(View.GONE);
+                viewHolder.gameIconLinearLayout.setVisibility(View.VISIBLE);
+                setSportsIcons((((InPlayChallengeItemViewHolder) holder).gameIconLinearLayout),challengeItem.getSportsIdArray());
             } else {
+                viewHolder.challengeButtonParent.setVisibility(View.VISIBLE);
                 viewHolder.challengeButtonTextView.setText("JOIN ANOTHER CONTEST");
                 viewHolder.challengeDurationTextView.setVisibility(View.GONE);
+                viewHolder.gameIconLinearLayout.setVisibility(View.GONE);
             }
-
         }
     }
 
@@ -293,6 +299,41 @@ public class InPlayRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             }
         }
     }
+
+    private void setSportsIcons(LinearLayout gameIconLinearLayout, int[] sportsIdArray) {
+
+        gameIconLinearLayout.removeAllViews();
+        LinearLayout layout2 = new LinearLayout(gameIconLinearLayout.getContext());
+        layout2.setLayoutParams(new LinearLayout.LayoutParams
+                (LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+        gameIconLinearLayout.setOrientation(LinearLayout.VERTICAL);
+        gameIconLinearLayout.addView(layout2);
+
+        SportsDataProvider sportsDataProvider = new SportsDataProvider();
+        List<SportsTab> sportsTabList = sportsDataProvider.getSportsList();
+
+        for (SportsTab sportsTab : sportsTabList) {
+            if (sportsIdArray != null) {
+                for (int temp = 0; temp < sportsIdArray.length; temp++) {
+
+                    if (sportsIdArray[temp] == sportsTab.getSportsId()) {
+
+                        ImageView imageView = new ImageView(gameIconLinearLayout.getContext());
+                        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams
+                                (LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                        lp.setMargins(16,0,0,0);
+                        imageView.setLayoutParams(lp);
+                        imageView.getLayoutParams().height = (int) gameIconLinearLayout.getContext().getResources().getDimension(R.dimen.dim_12);
+                        imageView.getLayoutParams().width = (int) gameIconLinearLayout.getContext().getResources().getDimension(R.dimen.dim_12);
+                        imageView.setBackgroundResource(sportsTab.getSportIconDrawable());
+                        layout2.addView(imageView);
+
+                    }
+                }
+           }
+        }
+    }
+
 
     @Override
     public int getItemCount() {
@@ -474,6 +515,7 @@ public class InPlayRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         TextView challengeButtonTextView;
         TextView challengeDurationTextView;
         LinearLayout challengeButtonParent;
+        LinearLayout gameIconLinearLayout;
 
         public InPlayChallengeItemViewHolder(View itemView) {
             super(itemView);
@@ -484,6 +526,7 @@ public class InPlayRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             challengeButton = (LinearLayout) itemView.findViewById(R.id.inplay_challenge_button);
             challengeDurationTextView = (TextView) itemView.findViewById(R.id.inplay_challenge_duration_tv);
             challengeButtonParent = (LinearLayout) itemView.findViewById(R.id.inplay_challenge_button);
+            gameIconLinearLayout = (LinearLayout) itemView.findViewById(R.id.inplay_challenge_sports_icons_container);
             challengeButton.setOnClickListener(this);
         }
 

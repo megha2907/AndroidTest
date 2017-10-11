@@ -47,12 +47,13 @@
                 <!-- Add sports identification icon -->
                 <LinearLayout
                     android:id="@+id/challenge_sports_icons_container"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="vertical">
-
-                </LinearLayout>
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    android:layout_weight="0.75"
+                    android:layout_gravity="end"
+                    android:gravity="end|bottom"
+                    android:paddingBottom="@dimen/dim_4"/>
 
             </LinearLayout>
 
@@ -155,7 +156,7 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:layout_weight="1">
@@ -164,8 +165,8 @@
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:gravity="right"
-                    android:layout_gravity="right"
+                    android:gravity="left"
+                    android:layout_gravity="left"
                     android:orientation="vertical">
 
                     <com.jeeva.android.widgets.customfont.CustomTextView
