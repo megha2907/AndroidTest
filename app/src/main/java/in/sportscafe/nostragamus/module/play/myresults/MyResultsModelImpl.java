@@ -3,6 +3,7 @@ package in.sportscafe.nostragamus.module.play.myresults;
 import android.content.Context;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.widget.TextView;
 
 import com.jeeva.android.ExceptionTracker;
 
@@ -234,7 +235,9 @@ public class MyResultsModelImpl implements MyResultsModel, MyResultsAdapter.OnMy
 
     @Override
     public String getMatchName() {
-        return match.getChallengeName() + " - " + contestName;
+        String challengeName = (!TextUtils.isEmpty(match.getChallengeName())) ? match.getChallengeName() : "";
+        String contestNameStr = (!TextUtils.isEmpty(contestName)) ? challengeName : "";
+        return challengeName + contestNameStr;
     }
 
     @Override

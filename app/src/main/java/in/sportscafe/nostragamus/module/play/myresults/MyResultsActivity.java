@@ -1,19 +1,11 @@
 package in.sportscafe.nostragamus.module.play.myresults;
 
-import android.animation.Animator;
-import android.animation.AnimatorSet;
-import android.animation.ObjectAnimator;
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.os.Handler;
-import android.support.design.widget.FloatingActionButton;
-import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -22,17 +14,11 @@ import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
 import android.text.style.ForegroundColorSpan;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
-import android.view.ViewTreeObserver;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import org.parceler.Parcels;
 
@@ -41,9 +27,7 @@ import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Constants.AppPermissions;
 import in.sportscafe.nostragamus.Constants.BundleKeys;
 import in.sportscafe.nostragamus.Constants.Notifications;
-import in.sportscafe.nostragamus.Constants.Powerups;
 import in.sportscafe.nostragamus.Constants.RequestCodes;
-import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.NostragamusActivity;
 import in.sportscafe.nostragamus.module.contest.dto.ContestScreenData;
@@ -477,7 +461,8 @@ public class MyResultsActivity extends NostragamusActivity implements MyResultsV
     @Override
     public void setUserRank(Match match) {
         if (null != match) {
-            if (null != match.getUserRank() && null != match.getCountPlayers()) {
+            if (null != match.getUserRank() && null != match.getCountPlayers() &&
+                    !isPlayingPseudoGame() && !isHeadlessFlow()) {
                 mTvLeaderBoardRank.setText(AppSnippet.ordinal(match.getUserRank()));
                 mTvLeaderBoardTotalPlayers.setText(" / " + String.valueOf(match.getCountPlayers()));
             } else {

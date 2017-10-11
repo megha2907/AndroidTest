@@ -245,8 +245,13 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
                 holder.mTvResultCorrectCount.setText(String.valueOf(mAnsweredQuestionCount) + "/" + match.getMatchQuestionCount() + " Questions Answered");
 
                 if (null != match.getUserRank()) {
-                    holder.mTvLeaderBoardRank.setText(String.valueOf(match.getUserRank()));
-                    holder.mTvLeaderBoardTotalPlayers.setText("/" + String.valueOf(match.getCountPlayers()));
+                    if (isPlayingPseudoGame() || isHeadlessFlow()) {
+                        holder.mTvLeaderBoardRank.setText("NA");
+                        holder.mTvLeaderBoardTotalPlayers.setText("");
+                    } else {
+                        holder.mTvLeaderBoardRank.setText(String.valueOf(match.getUserRank()));
+                        holder.mTvLeaderBoardTotalPlayers.setText("/" + String.valueOf(match.getCountPlayers()));
+                    }
                 } else {
                     holder.mTvLeaderBoardRank.setText("No Rank");
                 }

@@ -362,7 +362,7 @@
             android:id="@+id/schedule_row_rl_points_summary"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/schedule_row_ll"
+            android:layout_below="@+id/match_details_with_leaderboard_layout"
             android:layout_marginLeft="@dimen/dim_10"
             android:layout_marginRight="@dimen/dim_10"
             android:padding="@dimen/dp_4">
@@ -650,7 +650,7 @@
         android:id="@+id/schedule_row_ll_match_commentary_parent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/schedule_row_ll"
+        android:layout_below="@+id/match_details_with_leaderboard_layout"
         android:orientation="vertical"
         android:visibility="gone" />
 
