@@ -27,10 +27,13 @@ import in.sportscafe.nostragamus.module.challengeCompleted.dto.CompletedListItem
 import in.sportscafe.nostragamus.module.contest.ui.DetailScreensLaunchRequest;
 import in.sportscafe.nostragamus.module.customViews.TimelineHelper;
 import in.sportscafe.nostragamus.module.inPlay.adapter.InPlayAdapterItemType;
+import in.sportscafe.nostragamus.module.inPlay.adapter.InPlayRecyclerAdapter;
 import in.sportscafe.nostragamus.module.inPlay.dto.InPlayContestDto;
 import in.sportscafe.nostragamus.module.inPlay.dto.InPlayContestMatchDto;
 import in.sportscafe.nostragamus.module.inPlay.dto.InPlayListChallengeItem;
 import in.sportscafe.nostragamus.module.inPlay.dto.InPlayListItem;
+import in.sportscafe.nostragamus.module.newChallenges.dataProvider.SportsDataProvider;
+import in.sportscafe.nostragamus.module.newChallenges.dto.SportsTab;
 import in.sportscafe.nostragamus.module.newChallenges.helpers.DateTimeHelper;
 import in.sportscafe.nostragamus.utils.timeutils.TimeAgo;
 import in.sportscafe.nostragamus.utils.timeutils.TimeUnit;
@@ -111,14 +114,46 @@ public class CompletedChallengeRecyclerAdapter extends RecyclerView.Adapter<Recy
             if (getChallengeStarted(challengeItem.getChallengeStartTime())) {
                 viewHolder.challengeDurationTextView.setText(DateTimeHelper.getChallengeDuration(challengeItem.getChallengeStartTime(),
                         challengeItem.getChallengeEndTime()));
-                viewHolder.challengeButtonParent.setVisibility(View.GONE);
-            } else {
-                viewHolder.challengeButtonTextView.setText("JOIN ANOTHER CONTEST");
-                viewHolder.challengeDurationTextView.setVisibility(View.GONE);
             }
+            setSportsIcons(viewHolder.gameIconLinearLayout,challengeItem.getSportIdArray());
 
         }
     }
+
+    private void setSportsIcons(LinearLayout gameIconLinearLayout, int[] sportsIdArray) {
+
+        gameIconLinearLayout.removeAllViews();
+        LinearLayout layout2 = new LinearLayout(gameIconLinearLayout.getContext());
+        layout2.setLayoutParams(new LinearLayout.LayoutParams
+                (LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+        gameIconLinearLayout.setOrientation(LinearLayout.VERTICAL);
+        gameIconLinearLayout.addView(layout2);
+
+        SportsDataProvider sportsDataProvider = new SportsDataProvider();
+        List<SportsTab> sportsTabList = sportsDataProvider.getSportsList();
+
+        for (SportsTab sportsTab : sportsTabList) {
+            if (sportsIdArray != null) {
+                for (int temp = 0; temp < sportsIdArray.length; temp++) {
+
+                    if (sportsIdArray[temp] == sportsTab.getSportsId()) {
+
+                        ImageView imageView = new ImageView(gameIconLinearLayout.getContext());
+                        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams
+                                (LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                        lp.setMargins(16,0,0,0);
+                        imageView.setLayoutParams(lp);
+                        imageView.getLayoutParams().height = (int) gameIconLinearLayout.getContext().getResources().getDimension(R.dimen.dim_12);
+                        imageView.getLayoutParams().width = (int) gameIconLinearLayout.getContext().getResources().getDimension(R.dimen.dim_12);
+                        imageView.setBackgroundResource(sportsTab.getSportIconDrawable());
+                        layout2.addView(imageView);
+
+                    }
+                }
+            }
+        }
+    }
+
 
     private boolean getChallengeStarted(String challengeStartTime) {
 
@@ -339,18 +374,16 @@ public class CompletedChallengeRecyclerAdapter extends RecyclerView.Adapter<Recy
         TextView challengeNameTextView;
         TextView challengeCountTextView;
         TextView challengeTournamentTextView;
-        TextView challengeButtonTextView;
         TextView challengeDurationTextView;
-        LinearLayout challengeButtonParent;
+        LinearLayout gameIconLinearLayout;
 
         public CompletedChallengeItemViewHolder(View itemView) {
             super(itemView);
             challengeNameTextView = (TextView) itemView.findViewById(R.id.completed_challenge_title_textView);
             challengeCountTextView = (TextView) itemView.findViewById(R.id.completed_challenge_count_textView);
             challengeTournamentTextView = (TextView) itemView.findViewById(R.id.completed_challenge_tournaments_textView);
-            challengeButtonTextView = (TextView) itemView.findViewById(R.id.completed_challenge_button_textView);
             challengeDurationTextView = (TextView) itemView.findViewById(R.id.completed_challenge_duration_tv);
-            challengeButtonParent = (LinearLayout) itemView.findViewById(R.id.completed_challenge_button);
+            gameIconLinearLayout = (LinearLayout) itemView.findViewById(R.id.completed_challenge_sports_icons_container);
         }
 
         @Override

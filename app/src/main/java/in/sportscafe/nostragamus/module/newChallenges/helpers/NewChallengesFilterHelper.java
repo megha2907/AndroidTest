@@ -59,7 +59,7 @@ public class NewChallengesFilterHelper {
 
                 if (sportsIdArray != null) {
                     for (int temp = 0; temp < sportsIdArray.length; temp++) {
-                        if (sportsIdArray[temp] == SportsDataProvider.FILTER_MIXED_SPORTS_ID) {
+                        if (sportsIdArray.length > 1) {
                             mixChallenge.add(newChallenge);
                         }
                     }

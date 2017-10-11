@@ -178,6 +178,7 @@ public class InPlayFragment extends NostraBaseFragment implements View.OnClickLi
                     int sportId = sportsTab.getSportsId();
                     List<InPlayResponse> inPlayFilteredList = null;
                     switch (sportId) {
+
                         case SportsDataProvider.FILTER_ALL_SPORTS_ID:
                             inPlayFilteredList = inPlayResponseList;
                             break;
