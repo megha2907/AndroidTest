@@ -35,6 +35,7 @@ import in.sportscafe.nostragamus.module.inPlay.dto.InPlayMatchesResponse;
 import in.sportscafe.nostragamus.module.inPlay.ui.ResultsScreenDataDto;
 import in.sportscafe.nostragamus.module.inPlay.ui.headless.dto.HeadLessMatchScreenData;
 import in.sportscafe.nostragamus.module.navigation.wallet.WalletHelper;
+import in.sportscafe.nostragamus.module.newChallenges.dto.NewChallengeMatchesResponse;
 import in.sportscafe.nostragamus.module.nostraHome.helper.TimerHelper;
 import in.sportscafe.nostragamus.module.play.myresults.MyResultsActivity;
 import in.sportscafe.nostragamus.module.popups.timerPopup.TimerFinishDialogHelper;
@@ -52,6 +53,7 @@ public class InPlayHeadLessMatchesFragment extends BaseFragment implements View.
     private HeadLessMatchScreenData mHeadLessMatchScreenData;
     private TextView mTimerTextView;
     private TextView mMatchesLeftTextView;
+    private Button mJoinContestButton;
 
     public InPlayHeadLessMatchesFragment() {
     }
@@ -76,7 +78,7 @@ public class InPlayHeadLessMatchesFragment extends BaseFragment implements View.
     }
 
     private void initRootView(View rootView) {
-        Button joinContestBtn = (Button) rootView.findViewById(R.id.new_challenge_matches_join_button);
+        mJoinContestButton = (Button) rootView.findViewById(R.id.new_challenge_matches_join_button);
         mMatchesLeftTextView = (TextView) rootView.findViewById(R.id.matches_timeline_matches_left);
         mTimerTextView = (TextView) rootView.findViewById(R.id.matches_timeline_match_expires_in);
         ImageView backButtonImgView = (ImageView) rootView.findViewById(R.id.back_button);
@@ -86,7 +88,7 @@ public class InPlayHeadLessMatchesFragment extends BaseFragment implements View.
         mMatchesRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         mMatchesRecyclerView.setHasFixedSize(true);
 
-        joinContestBtn.setOnClickListener(this);
+        mJoinContestButton.setOnClickListener(this);
 
     }
 
@@ -312,6 +314,7 @@ public class InPlayHeadLessMatchesFragment extends BaseFragment implements View.
     }
 
     private void onSuccessMatchResponse(InPlayMatchesResponse responses) {
+        setChallengeInfoAsPerUserPerspective(responses);
         if (mMatchesRecyclerView != null && responses != null &&
                 responses.getData() != null && responses.getData().getInPlayMatchList() != null) {
 
@@ -320,6 +323,22 @@ public class InPlayHeadLessMatchesFragment extends BaseFragment implements View.
         }
     }
 
+    private void setChallengeInfoAsPerUserPerspective(InPlayMatchesResponse responses) {
+        if (responses != null && responses.getData() != null && getView() != null && !getActivity().isFinishing()) {
+            TextView infoMsgTextView = (TextView) getView().findViewById(R.id.games_info_msg_textView);
+
+            /* For any match , if status is answer or continue ; means some answers were given previously, so change string */
+            for (InPlayMatch match : responses.getData().getInPlayMatchList()) {
+                if (match.getMatchStatus().equalsIgnoreCase(Constants.MatchStatusStrings.ANSWER) ||
+                        match.getMatchStatus().equalsIgnoreCase(Constants.MatchStatusStrings.CONTINUE)) {
+
+                    String msg = "Your predictions were saved. You can edit or play the challenge with them, once you join, before the timer runs out!";
+                    infoMsgTextView.setText(msg);
+                    break;
+                }
+            }
+        }
+    }
 
     @Override
     public void onClick(View view) {
