@@ -23,13 +23,13 @@
 
             <ImageView
                 android:id="@+id/prediction_back_btn"
-                android:layout_width="@dimen/dim_24"
-                android:layout_height="@dimen/dim_24"
-                android:padding="@dimen/dim_3"
-                android:src="@drawable/back_icon_grey"
+                android:layout_width="@dimen/dp_32"
+                android:layout_height="@dimen/dp_32"
+                android:layout_gravity="center"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="@dimen/dim_16"
-                android:layout_alignParentLeft="true"/>
+                android:padding="@dimen/dim_10"
+                android:layout_marginLeft="@dimen/dim_6"
+                android:src="@drawable/back_icon_grey" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -43,8 +43,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:gravity="center"
-                    android:paddingLeft="@dimen/dim_40">
+                    android:gravity="center">
 
                     <com.jeeva.android.widgets.customfont.CustomTextView
                         android:id="@+id/prediction_heading_party1_textView"
@@ -54,7 +53,8 @@
                         android:gravity="right"
                         android:textColor="@color/white"
                         android:textSize="@dimen/sp_13"
-                        app:typeface="lato_regular"/>
+                        app:typeface="lato_regular"
+                        android:layout_marginLeft="@dimen/dim_40"/>
 
                     <com.jeeva.android.widgets.customfont.CustomTextView
                         android:layout_width="wrap_content"
@@ -74,7 +74,8 @@
                         android:layout_gravity="left"
                         android:textColor="@color/white"
                         android:textSize="@dimen/sp_13"
-                        app:typeface="lato_regular"/>
+                        app:typeface="lato_regular"
+                        android:layout_marginRight="@dimen/dim_40"/>
 
                 </LinearLayout>
 
@@ -115,17 +116,30 @@
                 android:layout_alignParentLeft="true"/>
 
             <!-- Next button -->
-            <com.jeeva.android.widgets.customfont.CustomTextView
-                android:id="@+id/prediction_question_next_textView"
+            <LinearLayout
+                android:id="@+id/prediction_next_layout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/white"
-                android:textSize="@dimen/sp_12"
-                app:typeface="lato_regular"
-                android:text="NEXT"
-                android:drawableRight="@drawable/ic_arrow_right"
-                android:drawablePadding="@dimen/dim_5"
-                android:layout_alignParentRight="true"/>
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_alignParentRight="true">
+
+                <com.jeeva.android.widgets.customfont.CustomTextView
+                    android:id="@+id/prediction_question_next_textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/sp_12"
+                    app:typeface="lato_regular"
+                    android:text="NEXT"/>
+
+                <ImageView
+                    android:layout_width="@dimen/dim_12"
+                    android:layout_height="@dimen/dim_12"
+                    android:src="@drawable/play_screen_next_button_icn"
+                    android:layout_marginLeft="@dimen/dim_5"/>
+
+            </LinearLayout>
 
         </RelativeLayout>
 
@@ -155,122 +169,138 @@
 
         <!-- Bottom/ Power-up Layout -->
         <LinearLayout
-            android:id="@+id/prediction_bottom_layout"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dim_80"
             android:orientation="horizontal"
             android:background="#252525"
             android:layout_alignParentBottom="true"
-            android:gravity="center"
-            android:visibility="gone">
+            android:gravity="center">
 
-            <ImageView
-                android:id="@+id/prediction_powerup_bank_imgView"
-                android:layout_width="@dimen/dim_32"
-                android:layout_height="@dimen/dim_32"
-                android:src="@drawable/prediction_powerup_bank_button"
-                android:layout_marginLeft="@dimen/dim_26"
-                android:layout_marginRight="@dimen/dim_26"/>
+            <LinearLayout
+                android:id="@+id/prediction_bottom_layout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:visibility="gone">
 
-            <RelativeLayout
-                android:layout_width="@dimen/dim_185"
-                android:layout_height="@dimen/dim_46"
-                android:gravity="bottom"
-                android:background="@drawable/prediction_powerup_bg_icn">
+                <ImageView
+                    android:id="@+id/prediction_powerup_bank_imgView"
+                    android:layout_width="@dimen/dim_32"
+                    android:layout_height="@dimen/dim_32"
+                    android:src="@drawable/prediction_powerup_bank_button"
+                    android:layout_marginLeft="@dimen/dim_26"
+                    android:layout_marginRight="@dimen/dim_26"/>
 
-                <!-- Doubler -->
                 <RelativeLayout
-                    android:id="@+id/prediction_doubler_Layout"
-                    android:layout_width="@dimen/dim_42"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true">
+                    android:layout_width="@dimen/dim_185"
+                    android:layout_height="@dimen/dim_52">
 
-                    <ImageView
-                        android:id="@+id/doubler_imgView"
-                        android:layout_width="@dimen/dim_42"
-                        android:layout_height="@dimen/dim_46"
-                        android:src="@drawable/prediction_doubler_powerup_button"/>
+                    <View
+                        android:id="@+id/background_img"
+                        android:layout_width="@dimen/dim_185"
+                        android:layout_height="@dimen/dim_42"
+                        android:layout_alignParentBottom="true"
+                        android:background="@drawable/prediction_powerup_bg_icn"/>
 
-                    <com.jeeva.android.widgets.customfont.CustomTextView
-                        android:id="@+id/prediction_doubler_counter_textView"
+                    <!-- Doubler -->
+                    <RelativeLayout
+                        android:id="@+id/prediction_doubler_Layout"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_centerHorizontal="true"
-                        android:gravity="center"
-                        android:text="0"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/sp_10"
-                        app:typeface="lato_regular"
-                        android:background="@drawable/prediction_powerup_counter_bg"/>
+                        android:layout_alignParentLeft="true">
 
+                        <ImageView
+                            android:id="@+id/doubler_imgView"
+                            android:layout_width="@dimen/dim_48"
+                            android:layout_height="@dimen/dim_48"
+                            android:adjustViewBounds="true"
+                            android:src="@drawable/prediction_doubler_powerup_button"/>
+
+                        <com.jeeva.android.widgets.customfont.CustomTextView
+                            android:id="@+id/prediction_doubler_counter_textView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerHorizontal="true"
+                            android:gravity="center"
+                            android:padding="@dimen/dim_2"
+                            android:text="0"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/sp_9"
+                            app:typeface="lato_regular"
+                            android:background="@drawable/prediction_powerup_counter_bg"/>
+
+                    </RelativeLayout>
+
+                    <!-- No negative -->
+                    <RelativeLayout
+                        android:id="@+id/prediction_noNeg_Layout"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true">
+
+                        <ImageView
+                            android:id="@+id/noNeg_ingView"
+                            android:layout_width="@dimen/dim_48"
+                            android:layout_height="@dimen/dim_48"
+                            android:src="@drawable/prediction_no_negative_powerup_button"/>
+
+                        <com.jeeva.android.widgets.customfont.CustomTextView
+                            android:id="@+id/prediction_noNeg_counter_textView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerHorizontal="true"
+                            android:gravity="center"
+                            android:padding="@dimen/dim_2"
+                            android:text="0"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/sp_9"
+                            app:typeface="lato_regular"
+                            android:layout_alignTop="@id/noNeg_ingView"
+                            android:background="@drawable/prediction_powerup_counter_bg"/>
+
+                    </RelativeLayout>
+
+                    <!-- Player poll -->
+                    <RelativeLayout
+                        android:id="@+id/prediction_player_poll_Layout"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true">
+
+                        <ImageView
+                            android:id="@+id/player_poll_imgView"
+                            android:layout_width="@dimen/dim_48"
+                            android:layout_height="@dimen/dim_48"
+                            android:src="@drawable/prediction_player_poll_powerup_button"/>
+
+                        <com.jeeva.android.widgets.customfont.CustomTextView
+                            android:id="@+id/prediction_player_poll_counter_textView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerHorizontal="true"
+                            android:gravity="center"
+                            android:padding="@dimen/dim_2"
+                            android:text="0"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/sp_9"
+                            app:typeface="lato_regular"
+                            android:layout_alignTop="@id/player_poll_imgView"
+                            android:background="@drawable/prediction_powerup_counter_bg"/>
+
+                    </RelativeLayout>
 
                 </RelativeLayout>
 
-                <!-- No negative -->
-                <RelativeLayout
-                    android:id="@+id/prediction_noNeg_Layout"
-                    android:layout_width="@dimen/dim_42"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true">
+                <ImageView
+                    android:id="@+id/prediction_help_play_imgView"
+                    android:layout_width="@dimen/dim_32"
+                    android:layout_height="@dimen/dim_32"
+                    android:src="@drawable/prediction_game_help_button"
+                    android:layout_marginLeft="@dimen/dim_26"
+                    android:layout_marginRight="@dimen/dim_26"/>
 
-                    <ImageView
-                        android:id="@+id/noNeg_ingView"
-                        android:layout_width="@dimen/dim_42"
-                        android:layout_height="@dimen/dim_46"
-                        android:src="@drawable/prediction_no_negative_powerup_button"/>
-
-                    <com.jeeva.android.widgets.customfont.CustomTextView
-                        android:id="@+id/prediction_noNeg_counter_textView"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerHorizontal="true"
-                        android:gravity="center"
-                        android:text="0"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/sp_10"
-                        app:typeface="lato_regular"
-                        android:layout_alignTop="@id/noNeg_ingView"
-                        android:background="@drawable/prediction_powerup_counter_bg"/>
-
-                </RelativeLayout>
-
-                <!-- Player poll -->
-                <RelativeLayout
-                    android:id="@+id/prediction_player_poll_Layout"
-                    android:layout_width="@dimen/dim_42"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true">
-
-                    <ImageView
-                        android:id="@+id/player_poll_imgView"
-                        android:layout_width="@dimen/dim_42"
-                        android:layout_height="@dimen/dim_46"
-                        android:src="@drawable/prediction_player_poll_powerup_button"/>
-
-                    <com.jeeva.android.widgets.customfont.CustomTextView
-                        android:id="@+id/prediction_player_poll_counter_textView"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerHorizontal="true"
-                        android:gravity="center"
-                        android:text="0"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/sp_10"
-                        app:typeface="lato_regular"
-                        android:layout_alignTop="@id/player_poll_imgView"
-                        android:background="@drawable/prediction_powerup_counter_bg"/>
-
-                </RelativeLayout>
-
-            </RelativeLayout>
-
-            <ImageView
-                android:id="@+id/prediction_help_play_imgView"
-                android:layout_width="@dimen/dim_32"
-                android:layout_height="@dimen/dim_32"
-                android:src="@drawable/prediction_game_help_button"
-                android:layout_marginLeft="@dimen/dim_26"
-                android:layout_marginRight="@dimen/dim_26"/>
+            </LinearLayout>
 
         </LinearLayout>
 
