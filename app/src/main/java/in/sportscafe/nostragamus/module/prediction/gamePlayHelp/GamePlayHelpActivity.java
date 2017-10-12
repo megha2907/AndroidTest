@@ -53,7 +53,7 @@ public class GamePlayHelpActivity extends NostragamusActivity implements View.On
             getWindowManager().getDefaultDisplay().getRealMetrics(dm);
 
             RelativeLayout.LayoutParams rlp = (RelativeLayout.LayoutParams) findViewById(R.id.game_play_help_bottom_empty_layout).getLayoutParams();
-            rlp.height = (int) (dm.heightPixels * 0.1);
+            rlp.height = (int) getResources().getDimension(R.dimen.dim_80); // (dm.heightPixels * 0.1);
 
             int total = dm.heightPixels - rlp.height;
             rlp = (RelativeLayout.LayoutParams) findViewById(R.id.game_play_help_top_layout).getLayoutParams();
