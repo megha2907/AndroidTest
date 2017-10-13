@@ -19,7 +19,8 @@ public class PredictionActivity extends NostraBaseActivity implements Prediction
 
     public interface LaunchedFrom {
         int NEW_CHALLENGES_SCREEN_PSEUDO_PLAY = 111;
-        int IN_PLAY_SCREEN_PLAY_MATCH = 121;
+        int IN_PLAY_SCREEN_PLAY_MATCH = 112;
+        int DUMMY_GAME = 113;
     }
 
     @Override

@@ -1,5 +1,6 @@
 package in.sportscafe.nostragamus.module.navigation.help.dummygame;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.FragmentTransaction;
@@ -11,11 +12,13 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 
+import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Constants.AnalyticsActions;
 import in.sportscafe.nostragamus.Constants.ScreenNames;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
 import in.sportscafe.nostragamus.module.common.NostragamusActivity;
+import in.sportscafe.nostragamus.module.prediction.playScreen.PredictionActivity;
 import in.sportscafe.nostragamus.module.resultspeek.dto.Question;
 import in.sportscafe.nostragamus.webservice.MyWebService;
 
@@ -330,6 +333,19 @@ public class DummyGameActivity extends NostragamusActivity implements DGPlayFrag
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
+
+                /* If args contains playscreenData then launch play screen and finish this as it could be firs time play for user */
+                if (getIntent() != null && getIntent().getExtras() != null) {
+                    Bundle bundle = getIntent().getExtras();
+                    if (bundle.containsKey(Constants.BundleKeys.PLAY_SCREEN_DATA)) {
+                        Intent predictionIntent = new Intent(getActivity(), PredictionActivity.class);
+                        predictionIntent.putExtras(bundle);
+                        predictionIntent.putExtra(Constants.BundleKeys.SCREEN_LAUNCHED_FROM_PARENT,
+                                PredictionActivity.LaunchedFrom.DUMMY_GAME);
+                        startActivity(predictionIntent);
+                    }
+                }
+
                 DummyGameActivity.super.onBackPressed();
             }
         }, DELAY_TO_PERFORM_BACK_PRESS);
