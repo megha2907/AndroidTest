@@ -14,13 +14,17 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.moengage.inapp.InAppMessage;
+
 import org.parceler.Parcels;
 
 import java.util.List;
 
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
+import in.sportscafe.nostragamus.module.challengeRewards.dto.Rewards;
 import in.sportscafe.nostragamus.module.contest.dto.Contest;
+import in.sportscafe.nostragamus.module.contest.ui.DetailScreensLaunchRequest;
 
 /**
  * Created by sandip on 01/09/17.
@@ -41,6 +45,7 @@ public class ContestRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
     @Override
     public int getItemViewType(int position) {
+
         int viewType = ContestAdapterItemType.CONTEST;
         if (mContestList != null && !mContestList.isEmpty()) {
             viewType = mContestList.get(position).getContestItemType();
@@ -61,6 +66,8 @@ public class ContestRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                 break;
 
             case ContestAdapterItemType.REFER_FRIEND_AD:
+                View v2 = inflater.inflate(R.layout.refer_friend_card_layout, parent, false);
+                viewHolder = new ReferFriendViewHolder(v2, mContestAdapterListener);
                 break;
 
             case ContestAdapterItemType.JOINED_CONTEST:
@@ -81,6 +88,7 @@ public class ContestRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                     break;
 
                 case ContestAdapterItemType.REFER_FRIEND_AD:
+                    bindReferFriendValues(holder, position);
                     break;
 
                 case ContestAdapterItemType.JOINED_CONTEST:
@@ -88,6 +96,10 @@ public class ContestRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                     break;
             }
         }
+    }
+
+    private void bindReferFriendValues(RecyclerView.ViewHolder holder, int position) {
+
     }
 
     private void bindContestValues(RecyclerView.ViewHolder holder, int position) {
@@ -109,11 +121,11 @@ public class ContestRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                 viewHolder.mTvContestsAvailable.setText(String.valueOf(contest.getFillingRooms()));
 
                 if (contest.getContestMode().equalsIgnoreCase(Constants.ContestType.GUARANTEED)) {
-                    viewHolder.mIvContestsType.setBackgroundResource(R.drawable.guaranteed_icon);
+                    viewHolder.mIvContestsType.setImageResource(R.drawable.guaranteed_icon);
                 } else if (contest.getContestMode().equalsIgnoreCase(Constants.ContestType.POOL)) {
-                    viewHolder.mIvContestsType.setBackgroundResource(R.drawable.pool_icon);
-                }else if (contest.getContestMode().equalsIgnoreCase(Constants.ContestType.NON_GUARANTEED)) {
-                    viewHolder.mIvContestsType.setBackgroundResource(R.drawable.no_guarantee_icon);
+                    viewHolder.mIvContestsType.setImageResource(R.drawable.pool_icon);
+                } else if (contest.getContestMode().equalsIgnoreCase(Constants.ContestType.NON_GUARANTEED)) {
+                    viewHolder.mIvContestsType.setImageResource(R.drawable.no_guarantee_icon);
                 }
 
                 if (contest.isFreeEntry()) {
@@ -153,14 +165,15 @@ public class ContestRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
                 String contestMode = contest.getContestMode();
                 if (!TextUtils.isEmpty(contestMode)) {
-                    if (contestMode.equalsIgnoreCase(Constants.ContestType.GUARANTEED)){
-                        viewHolder.mIvContestsType.setBackgroundResource(R.drawable.guaranteed_icon);
+                    if (contestMode.equalsIgnoreCase(Constants.ContestType.GUARANTEED)) {
+                        viewHolder.mIvContestsType.setImageResource(R.drawable.guaranteed_icon);
                     } else if (contestMode.equalsIgnoreCase(Constants.ContestType.POOL)) {
-                        viewHolder.mIvContestsType.setBackgroundResource(R.drawable.pool_icon);
+                        viewHolder.mIvContestsType.setImageResource(R.drawable.pool_icon);
                     } else if (contestMode.equalsIgnoreCase(Constants.ContestType.NON_GUARANTEED)) {
-                        viewHolder.mIvContestsType.setBackgroundResource(R.drawable.no_guarantee_icon);
+                        viewHolder.mIvContestsType.setImageResource(R.drawable.no_guarantee_icon);
                     }
                 }
+
 
                 if (contest.isFreeEntry()) {
                     viewHolder.mTvEntryFee.setText("Free");
@@ -177,6 +190,15 @@ public class ContestRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                 }
             }
         }
+    }
+
+//    @Override
+//    public int getItemCount() {
+//        return (mContestList != null) ? mContestList.size() : 0;
+//    }
+
+    private Contest getItem(int position) {
+        return mContestList.get(position);
     }
 
     @Override
@@ -206,6 +228,7 @@ public class ContestRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         public RelativeLayout mRlContestLayout;
         public ImageView mIvContestsType;
         LinearLayout mRewardsPrizesLayout;
+        LinearLayout mEntriesLayout;
 
         private ContestAdapterListener clickListener;
 
@@ -224,11 +247,14 @@ public class ContestRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             mRlContestLayout = (RelativeLayout) itemView.findViewById(R.id.pool_rl_layout);
             mIvContestsType = (ImageView) itemView.findViewById(R.id.pool_row_iv_contest_type);
             mRewardsPrizesLayout = (LinearLayout) itemView.findViewById(R.id.pool_row_ll_reward_layout);
+            mEntriesLayout = (LinearLayout) itemView.findViewById(R.id.pool_row_ll_member_layout);
 
             itemView.setOnClickListener(this);
             mBtnJoin.setOnClickListener(this);
             mRlContestLayout.setOnClickListener(this);
             mRewardsPrizesLayout.setOnClickListener(this);
+            mIvContestsType.setOnClickListener(this);
+            mEntriesLayout.setOnClickListener(this);
         }
 
         @Override
@@ -254,6 +280,21 @@ public class ContestRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                         clickListener.onPrizesClicked(getContestBundle(getAdapterPosition()));
                     }
                     break;
+
+                case R.id.pool_row_iv_contest_type:
+                    if (clickListener != null) {
+                        Bundle args = getContestBundle(getAdapterPosition());
+                        clickListener.onRulesClicked(args);
+                    }
+                    break;
+
+                case R.id.pool_row_ll_member_layout:
+                    if (clickListener != null) {
+                        Bundle args = getContestBundle(getAdapterPosition());
+                        clickListener.onEntriesClicked(args);
+                    }
+                    break;
+
             }
         }
     }
@@ -276,6 +317,31 @@ public class ContestRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             mTvPrizes = (TextView) itemView.findViewById(R.id.pool_row_tv_reward);
             mTvNumberOfPrizes = (TextView) itemView.findViewById(R.id.pool_row_tv_number_of_prizes);
             mIvContestsType = (ImageView) itemView.findViewById(R.id.pool_row_iv_contest_type);
+        }
+    }
+
+    public class ReferFriendViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+
+        public Button mReferButton;
+        private ContestAdapterListener clickListener;
+
+        public ReferFriendViewHolder(View itemView, @NonNull ContestAdapterListener listener) {
+            super(itemView);
+            this.clickListener = listener;
+
+            mReferButton = (Button) itemView.findViewById(R.id.refer_friend_btn);
+            mReferButton.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View v) {
+            switch (v.getId()) {
+                case R.id.refer_friend_btn:
+                    if (clickListener != null) {
+                        clickListener.onReferAFriendClicked();
+                    }
+                    break;
+            }
         }
     }
 

@@ -6,6 +6,8 @@ import android.os.Bundle;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.NostraBaseActivity;
 import in.sportscafe.nostragamus.module.newChallenges.ui.matches.NewChallengeMatchFragmentListener;
+import in.sportscafe.nostragamus.module.popups.challengepopups.ContestDetailsPopupActivity;
+import in.sportscafe.nostragamus.module.popups.walletpopups.WalletBalancePopupActivity;
 import in.sportscafe.nostragamus.utils.FragmentHelper;
 
 public class ContestsActivity extends NostraBaseActivity implements ContestsFragmentListener {
@@ -58,7 +60,20 @@ public class ContestsActivity extends NostraBaseActivity implements ContestsFrag
 
     @Override
     public void onBackClicked() {
-      onBackPressed();
+        onBackPressed();
+    }
+
+    @Override
+    public void onContestDetailsPopUpButtonClicked() {
+        Intent intent = new Intent(this, ContestDetailsPopupActivity.class);
+        startActivity(intent);
+    }
+
+    @Override
+    public void onWalletClicked() {
+        Intent intent = new Intent(this, WalletBalancePopupActivity.class);
+        startActivity(intent);
+
     }
 
 }

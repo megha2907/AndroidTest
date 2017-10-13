@@ -39,6 +39,7 @@ import in.sportscafe.nostragamus.module.contest.dto.ContestType;
 import in.sportscafe.nostragamus.module.contest.dto.JoinContestData;
 import in.sportscafe.nostragamus.module.contest.helper.JoinContestHelper;
 import in.sportscafe.nostragamus.module.contest.ui.DetailScreensLaunchRequest;
+import in.sportscafe.nostragamus.module.navigation.referfriends.ReferFriendActivity;
 import in.sportscafe.nostragamus.module.navigation.wallet.addMoney.lowBalance.AddMoneyOnLowBalanceActivity;
 import in.sportscafe.nostragamus.module.nostraHome.helper.TimerHelper;
 import in.sportscafe.nostragamus.module.nostraHome.ui.NostraHomeActivity;
@@ -141,6 +142,12 @@ public class ContestViewPagerFragment extends NostraBaseFragment {
                     contest.setContestItemType(ContestAdapterItemType.JOINED_CONTEST);
                 }
             }
+
+            if (contestList.size() >= 1) {
+                Contest referContest = new Contest();
+                referContest.setContestItemType(ContestAdapterItemType.REFER_FRIEND_AD);
+                contestList.add(referContest);
+            }
         }
 
         return contestList;
@@ -162,7 +169,27 @@ public class ContestViewPagerFragment extends NostraBaseFragment {
             public void onPrizesClicked(Bundle args) {
                 goToContestDetails(args, DetailScreensLaunchRequest.CONTESTS_REWARDS_SCREEN);
             }
+
+            @Override
+            public void onRulesClicked(Bundle args) {
+                goToContestDetails(args, DetailScreensLaunchRequest.CONTESTS_RULES_SCREEN);
+            }
+
+            @Override
+            public void onEntriesClicked(Bundle args) {
+                goToContestDetails(args, DetailScreensLaunchRequest.CONTESTS_DEFAULT_SCREEN);
+            }
+
+            @Override
+            public void onReferAFriendClicked() {
+                goToReferAFriendScreen();
+            }
         };
+    }
+
+    private void goToReferAFriendScreen() {
+        Intent intent = new Intent(getActivity(), ReferFriendActivity.class);
+        getActivity().startActivity(intent);
     }
 
     private void performJoinContest(Bundle args) {

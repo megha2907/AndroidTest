@@ -243,17 +243,10 @@ public class InPlayViewPagerFragment extends BaseFragment {
             }
 
             @Override
-            public void onContestModeClicked() {
-                launchContestModeDetailsScreen();
+            public void onContestModeClicked(Bundle args) {
+                goToNewMatchesTimeline(args);
             }
         };
-    }
-
-    private void launchContestModeDetailsScreen() {
-        if (getActivity() != null && !getActivity().isFinishing()){
-            Intent intent = new Intent(getActivity(), ContestDetailsPopupActivity.class);
-            getActivity().startActivity(intent);
-        }
     }
 
     private void launchHeadLessMatchesScreen(Bundle args, InPlayContestDto inPlayContestDto) {

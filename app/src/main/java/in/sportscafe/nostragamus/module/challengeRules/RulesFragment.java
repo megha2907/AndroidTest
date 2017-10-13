@@ -88,7 +88,12 @@ public class RulesFragment extends NostraBaseFragment implements RulesApiModelIm
 
     @Override
     public void onData(Rules rules) {
-        setInfo(rules);
+        if (getView()!=null) {
+            getView().findViewById(R.id.contest_rules_layout).setVisibility(View.VISIBLE);
+            setInfo(rules);
+        }else {
+            getView().findViewById(R.id.contest_rules_layout).setVisibility(View.GONE);
+        }
     }
 
     private void initViews(View rootView) {
@@ -118,12 +123,15 @@ public class RulesFragment extends NostraBaseFragment implements RulesApiModelIm
         tournamentsList = rules.getTournaments();
 
         if (tournamentsList != null && tournamentsList.size() > 0) {
-            TvContestRuleOne.setText("This challenge contains matches from - " + tournamentsList.toString().replaceAll("[\\[\\](){}]", "")
-                    + " and " + String.valueOf(rules.getTotalMatches()) + " matches in total");
 
-//            TvContestRuleOne.setText("This challenge has "+ String.valueOf(contest.getTotalMatches()) + " from "
-//                    +String.valueOf(contest.getTotalMatches())+" exciting games in "+String.valueOf(tournamentsList.size())
-//                    +" tournaments - "+ tournamentsList.toString().replaceAll("[\\[\\](){}]", ""));
+            if (tournamentsList.size() < 2){
+                TvContestRuleOne.setText("This challenge has "+String.valueOf(rules.getTotalMatches()) +" games in "
+                        + tournamentsList.size()+" tournament - "+ tournamentsList.toString().replaceAll("[\\[\\](){}]", ""));
+            }else {
+                TvContestRuleOne.setText("This challenge has "+String.valueOf(rules.getTotalMatches()) +" games in "
+                        + tournamentsList.size()+" tournaments - "+ tournamentsList.toString().replaceAll("[\\[\\](){}]", ""));
+            }
+
         } else {
             if (getView() != null) {
                 getView().findViewById(R.id.contest_rule_one_rl).setVisibility(View.GONE);

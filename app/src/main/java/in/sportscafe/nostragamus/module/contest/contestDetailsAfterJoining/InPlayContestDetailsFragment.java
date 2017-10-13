@@ -113,6 +113,10 @@ public class InPlayContestDetailsFragment extends NostraBaseFragment implements 
                     case DetailScreensLaunchRequest.MATCHES_REWARDS_SCREEN:
                         mViewPager.setCurrentItem(2);   // Third TAB is rewards
                         break;
+
+                    case DetailScreensLaunchRequest.MATCHES_RULES_SCREEN:
+                        mViewPager.setCurrentItem(3);   // Fourth TAB is rules
+                        break;
                 }
             }
         }

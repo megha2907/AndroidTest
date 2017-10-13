@@ -70,7 +70,6 @@
             android:id="@+id/schedule_row_ll"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-
             android:orientation="vertical"
             android:layout_marginTop="@dimen/dim_10">
 
@@ -118,18 +117,17 @@
                 android:layout_below="@+id/swipe_card_tv_context"
                 android:layout_marginTop="@dimen/feed_screen_spacing">
 
+
                 <com.jeeva.android.widgets.customfont.CustomButton
                     android:id="@+id/schedule_row_btn_vs"
-                    style="?android:attr/buttonStyleSmall"
-                    android:layout_width="@dimen/dim_20"
-                    android:layout_height="@dimen/dim_20"
+                    android:layout_width="@dimen/dim_24"
+                    android:layout_height="@dimen/dim_24"
+                    android:gravity="center"
+                    app:typeface="lato_regular"
                     android:layout_centerHorizontal="true"
                     android:layout_centerVertical="true"
-                    android:background="@drawable/grey_border_box"
-                    android:text="VS"
-                    android:textColor="@color/white_80"
-                    android:textSize="@dimen/sp_8"
-                    app:typeface="lato_regular" />
+                    android:background="@drawable/vs_icon" />
+
 
                 <!-- NewChallengesResponse Left Image and Name -->
                 <RelativeLayout
@@ -267,12 +265,26 @@
 
         </LinearLayout>
 
+        <!--One Party Match Layout-->
         <LinearLayout
             android:id="@+id/schedule_row_one_party_ll"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:visibility="gone">
+            android:orientation="horizontal"
+            android:layout_below="@+id/swipe_card_tv_context"
+            android:visibility="gone"
+            android:layout_marginTop="@dimen/feed_screen_spacing">
+
+            <com.jeeva.android.widgets.customfont.CustomButton
+                android:id="@+id/schedule_row_one_party_vs"
+                android:layout_width="@dimen/dim_24"
+                android:layout_height="@dimen/dim_24"
+                android:gravity="center"
+                app:typeface="lato_regular"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:background="@drawable/vs_icon" />
+
 
             <!-- NewChallengesResponse Left Image and Name -->
             <RelativeLayout

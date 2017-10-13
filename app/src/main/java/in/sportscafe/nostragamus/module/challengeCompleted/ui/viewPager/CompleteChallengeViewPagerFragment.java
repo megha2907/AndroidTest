@@ -169,6 +169,11 @@ public class CompleteChallengeViewPagerFragment extends BaseFragment {
                 goToHistoryDetails(args);
             }
 
+            @Override
+            public void onContestModeClicked(Bundle args) {
+                goToHistoryDetails(args);
+            }
+
         };
     }
 
