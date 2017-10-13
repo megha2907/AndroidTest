@@ -99,14 +99,12 @@ public class LeaderBoardAdapter extends Adapter<UserLeaderBoard, LeaderBoardAdap
             }
         }
 
-        if (userLeaderBoard.getRank() != null) {
-            if (userLeaderBoard.getRank() == 1 || userLeaderBoard.getRank() == 2 || userLeaderBoard.getRank() == 3) {
-                holder.mTvRank.setTextColor(Color.WHITE);
-                holder.mIvTopRankIndicator.setVisibility(View.VISIBLE);
-            } else {
-                holder.mTvRank.setTextColor(ContextCompat.getColor(holder.mTvRank.getContext(), R.color.leaderboard_rank_color));
-                holder.mIvTopRankIndicator.setVisibility(View.INVISIBLE);
-            }
+        if (userLeaderBoard.isWinning()) {
+            holder.mTvRank.setTextColor(Color.WHITE);
+            holder.mIvTopRankIndicator.setVisibility(View.VISIBLE);
+        } else {
+            holder.mTvRank.setTextColor(ContextCompat.getColor(holder.mTvRank.getContext(), R.color.leaderboard_rank_color));
+            holder.mIvTopRankIndicator.setVisibility(View.INVISIBLE);
         }
 
         if (userLeaderBoard.getAccuracy() != null) {
@@ -211,8 +209,8 @@ public class LeaderBoardAdapter extends Adapter<UserLeaderBoard, LeaderBoardAdap
                 if (!NostragamusDataHandler.getInstance().getUserId().equals(playerId.toString())) {
                     intent = new Intent(context, PlayerProfileActivity.class);
                     intent.putExtra(BundleKeys.PLAYER_ID, playerId);
-                    if(null != mRoomId) {
-                        intent.putExtra(BundleKeys.ROOM_ID,mRoomId);
+                    if (null != mRoomId) {
+                        intent.putExtra(BundleKeys.ROOM_ID, mRoomId);
                     }
                     context.startActivity(intent);
                 }

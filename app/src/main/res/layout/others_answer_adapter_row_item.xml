@@ -316,7 +316,7 @@
                     android:layout_weight="1"
                     android:textColor="#909090"
                     android:textSize="@dimen/dp_12"
-                    android:text="Powerups Used"
+                    android:text="POWERUPS USED"
                     app:typeface="lato_regular" />
 
                 <LinearLayout
