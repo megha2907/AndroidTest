@@ -46,11 +46,9 @@ public class InPlayFilterHelper {
                 int[] sportsIdArray = inPlayResponse.getSportsIdArray();
 
                 if (sportsIdArray != null) {
-                    for (int temp = 0; temp < sportsIdArray.length; temp++) {
                         if (sportsIdArray.length > 1) {
                             filteredChallenges.add(inPlayResponse);
                         }
-                    }
                 }
             }
         }

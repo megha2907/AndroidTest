@@ -236,8 +236,8 @@ public class MyResultsModelImpl implements MyResultsModel, MyResultsAdapter.OnMy
     @Override
     public String getMatchName() {
         String challengeName = (!TextUtils.isEmpty(match.getChallengeName())) ? match.getChallengeName() : "";
-        String contestNameStr = (!TextUtils.isEmpty(contestName)) ? challengeName : "";
-        return challengeName + contestNameStr;
+        String contestNameStr = (!TextUtils.isEmpty(contestName)) ? contestName : "";
+        return challengeName + " - " + contestNameStr;
     }
 
     @Override

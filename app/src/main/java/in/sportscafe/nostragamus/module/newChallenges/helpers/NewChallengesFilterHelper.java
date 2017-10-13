@@ -56,12 +56,9 @@ public class NewChallengesFilterHelper {
         if (newChallengesResponseData != null && newChallengesResponseData.size() > 0) {
             for (NewChallengesResponse newChallenge : newChallengesResponseData) {
                 int[] sportsIdArray = newChallenge.getSportsIdArray();
-
                 if (sportsIdArray != null) {
-                    for (int temp = 0; temp < sportsIdArray.length; temp++) {
-                        if (sportsIdArray.length > 1) {
-                            mixChallenge.add(newChallenge);
-                        }
+                    if (sportsIdArray.length > 1) {
+                        mixChallenge.add(newChallenge);
                     }
                 }
             }
