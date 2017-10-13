@@ -181,12 +181,13 @@ public class InPlayMatchesPagerFragment extends NostraBaseFragment {
                 }
 
                     /* Content */
-                TimelineHelper.addNode(parent, match.getStatus(), isPlayed,
-                        isNodeLineRequired, TimelineHelper.MatchTimelineTypeEnum.IN_PLAY_MATCHES_SCREEN, mInPlayContestDto.getMatches().size());
+                TimelineHelper.addNode(parent, match.getStatus(), matchAttemptedStatus, isPlayed,
+                        isNodeLineRequired, TimelineHelper.MatchTimelineTypeEnum.IN_PLAY_MATCHES_SCREEN,
+                        mInPlayContestDto.getMatches().size());
 
                     /* Title */
                 TimelineHelper.addTextNode(titleParent, "Game " + (temp + 1), mInPlayContestDto.getMatches().size(),
-                        match.getStatus(), TimelineHelper.MatchTimelineTypeEnum.IN_PLAY_MATCHES_SCREEN, isPlayed);
+                        match.getStatus(), TimelineHelper.MatchTimelineTypeEnum.IN_PLAY_MATCHES_SCREEN, isPlayed, matchAttemptedStatus);
 
             }
         }

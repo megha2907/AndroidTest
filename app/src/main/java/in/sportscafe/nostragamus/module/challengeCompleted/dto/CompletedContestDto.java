@@ -28,9 +28,6 @@ public class CompletedContestDto {
     @SerializedName("config_name")
     private String contestName;
 
-    @SerializedName("challenge_name")
-    private String challengeName;
-
     @SerializedName("rank")
     private int rank;
 
@@ -56,6 +53,8 @@ public class CompletedContestDto {
     private List<CompletedContestMatchDto> matches = null;
 
     private int challengeId;
+    private String challengeName;
+    private String challengeStartTime;
 
     public int getContestId() {
         return contestId;
@@ -167,5 +166,13 @@ public class CompletedContestDto {
 
     public void setHeadlessState(boolean headlessState) {
         this.headlessState = headlessState;
+    }
+
+    public String getChallengeStartTime() {
+        return challengeStartTime;
+    }
+
+    public void setChallengeStartTime(String challengeStartTime) {
+        this.challengeStartTime = challengeStartTime;
     }
 }

@@ -9,4 +9,5 @@ import android.os.Bundle;
 public interface ContestDetailsFragmentListener {
     void onJoinContestClicked(Bundle args);
     void onBackBtnClicked();
+    void onWalletClicked();
 }

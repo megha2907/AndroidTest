@@ -204,7 +204,7 @@
                                 android:layout_height="wrap_content"
                                 android:textColor="@color/grey6"
                                 android:text="Join a contest to play the challenge. You can only edit the predictions once you have joined contest"
-                                android:layout_marginTop="@dimen/dim_8"
+                                android:layout_marginTop="@dimen/dim_6"
                                 android:textSize="@dimen/sp_11"
                                 app:typeface="lato_regular" />
 

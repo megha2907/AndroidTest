@@ -73,6 +73,7 @@ public class ContestDetailsFragment extends NostraBaseFragment implements View.O
 
         mJoinContestButton.setOnClickListener(this);
         rootView.findViewById(R.id.contest_details_back_btn).setOnClickListener(this);
+        rootView.findViewById(R.id.toolbar_wallet_rl).setOnClickListener(this);
     }
 
     private void setInfo(Contest contest) {
@@ -187,6 +188,9 @@ public class ContestDetailsFragment extends NostraBaseFragment implements View.O
                 if (mContestDetailsFragmentListener != null) {
                     mContestDetailsFragmentListener.onBackBtnClicked();
                 }
+                break;
+            case R.id.toolbar_wallet_rl:
+                mContestDetailsFragmentListener.onWalletClicked();
                 break;
 
         }

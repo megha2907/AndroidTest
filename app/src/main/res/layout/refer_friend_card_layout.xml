@@ -33,7 +33,7 @@
                 android:layout_height="@dimen/dim_35"
                 android:scaleType="fitXY"
                 android:layout_centerVertical="true"
-                android:src="@drawable/gift_successful_referral" />
+                android:src="@drawable/wallet_referral_card_icon" />
 
             <com.jeeva.android.widgets.customfont.CustomTextView
                 android:layout_width="wrap_content"

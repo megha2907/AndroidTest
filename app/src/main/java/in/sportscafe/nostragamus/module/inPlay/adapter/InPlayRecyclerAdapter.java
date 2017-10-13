@@ -2,7 +2,6 @@ package in.sportscafe.nostragamus.module.inPlay.adapter;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.os.CountDownTimer;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
@@ -13,14 +12,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import org.parceler.Parcels;
 
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 import in.sportscafe.nostragamus.Constants;
@@ -32,8 +27,6 @@ import in.sportscafe.nostragamus.module.inPlay.dto.InPlayContestDto;
 import in.sportscafe.nostragamus.module.inPlay.dto.InPlayContestMatchDto;
 import in.sportscafe.nostragamus.module.inPlay.dto.InPlayListChallengeItem;
 import in.sportscafe.nostragamus.module.inPlay.dto.InPlayListItem;
-import in.sportscafe.nostragamus.module.newChallenges.dataProvider.SportsDataProvider;
-import in.sportscafe.nostragamus.module.newChallenges.dto.SportsTab;
 import in.sportscafe.nostragamus.module.newChallenges.helpers.DateTimeHelper;
 import in.sportscafe.nostragamus.utils.timeutils.TimeAgo;
 import in.sportscafe.nostragamus.utils.timeutils.TimeUnit;
@@ -119,8 +112,8 @@ public class InPlayRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
             viewHolder.challengeNameTextView.setText(challengeItem.getChallengeName());
             viewHolder.challengeCountTextView.setText("(" + challengeItem.getContestCount() + ")");
-           
-            if (challengeItem.getChallengeTournaments()!=null && !challengeItem.getChallengeTournaments().isEmpty()) {
+
+            if (challengeItem.getChallengeTournaments() != null && !challengeItem.getChallengeTournaments().isEmpty()) {
                 setTournaments(viewHolder.challengeTournamentsLayout, challengeItem.getChallengeTournaments());
             }
 
@@ -128,13 +121,11 @@ public class InPlayRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                 viewHolder.challengeDurationTextView.setText(DateTimeHelper.getChallengeDuration(challengeItem.getChallengeStartTime(),
                         challengeItem.getChallengeEndTime()));
                 viewHolder.challengeButtonParent.setVisibility(View.GONE);
-                viewHolder.gameIconLinearLayout.setVisibility(View.VISIBLE);
-                setSportsIcons((((InPlayChallengeItemViewHolder) holder).gameIconLinearLayout),challengeItem.getSportsIdArray());
+
             } else {
                 viewHolder.challengeButtonParent.setVisibility(View.VISIBLE);
                 viewHolder.challengeButtonTextView.setText("JOIN ANOTHER CONTEST");
                 viewHolder.challengeDurationTextView.setVisibility(View.GONE);
-                viewHolder.gameIconLinearLayout.setVisibility(View.GONE);
             }
         }
     }
@@ -147,7 +138,7 @@ public class InPlayRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                 (LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
         tournamentsLinearLayout.setOrientation(LinearLayout.VERTICAL);
         tournamentsLinearLayout.addView(layout2);
-        
+
         TextView tournamentName;
         ImageView tournamentImageView;
 
@@ -170,27 +161,27 @@ public class InPlayRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                 LinearLayout.LayoutParams lpImage = new LinearLayout.LayoutParams(
                         LinearLayout.LayoutParams.WRAP_CONTENT,
                         LinearLayout.LayoutParams.WRAP_CONTENT);
-                lpImage.setMargins(0,2,0,0);
+                lpImage.setMargins(0, 2, 0, 0);
                 tournamentImageView.setLayoutParams(lpImage);
 
                 LinearLayout.LayoutParams lpText = new LinearLayout.LayoutParams(
                         LinearLayout.LayoutParams.WRAP_CONTENT,
                         LinearLayout.LayoutParams.WRAP_CONTENT);
 
-                lpText.setMargins(0,0,5,0);
+                lpText.setMargins(0, 0, 5, 0);
                 tournamentName.setLayoutParams(lpText);
 
                 tournamentName.setTextSize(9);
-                tournamentName.setTextColor(ContextCompat.getColor(mContext,R.color.grey_999999));
+                tournamentName.setTextColor(ContextCompat.getColor(mContext, R.color.grey_999999));
 
                 tournamentName.setText(tournamentList.get(temp));
                 tournamentImageView.setImageResource(R.drawable.grey_circle);
-                tournamentImageView.getLayoutParams().height = (int)mContext.getResources().getDimension(R.dimen.dim_2);
+                tournamentImageView.getLayoutParams().height = (int) mContext.getResources().getDimension(R.dimen.dim_2);
                 tournamentImageView.getLayoutParams().width = (int) mContext.getResources().getDimension(R.dimen.dim_2);
 
                 childLayout.addView(tournamentName);
 
-                if (temp != tournamentList.size()-1) {
+                if (temp != tournamentList.size() - 1) {
                     childLayout.addView(tournamentImageView);
                 }
 
@@ -198,8 +189,8 @@ public class InPlayRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
                 LinearLayout.LayoutParams relativeParams =
                         new LinearLayout.LayoutParams(
-                                LinearLayout.LayoutParams.WRAP_CONTENT,  LinearLayout.LayoutParams.WRAP_CONTENT);
-                relativeParams.setMargins(0,0,5,0);
+                                LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                relativeParams.setMargins(0, 0, 5, 0);
                 layout2.addView(childLayout, relativeParams);
 
             }
@@ -260,8 +251,8 @@ public class InPlayRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                 InPlayContestMatchDto match = contest.getMatches().get(temp);
 
                 boolean isNodeLineRequired = true;
-                if (temp == 0){
-                    isNodeLineRequired =false;
+                if (temp == 0) {
+                    isNodeLineRequired = false;
                 }
 
                 int matchAttemptedStatus = match.isPlayed();
@@ -276,19 +267,19 @@ public class InPlayRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                 }
 
                     /* Content */
-                TimelineHelper.addNode(viewHolder.timelineContentParent, match.getStatus(), isPlayed,
+                TimelineHelper.addNode(viewHolder.timelineContentParent, match.getStatus(),matchAttemptedStatus, isPlayed,
                         isNodeLineRequired, TimelineHelper.MatchTimelineTypeEnum.IN_PLAY_HEADLESS, contest.getMatches().size());
 
                     /* Title */
                 TimelineHelper.addTextNode(viewHolder.timelineHeaderParent, "Game " + (temp + 1), contest.getMatches().size(),
-                        match.getStatus(), TimelineHelper.MatchTimelineTypeEnum.IN_PLAY_HEADLESS, isPlayed);
+                        match.getStatus(), TimelineHelper.MatchTimelineTypeEnum.IN_PLAY_HEADLESS, isPlayed, matchAttemptedStatus);
 
                     /* Footer */
                 TimelineHelper.addFooterTextNode(viewHolder.timelineFooterParent,
                         DateTimeHelper.getInPlayMatchTime(match.getStartTime()),
                         contest.getMatches().size(), match.getStatus(),
                         TimelineHelper.MatchTimelineTypeEnum.IN_PLAY_HEADLESS,
-                        isPlayed, match.getStartTime());
+                        isPlayed, match.getStartTime(),matchAttemptedStatus);
             }
         }
     }
@@ -303,7 +294,7 @@ public class InPlayRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
             if (contest.getRank() > 0 && contest.getTotalParticipants() > 0) {
                 viewHolder.currentRankTextView.setText(contest.getRank() + "/" + contest.getTotalParticipants());
-            }else {
+            } else {
                 viewHolder.currentRankTextView.setText("NA");
             }
 
@@ -311,7 +302,7 @@ public class InPlayRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                 viewHolder.contestModeImageView.setImageResource(R.drawable.guaranteed_icon);
             } else if (contest.getContestMode().equalsIgnoreCase(Constants.ContestType.POOL)) {
                 viewHolder.contestModeImageView.setImageResource(R.drawable.pool_icon);
-            }else if (contest.getContestMode().equalsIgnoreCase(Constants.ContestType.NON_GUARANTEED)) {
+            } else if (contest.getContestMode().equalsIgnoreCase(Constants.ContestType.NON_GUARANTEED)) {
                 viewHolder.contestModeImageView.setImageResource(R.drawable.no_guarantee_icon);
             }
 
@@ -325,8 +316,8 @@ public class InPlayRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                 InPlayContestMatchDto match = contest.getMatches().get(temp);
 
                 boolean isNodeLineRequired = true;
-                if (temp == 0){
-                    isNodeLineRequired =false;
+                if (temp == 0) {
+                    isNodeLineRequired = false;
                 }
 
                 int matchAttemptedStatus = match.isPlayed();
@@ -339,34 +330,34 @@ public class InPlayRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                     isPlayed = false;
                 }
 
-                LinearLayout.LayoutParams params = (LinearLayout.LayoutParams)viewHolder.timelineFooterParent.getLayoutParams();
+                LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) viewHolder.timelineFooterParent.getLayoutParams();
                 params.setMargins(0, 0, 0, 0);
 
                     /* Content */
-                TimelineHelper.addNode(viewHolder.timelineContentParent, match.getStatus(), isPlayed,
+                TimelineHelper.addNode(viewHolder.timelineContentParent, match.getStatus(), matchAttemptedStatus, isPlayed,
                         isNodeLineRequired, TimelineHelper.MatchTimelineTypeEnum.IN_PLAY_JOINED, contest.getMatches().size());
 
                     /* Title */
                 TimelineHelper.addTextNode(viewHolder.timelineHeaderParent, "Game " + (temp + 1), contest.getMatches().size(),
-                        match.getStatus(), TimelineHelper.MatchTimelineTypeEnum.IN_PLAY_JOINED, isPlayed);
+                        match.getStatus(), TimelineHelper.MatchTimelineTypeEnum.IN_PLAY_JOINED, isPlayed,matchAttemptedStatus);
 
                 /* Footer */
                 String footerStr = DateTimeHelper.getInPlayMatchTime(match.getStartTime());
                 if (match.getStatus().equalsIgnoreCase(Constants.InPlayMatchStatus.COMPLETED)) {
                     if (isPlayed) {
-                         footerStr = String.valueOf(match.getScore()) + " Points";
+                        footerStr = String.valueOf(match.getScore()) + " Points";
                     } else {
                         footerStr = "   DNP    ";
                     }
                     params.setMargins(10, 0, 0, 0);
-                }else if (match.getStatus().equalsIgnoreCase(Constants.InPlayMatchStatus.LIVE)){
+                } else if (match.getStatus().equalsIgnoreCase(Constants.InPlayMatchStatus.LIVE)) {
                     footerStr = "In Progress";
                 }
 
                 TimelineHelper.addFooterTextNode(viewHolder.timelineFooterParent, footerStr,
                         contest.getMatches().size(), match.getStatus(),
                         TimelineHelper.MatchTimelineTypeEnum.IN_PLAY_JOINED,
-                        isPlayed, match.getStartTime());
+                        isPlayed, match.getStartTime(), matchAttemptedStatus);
 
                 /* Layout params */
                 viewHolder.timelineFooterParent.setLayoutParams(params);
@@ -374,6 +365,7 @@ public class InPlayRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         }
     }
 
+    /*
     private void setSportsIcons(LinearLayout gameIconLinearLayout, int[] sportsIdArray) {
 
         gameIconLinearLayout.removeAllViews();
@@ -395,7 +387,7 @@ public class InPlayRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                         ImageView imageView = new ImageView(gameIconLinearLayout.getContext());
                         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams
                                 (LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-                        lp.setMargins(16,0,0,0);
+                        lp.setMargins(16, 0, 0, 0);
                         imageView.setLayoutParams(lp);
                         imageView.getLayoutParams().height = (int) gameIconLinearLayout.getContext().getResources().getDimension(R.dimen.dim_12);
                         imageView.getLayoutParams().width = (int) gameIconLinearLayout.getContext().getResources().getDimension(R.dimen.dim_12);
@@ -404,9 +396,9 @@ public class InPlayRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
                     }
                 }
-           }
+            }
         }
-    }
+    } */
 
 
     @Override
@@ -576,7 +568,7 @@ public class InPlayRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             InPlayContestDto inPlayContestDto = null;
             InPlayListItem listItem = mItemsList.get(getAdapterPosition());
             if (listItem != null && listItem.getInPlayAdapterItemType() == InPlayAdapterItemType.HEADLESS_CONTEST) {
-                 inPlayContestDto = (InPlayContestDto) listItem.getItemData();
+                inPlayContestDto = (InPlayContestDto) listItem.getItemData();
             }
             return inPlayContestDto;
         }

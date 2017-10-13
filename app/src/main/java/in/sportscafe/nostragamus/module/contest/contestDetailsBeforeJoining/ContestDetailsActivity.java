@@ -23,6 +23,7 @@ import in.sportscafe.nostragamus.module.contest.helper.JoinContestHelper;
 import in.sportscafe.nostragamus.module.navigation.wallet.addMoney.lowBalance.AddMoneyOnLowBalanceActivity;
 import in.sportscafe.nostragamus.module.nostraHome.ui.NostraHomeActivity;
 import in.sportscafe.nostragamus.module.popups.timerPopup.TimerFinishDialogHelper;
+import in.sportscafe.nostragamus.module.popups.walletpopups.WalletBalancePopupActivity;
 import in.sportscafe.nostragamus.utils.FragmentHelper;
 
 /**
@@ -84,6 +85,12 @@ public class ContestDetailsActivity extends NostraBaseActivity implements Contes
     @Override
     public void onBackBtnClicked() {
         onBackPressed();
+    }
+
+    @Override
+    public void onWalletClicked() {
+        Intent intent = new Intent(this, WalletBalancePopupActivity.class);
+        startActivity(intent);
     }
 
     private void performJoinContest(Bundle args) {

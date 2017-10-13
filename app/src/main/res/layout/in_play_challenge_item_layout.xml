@@ -71,7 +71,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:layout_marginTop="@dimen/dim_4"/>
+                android:layout_marginTop="@dimen/dim_4"
+                android:visibility="gone"/>
 
             <com.jeeva.android.widgets.customfont.CustomTextView
                 android:id="@+id/inplay_challenge_duration_tv"
@@ -79,7 +80,7 @@
                 android:layout_height="wrap_content"
                 android:textColor="@color/white_999999"
                 android:textSize="@dimen/sp_9"
-                android:layout_marginTop="@dimen/dim_2"
+                android:layout_marginTop="@dimen/dim_14"
                 app:typeface="lato_regular" />
 
             <LinearLayout

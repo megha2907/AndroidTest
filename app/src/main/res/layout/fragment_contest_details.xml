@@ -49,13 +49,22 @@
                 android:textSize="@dimen/sp_12"
                 app:typeface="lato_regular" />
 
+        <RelativeLayout
+            android:id="@+id/toolbar_wallet_rl"
+            android:layout_width="@dimen/dim_70"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:paddingBottom="@dimen/dim_6"
+            android:paddingRight="@dimen/dim_16"
+            android:paddingTop="@dimen/dim_6">
+
             <com.jeeva.android.widgets.customfont.CustomTextView
                 android:id="@+id/toolbar_wallet_money"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:layout_marginRight="@dimen/dim_16"
                 android:text="120"
                 android:textColor="@color/white_60"
                 android:textSize="@dimen/sp_14"
@@ -69,6 +78,8 @@
                 android:layout_marginRight="@dimen/dim_4"
                 android:layout_toLeftOf="@+id/toolbar_wallet_money"
                 android:src="@drawable/toolbar_wallet_icon" />
+
+            </RelativeLayout>
 
         </RelativeLayout>
 

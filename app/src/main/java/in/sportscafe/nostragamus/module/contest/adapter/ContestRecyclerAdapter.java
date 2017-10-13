@@ -229,6 +229,7 @@ public class ContestRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         public ImageView mIvContestsType;
         LinearLayout mRewardsPrizesLayout;
         LinearLayout mEntriesLayout;
+        LinearLayout mEntryFeeLayout;
 
         private ContestAdapterListener clickListener;
 
@@ -248,6 +249,7 @@ public class ContestRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             mIvContestsType = (ImageView) itemView.findViewById(R.id.pool_row_iv_contest_type);
             mRewardsPrizesLayout = (LinearLayout) itemView.findViewById(R.id.pool_row_ll_reward_layout);
             mEntriesLayout = (LinearLayout) itemView.findViewById(R.id.pool_row_ll_member_layout);
+            mEntryFeeLayout = (LinearLayout) itemView.findViewById(R.id.pool_row_ll_entry_fee_layout);
 
             itemView.setOnClickListener(this);
             mBtnJoin.setOnClickListener(this);
@@ -255,6 +257,7 @@ public class ContestRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             mRewardsPrizesLayout.setOnClickListener(this);
             mIvContestsType.setOnClickListener(this);
             mEntriesLayout.setOnClickListener(this);
+            mEntryFeeLayout.setOnClickListener(this);
         }
 
         @Override
@@ -292,6 +295,13 @@ public class ContestRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                     if (clickListener != null) {
                         Bundle args = getContestBundle(getAdapterPosition());
                         clickListener.onEntriesClicked(args);
+                    }
+                    break;
+
+                case R.id.pool_row_ll_entry_fee_layout:
+                    if (clickListener != null) {
+                        Bundle args = getContestBundle(getAdapterPosition());
+                        clickListener.onEntryFeeClicked(args);
                     }
                     break;
 

@@ -184,6 +184,11 @@ public class ContestViewPagerFragment extends NostraBaseFragment {
             public void onReferAFriendClicked() {
                 goToReferAFriendScreen();
             }
+
+            @Override
+            public void onEntryFeeClicked(Bundle args) {
+                goToContestDetails(args, DetailScreensLaunchRequest.CONTESTS_DEFAULT_SCREEN);
+            }
         };
     }
 

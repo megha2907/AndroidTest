@@ -14,6 +14,7 @@ import com.jeeva.android.Log;
 
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
+import in.sportscafe.nostragamus.module.common.EnhancedLinkMovementMethod;
 import in.sportscafe.nostragamus.module.newChallenges.helpers.DateTimeHelper;
 import in.sportscafe.nostragamus.module.nostraHome.helper.TimerHelper;
 
@@ -66,31 +67,40 @@ public class TimelineHelper {
         return view;
     }
 
-    private static View getNodeView(Context context, String matchStatus, boolean played, MatchTimelineTypeEnum typeEnum) {
+    private static View getNodeView(Context context, String matchStatus, int matchAttemptedStatus, boolean played, MatchTimelineTypeEnum typeEnum) {
         View view = View.inflate(context, R.layout.match_timeline_node_view, null);
         switch (typeEnum) {
             case IN_PLAY_HEADLESS:
-                // TODO: make changes as per need
                 if (matchStatus.equalsIgnoreCase(Constants.InPlayMatchStatus.COMPLETED)) {
-                    if (played) {
+
+                    if (Constants.GameAttemptedStatus.COMPLETELY == matchAttemptedStatus) {
                         view.setBackgroundResource(R.drawable.timeline_grey_tick_dot);
+                    } else if (Constants.GameAttemptedStatus.PARTIALLY == matchAttemptedStatus) {
+                        view.setBackgroundResource(R.drawable.timeline_brown_dot);
                     } else {
-                        //todo check what icon to add here
                         view.setBackgroundResource(R.drawable.timeline_lock_grey);
                     }
+
                 } else if (matchStatus.equalsIgnoreCase(Constants.InPlayMatchStatus.ONGOING)) {
-                    //todo for partially played add icon
-                    if (played) {
+
+                    if (Constants.GameAttemptedStatus.COMPLETELY == matchAttemptedStatus) {
                         view.setBackgroundResource(R.drawable.timeline_grey_tick_dot);
+                    } else if (Constants.GameAttemptedStatus.PARTIALLY == matchAttemptedStatus) {
+                        view.setBackgroundResource(R.drawable.timeline_brown_dot);
                     } else {
                         view.setBackgroundResource(R.drawable.timeline_lock_grey);
                     }
+
                 } else if (matchStatus.equalsIgnoreCase(Constants.InPlayMatchStatus.LIVE)) {
-                    if (played) {
+
+                    if (Constants.GameAttemptedStatus.COMPLETELY == matchAttemptedStatus) {
                         view.setBackgroundResource(R.drawable.timeline_grey_tick_dot);
+                    } else if (Constants.GameAttemptedStatus.PARTIALLY == matchAttemptedStatus) {
+                        view.setBackgroundResource(R.drawable.timeline_brown_dot);
                     } else {
                         view.setBackgroundResource(R.drawable.timeline_lock_grey);
                     }
+
                 } else if (matchStatus.equalsIgnoreCase(Constants.InPlayMatchStatus.UPCOMING)) {
 
                     view.setBackgroundResource(R.drawable.timeline_lock_grey);
@@ -176,7 +186,7 @@ public class TimelineHelper {
     }
 
     public static void addNode(LinearLayout parent, String matchStatus,
-                               boolean isPlayed, boolean isNodeWithLine,
+                               int matchAttemptedStatus, boolean isPlayed, boolean isNodeWithLine,
                                MatchTimelineTypeEnum typeEnum, int matchSize) {
         if (parent != null) {
             Context context = parent.getContext();
@@ -213,14 +223,14 @@ public class TimelineHelper {
                 }
             }
 
-            View view = getNodeView(parent.getContext(), matchStatus, isPlayed, typeEnum);
+            View view = getNodeView(parent.getContext(), matchStatus, matchAttemptedStatus, isPlayed, typeEnum);
             parent.addView(view, parent.getChildCount(), new ViewGroup.LayoutParams(nodeWidthHeight, nodeWidthHeight));
 
         }
     }
 
     public static void addTextNode(LinearLayout parent, String title, int matchSize, String status,
-                                   MatchTimelineTypeEnum typeEnum, boolean isPlayed) {
+                                   MatchTimelineTypeEnum typeEnum, boolean isPlayed, int matchAttemptedStatus) {
         if (parent != null) {
             Context context = parent.getContext();
 
@@ -256,16 +266,16 @@ public class TimelineHelper {
 
                 switch (typeEnum) {
                     case IN_PLAY_HEADLESS:
-                        if (status.equalsIgnoreCase(Constants.InPlayMatchStatus.ONGOING)) {
+
+                        if (Constants.GameAttemptedStatus.COMPLETELY == matchAttemptedStatus ||
+                                Constants.GameAttemptedStatus.PARTIALLY == matchAttemptedStatus) {
                             titleView.setTextColor(ContextCompat.getColor(context, R.color.brown_ccbbbb));
                             titleView.setTypeface(faceBold);
-                        } else if (status.equalsIgnoreCase(Constants.InPlayMatchStatus.UPCOMING)) {
-                            titleView.setTextColor(ContextCompat.getColor(context, R.color.white_998989));
-                            titleView.setTypeface(faceRegular);
                         } else {
                             titleView.setTextColor(ContextCompat.getColor(context, R.color.white_998989));
                             titleView.setTypeface(faceRegular);
                         }
+
                         break;
                     case IN_PLAY_JOINED:
                         if (status.equalsIgnoreCase(Constants.InPlayMatchStatus.ONGOING)) {
@@ -301,7 +311,7 @@ public class TimelineHelper {
     }
 
     public static void addFooterTextNode(LinearLayout parent, String title, int matchSize, String status,
-                                         MatchTimelineTypeEnum typeEnum, boolean isPlayed, String startTimeForTimer) {
+                                         MatchTimelineTypeEnum typeEnum, boolean isPlayed, String startTimeForTimer, int matchAttemptedStatus) {
         if (parent != null) {
             Context context = parent.getContext();
 
@@ -339,16 +349,16 @@ public class TimelineHelper {
 
                 switch (typeEnum) {
                     case IN_PLAY_HEADLESS:
-                        if (status.equalsIgnoreCase(Constants.InPlayMatchStatus.ONGOING)) {
+
+                        if (Constants.GameAttemptedStatus.COMPLETELY == matchAttemptedStatus ||
+                                Constants.GameAttemptedStatus.PARTIALLY == matchAttemptedStatus) {
                             titleView.setTextColor(ContextCompat.getColor(context, R.color.brown_ccbbbb));
                             titleView.setTypeface(faceBold);
-                        } else if (status.equalsIgnoreCase(Constants.InPlayMatchStatus.UPCOMING)) {
-                            titleView.setTextColor(ContextCompat.getColor(context, R.color.white_998989));
-                            titleView.setTypeface(faceRegular);
                         } else {
                             titleView.setTextColor(ContextCompat.getColor(context, R.color.white_998989));
                             titleView.setTypeface(faceRegular);
                         }
+
                         break;
                     case IN_PLAY_JOINED:
                         if (status.equalsIgnoreCase(Constants.InPlayMatchStatus.ONGOING)) {

@@ -168,12 +168,12 @@ public class CompletedMatchTimelineViewPagerFragment extends NostraBaseFragment 
                 }
 
                     /* Content */
-                TimelineHelper.addNode(parent, match.getStatus(), isPlayed,
+                TimelineHelper.addNode(parent, match.getStatus(), matchAttemptedStatus, isPlayed,
                         isNodeLineRequired, TimelineHelper.MatchTimelineTypeEnum.IN_PLAY_MATCHES_SCREEN, mCompletedContestDto.getMatches().size());
 
                     /* Title */
                 TimelineHelper.addTextNode(titleParent, "Game " + (temp + 1), mCompletedContestDto.getMatches().size(),
-                        match.getStatus(), TimelineHelper.MatchTimelineTypeEnum.IN_PLAY_MATCHES_SCREEN, isPlayed);
+                        match.getStatus(), TimelineHelper.MatchTimelineTypeEnum.IN_PLAY_MATCHES_SCREEN, isPlayed, matchAttemptedStatus);
 
             }
         }

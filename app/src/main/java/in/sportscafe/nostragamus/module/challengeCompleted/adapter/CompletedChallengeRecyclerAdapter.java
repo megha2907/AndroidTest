@@ -16,8 +16,6 @@ import android.widget.TextView;
 
 import org.parceler.Parcels;
 
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 import in.sportscafe.nostragamus.Constants;
@@ -29,14 +27,6 @@ import in.sportscafe.nostragamus.module.challengeCompleted.dto.CompletedListChal
 import in.sportscafe.nostragamus.module.challengeCompleted.dto.CompletedListItem;
 import in.sportscafe.nostragamus.module.contest.ui.DetailScreensLaunchRequest;
 import in.sportscafe.nostragamus.module.customViews.TimelineHelper;
-import in.sportscafe.nostragamus.module.inPlay.adapter.InPlayAdapterItemType;
-import in.sportscafe.nostragamus.module.inPlay.adapter.InPlayRecyclerAdapter;
-import in.sportscafe.nostragamus.module.inPlay.dto.InPlayContestDto;
-import in.sportscafe.nostragamus.module.inPlay.dto.InPlayContestMatchDto;
-import in.sportscafe.nostragamus.module.inPlay.dto.InPlayListChallengeItem;
-import in.sportscafe.nostragamus.module.inPlay.dto.InPlayListItem;
-import in.sportscafe.nostragamus.module.newChallenges.dataProvider.SportsDataProvider;
-import in.sportscafe.nostragamus.module.newChallenges.dto.SportsTab;
 import in.sportscafe.nostragamus.module.newChallenges.helpers.DateTimeHelper;
 import in.sportscafe.nostragamus.utils.timeutils.TimeAgo;
 import in.sportscafe.nostragamus.utils.timeutils.TimeUnit;
@@ -120,7 +110,6 @@ public class CompletedChallengeRecyclerAdapter extends RecyclerView.Adapter<Recy
                 viewHolder.challengeDurationTextView.setText(DateTimeHelper.getChallengeDuration(challengeItem.getChallengeStartTime(),
                         challengeItem.getChallengeEndTime()));
             }
-            setSportsIcons(viewHolder.gameIconLinearLayout,challengeItem.getSportIdArray());
 
         }
     }
@@ -194,7 +183,7 @@ public class CompletedChallengeRecyclerAdapter extends RecyclerView.Adapter<Recy
     }
 
 
-    private void setSportsIcons(LinearLayout gameIconLinearLayout, int[] sportsIdArray) {
+   /* private void setSportsIcons(LinearLayout gameIconLinearLayout, int[] sportsIdArray) {
 
         gameIconLinearLayout.removeAllViews();
         LinearLayout layout2 = new LinearLayout(gameIconLinearLayout.getContext());
@@ -227,7 +216,7 @@ public class CompletedChallengeRecyclerAdapter extends RecyclerView.Adapter<Recy
             }
         }
     }
-
+      */
 
     private boolean getChallengeStarted(String challengeStartTime) {
 
@@ -322,19 +311,19 @@ public class CompletedChallengeRecyclerAdapter extends RecyclerView.Adapter<Recy
                 }
 
                        /* Content */
-                TimelineHelper.addNode(viewHolder.timelineContentParent, match.getStatus(), isPlayed,
+                TimelineHelper.addNode(viewHolder.timelineContentParent, match.getStatus(), matchAttemptedStatus, isPlayed,
                         isNodeLineRequired, TimelineHelper.MatchTimelineTypeEnum.IN_PLAY_JOINED, contest.getMatches().size());
 
 
                     /* Title */
                 TimelineHelper.addTextNode(viewHolder.timelineHeaderParent, "Game " + (temp + 1), contest.getMatches().size(), match.getStatus(),
-                        TimelineHelper.MatchTimelineTypeEnum.IN_PLAY_JOINED, isPlayed);
+                        TimelineHelper.MatchTimelineTypeEnum.IN_PLAY_JOINED, isPlayed, matchAttemptedStatus);
 
                     /* Footer */
                 TimelineHelper.addFooterTextNode(viewHolder.timelineFooterParent, matchPoints,
                         contest.getMatches().size(), match.getStatus(),
                         TimelineHelper.MatchTimelineTypeEnum.IN_PLAY_JOINED, isPlayed,
-                        match.getStartTime());
+                        match.getStartTime(), matchAttemptedStatus);
 
                 LinearLayout.LayoutParams params = (LinearLayout.LayoutParams)viewHolder.timelineFooterParent.getLayoutParams();
                 params.setMargins(10, 0, 0, 0);
