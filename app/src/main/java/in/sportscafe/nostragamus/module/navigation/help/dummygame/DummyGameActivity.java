@@ -5,6 +5,7 @@ import android.os.Handler;
 import android.support.v4.app.FragmentTransaction;
 
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.google.gson.Gson;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -293,11 +294,12 @@ public class DummyGameActivity extends NostragamusActivity implements DGPlayFrag
         }
 
         if (null != json) {
-            return MyWebService.getInstance().getObjectFromJson(
+            /*return MyWebService.getInstance().getObjectFromJson(
                     json,
                     new TypeReference<List<DGInstruction>>() {
                     }
-            );
+            );*/
+            return new Gson().fromJson(json, new TypeReference<List<DGInstruction>>() {}.getType());
         }
         return null;
     }

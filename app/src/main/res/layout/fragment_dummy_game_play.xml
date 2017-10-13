@@ -245,7 +245,7 @@
         </RelativeLayout>
     </RelativeLayout>
 
-    <in.sportscafe.nostragamus.module.play.tindercard.SwipeFlingAdapterView
+    <in.sportscafe.nostragamus.module.navigation.help.dummygame.tindercard.SwipeFlingAdapterView
         android:id="@+id/activity_prediction_swipe"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
