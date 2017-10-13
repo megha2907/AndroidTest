@@ -185,7 +185,7 @@ public class LogInActivity extends NostragamusActivity implements LogInView, Vie
     }
 
     public void gotoTermsConditions() {
-        startActivity(new Intent(this, TermsConditions.class));
+        navigateToWebView(Constants.WebPageUrls.TERMS_SERVICE, "Terms of Service");
     }
 
     private void getGoogleAccessToken(final String email) {
