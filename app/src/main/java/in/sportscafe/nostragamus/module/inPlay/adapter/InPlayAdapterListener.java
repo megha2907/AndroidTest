@@ -21,5 +21,5 @@ public interface InPlayAdapterListener {
     /* Head Less Contest card Item */
     void onHeadLessContestCardClicked(Bundle args, InPlayContestDto inPlayContestDto);
 
-    void onContestModeClicked();
+    void onContestModeClicked(Bundle args);
 }

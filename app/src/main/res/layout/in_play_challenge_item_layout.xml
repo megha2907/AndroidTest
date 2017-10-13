@@ -49,16 +49,12 @@
 
             </LinearLayout>
 
-            <com.jeeva.android.widgets.customfont.CustomTextView
-                android:id="@+id/inplay_challenge_tournaments_textView"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:id="@+id/inplay_challenge_tournaments_layout"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/white_999999"
-                android:textSize="@dimen/sp_9"
-                android:ellipsize="end"
-                android:maxLines="1"
-                app:typeface="lato_regular"
-                />
+                android:orientation="horizontal"
+                android:layout_weight="2" />
 
         </LinearLayout>
 
@@ -100,7 +96,7 @@
                     android:id="@+id/inplay_challenge_button_textView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="#0098a6"
+                    android:textColor="@drawable/join_contest_text_selector"
                     android:textSize="@dimen/sp_8"
                     android:text="JOIN ANOTHER CONTEST"
                     app:typeface="lato_bold" />

@@ -76,6 +76,8 @@ public class ContestFragment extends NostraBaseFragment implements View.OnClickL
         mTvTBarSubHeading = (TextView) rootView.findViewById(R.id.toolbar_heading_two);
         mTvTBarWalletMoney = (TextView) rootView.findViewById(R.id.toolbar_wallet_money);
         rootView.findViewById(R.id.contest_back_btn).setOnClickListener(this);
+        rootView.findViewById(R.id.toolbar_icon).setOnClickListener(this);
+        rootView.findViewById(R.id.toolbar_wallet_rl).setOnClickListener(this);
     }
 
     public void onNewIntent(Intent intent) {
@@ -236,6 +238,13 @@ public class ContestFragment extends NostraBaseFragment implements View.OnClickL
         switch (v.getId()) {
             case R.id.contest_back_btn:
                 mContestsFragmentListener.onBackClicked();
+                break;
+            case R.id.toolbar_icon:
+                mContestsFragmentListener.onContestDetailsPopUpButtonClicked();
+                break;
+
+            case R.id.toolbar_wallet_rl:
+                mContestsFragmentListener.onWalletClicked();
                 break;
         }
     }

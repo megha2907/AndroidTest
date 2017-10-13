@@ -10,4 +10,10 @@ public interface ContestAdapterListener {
     void onContestClicked(Bundle args);
     void onJoinContestClicked(Bundle args);
     void onPrizesClicked(Bundle args);
+
+    void onRulesClicked(Bundle args);
+
+    void onEntriesClicked(Bundle args);
+
+    void onReferAFriendClicked();
 }

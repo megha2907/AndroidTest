@@ -1,9 +1,12 @@
 package in.sportscafe.nostragamus.module.challengeCompleted.adapter;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -109,8 +112,10 @@ public class CompletedChallengeRecyclerAdapter extends RecyclerView.Adapter<Recy
 
             viewHolder.challengeNameTextView.setText(challengeItem.getChallengeName());
             viewHolder.challengeCountTextView.setText("(" + challengeItem.getContestCount() + ")");
-            viewHolder.challengeTournamentTextView.setText(getTournamentString(challengeItem.getChallengeTournaments()));
 
+            if (challengeItem.getChallengeTournaments()!=null && !challengeItem.getChallengeTournaments().isEmpty()) {
+                setTournaments(viewHolder.challengeTournamentsLayout, challengeItem.getChallengeTournaments());
+            }
             if (getChallengeStarted(challengeItem.getChallengeStartTime())) {
                 viewHolder.challengeDurationTextView.setText(DateTimeHelper.getChallengeDuration(challengeItem.getChallengeStartTime(),
                         challengeItem.getChallengeEndTime()));
@@ -119,6 +124,75 @@ public class CompletedChallengeRecyclerAdapter extends RecyclerView.Adapter<Recy
 
         }
     }
+
+    private void setTournaments(LinearLayout tournamentsLinearLayout, List<String> tournamentList) {
+
+        tournamentsLinearLayout.removeAllViews();
+        LinearLayout layout2 = new LinearLayout(tournamentsLinearLayout.getContext());
+        layout2.setLayoutParams(new LinearLayout.LayoutParams
+                (LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+        tournamentsLinearLayout.setOrientation(LinearLayout.VERTICAL);
+        tournamentsLinearLayout.addView(layout2);
+
+        TextView tournamentName;
+        ImageView tournamentImageView;
+
+        Context mContext = tournamentsLinearLayout.getContext();
+
+        if (tournamentList != null && tournamentList.size() > 0) {
+
+            for (int temp = 0; temp < tournamentList.size(); temp++) {
+
+                LinearLayout childLayout = new LinearLayout(mContext);
+
+                LinearLayout.LayoutParams linearParams = new LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.WRAP_CONTENT,
+                        LinearLayout.LayoutParams.WRAP_CONTENT);
+                childLayout.setLayoutParams(linearParams);
+
+                tournamentName = new TextView(mContext);
+                tournamentImageView = new ImageView(mContext);
+
+                LinearLayout.LayoutParams lpImage = new LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.WRAP_CONTENT,
+                        LinearLayout.LayoutParams.WRAP_CONTENT);
+                lpImage.setMargins(0,2,0,0);
+                tournamentImageView.setLayoutParams(lpImage);
+
+                LinearLayout.LayoutParams lpText = new LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.WRAP_CONTENT,
+                        LinearLayout.LayoutParams.WRAP_CONTENT);
+
+                lpText.setMargins(0,0,5,0);
+                tournamentName.setLayoutParams(lpText);
+
+                tournamentName.setTextSize(9);
+                tournamentName.setTextColor(ContextCompat.getColor(mContext,R.color.grey_999999));
+
+                tournamentName.setText(tournamentList.get(temp));
+                tournamentImageView.setImageResource(R.drawable.grey_circle);
+                tournamentImageView.getLayoutParams().height = (int)mContext.getResources().getDimension(R.dimen.dim_2);
+                tournamentImageView.getLayoutParams().width = (int) mContext.getResources().getDimension(R.dimen.dim_2);
+
+                childLayout.addView(tournamentName);
+
+                if (temp != tournamentList.size()-1) {
+                    childLayout.addView(tournamentImageView);
+                }
+
+                childLayout.setGravity(Gravity.CENTER);
+
+                LinearLayout.LayoutParams relativeParams =
+                        new LinearLayout.LayoutParams(
+                                LinearLayout.LayoutParams.WRAP_CONTENT,  LinearLayout.LayoutParams.WRAP_CONTENT);
+                relativeParams.setMargins(0,0,5,0);
+                layout2.addView(childLayout, relativeParams);
+
+            }
+        }
+
+    }
+
 
     private void setSportsIcons(LinearLayout gameIconLinearLayout, int[] sportsIdArray) {
 
@@ -207,11 +281,11 @@ public class CompletedChallengeRecyclerAdapter extends RecyclerView.Adapter<Recy
             }
 
             if (contest.getContestMode().equalsIgnoreCase(Constants.ContestType.GUARANTEED)) {
-                viewHolder.contestModeImageView.setBackgroundResource(R.drawable.guaranteed_icon);
+                viewHolder.contestModeImageView.setImageResource(R.drawable.guaranteed_icon);
             } else if (contest.getContestMode().equalsIgnoreCase(Constants.ContestType.POOL)) {
-                viewHolder.contestModeImageView.setBackgroundResource(R.drawable.pool_icon);
+                viewHolder.contestModeImageView.setImageResource(R.drawable.pool_icon);
             }else if (contest.getContestMode().equalsIgnoreCase(Constants.ContestType.NON_GUARANTEED)) {
-                viewHolder.contestModeImageView.setBackgroundResource(R.drawable.no_guarantee_icon);
+                viewHolder.contestModeImageView.setImageResource(R.drawable.no_guarantee_icon);
             }
 
             viewHolder.timelineHeaderParent.removeAllViews();
@@ -324,6 +398,7 @@ public class CompletedChallengeRecyclerAdapter extends RecyclerView.Adapter<Recy
             prizesTextView = (TextView) itemView.findViewById(R.id.completed_contest_card_header_prizes_textView);
             itemView.findViewById(R.id.completed_challenge_rank_layout).setOnClickListener(this);
             itemView.findViewById(R.id.completed_challenge_winnings_layout).setOnClickListener(this);
+            contestModeImageView.setOnClickListener(this);
             root.setOnClickListener(this);
         }
 
@@ -353,6 +428,13 @@ public class CompletedChallengeRecyclerAdapter extends RecyclerView.Adapter<Recy
                         mCompletedAdapterListener.onCompletedWinningClicked(args);
                     }
                     break;
+                case R.id.completed_contest_card_header_mode_imgView:
+                    if (mCompletedAdapterListener != null) {
+                        Bundle args = getContestDataBundle();
+                        args.putInt(Constants.BundleKeys.SCREEN_LAUNCH_REQUEST, DetailScreensLaunchRequest.MATCHES_RULES_SCREEN);
+                        mCompletedAdapterListener.onContestModeClicked(args);
+                    }
+                    break;
 
             }
         }
@@ -373,15 +455,16 @@ public class CompletedChallengeRecyclerAdapter extends RecyclerView.Adapter<Recy
 
         TextView challengeNameTextView;
         TextView challengeCountTextView;
-        TextView challengeTournamentTextView;
+        LinearLayout challengeTournamentsLayout;
         TextView challengeDurationTextView;
         LinearLayout gameIconLinearLayout;
+
 
         public CompletedChallengeItemViewHolder(View itemView) {
             super(itemView);
             challengeNameTextView = (TextView) itemView.findViewById(R.id.completed_challenge_title_textView);
             challengeCountTextView = (TextView) itemView.findViewById(R.id.completed_challenge_count_textView);
-            challengeTournamentTextView = (TextView) itemView.findViewById(R.id.completed_challenge_tournaments_textView);
+            challengeTournamentsLayout = (LinearLayout) itemView.findViewById(R.id.completed_challenge_tournaments_layout);
             challengeDurationTextView = (TextView) itemView.findViewById(R.id.completed_challenge_duration_tv);
             gameIconLinearLayout = (LinearLayout) itemView.findViewById(R.id.completed_challenge_sports_icons_container);
         }

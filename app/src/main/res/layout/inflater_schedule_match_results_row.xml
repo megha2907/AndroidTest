@@ -113,16 +113,13 @@
 
             <com.jeeva.android.widgets.customfont.CustomButton
                 android:id="@+id/schedule_row_btn_vs"
-                style="?android:attr/buttonStyleSmall"
-                android:layout_width="@dimen/dim_20"
-                android:layout_height="@dimen/dim_20"
+                android:layout_width="@dimen/dim_24"
+                android:layout_height="@dimen/dim_24"
+                android:gravity="center"
+                app:typeface="lato_regular"
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
-                android:background="@drawable/grey_border_box"
-                android:text="VS"
-                android:textColor="@color/white_80"
-                android:textSize="@dimen/sp_8"
-                app:typeface="lato_regular" />
+                android:background="@drawable/vs_icon" />
 
             <!-- NewChallengesResponse Left Image and Name -->
             <RelativeLayout

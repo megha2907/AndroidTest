@@ -33,9 +33,11 @@ public class ContestEntriesExpandableListAdapter extends BaseExpandableListAdapt
     private int mFilledRooms = 0;
 
     public ContestEntriesExpandableListAdapter(Context context, List<ContestRoomDto> rooms) {
-        mLayoutInflater = LayoutInflater.from(context);
-        mRoomsList = new ArrayList<>();
-        filterRooms(rooms);
+        if (context!=null) {
+            mLayoutInflater = LayoutInflater.from(context);
+            mRoomsList = new ArrayList<>();
+            filterRooms(rooms);
+        }
     }
 
     private void filterRooms(List<ContestRoomDto> rooms) {

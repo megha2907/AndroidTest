@@ -99,18 +99,15 @@
                     android:textSize="@dimen/sp_12"
                     app:typeface="lato_bold" />
 
-                <com.jeeva.android.widgets.customfont.CustomTextView
-                    android:id="@+id/newChallenge_match_vs_textView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                <com.jeeva.android.widgets.customfont.CustomButton
+                    android:id="@+id/newChallenge_match_vs_btn"
+                    android:layout_width="@dimen/dim_24"
+                    android:layout_height="@dimen/dim_24"
                     android:gravity="center"
-                    android:text="VS"
-                    android:textColor="@color/white_80"
-                    android:textSize="@dimen/sp_12"
                     app:typeface="lato_regular"
-                    android:padding="@dimen/dim_5"
-                    android:background="@drawable/grey_border_box"
+                    android:background="@drawable/vs_icon"
                     android:visibility="gone"/>
+
 
             </LinearLayout>
 

@@ -4,12 +4,6 @@
     <!-- Pressed state -->
     <item android:state_pressed="true">
         <layer-list>
-            <item> <!-- Shadow -->
-                <shape>
-                    <solid android:color="#112d3f" />
-                    <corners android:radius="@dimen/dim_2" />
-                </shape>
-            </item>
             <item android:bottom="@dimen/dim_2">
                 <shape>
                     <solid android:color="#122a3a" />
@@ -22,13 +16,6 @@
     <!-- Default -->
     <item>
         <layer-list>
-            <!-- SHADOW -->
-            <item>
-                <shape>
-                    <solid android:color="#112d3f" />
-                    <corners android:radius="@dimen/dim_2" />
-                </shape>
-            </item>
             <!-- BUTTON -->
             <item android:bottom="@dimen/dim_2">
                 <shape android:shape="rectangle">

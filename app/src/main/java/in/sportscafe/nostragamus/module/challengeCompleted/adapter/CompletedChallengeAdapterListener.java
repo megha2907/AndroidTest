@@ -13,4 +13,6 @@ public interface CompletedChallengeAdapterListener {
     void onCompletedWinningClicked(Bundle args);
 
     void onCompletedContestCurrentRankClicked(Bundle args);
+
+    void onContestModeClicked(Bundle args);
 }

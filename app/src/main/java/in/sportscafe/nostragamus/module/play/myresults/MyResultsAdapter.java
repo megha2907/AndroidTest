@@ -202,7 +202,7 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
                     holder.mBtnMatchPoints.setText("Did Not Play");
                     holder.mBtnMatchPoints.setTextSize(14);
                     holder.mTvNumberofPowerupsUsed.setText("No");
-                    holder.mTvResultCorrectCount.setText("Not Answered");
+                    holder.mTvResultCorrectCount.setText("Did Not Play");
                     holder.mTvMatchPointsTxt.setVisibility(View.GONE);
 
                     //if partially or completely attempted
@@ -242,7 +242,7 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
                     }
                 }
 
-                holder.mTvResultCorrectCount.setText(String.valueOf(mAnsweredQuestionCount) + "/" + match.getMatchQuestionCount() + " Questions Answered");
+                holder.mTvResultCorrectCount.setText(String.valueOf(mAnsweredQuestionCount) + "/" + match.getMatchQuestionCount() + " Predictions Made");
 
                 if (null != match.getUserRank()) {
                     holder.mTvLeaderBoardRank.setText(String.valueOf(match.getUserRank()));
@@ -260,7 +260,7 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
                 if (null == match.getisAttempted() || Constants.GameAttemptedStatus.NOT == attemptedStatus) {
 
                     holder.mTvNumberofPowerupsUsed.setText("No");
-                    holder.mTvResultCorrectCount.setText("Not Answered");
+                    holder.mTvResultCorrectCount.setText("Did Not Play");
 
 
                 }

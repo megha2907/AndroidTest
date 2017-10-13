@@ -94,7 +94,7 @@
                 android:textAllCaps="true"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="@dimen/dim_20"
-                android:textSize="@dimen/sp_10"
+                android:textSize="@dimen/sp_12"
                 app:typeface="lato_regular" />
 
             <com.jeeva.android.widgets.customfont.CustomTextView

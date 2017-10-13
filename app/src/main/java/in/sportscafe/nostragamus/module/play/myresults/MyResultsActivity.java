@@ -606,10 +606,14 @@ public class MyResultsActivity extends NostragamusActivity implements MyResultsV
     @Override
     public void setUserRank(Match match) {
         if (null != match) {
-            if (null != match.getUserRank() && null != match.getCountPlayers()) {
-                mTvLeaderBoardRank.setText(AppSnippet.ordinal(match.getUserRank()));
-                mTvLeaderBoardTotalPlayers.setText(" / " + String.valueOf(match.getCountPlayers()));
-            } else {
+            if (match.getResult() != null && !match.getResult().isEmpty()) {
+                if (null != match.getUserRank() && null != match.getCountPlayers()) {
+                    mTvLeaderBoardRank.setText(AppSnippet.ordinal(match.getUserRank()));
+                    mTvLeaderBoardTotalPlayers.setText(" / " + String.valueOf(match.getCountPlayers()));
+                } else {
+                    mTvLeaderBoardRank.setText("NA");
+                }
+            }else {
                 mTvLeaderBoardRank.setText("NA");
             }
         }else {

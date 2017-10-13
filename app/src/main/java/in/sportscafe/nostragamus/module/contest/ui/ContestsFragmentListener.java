@@ -7,4 +7,8 @@ package in.sportscafe.nostragamus.module.contest.ui;
 public interface ContestsFragmentListener {
 
     void onBackClicked();
+
+    void onContestDetailsPopUpButtonClicked();
+
+    void onWalletClicked();
 }

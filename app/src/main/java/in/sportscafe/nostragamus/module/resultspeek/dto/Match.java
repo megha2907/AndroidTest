@@ -339,6 +339,9 @@ public class Match {
 
     @SerializedName("match_points")
     public Integer getMatchPoints() {
+        if(null == matchPoints) {
+            return 0;
+        }
         return matchPoints;
     }
 

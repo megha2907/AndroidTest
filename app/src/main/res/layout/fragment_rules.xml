@@ -3,14 +3,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:fillViewport="true">
+    android:fillViewport="true"
+    android:background="@color/black">
 
     <LinearLayout
+        android:id="@+id/contest_rules_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/black"
         android:orientation="vertical"
-        android:paddingBottom="@dimen/dim_90">
+        android:paddingBottom="@dimen/dim_90"
+        android:visibility="gone">
 
         <!-- Contest Rules-->
         <LinearLayout
