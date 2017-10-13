@@ -37,7 +37,7 @@
                         <!-- positive points -->
                         <LinearLayout
                             android:id="@+id/prediction_card_positive_layout"
-                            android:layout_width="wrap_content"
+                            android:layout_width="@dimen/dim_78"
                             android:layout_height="@dimen/dim_24"
                             android:orientation="horizontal"
                             android:background="@drawable/prediction_points_bg"
@@ -65,7 +65,7 @@
                         <!-- Negative points -->
                         <LinearLayout
                             android:id="@+id/prediction_card_negative_layout"
-                            android:layout_width="wrap_content"
+                            android:layout_width="@dimen/dim_78"
                             android:layout_height="@dimen/dim_24"
                             android:orientation="horizontal"
                             android:background="@drawable/prediction_points_bg"
@@ -218,7 +218,7 @@
                     android:layout_width="@dimen/dp_13"
                     android:layout_height="@dimen/dp_13"
                     android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="@dimen/dp_16"
+                    android:layout_marginLeft="@dimen/dp_12"
                     android:src="@drawable/play_arrow_left"
                     />
 
@@ -262,7 +262,7 @@
                     android:layout_width="@dimen/dp_13"
                     android:layout_height="@dimen/dp_13"
                     android:layout_gravity="center_vertical"
-                    android:layout_marginRight="@dimen/dp_16"
+                    android:layout_marginRight="@dimen/dp_12"
                     android:src="@drawable/play_arrow_right"
                     />
 

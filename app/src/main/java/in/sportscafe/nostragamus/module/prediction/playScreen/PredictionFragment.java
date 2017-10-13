@@ -90,6 +90,7 @@ public class PredictionFragment extends NostraBaseFragment implements View.OnCli
     private ImageView mPowerUpImageView;
     private ImageView mGamePlayImageView;
     private int mTotalQuestions = 0;
+    private int mCurrentQuestionPos = 1;
 
     public PredictionFragment() {}
 
@@ -265,10 +266,14 @@ public class PredictionFragment extends NostraBaseFragment implements View.OnCli
 
     private void showQuestionsCounter() {
         if (getView() != null && mQuestionsCardAdapter != null) {
-            int currentPos = mQuestionsCardAdapter.getPosition(mQuestionsCardAdapter.getItem(getTopVisibleCardPosition())) + 1; // default pos is 0 based, so add 1
+//            int currentPos = mQuestionsCardAdapter.getPosition(mQuestionsCardAdapter.getItem(getTopVisibleCardPosition())) + 1; // default pos is 0 based, so add 1
 
-            if (currentPos > 0) {
-                String questionNumCounter = String.valueOf(currentPos) +"/" + String.valueOf(mTotalQuestions);
+            if (mCurrentQuestionPos < 0 || mCurrentQuestionPos > mTotalQuestions) {
+                mCurrentQuestionPos = 1;
+            }
+
+            if (mCurrentQuestionPos > 0) {
+                String questionNumCounter = String.valueOf(mCurrentQuestionPos) +"/" + String.valueOf(mTotalQuestions);
                 mCounterTextView.setText(questionNumCounter);
 
                 RelativeLayout relativeLayout = (RelativeLayout) getView().findViewById(R.id.prediction_questions_info_parent);
@@ -318,7 +323,7 @@ public class PredictionFragment extends NostraBaseFragment implements View.OnCli
                             topLayout.setVisibility(View.VISIBLE);
 
                             bottomLayout.clearAnimation();
-                            bottomLayout.animate().translationYBy(bottomLayout.getHeight()).setDuration(1000).
+                            bottomLayout.animate().translationYBy(-bottomLayout.getHeight()).setDuration(1000).
                                     setInterpolator(new LinearInterpolator()).
                                     setListener(new Animator.AnimatorListener() {
                                         @Override
@@ -813,6 +818,7 @@ public class PredictionFragment extends NostraBaseFragment implements View.OnCli
                         if (mQuestionsCardAdapter != null && mCardStack != null) {
                             PredictionQuestion question = mQuestionsCardAdapter.getItem(index);
                             mCardStack.shuffle(question);
+                            mCurrentQuestionPos++;
                             showQuestionsCounter();
                             showNeitherIfRequired();
                             showPowerUpsIfApplied();
@@ -943,6 +949,8 @@ public class PredictionFragment extends NostraBaseFragment implements View.OnCli
                 onMatchCompleted();
 
             } else {
+                mCurrentQuestionPos++;
+                mTotalQuestions--;
                 showQuestionsCounter();
                 showNeitherIfRequired();
                 showPowerUpsIfApplied();
@@ -1104,8 +1112,8 @@ public class PredictionFragment extends NostraBaseFragment implements View.OnCli
         @Override
         public void onReceive(Context context, Intent intent) {
             if (intent != null && intent.getExtras() != null) {
-                PowerUp transferredPowerUp = Parcels.unwrap(intent.getExtras().getParcelable(Constants.BundleKeys.BANK_TRANSFER_POWERUPS));
-                updatePowerUpOnSuccessfulBankTransfer(transferredPowerUp);
+                PowerUp powerUpsAddedAsPerRequest = Parcels.unwrap(intent.getExtras().getParcelable(Constants.BundleKeys.BANK_TRANSFER_POWERUPS));
+                updatePowerUpOnSuccessfulBankTransfer(powerUpsAddedAsPerRequest);
             }
         }
     };
