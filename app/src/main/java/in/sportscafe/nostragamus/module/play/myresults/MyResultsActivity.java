@@ -72,6 +72,11 @@ public class MyResultsActivity extends NostragamusActivity implements MyResultsV
 
 
     @Override
+    public String getScreenName() {
+        return Constants.ScreenNames.RESULTS;
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_results);
@@ -461,21 +466,18 @@ public class MyResultsActivity extends NostragamusActivity implements MyResultsV
     @Override
     public void setUserRank(Match match) {
         if (null != match) {
-            if (null != match.getUserRank() && null != match.getCountPlayers() &&
-                    !isPlayingPseudoGame() && !isHeadlessFlow()) {
-                mTvLeaderBoardRank.setText(AppSnippet.ordinal(match.getUserRank()));
-                mTvLeaderBoardTotalPlayers.setText(" / " + String.valueOf(match.getCountPlayers()));
-            } else {
+            if (match.getResult() != null && !match.getResult().isEmpty()) {
+                if (null != match.getUserRank() && null != match.getCountPlayers() &&
+                        !isPlayingPseudoGame() && !isHeadlessFlow()) {
+                    mTvLeaderBoardRank.setText(AppSnippet.ordinal(match.getUserRank()));
+                    mTvLeaderBoardTotalPlayers.setText(" / " + String.valueOf(match.getCountPlayers()));
+                } else {
+                    mTvLeaderBoardRank.setText("NA");
+                }
+            }else{
                 mTvLeaderBoardRank.setText("NA");
             }
-        }else {
-            mTvLeaderBoardRank.setText("NA");
         }
-    }
-
-    @Override
-    public String getScreenName() {
-        return Constants.ScreenNames.RESULTS;
     }
 
     public void refresh(Match match){

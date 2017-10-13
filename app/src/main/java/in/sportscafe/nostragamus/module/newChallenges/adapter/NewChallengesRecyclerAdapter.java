@@ -4,14 +4,17 @@ import android.content.Context;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.TableLayout;
 import android.widget.TextView;
 
 import org.parceler.Parcels;
@@ -88,9 +91,8 @@ public class NewChallengesRecyclerAdapter extends RecyclerView.Adapter<RecyclerV
 
             if (newChallengesResponse != null) {
                 newChallengesItemViewHolder.challengeNameTextView.setText(newChallengesResponse.getChallengeName());
-                newChallengesItemViewHolder.challengeTournamentTextView.setText(getTournamentString(newChallengesResponse.getTournaments()));
                 newChallengesItemViewHolder.challengeDateTextView.setText(DateTimeHelper.getChallengeDuration(newChallengesResponse.getChallengeStartTime(), newChallengesResponse.getChallengeEndTime()));
-                newChallengesItemViewHolder.gameLeftTextView.setText(newChallengesResponse.getMatchesLeft() + "/" + newChallengesResponse.getTotalMatches());
+                newChallengesItemViewHolder.gameLeftTextView.setText(String.valueOf(newChallengesResponse.getTotalMatches()));
                 newChallengesItemViewHolder.prizeTextView.setText(Constants.RUPEE_SYMBOL+String.valueOf(newChallengesResponse.getPrizes()));
 
                 String startTimeStr = newChallengesResponse.getChallengeStartTime();
@@ -102,10 +104,83 @@ public class NewChallengesRecyclerAdapter extends RecyclerView.Adapter<RecyclerV
                     }
                 }
 
-                setSportsIcons(((NewChallengesItemViewHolder) holder).gameIconLinearLayout,newChallengesResponse.getSportsIdArray());
+                if (newChallengesResponse.getTournaments()!=null && !newChallengesResponse.getTournaments().isEmpty()) {
+                    setTournaments(newChallengesItemViewHolder.tournamentsLinearLayout, newChallengesResponse.getTournaments());
+                }
+                setSportsIcons(newChallengesItemViewHolder.gameIconLinearLayout,newChallengesResponse.getSportsIdArray());
 
             }
         }
+    }
+
+    private void setTournaments(LinearLayout tournamentsLinearLayout, List<String> tournamentList) {
+
+        tournamentsLinearLayout.removeAllViews();
+        LinearLayout layout2 = new LinearLayout(tournamentsLinearLayout.getContext());
+        layout2.setLayoutParams(new LinearLayout.LayoutParams
+                (LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+        tournamentsLinearLayout.setOrientation(LinearLayout.VERTICAL);
+        tournamentsLinearLayout.addView(layout2);
+
+        String str = "";
+
+        TextView mType;
+        ImageView imageView;
+
+        Context mContext = tournamentsLinearLayout.getContext();
+
+        if (tournamentList != null && tournamentList.size() > 0) {
+
+                for (int temp = 0; temp < tournamentList.size(); temp++) {
+
+                    LinearLayout childLayout = new LinearLayout(mContext);
+
+                    LinearLayout.LayoutParams linearParams = new LinearLayout.LayoutParams(
+                            LinearLayout.LayoutParams.WRAP_CONTENT,
+                            LinearLayout.LayoutParams.WRAP_CONTENT);
+                    childLayout.setLayoutParams(linearParams);
+
+                    mType = new TextView(mContext);
+                    imageView = new ImageView(mContext);
+
+                    LinearLayout.LayoutParams lpImage = new LinearLayout.LayoutParams(
+                            LinearLayout.LayoutParams.WRAP_CONTENT,
+                            LinearLayout.LayoutParams.WRAP_CONTENT);
+                    lpImage.setMargins(0,2,0,0);
+                    imageView.setLayoutParams(lpImage);
+
+                    LinearLayout.LayoutParams lpText = new LinearLayout.LayoutParams(
+                            LinearLayout.LayoutParams.WRAP_CONTENT,
+                            LinearLayout.LayoutParams.WRAP_CONTENT);
+
+                    lpText.setMargins(0,0,5,0);
+                    mType.setLayoutParams(lpText);
+
+                    mType.setTextSize(9);
+                    mType.setTextColor(ContextCompat.getColor(mContext,R.color.grey_999999));
+
+                    mType.setText(tournamentList.get(temp));
+                    imageView.setImageResource(R.drawable.grey_circle);
+                    imageView.getLayoutParams().height = (int)mContext.getResources().getDimension(R.dimen.dim_2);
+                    imageView.getLayoutParams().width = (int) mContext.getResources().getDimension(R.dimen.dim_2);
+
+                    childLayout.addView(mType);
+
+                    if (temp != tournamentList.size()-1) {
+                        childLayout.addView(imageView);
+                    }
+
+                    childLayout.setGravity(Gravity.CENTER);
+
+                    LinearLayout.LayoutParams relativeParams =
+                            new LinearLayout.LayoutParams(
+                                    LinearLayout.LayoutParams.WRAP_CONTENT,  LinearLayout.LayoutParams.WRAP_CONTENT);
+                    relativeParams.setMargins(0,0,5,0);
+                    layout2.addView(childLayout, relativeParams);
+
+                }
+        }
+
     }
 
     private void setSportsIcons(LinearLayout gameIconLinearLayout, int[] sportsIdArray) {
@@ -185,19 +260,19 @@ public class NewChallengesRecyclerAdapter extends RecyclerView.Adapter<RecyclerV
     private class NewChallengesItemViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         TextView challengeNameTextView;
-        TextView challengeTournamentTextView;
         TextView challengeDateTextView;
         TextView startTimeTextView;
         TextView gameLeftTextView;
         TextView prizeTextView;
         LinearLayout gameIconLinearLayout;
+        LinearLayout tournamentsLinearLayout;
 
         public NewChallengesItemViewHolder(View itemView) {
             super(itemView);
 
             itemView.setOnClickListener(this);
             challengeNameTextView = (TextView) itemView.findViewById(R.id.challenge_name_textView);
-            challengeTournamentTextView = (TextView) itemView.findViewById(R.id.challenge_tournaments_textView);
+            tournamentsLinearLayout = (LinearLayout) itemView.findViewById(R.id.challenge_tournaments_layout);
             challengeDateTextView = (TextView) itemView.findViewById(R.id.challenge_date_textView);
             startTimeTextView = (TextView) itemView.findViewById(R.id.challenge_start_time_textView);
             gameLeftTextView = (TextView) itemView.findViewById(R.id.challenge_game_left_textView);

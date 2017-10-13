@@ -85,11 +85,11 @@ public class InPlayHeadLessMatchesAdapter extends RecyclerView.Adapter<RecyclerV
             if (shouldDisableMatchClickAction(match)) {
                 viewHolder.matchParentLayout.setEnabled(false);
                 viewHolder.actionButton.setVisibility(View.GONE);
-                viewHolder.vsTextView.setVisibility(View.VISIBLE);
+                viewHolder.vsBtn.setVisibility(View.VISIBLE);
             } else {
                 viewHolder.matchParentLayout.setEnabled(true);
                 viewHolder.actionButton.setVisibility(View.VISIBLE);
-                viewHolder.vsTextView.setVisibility(View.GONE);
+                viewHolder.vsBtn.setVisibility(View.GONE);
             }
 
             /* Timer - match start */
@@ -291,7 +291,7 @@ public class InPlayHeadLessMatchesAdapter extends RecyclerView.Adapter<RecyclerV
         TextView party2NameTextView;
         TextView venueTextView;
         Button actionButton;
-        TextView vsTextView;
+        Button vsBtn;
 
         public TwoPartyMatchItemViewHolder(View itemView) {
             super(itemView);
@@ -303,7 +303,7 @@ public class InPlayHeadLessMatchesAdapter extends RecyclerView.Adapter<RecyclerV
             party2NameTextView = (TextView) itemView.findViewById(R.id.match_party_2_textView);
             venueTextView = (TextView) itemView.findViewById(R.id.newChallenge_match_venue_textView);
             actionButton = (Button) itemView.findViewById(R.id.newChallenge_match_action_button);
-            vsTextView = (TextView) itemView.findViewById(R.id.newChallenge_match_vs_textView);
+            vsBtn = (Button) itemView.findViewById(R.id.newChallenge_match_vs_btn);
 
             matchParentLayout.setOnClickListener(this);
             actionButton.setOnClickListener(this);

@@ -43,9 +43,9 @@ public class ResultsPeekModelImpl implements ResultsPeekModel {
 
     private String mMatchStage;
 
-    private Integer playerPoints;
+    private int playerPoints=0;
 
-    private Integer myPoints;
+    private int myPoints=0;
 
     private List<Question> playerQuestionsList = new ArrayList<>();
 
@@ -165,7 +165,7 @@ public class ResultsPeekModelImpl implements ResultsPeekModel {
 
         void onFailedResults();
 
-        void onSuccessBothResults(Integer myPoints, Integer playerPoints, String matchStage, String challengeName);
+        void onSuccessBothResults(int myPoints, int playerPoints, String matchStage, String challengeName);
 
         void setPlayerProfileData(String playerPhoto, String playerName);
     }

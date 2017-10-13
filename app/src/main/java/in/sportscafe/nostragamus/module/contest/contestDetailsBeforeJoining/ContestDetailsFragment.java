@@ -78,7 +78,7 @@ public class ContestDetailsFragment extends NostraBaseFragment implements View.O
     private void setInfo(Contest contest) {
         if (contest != null) {
             mTvTBarHeading.setText(contest.getConfigName());
-            mTvTBarSubHeading.setText("");
+            mTvTBarSubHeading.setText(contest.getChallengeName());
 
             if (contest.isContestJoined()) {
                 mJoinContestButton.setVisibility(View.GONE);
@@ -122,6 +122,9 @@ public class ContestDetailsFragment extends NostraBaseFragment implements View.O
 
                     case DetailScreensLaunchRequest.CONTESTS_REWARDS_SCREEN:
                         mViewPager.setCurrentItem(1);   // Second TAB is rewards
+                        break;
+                    case DetailScreensLaunchRequest.CONTESTS_RULES_SCREEN:
+                        mViewPager.setCurrentItem(2);   // Second TAB is rules
                         break;
                 }
             }

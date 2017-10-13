@@ -25,10 +25,10 @@
                 android:id="@+id/question_linear"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:minHeight="@dimen/dim_36"
+                android:minHeight="@dimen/dim_44"
                 android:orientation="horizontal"
-                android:layout_marginLeft="@dimen/dim_12"
-                android:layout_marginRight="@dimen/dim_12"
+                android:layout_marginLeft="@dimen/dp_18"
+                android:layout_marginRight="@dimen/dp_12"
                 android:animateLayoutChanges="true">
 
                 <com.jeeva.android.widgets.customfont.CustomTextView
@@ -287,7 +287,7 @@
             android:paddingRight="@dimen/dp_10"
             android:textColor="@color/white_60"
             android:textSize="@dimen/dp_12"
-            android:visibility="invisible"
+            android:visibility="gone"
             app:typeface="lato_regular"
             android:layout_marginBottom="@dimen/dp_10"/>
 

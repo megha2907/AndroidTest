@@ -100,7 +100,9 @@ public class LeaderBoardFragment extends BaseFragment implements LeaderBoardView
 
     @Override
     public void setSortSelectedType(int sortType) {
-        setSelected(findViewById(R.id.sort_by_total_points_btn));
+        if (getView()!=null) {
+            setSelected(getView().findViewById(R.id.sort_by_total_points_btn));
+        }
     }
 
     @Override

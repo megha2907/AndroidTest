@@ -208,18 +208,14 @@ public class LeaderBoardAdapter extends Adapter<UserLeaderBoard, LeaderBoardAdap
 
             if (null != context) {
                 Integer playerId = getItem(getAdapterPosition()).getUserId();
-                if (NostragamusDataHandler.getInstance().getUserId().equals(playerId.toString())) {
-                    intent = new Intent(context, UserProfileActivity.class);
-                } else {
+                if (!NostragamusDataHandler.getInstance().getUserId().equals(playerId.toString())) {
                     intent = new Intent(context, PlayerProfileActivity.class);
                     intent.putExtra(BundleKeys.PLAYER_ID, playerId);
+                    if(null != mRoomId) {
+                        intent.putExtra(BundleKeys.ROOM_ID,mRoomId);
+                    }
+                    context.startActivity(intent);
                 }
-
-                if(null != mRoomId) {
-                    intent.putExtra(BundleKeys.ROOM_ID,mRoomId);
-                }
-                context.startActivity(intent);
-
                 NostragamusAnalytics.getInstance().trackClickEvent(Constants.AnalyticsCategory.LEADERBOARD,
                         Constants.AnalyticsClickLabels.OTHER_PROFILE);
             }

@@ -76,10 +76,12 @@
     <dimen name="dim_30">34dp</dimen>
     <dimen name="dim_31">35dp</dimen>
     <dimen name="dim_32">36.5dp</dimen>
+    <dimen name="dim_35">40dp</dimen>
     <dimen name="dim_36">41dp</dimen>
     <dimen name="dim_38">43dp</dimen>
     <dimen name="dim_40">45.6dp</dimen>
     <dimen name="dim_42">48dp</dimen>
+    <dimen name="dim_44">50dp</dimen>
     <dimen name="dim_45">51dp</dimen>
     <dimen name="dim_46">52.5dp</dimen>
     <dimen name="dim_48">55dp</dimen>

@@ -18,7 +18,8 @@
             android:background="@color/black"
             android:paddingTop="@dimen/dim_10"
             android:paddingLeft="@dimen/dim_13"
-            android:paddingRight="@dimen/dim_13">
+            android:paddingRight="@dimen/dim_13"
+            android:paddingBottom="@dimen/dim_5">
 
             <com.jeeva.android.widgets.customfont.CustomTextView
                 android:id="@+id/contest_name"
