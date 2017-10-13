@@ -524,7 +524,7 @@ public class PowerupBankTransferFragment extends BaseFragment implements View.On
         Bundle args = new Bundle();
         if (response != null && response.getData() != null && response.getData().getTransferredFromBankPowerUp() != null) {
             args.putParcelable(Constants.BundleKeys.BANK_TRANSFER_POWERUPS,
-                    Parcels.wrap(response.getData().getTransferredFromBankPowerUp()));
+                    Parcels.wrap(response.getData().getPowerUpsAdded()));
         }
 
         Intent intent = new Intent(Constants.IntentActions.ACTION_POWERUPS_UPDATED);

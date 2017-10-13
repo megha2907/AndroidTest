@@ -54,7 +54,7 @@ public class FeedWebView extends NostraBaseActivity {
 
             }
             public void onPageFinished(WebView view, String url) {
-                CustomProgressbar.getProgressbar(FeedWebView.this).dismissProgress();
+//                CustomProgressbar.getProgressbar(FeedWebView.this).dismissProgress();
             }
 
         });
@@ -64,7 +64,7 @@ public class FeedWebView extends NostraBaseActivity {
 
 
         //Load url in webview
-        CustomProgressbar.getProgressbar(FeedWebView.this).show();
+//        CustomProgressbar.getProgressbar(FeedWebView.this).show();
         webView.loadUrl(url);
 
         initToolBar();

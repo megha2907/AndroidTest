@@ -22,6 +22,9 @@ public class TransferPowerUpFromBankResponseData {
     @SerializedName("powerups_from_bank")
     private PowerUp transferredFromBankPowerUp;
 
+    @SerializedName("add_powerups")
+    private PowerUp powerUpsAdded;
+
     public int getUserId() {
         return userId;
     }
@@ -52,5 +55,13 @@ public class TransferPowerUpFromBankResponseData {
 
     public void setTransferredFromBankPowerUp(PowerUp transferredFromBankPowerUp) {
         this.transferredFromBankPowerUp = transferredFromBankPowerUp;
+    }
+
+    public PowerUp getPowerUpsAdded() {
+        return powerUpsAdded;
+    }
+
+    public void setPowerUpsAdded(PowerUp powerUpsAdded) {
+        this.powerUpsAdded = powerUpsAdded;
     }
 }
