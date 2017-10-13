@@ -148,7 +148,7 @@ public class Contest {
 
 
     public boolean isUnlimitedEntries() {
-        return roomSize == 0;
+        return roomSize == -1;
     }
 
 
