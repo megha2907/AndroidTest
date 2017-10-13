@@ -12,6 +12,7 @@ import java.util.Date;
 import java.util.TimeZone;
 
 import in.sportscafe.nostragamus.Constants;
+import in.sportscafe.nostragamus.Nostragamus;
 
 /**
  * Created by Jeeva on 23/3/16.
@@ -190,8 +191,16 @@ public class TimeUtils {
         return finalFormat;
     }
 
+    /**
+     * Get current server time to save as answer for predictions
+     * @param neededFormat
+     * @param timeZone
+     * @return
+     */
     public static String getCurrentTime(String neededFormat, String timeZone) {
-        return getDateStringFromDate(Calendar.getInstance().getTime(), neededFormat, timeZone);
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(Nostragamus.getInstance().getServerTime());
+        return getDateStringFromDate(calendar.getTime(), neededFormat, timeZone);
     }
 
     public static long getMillisecondsFromDateString(String dateString) {
