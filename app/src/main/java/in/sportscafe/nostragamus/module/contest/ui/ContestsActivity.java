@@ -73,7 +73,6 @@ public class ContestsActivity extends NostraBaseActivity implements ContestsFrag
     public void onWalletClicked() {
         Intent intent = new Intent(this, WalletBalancePopupActivity.class);
         startActivity(intent);
-
     }
 
 }

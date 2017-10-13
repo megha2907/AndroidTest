@@ -18,9 +18,6 @@ public class InPlayContestDto {
     @SerializedName("contest_id")
     private int contestId;
 
-    @SerializedName("contest_tab_id")
-    private int contestTabId;
-
     @SerializedName("contest_mode")
     private String contestMode;
 
@@ -61,14 +58,6 @@ public class InPlayContestDto {
 
     public void setContestId(int contestId) {
         this.contestId = contestId;
-    }
-
-    public int getContestTabId() {
-        return contestTabId;
-    }
-
-    public void setContestTabId(int contestTabId) {
-        this.contestTabId = contestTabId;
     }
 
     public String getContestMode() {

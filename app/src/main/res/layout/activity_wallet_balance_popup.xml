@@ -216,7 +216,7 @@
                         android:gravity="center"
                         android:paddingBottom="@dimen/dim_3"
                         android:paddingTop="@dimen/dp_0"
-                        android:text="Add Money"
+                        android:text="Deposit Money"
                         android:textAllCaps="false"
                         android:textColor="@color/white"
                         android:textSize="@dimen/sp_14"

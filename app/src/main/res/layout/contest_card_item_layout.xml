@@ -179,6 +179,7 @@
                             android:layout_height="wrap_content"
                             android:layout_alignTop="@id/pool_row_ll_member_layout"
                             android:layout_toRightOf="@id/pool_row_ll_member_layout"
+                            android:background="?attr/selectableItemBackground"
                             android:clickable="true"
                             android:minHeight="@dimen/dim_30"
                             android:minWidth="@dimen/dim_52"
