@@ -95,7 +95,9 @@ public class InPlayMatchesRecyclerAdapter extends RecyclerView.Adapter<RecyclerV
                 viewHolder.actionButton.setEnabled(false);
             }
 
-            /* Set timer */
+            viewHolder.venueTextView.setText(match.getMatchVenue());
+
+               /* Set timer */
             String matchStartTime = match.getMatchStartTime();
             if (!TextUtils.isEmpty(matchStartTime)) {
                 if (DateTimeHelper.isTimerRequired(matchStartTime)) {
@@ -105,20 +107,19 @@ public class InPlayMatchesRecyclerAdapter extends RecyclerView.Adapter<RecyclerV
                 }
             }
 
-            viewHolder.venueTextView.setText(match.getMatchVenue());
-
             /* Match status */
             String matchStatus = match.getMatchStatus();
             if (!TextUtils.isEmpty(matchStatus)) {
 
                 if (matchStatus.equalsIgnoreCase(Constants.MatchStatusStrings.POINTS)) {
                     viewHolder.actionButton.setClickable(true);
+                    viewHolder.dateTimeTextView.setText("Completed");
                     matchStatus = match.getMatchPoints() + " " + matchStatus;
                     viewHolder.actionButton.setTextColor(ContextCompat.getColor(viewHolder.actionButton.getContext(), R.color.black));
                     viewHolder.actionButton.setBackground(ContextCompat.getDrawable(viewHolder.actionButton.getContext(), R.drawable.btn_points_bg));
                     viewHolder.actionButton.setLayoutParams(new LinearLayout.LayoutParams
                             (viewHolder.actionButton.getResources().getDimensionPixelSize(R.dimen.dim_90)
-                            , viewHolder.actionButton.getResources().getDimensionPixelSize(R.dimen.dim_32)));
+                                    , viewHolder.actionButton.getResources().getDimensionPixelSize(R.dimen.dim_32)));
 
                 } else if (matchStatus.equalsIgnoreCase(Constants.MatchStatusStrings.PLAY)) {
                     viewHolder.actionButton.setClickable(true);
@@ -136,6 +137,12 @@ public class InPlayMatchesRecyclerAdapter extends RecyclerView.Adapter<RecyclerV
                             (viewHolder.actionButton.getResources().getDimensionPixelSize(R.dimen.dim_100)
                                     , viewHolder.actionButton.getResources().getDimensionPixelSize(R.dimen.dim_32)));
 
+                    if (match.getMatchResult() != null && !match.getMatchResult().isEmpty()) {
+                        viewHolder.dateTimeTextView.setText("Completed");
+                    }else {
+                        viewHolder.dateTimeTextView.setText("In Progress");
+                    }
+
                 } else if (matchStatus.equalsIgnoreCase(Constants.MatchStatusStrings.COMING_UP)) {
                     viewHolder.actionButton.setClickable(false);
                     viewHolder.actionButton.setTextColor(ContextCompat.getColor(viewHolder.actionButton.getContext(), R.color.grey_a1a1a1));
@@ -144,7 +151,7 @@ public class InPlayMatchesRecyclerAdapter extends RecyclerView.Adapter<RecyclerV
                             (viewHolder.actionButton.getResources().getDimensionPixelSize(R.dimen.dim_90)
                                     , viewHolder.actionButton.getResources().getDimensionPixelSize(R.dimen.dim_32)));
 
-                }else if (matchStatus.equalsIgnoreCase(Constants.MatchStatusStrings.ANSWER)) {
+                } else if (matchStatus.equalsIgnoreCase(Constants.MatchStatusStrings.ANSWER)) {
                     viewHolder.actionButton.setClickable(true);
                     viewHolder.actionButton.setTextColor(ContextCompat.getColor(viewHolder.actionButton.getContext(), R.color.white));
                     viewHolder.actionButton.setBackground(ContextCompat.getDrawable(viewHolder.actionButton.getContext(), R.drawable.btn_play_bg));
@@ -152,7 +159,7 @@ public class InPlayMatchesRecyclerAdapter extends RecyclerView.Adapter<RecyclerV
                             (viewHolder.actionButton.getResources().getDimensionPixelSize(R.dimen.dim_90)
                                     , viewHolder.actionButton.getResources().getDimensionPixelSize(R.dimen.dim_32)));
 
-                }else if (matchStatus.equalsIgnoreCase(Constants.MatchStatusStrings.CONTINUE)) {
+                } else if (matchStatus.equalsIgnoreCase(Constants.MatchStatusStrings.CONTINUE)) {
                     viewHolder.actionButton.setClickable(true);
                     viewHolder.actionButton.setTextColor(ContextCompat.getColor(viewHolder.actionButton.getContext(), R.color.white));
                     viewHolder.actionButton.setBackground(ContextCompat.getDrawable(viewHolder.actionButton.getContext(), R.drawable.btn_play_bg));
@@ -160,7 +167,7 @@ public class InPlayMatchesRecyclerAdapter extends RecyclerView.Adapter<RecyclerV
                             (viewHolder.actionButton.getResources().getDimensionPixelSize(R.dimen.dim_90)
                                     , viewHolder.actionButton.getResources().getDimensionPixelSize(R.dimen.dim_32)));
 
-                }else if (matchStatus.equalsIgnoreCase(Constants.MatchStatusStrings.CANCELLED)) {
+                } else if (matchStatus.equalsIgnoreCase(Constants.MatchStatusStrings.CANCELLED)) {
                     viewHolder.actionButton.setClickable(false);
                     viewHolder.actionButton.setTextColor(ContextCompat.getColor(viewHolder.actionButton.getContext(), R.color.black));
                     viewHolder.actionButton.setBackground(ContextCompat.getDrawable(viewHolder.actionButton.getContext(), R.drawable.btn_did_not_play_bg));
@@ -168,7 +175,7 @@ public class InPlayMatchesRecyclerAdapter extends RecyclerView.Adapter<RecyclerV
                             (viewHolder.actionButton.getResources().getDimensionPixelSize(R.dimen.dim_100)
                                     , viewHolder.actionButton.getResources().getDimensionPixelSize(R.dimen.dim_32)));
 
-                }else {
+                } else {
                     viewHolder.actionButton.setClickable(true);
                     viewHolder.actionButton.setTextColor(ContextCompat.getColor(viewHolder.actionButton.getContext(), R.color.white));
                     viewHolder.actionButton.setBackground(ContextCompat.getDrawable(viewHolder.actionButton.getContext(), R.drawable.btn_play_bg));
@@ -207,6 +214,7 @@ public class InPlayMatchesRecyclerAdapter extends RecyclerView.Adapter<RecyclerV
 
             @Override
             public void onFinish() {
+                viewHolder.dateTimeTextView.setText("In Progress");
             }
         };
         countDownTimer.start();

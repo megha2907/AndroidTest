@@ -42,6 +42,9 @@ public class UserLeaderBoard {
     @SerializedName("count_powerups")
     private Integer userPowerUps;
 
+    @SerializedName("is_winning")
+    private boolean isWinning = false;
+
     /**
      * @return The userId
      */
@@ -160,6 +163,14 @@ public class UserLeaderBoard {
     @SerializedName("count_powerups")
     public void setUserPowerUps(Integer userPowerUps) {
         this.userPowerUps = userPowerUps;
+    }
+
+    public boolean isWinning() {
+        return isWinning;
+    }
+
+    public void setWinning(boolean winning) {
+        isWinning = winning;
     }
 
 

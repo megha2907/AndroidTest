@@ -147,6 +147,7 @@ public class InPlayMatchesPagerFragment extends NostraBaseFragment {
             gamesLeftTextView.setText(gamesLeftStr);
             gamesLeftTextViewText.setText("GAMES LEFT  ");
 
+
             /* Set Powerups */
             showOrHidePowerUps(responses.getData().getPowerUp());
 
@@ -244,7 +245,9 @@ public class InPlayMatchesPagerFragment extends NostraBaseFragment {
         int gameLeft = 0;
         if (matches != null && matches.size() > 0) {
             for (InPlayMatch match : matches) {
-                if (!match.isMatchCompleted()) {
+                if (match.getMatchStatus().equalsIgnoreCase(Constants.MatchStatusStrings.CONTINUE) ||
+                        match.getMatchStatus().equalsIgnoreCase(Constants.MatchStatusStrings.PLAY) ||
+                        match.getMatchStatus().equalsIgnoreCase(Constants.MatchStatusStrings.COMING_UP)) {
                     gameLeft++;
                 }
             }

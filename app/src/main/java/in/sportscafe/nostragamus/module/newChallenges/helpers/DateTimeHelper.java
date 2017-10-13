@@ -6,7 +6,10 @@ import java.util.Calendar;
 
 import in.sportscafe.nostragamus.AppSnippet;
 import in.sportscafe.nostragamus.Constants;
+import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.module.nostraHome.helper.TimerHelper;
+import in.sportscafe.nostragamus.utils.timeutils.TimeAgo;
+import in.sportscafe.nostragamus.utils.timeutils.TimeUnit;
 import in.sportscafe.nostragamus.utils.timeutils.TimeUtils;
 
 /**
@@ -36,7 +39,7 @@ public class DateTimeHelper {
         if (!TextUtils.isEmpty(startTime)) {
             long millis = TimeUtils.getMillisecondsFromDateString(startTime);
             if (millis > 0) {
-                long days = TimeUtils.getDaysDifference(millis - Calendar.getInstance().getTimeInMillis());
+                long days = TimeUtils.getDaysDifference(millis - Nostragamus.getInstance().getServerTime());
                 if (days > 1) {
                     startTimeStr = String.valueOf(days + " days");
                 } else {
@@ -53,7 +56,7 @@ public class DateTimeHelper {
         if (!TextUtils.isEmpty(startTime)) {
             long millis = TimeUtils.getMillisecondsFromDateString(startTime);
             if (millis > 0) {
-                long days = TimeUtils.getDaysDifference(millis - Calendar.getInstance().getTimeInMillis());
+                long days = TimeUtils.getDaysDifference(millis - Nostragamus.getInstance().getServerTime());
                 if (days <= 1) {
                     isTimerRequired = true;
                 }
@@ -69,7 +72,7 @@ public class DateTimeHelper {
         if (!TextUtils.isEmpty(time)) {
             long millis = TimeUtils.getMillisecondsFromDateString(time);
             if (millis > 0) {
-                long days = TimeUtils.getDaysDifference(millis - Calendar.getInstance().getTimeInMillis());
+                long days = TimeUtils.getDaysDifference(millis - Nostragamus.getInstance().getServerTime());
                 if (days > 1) {
                     startTimeStr = String.valueOf(days + " days left");
                 } else {
@@ -79,5 +82,27 @@ public class DateTimeHelper {
         }
         return startTimeStr;
     }
+
+    public static boolean isMatchOver(String matchEndTime) {
+
+        boolean isMatchOver = false;
+
+        if (!TextUtils.isEmpty(matchEndTime)) {
+            String startTime = matchEndTime.replace("+00:00", ".000Z");
+            long startTimeMs = TimeUtils.getMillisecondsFromDateString(
+                    startTime,
+                    Constants.DateFormats.FORMAT_DATE_T_TIME_ZONE,
+                    Constants.DateFormats.GMT
+            );
+            TimeAgo timeAgo = TimeUtils.calcTimeAgo(Nostragamus.getInstance().getServerTime(), startTimeMs);
+
+            isMatchOver = timeAgo.timeDiff <= 0
+                    || timeAgo.timeUnit == TimeUnit.MILLISECOND
+                    || timeAgo.timeUnit == TimeUnit.SECOND;
+        }
+
+        return isMatchOver;
+    }
+
 
 }

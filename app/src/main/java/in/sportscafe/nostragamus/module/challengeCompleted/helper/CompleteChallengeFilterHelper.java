@@ -12,7 +12,8 @@ import in.sportscafe.nostragamus.module.newChallenges.dataProvider.SportsDataPro
 
 public class CompleteChallengeFilterHelper {
 
-    public CompleteChallengeFilterHelper() {}
+    public CompleteChallengeFilterHelper() {
+    }
 
     public List<CompletedResponse> getCompletedChallengesFilteredOn(int sportFilterId, List<CompletedResponse> completedResponseList) {
         List<CompletedResponse> filteredChallenges = null;
@@ -44,12 +45,9 @@ public class CompleteChallengeFilterHelper {
 
             for (CompletedResponse completedResponse : completedResponseList) {
                 int[] sportsIdArray = completedResponse.getSportIdArray();
-
                 if (sportsIdArray != null) {
-                    for (int temp = 0; temp < sportsIdArray.length; temp++) {
-                        if (sportsIdArray.length > 1) {
-                            filteredChallenges.add(completedResponse);
-                        }
+                    if (sportsIdArray.length > 1) {
+                        filteredChallenges.add(completedResponse);
                     }
                 }
             }
