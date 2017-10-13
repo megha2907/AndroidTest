@@ -16,4 +16,6 @@ public interface ContestAdapterListener {
     void onEntriesClicked(Bundle args);
 
     void onReferAFriendClicked();
+
+    void onEntryFeeClicked(Bundle args);
 }

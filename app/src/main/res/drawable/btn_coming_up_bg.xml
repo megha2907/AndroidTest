@@ -19,7 +19,7 @@
             <!-- BUTTON -->
             <item android:bottom="@dimen/dim_2">
                 <shape android:shape="rectangle">
-                    <solid android:color="#17486a" />
+                    <solid android:color="#173f5d" />
                     <corners android:radius="@dimen/dim_2" />
                 </shape>
             </item>

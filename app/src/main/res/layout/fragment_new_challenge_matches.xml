@@ -178,7 +178,7 @@
                         android:layout_height="wrap_content"
                         android:textColor="@color/grey6"
                         android:text="To play the challenge, join a contest - or you can play a game once before joining the contest!"
-                        android:layout_marginTop="@dimen/dim_8"
+                        android:layout_marginTop="@dimen/dim_6"
                         android:textSize="@dimen/sp_11"
                         app:typeface="lato_regular" />
 

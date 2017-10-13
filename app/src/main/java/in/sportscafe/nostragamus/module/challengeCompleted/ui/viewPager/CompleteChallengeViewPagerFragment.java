@@ -118,6 +118,8 @@ public class CompleteChallengeViewPagerFragment extends BaseFragment {
                         for (CompletedContestDto contestDto : completedResponse.getContestList()) {
 
                             contestDto.setChallengeId(completedResponse.getChallengeId());     // To identify every contest that which challenge it belongs
+                            contestDto.setChallengeName(completedResponse.getChallengeName());
+                            contestDto.setChallengeStartTime(completedResponse.getChallengeStartTime());
 
                             listItem = new CompletedListItem();
                             listItem.setItemData(contestDto);
