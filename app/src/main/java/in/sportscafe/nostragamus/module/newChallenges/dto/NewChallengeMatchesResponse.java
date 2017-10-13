@@ -12,18 +12,29 @@ import in.sportscafe.nostragamus.module.inPlay.dto.InPlayMatch;
 
 public class NewChallengeMatchesResponse {
 
-    @SerializedName("state")
-    private String state;
+    @SerializedName("contests_joined")
+    private int contestJoined;
+
+    @SerializedName("headless_joined")
+    private int headLessJoined;
 
     @SerializedName("data")
     private List<InPlayMatch> matchList;
 
-    public String getState() {
-        return state;
+    public int getContestJoined() {
+        return contestJoined;
     }
 
-    public void setState(String state) {
-        this.state = state;
+    public void setContestJoined(int contestJoined) {
+        this.contestJoined = contestJoined;
+    }
+
+    public int getHeadLessJoined() {
+        return headLessJoined;
+    }
+
+    public void setHeadLessJoined(int headLessJoined) {
+        this.headLessJoined = headLessJoined;
     }
 
     public List<InPlayMatch> getMatchList() {

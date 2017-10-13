@@ -3,8 +3,8 @@ package in.sportscafe.nostragamus.module.contest.adapter;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -61,13 +61,13 @@ public class ContestRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
         switch (viewType) {
             case ContestAdapterItemType.CONTEST:
-                View v1 = inflater.inflate(R.layout.inflater_pool_new_row, parent, false);
+                View v1 = inflater.inflate(R.layout.contest_card_item_layout, parent, false);
                 viewHolder = new ContestViewHolder(v1, mContestAdapterListener);
                 break;
 
             case ContestAdapterItemType.REFER_FRIEND_AD:
                 View v2 = inflater.inflate(R.layout.refer_friend_card_layout, parent, false);
-                viewHolder = new ReferFriendViewHolder(v2,mContestAdapterListener);
+                viewHolder = new ReferFriendViewHolder(v2, mContestAdapterListener);
                 break;
 
             case ContestAdapterItemType.JOINED_CONTEST:
@@ -124,7 +124,7 @@ public class ContestRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                     viewHolder.mIvContestsType.setImageResource(R.drawable.guaranteed_icon);
                 } else if (contest.getContestMode().equalsIgnoreCase(Constants.ContestType.POOL)) {
                     viewHolder.mIvContestsType.setImageResource(R.drawable.pool_icon);
-                }else if (contest.getContestMode().equalsIgnoreCase(Constants.ContestType.NON_GUARANTEED)) {
+                } else if (contest.getContestMode().equalsIgnoreCase(Constants.ContestType.NON_GUARANTEED)) {
                     viewHolder.mIvContestsType.setImageResource(R.drawable.no_guarantee_icon);
                 }
 
@@ -151,7 +151,6 @@ public class ContestRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             JoinedContestViewHolder viewHolder = (JoinedContestViewHolder) holder;
 
             if (contest != null) {
-
                 viewHolder.mTvPoolName.setText(contest.getConfigName());
 
                 if (contest.noPrizes()) {
@@ -160,15 +159,21 @@ public class ContestRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                     viewHolder.mTvPrizes.setText(Constants.RUPEE_SYMBOL + String.valueOf(contest.getPrizes()));
                 }
 
-                viewHolder.mTvNumberOfPrizes.setText("(" + contest.getSubtitle() + ")");
-
-                if (contest.getContestMode().equalsIgnoreCase(Constants.ContestType.GUARANTEED)) {
-                    viewHolder.mIvContestsType.setImageResource(R.drawable.guaranteed_icon);
-                } else if (contest.getContestMode().equalsIgnoreCase(Constants.ContestType.POOL)) {
-                    viewHolder.mIvContestsType.setImageResource(R.drawable.pool_icon);
-                }else if (contest.getContestMode().equalsIgnoreCase(Constants.ContestType.NON_GUARANTEED)) {
-                    viewHolder.mIvContestsType.setImageResource(R.drawable.no_guarantee_icon);
+                if (!TextUtils.isEmpty(contest.getSubtitle())) {
+                    viewHolder.mTvNumberOfPrizes.setText("(" + contest.getSubtitle() + ")");
                 }
+
+                String contestMode = contest.getContestMode();
+                if (!TextUtils.isEmpty(contestMode)) {
+                    if (contestMode.equalsIgnoreCase(Constants.ContestType.GUARANTEED)) {
+                        viewHolder.mIvContestsType.setImageResource(R.drawable.guaranteed_icon);
+                    } else if (contestMode.equalsIgnoreCase(Constants.ContestType.POOL)) {
+                        viewHolder.mIvContestsType.setImageResource(R.drawable.pool_icon);
+                    } else if (contestMode.equalsIgnoreCase(Constants.ContestType.NON_GUARANTEED)) {
+                        viewHolder.mIvContestsType.setImageResource(R.drawable.no_guarantee_icon);
+                    }
+                }
+
 
                 if (contest.isFreeEntry()) {
                     viewHolder.mTvEntryFee.setText("Free");
@@ -320,7 +325,7 @@ public class ContestRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         public Button mReferButton;
         private ContestAdapterListener clickListener;
 
-        public ReferFriendViewHolder(View itemView,@NonNull ContestAdapterListener listener) {
+        public ReferFriendViewHolder(View itemView, @NonNull ContestAdapterListener listener) {
             super(itemView);
             this.clickListener = listener;
 

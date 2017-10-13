@@ -3,6 +3,7 @@ package in.sportscafe.nostragamus.module.play.myresults;
 import android.content.Context;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.widget.TextView;
 
 import com.jeeva.android.ExceptionTracker;
 
@@ -84,6 +85,7 @@ public class MyResultsModelImpl implements MyResultsModel, MyResultsAdapter.OnMy
                 roomId = mResultsScreenData.getRoomId();
                 contestName = mResultsScreenData.getSubTitle();
                 String matchStatus = mResultsScreenData.getMatchStatus();
+                mInPlayContest = mResultsScreenData.getInPlayContestDto();
 
                 /* Check for Awaiting Results to Change Toolbar Heading */
                 if (!TextUtils.isEmpty(matchStatus) && (
@@ -174,9 +176,19 @@ public class MyResultsModelImpl implements MyResultsModel, MyResultsAdapter.OnMy
     }
 
     private MyResultsAdapter createAdapter(Context context) {
+        InPlayContestDto contestDto = mInPlayContest;
+        if (contestDto == null) {
+            if (mResultsScreenData.getInPlayContestDto() != null) {
+                contestDto = mResultsScreenData.getInPlayContestDto();
+            }
+        }
+
         mResultAdapter = new MyResultsAdapter(context, null == mPlayerUserId,
-                mResultsScreenData,mInPlayContest,mCompletedContestDto);
+                mResultsScreenData,
+                contestDto,
+                mCompletedContestDto);
         mResultAdapter.setResultsActionListener(this);
+
         return mResultAdapter;
     }
 
@@ -223,7 +235,9 @@ public class MyResultsModelImpl implements MyResultsModel, MyResultsAdapter.OnMy
 
     @Override
     public String getMatchName() {
-        return match.getChallengeName() + " - " + contestName;
+        String challengeName = (!TextUtils.isEmpty(match.getChallengeName())) ? match.getChallengeName() : "";
+        String contestNameStr = (!TextUtils.isEmpty(contestName)) ? challengeName : "";
+        return challengeName + contestNameStr;
     }
 
     @Override

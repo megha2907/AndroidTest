@@ -82,6 +82,9 @@ public class ReferFriendActivity extends NostragamusActivity implements ReferFri
     public void onReferralCreditsClicked(Bundle bundle) {
         if (getActivity() != null) {
             Intent intent = new Intent(getActivity(), ReferralCreditActivity.class);
+            if (bundle == null) {
+                bundle = new Bundle();
+            }
             intent.putExtras(bundle);
             startActivity(intent);
         }

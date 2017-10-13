@@ -262,6 +262,7 @@ public class InPlayViewPagerFragment extends BaseFragment {
                 data.setStartTime(inPlayContestDto.getChallengeStartTime());
                 data.setMatchesLeft(getMatchesLeft(inPlayContestDto.getMatches()));
                 data.setTotalMatches(inPlayContestDto.getMatches().size());
+                data.setInPlayContestDto(inPlayContestDto);
 
                 args.putParcelable(Constants.BundleKeys.HEADLESS_MATCH_SCREEN_DATA, Parcels.wrap(data));
 

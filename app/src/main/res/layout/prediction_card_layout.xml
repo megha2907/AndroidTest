@@ -37,10 +37,10 @@
                         <!-- positive points -->
                         <LinearLayout
                             android:id="@+id/prediction_card_positive_layout"
-                            android:layout_width="@dimen/dp_70"
+                            android:layout_width="wrap_content"
                             android:layout_height="@dimen/dim_24"
                             android:orientation="horizontal"
-                            android:background="#cccccc"
+                            android:background="@drawable/prediction_points_bg"
                             android:gravity="center">
 
                             <ImageView
@@ -58,22 +58,17 @@
                                 app:typeface="lato_bold"
                                 android:text="+ PTS"
                                 android:textSize="@dimen/sp_10"
-                                />
+                                android:layout_marginRight="@dimen/dim_8"/>
 
                         </LinearLayout>
-
-                        <View
-                            android:layout_width="@dimen/dim_1"
-                            android:layout_height="match_parent"
-                            android:background="@color/grey"/>
 
                         <!-- Negative points -->
                         <LinearLayout
                             android:id="@+id/prediction_card_negative_layout"
-                            android:layout_width="@dimen/dp_70"
+                            android:layout_width="wrap_content"
                             android:layout_height="@dimen/dim_24"
                             android:orientation="horizontal"
-                            android:background="#cccccc"
+                            android:background="@drawable/prediction_points_bg"
                             android:gravity="center">
 
                             <ImageView
@@ -81,7 +76,6 @@
                                 android:layout_height="@dimen/dim_8"
                                 android:layout_margin="@dimen/dim_8"
                                 android:src="@drawable/prediction_negative_icn"/>
-
 
                             <com.jeeva.android.widgets.customfont.CustomTextView
                                 android:id="@+id/prediction_card_negative_textView"
@@ -91,8 +85,8 @@
                                 android:textColor="@color/black"
                                 app:typeface="lato_bold"
                                 android:text="- PTS"
-                                android:textSize="@dimen/sp_10"/>
-
+                                android:textSize="@dimen/sp_10"
+                                android:layout_marginRight="@dimen/dim_8"/>
 
                         </LinearLayout>
 
@@ -141,7 +135,8 @@
 
                     <!-- Image option 1 -->
                     <FrameLayout
-                        android:layout_width="@dimen/dim_170"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
                         android:layout_height="@dimen/dim_170">
 
                         <com.jeeva.android.widgets.HmImageView
@@ -165,7 +160,8 @@
 
                     <!-- Image option 2 -->
                     <FrameLayout
-                        android:layout_width="@dimen/dim_170"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
                         android:layout_height="@dimen/dim_170">
 
                         <com.jeeva.android.widgets.HmImageView
@@ -222,7 +218,7 @@
                     android:layout_width="@dimen/dp_13"
                     android:layout_height="@dimen/dp_13"
                     android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="@dimen/dp_15"
+                    android:layout_marginLeft="@dimen/dp_16"
                     android:src="@drawable/play_arrow_left"
                     />
 
@@ -235,7 +231,8 @@
                     android:ellipsize="end"
                     android:textColor="@color/white"
                     app:typeface="lato_regular"
-                    android:textSize="@dimen/sp_14"/>
+                    android:textSize="@dimen/sp_14"
+                    android:layout_marginLeft="@dimen/dim_6"/>
 
             </LinearLayout>
 
@@ -257,14 +254,15 @@
                     android:ellipsize="end"
                     android:textColor="@color/white"
                     app:typeface="lato_regular"
-                    android:textSize="@dimen/sp_14"/>
+                    android:textSize="@dimen/sp_14"
+                    android:layout_marginRight="@dimen/dim_6"/>
 
                 <ImageView
                     android:id="@+id/swipe_card_iv_right_arrow"
                     android:layout_width="@dimen/dp_13"
                     android:layout_height="@dimen/dp_13"
                     android:layout_gravity="center_vertical"
-                    android:layout_marginRight="@dimen/dp_15"
+                    android:layout_marginRight="@dimen/dp_16"
                     android:src="@drawable/play_arrow_right"
                     />
 

@@ -2,6 +2,8 @@ package in.sportscafe.nostragamus.module.prediction.playScreen.dto;
 
 import org.parceler.Parcel;
 
+import in.sportscafe.nostragamus.module.inPlay.dto.InPlayContestDto;
+
 /**
  * Created by sandip on 23/09/17.
  */
@@ -19,6 +21,7 @@ public class PlayScreenDataDto {
     private String matchStatus;
     private PowerUp powerUp;
     private boolean isPlayingPseudoGame = false;
+    private InPlayContestDto inPlayContestDto;
 
     public int getChallengeId() {
         return challengeId;
@@ -106,5 +109,13 @@ public class PlayScreenDataDto {
 
     public void setPlayingPseudoGame(boolean playingPseudoGame) {
         isPlayingPseudoGame = playingPseudoGame;
+    }
+
+    public InPlayContestDto getInPlayContestDto() {
+        return inPlayContestDto;
+    }
+
+    public void setInPlayContestDto(InPlayContestDto inPlayContestDto) {
+        this.inPlayContestDto = inPlayContestDto;
     }
 }

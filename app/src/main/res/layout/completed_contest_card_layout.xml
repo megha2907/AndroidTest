@@ -158,17 +158,93 @@
 
             </LinearLayout>
 
-            <!-- Card Content bar -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dim_68"
-                android:background="@drawable/inplay_card_content_bg"
-                android:gravity="center_vertical"
-                android:orientation="vertical"
-                android:paddingBottom="@dimen/dim_10"
-                android:paddingLeft="@dimen/dim_10"
-                android:paddingRight="@dimen/dim_5"
-                android:paddingTop="@dimen/dim_10">
+
+            <!--&lt;!&ndash; Card Content bar &ndash;&gt;-->
+        <!--</LinearLayout>-->
+        <!--&lt;!&ndash; Current rank &ndash;&gt;-->
+            <!--<LinearLayout-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:background="@drawable/inplay_card_content_bg"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="FINAL RANK"-->
+                <!--android:textColor="@color/white_999999"-->
+                <!--android:textSize="@dimen/sp_9"-->
+                <!--app:typeface="lato_regular" />-->
+
+            <!--<com.jeeva.android.widgets.customfont.CustomTextView-->
+                <!--android:id="@+id/completed_contest_card_header_current_rank_textView"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_marginTop="@dimen/dim_4"-->
+                <!--android:textColor="@color/white"-->
+                <!--android:textSize="@dimen/sp_10"-->
+                <!--app:typeface="lato_bold" />-->
+
+        <!--</LinearLayout>-->
+
+        <!--&lt;!&ndash; Prizes &ndash;&gt;-->
+            <!--<LinearLayout-->
+                <!--android:id="@+id/completed_challenge_winnings_layout"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:gravity="right"-->
+                <!--android:minWidth="@dimen/dim_50"-->
+                <!--android:background="?selectableItemBackgroundBorderless"-->
+                <!--android:orientation="vertical">-->
+
+            <!--<com.jeeva.android.widgets.customfont.CustomTextView-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="Winnings"-->
+                <!--android:textAllCaps="true"-->
+                <!--android:textColor="@color/white_999999"-->
+                <!--android:textSize="@dimen/sp_9"-->
+                <!--app:typeface="lato_regular" />-->
+
+            <!--<com.jeeva.android.widgets.customfont.CustomTextView-->
+                <!--android:id="@+id/completed_contest_card_header_prizes_textView"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_marginTop="@dimen/dim_4"-->
+                <!--android:textColor="#22b573"-->
+                <!--android:textSize="@dimen/sp_10"-->
+                <!--app:typeface="lato_bold" />-->
+
+        <!--</LinearLayout>-->
+
+    <!--</LinearLayout>-->
+
+    <!-- Card Content bar -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dim_68"
+        android:background="@drawable/inplay_card_content_bg"
+        android:gravity="center_vertical"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/dim_10"
+        android:paddingLeft="@dimen/dim_10"
+        android:paddingRight="@dimen/dim_5"
+        android:paddingTop="@dimen/dim_10">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:background="?attr/selectableItemBackgroundBorderless">
+
+            <!--<LinearLayout-->
+                <!--android:id="@+id/completed_completed_card_timeline_heading_parent"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_gravity="left"-->
+                <!--android:layout_marginLeft="@dimen/dim_5"-->
+                <!--android:gravity="center_vertical"-->
+                <!--android:orientation="vertical"-->
+                <!--android:paddingBottom="@dimen/dim_10"-->
+                <!--android:paddingLeft="@dimen/dim_10"-->
+                <!--android:paddingRight="@dimen/dim_5"-->
+                <!--android:paddingTop="@dimen/dim_10">-->
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -212,5 +288,6 @@
 
         </LinearLayout>
 
+    </LinearLayout>
     </LinearLayout>
 </LinearLayout>

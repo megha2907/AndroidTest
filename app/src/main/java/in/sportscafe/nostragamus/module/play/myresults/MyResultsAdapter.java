@@ -245,8 +245,13 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
                 holder.mTvResultCorrectCount.setText(String.valueOf(mAnsweredQuestionCount) + "/" + match.getMatchQuestionCount() + " Predictions Made");
 
                 if (null != match.getUserRank()) {
-                    holder.mTvLeaderBoardRank.setText(String.valueOf(match.getUserRank()));
-                    holder.mTvLeaderBoardTotalPlayers.setText("/" + String.valueOf(match.getCountPlayers()));
+                    if (isPlayingPseudoGame() || isHeadlessFlow()) {
+                        holder.mTvLeaderBoardRank.setText("NA");
+                        holder.mTvLeaderBoardTotalPlayers.setText("");
+                    } else {
+                        holder.mTvLeaderBoardRank.setText(String.valueOf(match.getUserRank()));
+                        holder.mTvLeaderBoardTotalPlayers.setText("/" + String.valueOf(match.getCountPlayers()));
+                    }
                 } else {
                     holder.mTvLeaderBoardRank.setText("No Rank");
                 }
@@ -274,8 +279,13 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
             holder.mLlPredictionsParent.addView(getMyPrediction(holder.mLlPredictionsParent, question, position, match.getRoomId()));
         }
 
-        if (match.isResultPublished() && mIsMyResults) {
-            holder.mleaderboard.addView(getLeaderBoardView(holder.mleaderboard, match));
+        if (isPlayingPseudoGame() || isHeadlessFlow()) {
+            holder.leaderBoardMatchInfoLayout.setVisibility(View.GONE);
+        } else {
+            if (match.isResultPublished() && mIsMyResults) {
+                holder.leaderBoardMatchInfoLayout.setVisibility(View.VISIBLE);
+                holder.mleaderboard.addView(getLeaderBoardView(holder.mleaderboard, match));
+            }
         }
 
         return myResultView;
@@ -340,6 +350,7 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
         TextView mTvLeaderBoardTotalPlayers;
 
         LinearLayout mLeaderBoardLayout;
+        LinearLayout leaderBoardMatchInfoLayout;
 
 
         public MyResultViewHolder(View V) {
@@ -379,7 +390,7 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
 
             mLeaderBoardLayout = (LinearLayout) V.findViewById(R.id.schedule_row_rl_points_summary);
             mTvLeaderBoardTotalPlayers = (TextView) V.findViewById(R.id.schedule_row_tv_leaderboard_total_players);
-
+            leaderBoardMatchInfoLayout = (LinearLayout) V.findViewById(R.id.match_details_with_leaderboard_layout);
 
             mRlLeaderBoard.setOnClickListener(this);
             mRlAvgMatchPoints.setOnClickListener(this);

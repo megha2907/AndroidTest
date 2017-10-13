@@ -27,7 +27,6 @@
             android:paddingRight="@dimen/dim_16"
             android:paddingTop="@dimen/dim_12">
 
-
             <!-- First row -->
             <LinearLayout
                 android:layout_width="match_parent"
@@ -94,7 +93,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dim_16"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:background="?attr/selectableItemBackgroundBorderless">
 
                 <!--Prizes -->
                 <LinearLayout

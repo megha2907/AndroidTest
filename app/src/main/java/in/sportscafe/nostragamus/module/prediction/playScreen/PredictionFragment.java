@@ -1,6 +1,9 @@
 package in.sportscafe.nostragamus.module.prediction.playScreen;
 
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.animation.ObjectAnimator;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -20,6 +23,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.view.animation.LayoutAnimationController;
+import android.view.animation.LinearInterpolator;
+import android.view.animation.TranslateAnimation;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -80,7 +86,7 @@ public class PredictionFragment extends NostraBaseFragment implements View.OnCli
     private PlayScreenDataDto mPlayScreenData;
     private CustomProgressbar mProgressDialog;
     private TextView mCounterTextView;
-    private TextView mNextTextView;
+    private LinearLayout mNextTextView;
     private ImageView mPowerUpImageView;
     private ImageView mGamePlayImageView;
     private int mTotalQuestions = 0;
@@ -116,7 +122,7 @@ public class PredictionFragment extends NostraBaseFragment implements View.OnCli
         Button thirdOptionButton = (Button) rootView.findViewById(R.id.prediction_third_option_button);
         mThirdOptionLayout = (LinearLayout) rootView.findViewById(R.id.prediction_third_option_layout);
         mCounterTextView = (TextView) rootView.findViewById(R.id.prediction_question_counter_textView);
-        mNextTextView = (TextView) rootView.findViewById(R.id.prediction_question_next_textView);
+        mNextTextView = (LinearLayout) rootView.findViewById(R.id.prediction_next_layout);
 
         mNextTextView.setOnClickListener(this);
         mPowerUpImageView.setOnClickListener(this);
@@ -165,8 +171,6 @@ public class PredictionFragment extends NostraBaseFragment implements View.OnCli
         initMembers();
         initHeading();
         animateTopBottomLayouts();
-        loadQuestions();
-
     }
 
     private void initMembers() {
@@ -300,15 +304,85 @@ public class PredictionFragment extends NostraBaseFragment implements View.OnCli
             final RelativeLayout topLayout = (RelativeLayout) getView().findViewById(R.id.prediction_top_layout);
             final LinearLayout bottomLayout = (LinearLayout) getView().findViewById(R.id.prediction_bottom_layout);
 
-            new Handler().postDelayed(new Runnable() {
+            topLayout.clearAnimation();
+            topLayout.animate().translationYBy(topLayout.getHeight()).setDuration(1000).
+                    setInterpolator(new LinearInterpolator()).
+                    setListener(new Animator.AnimatorListener() {
+                        @Override
+                        public void onAnimationStart(Animator animation) {
+
+                        }
+
+                        @Override
+                        public void onAnimationEnd(Animator animation) {
+                            topLayout.setVisibility(View.VISIBLE);
+
+                            bottomLayout.clearAnimation();
+                            bottomLayout.animate().translationYBy(bottomLayout.getHeight()).setDuration(1000).
+                                    setInterpolator(new LinearInterpolator()).
+                                    setListener(new Animator.AnimatorListener() {
+                                        @Override
+                                        public void onAnimationStart(Animator animation) {
+
+                                        }
+
+                                        @Override
+                                        public void onAnimationEnd(Animator animation) {
+                                            bottomLayout.setVisibility(View.VISIBLE);
+                                            loadQuestions();
+                                        }
+
+                                        @Override
+                                        public void onAnimationCancel(Animator animation) {
+
+                                        }
+
+                                        @Override
+                                        public void onAnimationRepeat(Animator animation) {
+
+                                        }
+                                    }).start();
+
+                        }
+
+                        @Override
+                        public void onAnimationCancel(Animator animation) {
+
+                        }
+
+                        @Override
+                        public void onAnimationRepeat(Animator animation) {
+
+                        }
+                    }).start();
+
+            /*new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    topLayout.startAnimation(AnimationUtils.loadAnimation(getContext(), R.anim.prediction_top_view_anim));
-                    bottomLayout.startAnimation(AnimationUtils.loadAnimation(getContext(), R.anim.prediction_bottom_view_anim));
-                    topLayout.setVisibility(View.VISIBLE);
-                    bottomLayout.setVisibility(View.VISIBLE);
+                    Animation animation = AnimationUtils.loadAnimation(topLayout.getContext(), R.anim.prediction_top_view_anim);
+                    animation.setAnimationListener(new Animation.AnimationListener() {
+                        @Override
+                        public void onAnimationStart(Animation animation) {
+
+                        }
+
+                        @Override
+                        public void onAnimationEnd(Animation animation) {
+                            topLayout.setVisibility(View.VISIBLE);
+                            bottomLayout.clearAnimation();
+                            bottomLayout.startAnimation(AnimationUtils.loadAnimation(bottomLayout.getContext(), R.anim.prediction_bottom_view_anim));
+                            bottomLayout.setVisibility(View.VISIBLE);
+                        }
+
+                        @Override
+                        public void onAnimationRepeat(Animation animation) {
+
+                        }
+                    });
+                    topLayout.clearAnimation();
+                    topLayout.startAnimation(animation);
                 }
-            }, 500);
+            }, 100);*/
         }
     }
 
@@ -413,7 +487,7 @@ public class PredictionFragment extends NostraBaseFragment implements View.OnCli
                 onThirdOptionClicked();
                 break;
 
-            case R.id.prediction_question_next_textView:
+            case R.id.prediction_next_layout:
                 onNextClicked();
                 break;
 
@@ -531,6 +605,8 @@ public class PredictionFragment extends NostraBaseFragment implements View.OnCli
      * @param playersPolls
      */
     private void onPlayerPollSuccess(PlayerPollResponse playersPolls) {
+        /* NOTE: same logic for PredictionCardAdapter.preFillIfPlayerPollAlreadyApplied() tobe followed */
+
         if (getView() != null && getActivity() != null && playersPolls != null &&
                 playersPolls.getPlayersPollList() != null &&
                 playersPolls.getPlayersPollList().size() == 2) {    // for both the options
@@ -729,6 +805,7 @@ public class PredictionFragment extends NostraBaseFragment implements View.OnCli
                             mCardStack.undo();
                             showQuestionsCounter();
                             showNeitherIfRequired();
+                            showPowerUpsIfApplied();
                         }
                         break;
 
@@ -802,6 +879,7 @@ public class PredictionFragment extends NostraBaseFragment implements View.OnCli
             data.setChallengeName(mPlayScreenData.getChallengeName());
             data.setPlayingPseudoGame(mPlayScreenData.isPlayingPseudoGame());
             data.setChallengeStartTime(mPlayScreenData.getChallengeStartTime());
+            data.setInPlayContestDto(mPlayScreenData.getInPlayContestDto());
         }
 
         Bundle args = getArguments();
