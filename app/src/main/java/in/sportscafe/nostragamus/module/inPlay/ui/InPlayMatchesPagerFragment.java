@@ -24,6 +24,7 @@ import java.util.List;
 
 import in.sportscafe.nostragamus.AppSnippet;
 import in.sportscafe.nostragamus.Constants;
+import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.NostraBaseFragment;
 import in.sportscafe.nostragamus.module.customViews.TimelineHelper;
@@ -35,6 +36,7 @@ import in.sportscafe.nostragamus.module.inPlay.dto.InPlayContestDto;
 import in.sportscafe.nostragamus.module.inPlay.dto.InPlayContestMatchDto;
 import in.sportscafe.nostragamus.module.inPlay.dto.InPlayMatch;
 import in.sportscafe.nostragamus.module.inPlay.dto.InPlayMatchesResponse;
+import in.sportscafe.nostragamus.module.navigation.help.dummygame.DummyGameActivity;
 import in.sportscafe.nostragamus.module.play.myresults.MyResultsActivity;
 import in.sportscafe.nostragamus.module.popups.timerPopup.TimerFinishDialogHelper;
 import in.sportscafe.nostragamus.module.prediction.playScreen.PredictionActivity;
@@ -338,12 +340,12 @@ public class InPlayMatchesPagerFragment extends NostraBaseFragment {
                     if (playData != null) {
                         bundle.putParcelable(Constants.BundleKeys.PLAY_SCREEN_DATA, Parcels.wrap(playData));
 
-                        Intent predictionIntent = new Intent(getActivity(), PredictionActivity.class);
-                        predictionIntent.putExtras(bundle);
-                        predictionIntent.putExtra(Constants.BundleKeys.SCREEN_LAUNCHED_FROM_PARENT,
-                                PredictionActivity.LaunchedFrom.IN_PLAY_SCREEN_PLAY_MATCH);
-                        startActivity(predictionIntent);
-
+                        /* If User has not Played first match yet, start dummy Game */
+                        if (NostragamusDataHandler.getInstance().isPlayedFirstMatch()) {
+                            startPredictionActivity(bundle);
+                        } else {
+                            startDummyGameActivity(bundle);
+                        }
                     }
 
                 } else {
@@ -355,6 +357,23 @@ public class InPlayMatchesPagerFragment extends NostraBaseFragment {
                 handleError(-1);
             }
         }
+    }
+
+    private void startPredictionActivity(Bundle bundle) {
+        Intent predictionIntent = new Intent(getActivity(), PredictionActivity.class);
+        predictionIntent.putExtras(bundle);
+        predictionIntent.putExtra(Constants.BundleKeys.SCREEN_LAUNCHED_FROM_PARENT,
+                PredictionActivity.LaunchedFrom.IN_PLAY_SCREEN_PLAY_MATCH);
+        startActivity(predictionIntent);
+    }
+
+    private void startDummyGameActivity(Bundle bundle) {
+        Intent intent = new Intent(getActivity(), DummyGameActivity.class);
+        intent.putExtras(bundle);
+        startActivity(intent);
+
+        /*  Set first match played param */
+        NostragamusDataHandler.getInstance().setPlayedFirstMatch(true);
     }
 
     private PlayScreenDataDto getPlayScreenData(InPlayMatch inPlayMatch, InPlayContestDto contestDto) {

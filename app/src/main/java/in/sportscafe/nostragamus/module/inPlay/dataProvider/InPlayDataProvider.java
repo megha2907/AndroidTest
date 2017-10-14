@@ -130,7 +130,7 @@ public class InPlayDataProvider {
                     if (inPlayResponses != null) {
                         listener.onData(status, inPlayResponses);
                     } else {
-                        listener.onError(Constants.DataStatus.FROM_DATABASE_ERROR);
+                        listener.onData(Constants.DataStatus.FROM_DATABASE_ERROR, null);
                     }
                 }
             }

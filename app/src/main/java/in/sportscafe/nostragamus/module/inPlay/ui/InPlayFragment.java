@@ -145,6 +145,7 @@ public class InPlayFragment extends NostraBaseFragment implements View.OnClickLi
                 break;
 
             case Constants.DataStatus.FROM_DATABASE_AS_NO_INTERNET:
+            case Constants.DataStatus.FROM_DATABASE_ERROR:
             case Constants.DataStatus.FROM_DATABASE_AS_SERVER_FAILED:
                 showDataOnUi(inPlayResponseData, false);
                 handleError(status);

@@ -24,11 +24,13 @@ import com.jeeva.android.BaseFragment;
 import org.parceler.Parcels;
 
 import in.sportscafe.nostragamus.Constants;
+import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.contest.dto.ContestScreenData;
 import in.sportscafe.nostragamus.module.contest.ui.ContestsActivity;
 import in.sportscafe.nostragamus.module.inPlay.adapter.MatchesAdapterAction;
 import in.sportscafe.nostragamus.module.inPlay.dto.InPlayMatch;
+import in.sportscafe.nostragamus.module.navigation.help.dummygame.DummyGameActivity;
 import in.sportscafe.nostragamus.module.navigation.wallet.WalletHelper;
 import in.sportscafe.nostragamus.module.newChallenges.adapter.NewChallengeMatchAdapterListener;
 import in.sportscafe.nostragamus.module.newChallenges.adapter.NewChallengeMatchesAdapter;
@@ -202,11 +204,12 @@ public class NewChallengesMatchesFragment extends BaseFragment implements View.O
 
             if (TimerFinishDialogHelper.canPlayGame(match.getMatchStartTime())) {
 
-                Intent predictionIntent = new Intent(getActivity(), PredictionActivity.class);
-                predictionIntent.putExtras(bundle);
-                predictionIntent.putExtra(Constants.BundleKeys.SCREEN_LAUNCHED_FROM_PARENT,
-                        PredictionActivity.LaunchedFrom.NEW_CHALLENGES_SCREEN_PSEUDO_PLAY);
-                startActivity(predictionIntent);
+                /* If User has not Played first match yet, start dummy Game */
+                if (NostragamusDataHandler.getInstance().isPlayedFirstMatch()) {
+                    startPredictionActivity(bundle);
+                } else {
+                    startDummyGameActivity(bundle);
+                }
 
             } else {
                 TimerFinishDialogHelper.showCanNotPlayGameTimerOutDialog(getChildFragmentManager());
@@ -215,6 +218,23 @@ public class NewChallengesMatchesFragment extends BaseFragment implements View.O
         } else {
             handleError(-1);
         }
+    }
+
+    private void startPredictionActivity(Bundle bundle) {
+        Intent predictionIntent = new Intent(getActivity(), PredictionActivity.class);
+        predictionIntent.putExtras(bundle);
+        predictionIntent.putExtra(Constants.BundleKeys.SCREEN_LAUNCHED_FROM_PARENT,
+                PredictionActivity.LaunchedFrom.NEW_CHALLENGES_SCREEN_PSEUDO_PLAY);
+        startActivity(predictionIntent);
+    }
+
+    private void startDummyGameActivity(Bundle bundle) {
+        Intent intent = new Intent(getActivity(), DummyGameActivity.class);
+        intent.putExtras(bundle);
+        startActivity(intent);
+
+        /*  Set first match played param */
+        NostragamusDataHandler.getInstance().setPlayedFirstMatch(true);
     }
 
     @Override

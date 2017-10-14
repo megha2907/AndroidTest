@@ -618,6 +618,14 @@ public class PredictionFragment extends NostraBaseFragment implements View.OnCli
 
             List<PlayersPoll> playersPollList = playersPolls.getPlayersPollList();
 
+            /* Add response to question so that it can be shown next time if card is shuffled */
+            if (mQuestionsCardAdapter != null) {
+                PredictionQuestion question = mQuestionsCardAdapter.getItem(getTopVisibleCardPosition());
+                if (question != null) {
+                    question.setPlayersPollList(playersPollList);
+                }
+            }
+
             String poll1Str = playersPollList.get(0).getAnswerPercentage();
             String poll2Str = playersPollList.get(1).getAnswerPercentage();
             int pollPercentForOption1 = Integer.parseInt(poll1Str.replaceAll("%",""));
