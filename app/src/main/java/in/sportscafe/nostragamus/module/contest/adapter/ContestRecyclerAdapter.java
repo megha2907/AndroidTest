@@ -133,7 +133,7 @@ public class ContestRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                     viewHolder.mTvEntryFee.setAllCaps(true);
 
                     if (contest.isUnlimitedEntries()) {
-                        viewHolder.mTvMaxEntries.setText("unlimited");
+                        viewHolder.mTvMaxEntries.setText("UNLIMITED");
                     } else {
                         viewHolder.mTvMaxEntries.setText(String.valueOf(contest.getRoomSize()));
                     }
@@ -180,7 +180,7 @@ public class ContestRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                     viewHolder.mTvEntryFee.setAllCaps(true);
 
                     if (contest.isUnlimitedEntries()) {
-                        viewHolder.mTvMaxEntries.setText("unlimited");
+                        viewHolder.mTvMaxEntries.setText("UNLIMITED");
                     } else {
                         viewHolder.mTvMaxEntries.setText(String.valueOf(contest.getRoomSize()));
                     }

@@ -45,10 +45,11 @@
 
                 <ImageView
                     android:id="@+id/toolbar_icon"
-                    android:layout_width="@dimen/dim_12"
-                    android:layout_height="@dimen/dim_12"
-                    android:layout_marginTop="@dimen/dim_4"
-                    android:layout_marginLeft="@dimen/dim_6"
+                    android:layout_width="@dimen/dim_44"
+                    android:layout_height="@dimen/dim_14"
+                    android:paddingRight="@dimen/dim_20"
+                    android:paddingLeft="@dimen/dim_10"
+                    android:layout_marginTop="@dimen/dim_3"
                     android:src="@drawable/contest_question_mark"
                     android:layout_toRightOf="@+id/toolbar_heading_one"/>
 
