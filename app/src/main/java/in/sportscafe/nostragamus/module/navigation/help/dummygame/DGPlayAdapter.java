@@ -32,6 +32,7 @@ import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.navigation.help.dummygame.tindercard.FlingCardListener;
 import in.sportscafe.nostragamus.module.resultspeek.dto.Question;
 import in.sportscafe.nostragamus.utils.ViewUtils;
+import retrofit2.http.HEAD;
 
 public class DGPlayAdapter extends ArrayAdapter<Question> {
 
@@ -43,48 +44,31 @@ public class DGPlayAdapter extends ArrayAdapter<Question> {
 
     /* Layout dynamic height is same as in Play (PredictionActivity) */
     private static final float HEADER_PERECENTAGE = 8.75f / 100;
-
     private static final float GAP_BW_HEADER_CARD_PERECENTAGE = 8.5f / 100;
-
     private static final float CARD_HEIGHT_PERECENTAGE = 53f / 100;
-
     private static final float OPTION_PERECENTAGE = 6.25f / 100;
-
     private static final float FOOTER_POWERUP_LAYOUT_PERCENTAGE = 10f / 100;
-
     private static final float FOOTER_NEITHER_BUTTON_PERCENTAGE = 12f / 100;
     private static final float EXTRA = 1.5f / 100;
 
     private LayoutInflater mLayoutInflater;
 
     private boolean mBgUpdateDone = false;
-
     private int mTopMargin;
-
     private View vBgFrame0;
-
     private View vBgFrame1;
-
     private View vBgFrame2;
 
     private FlingCardListener mFlingCardListener;
-
     private Question mTopQuestion;
-
     private boolean mNeitherOptionAvailable = false;
-
     private ViewHolder mTopViewHolder;
 
     private float mOptionHeight;
-
     private float mCardWidth;
-
     private float mCardHeight;
-
     private float mCardMargin;
-
     private float mImageWidth;
-
     private float mImageHeight;
 
     private View.OnClickListener mRemovePowerUpListener;
@@ -106,18 +90,18 @@ public class DGPlayAdapter extends ArrayAdapter<Question> {
     }
 
     private void applyFrameCardPercentages(View rootView, float screenHeight) {
-        mCardHeight = screenHeight * CARD_HEIGHT_PERECENTAGE;
+        /*mCardHeight = screenHeight * CARD_HEIGHT_PERECENTAGE;
         mCardWidth = mCardHeight;
         mOptionHeight = screenHeight * OPTION_PERECENTAGE;
         mImageWidth = mCardWidth / 2f;
-        mImageHeight = mImageWidth;
+        mImageHeight = mImageWidth;*/
 
-        vBgFrame0 = rootView.findViewById(R.id.prediction_cv_bg_0);
+        /*vBgFrame0 = rootView.findViewById(R.id.prediction_cv_bg_0);
         RelativeLayout.LayoutParams rlp = (RelativeLayout.LayoutParams) vBgFrame0.getLayoutParams();
         rlp.width = (int) mCardWidth;
-        rlp.height = (int) (mCardHeight + mOptionHeight);
-        mTopMargin = (int) (screenHeight * GAP_BW_HEADER_CARD_PERECENTAGE);
-        rlp.topMargin = mTopMargin;
+        rlp.height = (int) getContext().getResources().getDimension(R.dimen.dim_340); //(int) (mCardHeight + mOptionHeight);
+        mTopMargin = (int) (screenHeight * (GAP_BW_HEADER_CARD_PERECENTAGE + HEADER_PERECENTAGE));
+        rlp.topMargin = mTopMargin;*/
 
         /*int headerHeight = rootView.findViewById(R.id.prediction_rl_header).getMeasuredHeight();
         ((RelativeLayout.LayoutParams) rootView.findViewById(R.id.prediction_iv_dummy_left_right_indicator).getLayoutParams())
@@ -126,32 +110,32 @@ public class DGPlayAdapter extends ArrayAdapter<Question> {
         ((RelativeLayout.LayoutParams) rootView.findViewById(R.id.prediction_iv_dummy_neither_indicator).getLayoutParams())
                 .topMargin = (int) (mTopMargin + rlp.height - mOptionHeight + headerHeight);*/
 
-        vBgFrame1 = rootView.findViewById(R.id.prediction_cv_bg_1);
+        /*vBgFrame1 = rootView.findViewById(R.id.prediction_cv_bg_1);
         vBgFrame1.getLayoutParams().height = (int) (mCardHeight + mOptionHeight);
 
         vBgFrame2 = rootView.findViewById(R.id.prediction_cv_bg_2);
-        vBgFrame2.getLayoutParams().height = (int) (mCardHeight + mOptionHeight);
+        vBgFrame2.getLayoutParams().height = (int) (mCardHeight + mOptionHeight);*/
 
         /*rlp = (RelativeLayout.LayoutParams) rootView.findViewById(R.id.prediction_rl_header).getLayoutParams();
         rlp.height = (int) (screenHeight * HEADER_PERECENTAGE);*/
 
-        mTopMargin += (int) (screenHeight * HEADER_PERECENTAGE);
+//        mTopMargin = (int) (screenHeight * (HEADER_PERECENTAGE + GAP_BW_HEADER_CARD_PERECENTAGE));
 
 //        rootView.findViewById(R.id.prediction_rl_play_page).setPadding(0, rlp.height, 0, 0);
+/*
+        RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) rootView.findViewById(R.id.prediction_rl_footer).getLayoutParams();
+        layoutParams.height = (int) (screenHeight * (FOOTER_NEITHER_BUTTON_PERCENTAGE + FOOTER_POWERUP_LAYOUT_PERCENTAGE));
 
-        rlp = (RelativeLayout.LayoutParams) rootView.findViewById(R.id.prediction_rl_footer).getLayoutParams();
-        rlp.height = (int) (screenHeight * (FOOTER_NEITHER_BUTTON_PERCENTAGE + FOOTER_POWERUP_LAYOUT_PERCENTAGE));
+        layoutParams = (RelativeLayout.LayoutParams) rootView.findViewById(R.id.prediction_ll_powerup_layout).getLayoutParams();
+        layoutParams.height = (int) (screenHeight * FOOTER_POWERUP_LAYOUT_PERCENTAGE);
 
-        rlp = (RelativeLayout.LayoutParams) rootView.findViewById(R.id.prediction_ll_powerup_layout).getLayoutParams();
-        rlp.height = (int) (screenHeight * FOOTER_POWERUP_LAYOUT_PERCENTAGE);
-
-        rlp = (RelativeLayout.LayoutParams) rootView.findViewById(R.id.neither_btn_layout).getLayoutParams();
-        rlp.height = (int) (screenHeight * FOOTER_NEITHER_BUTTON_PERCENTAGE);
+        layoutParams = (RelativeLayout.LayoutParams) rootView.findViewById(R.id.neither_btn_layout).getLayoutParams();
+        layoutParams.height = (int) (screenHeight * FOOTER_NEITHER_BUTTON_PERCENTAGE);*/
     }
 
     private void applyMainCardPercentages(ViewHolder viewHolder) {
-        ViewGroup.LayoutParams lp = viewHolder.flLeftArea.getLayoutParams();
-        lp.width = (int) mImageWidth;
+        /*ViewGroup.LayoutParams lp = viewHolder.flLeftArea.getLayoutParams();
+        lp.width = (int) mImageHeight;
         lp.height = (int) mImageHeight;
 
         lp = viewHolder.flRightArea.getLayoutParams();
@@ -168,7 +152,7 @@ public class DGPlayAdapter extends ArrayAdapter<Question> {
 
         rlp = (RelativeLayout.LayoutParams) viewHolder.cvMainCard.getLayoutParams();
         rlp.width = (int) mCardWidth;
-        rlp.topMargin = mTopMargin;
+        rlp.topMargin = mTopMargin;*/
     }
 
     @Override
@@ -326,7 +310,7 @@ public class DGPlayAdapter extends ArrayAdapter<Question> {
         Integer positivePoint = question.getUpdatedPositivePoints();
         if (null == positivePoint || positivePoint == 0) {
             viewHolder.positivePointsCardView.setVisibility(View.GONE);
-            viewHolder.cardViewpoints.setVisibility(View.GONE);
+//            viewHolder.cardViewpoints.setVisibility(View.GONE);
         } else {
             viewHolder.tvquestionPositivePoints.setText("+" + positivePoint + " pts");
             viewHolder.tvquestionPositivePoints.setTag(positivePoint);
@@ -420,7 +404,7 @@ public class DGPlayAdapter extends ArrayAdapter<Question> {
     }
 
     private void updateBg(int offset) {
-        if (!mBgUpdateDone) {
+        /*if (!mBgUpdateDone) {
             float elevation = vBgFrame1.getResources().getDimensionPixelSize(R.dimen.dp_6);
             if (offset != 1) {
                 elevation = 0f;
@@ -439,7 +423,7 @@ public class DGPlayAdapter extends ArrayAdapter<Question> {
                 }
             }
             mTopViewHolder.cvMainCard.setCardElevation(elevation);
-        }
+        }*/
     }
 
     public Question getTopQuestion() {
@@ -601,8 +585,8 @@ public class DGPlayAdapter extends ArrayAdapter<Question> {
 
         private View rightOptionArrow;
 
-        CardView positivePointsCardView;
-        CardView negativePointsCardView;
+        LinearLayout positivePointsCardView;
+        LinearLayout negativePointsCardView;
 
         public ViewHolder(View rootView) {
             mainView = rootView;
@@ -616,12 +600,12 @@ public class DGPlayAdapter extends ArrayAdapter<Question> {
             ivRightOption = (HmImageView) rootView.findViewById(R.id.swipe_card_iv_right);
             btnanswer1Percentage = (TextView) rootView.findViewById(R.id.swipe_card_tv_left_poll);
             btnanswer2Percentage = (TextView) rootView.findViewById(R.id.swipe_card_answer2_percentage);
-            tvquestionPositivePoints = (TextView) rootView.findViewById(R.id.swipe_card_question_positive_points_textview);
-            tvquestionNegativePoints = (TextView) rootView.findViewById(R.id.swipe_card_question_negative_points_textview);
-            positivePointsCardView = (CardView) rootView.findViewById(R.id.positive_points_cardview);
-            negativePointsCardView = (CardView) rootView.findViewById(R.id.negative_points_cardview);
+            tvquestionPositivePoints = (TextView) rootView.findViewById(R.id.prediction_card_positive_textView);
+            tvquestionNegativePoints = (TextView) rootView.findViewById(R.id.prediction_card_negative_textView);
+            positivePointsCardView = (LinearLayout) rootView.findViewById(R.id.prediction_card_positive_layout);
+            negativePointsCardView = (LinearLayout) rootView.findViewById(R.id.prediction_card_negative_layout);
 //            viewPoints = rootView.findViewById(R.id.swipe_card_question_points_line);
-            cardViewpoints = (LinearLayout) rootView.findViewById(R.id.points_layout);
+            cardViewpoints = (LinearLayout) rootView.findViewById(R.id.dg_points_layout);
             tvLockingOption = (TextView) rootView.findViewById(R.id.swipe_card_tv_locking_option);
             llOptionLabels = (LinearLayout) rootView.findViewById(R.id.swipe_card_ll_option_labels);
             llQuestionDesc = (LinearLayout) rootView.findViewById(R.id.swipe_card_ll_question_desc);

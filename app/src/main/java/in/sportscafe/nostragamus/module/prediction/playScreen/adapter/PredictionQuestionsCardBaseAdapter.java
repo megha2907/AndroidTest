@@ -69,8 +69,8 @@ public class PredictionQuestionsCardBaseAdapter extends BaseAdapter {
             viewHolder = new ViewHolder();
             contentView = LayoutInflater.from(mContext).inflate(R.layout.prediction_card_layout, parent, false);
 
-            viewHolder.positivePointsTextView = (TextView) contentView.findViewById(R.id.positive_points_cardview);
-            viewHolder.negativePointsTextView = (TextView) contentView.findViewById(R.id.negative_points_cardview);
+            viewHolder.positivePointsTextView = (TextView) contentView.findViewById(R.id.prediction_card_positive_textView);
+            viewHolder.negativePointsTextView = (TextView) contentView.findViewById(R.id.prediction_card_negative_textView);
             viewHolder.questionTitleTextView = (TextView) contentView.findViewById(R.id.question_title_textView);
             viewHolder.questionDescriptionTextView = (TextView) contentView.findViewById(R.id.question_description_textView);
             viewHolder.option1ImgView = (HmImageView) contentView.findViewById(R.id.prediction_question_option_1_imgView);
@@ -165,8 +165,8 @@ public class PredictionQuestionsCardBaseAdapter extends BaseAdapter {
                 if (!TextUtils.isEmpty(question.getQuestionOption2())) {
                     viewHolder.option2TextView.setText(question.getQuestionOption2());
                 }
-                viewHolder.positivePointsTextView.setText("+ " + String.valueOf(question.getPositivePoints()) + " PTS");
-                viewHolder.negativePointsTextView.setText("- " + String.valueOf(question.getNegativePoints()) + " PTS");
+                /*viewHolder.positivePointsTextView.setText("+ " + String.valueOf(question.getPositivePoints()) + " PTS");
+                viewHolder.negativePointsTextView.setText(String.valueOf(question.getNegativePoints()) + " PTS");*/
             }
         }
     }

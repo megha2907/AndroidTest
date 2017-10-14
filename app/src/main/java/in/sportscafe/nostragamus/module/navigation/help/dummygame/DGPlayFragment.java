@@ -98,9 +98,9 @@ public class DGPlayFragment extends NostragamusFragment implements DGPlayView, V
         mTvPollPowerupCount = (TextView) findViewById(R.id.powerup_tv_poll_count);
         mTvNeitherOption = (TextView) findViewById(R.id.prediction_tv_neither_text);
 
-        mIv2xPowerup.setBackground(getPowerupDrawable(R.color.dodger_blue));
+        /*mIv2xPowerup.setBackground(getPowerupDrawable(R.color.dodger_blue));
         mIvNonegsPowerup.setBackground(getPowerupDrawable(R.color.amaranth));
-        mIvPollPowerup.setBackground(getPowerupDrawable(R.color.greencolor));
+        mIvPollPowerup.setBackground(getPowerupDrawable(R.color.greencolor));*/
 
         mIv2xPowerup.setOnClickListener(this);
         mIvNonegsPowerup.setOnClickListener(this);
@@ -241,15 +241,15 @@ public class DGPlayFragment extends NostragamusFragment implements DGPlayView, V
             alpha = 1f;
         }
 
-        powerUpIcon.setAlpha(alpha);
-        powerUpText.setAlpha(alpha);
+//        powerUpIcon.setAlpha(alpha);
+//        powerUpText.setAlpha(alpha);
 
         if (count == 0) {
             powerUpText.setText("+");
             powerUpText.setBackgroundResource(R.drawable.powerup_count_add_bg);
         } else {
             powerUpText.setText(String.valueOf(count));
-            powerUpText.setBackgroundResource(R.drawable.powerup_count_bg);
+            powerUpText.setBackgroundResource(R.drawable.prediction_powerup_counter_bg);
         }
     }
 
