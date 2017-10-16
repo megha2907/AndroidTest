@@ -250,11 +250,6 @@ public class InPlayRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             for (int temp = 0; temp < totalMatches; temp++) {
                 InPlayContestMatchDto match = contest.getMatches().get(temp);
 
-                boolean isNodeLineRequired = true;
-                if (temp == 0) {
-                    isNodeLineRequired = false;
-                }
-
                 int matchAttemptedStatus = match.isPlayed();
                 boolean isMatchCompleted;
                 boolean isPlayed;
@@ -264,6 +259,15 @@ public class InPlayRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                     isPlayed = false;
                 } else {
                     isPlayed = false;
+                }
+
+                boolean isNodeLineRequired = true;
+                if (temp == 0) {
+                    isNodeLineRequired = false;
+
+                    if (matchAttemptedStatus == 0) {
+                        matchAttemptedStatus = 1;
+                    }
                 }
 
                     /* Content */
