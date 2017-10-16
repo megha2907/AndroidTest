@@ -83,12 +83,12 @@ public class DateTimeHelper {
         return startTimeStr;
     }
 
-    public static boolean isMatchOver(String matchEndTime) {
+    public static boolean isMatchStarted(String matchStartTime) {
 
-        boolean isMatchOver = false;
+        boolean isMatchStarted = false;
 
-        if (!TextUtils.isEmpty(matchEndTime)) {
-            String startTime = matchEndTime.replace("+00:00", ".000Z");
+        if (!TextUtils.isEmpty(matchStartTime)) {
+            String startTime = matchStartTime.replace("+00:00", ".000Z");
             long startTimeMs = TimeUtils.getMillisecondsFromDateString(
                     startTime,
                     Constants.DateFormats.FORMAT_DATE_T_TIME_ZONE,
@@ -96,12 +96,12 @@ public class DateTimeHelper {
             );
             TimeAgo timeAgo = TimeUtils.calcTimeAgo(Nostragamus.getInstance().getServerTime(), startTimeMs);
 
-            isMatchOver = timeAgo.timeDiff <= 0
+            isMatchStarted = timeAgo.timeDiff <= 0
                     || timeAgo.timeUnit == TimeUnit.MILLISECOND
                     || timeAgo.timeUnit == TimeUnit.SECOND;
         }
 
-        return isMatchOver;
+        return isMatchStarted;
     }
 
 
