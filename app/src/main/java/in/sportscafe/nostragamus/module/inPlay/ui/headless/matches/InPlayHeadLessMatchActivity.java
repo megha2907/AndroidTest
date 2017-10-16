@@ -9,6 +9,7 @@ import android.widget.TextView;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.NostraBaseActivity;
 import in.sportscafe.nostragamus.module.contest.ui.ContestsActivity;
+import in.sportscafe.nostragamus.module.popups.walletpopups.WalletBalancePopupActivity;
 import in.sportscafe.nostragamus.utils.FragmentHelper;
 
 public class InPlayHeadLessMatchActivity extends NostraBaseActivity implements InPlayHeadLessMatchFragmentListener {
@@ -43,6 +44,12 @@ public class InPlayHeadLessMatchActivity extends NostraBaseActivity implements I
         if (args != null) {
             intent.putExtras(args);
         }
+        startActivity(intent);
+    }
+
+    @Override
+    public void onWalletClicked() {
+        Intent intent = new Intent(this, WalletBalancePopupActivity.class);
         startActivity(intent);
     }
 }
