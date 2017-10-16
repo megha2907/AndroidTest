@@ -36,6 +36,7 @@ import in.sportscafe.nostragamus.module.inPlay.ui.ResultsScreenDataDto;
 import in.sportscafe.nostragamus.module.inPlay.ui.headless.dto.HeadLessMatchScreenData;
 import in.sportscafe.nostragamus.module.navigation.wallet.WalletHelper;
 import in.sportscafe.nostragamus.module.newChallenges.dto.NewChallengeMatchesResponse;
+import in.sportscafe.nostragamus.module.newChallenges.helpers.DateTimeHelper;
 import in.sportscafe.nostragamus.module.nostraHome.helper.TimerHelper;
 import in.sportscafe.nostragamus.module.play.myresults.MyResultsActivity;
 import in.sportscafe.nostragamus.module.popups.timerPopup.TimerFinishDialogHelper;
@@ -94,31 +95,41 @@ public class InPlayHeadLessMatchesFragment extends BaseFragment implements View.
 
     private void setTimer() {
         if (mHeadLessMatchScreenData != null && !TextUtils.isEmpty(mHeadLessMatchScreenData.getStartTime())) {
-            CountDownTimer countDownTimer = new CountDownTimer(TimerHelper.getCountDownFutureTime(mHeadLessMatchScreenData.getStartTime()), 1000) {
-                @Override
-                public void onTick(long millisUntilFinished) {
-                    mTimerTextView.setText(TimerHelper.getTimerFormatFromMillis(millisUntilFinished));
-                }
+            boolean isMatchStarted = DateTimeHelper.isMatchStarted(mHeadLessMatchScreenData.getStartTime());
+            if (isMatchStarted) {
+                onMatchStarted();
+            } else {
+                CountDownTimer countDownTimer = new CountDownTimer(TimerHelper.getCountDownFutureTime(mHeadLessMatchScreenData.getStartTime()), 1000) {
+                    @Override
+                    public void onTick(long millisUntilFinished) {
+                        mTimerTextView.setText(TimerHelper.getTimerFormatFromMillis(millisUntilFinished));
+                    }
 
-                @Override
-                public void onFinish() {
-                    onMatchStarted();
-                }
-            };
-            countDownTimer.start();
+                    @Override
+                    public void onFinish() {
+                        onMatchStarted();
+                    }
+                };
+                countDownTimer.start();
+            }
         }
     }
 
     private void onMatchStarted() {
-        String msg = String.format(Constants.Alerts.CHALLENGE_STARTED_ALERT_FOR_TIMER, mHeadLessMatchScreenData.getChallengeName());
-        AlertsHelper.showAlert(getContext(), "Challenge Started!", msg, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                if (mInPlayHeadLessMatchFragmentListener != null) {
-                    mInPlayHeadLessMatchFragmentListener.onBackClicked();
-                }
+        if (mHeadLessMatchScreenData != null && !TextUtils.isEmpty(mHeadLessMatchScreenData.getStartTime())) {
+            boolean isMatchStarted = DateTimeHelper.isMatchStarted(mHeadLessMatchScreenData.getStartTime());
+            if (isMatchStarted) {
+                String msg = String.format(Constants.Alerts.CHALLENGE_STARTED_ALERT_FOR_TIMER, mHeadLessMatchScreenData.getChallengeName());
+                AlertsHelper.showAlert(getContext(), "Challenge Started!", msg, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        if (mInPlayHeadLessMatchFragmentListener != null) {
+                            mInPlayHeadLessMatchFragmentListener.onBackClicked();
+                        }
+                    }
+                });
             }
-        });
+        }
     }
 
     @NonNull
