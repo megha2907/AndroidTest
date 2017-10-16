@@ -23,6 +23,8 @@ import com.jeeva.android.BaseFragment;
 
 import org.parceler.Parcels;
 
+import java.util.List;
+
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.R;
@@ -39,6 +41,7 @@ import in.sportscafe.nostragamus.module.newChallenges.dataProvider.NewChallenges
 import in.sportscafe.nostragamus.module.newChallenges.dto.JoinPseudoContestResponse;
 import in.sportscafe.nostragamus.module.newChallenges.dto.NewChallengeMatchesResponse;
 import in.sportscafe.nostragamus.module.newChallenges.dto.NewChallengeMatchesScreenData;
+import in.sportscafe.nostragamus.module.newChallenges.helpers.DateTimeHelper;
 import in.sportscafe.nostragamus.module.nostraHome.helper.TimerHelper;
 import in.sportscafe.nostragamus.module.popups.timerPopup.TimerFinishDialogHelper;
 import in.sportscafe.nostragamus.module.prediction.playScreen.PredictionActivity;
@@ -262,13 +265,32 @@ public class NewChallengesMatchesFragment extends BaseFragment implements View.O
             titleTextView.setText(mScreenData.getChallengeName());
             walletAmtTextView.setText(String.valueOf((int)WalletHelper.getTotalBalance()));
 
-            /* Games */
-            if (mScreenData.getTotalMatches() > 0) {
-                mMatchesLeftTextView.setText(String.valueOf(mScreenData.getTotalMatches()));
-            }
         }
 
+    }
 
+    private void setMatchesLeftValue(List<InPlayMatch> matches){
+        if (matches!=null && !matches.isEmpty()) {
+            mMatchesLeftTextView.setText(String.valueOf(getGamesLeftCount(matches)));
+        }
+    }
+
+    private int getGamesLeftCount(List<InPlayMatch> matches) {
+        int gameLeft = 0;
+        if (matches != null && matches.size() > 0) {
+            for (InPlayMatch match : matches) {
+                if (!DateTimeHelper.isMatchStarted(match.getMatchStartTime())) {
+                    if (match.getMatchStatus().equalsIgnoreCase(Constants.MatchStatusStrings.CONTINUE) ||
+                            match.getMatchStatus().equalsIgnoreCase(Constants.MatchStatusStrings.PLAY) ||
+                            match.getMatchStatus().equalsIgnoreCase(Constants.MatchStatusStrings.COMING_UP) ||
+                            match.getMatchStatus().equalsIgnoreCase(Constants.MatchStatusStrings.ANSWER)) {
+
+                        gameLeft++;
+                    }
+                }
+            }
+        }
+        return gameLeft;
     }
 
     private void initMembers() {
@@ -300,6 +322,7 @@ public class NewChallengesMatchesFragment extends BaseFragment implements View.O
         if (responses != null && mMatchesRecyclerView != null && responses.getMatchList() != null) {
             mMatchesAdapter = new NewChallengeMatchesAdapter(responses.getMatchList(), getMatchAdapterListener());
             mMatchesRecyclerView.setAdapter(mMatchesAdapter);
+            setMatchesLeftValue(responses.getMatchList());
         }
     }
 
