@@ -192,12 +192,12 @@
 
                 <RelativeLayout
                     android:layout_width="@dimen/dim_185"
-                    android:layout_height="@dimen/dim_56">
+                    android:layout_height="@dimen/dim_58">
 
                     <View
                         android:id="@+id/background_img"
                         android:layout_width="@dimen/dim_185"
-                        android:layout_height="@dimen/dim_42"
+                        android:layout_height="@dimen/dim_46"
                         android:layout_alignParentBottom="true"
                         android:background="@drawable/prediction_powerup_bg_icn"/>
 
@@ -211,7 +211,7 @@
                         <ImageView
                             android:id="@+id/doubler_imgView"
                             android:layout_width="@dimen/dim_48"
-                            android:layout_height="@dimen/dim_48"
+                            android:layout_height="@dimen/dim_56"
                             android:adjustViewBounds="true"
                             android:src="@drawable/prediction_doubler_powerup_button"/>
 
@@ -240,7 +240,7 @@
                         <ImageView
                             android:id="@+id/noNeg_ingView"
                             android:layout_width="@dimen/dim_48"
-                            android:layout_height="@dimen/dim_48"
+                            android:layout_height="@dimen/dim_56"
                             android:src="@drawable/prediction_no_negative_powerup_button"/>
 
                         <com.jeeva.android.widgets.customfont.CustomTextView
@@ -269,7 +269,7 @@
                         <ImageView
                             android:id="@+id/player_poll_imgView"
                             android:layout_width="@dimen/dim_48"
-                            android:layout_height="@dimen/dim_48"
+                            android:layout_height="@dimen/dim_56"
                             android:src="@drawable/prediction_player_poll_powerup_button"/>
 
                         <com.jeeva.android.widgets.customfont.CustomTextView
