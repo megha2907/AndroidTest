@@ -22,10 +22,10 @@ public class InPlayResponse {
     @SerializedName("challenge_desc")
     private String challengeDesc;
 
-    @SerializedName("challenge_starttime")
+    @SerializedName("start_time")
     private String challengeStartTime;
 
-    @SerializedName("challenge_endtime")
+    @SerializedName("end_time")
     private String challengeEndTime;
 
     @SerializedName("status")
