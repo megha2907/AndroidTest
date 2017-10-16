@@ -1,8 +1,11 @@
 package in.sportscafe.nostragamus.module.contest.helper;
 
+import android.text.TextUtils;
+
 import java.util.ArrayList;
 import java.util.List;
 
+import in.sportscafe.nostragamus.module.contest.adapter.ContestAdapterItemType;
 import in.sportscafe.nostragamus.module.contest.dto.Contest;
 
 /**
@@ -19,8 +22,12 @@ public class ContestFilterHelper {
         if (list != null && list.size() > 0) {
             filteredList = new ArrayList<>();
             for (Contest contest : list) {
-                if (filterTypeName.equalsIgnoreCase(contest.getContestType().getCategoryName()) &&
-                        !contest.isContestJoined()) {           /* Contest should not be joined and contestId filter */
+                if (contest.getContestType()!=null && !TextUtils.isEmpty(contest.getContestType().getCategoryName())) {
+                    if ((filterTypeName.equalsIgnoreCase(contest.getContestType().getCategoryName())
+                            && !contest.isContestJoined())) {  /* Contest should not be joined and contestId filter */
+                        filteredList.add(contest);
+                    }
+                }else if (contest.getContestItemType()== ContestAdapterItemType.REFER_FRIEND_AD){
                     filteredList.add(contest);
                 }
             }
