@@ -20,8 +20,8 @@
         android:layout_gravity="center_horizontal"
         android:textColor="@color/white"
         android:gravity="center_horizontal"
-        android:text="Your ground, your challenges. Time to step up!"
-        android:textSize="@dimen/sp_13"
+        android:text="Time to step up!"
+        android:textSize="@dimen/sp_15"
         app:typeface="lato_regular"
         android:layout_marginTop="@dimen/dim_10"/>
 
@@ -31,7 +31,7 @@
         android:layout_gravity="center_horizontal"
         android:gravity="center_horizontal"
         android:textColor="@color/white"
-        android:text="This is your home turf. All the challenges you joined are listed here, for you to play! Join some challenges to get started"
+        android:text="This is your home turf. The challenges you join will be listed here for you to explore and play!"
         android:textSize="@dimen/sp_11"
         app:typeface="lato_regular"
         android:layout_marginTop="@dimen/dim_8"/>
@@ -44,7 +44,7 @@
         android:background="@drawable/light_blue_button_selector"
         android:onClick="onClick"
         android:paddingBottom="@dimen/dp_4"
-        android:text="Browse Challenges"
+        android:text="Join a Challenge"
         android:textAllCaps="false"
         android:textColor="@color/white"
         android:textSize="@dimen/sp_14"
