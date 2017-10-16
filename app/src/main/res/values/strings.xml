@@ -159,5 +159,6 @@
     <string name="bottom_nav_join">Join</string>
     <string name="bottom_nav_group">Group</string>
     <string name="bottom_nav_profile">Profile</string>
+    <string name="prediction_neither_button_text">NEITHER</string>
 
 </resources>

@@ -89,6 +89,7 @@ public class PredictionFragment extends NostraBaseFragment implements View.OnCli
     private LinearLayout mNextTextView;
     private ImageView mPowerUpImageView;
     private ImageView mGamePlayImageView;
+    private Button mThirdOptionButton;
     private int mTotalQuestions = 0;
     private int mCurrentQuestionPos = 1;
 
@@ -124,6 +125,7 @@ public class PredictionFragment extends NostraBaseFragment implements View.OnCli
         mThirdOptionLayout = (LinearLayout) rootView.findViewById(R.id.prediction_third_option_layout);
         mCounterTextView = (TextView) rootView.findViewById(R.id.prediction_question_counter_textView);
         mNextTextView = (LinearLayout) rootView.findViewById(R.id.prediction_next_layout);
+        mThirdOptionButton = (Button) rootView.findViewById(R.id.prediction_third_option_button);
 
         mNextTextView.setOnClickListener(this);
         mPowerUpImageView.setOnClickListener(this);
@@ -395,10 +397,11 @@ public class PredictionFragment extends NostraBaseFragment implements View.OnCli
         int pos = getTopVisibleCardPosition();
         if (mQuestionsCardAdapter != null && pos < mQuestionsCardAdapter.getCount()) {
             PredictionQuestion question = mQuestionsCardAdapter.getItem(pos);
+
             if (question != null && !TextUtils.isEmpty(question.getQuestionOption3())) {
-                makeThirdOptionVisible(true);
+                makeThirdOptionVisible(true, question.getQuestionOption3());
             } else {
-                makeThirdOptionVisible(false);
+                makeThirdOptionVisible(false, getString(R.string.prediction_neither_button_text));
             }
         }
     }
@@ -457,8 +460,10 @@ public class PredictionFragment extends NostraBaseFragment implements View.OnCli
         return pos;
     }
 
-    private void makeThirdOptionVisible(boolean shouldVisible) {
+    private void makeThirdOptionVisible(boolean shouldVisible, String buttonText) {
         if (getView() != null && getActivity() != null) {
+
+            mThirdOptionButton.setText(buttonText);
             if (shouldVisible) {
                 mThirdOptionLayout.setVisibility(View.VISIBLE);
             } else {
