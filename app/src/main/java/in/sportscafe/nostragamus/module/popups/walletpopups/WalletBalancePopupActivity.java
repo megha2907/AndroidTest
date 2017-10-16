@@ -33,8 +33,8 @@ public class WalletBalancePopupActivity extends BaseActivity implements View.OnC
 
     private void setWalletInfo() {
         TextView tvBalanceAmount = (TextView) findViewById(R.id.header_textView_wallet_amount);
-        TextView depositTextView = (TextView) findViewById(R.id.wallet_balance_promo_tv);
-        TextView promoBalanceTextView = (TextView) findViewById(R.id.wallet_balance_deposit_tv);
+        TextView depositTextView = (TextView) findViewById(R.id.wallet_balance_deposit_tv);
+        TextView promoBalanceTextView = (TextView) findViewById(R.id.wallet_balance_promo_tv);
         TextView winningsTextView = (TextView) findViewById(R.id.wallet_balance_winnings_tv);
 
         double walletBalAmount = WalletHelper.getTotalBalance();

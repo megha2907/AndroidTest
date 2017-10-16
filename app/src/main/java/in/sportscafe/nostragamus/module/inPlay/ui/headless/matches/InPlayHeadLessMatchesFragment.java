@@ -84,6 +84,7 @@ public class InPlayHeadLessMatchesFragment extends BaseFragment implements View.
         mTimerTextView = (TextView) rootView.findViewById(R.id.matches_timeline_match_expires_in);
         ImageView backButtonImgView = (ImageView) rootView.findViewById(R.id.back_button);
         backButtonImgView.setOnClickListener(this);
+        rootView.findViewById(R.id.toolbar_wallet_rl).setOnClickListener(this);
 
         mMatchesRecyclerView = (RecyclerView)rootView.findViewById(R.id.match_timeline_rv);
         mMatchesRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
@@ -360,6 +361,12 @@ public class InPlayHeadLessMatchesFragment extends BaseFragment implements View.
 
             case R.id.back_button:
                 onBackButtonClicked();
+                break;
+
+            case R.id.toolbar_wallet_rl:
+                if (mInPlayHeadLessMatchFragmentListener != null) {
+                    mInPlayHeadLessMatchFragmentListener.onWalletClicked();
+                }
                 break;
         }
     }
