@@ -166,7 +166,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="@color/bluecolor1"
-                        android:text="YOUR PREDICTIONS ARE SAVED"
+                        android:text="YOUR PREDICTIONS WERE SAVED"
                         android:textAllCaps="true"
                         android:textSize="@dimen/sp_12"
                         app:typeface="lato_bold" />

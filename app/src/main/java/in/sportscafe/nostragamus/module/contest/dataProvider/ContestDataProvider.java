@@ -127,7 +127,7 @@ public class ContestDataProvider {
             /* Add joined-contest always at end  */
             ContestType joinedContestType = new ContestType();
             joinedContestType.setCategoryName(ContestFilterHelper.JOINED_CONTEST);
-            joinedContestType.setCategoryDesc("Join more contests to win more!");
+            joinedContestType.setCategoryDesc("These are the contests you've already joined");
             joinedContestType.setPriority(-1);
 
             contestTypes.add(joinedContestType);

@@ -22,6 +22,8 @@ import com.jeeva.android.BaseFragment;
 
 import org.parceler.Parcels;
 
+import java.util.List;
+
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.contest.dto.ContestScreenData;
@@ -278,11 +280,31 @@ public class InPlayHeadLessMatchesFragment extends BaseFragment implements View.
 
             titleTextView.setText(mHeadLessMatchScreenData.getChallengeName());
             walletAmtTextView.setText(String.valueOf((int)WalletHelper.getTotalBalance()));
+        }
+    }
 
-            if (mHeadLessMatchScreenData.getTotalMatches() > 0) {
-                mMatchesLeftTextView.setText(String.valueOf(mHeadLessMatchScreenData.getTotalMatches()));
+    private void setMatchesLeftValue(List<InPlayMatch> matches){
+        if (matches!=null && !matches.isEmpty()) {
+            mMatchesLeftTextView.setText(String.valueOf(getGamesLeftCount(matches)));
+        }
+    }
+
+    private int getGamesLeftCount(List<InPlayMatch> matches) {
+        int gameLeft = 0;
+        if (matches != null && matches.size() > 0) {
+            for (InPlayMatch match : matches) {
+                if (!DateTimeHelper.isMatchStarted(match.getMatchStartTime())) {
+                    if (match.getMatchStatus().equalsIgnoreCase(Constants.MatchStatusStrings.CONTINUE) ||
+                            match.getMatchStatus().equalsIgnoreCase(Constants.MatchStatusStrings.PLAY) ||
+                            match.getMatchStatus().equalsIgnoreCase(Constants.MatchStatusStrings.COMING_UP) ||
+                            match.getMatchStatus().equalsIgnoreCase(Constants.MatchStatusStrings.ANSWER)) {
+
+                        gameLeft++;
+                    }
+                }
             }
         }
+        return gameLeft;
     }
 
     private void initMembers() {
@@ -332,6 +354,7 @@ public class InPlayHeadLessMatchesFragment extends BaseFragment implements View.
 
             mMatchesAdapter = new InPlayHeadLessMatchesAdapter(responses.getData().getInPlayMatchList(), getMatchAdapterListener());
             mMatchesRecyclerView.setAdapter(mMatchesAdapter);
+            setMatchesLeftValue(responses.getData().getInPlayMatchList());
         }
     }
 
@@ -344,7 +367,7 @@ public class InPlayHeadLessMatchesFragment extends BaseFragment implements View.
                 if (match.getMatchStatus().equalsIgnoreCase(Constants.MatchStatusStrings.ANSWER) ||
                         match.getMatchStatus().equalsIgnoreCase(Constants.MatchStatusStrings.CONTINUE)) {
 
-                    String msg = "Your predictions were saved. You can edit or play the challenge with them, once you join, before the timer runs out!";
+                    String msg = "But you need to join a contest before any match starts, to continue playing this challenge.";
                     infoMsgTextView.setText(msg);
                     break;
                 }

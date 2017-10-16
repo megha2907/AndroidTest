@@ -20,8 +20,8 @@
         android:layout_gravity="center_horizontal"
         android:gravity="center_horizontal"
         android:textColor="@color/white"
-        android:text="Your battles and glories, all in one place!"
-        android:textSize="@dimen/sp_13"
+        android:text="Relive your past battles!"
+        android:textSize="@dimen/sp_15"
         app:typeface="lato_regular"
         android:layout_marginTop="@dimen/dim_10"/>
 
@@ -31,7 +31,7 @@
         android:layout_gravity="center_horizontal"
         android:gravity="center_horizontal"
         android:textColor="@color/white"
-        android:text="The challenges you complete are here! You can check your performance, predictions, or just relive your past glories!"
+        android:text="Your completed challenges will appear here. Explore, remember and learn from your past."
         android:textSize="@dimen/sp_11"
         app:typeface="lato_regular"
         android:layout_marginTop="@dimen/dim_8"/>
@@ -44,7 +44,7 @@
         android:background="@drawable/light_blue_button_selector"
         android:onClick="onClick"
         android:paddingBottom="@dimen/dp_4"
-        android:text="Join a new Challenge"
+        android:text="Join a Challenge"
         android:textAllCaps="false"
         android:textColor="@color/white"
         android:textSize="@dimen/sp_14"

@@ -167,7 +167,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="@color/bluecolor1"
-                        android:text="JOIN A CONTEST OR PLAY A GAME"
+                        android:text="JOIN AND START PLAYING"
                         android:textAllCaps="true"
                         android:textSize="@dimen/sp_12"
                         app:typeface="lato_bold" />
@@ -177,7 +177,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="@color/grey6"
-                        android:text="To play the challenge, join a contest - or you can play a game once before joining the contest!"
+                        android:text="Or you can play a game before you decide to join"
                         android:layout_marginTop="@dimen/dim_6"
                         android:textSize="@dimen/sp_11"
                         app:typeface="lato_regular" />
