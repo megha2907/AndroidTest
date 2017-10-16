@@ -91,8 +91,6 @@ public class RulesFragment extends NostraBaseFragment implements RulesApiModelIm
         if (getView()!=null) {
             getView().findViewById(R.id.contest_rules_layout).setVisibility(View.VISIBLE);
             setInfo(rules);
-        }else {
-            getView().findViewById(R.id.contest_rules_layout).setVisibility(View.GONE);
         }
     }
 

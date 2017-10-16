@@ -5,4 +5,5 @@ import android.os.Bundle;
 public interface InPlayHeadLessMatchFragmentListener {
     void onBackClicked();
     void launchContestActivity(int launchedFrom, Bundle args);
+    void onWalletClicked();
 }
