@@ -142,12 +142,6 @@ public class ContestViewPagerFragment extends NostraBaseFragment {
                     contest.setContestItemType(ContestAdapterItemType.JOINED_CONTEST);
                 }
             }
-
-            if (contestList.size() >= 1) {
-                Contest referContest = new Contest();
-                referContest.setContestItemType(ContestAdapterItemType.REFER_FRIEND_AD);
-                contestList.add(referContest);
-            }
         }
 
         return contestList;

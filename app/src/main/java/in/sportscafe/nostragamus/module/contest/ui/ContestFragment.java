@@ -23,6 +23,7 @@ import java.util.List;
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.NostraBaseFragment;
+import in.sportscafe.nostragamus.module.contest.adapter.ContestAdapterItemType;
 import in.sportscafe.nostragamus.module.contest.dataProvider.ContestDataProvider;
 import in.sportscafe.nostragamus.module.contest.dto.Contest;
 import in.sportscafe.nostragamus.module.contest.dto.ContestResponse;
@@ -157,6 +158,7 @@ public class ContestFragment extends NostraBaseFragment implements View.OnClickL
                     && contestList != null && contestList.size() > 0) {
 
                 addChallengeDetailsIntoContest(contestList);
+                addReferCardIntoContestList(contestList);
 
                 TabLayout contestTabLayout = (TabLayout) getView().findViewById(R.id.contest_tabs);
                 ViewPager challengesViewPager = (ViewPager) getView().findViewById(R.id.contest_viewPager);
@@ -180,7 +182,7 @@ public class ContestFragment extends NostraBaseFragment implements View.OnClickL
                     }
 
                     if (contestFiltered != null && contestFiltered.size() > 0) {
-                        contestType.setContestCount(contestFiltered.size());
+                        contestType.setContestCount(getContestCounter(contestFiltered));
                         tabFragment.onContestData(contestFiltered, mContestScreenData);
                         tabFragment.setContestType(contestType);
                         fragmentList.add(tabFragment);
@@ -205,6 +207,25 @@ public class ContestFragment extends NostraBaseFragment implements View.OnClickL
             } else {
                 handleError(-1);
             }
+        }
+    }
+
+    private int getContestCounter(List<Contest> contestFiltered) {
+        int result = 0;
+        for (Contest contest : contestFiltered) {
+            if (contest.getContestItemType() != ContestAdapterItemType.REFER_FRIEND_AD) {
+                result++;
+            }
+        }
+
+        return result;
+    }
+
+    private void addReferCardIntoContestList(List<Contest> contestList) {
+        if (contestList.size() >= 1) {
+            Contest referContest = new Contest();
+            referContest.setContestItemType(ContestAdapterItemType.REFER_FRIEND_AD);
+            contestList.add(referContest);
         }
     }
 

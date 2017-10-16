@@ -134,8 +134,10 @@ public class CompletedMatchTimelineViewPagerFragment extends NostraBaseFragment 
             String gamesLeftStr = getGamesLeftCount(responses.getData().getInPlayMatchList()) + "/" + responses.getData().getInPlayMatchList().size();
             TextView gamesLeftTextView = (TextView) getView().findViewById(R.id.inplay_match_timeline_games_left_textview);
             TextView gamesLeftTextViewText = (TextView) getView().findViewById(R.id.inplay_match_timeline_games_left);
-            gamesLeftTextView.setText(gamesLeftStr);
-            gamesLeftTextViewText.setText("GAMES LEFT  ");
+//            gamesLeftTextView.setText(gamesLeftStr);
+//            gamesLeftTextViewText.setText("GAMES LEFT  ");
+            gamesLeftTextViewText.setVisibility(View.GONE);
+            gamesLeftTextView.setVisibility(View.GONE);
 
              /* Set Powerups */
             showOrHidePowerUps(responses.getData().getPowerUp());
