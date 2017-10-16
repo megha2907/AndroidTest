@@ -84,6 +84,17 @@ public class ContestDataProvider {
 
         Set<String> contestSet = new HashSet<>();
         if (contestList != null) {
+            /* Add contest string for all contest category names */
+            for (Contest contest : contestList) {
+                if (contest.getContestType() != null && !TextUtils.isEmpty(contest.getContestType().getCategoryName()) ) {
+                    String categoryName = contest.getContestType().getCategoryName();
+                    if (!categoryName.contains("Contest")) {
+                        categoryName = categoryName + " Contest";
+                        contest.getContestType().setCategoryName(categoryName);
+                    }
+                }
+            }
+
             /* Create a list of unique contest-names (Set will not keep duplicate values) */
             for (Contest contest : contestList) {
                 if (contest.getContestType() != null && !TextUtils.isEmpty(contest.getContestType().getCategoryName())) {

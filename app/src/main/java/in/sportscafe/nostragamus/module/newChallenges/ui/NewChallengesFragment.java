@@ -8,11 +8,15 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.jeeva.android.widgets.HmImageView;
 
 import org.parceler.Parcels;
 
@@ -186,14 +190,15 @@ public class NewChallengesFragment extends NostraBaseFragment implements View.On
 
     private void showDataOnUi(List<NewChallengesResponse> newChallengesResponseData) {
         if (getView() != null && getActivity() != null) {
+
+            TabLayout challengesTabLayout = (TabLayout) getView().findViewById(R.id.challenge_tabs);
+            ViewPager challengesViewPager = (ViewPager) getView().findViewById(R.id.challenge_viewPager);
+
+            SportsDataProvider sportsDataProvider = new SportsDataProvider();
+            List<SportsTab> sportsTabList = sportsDataProvider.getSportsList();
+
             if (newChallengesResponseData != null && newChallengesResponseData.size() > 0) {
-
-                TabLayout challengesTabLayout = (TabLayout) getView().findViewById(R.id.challenge_tabs);
-                ViewPager challengesViewPager = (ViewPager) getView().findViewById(R.id.challenge_viewPager);
                 mTvTBarNumberOfChallenges.setText("(" + String.valueOf(newChallengesResponseData.size()) + ")");
-
-                SportsDataProvider sportsDataProvider = new SportsDataProvider();
-                List<SportsTab> sportsTabList = sportsDataProvider.getSportsList();
 
                 ArrayList<NewChallengesViewPagerFragment> fragmentList = new ArrayList<>();
                 NewChallengesFilterHelper filterHelper = new NewChallengesFilterHelper();
@@ -269,9 +274,32 @@ public class NewChallengesFragment extends NostraBaseFragment implements View.On
                 handleNotification(challengesViewPager, fragmentList);
 
             } else {
-                // TODO: error page / no items found
+                showEmptyScreen(challengesViewPager, challengesTabLayout, sportsTabList);
             }
         }
+    }
+
+    private void showEmptyScreen(ViewPager viewPager, TabLayout tabLayout, List<SportsTab> sportsTabList) {
+        if (getView() != null) {
+            viewPager.setVisibility(View.GONE);
+            getView().findViewById(R.id.empty_new_challenges_list_textView).setVisibility(View.VISIBLE);
+            for (SportsTab sportsTab : sportsTabList) {
+                TabLayout.Tab tab = tabLayout.newTab();
+                tab.setCustomView(getEmptyTab(tabLayout.getContext(), sportsTab));
+                tabLayout.addTab(tab);
+            }
+        }
+    }
+
+    private View getEmptyTab(Context context, SportsTab sportsTab) {
+        LinearLayout parentLayout = (LinearLayout) LayoutInflater.from(context).inflate(R.layout.challenge_tab, null);
+
+        TextView tabTextView = (TextView) parentLayout.findViewById(R.id.tab_name);
+        HmImageView tabImageView = (HmImageView) parentLayout.findViewById(R.id.tab_iv);
+        tabTextView.setText(sportsTab.getSportsName());
+        tabImageView.setBackground(ContextCompat.getDrawable(context, sportsTab.getSportIconUnSelectedDrawable()));
+
+        return parentLayout;
     }
 
     private void handleNotification(ViewPager viewPager, ArrayList<NewChallengesViewPagerFragment> viewPagerFragmentList) {

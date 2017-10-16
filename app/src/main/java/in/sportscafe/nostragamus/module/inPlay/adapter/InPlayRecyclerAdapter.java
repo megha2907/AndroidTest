@@ -421,6 +421,7 @@ public class InPlayRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
                     if (inPlayContestDto != null && inPlayContestDto.getContestId() == contestId) {
                         isFound = true;
+                        break;
                     }
                 }
                 counter++;

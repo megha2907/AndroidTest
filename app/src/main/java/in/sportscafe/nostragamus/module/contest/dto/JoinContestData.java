@@ -16,6 +16,8 @@ public class JoinContestData {
     private boolean shouldSendPseudoRoomId = false;
     private int pseudoRoomId;
 
+    private boolean shouldScrollContestsInPlay = true;
+
     public int getChallengeId() {
         return challengeId;
     }
@@ -70,5 +72,13 @@ public class JoinContestData {
 
     public void setPseudoRoomId(int pseudoRoomId) {
         this.pseudoRoomId = pseudoRoomId;
+    }
+
+    public boolean isShouldScrollContestsInPlay() {
+        return shouldScrollContestsInPlay;
+    }
+
+    public void setShouldScrollContestsInPlay(boolean shouldScrollContestsInPlay) {
+        this.shouldScrollContestsInPlay = shouldScrollContestsInPlay;
     }
 }
