@@ -209,17 +209,17 @@ public class InPlayFragment extends NostraBaseFragment implements View.OnClickLi
                 Collections.sort(fragmentList, new Comparator<InPlayViewPagerFragment>() {
                     @Override
                     public int compare(InPlayViewPagerFragment fragment1, InPlayViewPagerFragment fragment2) {
-                        int sportId = fragment1.getTabDetails().getSportsId();
+                        int sportId = fragment2.getTabDetails().getSportsId();
                         if (sportId == SportsDataProvider.FILTER_ALL_SPORTS_ID ||
-                                sportId == SportsDataProvider.FILTER_DAILY_SPORTS_ID ||
-                                sportId == SportsDataProvider.FILTER_MIXED_SPORTS_ID) {
+                                sportId == SportsDataProvider.FILTER_DAILY_SPORTS_ID) {
                             return 0;
-                        }
+                        } else {
 
-                        if (fragment1.getTabDetails().getChallengeCount() < fragment2.getTabDetails().getChallengeCount()) {
-                            return 1;
-                        } else if (fragment1.getTabDetails().getChallengeCount() == fragment2.getTabDetails().getChallengeCount()) {
-                            return 0;
+                            if (fragment1.getTabDetails().getChallengeCount() < fragment2.getTabDetails().getChallengeCount()) {
+                                return 1;
+                            } else if (fragment1.getTabDetails().getChallengeCount() == fragment2.getTabDetails().getChallengeCount()) {
+                                return 0;
+                            }
                         }
                         return -1;
                     }

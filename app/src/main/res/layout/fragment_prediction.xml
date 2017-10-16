@@ -159,7 +159,7 @@
                 android:layout_height="@dimen/dp_34"
                 android:textColor="@color/white"
                 android:textSize="@dimen/sp_12"
-                android:text="NEITHER"
+                android:text="@string/prediction_neither_button_text"
                 app:typeface="lato_bold"
                 android:background="@drawable/prediction_card_bottom_bg"/>
 
