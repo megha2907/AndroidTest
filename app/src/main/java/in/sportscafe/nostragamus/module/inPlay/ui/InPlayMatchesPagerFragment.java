@@ -37,6 +37,7 @@ import in.sportscafe.nostragamus.module.inPlay.dto.InPlayContestMatchDto;
 import in.sportscafe.nostragamus.module.inPlay.dto.InPlayMatch;
 import in.sportscafe.nostragamus.module.inPlay.dto.InPlayMatchesResponse;
 import in.sportscafe.nostragamus.module.navigation.help.dummygame.DummyGameActivity;
+import in.sportscafe.nostragamus.module.newChallenges.helpers.DateTimeHelper;
 import in.sportscafe.nostragamus.module.play.myresults.MyResultsActivity;
 import in.sportscafe.nostragamus.module.popups.timerPopup.TimerFinishDialogHelper;
 import in.sportscafe.nostragamus.module.prediction.playScreen.PredictionActivity;
@@ -248,10 +249,14 @@ public class InPlayMatchesPagerFragment extends NostraBaseFragment {
         int gameLeft = 0;
         if (matches != null && matches.size() > 0) {
             for (InPlayMatch match : matches) {
-                if (match.getMatchStatus().equalsIgnoreCase(Constants.MatchStatusStrings.CONTINUE) ||
-                        match.getMatchStatus().equalsIgnoreCase(Constants.MatchStatusStrings.PLAY) ||
-                        match.getMatchStatus().equalsIgnoreCase(Constants.MatchStatusStrings.COMING_UP)) {
-                    gameLeft++;
+                if (!DateTimeHelper.isMatchStarted(match.getMatchStartTime())) {
+                    if (match.getMatchStatus().equalsIgnoreCase(Constants.MatchStatusStrings.CONTINUE) ||
+                            match.getMatchStatus().equalsIgnoreCase(Constants.MatchStatusStrings.PLAY) ||
+                            match.getMatchStatus().equalsIgnoreCase(Constants.MatchStatusStrings.COMING_UP) ||
+                            match.getMatchStatus().equalsIgnoreCase(Constants.MatchStatusStrings.ANSWER)) {
+
+                        gameLeft++;
+                    }
                 }
             }
         }
