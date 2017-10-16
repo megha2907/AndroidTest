@@ -20,7 +20,7 @@
         <com.jeeva.android.widgets.customfont.CustomTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Entry Fee"
+            android:text="Fee"
             android:textAllCaps="true"
             android:textColor="@color/white_50"
             android:textSize="@dimen/dp_9"

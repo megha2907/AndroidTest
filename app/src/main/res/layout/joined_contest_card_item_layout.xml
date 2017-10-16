@@ -178,7 +178,7 @@
                             android:id="@+id/pool_row_tv_label_entry_fee"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Entry Fee"
+                            android:text="Fee"
                             android:textAllCaps="true"
                             android:includeFontPadding="false"
                             android:textColor="@color/white_999999"
