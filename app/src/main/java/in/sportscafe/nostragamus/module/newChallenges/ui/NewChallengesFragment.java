@@ -235,17 +235,17 @@ public class NewChallengesFragment extends NostraBaseFragment implements View.On
                 Collections.sort(fragmentList, new Comparator<NewChallengesViewPagerFragment>() {
                     @Override
                     public int compare(NewChallengesViewPagerFragment fragment1, NewChallengesViewPagerFragment fragment2) {
-                        int sportId = fragment1.getTabDetails().getSportsId();
+                        int sportId = fragment2.getTabDetails().getSportsId();
                         if (sportId == SportsDataProvider.FILTER_ALL_SPORTS_ID ||
-                                sportId == SportsDataProvider.FILTER_DAILY_SPORTS_ID ||
-                                sportId == SportsDataProvider.FILTER_MIXED_SPORTS_ID) {
+                                sportId == SportsDataProvider.FILTER_DAILY_SPORTS_ID) {
                             return 0;
-                        }
+                        } else {
 
-                        if (fragment1.getTabDetails().getChallengeCount() < fragment2.getTabDetails().getChallengeCount()) {
-                            return 1;
-                        } else if (fragment1.getTabDetails().getChallengeCount() == fragment2.getTabDetails().getChallengeCount()) {
-                            return 0;
+                            if (fragment1.getTabDetails().getChallengeCount() < fragment2.getTabDetails().getChallengeCount()) {
+                                return 1;
+                            } else if (fragment1.getTabDetails().getChallengeCount() == fragment2.getTabDetails().getChallengeCount()) {
+                                return 0;
+                            }
                         }
                         return -1;
                     }
