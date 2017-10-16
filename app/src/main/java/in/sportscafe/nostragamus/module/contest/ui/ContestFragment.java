@@ -181,11 +181,14 @@ public class ContestFragment extends NostraBaseFragment implements View.OnClickL
                         contestFiltered = filterHelper.getFilteredContestByType(contestType.getCategoryName(), contestList);
                     }
 
-                    if (contestFiltered != null && contestFiltered.size() > 0) {
-                        contestType.setContestCount(getContestCounter(contestFiltered));
-                        tabFragment.onContestData(contestFiltered, mContestScreenData);
-                        tabFragment.setContestType(contestType);
-                        fragmentList.add(tabFragment);
+                    if (contestFiltered != null) {
+                        int contestCount = getContestCounter(contestFiltered);
+                        if (contestCount > 0) {
+                            contestType.setContestCount(contestCount);
+                            tabFragment.onContestData(contestFiltered, mContestScreenData);
+                            tabFragment.setContestType(contestType);
+                            fragmentList.add(tabFragment);
+                        }
                     }
                 }
 
