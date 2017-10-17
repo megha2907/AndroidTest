@@ -292,6 +292,25 @@
                 android:textColor="@color/white"
                 android:textSize="@dimen/sp_14" />
 
+            <!--Cancelled Subheading Layout  -->
+            <RelativeLayout
+                android:id="@+id/cancelled_subheading_one_rl"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <!-- Cancelled Subheading -->
+                <com.jeeva.android.widgets.customfont.CustomTextView
+                    android:id="@+id/cancelled_subheading"
+                    app:typeface="lato_regular"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dim_6"
+                    android:textColor="@color/grey6"
+                    android:textSize="@dimen/sp_12" />
+
+            </RelativeLayout>
+
+
             <!--Cancelled Rule One Layout  -->
             <RelativeLayout
                 android:id="@+id/cancelled_rule_one_rl"
@@ -305,13 +324,67 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/dim_12"
-                    android:layout_marginTop="@dimen/dim_12"
+                    android:layout_marginTop="@dimen/dim_6"
                     android:layout_toRightOf="@+id/cancelled_rule_one_bullet"
                     android:textColor="@color/grey6"
                     android:textSize="@dimen/sp_12" />
 
                 <ImageView
                     android:id="@+id/cancelled_rule_one_bullet"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dim_12"
+                    android:src="@drawable/bullet_icon" />
+
+            </RelativeLayout>
+
+            <!--Cancelled Rule Two Layout  -->
+            <RelativeLayout
+                android:id="@+id/cancelled_rule_two_rl"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <!-- Cancelled Rule Two-->
+                <com.jeeva.android.widgets.customfont.CustomTextView
+                    android:id="@+id/cancelled_rule_two"
+                    app:typeface="lato_regular"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dim_12"
+                    android:layout_marginTop="@dimen/dim_12"
+                    android:layout_toRightOf="@+id/cancelled_rule_two_bullet"
+                    android:textColor="@color/grey6"
+                    android:textSize="@dimen/sp_12" />
+
+                <ImageView
+                    android:id="@+id/cancelled_rule_two_bullet"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dim_18"
+                    android:src="@drawable/bullet_icon" />
+
+            </RelativeLayout>
+
+            <!--Cancelled Rule Three Layout  -->
+            <RelativeLayout
+                android:id="@+id/cancelled_rule_three_rl"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <!-- Cancelled Rule Three-->
+                <com.jeeva.android.widgets.customfont.CustomTextView
+                    android:id="@+id/cancelled_rule_three"
+                    app:typeface="lato_regular"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dim_12"
+                    android:layout_marginTop="@dimen/dim_12"
+                    android:layout_toRightOf="@+id/cancelled_rule_three_bullet"
+                    android:textColor="@color/grey6"
+                    android:textSize="@dimen/sp_12" />
+
+                <ImageView
+                    android:id="@+id/cancelled_rule_three_bullet"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/dim_18"

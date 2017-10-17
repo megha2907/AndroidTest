@@ -45,7 +45,7 @@
 
                 <RelativeLayout
                     android:id="@+id/toolbar_wallet_rl"
-                    android:layout_width="@dimen/dim_70"
+                    android:layout_width="@dimen/dim_120"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"

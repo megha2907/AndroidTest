@@ -44,6 +44,9 @@ import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
 import in.sportscafe.nostragamus.module.common.Adapter;
 import in.sportscafe.nostragamus.module.common.dto.TournamentPowerupInfo;
+import in.sportscafe.nostragamus.module.inPlay.dto.InPlayContestDto;
+import in.sportscafe.nostragamus.module.inPlay.dto.InPlayMatch;
+import in.sportscafe.nostragamus.module.inPlay.ui.ResultsScreenDataDto;
 import in.sportscafe.nostragamus.module.play.myresults.MyResultsActivity;
 import in.sportscafe.nostragamus.module.prediction.playScreen.PredictionActivity;
 import in.sportscafe.nostragamus.module.resultspeek.FeedWebView;
@@ -76,6 +79,8 @@ public class TimelineAdapter extends Adapter<Match, TimelineAdapter.ViewHolder> 
 
     private String mPlayerPhoto;
 
+    private int mRoomId = 0;
+
     private TournamentPowerupInfo mPowerupInfo;
 
     public TimelineAdapter(Context context) {
@@ -83,11 +88,12 @@ public class TimelineAdapter extends Adapter<Match, TimelineAdapter.ViewHolder> 
         mTimerRunnable = new TimerRunnable();
     }
 
-    public TimelineAdapter(Context context, Integer playerId, String playerName, String playerPhoto) {
+    public TimelineAdapter(Context context, int roomId, Integer playerId, String playerName, String playerPhoto) {
         this(context);
         this.mPlayerId = playerId;
         this.mPlayerName = playerName;
         this.mPlayerPhoto = playerPhoto;
+        this.mRoomId = roomId;
     }
 
     public TimelineAdapter(Context context, TournamentPowerupInfo powerupInfo) {
@@ -198,7 +204,7 @@ public class TimelineAdapter extends Adapter<Match, TimelineAdapter.ViewHolder> 
                 holder.mLlRightPartyLayout.setVisibility(View.GONE);
 
                 RelativeLayout.LayoutParams paramsFour = (RelativeLayout.LayoutParams) holder.mLlLeftPartyLayout.getLayoutParams();
-                paramsFour.addRule(RelativeLayout.ALIGN_PARENT_LEFT,0);
+                paramsFour.addRule(RelativeLayout.ALIGN_PARENT_LEFT, 0);
                 paramsFour.addRule(RelativeLayout.CENTER_IN_PARENT);
                 holder.mLlLeftPartyLayout.setLayoutParams(paramsFour);
 
@@ -213,7 +219,7 @@ public class TimelineAdapter extends Adapter<Match, TimelineAdapter.ViewHolder> 
 
                 RelativeLayout.LayoutParams paramsFour = (RelativeLayout.LayoutParams) holder.mLlLeftPartyLayout.getLayoutParams();
                 paramsFour.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
-                paramsFour.addRule(RelativeLayout.LEFT_OF,R.id.schedule_row_btn_vs);
+                paramsFour.addRule(RelativeLayout.LEFT_OF, R.id.schedule_row_btn_vs);
                 holder.mLlLeftPartyLayout.setLayoutParams(paramsFour);
             }
 
@@ -282,7 +288,7 @@ public class TimelineAdapter extends Adapter<Match, TimelineAdapter.ViewHolder> 
                                 holder.mTvMatchResult.setVisibility(View.VISIBLE);
                                 holder.mTvMatchResult.setText("Awaiting Results");
                                 holder.mTvMatchResult.setTextColor(ContextCompat.getColor(holder.mTvDate.getContext(), R.color.white_60));
-                                holder.mQuestionsAnswered.setText(match.getNoOfQuestionsAnswered() +"/" + match.getMatchQuestionCount() + " Questions Answered");
+                                holder.mQuestionsAnswered.setText(match.getNoOfQuestionsAnswered() + "/" + match.getMatchQuestionCount() + " Predictions Made");
                                 holder.mLlResultWait.setVisibility(View.VISIBLE);
                                 holder.mLlResultWait.setTag(match);
                             } else {
@@ -316,7 +322,7 @@ public class TimelineAdapter extends Adapter<Match, TimelineAdapter.ViewHolder> 
                         holder.mTvMatchResult.setVisibility(View.VISIBLE);
                         holder.mTvMatchResult.setText("Awaiting Results");
                         holder.mTvMatchResult.setTextColor(ContextCompat.getColor(holder.mTvDate.getContext(), R.color.white_60));
-                        holder.mQuestionsAnswered.setText(match.getNoOfQuestionsAnswered() +"/" + match.getMatchQuestionCount() + " Questions Answered");
+                        holder.mQuestionsAnswered.setText(match.getNoOfQuestionsAnswered() + "/" + match.getMatchQuestionCount() + " Predictions Made");
                         holder.mLlResultWait.setVisibility(View.VISIBLE);
                         holder.mLlResultWait.setTag(match);
                     }
@@ -474,6 +480,7 @@ public class TimelineAdapter extends Adapter<Match, TimelineAdapter.ViewHolder> 
                     bundle.putInt(BundleKeys.MATCH_ID, match.getId());
                     bundle.putString(BundleKeys.PLAYER_NAME, mPlayerName);
                     bundle.putString(BundleKeys.PLAYER_PHOTO, mPlayerPhoto);
+                    bundle.putInt(BundleKeys.ROOM_ID, match.getRoomId());
                 }
             }
 
@@ -498,11 +505,36 @@ public class TimelineAdapter extends Adapter<Match, TimelineAdapter.ViewHolder> 
                     break;
                 case R.id.schedule_row_ll_waiting_for_result:
                     NostragamusAnalytics.getInstance().trackTimeline(AnalyticsActions.OTHERS_RESULTS_WAITING);
-                    navigateToMyResults(context, bundle);
+                    launchResultsScreen(context,match);
                     break;
             }
         }
 
+    }
+
+    private void launchResultsScreen(Context context, Match match) {
+
+        if (context != null) {
+            if (match != null) {
+                Bundle bundle = new Bundle();
+                ResultsScreenDataDto resultsScreenData = new ResultsScreenDataDto();
+                resultsScreenData.setMatchId(match.getId());
+                resultsScreenData.setRoomId(match.getRoomId());
+                resultsScreenData.setMatchStatus(Constants.MatchStatusStrings.ANSWER);
+
+                if (resultsScreenData != null) {
+                    bundle.putParcelable(Constants.BundleKeys.RESULTS_SCREEN_DATA, Parcels.wrap(resultsScreenData));
+                    bundle.putInt(BundleKeys.PLAYER_ID, mPlayerId);
+
+                    Intent resultsIntent = new Intent(context, MyResultsActivity.class);
+                    resultsIntent.putExtras(bundle);
+                    resultsIntent.putExtra(Constants.BundleKeys.SCREEN_LAUNCHED_FROM_PARENT,
+                            MyResultsActivity.LaunchedFrom.IN_PLAY_SCREEN_MATCH_AWAITING_RESULTS);
+                    context.startActivity(resultsIntent);
+
+                }
+            }
+        }
     }
 
     private void navigateToResultsPeek(Context context, Bundle bundle) {

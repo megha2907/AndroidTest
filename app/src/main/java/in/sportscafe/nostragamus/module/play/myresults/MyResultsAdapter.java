@@ -25,6 +25,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.jeeva.android.Log;
 import com.jeeva.android.widgets.HmImageView;
 import com.jeeva.android.widgets.ShadowLayout;
 
@@ -1076,7 +1077,7 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
            }
 
        } else {
-           Toast.makeText(context, Constants.Alerts.SOMETHING_WRONG, Toast.LENGTH_SHORT).show();
+           Log.i(Constants.Alerts.SOMETHING_WRONG,"InPlayContestDto = null");
        }
 
     }

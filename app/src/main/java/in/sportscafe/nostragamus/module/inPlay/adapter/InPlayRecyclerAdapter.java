@@ -264,10 +264,6 @@ public class InPlayRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                 boolean isNodeLineRequired = true;
                 if (temp == 0) {
                     isNodeLineRequired = false;
-
-                    if (matchAttemptedStatus == 0) {
-                        matchAttemptedStatus = 1;
-                    }
                 }
 
                     /* Content */

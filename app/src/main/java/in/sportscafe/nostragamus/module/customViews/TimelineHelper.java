@@ -88,7 +88,7 @@ public class TimelineHelper {
                     } else if (Constants.GameAttemptedStatus.PARTIALLY == matchAttemptedStatus) {
                         view.setBackgroundResource(R.drawable.timeline_brown_dot);
                     } else {
-                        view.setBackgroundResource(R.drawable.timeline_lock_grey);
+                        view.setBackgroundResource(R.drawable.timeline_brown_dot);
                     }
 
                 } else if (matchStatus.equalsIgnoreCase(Constants.InPlayMatchStatus.LIVE)) {
@@ -268,7 +268,8 @@ public class TimelineHelper {
                     case IN_PLAY_HEADLESS:
 
                         if (Constants.GameAttemptedStatus.COMPLETELY == matchAttemptedStatus ||
-                                Constants.GameAttemptedStatus.PARTIALLY == matchAttemptedStatus) {
+                                Constants.GameAttemptedStatus.PARTIALLY == matchAttemptedStatus ||
+                                status.equalsIgnoreCase(Constants.InPlayMatchStatus.ONGOING)) {
                             titleView.setTextColor(ContextCompat.getColor(context, R.color.brown_ccbbbb));
                             titleView.setTypeface(faceBold);
                         } else {
@@ -351,7 +352,8 @@ public class TimelineHelper {
                     case IN_PLAY_HEADLESS:
 
                         if (Constants.GameAttemptedStatus.COMPLETELY == matchAttemptedStatus ||
-                                Constants.GameAttemptedStatus.PARTIALLY == matchAttemptedStatus) {
+                                Constants.GameAttemptedStatus.PARTIALLY == matchAttemptedStatus ||
+                                status.equalsIgnoreCase(Constants.InPlayMatchStatus.ONGOING)) {
                             titleView.setTextColor(ContextCompat.getColor(context, R.color.brown_ccbbbb));
                             titleView.setTypeface(faceBold);
                         } else {

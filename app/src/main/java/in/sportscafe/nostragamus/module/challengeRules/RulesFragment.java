@@ -13,6 +13,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
+import in.sportscafe.nostragamus.AppSnippet;
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.challengeRules.dto.Rules;
@@ -33,6 +34,9 @@ public class RulesFragment extends NostraBaseFragment implements RulesApiModelIm
     private TextView TvPowerUpsRuleOne;
     private TextView TvPowerUpsRuleTwo;
     private TextView TvCancelledRuleOne;
+    private TextView TvCancelledRuleTwo;
+    private TextView TvCancelledRuleThree;
+    private TextView TvCancelledSubHeading;
     private ImageView IvContestRuleThree;
 
     private int mContestId = 0;
@@ -102,6 +106,9 @@ public class RulesFragment extends NostraBaseFragment implements RulesApiModelIm
         TvPowerUpsRuleOne = (TextView) rootView.findViewById(R.id.powerup_rule_one);
         TvPowerUpsRuleTwo = (TextView) rootView.findViewById(R.id.powerup_rule_two);
         TvCancelledRuleOne = (TextView) rootView.findViewById(R.id.cancelled_rule_one);
+        TvCancelledRuleTwo = (TextView) rootView.findViewById(R.id.cancelled_rule_two);
+        TvCancelledRuleThree = (TextView) rootView.findViewById(R.id.cancelled_rule_three);
+        TvCancelledSubHeading = (TextView) rootView.findViewById(R.id.cancelled_subheading);
     }
 
     private void setInfo(Rules rules) {
@@ -113,8 +120,12 @@ public class RulesFragment extends NostraBaseFragment implements RulesApiModelIm
         showPowerUpsRuleOne(rules);
         showPowerUpsRuleTwo(rules);
 
+        showCancelledSubHeading();
         showCancelledRuleOne(rules);
+        showCancelledRuleTwo();
+        showCancelledRuleThree();
     }
+
 
     private void showContestRuleOne(Rules rules) {
 
@@ -155,7 +166,7 @@ public class RulesFragment extends NostraBaseFragment implements RulesApiModelIm
                 }
 
                 if (rules.getContestModeInfo().getDescription() != null) {
-                    TvContestRuleThree.setText(rules.getContestModeInfo().getModeId()
+                    TvContestRuleThree.setText(AppSnippet.capitalize(rules.getContestModeInfo().getModeId())
                             + " - " + rules.getContestModeInfo().getDescription());
                 }
             }
@@ -234,14 +245,26 @@ public class RulesFragment extends NostraBaseFragment implements RulesApiModelIm
 
     }
 
+    private void showCancelledSubHeading() {
+        TvCancelledSubHeading.setText("Questions will be cancelled or points may be split, if - ");
+    }
+
     private void showPowerUpsRuleTwo(Rules rules) {
         TvPowerUpsRuleTwo.setText("You can transfer a maximum of " + String.valueOf(rules.getMaxTransferPowerUps()) + " powerups each from the bank");
     }
 
 
     private void showCancelledRuleOne(Rules rules) {
-        TvCancelledRuleOne.setText("Questions will be cancelled in case a player is injured or does not play.In these cases," +
-                " half the points would be awarded for the questions.");
+        TvCancelledRuleOne.setText("If two or more options are right for a given prediction.");
+    }
+
+    private void showCancelledRuleTwo() {
+        TvCancelledRuleTwo.setText("If the answer to a prediction is already determined 2 hrs before a match has started");
+    }
+
+    private void showCancelledRuleThree() {
+        TvCancelledRuleThree.setText("If a player isn't able to perform a specific activity (eg: taking wickets or scoring runs)" +
+                " due to the match being abandoned (or washed out) or due to the unavailability of a specific opposition player.");
     }
 
     private void showEmptyScreen() {

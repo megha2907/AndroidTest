@@ -30,8 +30,11 @@ import in.sportscafe.nostragamus.Constants.Notifications;
 import in.sportscafe.nostragamus.Constants.RequestCodes;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.NostragamusActivity;
+import in.sportscafe.nostragamus.module.contest.contestDetailsAfterJoining.InplayContestDetailsActivity;
 import in.sportscafe.nostragamus.module.contest.dto.ContestScreenData;
 import in.sportscafe.nostragamus.module.contest.ui.ContestsActivity;
+import in.sportscafe.nostragamus.module.contest.ui.DetailScreensLaunchRequest;
+import in.sportscafe.nostragamus.module.inPlay.dto.InPlayContestDto;
 import in.sportscafe.nostragamus.module.inPlay.ui.ResultsScreenDataDto;
 import in.sportscafe.nostragamus.module.nostraHome.ui.NostraHomeActivity;
 import in.sportscafe.nostragamus.module.permission.PermissionsActivity;
@@ -91,7 +94,7 @@ public class MyResultsActivity extends NostragamusActivity implements MyResultsV
         shareResultsBtn = (Button) findViewById(R.id.my_results_ll_share_score);
         mRlshareResults = (RelativeLayout) findViewById(R.id.my_results_rl_share_score);
         shareResultsBtn.setOnClickListener(this);
-        mTvLeaderBoardRank = (TextView)findViewById(R.id.schedule_row_tv_leaderboard_rank);
+        mTvLeaderBoardRank = (TextView) findViewById(R.id.schedule_row_tv_leaderboard_rank);
         mTvLeaderBoardTotalPlayers = (TextView) findViewById(R.id.schedule_row_tv_leaderboard_total_players);
 
         mRvMyResults.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
@@ -176,31 +179,32 @@ public class MyResultsActivity extends NostragamusActivity implements MyResultsV
         Bundle args = null;
         if (getIntent() != null && getIntent().getExtras() != null) {
             args = getIntent().getExtras();
-            if (args.containsKey(Constants.BundleKeys.SCREEN_LAUNCH_REQUEST)){
+            if (args.containsKey(Constants.BundleKeys.SCREEN_LAUNCH_REQUEST)) {
                 if (args.getInt(Constants.BundleKeys.SCREEN_LAUNCH_REQUEST)
-                        == (NostraHomeActivity.LaunchedFrom.SHOW_IN_PLAY)){
+                        == (NostraHomeActivity.LaunchedFrom.SHOW_IN_PLAY)) {
 
-                    finishStackAndLaunchHomeInPlay();
-                }else {
+                    finishStackAndLaunchMatchesInPlay();
+                } else {
                     finish();
                 }
-            }else {
+            } else {
                 finish();
             }
-        }else {
+        } else {
             finish();
         }
 
     }
 
-    private void finishStackAndLaunchHomeInPlay() {
+    private void finishStackAndLaunchMatchesInPlay() {
         Bundle args = null;
         if (getIntent() != null && getIntent().getExtras() != null) {
             args = getIntent().getExtras();
         }
 
-        Intent clearTaskIntent = new Intent(getApplicationContext(), NostraHomeActivity.class);
-        clearTaskIntent.putExtra(Constants.BundleKeys.SCREEN_LAUNCH_REQUEST, NostraHomeActivity.LaunchedFrom.SHOW_IN_PLAY);
+        Intent clearTaskIntent = new Intent(getApplicationContext(), InplayContestDetailsActivity.class);
+        clearTaskIntent.putExtra(Constants.BundleKeys.SCREEN_LAUNCH_REQUEST, DetailScreensLaunchRequest.MATCHES_DEFAULT_SCREEN);
+        clearTaskIntent.putExtra(Constants.BundleKeys.SCREEN_LAUNCHED_FROM_PARENT, LaunchedFrom.IN_PLAY_SCREEN_MATCH_AWAITING_RESULTS);
         clearTaskIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
 
         if (args != null) {
@@ -460,7 +464,7 @@ public class MyResultsActivity extends NostragamusActivity implements MyResultsV
 
     @Override
     public void updateAnswers(Match match) {
-      refresh(match);
+        refresh(match);
     }
 
     @Override
@@ -474,13 +478,13 @@ public class MyResultsActivity extends NostragamusActivity implements MyResultsV
                 } else {
                     mTvLeaderBoardRank.setText("NA");
                 }
-            }else{
+            } else {
                 mTvLeaderBoardRank.setText("NA");
             }
         }
     }
 
-    public void refresh(Match match){
+    public void refresh(Match match) {
         navigateToResultsActivity(match);
     }
 
