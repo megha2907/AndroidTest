@@ -143,6 +143,7 @@
                             android:id="@+id/prediction_question_option_1_imgView"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
+                            android:scaleType="fitXY"
                             android:src="@drawable/empty_leaderboard_image"/>
 
                         <com.jeeva.android.widgets.customfont.CustomTextView
@@ -168,6 +169,7 @@
                             android:id="@+id/prediction_question_option_2_imgView"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
+                            android:scaleType="fitXY"
                             android:src="@drawable/empty_leaderboard_image"/>
 
                         <com.jeeva.android.widgets.customfont.CustomTextView

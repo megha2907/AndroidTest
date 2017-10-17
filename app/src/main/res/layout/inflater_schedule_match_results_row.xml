@@ -27,7 +27,7 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/dim_20"
-            android:text="CURRENT RANK"
+            android:text="RANK"
             android:textAllCaps="true"
             android:textColor="#a1afbe"
             android:textSize="@dimen/sp_10"

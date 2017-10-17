@@ -336,13 +336,14 @@ public class NewChallengesMatchesFragment extends BaseFragment implements View.O
                 mJoinContestButton.setText("Join Another Contest");
                 imgView.setImageResource(R.drawable.win_more);
                 infoHeadingTextView.setText("Join more contests, to win more!");
-                infoMsgTextView.setText("You can play "+ responses.getContestJoined() +" contests you joined in the In Play tab. Join more to win even more prize money!");
-
+                infoHeadingTextView.setText("You are playing "+ responses.getContestJoined() +" contests...");
+                infoMsgTextView.setText("Continue playing from the 'In Play' section. Or, you can join another contest to give yourself another chance to win!");
+ 
             } else if (responses.getHeadLessJoined() > 0) {
                 mJoinContestButton.setText("Join Another Contest");
                 imgView.setImageResource(R.drawable.play_contest_card);
-                infoHeadingTextView.setText("You predictions are in play!");
-                infoMsgTextView.setText("You predictions are saved in In Play Tab. Join a contest using them, or join a fresh contest below");
+                infoHeadingTextView.setText("You started a game earlier...");
+                infoMsgTextView.setText("Continue playing it from the 'In Play' section. Or, you can join another contest and start afresh.");
 
             }
         }

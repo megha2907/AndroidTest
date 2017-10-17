@@ -74,7 +74,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="@dimen/dim_12"
-                    android:text="More Powerups!"
+                    android:text="More Power to You!"
                     android:textColor="@color/white"
                     android:textSize="@dimen/sp_14"
                     app:typeface="lato_bold" />

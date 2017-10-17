@@ -119,7 +119,7 @@ public class InPlayViewPagerFragment extends BaseFragment {
                         final int adapterPos = inPlayRecyclerAdapter.getAdapterPositionFromContestId(joinContestData.getContestId());
 
                         Log.d(TAG, "Scrolling to : " + adapterPos);
-                        if (adapterPos > 0) {
+                        if (adapterPos > 0 && joinContestData.isShouldScrollContestsInPlay()) {
                             Handler handler = new Handler();
                             handler.postDelayed(new Runnable() {
                                 @Override
@@ -133,6 +133,8 @@ public class InPlayViewPagerFragment extends BaseFragment {
                                     mRecyclerView.getLayoutManager().startSmoothScroll(smoothScroller);
                                 }
                             }, 100);
+
+                            joinContestData.setShouldScrollContestsInPlay(false);
                         }
                     }
                 }

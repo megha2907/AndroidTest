@@ -237,9 +237,9 @@ public class InPlayRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         if (contest != null && contest.getMatches() != null) {
             InPlayHeadLessItemViewHolder viewHolder = (InPlayHeadLessItemViewHolder) holder;
 
-            viewHolder.contestTitleTextView.setText("No Contest Joined");
+            viewHolder.contestTitleTextView.setText("No Contest Joined Yet");
             viewHolder.contestModeImageView.setBackgroundResource(R.drawable.exclamation_mark);
-            viewHolder.joinContestTextView.setText("Join a contest to play the challenge");
+            viewHolder.joinContestTextView.setText("Join a contest and continue playing");
 
             viewHolder.timelineHeaderParent.removeAllViews();
             viewHolder.timelineContentParent.removeAllViews();
@@ -421,6 +421,7 @@ public class InPlayRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
                     if (inPlayContestDto != null && inPlayContestDto.getContestId() == contestId) {
                         isFound = true;
+                        break;
                     }
                 }
                 counter++;

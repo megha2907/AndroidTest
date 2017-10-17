@@ -84,6 +84,17 @@ public class ContestDataProvider {
 
         Set<String> contestSet = new HashSet<>();
         if (contestList != null) {
+            /* Add contest string for all contest category names */
+            for (Contest contest : contestList) {
+                if (contest.getContestType() != null && !TextUtils.isEmpty(contest.getContestType().getCategoryName()) ) {
+                    String categoryName = contest.getContestType().getCategoryName();
+                    if (!categoryName.contains("Contest")) {
+                        categoryName = categoryName + " Contest";
+                        contest.getContestType().setCategoryName(categoryName);
+                    }
+                }
+            }
+
             /* Create a list of unique contest-names (Set will not keep duplicate values) */
             for (Contest contest : contestList) {
                 if (contest.getContestType() != null && !TextUtils.isEmpty(contest.getContestType().getCategoryName())) {
@@ -116,7 +127,7 @@ public class ContestDataProvider {
             /* Add joined-contest always at end  */
             ContestType joinedContestType = new ContestType();
             joinedContestType.setCategoryName(ContestFilterHelper.JOINED_CONTEST);
-            joinedContestType.setCategoryDesc("Join more contests to win more!");
+            joinedContestType.setCategoryDesc("These are the contests you've already joined");
             joinedContestType.setPriority(-1);
 
             contestTypes.add(joinedContestType);

@@ -103,7 +103,7 @@
                     <!--<com.jeeva.android.widgets.customfont.CustomTextView-->
                         <!--android:layout_width="match_parent"-->
                         <!--android:layout_height="wrap_content"-->
-                        <!--android:text="CURRENT RANK"-->
+                        <!--android:text="RANK"-->
                         <!--android:textColor="@color/white_999999"-->
                         <!--android:textSize="@dimen/sp_9"-->
                         <!--app:typeface="lato_regular" />-->
@@ -214,7 +214,7 @@
                 android:textColor="@color/white_999999"
                 android:textSize="@dimen/sp_9"
                 app:typeface="lato_regular"
-                android:text="CURRENT RANK"/>
+                android:text="RANK"/>
 
             <com.jeeva.android.widgets.customfont.CustomTextView
                 android:id="@+id/inplay_contest_card_header_current_rank_textView"
