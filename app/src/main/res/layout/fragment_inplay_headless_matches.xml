@@ -176,7 +176,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="@color/grey6"
-                        android:text="You can play the first game of this challenge and join a contest with those answers, or directly join a contest before the timer runs out"
+                        android:text="To continue playing with these answers, you will need to join a contest before the first match begins."
                         android:layout_marginTop="@dimen/dim_6"
                         android:textSize="@dimen/sp_11"
                         app:typeface="lato_regular" />
