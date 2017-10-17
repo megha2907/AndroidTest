@@ -367,7 +367,7 @@ public class InPlayHeadLessMatchesFragment extends BaseFragment implements View.
                 if (match.getMatchStatus().equalsIgnoreCase(Constants.MatchStatusStrings.ANSWER) ||
                         match.getMatchStatus().equalsIgnoreCase(Constants.MatchStatusStrings.CONTINUE)) {
 
-                    String msg = "But you need to join a contest before any match starts, to continue playing this challenge.";
+                    String msg = "To continue playing with these answers, you will need to join a contest before the first match begins.";
                     infoMsgTextView.setText(msg);
                     break;
                 }

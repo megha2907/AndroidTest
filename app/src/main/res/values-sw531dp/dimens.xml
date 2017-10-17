@@ -4,6 +4,7 @@
     <!-- Font sizes -->
     <dimen name="sp_8">9sp</dimen>
     <dimen name="sp_9">10sp</dimen>
+    <dimen name="sp_9.5">10.5sp</dimen>
     <dimen name="sp_10">11sp</dimen>
     <dimen name="sp_11">12.5sp</dimen>
     <dimen name="sp_12">14sp</dimen>

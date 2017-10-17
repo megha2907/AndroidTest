@@ -44,14 +44,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/toolbar_heading_one"
-                android:text="India vs Australia T20 Challenge"
                 android:textColor="@color/white_60"
                 android:textSize="@dimen/sp_12"
                 app:typeface="lato_regular" />
 
         <RelativeLayout
             android:id="@+id/toolbar_wallet_rl"
-            android:layout_width="@dimen/dim_70"
+            android:layout_width="@dimen/dim_120"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
@@ -65,7 +64,6 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:text="120"
                 android:textColor="@color/white_60"
                 android:textSize="@dimen/sp_14"
                 app:typeface="lato_regular" />
@@ -135,7 +133,8 @@
         <in.sportscafe.nostragamus.module.common.CustomViewPager
             android:id="@+id/contest_details_viewPager"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:background="@color/black"/>
 
         <View
             android:id="@+id/gradient_view"

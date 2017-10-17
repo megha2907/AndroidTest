@@ -70,7 +70,7 @@ public class TimelineModelImpl implements TimelineModel {
         if (null == mPlayerUserId) {
             return mTimelineAdapter = new TimelineAdapter(context);
         }
-        return mTimelineAdapter = new TimelineAdapter(context, mPlayerUserId, mPlayerName, mPlayerPhoto);
+        return mTimelineAdapter = new TimelineAdapter(context,mRoomId, mPlayerUserId, mPlayerName, mPlayerPhoto);
     }
 
     @Override
@@ -101,7 +101,7 @@ public class TimelineModelImpl implements TimelineModel {
     @Override
     public String getChallengeNameIfAvailable() {
         if (null != mRoomId && null != mTimelineAdapter && mTimelineAdapter.getItemCount() > 0) {
-            return mTimelineAdapter.getItem(0).getChallengeName();
+            return mTimelineAdapter.getItem(0).getChallengeName()+" - "+mTimelineAdapter.getItem(0).getContestName();
         }
         return null;
     }

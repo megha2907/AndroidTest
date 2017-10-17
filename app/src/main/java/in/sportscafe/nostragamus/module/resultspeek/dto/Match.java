@@ -88,6 +88,9 @@ public class Match {
     @SerializedName("challenge_name")
     private String challengeName;
 
+    @SerializedName("config_name")
+    private String contestName;
+
     @SerializedName("challenge_img_url")
     private String challengeImgUrl;
 
@@ -621,5 +624,11 @@ public class Match {
         this.roomId = roomId;
     }
 
+    public String getContestName() {
+        return contestName;
+    }
 
+    public void setContestName(String contestName) {
+        this.contestName = contestName;
+    }
 }

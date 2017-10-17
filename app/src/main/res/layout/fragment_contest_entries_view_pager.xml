@@ -48,7 +48,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/dim_2"
-                    android:text=" Filling Contests"
+                    android:text=" Filling"
                     android:textColor="@color/white"
                     android:textSize="@dimen/sp_14"
                     app:typeface="lato_regular" />
@@ -112,7 +112,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/dim_2"
-                    android:text=" Filled Contests"
+                    android:text=" Filled"
                     android:textColor="@color/white"
                     android:textSize="@dimen/sp_14"
                     app:typeface="lato_regular" />

@@ -17,9 +17,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:layout_marginLeft="@dimen/dp_20"
-            android:layout_marginRight="@dimen/dp_20"
-            android:layout_marginTop="@dimen/dp_15"
+            android:layout_marginLeft="@dimen/dim_16"
+            android:layout_marginRight="@dimen/dim_16"
+            android:layout_marginTop="@dimen/dim_15"
             app:cardBackgroundColor="#CC000000"
             app:cardCornerRadius="@dimen/dp_4"
             app:cardUseCompatPadding="true">
@@ -43,7 +43,7 @@
                         android:id="@+id/popup_contest_tv_heading"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/dp_8"
+                        android:layout_marginLeft="@dimen/dim_8"
                         android:text="Contest Details"
                         android:textColor="@color/white"
                         android:textSize="@dimen/sp_14"
@@ -55,14 +55,14 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:minHeight="@dimen/dim_56"
+                    android:minHeight="@dimen/dim_66"
                     android:paddingLeft="@dimen/dim_20">
 
 
                     <ImageView
                         android:id="@+id/popup_guarantee_contest_icon"
-                        android:layout_width="@dimen/dim_16"
-                        android:layout_height="@dimen/dim_16"
+                        android:layout_width="@dimen/dim_20"
+                        android:layout_height="@dimen/dim_20"
                         android:layout_marginTop="@dimen/dim_12"
                         android:src="@drawable/guaranteed_icon" />
 
@@ -72,8 +72,8 @@
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
                         android:layout_gravity="center"
-                        android:layout_marginLeft="@dimen/dim_20"
-                        android:layout_marginRight="@dimen/dim_20">
+                        android:layout_marginLeft="@dimen/dim_14"
+                        android:layout_marginRight="@dimen/dim_14">
 
                         <com.jeeva.android.widgets.customfont.CustomTextView
                             android:id="@+id/popup_guarantee_contest_title"
@@ -93,8 +93,8 @@
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
                             android:layout_gravity="center_vertical"
-                            android:layout_marginTop="@dimen/dim_2"
-                            android:text="The contest will go on without max entries."
+                            android:layout_marginTop="@dimen/dim_3"
+                            android:text="The contest will go on even if the maximum number of entries have not joined that contest!"
                             android:textColor="@color/white_60"
                             android:textSize="@dimen/sp_11"
                             app:typeface="lato_regular" />
@@ -108,14 +108,14 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:minHeight="@dimen/dim_56"
+                    android:minHeight="@dimen/dim_66"
                     android:paddingLeft="@dimen/dim_20">
 
 
                     <ImageView
                         android:id="@+id/popup_pool_contest_icon"
-                        android:layout_width="@dimen/dim_16"
-                        android:layout_height="@dimen/dim_16"
+                        android:layout_width="@dimen/dim_20"
+                        android:layout_height="@dimen/dim_20"
                         android:layout_marginTop="@dimen/dim_12"
                         android:src="@drawable/pool_icon" />
 
@@ -125,8 +125,8 @@
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
                         android:layout_gravity="center"
-                        android:layout_marginLeft="@dimen/dim_20"
-                        android:layout_marginRight="@dimen/dim_20">
+                        android:layout_marginLeft="@dimen/dim_14"
+                        android:layout_marginRight="@dimen/dim_14">
 
                         <com.jeeva.android.widgets.customfont.CustomTextView
                             android:id="@+id/popup_pool_contest_title"
@@ -146,8 +146,8 @@
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
                             android:layout_gravity="center_vertical"
-                            android:layout_marginTop="@dimen/dim_2"
-                            android:text="Will be cancelled without enough entries."
+                            android:layout_marginTop="@dimen/dim_3"
+                            android:text="Requires a minimum number of entries to start. If it's cancelled your entry fee will be refunded to the wallet."
                             android:textColor="@color/white_60"
                             android:textSize="@dimen/sp_11"
                             app:typeface="lato_regular" />
@@ -161,14 +161,14 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:minHeight="@dimen/dim_56"
+                    android:minHeight="@dimen/dim_66"
                     android:paddingLeft="@dimen/dim_20">
 
 
                     <ImageView
                         android:id="@+id/popup_non_guarantee_contest_icon"
-                        android:layout_width="@dimen/dim_16"
-                        android:layout_height="@dimen/dim_16"
+                        android:layout_width="@dimen/dim_20"
+                        android:layout_height="@dimen/dim_20"
                         android:layout_marginTop="@dimen/dim_12"
                         android:src="@drawable/no_guarantee_icon" />
 
@@ -178,8 +178,8 @@
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
                         android:layout_gravity="center"
-                        android:layout_marginLeft="@dimen/dim_20"
-                        android:layout_marginRight="@dimen/dim_20">
+                        android:layout_marginLeft="@dimen/dim_14"
+                        android:layout_marginRight="@dimen/dim_14">
 
                         <com.jeeva.android.widgets.customfont.CustomTextView
                             android:id="@+id/popup_non_guarantee_contest_title"
@@ -199,8 +199,8 @@
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
                             android:layout_gravity="center_vertical"
-                            android:layout_marginTop="@dimen/dim_2"
-                            android:text="Will be cancelled without enough entries."
+                            android:layout_marginTop="@dimen/dim_3"
+                            android:text="The contest prize money will scale with the number of entries."
                             android:textColor="@color/white_60"
                             android:textSize="@dimen/sp_11"
                             app:typeface="lato_regular" />
@@ -215,7 +215,8 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     android:minHeight="@dimen/dim_56"
-                    android:paddingLeft="@dimen/dim_20">
+                    android:paddingLeft="@dimen/dim_20"
+                    android:visibility="gone">
 
 
                     <ImageView
@@ -269,7 +270,8 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     android:minHeight="@dimen/dim_56"
-                    android:paddingLeft="@dimen/dim_20">
+                    android:paddingLeft="@dimen/dim_20"
+                    android:visibility="gone">
 
 
                     <ImageView
