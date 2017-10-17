@@ -183,7 +183,7 @@ public class MyResultsActivity extends NostragamusActivity implements MyResultsV
                 if (args.getInt(Constants.BundleKeys.SCREEN_LAUNCH_REQUEST)
                         == (NostraHomeActivity.LaunchedFrom.SHOW_IN_PLAY)) {
 
-                    finishStackAndLaunchInPlayMatchScreen();
+                    finishStackAndLaunchMatchesInPlay();
                 } else {
                     finish();
                 }
@@ -196,37 +196,21 @@ public class MyResultsActivity extends NostragamusActivity implements MyResultsV
 
     }
 
-    private void finishStackAndLaunchInPlayMatchScreen() {
-
+    private void finishStackAndLaunchMatchesInPlay() {
         Bundle args = null;
-
         if (getIntent() != null && getIntent().getExtras() != null) {
             args = getIntent().getExtras();
-
-            if (args.containsKey(BundleKeys.RESULTS_SCREEN_DATA)) {
-
-                mResultScreenData = Parcels.unwrap(mbundle.getParcelable(BundleKeys.RESULTS_SCREEN_DATA));
-
-                if (mResultScreenData != null) {
-
-                    InPlayContestDto contestDto = mResultScreenData.getInPlayContestDto();
-                    if (contestDto != null) {
-
-                        Bundle inPlayBundle = new Bundle();
-                        inPlayBundle.putParcelable(Constants.BundleKeys.INPLAY_CONTEST, Parcels.wrap(contestDto));
-                        inPlayBundle.putInt(Constants.BundleKeys.SCREEN_LAUNCH_REQUEST, DetailScreensLaunchRequest.MATCHES_DEFAULT_SCREEN);
-
-                        Intent intent = new Intent(this, InplayContestDetailsActivity.class);
-                        if (args != null) {
-                            intent.putExtras(args);
-                        }
-                        startActivity(intent);
-                    }
-
-                }
-            }
         }
 
+        Intent clearTaskIntent = new Intent(getApplicationContext(), InplayContestDetailsActivity.class);
+        clearTaskIntent.putExtra(Constants.BundleKeys.SCREEN_LAUNCH_REQUEST, DetailScreensLaunchRequest.MATCHES_DEFAULT_SCREEN);
+        clearTaskIntent.putExtra(Constants.BundleKeys.SCREEN_LAUNCHED_FROM_PARENT, LaunchedFrom.IN_PLAY_SCREEN_MATCH_AWAITING_RESULTS);
+        clearTaskIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+
+        if (args != null) {
+            clearTaskIntent.putExtras(args);
+        }
+        startActivity(clearTaskIntent);
     }
 
     private final boolean shouldUpRecreateTask(Activity from) {
