@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.view.View;
 
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.module.nostraHome.ui.NostraHomeActivity;
@@ -33,6 +34,17 @@ public class TimerFinishDialogHelper {
         screenData.setMessage("Oops! Time is up!");
         screenData.setSubMessage("cannot play this game as timer has elapsed! You can still play other games that are available");
         screenData.setButtonText("Go to Games List");
+
+        return screenData;
+    }
+
+    private static TimerFinishDialogScreenData getChallengeStartedScreenData(String subMessage) {
+        TimerFinishDialogScreenData screenData = new TimerFinishDialogScreenData();
+        screenData.setRequestCode(Constants.TimerOutDialogRequestCode.CHALLENGE_STARTED);
+        screenData.setDialogTitle("Challenge Started");
+        screenData.setMessage("Oops! Time is up!");
+        screenData.setSubMessage(subMessage);
+        screenData.setButtonText("Ok");
 
         return screenData;
     }
@@ -83,6 +95,22 @@ public class TimerFinishDialogHelper {
                 new TimerFinishedDialogFragment.TimerFinishedFragmentListener() {
                     @Override
                     public void onActionButtonClicked() {
+                    }
+                }
+        );
+
+        dialogFragment.show(fragmentManager, dialogFragment.getClass().getSimpleName());
+    }
+
+    public static void showChallengeStartedTimerOutDialog(FragmentManager fragmentManager, String subMessage,
+                                                          final View.OnClickListener onClickListener) {
+        TimerFinishedDialogFragment dialogFragment = TimerFinishedDialogFragment.newInstance(getChallengeStartedScreenData(subMessage),
+                new TimerFinishedDialogFragment.TimerFinishedFragmentListener() {
+                    @Override
+                    public void onActionButtonClicked() {
+                        if (onClickListener != null) {
+                            onClickListener.onClick(null);
+                        }
                     }
                 }
         );

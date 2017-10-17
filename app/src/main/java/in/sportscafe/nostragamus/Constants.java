@@ -836,5 +836,6 @@ public interface Constants {
     interface TimerOutDialogRequestCode {
         int CAN_NOT_JOIN = 3111;
         int CAN_NOT_PLAY_GAME = 3112;
+        int CHALLENGE_STARTED = 3113;
     }
 }
