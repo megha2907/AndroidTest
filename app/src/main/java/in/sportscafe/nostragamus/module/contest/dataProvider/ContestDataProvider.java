@@ -6,7 +6,6 @@ import android.text.TextUtils;
 import com.jeeva.android.Log;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
@@ -15,12 +14,11 @@ import java.util.Set;
 
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Nostragamus;
+import in.sportscafe.nostragamus.module.contest.adapter.ContestAdapterItemType;
 import in.sportscafe.nostragamus.module.contest.dto.Contest;
-import in.sportscafe.nostragamus.module.contest.dto.ContestRequest;
 import in.sportscafe.nostragamus.module.contest.dto.ContestResponse;
 import in.sportscafe.nostragamus.module.contest.dto.ContestType;
 import in.sportscafe.nostragamus.module.contest.helper.ContestFilterHelper;
-import in.sportscafe.nostragamus.module.newChallenges.dto.NewChallengesResponse;
 import in.sportscafe.nostragamus.webservice.ApiCallBack;
 import in.sportscafe.nostragamus.webservice.MyWebService;
 import retrofit2.Call;
@@ -57,7 +55,8 @@ public class ContestDataProvider {
                 if (response.isSuccessful() && response.body() != null && response.body() != null) {
                     Log.d(TAG, "Server response success");
                     if (listener != null) {
-                        listener.onSuccessResponse(Constants.DataStatus.FROM_SERVER_API_SUCCESS, response.body());
+                        listener.onSuccessResponse(Constants.DataStatus.FROM_SERVER_API_SUCCESS,
+                                getFilteredJoinableContestList(response.body()));
                     }
                 } else {
                     Log.d(TAG, "Server response null");
@@ -77,6 +76,17 @@ public class ContestDataProvider {
             }
         });
 
+    }
+
+    private ContestResponse getFilteredJoinableContestList(ContestResponse contestResponse) {
+        if (contestResponse != null && contestResponse.getData() != null && contestResponse.getData().getContests() != null) {
+            for(Contest contest : contestResponse.getData().getContests()) {
+                if (!contest.isJoinable()) {
+                    contest.setContestItemType(ContestAdapterItemType.NON_JOINABLE_CONTEST);
+                }
+            }
+        }
+        return contestResponse;
     }
 
     public List<ContestType> getContestTypeList(List<Contest> contestList) {

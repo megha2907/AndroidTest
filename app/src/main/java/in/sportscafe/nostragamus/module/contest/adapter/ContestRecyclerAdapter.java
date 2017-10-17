@@ -14,17 +14,13 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.moengage.inapp.InAppMessage;
-
 import org.parceler.Parcels;
 
 import java.util.List;
 
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
-import in.sportscafe.nostragamus.module.challengeRewards.dto.Rewards;
 import in.sportscafe.nostragamus.module.contest.dto.Contest;
-import in.sportscafe.nostragamus.module.contest.ui.DetailScreensLaunchRequest;
 
 /**
  * Created by sandip on 01/09/17.
@@ -74,6 +70,11 @@ public class ContestRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                 View v3 = inflater.inflate(R.layout.joined_contest_card_item_layout, parent, false);
                 viewHolder = new JoinedContestViewHolder(v3);
                 break;
+
+            case ContestAdapterItemType.NON_JOINABLE_CONTEST:
+                View nonJoinable = inflater.inflate(R.layout.contest_card_non_joinable_item_layout, parent, false);
+                viewHolder = new NonJoinablaContestViewHolder(nonJoinable);
+                break;
         }
 
         return viewHolder;
@@ -94,6 +95,56 @@ public class ContestRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                 case ContestAdapterItemType.JOINED_CONTEST:
                     bindJoinedContestValues(holder, position);
                     break;
+
+                case ContestAdapterItemType.NON_JOINABLE_CONTEST:
+                    bindNonJoinableContestValues(holder, position);
+                    break;
+            }
+        }
+    }
+
+    private void bindNonJoinableContestValues(RecyclerView.ViewHolder holder, int position) {
+        if (mContestList != null && mContestList.size() > position) {
+            Contest contest = mContestList.get(position);
+            NonJoinablaContestViewHolder viewHolder = (NonJoinablaContestViewHolder) holder;
+
+            if (contest != null) {
+                viewHolder.mTvPoolName.setText(contest.getConfigName());
+
+                if (contest.noPrizes()) {
+                    viewHolder.mTvPrizes.setText("No Prizes");
+                } else {
+                    viewHolder.mTvPrizes.setText(Constants.RUPEE_SYMBOL + String.valueOf(contest.getPrizes()));
+                }
+
+                if (!TextUtils.isEmpty(contest.getSubtitle())) {
+                    viewHolder.mTvNumberOfPrizes.setText("(" + contest.getSubtitle() + ")");
+                }
+
+                String contestMode = contest.getContestMode();
+                if (!TextUtils.isEmpty(contestMode)) {
+                    if (contestMode.equalsIgnoreCase(Constants.ContestType.GUARANTEED)) {
+                        viewHolder.mIvContestsType.setImageResource(R.drawable.guaranteed_icon);
+                    } else if (contestMode.equalsIgnoreCase(Constants.ContestType.POOL)) {
+                        viewHolder.mIvContestsType.setImageResource(R.drawable.pool_icon);
+                    } else if (contestMode.equalsIgnoreCase(Constants.ContestType.NON_GUARANTEED)) {
+                        viewHolder.mIvContestsType.setImageResource(R.drawable.no_guarantee_icon);
+                    }
+                }
+
+                if (contest.isFreeEntry()) {
+                    viewHolder.mTvEntryFee.setText("Free");
+                    viewHolder.mTvEntryFee.setAllCaps(true);
+
+                    if (contest.isUnlimitedEntries()) {
+                        viewHolder.mTvMaxEntries.setText("UNLIMITED");
+                    } else {
+                        viewHolder.mTvMaxEntries.setText(String.valueOf(contest.getRoomSize()));
+                    }
+                } else {
+                    viewHolder.mTvEntryFee.setText(Constants.RUPEE_SYMBOL + String.valueOf(contest.getEntryFee()));
+                    viewHolder.mTvMaxEntries.setText(String.valueOf(contest.getRoomSize()));
+                }
             }
         }
     }
@@ -174,7 +225,6 @@ public class ContestRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                     }
                 }
 
-
                 if (contest.isFreeEntry()) {
                     viewHolder.mTvEntryFee.setText("Free");
                     viewHolder.mTvEntryFee.setAllCaps(true);
@@ -191,11 +241,6 @@ public class ContestRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             }
         }
     }
-
-//    @Override
-//    public int getItemCount() {
-//        return (mContestList != null) ? mContestList.size() : 0;
-//    }
 
     private Contest getItem(int position) {
         return mContestList.get(position);
@@ -355,4 +400,35 @@ public class ContestRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         }
     }
 
+    public class NonJoinablaContestViewHolder extends RecyclerView.ViewHolder {
+
+        public TextView mTvPoolName;
+        public Button mBtnJoin;
+        public TextView mTvEntryFee;
+        public TextView mTvMaxEntries;
+        public TextView mTvPrizes;
+        public TextView mTvNumberOfPrizes;
+        public TextView mTvFilledContests;
+        public RelativeLayout mRlContestLayout;
+        public ImageView mIvContestsType;
+        LinearLayout mRewardsPrizesLayout;
+        LinearLayout mEntriesLayout;
+        LinearLayout mEntryFeeLayout;
+
+        public NonJoinablaContestViewHolder(View itemView) {
+            super(itemView);
+            mTvPoolName = (TextView) itemView.findViewById(R.id.pool_row_tv_name);
+            mBtnJoin = (Button) itemView.findViewById(R.id.pool_row_btn_join);
+            mTvEntryFee = (TextView) itemView.findViewById(R.id.pool_row_tv_entry_fee);
+            mTvMaxEntries = (TextView) itemView.findViewById(R.id.pool_row_tv_member_count);
+            mTvPrizes = (TextView) itemView.findViewById(R.id.pool_row_tv_reward);
+            mTvNumberOfPrizes = (TextView) itemView.findViewById(R.id.pool_row_tv_number_of_prizes);
+            mTvFilledContests = (TextView) itemView.findViewById(R.id.pool_row_tv_rooms_filled);
+            mRlContestLayout = (RelativeLayout) itemView.findViewById(R.id.pool_rl_layout);
+            mIvContestsType = (ImageView) itemView.findViewById(R.id.pool_row_iv_contest_type);
+            mRewardsPrizesLayout = (LinearLayout) itemView.findViewById(R.id.pool_row_ll_reward_layout);
+            mEntriesLayout = (LinearLayout) itemView.findViewById(R.id.pool_row_ll_member_layout);
+            mEntryFeeLayout = (LinearLayout) itemView.findViewById(R.id.pool_row_ll_entry_fee_layout);
+        }
+    }
 }
