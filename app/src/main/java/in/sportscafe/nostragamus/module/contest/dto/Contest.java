@@ -62,6 +62,9 @@ public class Contest {
     @SerializedName("powerups")
     private PowerUp powerUpInfo;
 
+    @SerializedName("joinable")
+    private boolean isJoinable;
+
     @SerializedName("joined_contest")
     private boolean isContestJoined;
 
@@ -211,5 +214,13 @@ public class Contest {
 
     public void setContestJoined(boolean contestJoined) {
         isContestJoined = contestJoined;
+    }
+
+    public boolean isJoinable() {
+        return isJoinable;
+    }
+
+    public void setJoinable(boolean joinable) {
+        isJoinable = joinable;
     }
 }

@@ -167,7 +167,6 @@ public class ContestFragment extends NostraBaseFragment implements View.OnClickL
                 ContestFilterHelper filterHelper = new ContestFilterHelper();
                 ContestViewPagerFragment tabFragment = null;
 
-
                 /* For all the tabs */
                 for (int temp = 0; temp < contestTypeList.size(); temp++) {
                     ContestType contestType = contestTypeList.get(temp);
@@ -246,7 +245,8 @@ public class ContestFragment extends NostraBaseFragment implements View.OnClickL
 
         if (contestList != null) {
             for (Contest contest : contestList) {
-                if (!contest.isContestJoined() && contest.getContestItemType() != ContestAdapterItemType.REFER_FRIEND_AD) {
+                if (!contest.isContestJoined() && !contest.isJoinable() &&
+                        contest.getContestItemType() != ContestAdapterItemType.REFER_FRIEND_AD) {
                     count++;
                 }
             }

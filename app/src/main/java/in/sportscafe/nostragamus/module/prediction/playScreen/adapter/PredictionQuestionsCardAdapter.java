@@ -152,23 +152,21 @@ public class PredictionQuestionsCardAdapter extends ArrayAdapter<PredictionQuest
             int pollPercentForOption1 = Integer.parseInt(option1);
             int pollPercentForOption2 = Integer.parseInt(option2);
 
-            if (pollPercentForOption1 > 0 && pollPercentForOption2 > 0) {
-                playerPollOption1TextView.setText(playersPollList.get(0).getAnswerPercentage());
-                playerPollOption2TextView.setText(playersPollList.get(1).getAnswerPercentage());
+            playerPollOption1TextView.setText(playersPollList.get(0).getAnswerPercentage());
+            playerPollOption2TextView.setText(playersPollList.get(1).getAnswerPercentage());
 
-                playerPollOption1TextView.setVisibility(View.VISIBLE);
-                playerPollOption2TextView.setVisibility(View.VISIBLE);
+            playerPollOption1TextView.setVisibility(View.VISIBLE);
+            playerPollOption2TextView.setVisibility(View.VISIBLE);
 
-                applyOrRemovePowerUp(PowerUpEnum.PLAYER_POLL, position, true);
+            applyOrRemovePowerUp(PowerUpEnum.PLAYER_POLL, position, true);
 
                 /* Set Minority Answer */
-                if (pollPercentForOption1 > pollPercentForOption2) {
-                    question.setMinorityAnswerId(Constants.AnswerIds.RIGHT);
-                } else if (pollPercentForOption1 < pollPercentForOption2) {
-                    question.setMinorityAnswerId(Constants.AnswerIds.LEFT);
-                } else {
-                    question.setMinorityAnswerId(-1);
-                }
+            if (pollPercentForOption1 > pollPercentForOption2) {
+                question.setMinorityAnswerId(Constants.AnswerIds.RIGHT);
+            } else if (pollPercentForOption1 < pollPercentForOption2) {
+                question.setMinorityAnswerId(Constants.AnswerIds.LEFT);
+            } else {
+                question.setMinorityAnswerId(-1);
             }
         }
     }

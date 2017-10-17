@@ -1,0 +1,303 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/contest_card_parent"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_marginLeft="@dimen/dim_5"
+        android:layout_marginRight="@dimen/dim_5"
+        android:layout_marginTop="@dimen/dim_6"
+        android:clipToPadding="false"
+        android:paddingBottom="@dimen/dim_6"
+        android:paddingLeft="@dimen/dim_5"
+        android:paddingRight="@dimen/dim_5">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/dark_grey_gradient_bg"
+            android:elevation="@dimen/dim_4"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:id="@+id/pool_rl_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <RelativeLayout
+                    android:id="@+id/pool_layout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/dark_grey_gradient_bg"
+                    android:paddingBottom="@dimen/dim_8"
+                    android:paddingLeft="@dimen/dim_15"
+                    android:paddingRight="@dimen/dim_15"
+                    android:paddingTop="@dimen/dim_12">
+
+                    <RelativeLayout
+                        android:id="@+id/pool_row_rl_detail_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true">
+
+                        <com.jeeva.android.widgets.customfont.CustomTextView
+                            android:id="@+id/pool_row_tv_name"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:maxLines="1"
+                            android:text="Pool Challenge 1"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/sp_13"
+                            app:typeface="lato_regular" />
+
+                        <com.jeeva.android.widgets.customfont.CustomTextView
+                            android:id="@+id/pool_row_tv_number_of_prizes"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/dim_5"
+                            android:layout_marginTop="@dimen/dim_1"
+                            android:layout_toRightOf="@+id/pool_row_tv_name"
+                            android:maxLines="1"
+                            android:text="No Prizes"
+                            android:textColor="@color/white_999999"
+                            android:textSize="@dimen/sp_12"
+                            android:visibility="visible"
+                            app:typeface="lato_regular" />
+
+                        <ImageView
+                            android:id="@+id/pool_row_iv_contest_type"
+                            android:layout_width="@dimen/dim_25"
+                            android:layout_height="@dimen/dim_20"
+                            android:layout_alignParentRight="true"
+                            android:paddingLeft="@dimen/dim_8"
+                            android:paddingBottom="@dimen/dim_8"
+                            android:layout_marginTop="@dimen/dim_3" />
+
+                        <LinearLayout
+                            android:id="@+id/pool_row_ll_member_layout"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/pool_row_tv_name"
+                            android:layout_marginRight="@dimen/dim_20"
+                            android:layout_marginTop="@dimen/dim_16"
+                            android:layout_toRightOf="@+id/pool_row_ll_reward_layout"
+                            android:clickable="true"
+                            android:minHeight="@dimen/dim_30"
+                            android:minWidth="@dimen/dim_52"
+                            android:background="?attr/selectableItemBackground"
+                            android:orientation="vertical">
+
+                            <com.jeeva.android.widgets.customfont.CustomTextView
+                                android:id="@+id/pool_row_tv_label_members"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:includeFontPadding="false"
+                                android:text="Entries"
+                                android:textAllCaps="true"
+                                android:textColor="@color/white_999999"
+                                android:textSize="@dimen/sp_9"
+                                app:typeface="lato_regular" />
+
+                            <RelativeLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/dim_5">
+
+                                <com.jeeva.android.widgets.customfont.CustomTextView
+                                    android:id="@+id/pool_row_tv_member_count"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:includeFontPadding="false"
+                                    android:maxLines="1"
+                                    android:textColor="@color/white"
+                                    android:textSize="@dimen/sp_10"
+                                    app:typeface="lato_bold" />
+
+
+                            </RelativeLayout>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/pool_row_ll_reward_layout"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignTop="@id/pool_row_ll_member_layout"
+                            android:layout_marginRight="@dimen/dim_20"
+                            android:background="?android:attr/selectableItemBackground"
+                            android:clickable="true"
+                            android:minHeight="@dimen/dim_30"
+                            android:minWidth="@dimen/dim_52"
+                            android:orientation="vertical">
+
+                            <com.jeeva.android.widgets.customfont.CustomTextView
+                                android:id="@+id/pool_row_tv_label_rewards"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:includeFontPadding="false"
+                                android:text="Prizes"
+                                android:textAllCaps="true"
+                                android:textColor="#22b573"
+                                android:textSize="@dimen/sp_9"
+                                app:typeface="lato_regular" />
+
+                            <RelativeLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/dim_5">
+
+                                <com.jeeva.android.widgets.customfont.CustomTextView
+                                    android:id="@+id/pool_row_tv_reward"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:includeFontPadding="false"
+                                    android:maxLines="1"
+                                    android:textColor="#22b573"
+                                    android:textSize="@dimen/sp_10"
+                                    app:typeface="lato_bold" />
+
+                                <ImageView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="@dimen/dim_2"
+                                    android:layout_marginTop="@dimen/dim_3"
+                                    android:layout_toRightOf="@+id/pool_row_tv_reward"
+                                    android:src="@drawable/contest_prizes_arrow" />
+
+                            </RelativeLayout>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/pool_row_ll_entry_fee_layout"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignTop="@id/pool_row_ll_member_layout"
+                            android:layout_toRightOf="@id/pool_row_ll_member_layout"
+                            android:background="?attr/selectableItemBackground"
+                            android:clickable="true"
+                            android:minHeight="@dimen/dim_30"
+                            android:minWidth="@dimen/dim_52"
+                            android:orientation="vertical">
+
+                            <com.jeeva.android.widgets.customfont.CustomTextView
+                                android:id="@+id/pool_row_tv_label_entry_fee"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:includeFontPadding="false"
+                                android:text="Fee"
+                                android:textAllCaps="true"
+                                android:textColor="@color/white_999999"
+                                android:textSize="@dimen/sp_9"
+                                app:typeface="lato_regular" />
+
+                            <RelativeLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/dim_5">
+
+                                <com.jeeva.android.widgets.customfont.CustomTextView
+                                    android:id="@+id/pool_row_tv_entry_fee"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:includeFontPadding="false"
+                                    android:maxLines="1"
+                                    android:textColor="@color/white"
+                                    android:textSize="@dimen/sp_10"
+                                    app:typeface="lato_bold" />
+
+                            </RelativeLayout>
+
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/pool_row_ll_join_layout"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_alignTop="@id/pool_row_ll_member_layout"
+                            android:gravity="center_horizontal"
+                            android:orientation="vertical">
+
+                            <com.jeeva.android.widgets.customfont.CustomButton
+                                android:id="@+id/pool_row_btn_join"
+                                android:layout_width="@dimen/dim_80"
+                                android:layout_height="@dimen/dim_28"
+                                android:background="@color/grey"
+                                android:paddingBottom="@dimen/dp_4"
+                                android:text="Closed"
+                                android:textAllCaps="false"
+                                android:textColor="@color/white"
+                                android:textSize="@dimen/sp_13"
+                                app:typeface="lato_bold" />
+
+                        </LinearLayout>
+
+                    </RelativeLayout>
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dim_26"
+                    android:layout_below="@+id/pool_layout"
+                    android:background="@drawable/grey_gradient_bg"
+                    android:paddingLeft="@dimen/dim_16"
+                    android:paddingRight="@dimen/dim_16">
+
+                    <com.jeeva.android.widgets.customfont.CustomTextView
+                        android:id="@+id/pool_row_tv_rooms_filled"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:includeFontPadding="false"
+                        android:maxLines="1"
+                        android:text="0"
+                        android:textAllCaps="true"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/sp_10"
+                        app:typeface="lato_bold" />
+
+                    <com.jeeva.android.widgets.customfont.CustomTextView
+                        android:id="@+id/pool_row_tv_rooms_filled_txt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="@dimen/dim_4"
+                        android:layout_toRightOf="@+id/pool_row_tv_rooms_filled"
+                        android:includeFontPadding="false"
+                        android:maxLines="1"
+                        android:text="Filled"
+                        android:textAllCaps="true"
+                        android:textColor="@color/white_60"
+                        android:textSize="@dimen/sp_9"
+                        app:typeface="lato_regular" />
+
+                    <com.jeeva.android.widgets.customfont.CustomTextView
+                        android:id="@+id/pool_row_tv_rooms_available_txt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:includeFontPadding="false"
+                        android:maxLines="1"
+                        android:text="Entries Closed"
+                        android:textAllCaps="true"
+                        android:textColor="@color/white_60"
+                        android:textSize="@dimen/sp_9"
+                        app:typeface="lato_regular" />
+
+                </RelativeLayout>
+
+
+            </RelativeLayout>
+
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

@@ -3,15 +3,19 @@ package in.sportscafe.nostragamus.utils;
 
 import android.app.ActivityManager;
 import android.content.Context;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 
 import com.jeeva.android.ExceptionTracker;
+import com.jeeva.android.Log;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Iterator;
 import java.util.Random;
+import java.util.Set;
 
 /**
  * Created by Jeeva on 27/5/15.
@@ -44,6 +48,22 @@ public class CodeSnippet {
             }
         }
         return false;
+    }
+
+    public static void printBundleValues(Bundle bundle, String tag) {
+        if (bundle != null) {
+            StringBuilder str = new StringBuilder();
+                Set<String> keys = bundle.keySet();
+                Iterator<String> it = keys.iterator();
+                while (it.hasNext()) {
+                    String key = it.next();
+                    str.append(key);
+                    str.append(":");
+                    str.append(bundle.get(key));
+                    str.append("\n\r");
+                }
+                Log.d(tag, str.toString());
+            }
     }
 
 }

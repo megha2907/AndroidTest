@@ -2,15 +2,12 @@ package in.sportscafe.nostragamus.module.prediction.playScreen;
 
 
 import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
-import android.animation.ObjectAnimator;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
@@ -22,10 +19,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.view.animation.LayoutAnimationController;
 import android.view.animation.LinearInterpolator;
-import android.view.animation.TranslateAnimation;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -641,28 +635,26 @@ public class PredictionFragment extends NostraBaseFragment implements View.OnCli
                 TextView playerPollOption1TextView = (TextView) view.findViewById(R.id.prediction_card_player_poll_1_textView);
                 TextView playerPollOption2TextView = (TextView) view.findViewById(R.id.prediction_card_player_poll_2_textView);
 
-                if (pollPercentForOption1 > 0 && pollPercentForOption2 > 0) {
-                    playerPollOption1TextView.setText(playersPollList.get(0).getAnswerPercentage());
-                    playerPollOption2TextView.setText(playersPollList.get(1).getAnswerPercentage());
+                playerPollOption1TextView.setText(poll1Str);
+                playerPollOption2TextView.setText(poll2Str);
 
-                    playerPollOption1TextView.setVisibility(View.VISIBLE);
-                    playerPollOption2TextView.setVisibility(View.VISIBLE);
+                playerPollOption1TextView.setVisibility(View.VISIBLE);
+                playerPollOption2TextView.setVisibility(View.VISIBLE);
 
-                    mQuestionsCardAdapter.applyOrRemovePowerUp(PowerUpEnum.PLAYER_POLL, getTopVisibleCardPosition(), true);
-                    usePowerUp(true, PowerUpEnum.PLAYER_POLL);
+                mQuestionsCardAdapter.applyOrRemovePowerUp(PowerUpEnum.PLAYER_POLL, getTopVisibleCardPosition(), true);
+                usePowerUp(true, PowerUpEnum.PLAYER_POLL);
 
                     /* Set Minority Answer */
-                    int pos = getTopVisibleCardPosition();
-                    if (mQuestionsCardAdapter != null && pos < mQuestionsCardAdapter.getCount()) {
-                        PredictionQuestion question = mQuestionsCardAdapter.getItem(pos);
-                        if (question != null) {
-                            if (pollPercentForOption1 > pollPercentForOption2) {
-                                question.setMinorityAnswerId(Constants.AnswerIds.RIGHT);
-                            } else if (pollPercentForOption1 < pollPercentForOption2) {
-                                question.setMinorityAnswerId(Constants.AnswerIds.LEFT);
-                            } else {
-                                question.setMinorityAnswerId(-1);
-                            }
+                int pos = getTopVisibleCardPosition();
+                if (mQuestionsCardAdapter != null && pos < mQuestionsCardAdapter.getCount()) {
+                    PredictionQuestion question = mQuestionsCardAdapter.getItem(pos);
+                    if (question != null) {
+                        if (pollPercentForOption1 > pollPercentForOption2) {
+                            question.setMinorityAnswerId(Constants.AnswerIds.RIGHT);
+                        } else if (pollPercentForOption1 < pollPercentForOption2) {
+                            question.setMinorityAnswerId(Constants.AnswerIds.LEFT);
+                        } else {
+                            question.setMinorityAnswerId(-1);
                         }
                     }
                 }

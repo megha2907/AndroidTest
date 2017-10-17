@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 
+import com.google.gson.Gson;
 import com.jeeva.android.Log;
 
 import org.parceler.Parcels;
@@ -19,7 +20,6 @@ import in.sportscafe.nostragamus.module.newChallenges.dto.NewChallengeMatchesScr
 import in.sportscafe.nostragamus.module.newChallenges.ui.matches.NewChallengesMatchActivity;
 import in.sportscafe.nostragamus.module.play.myresults.MyResultsActivity;
 import in.sportscafe.nostragamus.module.store.StoreActivity;
-import in.sportscafe.nostragamus.webservice.MyWebService;
 
 /**
  * Created by sandip on 03/10/17.
@@ -44,7 +44,7 @@ public class NotificationHelper {
                     if (object != null) {
                         Log.d(TAG, "obj : " + object.toString());
                         try {
-                            nostraNotification = MyWebService.getInstance().getObjectFromJson(object.toString(), NostraNotification.class);
+                            nostraNotification = new Gson().fromJson(object.toString(), NostraNotification.class); //MyWebService.getInstance().getObjectFromJson(object.toString(), NostraNotification.class);
                         } catch (Exception ex) {
                             ex.printStackTrace();
                         }

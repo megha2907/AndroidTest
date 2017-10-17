@@ -123,9 +123,10 @@ public class InPlayHeadLessMatchesFragment extends BaseFragment implements View.
             boolean isMatchStarted = DateTimeHelper.isMatchStarted(mHeadLessMatchScreenData.getStartTime());
             if (isMatchStarted) {
                 String msg = String.format(Constants.Alerts.CHALLENGE_STARTED_ALERT_FOR_TIMER, mHeadLessMatchScreenData.getChallengeName());
-                AlertsHelper.showAlert(getContext(), "Challenge Started!", msg, new DialogInterface.OnClickListener() {
+
+                TimerFinishDialogHelper.showChallengeStartedTimerOutDialog(getChildFragmentManager(), msg, new View.OnClickListener() {
                     @Override
-                    public void onClick(DialogInterface dialog, int which) {
+                    public void onClick(View v) {
                         if (mInPlayHeadLessMatchFragmentListener != null) {
                             mInPlayHeadLessMatchFragmentListener.onBackClicked();
                         }
