@@ -152,7 +152,6 @@ public class NewChallengesRecyclerAdapter extends RecyclerView.Adapter<RecyclerV
                     LinearLayout.LayoutParams lpText = new LinearLayout.LayoutParams(
                             LinearLayout.LayoutParams.WRAP_CONTENT,
                             LinearLayout.LayoutParams.WRAP_CONTENT);
-
                     lpText.setMargins(0,0,5,0);
                     mType.setLayoutParams(lpText);
 

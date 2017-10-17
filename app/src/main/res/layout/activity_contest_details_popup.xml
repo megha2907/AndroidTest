@@ -215,7 +215,8 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     android:minHeight="@dimen/dim_56"
-                    android:paddingLeft="@dimen/dim_20">
+                    android:paddingLeft="@dimen/dim_20"
+                    android:visibility="gone">
 
 
                     <ImageView
@@ -269,7 +270,8 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     android:minHeight="@dimen/dim_56"
-                    android:paddingLeft="@dimen/dim_20">
+                    android:paddingLeft="@dimen/dim_20"
+                    android:visibility="gone">
 
 
                     <ImageView
