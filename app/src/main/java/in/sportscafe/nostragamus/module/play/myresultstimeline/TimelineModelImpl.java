@@ -61,6 +61,11 @@ public class TimelineModelImpl implements TimelineModel {
 
             if (bundle.containsKey(BundleKeys.ROOM_ID)) {
                 mRoomId = bundle.getInt(BundleKeys.ROOM_ID);
+
+                /* setting room Id 0 for current user */
+                if (mRoomId==0){
+                    mRoomId = null;
+                }
             }
         }
     }

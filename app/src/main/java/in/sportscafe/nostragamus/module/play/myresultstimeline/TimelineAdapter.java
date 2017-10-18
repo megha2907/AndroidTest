@@ -249,7 +249,7 @@ public class TimelineAdapter extends Adapter<Match, TimelineAdapter.ViewHolder> 
                         holder.mTvMatchResult.setText(Html.fromHtml(match.getResult()));
                         holder.mRlMatchPoints.setTag(match);
                         holder.mBtnMatchPoints.setText(match.getMatchPoints() + " Points");
-                        holder.mTvResultCorrectCount.setText(/*"You got " + */match.getCorrectCount() + "/" + match.getMatchQuestionCount() + " answers correct");
+                        holder.mTvResultCorrectCount.setText(/*"You got " + */match.getCorrectCount() + "/" + match.getMatchQuestionCount() + " Correct Predictions");
 
                         Integer winnerPartyId = match.getWinnerPartyId();
                         if (null != winnerPartyId) {
@@ -499,20 +499,20 @@ public class TimelineAdapter extends Adapter<Match, TimelineAdapter.ViewHolder> 
                     if (mPlayerId != null) {
                         navigateToResultsPeek(context, bundle);
                     } else {
-                        navigateToMyResults(context, bundle);
+                        launchResultsScreen(context, match,Constants.MatchStatusStrings.POINTS);
                     }
 
                     break;
                 case R.id.schedule_row_ll_waiting_for_result:
                     NostragamusAnalytics.getInstance().trackTimeline(AnalyticsActions.OTHERS_RESULTS_WAITING);
-                    launchResultsScreen(context,match);
+                    launchResultsScreen(context,match,Constants.MatchStatusStrings.ANSWER);
                     break;
             }
         }
 
     }
 
-    private void launchResultsScreen(Context context, Match match) {
+    private void launchResultsScreen(Context context, Match match,String matchStatus) {
 
         if (context != null) {
             if (match != null) {
@@ -520,12 +520,13 @@ public class TimelineAdapter extends Adapter<Match, TimelineAdapter.ViewHolder> 
                 ResultsScreenDataDto resultsScreenData = new ResultsScreenDataDto();
                 resultsScreenData.setMatchId(match.getId());
                 resultsScreenData.setRoomId(match.getRoomId());
-                resultsScreenData.setMatchStatus(Constants.MatchStatusStrings.ANSWER);
+                resultsScreenData.setMatchStatus(matchStatus);
 
                 if (resultsScreenData != null) {
                     bundle.putParcelable(Constants.BundleKeys.RESULTS_SCREEN_DATA, Parcels.wrap(resultsScreenData));
-                    bundle.putInt(BundleKeys.PLAYER_ID, mPlayerId);
-
+                    if (mPlayerId != null) {
+                        bundle.putInt(BundleKeys.PLAYER_ID, mPlayerId);
+                    }
                     Intent resultsIntent = new Intent(context, MyResultsActivity.class);
                     resultsIntent.putExtras(bundle);
                     resultsIntent.putExtra(Constants.BundleKeys.SCREEN_LAUNCHED_FROM_PARENT,
