@@ -39,6 +39,11 @@ public class ContestDetailsActivity extends NostraBaseActivity implements Contes
     private ContestScreenData mContestScreenData;
 
     @Override
+    public String getScreenName() {
+        return Constants.Notifications.SCREEN_CONTEST_DETAILS;
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         setShouldAnimateActivity(true);
         super.onCreate(savedInstanceState);

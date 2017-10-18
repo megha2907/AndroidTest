@@ -25,6 +25,11 @@ public class InplayContestDetailsActivity extends NostraBaseActivity implements 
     private int Launched_From_Results = 112;
 
     @Override
+    public String getScreenName() {
+        return Constants.Notifications.SCREEN_IN_PLAY_CONTEST_DETAILS;
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         setShouldAnimateActivity(true);
         super.onCreate(savedInstanceState);

@@ -18,18 +18,30 @@ public interface Constants {
     interface Notifications {
         String IS_LAUNCHED_FROM_NOTIFICATION = "isLaunchedFromNotification";
         String NOSTRA_NOTIFICATION = "nostraNotification";
-
         String SCREEN_NEW_CHALLENGE = "newChallenge";
         String SCREEN_NEW_CHALLENGE_SPORT = "newChallengeSport";
-        String SCREEN_NEW_CHALLENGE_MATCHES = "newChallengeGames";
         String SCREEN_IN_PLAY_MATCHES = "inPlayGames";
-        String SCREEN_RESULTS = "results";
-        String SCREEN_CHALLENGE_HISTORY_WINNINGS = "challengeHistoryWinnings";
-        String SCREEN_REFER_FRIEND = "referFriend";
-        String SCREEN_REFERRAL_CREDITS = "referralCredits";
-        String SCREEN_APP_UPDATE = "appUpdate";
-        String SCREEN_STORE = "store";
-        String SCREEN_WALLET_HISTORY = "walletHistory";
+
+        String SCREEN_CONTEST_DETAILS = "contestDetails"; /* Contest Details with Entries,Rewards & Rules */
+        String SCREEN_CONTEST = "contest"; /* Contest Screen */
+        String SCREEN_IN_PLAY_CONTEST_DETAILS = "inPlayContestDetails"; /* Contest Details with Games,Entries,Rewards & Rules for inPlay */
+        String SCREEN_CHALLENGE_HISTORY_WINNINGS = "challengeHistoryWinnings"; /* Contest Details with Games , Entries , Winners & Rules for Completed */
+        String SCREEN_IN_PLAY_HEADLESS_GAMES = "inPlayHeadlessGames"; /* Headless Games Screen */
+        String SCREEN_NEW_CHALLENGES_GAMES = "newChallengesGames"; /* New Challenges Games Screen  */
+        String SCREEN_HOME = "home"; /* Home Screen with Challenges,inPlay,History & Profile */
+        String SCREEN_PLAY = "play"; /* Play Screen */
+        String SCREEN_RESULTS = "results"; /* Results Screen */
+        String SCREEN_RESULTS_PEEK = "results_peek"; /* Compare Results Screen */
+        String SCREEN_AVERAGE_SCORE = "average_score";  /* Average Score Screen */
+        String SCREEN_WALLET_HOME = "wallet"; /* Wallet Home Screen */
+        String SCREEN_WALLET_HISTORY = "walletHistory"; /* Wallet History Screen */
+        String SCREEN_WALLET_PAYOUT_HOME = "walletPayoutHome"; /* Withdrawal Details Screen ( Paytm & Bank account) */
+        String SCREEN_POWERUP_BANK = "PowerupBank"; /* Powerup Bank Screen */
+        String SCREEN_REFER_FRIEND = "ReferFriend"; /* Refer a Friend Screen */
+        String SCREEN_REFERRAL_CREDITS = "referralCredits";  /* Referral History Screen */
+        String SCREEN_STORE = "Store";  /* Store - Buy Powerups */
+        String SCREEN_APP_UPDATE = "appUpdate"; /* Update the App screen & What's New Screen */
+
     }
 
     interface SharedKeys {
@@ -579,7 +591,7 @@ public interface Constants {
         String ADMIN_MEMBERS = "admin_members"; //in.sportscafe.nostragamus.module.user.group.admin.adminmembers.AdminMembersActivity
         String FLIP_POWERUP = "flip_powerup"; //in.sportscafe.nostragamus.module.play.myresults.flipPowerup.FlipActivity
         String GOOGLE_FORM = "google_form"; // in.sportscafe.nostragamus.module.feedback.GoogleFormActivity
-        String OTHER_ANSWERS = "other_answers"; // in.sportscafe.nostragamus.module.othersanswers.OthersAnswersActivity
+        String OTHER_ANSWERS = "average_score"; // in.sportscafe.nostragamus.module.othersanswers.OthersAnswersActivity
         String SPORT_SELECTION = "sport_selection"; //in.sportscafe.nostragamus.module.user.sportselection.SportSelectionActivity
         String PLAYER_COMPARISON = "player_comparison"; //in.sportscafe.nostragamus.module.user.comparisons.PlayerComparisonActivity
         String RESULTS_PEEK = "results_peek"; //in.sportscafe.nostragamus.module.resultspeek.ResultsPeekActivity

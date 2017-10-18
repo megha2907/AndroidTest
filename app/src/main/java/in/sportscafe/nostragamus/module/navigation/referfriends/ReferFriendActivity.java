@@ -34,7 +34,7 @@ public class ReferFriendActivity extends NostragamusActivity implements ReferFri
 
     @Override
     public String getScreenName() {
-        return Constants.ScreenNames.REFER_FRIEND;
+        return Constants.Notifications.SCREEN_REFER_FRIEND;
     }
 
     @Override

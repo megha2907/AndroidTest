@@ -3,6 +3,7 @@ package in.sportscafe.nostragamus.module.contest.contestDetailsCompletedChalleng
 import android.content.Intent;
 import android.os.Bundle;
 
+import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.NostraBaseActivity;
 import in.sportscafe.nostragamus.utils.FragmentHelper;
@@ -16,6 +17,11 @@ public class ChallengeHistoryContestDetailsActivity extends NostraBaseActivity i
     private static final String TAG = ChallengeHistoryContestDetailsActivity.class.getSimpleName();
 
     private ChallengeHistoryContestDetailFragment mChallengeHistoryContestDetailFragment;
+
+    @Override
+    public String getScreenName() {
+        return Constants.Notifications.SCREEN_CHALLENGE_HISTORY_WINNINGS;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

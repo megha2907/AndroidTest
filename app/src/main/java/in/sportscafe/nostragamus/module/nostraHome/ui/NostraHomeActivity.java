@@ -59,6 +59,11 @@ public class NostraHomeActivity extends NostraBaseActivity implements View.OnCli
     private boolean mIsFirstBackPressed = false;
 
     @Override
+    public String getScreenName() {
+        return Constants.Notifications.SCREEN_HOME;
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nostra_home);
@@ -143,7 +148,7 @@ public class NostraHomeActivity extends NostraBaseActivity implements View.OnCli
                 } else if (screenName.equalsIgnoreCase(Constants.Notifications.SCREEN_NEW_CHALLENGE_SPORT)) {
                     onNewChallengesClicked(notificationHelper.getBundleAddedNotificationDetailsIntoArgs(getIntent(), notification));
 
-                }  else if (screenName.equalsIgnoreCase(Constants.Notifications.SCREEN_NEW_CHALLENGE_MATCHES)) {
+                }  else if (screenName.equalsIgnoreCase(Constants.Notifications.SCREEN_NEW_CHALLENGES_GAMES)) {
                     startActivity(notificationHelper.getNewChallengeMatchesScreenIntent(this, notification));
 
                 }  else if (screenName.equalsIgnoreCase(Constants.Notifications.SCREEN_IN_PLAY_MATCHES)) {

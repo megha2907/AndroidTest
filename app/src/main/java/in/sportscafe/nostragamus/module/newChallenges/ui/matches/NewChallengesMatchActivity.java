@@ -25,6 +25,11 @@ import in.sportscafe.nostragamus.utils.FragmentHelper;
 public class NewChallengesMatchActivity extends NostraBaseActivity implements NewChallengeMatchFragmentListener{
 
     @Override
+    public String getScreenName() {
+        return Constants.Notifications.SCREEN_NEW_CHALLENGES_GAMES;
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         setShouldAnimateActivity(true);
         super.onCreate(savedInstanceState);

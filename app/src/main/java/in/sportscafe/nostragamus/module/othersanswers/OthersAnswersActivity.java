@@ -73,6 +73,6 @@ public class OthersAnswersActivity extends NostragamusActivity {
 
     @Override
     public String getScreenName() {
-        return Constants.ScreenNames.OTHER_ANSWERS;
+        return Constants.Notifications.SCREEN_AVERAGE_SCORE;
     }
 }
