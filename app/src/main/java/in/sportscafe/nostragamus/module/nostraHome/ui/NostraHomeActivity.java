@@ -178,8 +178,6 @@ public class NostraHomeActivity extends NostraBaseActivity implements View.OnCli
 
             } else {
                 Log.d("Notification", "User Logged out, can not launch Home!");
-                Intent intent = new Intent(this, LogInActivity.class);
-                startActivity(intent);
             }
         }
     }

@@ -301,7 +301,7 @@ public class ContestViewPagerFragment extends NostraBaseFragment {
 
             Intent intent = new Intent(getActivity(), AddMoneyOnLowBalanceActivity.class);
             intent.putExtras(args);
-            getActivity().startActivityForResult(intent, ADD_MONEY_ON_LOW_BALANCE_REQUEST_CODE);
+            startActivityForResult(intent, ADD_MONEY_ON_LOW_BALANCE_REQUEST_CODE);
         }
     }
 

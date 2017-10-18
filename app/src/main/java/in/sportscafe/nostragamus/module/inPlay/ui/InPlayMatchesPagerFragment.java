@@ -9,6 +9,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -391,11 +392,19 @@ public class InPlayMatchesPagerFragment extends NostraBaseFragment {
             dataDto.setMatchId(inPlayMatch.getMatchId());
             dataDto.setRoomId(contestDto.getRoomId());
             dataDto.setPowerUp(contestDto.getPowerUp());
-            dataDto.setSubTitle(contestDto.getChallengeName() + " - " + contestDto.getContestName());
             dataDto.setMatchStatus(inPlayMatch.getMatchStatus());
             dataDto.setChallengeName(contestDto.getChallengeName());
             dataDto.setChallengeStartTime(contestDto.getChallengeStartTime());
             dataDto.setInPlayContestDto(contestDto);
+
+            String subTitle = "";
+            if (!TextUtils.isEmpty(contestDto.getChallengeName())) {
+                subTitle = contestDto.getChallengeName();
+            }
+            if (!TextUtils.isEmpty(contestDto.getContestName())) {
+                subTitle = subTitle + " - " + contestDto.getContestName();
+            }
+            dataDto.setSubTitle(subTitle);
 
             if (inPlayMatch.getMatchParties() != null && inPlayMatch.getMatchParties().size() == 2) {
                 dataDto.setMatchPartyTitle1(inPlayMatch.getMatchParties().get(0).getPartyName());
