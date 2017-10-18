@@ -152,8 +152,8 @@ public class NostraHomeActivity extends NostraBaseActivity implements View.OnCli
                 }  else if (screenName.equalsIgnoreCase(Constants.Notifications.SCREEN_RESULTS)) {
                     startActivity(notificationHelper.getResultsScreenIntent(this, notification));
 
-                } else if (screenName.equalsIgnoreCase(Constants.Notifications.SCREEN_CHALLENGE_HISTORY)) {
-                    onHistoryClicked(notificationHelper.getBundleAddedNotificationDetailsIntoArgs(getIntent(), notification));
+                } else if (screenName.equalsIgnoreCase(Constants.Notifications.SCREEN_CHALLENGE_HISTORY_WINNINGS)) {
+                    startActivity(notificationHelper.getChallengeHistoryWinningsScreenIntent(this, notification));
 
                 } else if (screenName.equalsIgnoreCase(Constants.Notifications.SCREEN_REFER_FRIEND)) {
                     startActivity(notificationHelper.getReferFriendScreenIntent(this, notification));

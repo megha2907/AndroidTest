@@ -334,7 +334,7 @@
         android:screenOrientation="portrait" />
 
         <activity
-            android:name=".module.contest.contestDetailsCompletedChallenges.ContestDetailCompletedActivity"
+            android:name=".module.contest.contestDetailsCompletedChallenges.ChallengeHistoryContestDetailsActivity"
             android:screenOrientation="portrait" />
 
         <activity

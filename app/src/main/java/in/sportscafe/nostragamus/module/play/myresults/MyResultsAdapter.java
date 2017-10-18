@@ -9,7 +9,6 @@ import android.graphics.Paint;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
@@ -38,7 +37,6 @@ import in.sportscafe.nostragamus.AppSnippet;
 import in.sportscafe.nostragamus.BuildConfig;
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Constants.BundleKeys;
-import in.sportscafe.nostragamus.Constants.LBLandingType;
 import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
@@ -46,17 +44,15 @@ import in.sportscafe.nostragamus.module.challengeCompleted.dto.CompletedContestD
 import in.sportscafe.nostragamus.module.common.Adapter;
 import in.sportscafe.nostragamus.module.common.NostraTextViewLinkClickMovementMethod;
 import in.sportscafe.nostragamus.module.contest.contestDetailsAfterJoining.InplayContestDetailsActivity;
-import in.sportscafe.nostragamus.module.contest.contestDetailsCompletedChallenges.ContestDetailCompletedActivity;
+import in.sportscafe.nostragamus.module.contest.contestDetailsCompletedChallenges.ChallengeHistoryContestDetailsActivity;
 import in.sportscafe.nostragamus.module.contest.ui.DetailScreensLaunchRequest;
 import in.sportscafe.nostragamus.module.inPlay.dto.InPlayContestDto;
 import in.sportscafe.nostragamus.module.inPlay.ui.ResultsScreenDataDto;
 import in.sportscafe.nostragamus.module.othersanswers.OthersAnswersActivity;
-import in.sportscafe.nostragamus.module.popups.inapppopups.LbLanding;
 import in.sportscafe.nostragamus.module.resultspeek.FeedWebView;
 import in.sportscafe.nostragamus.module.resultspeek.ResultsPeekActivity;
 import in.sportscafe.nostragamus.module.resultspeek.dto.Match;
 import in.sportscafe.nostragamus.module.resultspeek.dto.Question;
-import in.sportscafe.nostragamus.module.user.points.PointsActivity;
 import in.sportscafe.nostragamus.utils.timeutils.TimeUtils;
 
 /**
@@ -1069,7 +1065,7 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
            args.putInt(Constants.BundleKeys.SCREEN_LAUNCH_REQUEST, DetailScreensLaunchRequest.MATCHES_LEADER_BOARD_SCREEN);
 
            if (context != null) {
-               Intent intent = new Intent(context, ContestDetailCompletedActivity.class);
+               Intent intent = new Intent(context, ChallengeHistoryContestDetailsActivity.class);
                if (args != null) {
                    intent.putExtras(args);
                }

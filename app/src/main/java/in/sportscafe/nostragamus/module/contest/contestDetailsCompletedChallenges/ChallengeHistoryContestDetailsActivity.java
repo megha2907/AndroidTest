@@ -11,11 +11,11 @@ import in.sportscafe.nostragamus.utils.FragmentHelper;
  * Created by sc on 4/10/17.
  */
 
-public class ContestDetailCompletedActivity extends NostraBaseActivity implements ContestDetailCompletedFragmentListener {
+public class ChallengeHistoryContestDetailsActivity extends NostraBaseActivity implements ContestDetailCompletedFragmentListener {
 
-    private static final String TAG = ContestDetailCompletedActivity.class.getSimpleName();
+    private static final String TAG = ChallengeHistoryContestDetailsActivity.class.getSimpleName();
 
-    private ContestDetailCompletedFragment mContestDetailCompletedFragment;
+    private ChallengeHistoryContestDetailFragment mChallengeHistoryContestDetailFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,12 +31,12 @@ public class ContestDetailCompletedActivity extends NostraBaseActivity implement
             args = getIntent().getExtras();
         }
 
-        mContestDetailCompletedFragment = new ContestDetailCompletedFragment();
+        mChallengeHistoryContestDetailFragment = new ChallengeHistoryContestDetailFragment();
         if (args != null) {
-            mContestDetailCompletedFragment.setArguments(args);
+            mChallengeHistoryContestDetailFragment.setArguments(args);
         }
 
-        FragmentHelper.replaceFragment(this, R.id.fragment_container, mContestDetailCompletedFragment);
+        FragmentHelper.replaceFragment(this, R.id.fragment_container, mChallengeHistoryContestDetailFragment);
     }
 
     @Override
@@ -47,8 +47,8 @@ public class ContestDetailCompletedActivity extends NostraBaseActivity implement
     }
 
     private void passIntentToFragment(Intent intent) {
-        if (intent != null && mContestDetailCompletedFragment != null) {
-            mContestDetailCompletedFragment.onNewIntent(intent);
+        if (intent != null && mChallengeHistoryContestDetailFragment != null) {
+            mChallengeHistoryContestDetailFragment.onNewIntent(intent);
         }
     }
 

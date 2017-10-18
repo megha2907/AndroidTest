@@ -27,6 +27,9 @@ public class NostraNotificationData {
     @SerializedName("challenge_name")
     private String challengeName;
 
+    @SerializedName("config_name")
+    private String contestName;
+
     @SerializedName("match_status")
     private String matchStatus;
 
@@ -109,5 +112,13 @@ public class NostraNotificationData {
 
     public void setChallengeStartTime(String challengeStartTime) {
         this.challengeStartTime = challengeStartTime;
+    }
+
+    public String getContestName() {
+        return contestName;
+    }
+
+    public void setContestName(String contestName) {
+        this.contestName = contestName;
     }
 }

@@ -24,7 +24,7 @@ public interface Constants {
         String SCREEN_NEW_CHALLENGE_MATCHES = "newChallengeGames";
         String SCREEN_IN_PLAY_MATCHES = "inPlayGames";
         String SCREEN_RESULTS = "results";
-        String SCREEN_CHALLENGE_HISTORY = "challengeHistory";
+        String SCREEN_CHALLENGE_HISTORY_WINNINGS = "challengeHistoryWinnings";
         String SCREEN_REFER_FRIEND = "referFriend";
         String SCREEN_REFERRAL_CREDITS = "referralCredits";
         String SCREEN_APP_UPDATE = "appUpdate";
