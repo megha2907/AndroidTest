@@ -115,7 +115,9 @@ public class TimelineHelper {
 
                 if (matchStatus.equalsIgnoreCase(Constants.InPlayMatchStatus.COMPLETED)) {
 
-                    if (played) {
+                    if (Constants.GameAttemptedStatus.COMPLETELY == matchAttemptedStatus) {
+                        view.setBackgroundResource(R.drawable.timeline_tick_yellow_dot);
+                    } else if (Constants.GameAttemptedStatus.PARTIALLY == matchAttemptedStatus) {
                         view.setBackgroundResource(R.drawable.timeline_tick_yellow_dot);
                     } else {
                         view.setBackgroundResource(R.drawable.timeline_yellow_cross_ring);
@@ -147,7 +149,9 @@ public class TimelineHelper {
 
                 if (matchStatus.equalsIgnoreCase(Constants.InPlayMatchStatus.COMPLETED)) {
 
-                    if (played) {
+                    if (Constants.GameAttemptedStatus.COMPLETELY == matchAttemptedStatus) {
+                        view.setBackgroundResource(R.drawable.timeline_tick_yellow_dot);
+                    } else if (Constants.GameAttemptedStatus.PARTIALLY == matchAttemptedStatus) {
                         view.setBackgroundResource(R.drawable.timeline_tick_yellow_dot);
                     } else {
                         view.setBackgroundResource(R.drawable.timeline_yellow_cross_ring);
