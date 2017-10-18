@@ -115,6 +115,10 @@ public class MyWebService extends AbstractWebService<NostragamusService> {
         return mNostragamusService.getUserInfo();
     }
 
+    public Call<SportsInfoResponse> getSportsInfoRequest() {
+        return mNostragamusService.getSportsInfo();
+    }
+
     public Call<PlayerInfoResponse> getPlayerInfoRequest(Integer playerId) {
         return mNostragamusService.getPlayerInfo(playerId);
     }

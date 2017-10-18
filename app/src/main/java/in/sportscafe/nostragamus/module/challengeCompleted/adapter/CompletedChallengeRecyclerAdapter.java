@@ -1,11 +1,13 @@
 package in.sportscafe.nostragamus.module.challengeCompleted.adapter;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -127,6 +129,7 @@ public class CompletedChallengeRecyclerAdapter extends RecyclerView.Adapter<Recy
         ImageView tournamentImageView;
 
         Context mContext = tournamentsLinearLayout.getContext();
+        Typeface face = Typeface.createFromAsset(mContext.getAssets(), "fonts/lato/Lato-Regular.ttf");
 
         if (tournamentList != null && tournamentList.size() > 0) {
 
@@ -155,8 +158,9 @@ public class CompletedChallengeRecyclerAdapter extends RecyclerView.Adapter<Recy
                 lpText.setMargins(0,0,5,0);
                 tournamentName.setLayoutParams(lpText);
 
-                tournamentName.setTextSize(9);
+                tournamentName.setTextSize(TypedValue.COMPLEX_UNIT_PX,mContext.getResources().getDimension(R.dimen.sp_9_5));
                 tournamentName.setTextColor(ContextCompat.getColor(mContext,R.color.grey_999999));
+                tournamentName.setTypeface(face);
 
                 tournamentName.setText(tournamentList.get(temp));
                 tournamentImageView.setImageResource(R.drawable.grey_circle);

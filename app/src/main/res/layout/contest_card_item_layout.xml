@@ -190,7 +190,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:includeFontPadding="false"
-                                android:text="Fee"
+                                android:text="Entry Fee"
                                 android:textAllCaps="true"
                                 android:textColor="@color/white_999999"
                                 android:textSize="@dimen/sp_9"

@@ -107,7 +107,7 @@
                         <com.jeeva.android.widgets.customfont.CustomTextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="FEE"
+                            android:text="ENTRY"
                             android:textColor="@color/white_999999"
                             android:textSize="@dimen/sp_9"
                             app:typeface="lato_regular" />
