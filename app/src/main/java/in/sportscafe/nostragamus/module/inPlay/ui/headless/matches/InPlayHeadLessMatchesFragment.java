@@ -209,10 +209,18 @@ public class InPlayHeadLessMatchesFragment extends BaseFragment implements View.
             dataDto.setMatchId(inPlayMatch.getMatchId());
             dataDto.setRoomId(mHeadLessMatchScreenData.getRoomId());
             dataDto.setPowerUp(mHeadLessMatchScreenData.getPowerUp());
-            dataDto.setSubTitle(mHeadLessMatchScreenData.getChallengeName() + " - " + mHeadLessMatchScreenData.getContestName());
             dataDto.setChallengeName(mHeadLessMatchScreenData.getChallengeName());
             dataDto.setChallengeStartTime(mHeadLessMatchScreenData.getStartTime());
             dataDto.setInPlayContestDto(mHeadLessMatchScreenData.getInPlayContestDto());
+
+            String subTitle = "";
+            if (!TextUtils.isEmpty(mHeadLessMatchScreenData.getChallengeName())) {
+                subTitle = mHeadLessMatchScreenData.getChallengeName();
+            }
+            if (!TextUtils.isEmpty(mHeadLessMatchScreenData.getContestName())) {
+                subTitle = subTitle + " - " + mHeadLessMatchScreenData.getContestName();
+            }
+            dataDto.setSubTitle(subTitle);
 
             if (inPlayMatch.getMatchParties() != null && inPlayMatch.getMatchParties().size() == 2) {
                 dataDto.setMatchPartyTitle1(inPlayMatch.getMatchParties().get(0).getPartyName());

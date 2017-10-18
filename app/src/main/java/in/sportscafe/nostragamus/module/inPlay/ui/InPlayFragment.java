@@ -284,15 +284,32 @@ public class InPlayFragment extends NostraBaseFragment implements View.OnClickLi
             PlayScreenDataDto playScreenDataDto = Parcels.unwrap(args.getParcelable(Constants.BundleKeys.PLAY_SCREEN_DATA));
             if (playScreenDataDto != null && inPlayResponseList != null) {
 
-                if (playScreenDataDto.isPlayingPseudoGame()) {
-                    launchHeadLessMatchesScreen(playScreenDataDto);
-                } else {
+                boolean shouldBreak = false;
+                for (InPlayResponse inPlayResponse : inPlayResponseList) {
+                    if (inPlayResponse.getChallengeId() == playScreenDataDto.getChallengeId()) {
 
-                    /* launch appropriate matches screen */
-                    for (InPlayResponse inPlayResponse : inPlayResponseList) {
-                        if (inPlayResponse.getChallengeId() == playScreenDataDto.getChallengeId()) {
-                            launchInplayContestDetailsScreen(playScreenDataDto);
-                            break;
+                        if (playScreenDataDto.isPlayingPseudoGame()) {
+                            launchHeadLessMatchesScreen(playScreenDataDto);
+                        } else {
+                            if (playScreenDataDto.getInPlayContestDto() != null) {
+                                for (InPlayContestDto contestDto : inPlayResponse.getContestList()) {
+                                    if (contestDto.getContestId() == playScreenDataDto.getInPlayContestDto().getContestId()) {
+
+                                        if (contestDto.isHeadlessState()) {
+                                            launchHeadLessMatchesScreen(playScreenDataDto);
+                                        } else {
+                                            contestDto.setChallengeId(inPlayResponse.getChallengeId());
+                                            contestDto.setChallengeName(inPlayResponse.getChallengeName());
+                                            launchInplayContestDetailsScreen(contestDto);
+                                        }
+                                        shouldBreak = true;
+                                        break;
+                                    }
+                                }
+                                if (shouldBreak) {
+                                    break;
+                                }
+                            }
                         }
                     }
                 }
@@ -300,45 +317,39 @@ public class InPlayFragment extends NostraBaseFragment implements View.OnClickLi
         }
     }
 
-    private void launchInplayContestDetailsScreen(PlayScreenDataDto playScreenDataDto) {
-        if (getActivity() != null && !getActivity().isFinishing() && playScreenDataDto != null) {
-            if (playScreenDataDto.isShouldLaunchMatchesScreen()) {
-                playScreenDataDto.setShouldLaunchMatchesScreen(false);
+    private void launchInplayContestDetailsScreen(InPlayContestDto inPlayContestDto) {
+        if (getActivity() != null && !getActivity().isFinishing() && inPlayContestDto != null) {
+            Bundle args = new Bundle();
+            args.putParcelable(Constants.BundleKeys.INPLAY_CONTEST, Parcels.wrap(inPlayContestDto));
 
-                Bundle args = new Bundle();
-                if (playScreenDataDto.getInPlayContestDto() != null) {
-                    args.putParcelable(Constants.BundleKeys.INPLAY_CONTEST, Parcels.wrap(playScreenDataDto.getInPlayContestDto()));
-                }
-
-                Intent intent = new Intent(getActivity(), InplayContestDetailsActivity.class);
-                intent.putExtras(args);
-                startActivity(intent);
-            } else {
-                Log.d(TAG, "Not require to launch Matches screen");
-            }
+            Intent intent = new Intent(getActivity(), InplayContestDetailsActivity.class);
+            intent.putExtras(args);
+            getActivity().startActivity(intent);
         }
     }
 
     private void launchHeadLessMatchesScreen(PlayScreenDataDto playScreenDataDto) {
-        HeadLessMatchScreenData data = new HeadLessMatchScreenData();
-        data.setChallengeName(playScreenDataDto.getSubTitle());
-        data.setChallengeId(playScreenDataDto.getChallengeId());
-        data.setPowerUp(playScreenDataDto.getPowerUp());
-        data.setContestName(playScreenDataDto.getSubTitle());
-        data.setRoomId(playScreenDataDto.getRoomId());
-        data.setPlayingPseudoGame(playScreenDataDto.isPlayingPseudoGame());
-        data.setInPlayContestDto(playScreenDataDto.getInPlayContestDto());
-        data.setStartTime(playScreenDataDto.getChallengeStartTime());
+        if (playScreenDataDto.isPlayingPseudoGame()) {
+            HeadLessMatchScreenData data = new HeadLessMatchScreenData();
+            data.setChallengeName(playScreenDataDto.getChallengeName());
+            data.setChallengeId(playScreenDataDto.getChallengeId());
+            data.setPowerUp(playScreenDataDto.getPowerUp());
+            data.setContestName(playScreenDataDto.getSubTitle());
+            data.setRoomId(playScreenDataDto.getRoomId());
+            data.setPlayingPseudoGame(playScreenDataDto.isPlayingPseudoGame());
+            data.setInPlayContestDto(playScreenDataDto.getInPlayContestDto());
+            data.setStartTime(playScreenDataDto.getChallengeStartTime());
 
-        playScreenDataDto.setPlayingPseudoGame(false);  // Action is taken once so remove this flag
+            playScreenDataDto.setPlayingPseudoGame(false);  // Action is taken once so remove this flag
 
                     /* New bundle as older one has unnecessary values which can lead improper flow */
-        Bundle bundle = new Bundle();
-        bundle.putParcelable(Constants.BundleKeys.HEADLESS_MATCH_SCREEN_DATA, Parcels.wrap(data));
+            Bundle bundle = new Bundle();
+            bundle.putParcelable(Constants.BundleKeys.HEADLESS_MATCH_SCREEN_DATA, Parcels.wrap(data));
 
-        Intent intent = new Intent(getActivity(), InPlayHeadLessMatchActivity.class);
-        intent.putExtras(bundle);
-        getActivity().startActivity(intent);
+            Intent intent = new Intent(getActivity(), InPlayHeadLessMatchActivity.class);
+            intent.putExtras(bundle);
+            getActivity().startActivity(intent);
+        }
     }
 
     private void showLoadingProgressBar() {
