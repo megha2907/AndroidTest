@@ -1,27 +1,43 @@
 package in.sportscafe.nostragamus.module.common;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 
+import org.parceler.Parcels;
+
+import java.util.List;
+
+import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
+import in.sportscafe.nostragamus.module.popups.PopUp;
+import in.sportscafe.nostragamus.module.popups.PopUpActivity;
+import in.sportscafe.nostragamus.module.popups.PopUpModelImpl;
 
 /**
  * Base Activity for all New Activities now-onwards
  */
-public class NostraBaseActivity extends AppCompatActivity {
+public abstract class NostraBaseActivity extends AppCompatActivity implements PopUpModelImpl.OnGetPopUpModelListener {
 
     private boolean mShouldAnimateActivity = false;
 
+    public abstract String getScreenName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         performActivityEntryAnimation();
 //        setContentView(R.layout.activity_nostra_base);
+
+        String screenName = getScreenName();
+        if (!TextUtils.isEmpty(screenName)) {
+            PopUpModelImpl.newInstance(this).getPopUps(screenName);
+        }
 
     }
 
@@ -96,6 +112,22 @@ public class NostraBaseActivity extends AppCompatActivity {
                         }
                     }
                 });
+    }
+
+    private void openPopup(List<PopUp> popUps) {
+        Intent intent = new Intent(this, PopUpActivity.class);
+        intent.putExtra(Constants.BundleKeys.POPUP_DATA, Parcels.wrap(popUps));
+        startActivity(intent);
+    }
+
+    @Override
+    public void onSuccessGetUpdatedPopUps(List<PopUp> popUps) {
+        openPopup(popUps);
+    }
+
+    @Override
+    public void onFailedGetUpdatePopUps(String message) {
+
     }
 
 

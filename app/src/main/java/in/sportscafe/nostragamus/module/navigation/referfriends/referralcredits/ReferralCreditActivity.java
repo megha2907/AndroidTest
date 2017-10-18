@@ -34,7 +34,7 @@ public class ReferralCreditActivity extends NostragamusActivity implements Refer
 
     @Override
     public String getScreenName() {
-        return Constants.ScreenNames.REFERRAL_CREDIT;
+        return Constants.Notifications.SCREEN_REFERRAL_CREDITS;
     }
 
     @Override

@@ -25,7 +25,7 @@ public class PowerUpBankActivity extends NostragamusActivity implements PowerUpB
 
     @Override
     public String getScreenName() {
-        return Constants.ScreenNames.POWERUP_BANK;
+        return Constants.Notifications.SCREEN_POWERUP_BANK;
     }
 
     @Override

@@ -11,7 +11,7 @@ public class WalletHistoryActivity extends NostragamusActivity implements Wallet
 
     @Override
     public String getScreenName() {
-        return Constants.ScreenNames.WALLET_HISTORY;
+        return Constants.Notifications.SCREEN_WALLET_HISTORY;
     }
 
     @Override

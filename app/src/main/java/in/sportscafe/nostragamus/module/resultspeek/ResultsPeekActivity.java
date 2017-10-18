@@ -81,6 +81,6 @@ public class ResultsPeekActivity extends NostragamusActivity implements ResultsP
 
     @Override
     public String getScreenName() {
-        return Constants.ScreenNames.RESULTS_PEEK;
+        return Constants.Notifications.SCREEN_RESULTS_PEEK;
     }
 }

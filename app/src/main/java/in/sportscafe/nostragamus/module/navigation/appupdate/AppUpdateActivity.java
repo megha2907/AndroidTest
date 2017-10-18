@@ -28,7 +28,7 @@ public class AppUpdateActivity extends NostragamusActivity implements OnDismissL
 
     @Override
     public String getScreenName() {
-        return null;
+        return Constants.Notifications.SCREEN_APP_UPDATE;
     }
 
     @Override

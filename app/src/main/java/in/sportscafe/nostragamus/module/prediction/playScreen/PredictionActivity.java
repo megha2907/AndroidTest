@@ -24,6 +24,11 @@ public class PredictionActivity extends NostraBaseActivity implements Prediction
     }
 
     @Override
+    public String getScreenName() {
+        return Constants.Notifications.SCREEN_PLAY;
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         setShouldAnimateActivity(true);
         super.onCreate(savedInstanceState);
