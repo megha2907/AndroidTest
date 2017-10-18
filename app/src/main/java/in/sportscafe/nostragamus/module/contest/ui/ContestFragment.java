@@ -245,7 +245,7 @@ public class ContestFragment extends NostraBaseFragment implements View.OnClickL
 
         if (contestList != null) {
             for (Contest contest : contestList) {
-                if (!contest.isContestJoined() && !contest.isJoinable() &&
+                if (!contest.isContestJoined() && contest.isJoinable() &&
                         contest.getContestItemType() != ContestAdapterItemType.REFER_FRIEND_AD) {
                     count++;
                 }
