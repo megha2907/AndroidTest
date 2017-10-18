@@ -97,6 +97,9 @@ public interface NostragamusService {
     @GET("v1/game/users")
     Call<UserInfoResponse> getUserInfo();
 
+    @GET("v1/game/sports")
+    Call<SportsInfoResponse> getSportsInfo();
+
     @GET("v3/game/users/questions")
     Call<PredictionAllQuestionResponse> getAllPredictionQuestions(@Query("match_id") int matchId,
                                                                   @Query("room_id") int roomId);
