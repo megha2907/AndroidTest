@@ -6,6 +6,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.TextView;
 
+import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.NostraBaseActivity;
 import in.sportscafe.nostragamus.module.contest.ui.ContestsActivity;
@@ -13,6 +14,11 @@ import in.sportscafe.nostragamus.module.popups.walletpopups.WalletBalancePopupAc
 import in.sportscafe.nostragamus.utils.FragmentHelper;
 
 public class InPlayHeadLessMatchActivity extends NostraBaseActivity implements InPlayHeadLessMatchFragmentListener {
+
+    @Override
+    public String getScreenName() {
+        return Constants.Notifications.SCREEN_IN_PLAY_HEADLESS_GAMES;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -22,6 +22,11 @@ public class FeedWebView extends NostraBaseActivity {
     private Toolbar mtoolbar;
 
     @Override
+    public String getScreenName() {
+        return null;
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         setShouldAnimateActivity(true);
         super.onCreate(savedInstanceState);

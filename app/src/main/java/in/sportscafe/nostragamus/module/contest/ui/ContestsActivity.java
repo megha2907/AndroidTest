@@ -3,6 +3,7 @@ package in.sportscafe.nostragamus.module.contest.ui;
 import android.content.Intent;
 import android.os.Bundle;
 
+import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.NostraBaseActivity;
 import in.sportscafe.nostragamus.module.newChallenges.ui.matches.NewChallengeMatchFragmentListener;
@@ -22,6 +23,11 @@ public class ContestsActivity extends NostraBaseActivity implements ContestsFrag
     }
 
     private ContestFragment mContestFragment;
+
+    @Override
+    public String getScreenName() {
+        return Constants.Notifications.SCREEN_CONTEST;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

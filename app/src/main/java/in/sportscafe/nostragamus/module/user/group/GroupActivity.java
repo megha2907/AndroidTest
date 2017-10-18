@@ -8,6 +8,11 @@ import in.sportscafe.nostragamus.module.nostraHome.ui.NostraHomeActivity;
 public class GroupActivity extends NostraHomeActivity {
 
     @Override
+    public String getScreenName() {
+        return null;
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setGroupSelected();

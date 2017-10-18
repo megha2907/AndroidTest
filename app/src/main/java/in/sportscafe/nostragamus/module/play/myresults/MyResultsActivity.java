@@ -77,7 +77,7 @@ public class MyResultsActivity extends NostragamusActivity implements MyResultsV
 
     @Override
     public String getScreenName() {
-        return Constants.ScreenNames.RESULTS;
+        return Notifications.SCREEN_RESULTS;
     }
 
     @Override

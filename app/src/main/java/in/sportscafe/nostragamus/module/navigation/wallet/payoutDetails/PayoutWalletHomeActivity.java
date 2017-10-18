@@ -32,7 +32,7 @@ public class PayoutWalletHomeActivity extends NostragamusActivity implements Pay
 
     @Override
     public String getScreenName() {
-        return Constants.ScreenNames.WALLET_PAYOUT_HOME;
+        return Constants.Notifications.SCREEN_WALLET_PAYOUT_HOME;
     }
 
     @Override

@@ -28,7 +28,7 @@ public class StoreActivity extends NostragamusActivity implements StoreFragmentL
 
     @Override
     public String getScreenName() {
-        return Constants.ScreenNames.STORE;
+        return Constants.Notifications.SCREEN_STORE;
     }
 
     @Override

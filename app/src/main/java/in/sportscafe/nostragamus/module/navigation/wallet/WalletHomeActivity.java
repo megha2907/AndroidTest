@@ -21,7 +21,7 @@ public class WalletHomeActivity extends NostragamusActivity implements WalletHom
 
     @Override
     public String getScreenName() {
-        return Constants.ScreenNames.WALLET_HOME;
+        return Constants.Notifications.SCREEN_WALLET_HOME;
     }
 
     @Override
