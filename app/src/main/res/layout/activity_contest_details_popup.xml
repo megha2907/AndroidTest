@@ -63,7 +63,7 @@
                         android:id="@+id/popup_guarantee_contest_icon"
                         android:layout_width="@dimen/dim_20"
                         android:layout_height="@dimen/dim_20"
-                        android:layout_gravity="center"
+                        android:layout_marginTop="@dimen/dim_10"
                         android:src="@drawable/guaranteed_icon" />
 
 
@@ -93,6 +93,7 @@
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
                             android:layout_gravity="center_vertical"
+                            android:layout_marginTop="@dimen/dim_2"
                             android:text="The contest will go on even if the maximum number of entries have not joined that contest!"
                             android:textColor="@color/white_60"
                             android:textSize="@dimen/sp_11"
@@ -115,7 +116,7 @@
                         android:id="@+id/popup_pool_contest_icon"
                         android:layout_width="@dimen/dim_20"
                         android:layout_height="@dimen/dim_20"
-                        android:layout_gravity="center"
+                        android:layout_marginTop="@dimen/dim_10"
                         android:src="@drawable/pool_icon" />
 
 
@@ -145,7 +146,8 @@
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
                             android:layout_gravity="center_vertical"
-                            android:text="Requires a minimum number of entries to start. If it's cancelled your entry fee will be refunded to the wallet."
+                            android:layout_marginTop="@dimen/dim_2"
+                            android:text="Requires minimum number of entries to start. Entry fee will be refunded to your wallet if it’s cancelled."
                             android:textColor="@color/white_60"
                             android:textSize="@dimen/sp_11"
                             app:typeface="lato_regular" />
@@ -167,7 +169,7 @@
                         android:id="@+id/popup_non_guarantee_contest_icon"
                         android:layout_width="@dimen/dim_20"
                         android:layout_height="@dimen/dim_20"
-                        android:layout_gravity="center"
+                        android:layout_marginTop="@dimen/dim_10"
                         android:src="@drawable/no_guarantee_icon" />
 
 
@@ -197,6 +199,7 @@
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
                             android:layout_gravity="center_vertical"
+                            android:layout_marginTop="@dimen/dim_2"
                             android:text="The contest prize money will scale with the number of entries."
                             android:textColor="@color/white_60"
                             android:textSize="@dimen/sp_11"
