@@ -185,6 +185,10 @@ public class PredictionQuestionsCardAdapter extends ArrayAdapter<PredictionQuest
                         powerUp.setDoubler(1);
                         question.setPositivePoints(Constants.PredictionPoints.POSITIVE_POINTS * 2);
                         question.setNegativePoints(Constants.PredictionPoints.NEGATIVE_POINTS * 2);
+                        
+                        if (powerUp.getNoNegative() == 1) {
+                            question.setNegativePoints(0);
+                        }
                     } else {
                         powerUp.setDoubler(0);
                         question.setPositivePoints(Constants.PredictionPoints.POSITIVE_POINTS);
