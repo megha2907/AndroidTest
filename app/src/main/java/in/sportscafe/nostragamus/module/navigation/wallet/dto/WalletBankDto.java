@@ -1,6 +1,6 @@
 package in.sportscafe.nostragamus.module.navigation.wallet.dto;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.annotations.SerializedName;
 
 /**
  * Created by sandip on 12/06/17.
@@ -8,41 +8,41 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class WalletBankDto {
 
-    @JsonProperty("holderName")
+    @SerializedName("holderName")
     private String holderName;
 
-    @JsonProperty("accNumber")
+    @SerializedName("accNumber")
     private String accNumber;
 
-    @JsonProperty("ifsc")
+    @SerializedName("ifsc")
     private String ifsc;
 
-    @JsonProperty("holderName")
+    @SerializedName("holderName")
     public String getHolderName() {
         return holderName;
     }
 
-    @JsonProperty("holderName")
+    @SerializedName("holderName")
     public void setHolderName(String holderName) {
         this.holderName = holderName;
     }
 
-    @JsonProperty("accNumber")
+    @SerializedName("accNumber")
     public String getAccNumber() {
         return accNumber;
     }
 
-    @JsonProperty("accNumber")
+    @SerializedName("accNumber")
     public void setAccNumber(String accNumber) {
         this.accNumber = accNumber;
     }
 
-    @JsonProperty("ifsc")
+    @SerializedName("ifsc")
     public String getIfsc() {
         return ifsc;
     }
 
-    @JsonProperty("ifsc")
+    @SerializedName("ifsc")
     public void setIfsc(String ifsc) {
         this.ifsc = ifsc;
     }

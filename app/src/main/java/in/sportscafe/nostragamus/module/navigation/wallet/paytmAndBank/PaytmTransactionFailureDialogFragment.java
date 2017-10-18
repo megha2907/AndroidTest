@@ -10,21 +10,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import org.parceler.Parcels;
-
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
-import in.sportscafe.nostragamus.module.allchallenges.dto.Challenge;
-import in.sportscafe.nostragamus.module.common.NostragamusDialogFragment;
+import in.sportscafe.nostragamus.module.common.PopUpDialogFragment;
+import in.sportscafe.nostragamus.module.common.dto.Challenge;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class PaytmTransactionFailureDialogFragment extends NostragamusDialogFragment implements View.OnClickListener {
+public class PaytmTransactionFailureDialogFragment extends PopUpDialogFragment implements View.OnClickListener {
 
     public interface IPaytmFailureActionListener {
         void onBackToAddMoney();
-
         void onRetryPayment();
     }
 
@@ -75,6 +72,7 @@ public class PaytmTransactionFailureDialogFragment extends NostragamusDialogFrag
     private void initViews() {
         findViewById(R.id.paytm_failure_backToAddMoney_button).setOnClickListener(this);
         findViewById(R.id.paytm_failure_retry_payment_button).setOnClickListener(this);
+        findViewById(R.id.popup_bg).setOnClickListener(this);
         ImageView mBtnPopupClose = (ImageView)findViewById(R.id.popup_cross_btn);
         mBtnPopupClose.setVisibility(View.VISIBLE);
         mBtnPopupClose.setOnClickListener(this);
@@ -98,6 +96,10 @@ public class PaytmTransactionFailureDialogFragment extends NostragamusDialogFrag
                 break;
 
             case R.id.popup_cross_btn:
+                dismiss();
+                break;
+
+            case R.id.popup_bg:
                 dismiss();
                 break;
         }

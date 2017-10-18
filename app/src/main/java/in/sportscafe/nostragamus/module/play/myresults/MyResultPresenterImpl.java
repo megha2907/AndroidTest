@@ -9,7 +9,7 @@ import in.sportscafe.nostragamus.AppSnippet;
 import in.sportscafe.nostragamus.Constants.Alerts;
 import in.sportscafe.nostragamus.Constants.Powerups;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
-import in.sportscafe.nostragamus.module.feed.dto.Match;
+import in.sportscafe.nostragamus.module.resultspeek.dto.Match;
 
 /**
  * Created by Jeeva on 15/6/16.
@@ -49,7 +49,6 @@ public class MyResultPresenterImpl implements MyResultsPresenter, MyResultsModel
     @Override
     public void onsetMatchDetails(Match match) {
         mResultsView.setMatchDetails(match);
-//        mResultsView.navigatetoPlay(match);
     }
 
     @Override
@@ -72,13 +71,13 @@ public class MyResultPresenterImpl implements MyResultsPresenter, MyResultsModel
     }
 
     @Override
-    public void showResultsToBeDeclared(boolean playedFirstMatch, Match match) {
-        mResultsView.showResultsToBeDeclaredView(playedFirstMatch, match);
+    public void showResultsToBeDeclared(boolean playedFirstMatch) {
+        mResultsView.showResultsToBeDeclaredView(playedFirstMatch,mResultsModel.getMatchEndTime());
     }
 
     @Override
     public void onSuccessChangeAnswerResponse(Match match) {
-        //mResultsView.updateAnswers(match);
+        //mResultsView.updateAnswers(Match);
         mResultsView.dismissProgressbar();
     }
 
@@ -124,6 +123,7 @@ public class MyResultPresenterImpl implements MyResultsPresenter, MyResultsModel
         mResultsView.dismissProgressbar();
         mResultsView.setAdapter(myResultsAdapter);
         mResultsView.setMatchName(mResultsModel.getMatchName());
+        mResultsView.setUserRank(mResultsModel.getMatch());
     }
 
     @Override

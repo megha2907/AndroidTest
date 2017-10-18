@@ -1,10 +1,6 @@
 package in.sportscafe.nostragamus.module.play.myresults.dto;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-
-import java.util.List;
-
-import in.sportscafe.nostragamus.module.play.prediction.dto.AudiencePoll;
+import com.google.gson.annotations.SerializedName;
 
 /**
  * Created by deepanshi on 12/14/16.
@@ -12,15 +8,15 @@ import in.sportscafe.nostragamus.module.play.prediction.dto.AudiencePoll;
 
 public class ReplayPowerupResponse {
 
-    @JsonProperty("data")
+    @SerializedName("data")
     private String response;
 
-    @JsonProperty("data")
+    @SerializedName("data")
     public String getResponse() {
         return response;
     }
 
-    @JsonProperty("data")
+    @SerializedName("data")
     public void setResponse(String response) {
         this.response = response;
     }

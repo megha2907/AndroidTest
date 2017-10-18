@@ -14,12 +14,13 @@ import android.widget.TextView;
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.NostragamusDialogFragment;
+import in.sportscafe.nostragamus.module.common.PopUpDialogFragment;
 import in.sportscafe.nostragamus.module.navigation.wallet.WalletHelper;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class PaytmTransactionSuccessDialogFragment extends NostragamusDialogFragment implements View.OnClickListener {
+public class PaytmTransactionSuccessDialogFragment extends PopUpDialogFragment implements View.OnClickListener {
 
     public interface IPaytmSuccessActionListener {
         void onBackToHomeClicked();
@@ -74,6 +75,7 @@ public class PaytmTransactionSuccessDialogFragment extends NostragamusDialogFrag
 
     private void initViews() {
         findViewById(R.id.paytm_transaction_success_back_button).setOnClickListener(this);
+        findViewById(R.id.popup_bg).setOnClickListener(this);
         ImageView mBtnPopupClose = (ImageView)findViewById(R.id.popup_cross_btn);
         mBtnPopupClose.setVisibility(View.VISIBLE);
         mBtnPopupClose.setOnClickListener(this);
@@ -99,6 +101,13 @@ public class PaytmTransactionSuccessDialogFragment extends NostragamusDialogFrag
                 break;
 
             case R.id.popup_cross_btn:
+                if (mPaytmFailureListener != null) {
+                    mPaytmFailureListener.onBackToHomeClicked();
+                }
+                dismiss();
+                break;
+
+            case R.id.popup_bg:
                 if (mPaytmFailureListener != null) {
                     mPaytmFailureListener.onBackToHomeClicked();
                 }

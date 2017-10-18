@@ -1,6 +1,6 @@
 package in.sportscafe.nostragamus.webservice;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,15 +12,15 @@ import in.sportscafe.nostragamus.module.popups.PopUp;
  */
 public class PopUpResponse {
 
-    @JsonProperty("data")
+    @SerializedName("data")
     private List<PopUp> popUps = new ArrayList<>();
 
-    @JsonProperty("data")
+    @SerializedName("data")
     public List<PopUp> getPopUps() {
         return popUps;
     }
 
-    @JsonProperty("data")
+    @SerializedName("data")
     public void setPopUps(List<PopUp> popUps) {
         this.popUps = popUps;
     }

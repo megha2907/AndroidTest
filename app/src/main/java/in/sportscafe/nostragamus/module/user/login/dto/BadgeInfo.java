@@ -1,6 +1,6 @@
 package in.sportscafe.nostragamus.module.user.login.dto;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,15 +13,15 @@ import in.sportscafe.nostragamus.module.user.badges.Badge;
  */
 public class BadgeInfo {
 
-    @JsonProperty("badges")
+    @SerializedName("badges")
          List<Badge> badges = new ArrayList<>();
 
-        @JsonProperty("badges")
+        @SerializedName("badges")
         public List<Badge> getBadges() {
             return badges;
         }
 
-        @JsonProperty("badges")
+        @SerializedName("badges")
         public void setBadges(List<Badge> badges) {
             this.badges = badges;
         }

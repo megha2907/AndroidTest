@@ -25,7 +25,7 @@
                 android:background="@drawable/play_options_bg" />
         </android.support.v7.widget.CardView>
 
-        <RelativeLayout
+        <!--<RelativeLayout
             android:id="@+id/prediction_cv_bg_rl"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -67,7 +67,7 @@
                     android:background="@drawable/play_options_bg" />
             </android.support.v7.widget.CardView>
 
-        </RelativeLayout>
+        </RelativeLayout>-->
 
         <RelativeLayout
             android:id="@+id/prediction_rl_footer"
@@ -84,116 +84,112 @@
                 android:orientation="horizontal"
                 android:visibility="invisible">
 
-                <ImageView
+                <RelativeLayout
+                    android:layout_width="@dimen/dim_185"
+                    android:layout_height="@dimen/dim_56"
+                    android:layout_centerInParent="true">
+
+                    <View
+                        android:id="@+id/background_img"
+                        android:layout_width="@dimen/dim_185"
+                        android:layout_height="@dimen/dim_42"
+                        android:layout_alignParentBottom="true"
+                        android:background="@drawable/prediction_powerup_bg_icn"/>
+
+                    <!-- No negative -->
+                    <RelativeLayout
+                        android:id="@+id/powerups_rl_nonegs"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true">
+
+                        <ImageView
+                            android:id="@+id/powerups_iv_nonegs"
+                            android:layout_width="@dimen/dim_48"
+                            android:layout_height="@dimen/dp_48"
+                            android:onClick="onClick"
+                            android:src="@drawable/prediction_no_negative_powerup_button" />
+
+                        <com.jeeva.android.widgets.customfont.CustomTextView
+                            android:id="@+id/powerup_tv_nonegs_count"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignTop="@id/powerups_iv_nonegs"
+                            android:layout_centerHorizontal="true"
+                            android:background="@drawable/prediction_powerup_counter_bg"
+                            android:gravity="center"
+                            android:text="3"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/sp_8"
+                            app:typeface="lato_regular" />
+
+                    </RelativeLayout>
+
+                    <!-- Doubler -->
+                    <RelativeLayout
+                        android:id="@+id/powerups_rl_2x"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true">
+
+                        <ImageView
+                            android:id="@+id/powerups_iv_2x"
+                            android:layout_width="@dimen/dp_48"
+                            android:layout_height="@dimen/dp_48"
+                            android:onClick="onClick"
+                            android:src="@drawable/prediction_doubler_powerup_button" />
+
+                        <com.jeeva.android.widgets.customfont.CustomTextView
+                            android:id="@+id/powerup_tv_2x_count"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignTop="@id/powerups_iv_2x"
+                            android:layout_centerHorizontal="true"
+                            android:background="@drawable/prediction_powerup_counter_bg"
+                            android:gravity="center"
+                            android:text="3"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/sp_8"
+                            app:typeface="lato_regular" />
+
+                    </RelativeLayout>
+
+                    <!-- Player poll -->
+                    <RelativeLayout
+                        android:id="@+id/powerups_rl_poll"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true">
+
+                        <ImageView
+                            android:id="@+id/powerups_iv_poll"
+                            android:layout_width="@dimen/dp_48"
+                            android:layout_height="@dimen/dp_48"
+                            android:onClick="onClick"
+                            android:src="@drawable/prediction_player_poll_powerup_button" />
+
+                        <com.jeeva.android.widgets.customfont.CustomTextView
+                            android:id="@+id/powerup_tv_poll_count"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignTop="@id/powerups_iv_poll"
+                            android:layout_centerHorizontal="true"
+                            android:background="@drawable/prediction_powerup_counter_bg"
+                            android:gravity="center"
+                            android:text="3"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/sp_8"
+                            app:typeface="lato_regular" />
+
+                    </RelativeLayout>
+
+                </RelativeLayout>
+
+                <!--<ImageView
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/dp_38"
                     android:layout_alignParentBottom="true"
-                    android:background="@drawable/powerup_half_circle_bg" />
-
-                <RelativeLayout
-                    android:id="@+id/powerups_rl_nonegs"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginBottom="@dimen/dp_16"
-                    android:layout_marginLeft="@dimen/dp_26"
-                    android:layout_marginRight="@dimen/dp_26">
-
-                    <ImageView
-                        android:id="@+id/powerups_iv_nonegs"
-                        android:layout_width="@dimen/dp_46"
-                        android:layout_height="@dimen/dp_46"
-                        android:layout_marginRight="@dimen/dp_2"
-                        android:onClick="onClick"
-                        android:padding="@dimen/dp_10"
-                        android:src="@drawable/powerup_nonegs_white" />
-
-                    <com.jeeva.android.widgets.customfont.CustomTextView
-                        android:id="@+id/powerup_tv_nonegs_count"
-                        android:layout_width="@dimen/dp_15"
-                        android:layout_height="@dimen/dp_15"
-                        android:layout_alignRight="@id/powerups_iv_nonegs"
-                        android:layout_alignTop="@id/powerups_iv_nonegs"
-                        android:layout_marginRight="@dimen/_dp_2"
-                        android:alpha="0.8"
-                        android:background="@drawable/powerup_count_bg"
-                        android:gravity="center"
-                        android:text="3"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/dp_8"
-                        app:typeface="lato_regular" />
-
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:id="@+id/powerups_rl_2x"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
-                    android:layout_marginBottom="@dimen/dp_8"
-                    android:layout_toLeftOf="@id/powerups_rl_nonegs">
-
-                    <ImageView
-                        android:id="@+id/powerups_iv_2x"
-                        android:layout_width="@dimen/dp_46"
-                        android:layout_height="@dimen/dp_46"
-                        android:layout_marginRight="@dimen/dp_2"
-                        android:onClick="onClick"
-                        android:padding="@dimen/dp_10"
-                        android:src="@drawable/powerup_2x_white" />
-
-                    <com.jeeva.android.widgets.customfont.CustomTextView
-                        android:id="@+id/powerup_tv_2x_count"
-                        android:layout_width="@dimen/dp_15"
-                        android:layout_height="@dimen/dp_15"
-                        android:layout_alignRight="@id/powerups_iv_2x"
-                        android:layout_alignTop="@id/powerups_iv_2x"
-                        android:layout_marginRight="@dimen/_dp_2"
-                        android:alpha="0.8"
-                        android:background="@drawable/powerup_count_bg"
-                        android:gravity="center"
-                        android:text="3"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/dp_8"
-                        app:typeface="lato_regular" />
-
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:id="@+id/powerups_rl_poll"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
-                    android:layout_marginBottom="@dimen/dp_8"
-                    android:layout_toRightOf="@id/powerups_rl_nonegs">
-
-                    <ImageView
-                        android:id="@+id/powerups_iv_poll"
-                        android:layout_width="@dimen/dp_46"
-                        android:layout_height="@dimen/dp_46"
-                        android:layout_marginRight="@dimen/dp_2"
-                        android:onClick="onClick"
-                        android:padding="@dimen/dp_10"
-                        android:src="@drawable/powerup_audience_poll_white" />
-
-                    <com.jeeva.android.widgets.customfont.CustomTextView
-                        android:id="@+id/powerup_tv_poll_count"
-                        android:layout_width="@dimen/dp_15"
-                        android:layout_height="@dimen/dp_15"
-                        android:layout_alignRight="@id/powerups_iv_poll"
-                        android:layout_alignTop="@id/powerups_iv_poll"
-                        android:layout_marginRight="@dimen/_dp_2"
-                        android:alpha="0.8"
-                        android:background="@drawable/powerup_count_bg"
-                        android:gravity="center"
-                        android:text="3"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/dp_8"
-                        app:typeface="lato_regular" />
-
-                </RelativeLayout>
-
+                    android:background="@drawable/powerup_half_circle_bg" />-->
 
             </RelativeLayout>
 
@@ -214,7 +210,7 @@
                     android:paddingLeft="@dimen/dp_10"
                     android:paddingRight="@dimen/dp_10"
                     android:minWidth="@dimen/dp_90"
-                    android:background="@drawable/shape_neither_bg"
+                    android:background="@drawable/prediction_card_bottom_bg"
                     android:clickable="true"
                     android:gravity="center"
                     android:onClick="onClick"
@@ -243,9 +239,10 @@
             </RelativeLayout>
 
         </RelativeLayout>
+
     </RelativeLayout>
 
-    <in.sportscafe.nostragamus.module.play.tindercard.SwipeFlingAdapterView
+    <in.sportscafe.nostragamus.module.navigation.help.dummygame.tindercard.SwipeFlingAdapterView
         android:id="@+id/activity_prediction_swipe"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

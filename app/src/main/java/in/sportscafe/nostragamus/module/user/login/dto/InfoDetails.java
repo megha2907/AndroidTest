@@ -1,6 +1,6 @@
 package in.sportscafe.nostragamus.module.user.login.dto;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.annotations.SerializedName;
 
 import org.parceler.Parcel;
 
@@ -16,145 +16,145 @@ import in.sportscafe.nostragamus.module.user.badges.Badge;
 @Parcel
 public class InfoDetails {
 
-    @JsonProperty("powerups")
+    @SerializedName("powerups")
     private HashMap<String, Integer> powerUps = new HashMap<>();
 
-    @JsonProperty("badges")
+    @SerializedName("badges")
     private List<Badge> badges = new ArrayList<>();
 
-    @JsonProperty("transient_badges")
+    @SerializedName("transient_badges")
     private List<Badge> transientBadges = new ArrayList<>();
 
-    @JsonProperty("level")
+    @SerializedName("level")
     private String level;
 
-    @JsonProperty("user_referral_code")
+    @SerializedName("user_referral_code")
     private String ReferUserCode;
 
-    @JsonProperty("user_accepted")
+    @SerializedName("user_accepted")
     private Boolean disclaimerAccepted;
 
-    @JsonProperty("otp_verified")
+    @SerializedName("otp_verified")
     private Boolean otpVerified;
 
-    @JsonProperty("seen_whats_new")
+    @SerializedName("seen_whats_new")
     private Boolean whatsNewShown;
 
-    @JsonProperty("wallet_init")
+    @SerializedName("wallet_init")
     private Integer walletInit;
 
-    @JsonProperty("first_withdrawal_done")
+    @SerializedName("first_withdrawal_done")
     private Boolean firstWithdrawDone;
 
-    @JsonProperty("wallet_created")
+    @SerializedName("wallet_created")
     private boolean isWalletCreated;
 
-    @JsonProperty("powerups")
+    @SerializedName("powerups")
     public HashMap<String, Integer> getPowerUps() {
         return powerUps;
     }
 
-    @JsonProperty("powerups")
+    @SerializedName("powerups")
     public void setPowerUps(HashMap<String, Integer> powerUps) {
         this.powerUps = powerUps;
     }
 
-    @JsonProperty("badges")
+    @SerializedName("badges")
     public List<Badge> getBadges() {
         return badges;
     }
 
-    @JsonProperty("badges")
+    @SerializedName("badges")
     public void setBadges(List<Badge> badges) {
         this.badges = badges;
     }
 
-    @JsonProperty("level")
+    @SerializedName("level")
     public String getLevel() {
         return level;
     }
 
-    @JsonProperty("level")
+    @SerializedName("level")
     public void setLevel(String level) {
         this.level = level;
     }
 
-    @JsonProperty("transient_badges")
+    @SerializedName("transient_badges")
     public List<Badge> getTransientBadges() {
         return transientBadges;
     }
 
-    @JsonProperty("transient_badges")
+    @SerializedName("transient_badges")
     public void setTransientBadges(List<Badge> transientBadges) {
         this.transientBadges = transientBadges;
     }
 
-    @JsonProperty("user_accepted")
+    @SerializedName("user_accepted")
     public Boolean getDisclaimerAccepted() {
         return disclaimerAccepted;
     }
 
-    @JsonProperty("user_accepted")
+    @SerializedName("user_accepted")
     public void setDisclaimerAccepted(Boolean disclaimerAccepted) {
         this.disclaimerAccepted = disclaimerAccepted;
     }
 
-    @JsonProperty("wallet_init")
+    @SerializedName("wallet_init")
     public Integer getWalletInit() {
         return walletInit;
     }
 
-    @JsonProperty("wallet_init")
+    @SerializedName("wallet_init")
     public void setWalletInit(Integer walletInit) {
         this.walletInit = walletInit;
     }
 
-    @JsonProperty("first_withdrawal_done")
+    @SerializedName("first_withdrawal_done")
     public Boolean getFirstWithdrawDone() {
         return firstWithdrawDone;
     }
 
-    @JsonProperty("first_withdrawal_done")
+    @SerializedName("first_withdrawal_done")
     public void setFirstWithdrawDone(Boolean firstWithdrawDone) {
         this.firstWithdrawDone = firstWithdrawDone;
     }
 
-    @JsonProperty("wallet_created")
+    @SerializedName("wallet_created")
     public boolean isWalletCreated() {
         return isWalletCreated;
     }
 
-    @JsonProperty("wallet_created")
+    @SerializedName("wallet_created")
     public void setWalletCreated(boolean walletCreated) {
         isWalletCreated = walletCreated;
     }
 
-    @JsonProperty("user_referral_code")
+    @SerializedName("user_referral_code")
     public String getReferUserCode() {
         return ReferUserCode;
     }
 
-    @JsonProperty("user_referral_code")
+    @SerializedName("user_referral_code")
     public void setReferUserCode(String referUserCode) {
         ReferUserCode = referUserCode;
     }
 
-    @JsonProperty("seen_whats_new")
+    @SerializedName("seen_whats_new")
     public Boolean getWhatsNewShown() {
         return whatsNewShown;
     }
 
-    @JsonProperty("seen_whats_new")
+    @SerializedName("seen_whats_new")
     public void setWhatsNewShown(Boolean whatsNewShown) {
         this.whatsNewShown = whatsNewShown;
     }
 
-    @JsonProperty("otp_verified")
+    @SerializedName("otp_verified")
     public Boolean getOtpVerified() {
         return otpVerified;
     }
 
-    @JsonProperty("otp_verified")
+    @SerializedName("otp_verified")
     public void setOtpVerified(Boolean otpVerified) {
         this.otpVerified = otpVerified;
     }

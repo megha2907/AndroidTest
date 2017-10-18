@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/black"
+    android:id="@+id/newChallenge_match_item_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:minHeight="@dimen/dim_100"
+        android:paddingLeft="@dimen/dim_12"
+        android:paddingRight="@dimen/dim_12"
+        android:gravity="center_vertical">
+
+        <!-- Date Time details -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center">
+
+            <com.jeeva.android.widgets.customfont.CustomTextView
+                android:id="@+id/newChallenge_match_date_time_textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="2"
+                android:textAllCaps="false"
+                android:textColor="@color/grey6"
+                android:textSize="@dimen/sp_10"
+                app:typeface="lato_bold" />
+
+        </LinearLayout>
+
+        <!-- party details -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="@dimen/dim_10"
+            android:minHeight="@dimen/dim_32"
+            android:gravity="center_vertical">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <com.jeeva.android.widgets.HmImageView
+                    android:id="@+id/match_party_1_imgView"
+                    android:layout_width="@dimen/dim_32"
+                    android:layout_height="@dimen/dim_32"
+                    android:scaleType="fitXY"
+                    app:defaultImage="@drawable/right_placeholder_icon" />
+
+                <com.jeeva.android.widgets.customfont.CustomTextView
+                    android:id="@+id/match_party_1_textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="left"
+                    android:ellipsize="end"
+                    android:maxLines="2"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white_80"
+                    android:textSize="@dimen/sp_12"
+                    app:typeface="lato_regular"
+                    android:layout_marginLeft="@dimen/dim_8"
+                    android:layout_marginRight="@dimen/dim_12"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <com.jeeva.android.widgets.customfont.CustomButton
+                    android:id="@+id/newChallenge_match_action_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/dim_32"
+                    android:background="@color/transparent"
+                    android:gravity="center"
+                    android:minWidth="0dp"
+                    android:textAllCaps="false"
+                    android:paddingBottom="@dimen/dim_5"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/sp_12"
+                    app:typeface="lato_bold" />
+
+                <com.jeeva.android.widgets.customfont.CustomButton
+                    android:id="@+id/newChallenge_match_vs_button"
+                    android:layout_width="@dimen/dim_24"
+                    android:layout_height="@dimen/dim_24"
+                    android:gravity="center"
+                    app:typeface="lato_regular"
+                    android:background="@drawable/vs_icon"
+                    android:visibility="gone"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <com.jeeva.android.widgets.customfont.CustomTextView
+                    android:id="@+id/match_party_2_textView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:ellipsize="end"
+                    android:maxLines="2"
+                    android:layout_marginLeft="@dimen/dim_12"
+                    android:gravity="right"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white_80"
+                    android:textSize="@dimen/sp_12"
+                    app:typeface="lato_regular"
+                    android:layout_marginRight="@dimen/dim_8"/>
+
+                <com.jeeva.android.widgets.HmImageView
+                    android:id="@+id/match_party_2_imgView"
+                    android:layout_width="@dimen/dim_32"
+                    android:layout_height="@dimen/dim_32"
+                    android:scaleType="fitXY"
+                    app:defaultImage="@drawable/right_placeholder_icon" />
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+        <!-- venue details -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_marginTop="@dimen/dim_10">
+
+            <com.jeeva.android.widgets.customfont.CustomTextView
+                android:id="@+id/newChallenge_match_venue_textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="2"
+                android:textAllCaps="false"
+                android:textColor="@color/grey6"
+                android:textSize="@dimen/sp_10"
+                app:typeface="lato_bold" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dim_0.5"
+        android:background="@color/line_separator"/>
+
+
+</LinearLayout>

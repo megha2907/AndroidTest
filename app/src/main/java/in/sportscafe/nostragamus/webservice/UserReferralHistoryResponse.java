@@ -1,6 +1,6 @@
 package in.sportscafe.nostragamus.webservice;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.annotations.SerializedName;
 
 import org.parceler.Parcel;
 
@@ -16,15 +16,15 @@ import in.sportscafe.nostragamus.module.navigation.referfriends.referralcredits.
 @Parcel
 public class UserReferralHistoryResponse {
 
-    @JsonProperty("data")
+    @SerializedName("data")
     private List<ReferralHistory> referralHistoryList = new ArrayList<>();
 
-    @JsonProperty("data")
+    @SerializedName("data")
     public List<ReferralHistory> getReferralHistoryList() {
         return referralHistoryList;
     }
 
-    @JsonProperty("data")
+    @SerializedName("data")
     public void setReferralHistoryList(List<ReferralHistory> referralHistoryList) {
         this.referralHistoryList = referralHistoryList;
     }

@@ -1,6 +1,6 @@
 package in.sportscafe.nostragamus.module.user.leaderboard.dto;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.annotations.SerializedName;
 
 import org.parceler.Parcel;
 
@@ -12,40 +12,43 @@ import java.util.Comparator;
 @Parcel
 public class UserLeaderBoard {
 
-    @JsonProperty("user_id")
+    @SerializedName("user_id")
     private Integer userId;
 
-    @JsonProperty("user_nick")
+    @SerializedName("user_nick")
     private String userName;
 
-    @JsonProperty("user_photo")
+    @SerializedName("user_photo")
     private String userPhoto;
 
-    @JsonProperty("accuracy")
+    @SerializedName("accuracy")
     private Integer accuracy;
 
-    @JsonProperty("rank")
+    @SerializedName("rank")
     private Integer rank;
 
-    @JsonProperty("rank_change")
+    @SerializedName("rank_change")
     private Integer rankChange;
 
-    @JsonProperty("count_played")
+    @SerializedName("count_plays")
     private Integer countPlayed;
 
-    @JsonProperty("total_points")
+    @SerializedName("total_points")
     private Long points;
 
-    @JsonProperty("this_match_points")
+    @SerializedName("this_match_points")
     private Long matchPoints;
 
-    @JsonProperty("count_powerups")
+    @SerializedName("count_powerups")
     private Integer userPowerUps;
+
+    @SerializedName("is_winning")
+    private boolean isWinning = false;
 
     /**
      * @return The userId
      */
-    @JsonProperty("user_id")
+    @SerializedName("user_id")
     public Integer getUserId() {
         return userId;
     }
@@ -53,28 +56,28 @@ public class UserLeaderBoard {
     /**
      * @param userId The user_id
      */
-    @JsonProperty("user_id")
+    @SerializedName("user_id")
     public void setUserId(Integer userId) {
         this.userId = userId;
     }
 
-    @JsonProperty("user_name")
+    @SerializedName("user_name")
     public String getUserName() {
         return userName;
     }
 
-    @JsonProperty("user_name")
+    @SerializedName("user_name")
     public void setUserName(String userName) {
         this.userName = userName;
     }
 
 
-    @JsonProperty("user_photo")
+    @SerializedName("user_photo")
     public String getUserPhoto() {
         return userPhoto;
     }
 
-    @JsonProperty("user_photo")
+    @SerializedName("user_photo")
     public void setUserPhoto(String userPhoto) {
         this.userPhoto = userPhoto;
     }
@@ -82,7 +85,7 @@ public class UserLeaderBoard {
     /**
      * @return The rank
      */
-    @JsonProperty("rank")
+    @SerializedName("rank")
     public Integer getRank() {
         return rank;
     }
@@ -90,7 +93,7 @@ public class UserLeaderBoard {
     /**
      * @param rank The rank
      */
-    @JsonProperty("rank")
+    @SerializedName("rank")
     public void setRank(Integer rank) {
         this.rank = rank;
     }
@@ -98,7 +101,7 @@ public class UserLeaderBoard {
     /**
      * @return The rankChange
      */
-    @JsonProperty("rank_change")
+    @SerializedName("rank_change")
     public Integer getRankChange() {
         return rankChange;
     }
@@ -106,60 +109,68 @@ public class UserLeaderBoard {
     /**
      * @param rankChange The rank_change
      */
-    @JsonProperty("rank_change")
+    @SerializedName("rank_change")
     public void setRankChange(Integer rankChange) {
         this.rankChange = rankChange;
     }
 
-    @JsonProperty("user_points")
+    @SerializedName("user_points")
     public Long getPoints() {
         return points;
     }
 
-    @JsonProperty("user_points")
+    @SerializedName("user_points")
     public void setPoints(Long points) {
         this.points = points;
     }
 
 
-    @JsonProperty("count_played")
+    @SerializedName("count_plays")
     public Integer getCountPlayed() {
         return countPlayed;
     }
 
-    @JsonProperty("count_played")
+    @SerializedName("count_plays")
     public void setCountPlayed(Integer countPlayed) {
         this.countPlayed = countPlayed;
     }
 
-    @JsonProperty("accuracy")
+    @SerializedName("accuracy")
     public Integer getAccuracy() {
         return accuracy;
     }
 
-    @JsonProperty("accuracy")
+    @SerializedName("accuracy")
     public void setAccuracy(Integer accuracy) {
         this.accuracy = accuracy;
     }
 
-    @JsonProperty("this_match_points")
+    @SerializedName("this_match_points")
     public Long getMatchPoints() {
         return matchPoints;
     }
 
-    @JsonProperty("this_match_points")
+    @SerializedName("this_match_points")
     public void setMatchPoints(Long matchPoints) {
         this.matchPoints = matchPoints;
     }
 
-    @JsonProperty("count_powerups")
+    @SerializedName("count_powerups")
     public Integer getUserPowerUps() {
         return userPowerUps;
     }
 
-    @JsonProperty("count_powerups")
+    @SerializedName("count_powerups")
     public void setUserPowerUps(Integer userPowerUps) {
         this.userPowerUps = userPowerUps;
+    }
+
+    public boolean isWinning() {
+        return isWinning;
+    }
+
+    public void setWinning(boolean winning) {
+        isWinning = winning;
     }
 
 

@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="in.sportscafe.nostragamus.module.nostraHome.ui.NostraHomeActivity">
+
+    <!-- Bottom Layout -->
+    <LinearLayout
+        android:id="@+id/bottom_bar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dim_48"
+        android:orientation="vertical"
+        android:background="#141414"
+        android:layout_alignParentBottom="true">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dim_1"
+            android:background="@color/grey"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:paddingBottom="@dimen/dim_5">
+
+            <!-- Challenges tab -->
+            <LinearLayout
+                android:id="@+id/home_challenges_tab_layout"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:gravity="center">
+
+                <ImageView
+                    android:id="@+id/home_challenges_imgView"
+                    android:layout_width="@dimen/dim_16"
+                    android:layout_height="@dimen/dim_16"
+                    android:layout_marginTop="@dimen/dp_8"
+                    android:src="@drawable/menu_home_btn_selector" />
+
+                <com.jeeva.android.widgets.customfont.CustomTextView
+                    android:id="@+id/home_challenges_tab_textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dim_2"
+                    android:text="Challenges"
+                    android:textColor="@drawable/menu_tv_selector"
+                    android:textSize="@dimen/sp_11"
+                    app:typeface="lato_regular" />
+
+            </LinearLayout>
+
+            <!-- InPlay tab -->
+            <LinearLayout
+                android:id="@+id/home_inPlay_tab_layout"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:gravity="center">
+
+                <ImageView
+                    android:id="@+id/home_inPlay_imgView"
+                    android:layout_width="@dimen/dim_16"
+                    android:layout_height="@dimen/dim_16"
+                    android:layout_marginTop="@dimen/dp_8"
+                    android:src="@drawable/menu_inplay_btn_selector" />
+
+                <com.jeeva.android.widgets.customfont.CustomTextView
+                    android:id="@+id/home_inPlay_tab_textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dim_2"
+                    android:text="In Play"
+                    android:textColor="@drawable/menu_tv_selector"
+                    android:textSize="@dimen/sp_11"
+                    app:typeface="lato_regular" />
+
+            </LinearLayout>
+
+            <!-- Completed tab -->
+            <LinearLayout
+                android:id="@+id/home_completed_tab_layout"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:gravity="center">
+
+                <ImageView
+                    android:id="@+id/home_completed_imgView"
+                    android:layout_width="@dimen/dim_16"
+                    android:layout_height="@dimen/dim_16"
+                    android:layout_marginTop="@dimen/dp_8"
+                    android:src="@drawable/menu_history_btn_selector" />
+
+                <com.jeeva.android.widgets.customfont.CustomTextView
+                    android:id="@+id/home_completed_tab_textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dim_2"
+                    android:text="History"
+                    android:textColor="@drawable/menu_tv_selector"
+                    android:textSize="@dimen/sp_11"
+                    app:typeface="lato_regular" />
+
+            </LinearLayout>
+
+            <!-- Group tab -->
+            <LinearLayout
+                android:id="@+id/home_group_tab_layout"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:visibility="gone"
+                android:orientation="vertical"
+                android:gravity="center">
+
+                <ImageView
+                    android:id="@+id/home_group_imgView"
+                    android:layout_width="@dimen/dim_16"
+                    android:layout_height="@dimen/dim_16"
+                    android:layout_marginTop="@dimen/dp_8"
+                    android:src="@drawable/menu_group_btn_selector" />
+
+                <com.jeeva.android.widgets.customfont.CustomTextView
+                    android:id="@+id/home_group_tab_textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dim_2"
+                    android:text="Group"
+                    android:textColor="@drawable/menu_tv_selector"
+                    android:textSize="@dimen/sp_11"
+                    app:typeface="lato_regular" />
+
+            </LinearLayout>
+
+            <!-- Navigation tab -->
+            <LinearLayout
+                android:id="@+id/home_profile_tab_layout"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:gravity="center">
+
+                <ImageView
+                    android:id="@+id/home_profile_imgView"
+                    android:layout_width="@dimen/dim_16"
+                    android:layout_height="@dimen/dim_16"
+                    android:layout_marginTop="@dimen/dp_8"
+                    android:src="@drawable/menu_profile_btn_selector" />
+
+                <com.jeeva.android.widgets.customfont.CustomTextView
+                    android:id="@+id/home_profile_tab_textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dim_2"
+                    android:text="Profile"
+                    android:textColor="@drawable/menu_tv_selector"
+                    android:textSize="@dimen/sp_11"
+                    app:typeface="lato_regular" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <!-- All fragments to be inflated here, which have bottom navigation bar visible -->
+    <FrameLayout
+        android:id="@+id/fragment_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:layout_above="@id/bottom_bar"/>
+
+</RelativeLayout>

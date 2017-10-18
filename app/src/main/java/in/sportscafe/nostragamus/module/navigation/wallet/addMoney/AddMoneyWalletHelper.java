@@ -202,7 +202,11 @@ public class AddMoneyWalletHelper {
                 if (fragment != null) {
                     FragmentManager fragmentManager = fragment.getChildFragmentManager();
                     if (fragmentManager != null) {
-                        failureDialogFragment.show(fragmentManager, "FAILURE_DIALOG");
+                        try {
+                            failureDialogFragment.show(fragmentManager, "FAILURE_DIALOG");
+                        } catch (Exception ex) {
+                            ex.printStackTrace();
+                        }
                     }
                 }
             }
@@ -248,7 +252,7 @@ public class AddMoneyWalletHelper {
                     }
                     if (fragment instanceof AddMoneyOnLowBalanceFragment) {
                         /*AddMoneyOnLowBalanceFragmentListener fragmentListener = ((AddMoneyOnLowBalanceFragment) fragment).getFragmentListener();
-                        fragmentListener.onSuccess();*/
+                        fragmentListener.onTimerSuccess();*/
 
                         ((AddMoneyOnLowBalanceFragment) fragment).onAddMoneySuccess();
                     }

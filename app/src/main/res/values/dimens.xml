@@ -1,7 +1,7 @@
 <resources>
     <!-- Default screen margins, per the Android Design guidelines. -->
-    <dimen name="activity_horizontal_margin">16dp</dimen>
-    <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="activity_horizontal_margin">0dp</dimen>
+    <dimen name="activity_vertical_margin">0dp</dimen>
 
     <dimen name="dp_37">37dp</dimen>
     <dimen name="dp_60">60dp</dimen>
@@ -20,6 +20,7 @@
     <!-- Font sizes -->
     <dimen name="sp_8">8sp</dimen>
     <dimen name="sp_9">9sp</dimen>
+    <dimen name="sp_9.5">9.5sp</dimen>
     <dimen name="sp_10">10sp</dimen>
     <dimen name="sp_11">11sp</dimen>
     <dimen name="sp_12">12sp</dimen>
@@ -124,6 +125,7 @@
     <dimen name="dim_11">11dp</dimen>
     <dimen name="dim_11.5">11.5dp</dimen>
     <dimen name="dim_12">12dp</dimen>
+    <dimen name="_dim_12">-12dp</dimen>
     <dimen name="dim_13">13dp</dimen>
     <dimen name="dim_14">14dp</dimen>
     <dimen name="dim_15">15dp</dimen>
@@ -144,18 +146,57 @@
     <dimen name="dim_29">29dp</dimen>
     <dimen name="dim_30">30dp</dimen>
     <dimen name="dim_32">32dp</dimen>
+    <dimen name="dim_38">38dp</dimen>
     <dimen name="dim_40">40dp</dimen>
+    <dimen name="dim_42">42dp</dimen>
+    <dimen name="dim_46">46dp</dimen>
+    <dimen name="dim_48">48dp</dimen>
     <dimen name="dim_50">50dp</dimen>
+    <dimen name="dim_55">55dp</dimen>
+    <dimen name="dim_56">56dp</dimen>
+    <dimen name="dim_58">58dp</dimen>
     <dimen name="dim_60">60dp</dimen>
+    <dimen name="dim_68">68dp</dimen>
+    <dimen name="dim_70">70dp</dimen>
     <dimen name="dim_75">75dp</dimen>
+    <dimen name="dim_78">78dp</dimen>
     <dimen name="dim_90">90dp</dimen>
     <dimen name="dim_100">100dp</dimen>
+    <dimen name="dim_110">110dp</dimen>
+    <dimen name="dim_115">115dp</dimen>
     <dimen name="dim_132">132dp</dimen>
+    <dimen name="dim_130">130dp</dimen>
     <dimen name="dim_120">120dp</dimen>
     <dimen name="dim_150">150dp</dimen>
     <dimen name="dim_160">160dp</dimen>
+    <dimen name="dim_165">165dp</dimen>
+    <dimen name="dim_170">170dp</dimen>
+    <dimen name="dim_185">185dp</dimen>
+    <dimen name="dim_250">250dp</dimen>
+    <dimen name="dim_240">240dp</dimen>
+    <dimen name="dim_230">230dp</dimen>
+    <dimen name="dim_225">225dp</dimen>
+    <dimen name="dim_227">227dp</dimen>
+    <dimen name="dim_260">260dp</dimen>
+    <dimen name="dim_265">265dp</dimen>
+    <dimen name="dim_252">252dp</dimen>
+    <dimen name="dim_280">280dp</dimen>
+    <dimen name="dim_246">246dp</dimen>
+    <dimen name="dim_236">236dp</dimen>
+    <dimen name="dim_237">237dp</dimen>
+    <dimen name="dim_235">235dp</dimen>
+    <dimen name="dim_262">262dp</dimen>
+    <dimen name="dim_267">267dp</dimen>
+    <dimen name="dim_220">220dp</dimen>
+    <dimen name="dim_268">268dp</dimen>
+    <dimen name="dim_270">270dp</dimen>
     <dimen name="dim_300">300dp</dimen>
     <dimen name="dim_320">320dp</dimen>
+    <dimen name="dim_330">330dp</dimen>
+    <dimen name="dim_340">340dp</dimen>
+    <dimen name="dim_370">370dp</dimen>
+    <dimen name="dim_380">380dp</dimen>
+    <dimen name="dim_382">382dp</dimen>
 
     <!-- Wallet -->
     <dimen name="wallet_home_row_height">52dp</dimen>
@@ -172,5 +213,11 @@
     <dimen name="dim_72">72dp</dimen>
     <dimen name="dim_45">45dp</dimen>
     <dimen name="dim_80">80dp</dimen>
+    <dimen name="dim_156">156dp</dimen>
+    <dimen name="dim_52">52dp</dimen>
+    <dimen name="dim_54">54dp</dimen>
+    <dimen name="dim_64">64dp</dimen>
+    <dimen name="dim_35">35dp</dimen>
+    <dimen name="dim_44">44dp</dimen>
 
 </resources>

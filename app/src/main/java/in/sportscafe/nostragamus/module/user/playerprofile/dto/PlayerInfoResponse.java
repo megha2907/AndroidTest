@@ -1,6 +1,6 @@
 package in.sportscafe.nostragamus.module.user.playerprofile.dto;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.annotations.SerializedName;
 
 import in.sportscafe.nostragamus.module.user.login.dto.UserInfo;
 
@@ -10,15 +10,15 @@ import in.sportscafe.nostragamus.module.user.login.dto.UserInfo;
 
 public class PlayerInfoResponse {
 
-        @JsonProperty("data")
+        @SerializedName("data")
         private PlayerInfo playerInfo;
 
-        @JsonProperty("data")
+        @SerializedName("data")
         public PlayerInfo getPlayerInfo() {
             return playerInfo;
         }
 
-        @JsonProperty("data")
+        @SerializedName("data")
         public void setPlayerInfo(PlayerInfo playerInfo) {
             this.playerInfo = playerInfo;
         }

@@ -2,44 +2,55 @@ package in.sportscafe.nostragamus.webservice;
 
 
 import java.util.List;
-import java.util.Map;
 
-import in.sportscafe.nostragamus.module.allchallenges.dto.AllChallengesResponse;
-import in.sportscafe.nostragamus.module.allchallenges.dto.Challenge;
-import in.sportscafe.nostragamus.module.allchallenges.dto.ChallengeConfigsResponse;
-import in.sportscafe.nostragamus.module.allchallenges.join.dto.JoinChallengeRequest;
-import in.sportscafe.nostragamus.module.allchallenges.join.dto.JoinChallengeResponse;
-import in.sportscafe.nostragamus.module.navigation.appupdate.AppUpdateResponse;
+import in.sportscafe.nostragamus.BuildConfig;
+import in.sportscafe.nostragamus.module.challengeCompleted.dto.CompletedMatchesResponse;
+import in.sportscafe.nostragamus.module.challengeCompleted.dto.CompletedResponse;
+import in.sportscafe.nostragamus.module.challengeRewards.dto.RewardsResponse;
+import in.sportscafe.nostragamus.module.challengeRules.dto.RulesResponse;
 import in.sportscafe.nostragamus.module.common.ApiResponse;
-import in.sportscafe.nostragamus.module.common.TimeResponse;
-import in.sportscafe.nostragamus.module.feed.dto.FeedResponse;
-import in.sportscafe.nostragamus.module.feed.dto.MatchesResponse;
-import in.sportscafe.nostragamus.module.fuzzylbs.FuzzyLbResponse;
-import in.sportscafe.nostragamus.module.fuzzyplayers.FuzzyPlayerResponse;
+import in.sportscafe.nostragamus.module.nostraHome.dto.TimeResponse;
+import in.sportscafe.nostragamus.module.common.dto.MatchesResponse;
+import in.sportscafe.nostragamus.module.contest.dto.ContestEntriesRequest;
+import in.sportscafe.nostragamus.module.contest.dto.ContestEntriesResponse;
+import in.sportscafe.nostragamus.module.contest.dto.ContestResponse;
+import in.sportscafe.nostragamus.module.contest.dto.JoinContestQueueRequest;
+import in.sportscafe.nostragamus.module.contest.dto.JoinContestQueueResponse;
+import in.sportscafe.nostragamus.module.contest.dto.VerifyJoinContestRequest;
+import in.sportscafe.nostragamus.module.contest.dto.VerifyJoinContestResponse;
+import in.sportscafe.nostragamus.module.inPlay.dto.InPlayMatchesResponse;
+import in.sportscafe.nostragamus.module.inPlay.dto.InPlayResponse;
+import in.sportscafe.nostragamus.module.navigation.appupdate.AppUpdateResponse;
 import in.sportscafe.nostragamus.module.navigation.edituserprofile.UpdateUserProfileRequest;
 import in.sportscafe.nostragamus.module.navigation.powerupbank.powerupbanktransaction.dto.PBTransactionHistoryResponse;
+import in.sportscafe.nostragamus.module.navigation.submitquestion.add.AddQuestionRequest;
+import in.sportscafe.nostragamus.module.navigation.submitquestion.tourlist.TourListResponse;
 import in.sportscafe.nostragamus.module.navigation.wallet.addMoney.dto.AddMoneyToWalletRequest;
 import in.sportscafe.nostragamus.module.navigation.wallet.dto.UserWalletResponse;
-import in.sportscafe.nostragamus.module.navigation.wallet.withdrawMoney.dto.WithdrawFromWalletRequest;
-import in.sportscafe.nostragamus.module.navigation.wallet.withdrawMoney.dto.WithdrawFromWalletResponse;
 import in.sportscafe.nostragamus.module.navigation.wallet.paytmAndBank.dto.AddBankDetailsRequest;
-import in.sportscafe.nostragamus.module.othersanswers.MatchAnswerStatsResponse;
 import in.sportscafe.nostragamus.module.navigation.wallet.paytmAndBank.dto.AddUserPaymentDetailsResponse;
 import in.sportscafe.nostragamus.module.navigation.wallet.paytmAndBank.dto.AddUserPaymentPaytmRequest;
 import in.sportscafe.nostragamus.module.navigation.wallet.paytmAndBank.dto.GenerateOrderRequest;
 import in.sportscafe.nostragamus.module.navigation.wallet.paytmAndBank.dto.GenerateOrderResponse;
+import in.sportscafe.nostragamus.module.navigation.wallet.walletHistory.WalletHistoryTransaction;
+import in.sportscafe.nostragamus.module.navigation.wallet.withdrawMoney.dto.WithdrawFromWalletRequest;
+import in.sportscafe.nostragamus.module.navigation.wallet.withdrawMoney.dto.WithdrawFromWalletResponse;
+import in.sportscafe.nostragamus.module.newChallenges.dto.JoinPseudoContestRequest;
+import in.sportscafe.nostragamus.module.newChallenges.dto.JoinPseudoContestResponse;
+import in.sportscafe.nostragamus.module.newChallenges.dto.NewChallengeMatchesResponse;
+import in.sportscafe.nostragamus.module.newChallenges.dto.NewChallengesResponse;
+import in.sportscafe.nostragamus.module.othersanswers.MatchAnswerStatsResponse;
 import in.sportscafe.nostragamus.module.play.myresults.MyResultsResponse;
 import in.sportscafe.nostragamus.module.play.myresults.dto.ReplayPowerupResponse;
-import in.sportscafe.nostragamus.module.play.powerup.dto.PowerupBankStatusRequest;
-import in.sportscafe.nostragamus.module.play.powerup.dto.PowerUpBankStatusResponse;
-import in.sportscafe.nostragamus.module.play.prediction.dto.Answer;
-import in.sportscafe.nostragamus.module.play.prediction.dto.AudiencePollRequest;
-import in.sportscafe.nostragamus.module.play.prediction.dto.AudiencePollResponse;
-import in.sportscafe.nostragamus.module.play.prediction.dto.QuestionsResponse;
-import in.sportscafe.nostragamus.module.popups.banktransfer.BankTransferRequest;
-import in.sportscafe.nostragamus.module.popups.banktransfer.BankTransferResponse;
-import in.sportscafe.nostragamus.module.navigation.submitquestion.add.AddQuestionRequest;
-import in.sportscafe.nostragamus.module.navigation.submitquestion.tourlist.TourListResponse;
+import in.sportscafe.nostragamus.module.prediction.playScreen.dto.AnswerRequest;
+import in.sportscafe.nostragamus.module.prediction.playScreen.dto.AnswerResponse;
+import in.sportscafe.nostragamus.module.prediction.playScreen.dto.PlayerPollResponse;
+import in.sportscafe.nostragamus.module.prediction.playScreen.dto.PlayersPollRequest;
+import in.sportscafe.nostragamus.module.prediction.playScreen.dto.PredictionAllQuestionResponse;
+import in.sportscafe.nostragamus.module.prediction.powerupBank.dto.PowerUpBankStatusResponse;
+import in.sportscafe.nostragamus.module.prediction.powerupBank.dto.PowerupBankStatusRequest;
+import in.sportscafe.nostragamus.module.prediction.powerupBank.dto.TransferPowerUpFromBankRequest;
+import in.sportscafe.nostragamus.module.prediction.powerupBank.dto.TransferPowerUpFromBankResponse;
 import in.sportscafe.nostragamus.module.settings.app.dto.AppSettingsResponse;
 import in.sportscafe.nostragamus.module.store.buy.BuyRequest;
 import in.sportscafe.nostragamus.module.store.buy.BuyResponse;
@@ -53,19 +64,17 @@ import in.sportscafe.nostragamus.module.user.group.members.AddGroupRequest;
 import in.sportscafe.nostragamus.module.user.group.members.MembersRequest;
 import in.sportscafe.nostragamus.module.user.group.newgroup.NewGroupRequest;
 import in.sportscafe.nostragamus.module.user.group.newgroup.NewGroupResponse;
-import in.sportscafe.nostragamus.module.user.lblanding.LBLandingResponse;
 import in.sportscafe.nostragamus.module.user.leaderboard.LeaderBoardResponse;
+import in.sportscafe.nostragamus.module.user.leaderboard.dto.UserLeaderBoardResponse;
 import in.sportscafe.nostragamus.module.user.login.dto.JwtToken;
 import in.sportscafe.nostragamus.module.user.login.dto.LogInRequest;
 import in.sportscafe.nostragamus.module.user.login.dto.LogInResponse;
 import in.sportscafe.nostragamus.module.user.myprofile.dto.Result;
 import in.sportscafe.nostragamus.module.user.myprofile.dto.TournamentFeedResponse;
-import in.sportscafe.nostragamus.module.user.myprofile.dto.TournamentsResponse;
 import in.sportscafe.nostragamus.module.user.myprofile.dto.UserInfoResponse;
 import in.sportscafe.nostragamus.module.user.myprofile.edit.UpdateUserRequest;
 import in.sportscafe.nostragamus.module.user.myprofile.edit.VerifyReferralCodeResponse;
 import in.sportscafe.nostragamus.module.user.playerprofile.dto.PlayerInfoResponse;
-import in.sportscafe.nostragamus.module.navigation.wallet.walletHistory.WalletHistoryTransaction;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.Call;
@@ -79,7 +88,6 @@ import retrofit2.http.PUT;
 import retrofit2.http.Part;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
-import retrofit2.http.QueryMap;
 
 /**
  * Created by Jeeva on 14/3/16.
@@ -89,17 +97,12 @@ public interface NostragamusService {
     @GET("v1/game/users")
     Call<UserInfoResponse> getUserInfo();
 
-    @GET("v2/game/users/{tournament_id}/timeline")
-    Call<FeedResponse> getMatches(@Path("tournament_id") int tourId);
+    @GET("v1/game/sports")
+    Call<SportsInfoResponse> getSportsInfo();
 
-    @GET("v1/game/users/matches")
-    Call<MatchesResponse> getMatchResults(@Query("is_attempted") Boolean isAttempted, @Query("without_commentary") Boolean WithoutCommentary);
-
-    @GET("v1/game/users/questions")
-    Call<QuestionsResponse> getQuestions(@Query("match_id") int matchId);
-
-    @GET("v1/game/users/tournaments")
-    Call<TournamentsResponse> getTournaments(@Query("is_current") boolean isCurrent, @Query("group_by_sport") boolean groupbySport);
+    @GET("v3/game/users/questions")
+    Call<PredictionAllQuestionResponse> getAllPredictionQuestions(@Query("match_id") int matchId,
+                                                                  @Query("room_id") int roomId);
 
     @GET("v1/game/users/tournaments")
     Call<TournamentFeedResponse> getCurrentTournaments(@Query("is_current") boolean isCurrent);
@@ -113,13 +116,6 @@ public interface NostragamusService {
     @Multipart
     @POST("v1/utility/addFileToS3")
     Call<Result> uploadImage(@Part MultipartBody.Part file, @Part("filePath") RequestBody filepath, @Part("fileName") RequestBody filename);
-
-    @POST("v2/game/users/answer")
-    Call<ApiResponse> saveAnswer(
-            @Body Answer answer,
-            @Query("is_match_complete") boolean isMatchComplete,
-            @Query("is_minority_option") boolean isMinorityOption
-    );
 
     @POST("v2/game/groups")
     Call<NewGroupResponse> createNewGroup(@Body NewGroupRequest request);
@@ -136,12 +132,15 @@ public interface NostragamusService {
     @HTTP(method = "DELETE", path = "v2/game/users/groups", hasBody = true)
     Call<ApiResponse> leaveGroup(@Body MembersRequest request);
 
-    @GET("v1/game/users/results")
-    Call<MyResultsResponse> getMyResults(@Query("match_id") Integer matchId, @Query("player_id") Integer playerId);
+    @GET("v3/game/users/results")
+    Call<MyResultsResponse> getMyResults(@Query("match_id") Integer matchId,
+                                         @Query("player_id") Integer playerId,
+                                         @Query("room_id") Integer roomId);
 
     @GET("v1/game/leaderboard/detail")
     Call<LeaderBoardResponse> getLeaderBoardDetail(@Query("group_id") Integer groupId,
-                                                   @Query("challenge_id") Integer challengeId, @Query("match_id") Integer matchId);
+                                                   @Query("challenge_id") Integer challengeId,
+                                                   @Query("match_id") Integer matchId);
 
     @PUT("v2/game/groups/tournaments")
     Call<ApiResponse> updateGroupTournament(@Body GroupTournamentUpdateRequest request);
@@ -158,8 +157,8 @@ public interface NostragamusService {
     @GET("v1/setting/getSettingsBody")
     Call<AppSettingsResponse> getAppSettings(@Query("unique_id") String uniqueId,@Query("app_type") String flavor);
 
-    @POST("v2/game/users/poll")
-    Call<AudiencePollResponse> getAudiencePoll(@Body AudiencePollRequest request);
+    /*@POST("v2/game/users/poll")
+    Call<AudiencePollResponse> getAudiencePoll(@Body AudiencePollRequest request);*/
 
     @GET("v2/game/refreshToken")
     Call<JwtToken> refreshAccessToken();
@@ -169,33 +168,40 @@ public interface NostragamusService {
                                                  @Query("match_id") Integer matchId);
 
     @GET("/v2/game/applyResultsPowerups")
-    Call<ReplayPowerupResponse> getFlipPowerup(@Query("powerup_id") String powerupId, @Query("match_id") Integer matchId, @Query("question_id") Integer questionId);
+    Call<ReplayPowerupResponse> getFlipPowerup(@Query("powerup_id") String powerupId,
+                                               @Query("match_id") Integer matchId,
+                                               @Query("question_id") Integer questionId);
 
     @GET("/v1/game/users/getPlayerProfile")
     Call<PlayerInfoResponse> getPlayerInfo(@Query("player_user_id") Integer playerId);
 
-    @GET("v1/game/users/matches/timeline")
+    @GET("v3/game/users/matches/timeline")
     Call<MatchesResponse> getTimelines(
-            @Query("challenge_id") Integer challengeId,
+            @Query("room_id") Integer roomId,
             @Query("player_id") Integer playerUserId,
             @Query("skip") int skip,
             @Query("limit") int limit
     );
 
+/*
+
     @GET("v1/game/users/getFuzzyPlayer")
     Call<FuzzyPlayerResponse> fuzzyPlayers(@Query("player_user_name") String key, @Query("match_id") Integer matchId);
+*/
 
-    @GET("v1/game/getPlayerResult")
-    Call<MyResultsResponse> getPlayerResult(@Query("player_id") Integer playerId, @Query("match_id") Integer matchId);
+    @GET("v3/game/getPlayerMatchResult")
+    Call<MyResultsResponse> getPlayerResult(@Query("player_id") Integer playerId,
+                                            @Query("match_id") Integer matchId,
+                                            @Query("room_id") Integer roomId);
 
-    @GET("v1/game/getMatchAnswersStats")
+    @GET("v3/game/getMatchAnswersStats")
     Call<MatchAnswerStatsResponse> playerResultPercentage(@Query("match_id") Integer matchId);
 
-    @GET("v2/game/users/leaderboard/summary")
+    /*@GET("v2/game/users/leaderboard/summary")
     Call<LBLandingResponse> getLBLandingSummary(@QueryMap Map<String, String> queries);
 
     @GET("v1/game/users/getFuzzySearchLeaderboards")
-    Call<FuzzyLbResponse> fuzzyLbs(@Query("search_key") String key);
+    Call<FuzzyLbResponse> fuzzyLbs(@Query("search_key") String key);*/
 
     @GET("/v1/game/users/getPendingUserPopups")
     Call<PopUpResponse> getPopUps(@Query("screen_name") String screenName);
@@ -212,29 +218,14 @@ public interface NostragamusService {
     @GET("/v2/game/users/getCommonLeaderboards")
     Call<CompareLeaderBoardResponse> getLeaderBoardComparisonRequest(@Query("player_id") Integer playerId);
 
-    /*@GET("/v2/game/users/getUserChallenges")
-    Call<AllChallengesResponse> getAllChallenges();*/
-
-    @GET("/v2/game/users/getHomeChallenges")
-    Call<AllChallengesResponse> getAllChallenges(@Query("filter") String filter);
-
-    @POST("v2/game/users/challenges/transferFromBank")
-    Call<BankTransferResponse> bankTransfer(@Body BankTransferRequest bankTransferRequest);
+    /*@POST("v2/game/users/challenges/transferFromBank")
+    Call<BankTransferResponse> bankTransfer(@Body BankTransferRequest bankTransferRequest);*/
 
     @POST("v2/game/submitQuestion")
     Call<ApiResponse> submitQuestion(@Body AddQuestionRequest addQuestionRequest);
 
     @GET("v2/game/getUpcomingMatches")
     Call<TourListResponse> getTourList();
-
-    @GET("/v2/game/challenges/getConfigs")
-    Call<ChallengeConfigsResponse> getConfigs(@Query("challenge_id") int challengeId, @Query("config_index") Integer configIndex,@Query("flavor") String appFlavor);
-
-    @PUT("/v2/game/users/joinUserChallenge")
-    Call<Challenge> getJoinChallenge(
-            @Query("challenge_id") int challengeId,
-            @Query("config_index") int configIndex
-    );
 
     @POST("v2/game/generateOrder")
     Call<GenerateOrderResponse> generateOrder(@Body GenerateOrderRequest request);
@@ -251,12 +242,13 @@ public interface NostragamusService {
     @GET("v1/utility/getServerTime")
     Call<TimeResponse> getServerTime();
 
+/*
     @GET("/v2/game/users/getHomeChallenges")
     Call<AllChallengesResponse> getCompletedChallengesRequest( @Query("filter") String filter,
                                                                @Query("skip") int skip,
-                                                               @Query("limit") int limit);
+                                                               @Query("limit") int limit);*/
 
-    @POST("v2/game/users/editAnswer")
+    @POST("v3/game/users/editAnswer")
     Call<ApiResponse> changeAnswer(@Body ChangeAnswer changeAnswer);
 
     @GET("v2/game/appUpdate")
@@ -271,8 +263,8 @@ public interface NostragamusService {
     @POST("/v1/wallet/withdraw")
     Call<WithdrawFromWalletResponse> withdrawFromWallet(@Body WithdrawFromWalletRequest request);
 
-    @POST("/v1/wallet/useWallet")
-    Call<JoinChallengeResponse> useWalletToJoinChallenge(@Body JoinChallengeRequest request);
+    /*@POST("/v1/wallet/useWallet")
+    Call<JoinChallengeResponse> useWalletToJoinChallenge(@Body JoinChallengeRequest request);*/
 
     @POST("/v1/wallet/useWallet")
     Call<BuyResponse> useWalletToBuyFromStore(@Body BuyRequest request);
@@ -304,11 +296,10 @@ public interface NostragamusService {
     @POST("/v2/game/login")
     Call<LogInResponse> loginUserV2(@Body LogInRequest logInRequest);
 
-
     @GET("/v2/game/store/getProductsByCategory")
     Call<StoreApiResponse> getStoreDetails(@Query("category") String category);
 
-    @POST("/v2/game/users/powerupTransferStats")
+    @POST("/v3/game/users/powerupTransferStats")
     Call<PowerUpBankStatusResponse> powerupTransferStatus(@Body PowerupBankStatusRequest request);
 
     @GET("v2/game/store/getPowerupTransaction")
@@ -319,4 +310,60 @@ public interface NostragamusService {
 
     @POST("v1/game/users/updateProfile")
     Call<ApiResponse> updateUserProfile(@Body UpdateUserProfileRequest updateUserProfileRequest);
+
+    @GET("/v3/game/challenges/new")
+    Call<List<NewChallengesResponse>> getNewHomeChallenges();
+
+    @GET("v3/game/challenges/getContests")
+    Call<ContestResponse> getContests(@Query("challenge_id") int challengeId,
+                                      @Query("flavor") String flavor);
+
+    @GET("v3/game/challenges/inPlay")
+    Call<List<InPlayResponse>> getInPlayChallenges();
+
+    @GET("v3/game/challenges/rewards")
+    Call<RewardsResponse> getRewardDetails(@Query("room_id") Integer roomId,@Query("config_id") Integer configId);
+
+    @GET("v3/game/challenges/contestRooms")
+    Call<ContestEntriesResponse> getContestEntries(@Query("config_id") Integer contestId);
+
+    @GET("v3/game/challenges/getUserMatches")
+    Call<InPlayMatchesResponse> getInPlayMatches(@Query("room_id") int roomId, @Query("challenge_id") int challengeId);
+
+    @GET("v3/game/challenges/getUserMatches")
+    Call<NewChallengeMatchesResponse> getNewChallengeMatches(@Query("challenge_id") int challengeId);
+
+    @GET("v3/game/rooms/leaderboards")
+    Call<UserLeaderBoardResponse> getUserLeaderBoardDetails(@Query("room_id") Integer userLeaderBoardRequest);
+
+    @GET("v3/game/contest/rules")
+    Call<RulesResponse> getContestRules(@Query("contest_id") int rulesRequest);
+
+    @POST("v3/game/users/poll")
+    Call<PlayerPollResponse> getPlayersPoll(@Body PlayersPollRequest request);
+
+    @POST("v3/game/users/answer")
+    Call<AnswerResponse> savePredictionAnswer(
+            @Body AnswerRequest answer,
+            @Query("is_match_complete") boolean isMatchComplete,
+            @Query("is_minority_option") boolean isMinorityOption
+    );
+
+    @POST("v3/game/users/transferFromBank")
+    Call<TransferPowerUpFromBankResponse> transferPowerUpsFromBank(@Body TransferPowerUpFromBankRequest request);
+
+    @POST("/v3/game/challenges/joinPseudoContest")
+    Call<JoinPseudoContestResponse> joinPseudoContest(@Body JoinPseudoContestRequest request);
+
+    @POST("/v3/game/challenges/joinContestQueue")
+    Call<JoinContestQueueResponse> joinContestQueue(@Body JoinContestQueueRequest request);
+
+    @POST("/v3/game/challenges/verifyJoinContest")
+    Call<VerifyJoinContestResponse> verifyJoinContest(@Body VerifyJoinContestRequest request);
+
+    @GET("/v3/game/challenges/completed")
+    Call<List<CompletedResponse>> getCompletedChallenges(@Query("skip") int skip, @Query("limit") int limit);
+
+    @GET("v3/game/challenges/getUserMatches")
+    Call<CompletedMatchesResponse> getCompletedChallengeMatches(@Query("room_id") int roomId, @Query("challenge_id") int challengeId);
 }

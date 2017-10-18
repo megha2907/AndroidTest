@@ -1,11 +1,11 @@
 package in.sportscafe.nostragamus.module.navigation.help.dummygame;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.annotations.SerializedName;
 
 import org.parceler.Parcel;
 
-import in.sportscafe.nostragamus.module.play.prediction.dto.Question;
+import in.sportscafe.nostragamus.module.resultspeek.dto.Question;
 
 /**
  * Created by Jeeva on 11/03/17.
@@ -13,132 +13,132 @@ import in.sportscafe.nostragamus.module.play.prediction.dto.Question;
 @Parcel
 public class DGInstruction {
 
-    @JsonProperty("name")
+    @SerializedName("name")
     private String name;
 
-    @JsonProperty("animation")
+    @SerializedName("animation")
     private DGAnimation animation;
 
-    @JsonProperty("waitingTime")
+    @SerializedName("waitingTime")
     private Long waitingTime;
 
-    @JsonProperty("freshStart")
+    @SerializedName("freshStart")
     private boolean freshStart = false;
 
-    @JsonProperty("type")
+    @SerializedName("type")
     private String type;
 
-    @JsonProperty("textType")
+    @SerializedName("textType")
     private String textType;
 
-    @JsonProperty("actionType")
+    @SerializedName("actionType")
     private String actionType;
 
-    @JsonProperty("questionType")
+    @SerializedName("questionType")
     private String questionType;
 
-    @JsonProperty("question")
+    @SerializedName("question")
     private Question question;
 
-    @JsonIgnore
+
     private Integer scoredPoints;
 
-    @JsonProperty("name")
+    @SerializedName("name")
     public String getName() {
         return name;
     }
 
-    @JsonProperty("name")
+    @SerializedName("name")
     public void setName(String name) {
         this.name = name;
     }
 
-    @JsonProperty("animation")
+    @SerializedName("animation")
     public DGAnimation getAnimation() {
         return animation;
     }
 
-    @JsonProperty("animation")
+    @SerializedName("animation")
     public void setAnimation(DGAnimation animation) {
         this.animation = animation;
     }
 
-    @JsonProperty("waitingTime")
+    @SerializedName("waitingTime")
     public Long getWaitingTime() {
         return waitingTime;
     }
 
-    @JsonProperty("waitingTime")
+    @SerializedName("waitingTime")
     public void setWaitingTime(Long waitingTime) {
         this.waitingTime = waitingTime;
     }
 
-    @JsonProperty("freshStart")
+    @SerializedName("freshStart")
     public boolean isFreshStart() {
         return freshStart;
     }
 
-    @JsonProperty("freshStart")
+    @SerializedName("freshStart")
     public void setFreshStart(boolean freshStart) {
         this.freshStart = freshStart;
     }
 
-    @JsonProperty("type")
+    @SerializedName("type")
     public String getType() {
         return type;
     }
 
-    @JsonProperty("type")
+    @SerializedName("type")
     public void setType(String type) {
         this.type = type;
     }
 
-    @JsonProperty("textType")
+    @SerializedName("textType")
     public String getTextType() {
         return textType;
     }
 
-    @JsonProperty("textType")
+    @SerializedName("textType")
     public void setTextType(String textType) {
         this.textType = textType;
     }
 
-    @JsonProperty("actionType")
+    @SerializedName("actionType")
     public String getActionType() {
         return actionType;
     }
 
-    @JsonProperty("actionType")
+    @SerializedName("actionType")
     public void setActionType(String actionType) {
         this.actionType = actionType;
     }
 
-    @JsonProperty("questionType")
+    @SerializedName("questionType")
     public String getQuestionType() {
         return questionType;
     }
 
-    @JsonProperty("questionType")
+    @SerializedName("questionType")
     public void setQuestionType(String questionType) {
         this.questionType = questionType;
     }
 
-    @JsonProperty("question")
+    @SerializedName("question")
     public Question getQuestion() {
         return question;
     }
 
-    @JsonProperty("question")
+    @SerializedName("question")
     public void setQuestion(Question question) {
         this.question = question;
     }
 
-    @JsonIgnore
+
     public Integer getScoredPoints() {
         return scoredPoints;
     }
 
-    @JsonIgnore
+
     public void setScoredPoints(Integer scoredPoints) {
         this.scoredPoints = scoredPoints;
     }

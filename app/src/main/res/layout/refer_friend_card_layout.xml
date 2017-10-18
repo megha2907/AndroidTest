@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_marginLeft="@dimen/dim_5"
+        android:layout_marginRight="@dimen/dim_5"
+        android:layout_marginTop="@dimen/dim_6"
+        android:clipToPadding="false"
+        android:paddingBottom="@dimen/dim_6"
+        android:paddingLeft="@dimen/dim_5"
+        android:paddingRight="@dimen/dim_5">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dim_60"
+            android:background="@drawable/refer_card_bg"
+            android:elevation="@dimen/dim_4"
+            android:orientation="horizontal"
+            android:paddingBottom="@dimen/dim_12"
+            android:paddingLeft="@dimen/dim_16"
+            android:paddingRight="@dimen/dim_16"
+            android:paddingTop="@dimen/dim_12">
+
+            <ImageView
+                android:id="@+id/refer_friend_image"
+                android:layout_width="@dimen/dim_35"
+                android:layout_height="@dimen/dim_35"
+                android:scaleType="fitXY"
+                android:layout_centerVertical="true"
+                android:src="@drawable/wallet_referral_card_icon" />
+
+            <com.jeeva.android.widgets.customfont.CustomTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Refer a friend and earn \nmoney, now!"
+                android:layout_toRightOf="@+id/refer_friend_image"
+                android:gravity="left"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/dim_16"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp_14"
+                app:typeface="lato_regular" />
+
+            <!-- Refer Now Button -->
+            <com.jeeva.android.widgets.customfont.CustomButton
+                android:id="@+id/refer_friend_btn"
+                android:layout_width="@dimen/dim_80"
+                android:layout_height="@dimen/dim_30"
+                android:background="@drawable/btn_refer_bg"
+                android:paddingBottom="@dimen/dim_3"
+                android:layout_alignParentRight="true"
+                android:text="Refer"
+                android:layout_centerVertical="true"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp_12"
+                app:typeface="lato_bold" />
+
+        </RelativeLayout>
+    </LinearLayout>
+</LinearLayout>

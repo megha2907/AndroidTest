@@ -22,7 +22,7 @@ import org.parceler.Parcels;
 
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
-import in.sportscafe.nostragamus.module.allchallenges.dto.ChallengeConfig;
+import in.sportscafe.nostragamus.module.contest.dto.JoinContestData;
 import in.sportscafe.nostragamus.module.navigation.wallet.WalletHelper;
 import in.sportscafe.nostragamus.module.navigation.wallet.addMoney.AddMoneyWalletHelper;
 import in.sportscafe.nostragamus.module.store.dto.StoreItems;
@@ -84,7 +84,7 @@ public class AddMoneyOnLowBalanceFragment extends BaseFragment implements View.O
     private void initBalanceDetails() {
         Bundle args = getArguments();
         if (args != null) {
-            if (args.containsKey(Constants.BundleKeys.CHALLENGE_CONFIG)) {
+            if (args.containsKey(Constants.BundleKeys.JOIN_CONTEST_DATA)) {
                 setUiAsLowBalFromChallenge(args);
             } else if (args.containsKey(Constants.BundleKeys.STORE_ITEM)) {
                 setUiAsLowBalFromBuyFromStore(args);
@@ -126,15 +126,15 @@ public class AddMoneyOnLowBalanceFragment extends BaseFragment implements View.O
     }
 
     private void setUiAsLowBalFromChallenge(Bundle args) {
-        ChallengeConfig challengeConfig = Parcels.unwrap(args.getParcelable(Constants.BundleKeys.CHALLENGE_CONFIG));
-        if (challengeConfig != null) {
+        JoinContestData joinContestData = Parcels.unwrap(args.getParcelable(Constants.BundleKeys.JOIN_CONTEST_DATA));
+        if (joinContestData != null) {
             double totalBal = WalletHelper.getTotalBalance();
-            int entryFee = challengeConfig.getEntryFee();
+            double entryFee = joinContestData.getEntryFee();
             double diff = totalBal - entryFee;
             if (diff < 0) {
                 mLowBalanceDifferenceAmount = -diff;
                 showDetailsOnUi(totalBal, entryFee);
-                setMessageText(challengeConfig.getConfigName(), "join");
+                setMessageText(joinContestData.getChallengeName(), "join");
             } else {
                 Log.d(TAG, "Low balance difference not proper : " + diff);
                 showMessage(Constants.Alerts.SOMETHING_WRONG);
@@ -142,7 +142,7 @@ public class AddMoneyOnLowBalanceFragment extends BaseFragment implements View.O
         }
     }
 
-    private void showDetailsOnUi(double totalBal, int entryFee) {
+    private void showDetailsOnUi(double totalBal, double entryFee) {
         // Show on UI
         View view = getView();
         if (view != null && getActivity() != null) {

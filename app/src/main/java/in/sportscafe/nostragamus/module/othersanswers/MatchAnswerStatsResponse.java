@@ -1,6 +1,6 @@
 package in.sportscafe.nostragamus.module.othersanswers;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,15 +11,15 @@ import java.util.List;
 
 public class MatchAnswerStatsResponse {
 
-    @JsonProperty("data")
+    @SerializedName("data")
     private List<MatchAnswerStats> questionAnswers = new ArrayList<>();
 
-    @JsonProperty("data")
+    @SerializedName("data")
     public List<MatchAnswerStats> getQuestionAnswers() {
         return questionAnswers;
     }
 
-    @JsonProperty("data")
+    @SerializedName("data")
     public void setQuestionAnswers(List<MatchAnswerStats> questionAnswers) {
         this.questionAnswers = questionAnswers;
     }

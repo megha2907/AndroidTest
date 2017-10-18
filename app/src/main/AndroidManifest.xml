@@ -8,6 +8,8 @@
 
     <!-- To get the status of internet -->
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
 
     <!-- Start MoEngage Permissions -->
     <!-- If you have specified applicationId in build.gradle file then replace [YOUR_PACKAGE_NAME] with applicationId -->
@@ -33,9 +35,7 @@
         android:largeHeap="true"
         android:theme="@style/AppTheme"
         tools:node="replace">
-        <activity
-            android:name=".module.test.TestActivity"
-            android:screenOrientation="portrait" />
+
         <activity
             android:name=".module.navigation.submitquestion.tourlist.TourListActivity"
             android:screenOrientation="portrait" />
@@ -53,6 +53,11 @@
             android:name=".module.navigation.wallet.paytmAndBank.AddBankDetailsActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
+
+        <activity
+            android:name=".module.popups.walletpopups.WalletBalancePopupActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.PopupTheme"/>
         <!--
             <activity
             android:name=".module.navigation.submitquestion.matchlist.MatchListFragment"
@@ -104,18 +109,15 @@
                     android:scheme="https" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".module.feed.FeedWebView"
-            android:screenOrientation="portrait" />
-        <activity android:name=".module.common.NostragamusWebView">
 
+        <activity
+            android:name=".module.resultspeek.FeedWebView"
+            android:screenOrientation="portrait" />
+
+        <activity android:name=".module.common.NostragamusWebView">
             <!-- <intent-filter> -->
             <!-- <action android:name="android.intent.action.VIEW" /> -->
-
-
             <!-- <category android:name="android.intent.category.DEFAULT" /> -->
-
-
             <!-- <data android:scheme="myscheme" /> -->
             <!-- <data android:scheme="https" /> -->
             <!-- <data android:scheme="http" /> -->
@@ -131,10 +133,6 @@
             android:name=".module.popups.inapppopups.InAppPopupActivity"
             android:theme="@style/AppTheme.PopupTheme" />
         <activity
-            android:name=".module.home.HomeActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden|adjustPan" />
-        <activity
             android:name=".module.user.playerprofile.PlayerProfileActivity"
             android:screenOrientation="portrait" />
         <activity
@@ -147,7 +145,7 @@
             android:name=".module.common.TermsConditions"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".module.user.referral.ReferralActivity"
+            android:name=".module.referral.ReferralActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".module.user.login.LogInActivity"
@@ -159,46 +157,16 @@
             android:name=".module.common.WebViewActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".module.feed.FeedActivity"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".module.user.myprofile.edit.EditProfileActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
-
         <activity
             android:name=".module.navigation.edituserprofile.EditUserProfileActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
-        <!--
-            <activity
-            android:name=".module.user.sportselection.SportSelectionActivity"
-            android:screenOrientation="portrait" />
-        -->
-        <activity
-            android:name=".module.play.prediction.PredictionActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".module.play.prediction.AllDoneActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".module.play.myresults.MyResultsActivity"
-            android:parentActivityName=".module.home.HomeActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden|adjustPan">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".module.home.HomeActivity" />
-        </activity>
         <activity
             android:name=".module.resultspeek.ResultsPeekActivity"
             android:screenOrientation="portrait" />
-        <!--
-            <activity
-            android:name=".module.play.myresults.flipPowerup.FlipActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden|adjustPan" />
-        -->
         <activity
             android:name=".module.user.points.PointsActivity"
             android:screenOrientation="portrait" />
@@ -231,10 +199,6 @@
             android:label="@string/app_name"
             android:theme="@style/Theme.AppCompat.Translucent" />
         <activity
-            android:name=".module.feedback.GoogleFormActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden|adjustPan" />
-        <activity
             android:name=".module.navigation.wallet.paytmAndBank.TestPaytmActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustPan" />
@@ -246,15 +210,16 @@
             android:name="com.facebook.FacebookActivity"
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
             android:label="@string/app_name" />
-
         <activity
             android:name="com.facebook.CustomTabMainActivity"
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
-            android:label="@string/app_name" >
+            android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
+
                 <data android:scheme="@string/fb_login_protocol_scheme" />
             </intent-filter>
         </activity>
@@ -263,8 +228,10 @@
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
+
                 <data android:scheme="@string/fb_login_protocol_scheme" />
             </intent-filter>
         </activity>
@@ -319,27 +286,66 @@
             android:name=".module.navigation.powerupbank.powerupbanktransaction.PBTransactionActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".module.play.powerup.PowerupBankTransferToPlayActivity"
+            android:name=".module.prediction.powerupBank.PowerupBankTransferToPlayActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@style/TransferPowerupTheme" />
         <activity
-            android:name=".module.play.gamePlayHelp.GamePlayHelpActivity"
+            android:name=".module.prediction.gamePlayHelp.GamePlayHelpActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@style/TransferPowerupTheme" />
-
         <activity
             android:name=".module.user.myprofile.verify.VerifyProfileActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden"/>
-
+            android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".module.store.StoreActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".module.navigation.powerupbank.earnmorepowerups.EarnMorePowerUpActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".module.user.group.GroupActivity"
+            
+            android:screenOrientation="portrait"
+            android:theme="@style/homeActivityTransitionStyle" />
+        <activity
+            android:name=".module.popups.challengepopups.ContestDetailsPopupActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.PopupTheme" />
+        <activity
+            android:name=".module.nostraHome.ui.NostraHomeActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".module.newChallenges.ui.matches.NewChallengesMatchActivity"
+            
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".module.contest.contestDetailsBeforeJoining.ContestDetailsActivity"
+            
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".module.contest.ui.ContestsActivity"
+            
+            android:screenOrientation="portrait" />
+        <activity
+        android:name=".module.contest.contestDetailsAfterJoining.InplayContestDetailsActivity"
+        android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".module.contest.contestDetailsCompletedChallenges.ChallengeHistoryContestDetailsActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".module.prediction.playScreen.PredictionActivity"
+            
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".module.inPlay.ui.headless.matches.InPlayHeadLessMatchActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".module.play.myresults.MyResultsActivity"
             android:screenOrientation="portrait" />
 
         <meta-data
@@ -555,6 +561,14 @@
 
                 <!-- Take action from NostraFileDownloadService.FILE_DOWNLOAD_BROADCAST_ACTION -->
                 <action android:name="in.sportscafe.nostragamus.broadcast.action.fileDownloadBroadcast" />
+            </intent-filter>
+        </receiver>
+
+        <!-- Internet connection change receiver -->
+        <receiver android:name=".receiver.InternetConnectionStateChangeReceiver">
+            <intent-filter>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+                <action android:name="android.net.wifi.WIFI_STATE_CHANGED" />
             </intent-filter>
         </receiver>
     </application>

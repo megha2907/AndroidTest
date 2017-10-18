@@ -35,12 +35,7 @@ public class PointsPresenterImpl implements PointsPresenter, PointsModelImpl.OnP
     @Override
     public void onCreatePoints(Bundle bundle) {
         mPointsModel.init(bundle);
-        mPointsView.setName(mPointsModel.getName());
-        mPointsView.setIcon(mPointsModel.getIcon());
         refreshLb();
-        if (!NostragamusDataHandler.getInstance().isVisitedLeaderBoards()) {
-            mPointsView.showOtherProfilePopUp();
-        }
     }
 
     @Override
@@ -123,7 +118,7 @@ public class PointsPresenterImpl implements PointsPresenter, PointsModelImpl.OnP
     @Override
     public void onEmpty() {
         mPointsView.dismissProgressbar();
-        mPointsView.showInAppMessage("Your leaderboard will update here after a match you have played is over");
+        mPointsView.showInAppMessage("Your leaderboard will update here after a Match you have played is over");
 
     }
 

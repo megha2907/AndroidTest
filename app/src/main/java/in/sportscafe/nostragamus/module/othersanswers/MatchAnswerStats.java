@@ -1,6 +1,6 @@
 package in.sportscafe.nostragamus.module.othersanswers;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.annotations.SerializedName;
 
 import java.util.HashMap;
 
@@ -10,67 +10,67 @@ import java.util.HashMap;
 
 public class MatchAnswerStats {
 
-    @JsonProperty("question_id")
+    @SerializedName("question_id")
     private Integer questionId;
 
-    @JsonProperty("answer3")
+    @SerializedName("answer3")
     private Integer answer3;
 
-    @JsonProperty("answer1")
+    @SerializedName("answer1")
     private Integer answer1;
 
-    @JsonProperty("answer2")
+    @SerializedName("answer2")
     private Integer answer2;
 
-    @JsonProperty("powerups")
+    @SerializedName("powerups")
     private HashMap<String, Integer> powerUps = new HashMap<>();
 
-    @JsonProperty("question_id")
+    @SerializedName("question_id")
     public Integer getQuestionId() {
         return questionId;
     }
 
-    @JsonProperty("question_id")
+    @SerializedName("question_id")
     public void setQuestionId(Integer questionId) {
         this.questionId = questionId;
     }
 
-    @JsonProperty("answer3")
+    @SerializedName("answer3")
     public Integer getAnswer3() {
         return answer3;
     }
 
-    @JsonProperty("answer3")
+    @SerializedName("answer3")
     public void setAnswer3(Integer answer3) {
         this.answer3 = answer3;
     }
 
-    @JsonProperty("answer1")
+    @SerializedName("answer1")
     public Integer getAnswer1() {
         return answer1;
     }
 
-    @JsonProperty("answer1")
+    @SerializedName("answer1")
     public void setAnswer1(Integer answer1) {
         this.answer1 = answer1;
     }
 
-    @JsonProperty("answer2")
+    @SerializedName("answer2")
     public Integer getAnswer2() {
         return answer2;
     }
 
-    @JsonProperty("answer2")
+    @SerializedName("answer2")
     public void setAnswer2(Integer answer2) {
         this.answer2 = answer2;
     }
 
-    @JsonProperty("powerups")
+    @SerializedName("powerups")
     public HashMap<String, Integer> getPowerUps() {
         return powerUps;
     }
 
-    @JsonProperty("powerups")
+    @SerializedName("powerups")
     public void setPowerUps(HashMap<String, Integer> powerUps) {
         this.powerUps = powerUps;
     }

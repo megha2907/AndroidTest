@@ -1,6 +1,6 @@
 package in.sportscafe.nostragamus.module.user.login.dto;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,15 +11,15 @@ import java.util.List;
 
 public class Emails {
 
-    @JsonProperty("value")
+    @SerializedName("value")
     private List<String> email = new ArrayList<>();
 
-    @JsonProperty("value")
+    @SerializedName("value")
     public List<String> getEmail() {
         return email;
     }
 
-    @JsonProperty("value")
+    @SerializedName("value")
     public void setEmail(List<String> email) {
         this.email = email;
     }

@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/popup_bg"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black_80">
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/popup_card"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dim_20"
+        android:layout_marginRight="@dimen/dim_20"
+        android:layout_marginTop="@dimen/dim_15"
+        android:layout_centerInParent="true"
+        app:cardBackgroundColor="@color/transparent"
+        app:cardCornerRadius="@dimen/dp_4"
+        app:cardUseCompatPadding="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/grey_303030"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <!-- Header -->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dim_56"
+                android:background="@color/colorBackground"
+                android:paddingLeft="@dimen/dim_20"
+                android:paddingRight="@dimen/dim_20"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/header_wallet_icon"
+                    android:layout_width="@dimen/dim_14"
+                    android:layout_height="@dimen/dim_14"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/dim_6"
+                    android:layout_toLeftOf="@+id/toolbar_wallet_money"
+                    android:src="@drawable/toolbar_wallet_icon" />
+
+                <com.jeeva.android.widgets.customfont.CustomTextView
+                    android:id="@+id/header_textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Wallet Balance"
+                    android:layout_toRightOf="@+id/header_wallet_icon"
+                    android:layout_centerVertical="true"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/sp_14"
+                    app:typeface="lato_regular" />
+
+                <com.jeeva.android.widgets.customfont.CustomTextView
+                    android:id="@+id/header_textView_wallet_amount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dim_8"
+                    android:text="360.00"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/sp_20"
+                    app:typeface="lato_bold" />
+
+            </RelativeLayout>
+
+            <!-- Image -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dim_8"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <ImageView
+                    android:layout_width="@dimen/dim_100"
+                    android:layout_height="@dimen/dim_100"
+                    android:src="@drawable/wallet_join_challenge_icn" />
+
+            </LinearLayout>
+
+            <!-- Content -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dim_20"
+                android:layout_marginRight="@dimen/dim_20"
+                android:orientation="vertical">
+
+                <!-- Balance Layout-->
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:minHeight="@dimen/dim_56"
+                    android:gravity="center_vertical"
+                    android:layout_marginLeft="@dimen/dim_12"
+                    android:layout_marginRight="@dimen/dim_12">
+
+                    <com.jeeva.android.widgets.customfont.CustomTextView
+                        android:id="@+id/wallet_balance_promo_txt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:text="Promo"
+                        android:textColor="@color/grey6"
+                        android:textSize="@dimen/sp_12"
+                        app:typeface="lato_regular" />
+
+                    <com.jeeva.android.widgets.customfont.CustomTextView
+                        android:id="@+id/wallet_balance_promo_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0.00"
+                        android:layout_alignParentRight="true"
+                        android:textColor="@color/grey6"
+                        android:textSize="@dimen/sp_12"
+                        app:typeface="lato_bold" />
+
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_0.5"
+                    android:background="@color/linecolor"
+                    android:visibility="gone"/>
+
+                <!-- Deposit layout -->
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:minHeight="@dimen/dim_56"
+                    android:gravity="center_vertical"
+                    android:layout_marginLeft="@dimen/dim_12"
+                    android:layout_marginRight="@dimen/dim_12">
+
+                    <com.jeeva.android.widgets.customfont.CustomTextView
+                        android:id="@+id/wallet_balance_deposit_txt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:text="Deposit"
+                        android:textColor="@color/grey6"
+                        android:textSize="@dimen/sp_12"
+                        app:typeface="lato_regular" />
+
+                    <com.jeeva.android.widgets.customfont.CustomTextView
+                        android:id="@+id/wallet_balance_deposit_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0.00"
+                        android:layout_alignParentRight="true"
+                        android:textColor="@color/grey6"
+                        android:textSize="@dimen/sp_12"
+                        app:typeface="lato_bold" />
+
+                </RelativeLayout>
+
+                <!-- Winnings layout -->
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:minHeight="@dimen/dim_56"
+                    android:gravity="center_vertical"
+                    android:layout_marginLeft="@dimen/dim_12"
+                    android:layout_marginRight="@dimen/dim_12">
+
+                    <com.jeeva.android.widgets.customfont.CustomTextView
+                        android:id="@+id/wallet_balance_winnings_txt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:text="Winnings"
+                        android:textColor="@color/grey6"
+                        android:textSize="@dimen/sp_12"
+                        app:typeface="lato_regular" />
+
+                    <com.jeeva.android.widgets.customfont.CustomTextView
+                        android:id="@+id/wallet_balance_winnings_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0.00"
+                        android:layout_alignParentRight="true"
+                        android:textColor="@color/grey6"
+                        android:textSize="@dimen/sp_12"
+                        app:typeface="lato_bold" />
+
+                </RelativeLayout>
+
+            </LinearLayout>
+
+            <!-- Buttons -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:layout_marginBottom="@dimen/dim_20">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dim_20"
+                    android:layout_marginRight="@dimen/dim_20">
+
+                    <com.jeeva.android.widgets.customfont.CustomButton
+                        android:id="@+id/wallet_balance_add_money_btn"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dim_40"
+                        android:layout_alignParentRight="true"
+                        android:background="@drawable/blue_button_selector"
+                        android:gravity="center"
+                        android:paddingBottom="@dimen/dim_3"
+                        android:paddingTop="@dimen/dp_0"
+                        android:text="Deposit Money"
+                        android:textAllCaps="false"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/sp_14"
+                        app:typeface="lato_regular" />
+
+                </RelativeLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </android.support.v7.widget.CardView>
+
+    <ImageView
+        android:id="@+id/popup_cross_btn"
+        android:layout_width="@dimen/dim_32"
+        android:layout_height="@dimen/dim_32"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/popup_card"
+        android:layout_marginTop="@dimen/dim_28"
+        android:elevation="@dimen/dp_4"
+        android:padding="@dimen/dp_5"
+        android:src="@drawable/popup_cross_icon"
+        android:visibility="visible" />
+
+</RelativeLayout>

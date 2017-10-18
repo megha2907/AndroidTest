@@ -1,6 +1,6 @@
 package in.sportscafe.nostragamus.module.user.leaderboard.dto;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,54 +10,54 @@ import java.util.List;
  */
 public class LbSport {
 
-    @JsonProperty("sports_id")
+    @SerializedName("sports_id")
     private Integer sportId;
 
-    @JsonProperty("weekly")
+    @SerializedName("weekly")
     private List<LeaderBoard> weeklyList = new ArrayList<>();
 
-    @JsonProperty("monthly")
+    @SerializedName("monthly")
     private List<LeaderBoard> monthlyList = new ArrayList<>();
 
-    @JsonProperty("alltime")
+    @SerializedName("alltime")
     private List<LeaderBoard> allTimeList = new ArrayList<>();
 
-    @JsonProperty("sports_id")
+    @SerializedName("sports_id")
     public Integer getSportId() {
         return sportId;
     }
 
-    @JsonProperty("sports_id")
+    @SerializedName("sports_id")
     public void setSportId(Integer sportId) {
         this.sportId = sportId;
     }
 
-    @JsonProperty("weekly")
+    @SerializedName("weekly")
     public List<LeaderBoard> getWeeklyList() {
         return weeklyList;
     }
 
-    @JsonProperty("weekly")
+    @SerializedName("weekly")
     public void setWeeklyList(List<LeaderBoard> weeklyList) {
         this.weeklyList = weeklyList;
     }
 
-    @JsonProperty("monthly")
+    @SerializedName("monthly")
     public List<LeaderBoard> getMonthlyList() {
         return monthlyList;
     }
 
-    @JsonProperty("monthly")
+    @SerializedName("monthly")
     public void setMonthlyList(List<LeaderBoard> monthlyList) {
         this.monthlyList = monthlyList;
     }
 
-    @JsonProperty("alltime")
+    @SerializedName("alltime")
     public List<LeaderBoard> getAllTimeList() {
         return allTimeList;
     }
 
-    @JsonProperty("alltime")
+    @SerializedName("alltime")
     public void setAllTimeList(List<LeaderBoard> allTimeList) {
         this.allTimeList = allTimeList;
     }

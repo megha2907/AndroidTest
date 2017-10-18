@@ -1,7 +1,7 @@
 package in.sportscafe.nostragamus.module.user.playerprofile.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.annotations.SerializedName;
 
 import org.parceler.Parcel;
 
@@ -20,50 +20,50 @@ import in.sportscafe.nostragamus.module.user.login.dto.UserPaymentInfo;
 @Parcel
 public class PlayerInfo extends BasicUserInfo {
 
-    @JsonProperty("user_photo")
+    @SerializedName("user_photo")
     private String photo;
 
-    @JsonProperty("sports_preferences")
+    @SerializedName("sports_preferences")
     private List<Integer> userSports = new ArrayList<>();
 
-    @JsonProperty("info")
+    @SerializedName("info")
     private InfoDetails infoDetails;
 
-    @JsonProperty("payment_info")
+    @SerializedName("payment_info")
     private UserPaymentInfo userPaymentInfo;
 
-    @JsonProperty("count_matches")
+    @SerializedName("count_matches")
     private Integer totalMatchesPlayed = 0;
 
-    @JsonProperty("total_points")
+    @SerializedName("total_points")
     private Long points;
 
-    @JsonProperty("total_powerups")
+    @SerializedName("total_powerups")
     private Long totalPowerups;
 
-    @JsonProperty("count_predictions")
+    @SerializedName("count_predictions")
     private Integer predictionCount;
 
-    @JsonProperty("count_powerups")
+    @SerializedName("count_powerups")
     private Integer powerupsUsedCount;
 
-    @JsonProperty("accuracy")
+    @SerializedName("accuracy")
     private Integer accuracy;
 
-    @JsonProperty("mutual_groups")
+    @SerializedName("mutual_groups")
     private List<AllGroups> mutualGroups = new ArrayList<>();
 
-    @JsonProperty("user_photo")
+    @SerializedName("user_photo")
     public String getPhoto() {
         return photo;
     }
 
-    @JsonProperty("user_photo")
+    @SerializedName("user_photo")
     public void setPhoto(String photo) {
         this.photo = photo;
     }
 
-    @JsonProperty("sports_preferences")
+    @SerializedName("sports_preferences")
     public List<Integer> getUserSports() {
         if (null == userSports) {
             userSports = new ArrayList<>();
@@ -71,32 +71,32 @@ public class PlayerInfo extends BasicUserInfo {
         return userSports;
     }
 
-    @JsonProperty("sports_preferences")
+    @SerializedName("sports_preferences")
     public void setUserSports(List<Integer> userSports) {
         this.userSports = userSports;
     }
 
-    @JsonProperty("info")
+    @SerializedName("info")
     public InfoDetails getInfoDetails() {
         return infoDetails;
     }
 
-    @JsonProperty("info")
+    @SerializedName("info")
     public void setInfoDetails(InfoDetails infoDetails) {
         this.infoDetails = infoDetails;
     }
 
-    @JsonProperty("count_matches")
+    @SerializedName("count_matches")
     public Integer getTotalMatchesPlayed() {
         return totalMatchesPlayed;
     }
 
-    @JsonProperty("count_matches")
+    @SerializedName("count_matches")
     public void setTotalMatchesPlayed(Integer totalMatchesPlayed) {
         this.totalMatchesPlayed = totalMatchesPlayed;
     }
 
-    @JsonProperty("total_points")
+    @SerializedName("total_points")
     public Long getTotalPoints() {
         if(null == points) {
             return 0L;
@@ -104,22 +104,22 @@ public class PlayerInfo extends BasicUserInfo {
         return points;
     }
 
-    @JsonProperty("total_points")
+    @SerializedName("total_points")
     public void setTotalPoints(Long points) {
         this.points = points;
     }
 
-    @JsonProperty("total_powerups")
+    @SerializedName("total_powerups")
     public Long getTotalPowerups() {
         return totalPowerups;
     }
 
-    @JsonProperty("total_powerups")
+    @SerializedName("total_powerups")
     public void setTotalPowerups(Long totalPowerups) {
         this.totalPowerups = totalPowerups;
     }
 
-    @JsonProperty("mutual_groups")
+    @SerializedName("mutual_groups")
     public List<AllGroups> getMutualGroups() {
         if(null == mutualGroups) {
             mutualGroups = new ArrayList<>();
@@ -127,52 +127,52 @@ public class PlayerInfo extends BasicUserInfo {
         return mutualGroups;
     }
 
-    @JsonProperty("mutual_groups")
+    @SerializedName("mutual_groups")
     public void setMutualGroups(List<AllGroups> mutualGroups) {
         this.mutualGroups = mutualGroups;
     }
 
-    @JsonIgnore
+
     public List<Badge> getBadges() {
         return infoDetails.getBadges();
     }
 
-    @JsonProperty("count_predictions")
+    @SerializedName("count_predictions")
     public Integer getPredictionCount() {
         return predictionCount;
     }
 
-    @JsonProperty("count_predictions")
+    @SerializedName("count_predictions")
     public void setPredictionCount(Integer predictionCount) {
         this.predictionCount = predictionCount;
     }
 
-    @JsonProperty("accuracy")
+    @SerializedName("accuracy")
     public Integer getAccuracy() {
         return accuracy;
     }
 
-    @JsonProperty("accuracy")
+    @SerializedName("accuracy")
     public void setAccuracy(Integer accuracy) {
         this.accuracy = accuracy;
     }
 
-    @JsonProperty("count_powerups")
+    @SerializedName("count_powerups")
     public Integer getPowerupsUsedCount() {
         return powerupsUsedCount;
     }
 
-    @JsonProperty("count_powerups")
+    @SerializedName("count_powerups")
     public void setPowerupsUsedCount(Integer powerupsUsedCount) {
         this.powerupsUsedCount = powerupsUsedCount;
     }
 
-    @JsonProperty("payment_info")
+    @SerializedName("payment_info")
     public UserPaymentInfo getUserPaymentInfo() {
         return userPaymentInfo;
     }
 
-    @JsonProperty("payment_info")
+    @SerializedName("payment_info")
     public void setUserPaymentInfo(UserPaymentInfo userPaymentInfo) {
         this.userPaymentInfo = userPaymentInfo;
     }

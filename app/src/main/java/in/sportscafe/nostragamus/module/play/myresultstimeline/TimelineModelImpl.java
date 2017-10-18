@@ -7,8 +7,8 @@ import java.util.List;
 
 import in.sportscafe.nostragamus.Constants.BundleKeys;
 import in.sportscafe.nostragamus.Nostragamus;
-import in.sportscafe.nostragamus.module.feed.dto.Match;
-import in.sportscafe.nostragamus.module.feed.dto.MatchesResponse;
+import in.sportscafe.nostragamus.module.common.dto.MatchesResponse;
+import in.sportscafe.nostragamus.module.resultspeek.dto.Match;
 import in.sportscafe.nostragamus.webservice.MyWebService;
 import in.sportscafe.nostragamus.webservice.NostragamusCallBack;
 import retrofit2.Call;
@@ -30,7 +30,7 @@ public class TimelineModelImpl implements TimelineModel {
 
     private String mPlayerName;
 
-    private Integer mChallengeId;
+    private Integer mRoomId;
 
     private int mClosestDatePosition = 0;
 
@@ -59,8 +59,13 @@ public class TimelineModelImpl implements TimelineModel {
                 mPlayerPhoto = bundle.getString(BundleKeys.PLAYER_PHOTO);
             }
 
-            if (bundle.containsKey(BundleKeys.CHALLENGE_ID)) {
-                mChallengeId = bundle.getInt(BundleKeys.CHALLENGE_ID);
+            if (bundle.containsKey(BundleKeys.ROOM_ID)) {
+                mRoomId = bundle.getInt(BundleKeys.ROOM_ID);
+
+                /* setting room Id 0 for current user */
+                if (mRoomId==0){
+                    mRoomId = null;
+                }
             }
         }
     }
@@ -70,7 +75,7 @@ public class TimelineModelImpl implements TimelineModel {
         if (null == mPlayerUserId) {
             return mTimelineAdapter = new TimelineAdapter(context);
         }
-        return mTimelineAdapter = new TimelineAdapter(context, mPlayerUserId, mPlayerName, mPlayerPhoto);
+        return mTimelineAdapter = new TimelineAdapter(context,mRoomId, mPlayerUserId, mPlayerName, mPlayerPhoto);
     }
 
     @Override
@@ -100,15 +105,15 @@ public class TimelineModelImpl implements TimelineModel {
 
     @Override
     public String getChallengeNameIfAvailable() {
-        if (null != mChallengeId && null != mTimelineAdapter && mTimelineAdapter.getItemCount() > 0) {
-            return mTimelineAdapter.getItem(0).getChallengeName();
+        if (null != mRoomId && null != mTimelineAdapter && mTimelineAdapter.getItemCount() > 0) {
+            return mTimelineAdapter.getItem(0).getChallengeName()+" - "+mTimelineAdapter.getItem(0).getContestName();
         }
         return null;
     }
 
     @Override
     public void clearChallengeDetails() {
-        mChallengeId = null;
+        mRoomId = null;
     }
 
     @Override
@@ -124,7 +129,7 @@ public class TimelineModelImpl implements TimelineModel {
 
         mTimelineLoading = true;
 
-        MyWebService.getInstance().getTimelinesRequest(mChallengeId, mPlayerUserId, skip, limit)
+        MyWebService.getInstance().getTimelinesRequest(mRoomId, mPlayerUserId, skip, limit)
                 .enqueue(new NostragamusCallBack<MatchesResponse>() {
                     @Override
                     public void onResponse(Call<MatchesResponse> call, Response<MatchesResponse> response) {

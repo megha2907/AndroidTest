@@ -12,8 +12,8 @@ import java.util.Map;
 import in.sportscafe.nostragamus.Constants.BundleKeys;
 import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
-import in.sportscafe.nostragamus.module.feed.dto.Match;
 import in.sportscafe.nostragamus.module.play.myresults.MyResultsResponse;
+import in.sportscafe.nostragamus.module.resultspeek.dto.Match;
 import in.sportscafe.nostragamus.module.user.playerprofile.PlayerProfileModelImpl;
 import in.sportscafe.nostragamus.module.user.playerprofile.dto.PlayerInfo;
 import in.sportscafe.nostragamus.webservice.MyWebService;
@@ -31,6 +31,8 @@ public class OthersAnswersModelImpl implements OthersAnswersModel {
     private int mPlayerUserId;
 
     private int mMatchId;
+
+    private int mRoomId;
 
     private Match mMatchDetails;
 
@@ -63,6 +65,7 @@ public class OthersAnswersModelImpl implements OthersAnswersModel {
             if (bundle.containsKey(BundleKeys.MATCH_DETAILS)) {
                 mMatchDetails = Parcels.unwrap(bundle.getParcelable(BundleKeys.MATCH_DETAILS));
                 mMatchId = mMatchDetails.getId();
+                mRoomId =  mMatchDetails.getRoomId();
             }
 
             if (bundle.containsKey(BundleKeys.SHOW_ANSWER_PERCENTAGE)) {
@@ -97,7 +100,7 @@ public class OthersAnswersModelImpl implements OthersAnswersModel {
     }
 
     private void callPlayerResultsApi() {
-        MyWebService.getInstance().getPlayerResultRequest(mPlayerUserId, mMatchId).enqueue(
+        MyWebService.getInstance().getPlayerResultRequest(mPlayerUserId, mMatchId,mRoomId).enqueue(
                 new NostragamusCallBack<MyResultsResponse>() {
                     @Override
                     public void onResponse(Call<MyResultsResponse> call, Response<MyResultsResponse> response) {
@@ -115,13 +118,13 @@ public class OthersAnswersModelImpl implements OthersAnswersModel {
         );
     }
 
-    private void handleOthersAnswersResponse(List<Match> othersAnswers) {
-        if (othersAnswers.isEmpty()) {
+    private void handleOthersAnswersResponse(Match othersAnswers) {
+        if (othersAnswers!=null) {
             mOthersAnswersModelListener.onEmpty();
             return;
         }
 
-        mMatchDetails = othersAnswers.get(0);
+        mMatchDetails = othersAnswers;
         if(mShowAnswerPercentage) {
             callPlayerResultPercentageApi();
         } else {
@@ -145,7 +148,7 @@ public class OthersAnswersModelImpl implements OthersAnswersModel {
         }
     }*/
 
-    /*private List<Feed> getCategorizedList(Match match, Map<Integer, MatchAnswerStats> questionAnswersMap) {
+    /*private List<Feed> getCategorizedList(Match Match, Map<Integer, MatchAnswerStats> questionAnswersMap) {
         Map<String, Tournament> tourMap = new HashMap<>();
         Map<String, Feed> feedMap = new HashMap<>();
         List<Feed> feedList = new ArrayList<>();
@@ -155,7 +158,7 @@ public class OthersAnswersModelImpl implements OthersAnswersModel {
         int tourId;
         Tournament tour;
         date = TimeUtils.getFormattedDateString(
-                match.getStartTime(),
+                Match.getStartTime(),
                 Constants.DateFormats.DD_MM_YYYY,
                 Constants.DateFormats.FORMAT_DATE_T_TIME_ZONE,
                 Constants.DateFormats.GMT
@@ -173,19 +176,19 @@ public class OthersAnswersModelImpl implements OthersAnswersModel {
             feedList.add(feed);
         }
 
-        tourId = match.getTournamentId();
+        tourId = Match.getTournamentId();
 
         if (tourMap.containsKey(date + tourId)) {
             tour = tourMap.get(date + tourId);
         } else {
-            tour = new Tournament(tourId, match.getTournamentName());
+            tour = new Tournament(tourId, Match.getTournamentName());
             tourMap.put(date + tourId, tour);
             feed.addTournament(tour);
         }
 
-        tour.addMatches(match);
+        tour.addMatches(Match);
 
-        match.updateAnswerPercentage(questionAnswersMap);
+        Match.updateAnswerPercentage(questionAnswersMap);
 
         Collections.sort(feedList, new Comparator<Feed>() {
             @Override

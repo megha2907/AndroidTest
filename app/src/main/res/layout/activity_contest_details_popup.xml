@@ -1,0 +1,372 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/popup_bg"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#CC000000">
+
+    <RelativeLayout
+        android:id="@+id/popup_contest_rl"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true">
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/popup_contest"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginLeft="@dimen/dim_16"
+            android:layout_marginRight="@dimen/dim_16"
+            android:layout_marginTop="@dimen/dim_15"
+            app:cardBackgroundColor="#CC000000"
+            app:cardCornerRadius="@dimen/dp_4"
+            app:cardUseCompatPadding="true">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/grey_303030"
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:id="@+id/popup_contest_ll_heading_bg"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dim_56"
+                    android:background="@color/colorBackground"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <com.jeeva.android.widgets.customfont.CustomTextView
+                        android:id="@+id/popup_contest_tv_heading"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/dim_8"
+                        android:text="Contest Details"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/sp_14"
+                        app:typeface="lato_bold" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:minHeight="@dimen/dim_66"
+                    android:paddingLeft="@dimen/dim_20">
+
+
+                    <ImageView
+                        android:id="@+id/popup_guarantee_contest_icon"
+                        android:layout_width="@dimen/dim_20"
+                        android:layout_height="@dimen/dim_20"
+                        android:layout_marginTop="@dimen/dim_10"
+                        android:src="@drawable/guaranteed_icon" />
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="@dimen/dim_14"
+                        android:layout_marginRight="@dimen/dim_14">
+
+                        <com.jeeva.android.widgets.customfont.CustomTextView
+                            android:id="@+id/popup_guarantee_contest_title"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_gravity="center_vertical"
+                            android:text="Guaranteed Contests"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/sp_14"
+                            app:typeface="lato_bold" />
+
+
+                        <com.jeeva.android.widgets.customfont.CustomTextView
+                            android:id="@+id/popup_guarantee_contest_desc"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginTop="@dimen/dim_2"
+                            android:text="The contest will go on even if the maximum number of entries have not joined that contest!"
+                            android:textColor="@color/white_60"
+                            android:textSize="@dimen/sp_11"
+                            app:typeface="lato_regular" />
+
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:minHeight="@dimen/dim_66"
+                    android:paddingLeft="@dimen/dim_20">
+
+
+                    <ImageView
+                        android:id="@+id/popup_pool_contest_icon"
+                        android:layout_width="@dimen/dim_20"
+                        android:layout_height="@dimen/dim_20"
+                        android:layout_marginTop="@dimen/dim_10"
+                        android:src="@drawable/pool_icon" />
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="@dimen/dim_14"
+                        android:layout_marginRight="@dimen/dim_14">
+
+                        <com.jeeva.android.widgets.customfont.CustomTextView
+                            android:id="@+id/popup_pool_contest_title"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_gravity="center_vertical"
+                            android:text="Pool Contests"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/sp_14"
+                            app:typeface="lato_bold" />
+
+
+                        <com.jeeva.android.widgets.customfont.CustomTextView
+                            android:id="@+id/popup_pool_contest_desc"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginTop="@dimen/dim_2"
+                            android:text="Requires minimum number of entries to start. Entry fee will be refunded to your wallet if it’s cancelled."
+                            android:textColor="@color/white_60"
+                            android:textSize="@dimen/sp_11"
+                            app:typeface="lato_regular" />
+
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:minHeight="@dimen/dim_66"
+                    android:paddingLeft="@dimen/dim_20">
+
+
+                    <ImageView
+                        android:id="@+id/popup_non_guarantee_contest_icon"
+                        android:layout_width="@dimen/dim_20"
+                        android:layout_height="@dimen/dim_20"
+                        android:layout_marginTop="@dimen/dim_10"
+                        android:src="@drawable/no_guarantee_icon" />
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="@dimen/dim_14"
+                        android:layout_marginRight="@dimen/dim_14">
+
+                        <com.jeeva.android.widgets.customfont.CustomTextView
+                            android:id="@+id/popup_non_guarantee_contest_title"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_gravity="center_vertical"
+                            android:text="Non-Guaranteed Contests"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/sp_14"
+                            app:typeface="lato_bold" />
+
+
+                        <com.jeeva.android.widgets.customfont.CustomTextView
+                            android:id="@+id/popup_non_guarantee_contest_desc"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginTop="@dimen/dim_2"
+                            android:text="The contest prize money will scale with the number of entries."
+                            android:textColor="@color/white_60"
+                            android:textSize="@dimen/sp_11"
+                            app:typeface="lato_regular" />
+
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:minHeight="@dimen/dim_56"
+                    android:paddingLeft="@dimen/dim_20"
+                    android:visibility="gone">
+
+
+                    <ImageView
+                        android:id="@+id/popup_powerups_icon"
+                        android:layout_width="@dimen/dim_16"
+                        android:layout_height="@dimen/dim_16"
+                        android:layout_marginTop="@dimen/dim_12"
+                        android:src="@drawable/powerup_enabled" />
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="@dimen/dim_20"
+                        android:layout_marginRight="@dimen/dim_19">
+
+                        <com.jeeva.android.widgets.customfont.CustomTextView
+                            android:id="@+id/popup_powerups_title"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_gravity="center_vertical"
+                            android:text="Powerups Enabled"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/sp_14"
+                            app:typeface="lato_bold" />
+
+
+                        <com.jeeva.android.widgets.customfont.CustomTextView
+                            android:id="@+id/popup_powerups_desc"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginTop="@dimen/dim_2"
+                            android:text="Powerups will be enabled for these contests."
+                            android:textColor="@color/white_60"
+                            android:textSize="@dimen/sp_11"
+                            app:typeface="lato_regular" />
+
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:minHeight="@dimen/dim_56"
+                    android:paddingLeft="@dimen/dim_20"
+                    android:visibility="gone">
+
+
+                    <ImageView
+                        android:id="@+id/popup_powerups_disabled_icon"
+                        android:layout_width="@dimen/dim_16"
+                        android:layout_height="@dimen/dim_16"
+                        android:layout_marginTop="@dimen/dim_12"
+                        android:src="@drawable/powerup_disabled_icon" />
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="@dimen/dim_20"
+                        android:layout_marginRight="@dimen/dim_20">
+
+                        <com.jeeva.android.widgets.customfont.CustomTextView
+                            android:id="@+id/popup_powerups_disabled_title"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_gravity="center_vertical"
+                            android:text="Powerups Disabled"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/sp_14"
+                            app:typeface="lato_bold" />
+
+
+                        <com.jeeva.android.widgets.customfont.CustomTextView
+                            android:id="@+id/popup_powerups_disabled_desc"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginTop="@dimen/dim_2"
+                            android:text="Powerups disabled for these contests."
+                            android:textColor="@color/white_60"
+                            android:textSize="@dimen/sp_11"
+                            app:typeface="lato_regular" />
+
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="@dimen/dp_0"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:paddingTop="@dimen/dim_20"
+                        android:paddingBottom="@dimen/dim_20">
+
+                        <com.jeeva.android.widgets.customfont.CustomButton
+                            android:id="@+id/popup_contest_exit_btn"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/dim_40"
+                            android:layout_marginTop="@dimen/dim_1"
+                            android:layout_marginLeft="@dimen/dim_20"
+                            android:layout_marginRight="@dimen/dim_20"
+                            android:background="@drawable/blue_button_selector"
+                            android:gravity="center"
+                            android:minWidth="@dimen/dim_72"
+                            android:paddingBottom="@dimen/dim_2"
+                            android:text="Got it!"
+                            android:textAllCaps="false"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/sp_14"
+                            app:typeface="lato_bold" />
+                    </LinearLayout>
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </android.support.v7.widget.CardView>
+
+    </RelativeLayout>
+
+    <ImageView
+        android:id="@+id/popup_contest_cross_btn"
+        android:layout_width="@dimen/dim_32"
+        android:layout_height="@dimen/dim_32"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/popup_contest_rl"
+        android:layout_marginTop="@dimen/dim_18"
+        android:elevation="@dimen/dp_4"
+        android:padding="@dimen/dp_5"
+        android:src="@drawable/popup_cross_icon"
+        android:visibility="visible" />
+
+</RelativeLayout>

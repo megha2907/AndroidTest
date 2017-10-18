@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="in.sportscafe.nostragamus.module.play.powerup.info.PowerupBankInfoViewPagerFragment">
+    tools:context="in.sportscafe.nostragamus.module.prediction.powerupBank.info.PowerupBankInfoViewPagerFragment">
 
     <LinearLayout
         android:id="@+id/powerup_bank_info_text_container_linear"

@@ -71,7 +71,7 @@
                 android:layout_gravity="center_horizontal"
                 android:textColor="#cecece"
                 android:gravity="center"
-                android:text="Transaction to join challenge has failed."
+                android:text="Transaction to join newChallengesResponse has failed."
                 android:textSize="@dimen/dp_12"
                 app:typeface="lato_regular"
                 android:layout_marginTop="@dimen/dp_10"

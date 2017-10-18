@@ -1,27 +1,25 @@
 package in.sportscafe.nostragamus.module.play.myresults;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.annotations.SerializedName;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import in.sportscafe.nostragamus.module.feed.dto.Match;
+import in.sportscafe.nostragamus.module.resultspeek.dto.Match;
 
 /**
  * Created by Jeeva on 5/7/16.
  */
 public class MyResultsResponse {
 
-    @JsonProperty("data")
-    private List<Match> myResults = new ArrayList<>();
+    @SerializedName("data")
+    private Match myResults;
 
-    @JsonProperty("data")
-    public List<Match> getMyResults() {
+    @SerializedName("data")
+    public Match getMyResults() {
         return myResults;
     }
 
-    @JsonProperty("data")
-    public void setMyResults(List<Match> myResults) {
+    @SerializedName("data")
+    public void setMyResults(Match myResults) {
         this.myResults = myResults;
     }
+
 }

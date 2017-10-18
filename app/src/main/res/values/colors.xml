@@ -41,7 +41,7 @@
     <color name="textcolorlight">#86858D</color>
     <color name="textcolorlightopacity">#5586858D</color>
     <color name="dividercolor">#2A2A2A</color>
-    <color name="linecolor">#303030</color>
+    <color name="linecolor">#505050</color>
     <color name="colorBrown">#2A2832</color>
     <color name="colorGrey">#26252d</color>
     <color name="invitepeoplebtncolor">#00CE61</color>
@@ -64,6 +64,7 @@
 
     <color name="black">#151515</color>
     <color name="black_1">#252525</color>
+    <color name="black_2">#181818</color>
     <color name="black_10">#1A000000</color>
     <color name="black_20">#33000000</color>
     <color name="black_30">#4D000000</color>
@@ -83,7 +84,13 @@
     <color name="grey5">#999999</color>
     <color name="grey6">#CCCCCC</color>
     <color name="grey7">#e6e6e6</color>
+    <color name="grey8">#282828</color>
+    <color name="grey_303030">#303030</color>
     <color name="grey_dim_text">#99a5b5</color>
+    <color name="grey_999999">#999999</color>
+    <color name="grey_a1a1a1">#a1a1a1</color>
+    <color name="grey_bbbbcc">#bbbbcc</color>
+    <color name="brown_ccbbbb">#ccbbbb</color>
 
     <color name="white_70">#B3FFFFFF</color>
     <color name="white_80">#CCFFFFFF</color>
@@ -98,6 +105,7 @@
     <color name="white_f2f2f2">#f2f2f2</color>
     <color name="white_999999">#999999</color>
     <color name="white_909090">#909090</color>
+    <color name="white_998989">#998989</color>
 
     <color name="wallet_button_bg">#405583</color>
     <color name="challenge_join_bg">#04b554</color>
@@ -149,15 +157,23 @@
     <color name="elephant">#13374D</color>
     <color name="deepcarmine">#b22b42</color>
 
+    <color name="bluecolor1">#0098a6</color>
+    <color name="bluecolor2">#1888bb</color>
+
+
     <color name="greencolor2">#04af76</color>
     <color name="greencolor3">#057f53</color>
 
     <color name="black2">#212121</color>
     <color name="black3">#252525</color>
+    <color name="black4">#181818</color>
+    <color name="black5">#151515</color>
 
     <color name="text_shadow_color_blue">#0f1c44</color>
     <color name="edit_text_icon_bg_color">#186AA2</color>
     <color name="play_screen_bg_color">#222222</color>
     <color name="err_color">#c43763</color>
+
+    <color name="new_challenge_tab_bg">#102c4e</color>
 
 </resources>

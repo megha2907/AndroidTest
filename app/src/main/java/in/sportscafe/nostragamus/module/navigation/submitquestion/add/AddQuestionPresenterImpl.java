@@ -7,8 +7,8 @@ import java.util.List;
 import in.sportscafe.nostragamus.AppSnippet;
 import in.sportscafe.nostragamus.Constants.Alerts;
 import in.sportscafe.nostragamus.Constants.DateFormats;
-import in.sportscafe.nostragamus.module.feed.dto.Match;
-import in.sportscafe.nostragamus.module.feed.dto.Parties;
+import in.sportscafe.nostragamus.module.resultspeek.dto.Match;
+import in.sportscafe.nostragamus.module.resultspeek.dto.Parties;
 import in.sportscafe.nostragamus.utils.timeutils.TimeUtils;
 
 /**
@@ -95,7 +95,7 @@ public class AddQuestionPresenterImpl implements AddQuestionPresenter, AddQuesti
         );
 
         int dayOfMonth = Integer.parseInt(TimeUtils.getDateStringFromMs(startTimeMs, "d"));
-        // Setting date of the match
+        // Setting date of the Match
         mAddQuestionView.setMatchDate(dayOfMonth + AppSnippet.ordinalOnly(dayOfMonth) + " " +
                 TimeUtils.getDateStringFromMs(startTimeMs, "MMM") + ", "
                 + TimeUtils.getDateStringFromMs(startTimeMs, DateFormats.HH_MM_AA)

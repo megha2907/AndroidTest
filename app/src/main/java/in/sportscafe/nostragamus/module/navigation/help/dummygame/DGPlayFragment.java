@@ -18,8 +18,8 @@ import org.parceler.Parcels;
 import in.sportscafe.nostragamus.Constants.BundleKeys;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.NostragamusFragment;
-import in.sportscafe.nostragamus.module.play.prediction.dto.Question;
-import in.sportscafe.nostragamus.module.play.tindercard.SwipeFlingAdapterView;
+import in.sportscafe.nostragamus.module.navigation.help.dummygame.tindercard.SwipeFlingAdapterView;
+import in.sportscafe.nostragamus.module.resultspeek.dto.Question;
 
 
 public class DGPlayFragment extends NostragamusFragment implements DGPlayView, View.OnClickListener {
@@ -98,9 +98,9 @@ public class DGPlayFragment extends NostragamusFragment implements DGPlayView, V
         mTvPollPowerupCount = (TextView) findViewById(R.id.powerup_tv_poll_count);
         mTvNeitherOption = (TextView) findViewById(R.id.prediction_tv_neither_text);
 
-        mIv2xPowerup.setBackground(getPowerupDrawable(R.color.dodger_blue));
+        /*mIv2xPowerup.setBackground(getPowerupDrawable(R.color.dodger_blue));
         mIvNonegsPowerup.setBackground(getPowerupDrawable(R.color.amaranth));
-        mIvPollPowerup.setBackground(getPowerupDrawable(R.color.greencolor));
+        mIvPollPowerup.setBackground(getPowerupDrawable(R.color.greencolor));*/
 
         mIv2xPowerup.setOnClickListener(this);
         mIvNonegsPowerup.setOnClickListener(this);
@@ -241,15 +241,15 @@ public class DGPlayFragment extends NostragamusFragment implements DGPlayView, V
             alpha = 1f;
         }
 
-        powerUpIcon.setAlpha(alpha);
-        powerUpText.setAlpha(alpha);
+//        powerUpIcon.setAlpha(alpha);
+//        powerUpText.setAlpha(alpha);
 
         if (count == 0) {
             powerUpText.setText("+");
             powerUpText.setBackgroundResource(R.drawable.powerup_count_add_bg);
         } else {
             powerUpText.setText(String.valueOf(count));
-            powerUpText.setBackgroundResource(R.drawable.powerup_count_bg);
+            powerUpText.setBackgroundResource(R.drawable.prediction_powerup_counter_bg);
         }
     }
 
@@ -260,9 +260,12 @@ public class DGPlayFragment extends NostragamusFragment implements DGPlayView, V
     private static final float MAX_WIGGLE_ROTATION = 15;
 
     public void animatePowerUps() {
-        doWiggleAnimation(findViewById(R.id.powerups_rl_2x), 0, MAX_WIGGLE_ROTATION);
-        doWiggleAnimation(findViewById(R.id.powerups_rl_nonegs), 0, MAX_WIGGLE_ROTATION);
-        doWiggleAnimation(findViewById(R.id.powerups_rl_poll), 0, MAX_WIGGLE_ROTATION);
+        if (getView() != null) {
+            View rootView = getView();
+            doWiggleAnimation(rootView.findViewById(R.id.powerups_rl_2x), 0, MAX_WIGGLE_ROTATION);
+            doWiggleAnimation(rootView.findViewById(R.id.powerups_rl_nonegs), 0, MAX_WIGGLE_ROTATION);
+            doWiggleAnimation(rootView.findViewById(R.id.powerups_rl_poll), 0, MAX_WIGGLE_ROTATION);
+        }
     }
 
     private void doWiggleAnimation(View view, int count, float rotation) {

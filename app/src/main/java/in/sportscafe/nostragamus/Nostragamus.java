@@ -11,15 +11,14 @@ import android.support.multidex.MultiDex;
 
 import com.crashlytics.android.Crashlytics;
 import com.jeeva.android.ExceptionTracker;
-import com.jeeva.android.Log;
 import com.jeeva.android.facebook.FacebookHandler;
 import com.jeeva.android.facebook.user.FacebookPermission;
 import com.jeeva.android.volley.Volley;
 import com.jeeva.android.widgets.customfont.CustomFont;
 import com.moe.pushlibrary.MoEHelper;
 import com.moe.pushlibrary.utils.MoEHelperConstants;
-import com.moengage.addon.inbox.InboxManager;
 import com.moengage.push.PushManager;
+import com.moengage.pushbase.push.PushActionManager;
 
 import java.util.Arrays;
 import java.util.Calendar;
@@ -28,9 +27,7 @@ import java.util.List;
 import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
 import in.sportscafe.nostragamus.module.crash.NostragamusUncaughtExceptionHandler;
 import in.sportscafe.nostragamus.module.getstart.GetStartActivity;
-import in.sportscafe.nostragamus.module.notifications.NotificationCustom;
-import in.sportscafe.nostragamus.module.notifications.NotificationInboxAdapter;
-import in.sportscafe.nostragamus.module.offline.OfflineDataHandler;
+import in.sportscafe.nostragamus.module.notifications.NotificationPushMessageListener;
 import in.sportscafe.nostragamus.module.settings.app.AppSettingsModelImpl;
 import in.sportscafe.nostragamus.module.user.login.RefreshTokenModelImpl;
 import in.sportscafe.nostragamus.webservice.MyWebService;
@@ -42,8 +39,6 @@ import io.fabric.sdk.android.Fabric;
  */
 public class Nostragamus extends Application {
 
-    private static final boolean mDebuggable = BuildConfig.DEBUG;
-
     private static Nostragamus sNostragamus;
     private ServerDataManager mServerDataManager;
 
@@ -51,7 +46,6 @@ public class Nostragamus extends Application {
     private static long systemTimeMillis;
 
     private void initMembers() {
-        // Assigning the Nostragamus instance
         sNostragamus = Nostragamus.this;
 
         mServerDataManager = new ServerDataManager();
@@ -84,7 +78,7 @@ public class Nostragamus extends Application {
         initMembers();
 
         // Initializing the SportsCafe Uncaught Exception handler
-        initCrashHandler(mDebuggable);
+        initCrashHandler();
 
         // Initializing all the data handlers
         initDataHandlers();
@@ -99,16 +93,13 @@ public class Nostragamus extends Application {
         initCustomFonts();
 
         // Initializing the SportsCafe analytics
-        NostragamusAnalytics.getInstance().init(getApplicationContext(), mDebuggable).autoTrack(this);
+        NostragamusAnalytics.getInstance().init(getApplicationContext()).autoTrack(this);
 
         // Here we are helping moEngage to track install/update count
         doInstallOrUpdateChanges();
 
         //For customizing the notification which is received from mo-engage
-        PushManager.getInstance().setMessageListener(new NotificationCustom());
-
-        // For notification inbox
-        InboxManager.getInstance().setInboxAdapter(new NotificationInboxAdapter());
+        PushManager.getInstance().setMessageListener(new NotificationPushMessageListener());
 
         //Enable cookie matching
         Branch.enableCookieBasedMatching("http://nostragamus.in/");
@@ -122,19 +113,17 @@ public class Nostragamus extends Application {
     @Override
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(base);
-
-        if (mDebuggable) {
+        if (BuildConfig.DEBUG) {
             MultiDex.install(this);
         }
     }
 
-    private void initCrashHandler(boolean debuggable) {
+    private void initCrashHandler() {
 
         // It is to show the crash page, If the application is crashed
         Thread.setDefaultUncaughtExceptionHandler(new NostragamusUncaughtExceptionHandler());
 
-        if (!debuggable) {
-            // Initializing the Crashlytics using fabric
+        if (!BuildConfig.DEBUG) {
             Fabric.with(this, new Crashlytics());
         }
     }
@@ -142,7 +131,6 @@ public class Nostragamus extends Application {
     private void initDataHandlers() {
         Context context = getApplicationContext();
         NostragamusDataHandler.getInstance().init(context);
-        OfflineDataHandler.getInstance().init(context);
     }
 
     private void initCustomFonts() {
@@ -209,10 +197,9 @@ public class Nostragamus extends Application {
 
     @Override
     public void onTerminate() {
-        super.onTerminate();
-
-        // It is to clear all the hold memory after termination
+        // This method is only called when running on Emulated env, not on real device
         removeAllInstances();
+        super.onTerminate();
     }
 
     private void removeAllInstances() {

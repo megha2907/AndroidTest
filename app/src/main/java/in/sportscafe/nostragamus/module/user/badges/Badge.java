@@ -1,6 +1,6 @@
 package in.sportscafe.nostragamus.module.user.badges;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.annotations.SerializedName;
 
 import org.parceler.Parcel;
 
@@ -10,16 +10,16 @@ import org.parceler.Parcel;
 @Parcel
 public class Badge {
 
-    @JsonProperty("name")
+    @SerializedName("name")
     private String name;
 
-    @JsonProperty("desc")
+    @SerializedName("desc")
     private String desc;
 
-    @JsonProperty("img_url")
+    @SerializedName("img_url")
     private String photo;
 
-    @JsonProperty("is_locked")
+    @SerializedName("is_locked")
     private Boolean isLocked;
 
     public Badge() {
@@ -30,42 +30,42 @@ public class Badge {
         this.desc = desc;
     }
 
-    @JsonProperty("name")
+    @SerializedName("name")
     public String getName() {
         return name;
     }
 
-    @JsonProperty("name")
+    @SerializedName("name")
     public void setName(String name) {
         this.name = name;
     }
 
-    @JsonProperty("desc")
+    @SerializedName("desc")
     public String getDesc() {
         return desc;
     }
 
-    @JsonProperty("desc")
+    @SerializedName("desc")
     public void setDesc(String desc) {
         this.desc = desc;
     }
 
-    @JsonProperty("img_url")
+    @SerializedName("img_url")
     public String getPhoto() {
         return photo;
     }
 
-    @JsonProperty("img_url")
+    @SerializedName("img_url")
     public void setPhoto(String photo) {
         this.photo = photo;
     }
 
-    @JsonProperty("is_locked")
+    @SerializedName("is_locked")
     public Boolean getIsLocked() {
         return isLocked;
     }
 
-    @JsonProperty("is_locked")
+    @SerializedName("is_locked")
     public void setIsLocked(Boolean isLocked) {
         this.isLocked = isLocked;
     }

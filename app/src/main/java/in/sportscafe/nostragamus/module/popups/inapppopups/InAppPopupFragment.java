@@ -15,7 +15,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import org.parceler.Parcels;
@@ -30,7 +29,6 @@ import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.NostragamusDialogFragment;
 import in.sportscafe.nostragamus.module.common.OnDismissListener;
 import in.sportscafe.nostragamus.module.user.group.newgroup.NewGroupActivity;
-import in.sportscafe.nostragamus.module.user.lblanding.LbLanding;
 import in.sportscafe.nostragamus.module.user.points.PointsActivity;
 
 /**
@@ -148,7 +146,7 @@ public class InAppPopupFragment extends NostragamusDialogFragment implements Vie
             mInAppPopup.setHeadingColor(R.drawable.popup_heading_blue_bg);
             mInAppPopup.setBtnColor(R.drawable.popup_action_blue_btn_bg);
             mInAppPopup.setShowCrossBtn(false);
-            mPopUpBodyList.add(new PopUpBody("Submit your questions for the upcoming matches (Deadline: 36 hours before the start of the match)", R.drawable.popup_question_icon));
+            mPopUpBodyList.add(new PopUpBody("Submit your questions for the upcoming matches (Deadline: 36 hours before the start of the Match)", R.drawable.popup_question_icon));
             mPopUpBodyList.add(new PopUpBody("Get 3 power ups in the powerup bank for every approved question", R.drawable.powerup_icn));
             mPopUpBodyList.add(new PopUpBody("Once you submit a question, we will mail you at your registered mail id within 24-hrs.", R.drawable.popup_mail_icon));
             mInAppPopup.setBtnTitle("Ok, got it!");

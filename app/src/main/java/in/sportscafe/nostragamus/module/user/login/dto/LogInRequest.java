@@ -1,73 +1,73 @@
 package in.sportscafe.nostragamus.module.user.login.dto;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.annotations.SerializedName;
 
 /**
  * Created by Jeeva on 4/7/16.
  */
 public class LogInRequest {
 
-    @JsonProperty("accessToken")
+    @SerializedName("accessToken")
     private String accessToken;
 
-    @JsonProperty("refreshToken")
+    @SerializedName("refreshToken")
     private String refreshToken;
 
-    @JsonProperty("accessExpiry")
+    @SerializedName("accessExpiry")
     private Long accessExpiry = 123456789L;
 
-//    @JsonProperty("access_provider")
+//    @SerializedName("access_provider")
 //    private String accessPovider;
 
-    @JsonProperty("profile")
+    @SerializedName("profile")
     private UserProfile userProfile;
 
-    @JsonProperty("accessToken")
+    @SerializedName("accessToken")
     public String getAccessToken() {
         return accessToken;
     }
 
-    @JsonProperty("accessToken")
+    @SerializedName("accessToken")
     public void setAccessToken(String accessToken) {
         this.accessToken = accessToken;
     }
 
-    @JsonProperty("accessExpiry")
+    @SerializedName("accessExpiry")
     public Long getAccessExpiry() {
         return accessExpiry;
     }
 
-    @JsonProperty("accessExpiry")
+    @SerializedName("accessExpiry")
     public void setAccessExpiry(Long accessExpiry) {
         this.accessExpiry = accessExpiry;
     }
 
-//    @JsonProperty("access_provider")
+//    @SerializedName("access_provider")
 //    public String getAccessPovider() {
 //        return accessPovider;
 //    }
 //
-//    @JsonProperty("access_provider")
+//    @SerializedName("access_provider")
 //    public void setAccessPovider(String accessProvider) {
 //        this.accessPovider = accessProvider;
 //    }
 
-    @JsonProperty("profile")
+    @SerializedName("profile")
     public UserProfile getUserProfile() {
         return userProfile;
     }
 
-    @JsonProperty("profile")
+    @SerializedName("profile")
     public void setUserProfile(UserProfile userProfile) {
         this.userProfile = userProfile;
     }
 
-    @JsonProperty("refreshToken")
+    @SerializedName("refreshToken")
     public String getRefreshToken() {
         return refreshToken;
     }
 
-    @JsonProperty("refreshToken")
+    @SerializedName("refreshToken")
     public void setRefreshToken(String refreshToken) {
         this.refreshToken = refreshToken;
     }

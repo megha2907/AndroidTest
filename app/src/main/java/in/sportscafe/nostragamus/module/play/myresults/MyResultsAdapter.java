@@ -13,7 +13,6 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -25,10 +24,10 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.jeeva.android.Log;
 import com.jeeva.android.widgets.HmImageView;
 import com.jeeva.android.widgets.ShadowLayout;
 
-import org.parceler.Parcel;
 import org.parceler.Parcels;
 
 import java.util.ArrayList;
@@ -38,22 +37,22 @@ import in.sportscafe.nostragamus.AppSnippet;
 import in.sportscafe.nostragamus.BuildConfig;
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Constants.BundleKeys;
-import in.sportscafe.nostragamus.Constants.LBLandingType;
 import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
+import in.sportscafe.nostragamus.module.challengeCompleted.dto.CompletedContestDto;
 import in.sportscafe.nostragamus.module.common.Adapter;
-import in.sportscafe.nostragamus.module.common.EnhancedLinkMovementMethod;
 import in.sportscafe.nostragamus.module.common.NostraTextViewLinkClickMovementMethod;
-import in.sportscafe.nostragamus.module.feed.FeedWebView;
-import in.sportscafe.nostragamus.module.feed.dto.Match;
+import in.sportscafe.nostragamus.module.contest.contestDetailsAfterJoining.InplayContestDetailsActivity;
+import in.sportscafe.nostragamus.module.contest.contestDetailsCompletedChallenges.ChallengeHistoryContestDetailsActivity;
+import in.sportscafe.nostragamus.module.contest.ui.DetailScreensLaunchRequest;
+import in.sportscafe.nostragamus.module.inPlay.dto.InPlayContestDto;
+import in.sportscafe.nostragamus.module.inPlay.ui.ResultsScreenDataDto;
 import in.sportscafe.nostragamus.module.othersanswers.OthersAnswersActivity;
-import in.sportscafe.nostragamus.module.play.prediction.dto.Question;
+import in.sportscafe.nostragamus.module.resultspeek.FeedWebView;
 import in.sportscafe.nostragamus.module.resultspeek.ResultsPeekActivity;
-import in.sportscafe.nostragamus.module.user.lblanding.LbLanding;
-import in.sportscafe.nostragamus.module.user.points.PointsActivity;
-import in.sportscafe.nostragamus.utils.timeutils.TimeAgo;
-import in.sportscafe.nostragamus.utils.timeutils.TimeUnit;
+import in.sportscafe.nostragamus.module.resultspeek.dto.Match;
+import in.sportscafe.nostragamus.module.resultspeek.dto.Question;
 import in.sportscafe.nostragamus.utils.timeutils.TimeUtils;
 
 /**
@@ -68,6 +67,10 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
 
     private int answerId;
 
+    private InPlayContestDto mInPlayContestDto = null;
+
+    private CompletedContestDto mCompletedContestDto = null;
+
     private RadioGroup mRadioGroup;
 
     private int mAnsweredQuestionCount = 0;
@@ -78,10 +81,17 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
 
     private boolean mIsMatchStarted = false;
     private long mMatchStartTimeMs = 0;
+    private ResultsScreenDataDto mResultScreenData;
 
-    public MyResultsAdapter(Context context, boolean isMyResults) {
+    public MyResultsAdapter(Context context, boolean isMyResults,
+                            ResultsScreenDataDto resultsScreenData,
+                            InPlayContestDto inPlayContestDto,
+                            CompletedContestDto completedContestDto) {
         super(context);
         this.mIsMyResults = isMyResults;
+        mResultScreenData = resultsScreenData;
+        mInPlayContestDto = inPlayContestDto;
+        mCompletedContestDto = completedContestDto;
     }
 
     public void setResultsActionListener(OnMyResultsActionListener mResultsActionListener) {
@@ -121,7 +131,7 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
         mMatchStartTimeMs = startTimeMs;
 
         int dayOfMonth = Integer.parseInt(TimeUtils.getDateStringFromMs(startTimeMs, "d"));
-        // Setting date of the match
+        // Setting date of the Match
         holder.mTvDate.setText(dayOfMonth + AppSnippet.ordinalOnly(dayOfMonth) + " " +
                 TimeUtils.getDateStringFromMs(startTimeMs, "MMM") + ", "
                 + TimeUtils.getDateStringFromMs(startTimeMs, Constants.DateFormats.HH_MM_AA)
@@ -158,68 +168,6 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
             );
         }
 
-
-//        if (null == match.getResult() || match.getResult().isEmpty()) {
-//            holder.mTvMatchResult.setVisibility(View.GONE);
-//            holder.mTvResultWait.setVisibility(View.VISIBLE);
-//            holder.mTvResultWait.setText(match.getStage()+" - "+"Awaiting Results");
-//            holder.mTvResultWait.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
-//            holder.mTvResultCorrectCount.setText(match.getQuestions().size() +"/" + match.getMatchQuestionCount() + " Questions Answered");
-//
-//            if (null != match.getUserRank()) {
-//                holder.mTvLeaderBoardRank.setText("Rank " + String.valueOf(match.getUserRank()) + "/" + String.valueOf(match.getCountPlayers()));
-//            }else {
-//                holder.mTvLeaderBoardRank.setText("No Rank");
-//            }
-//
-//            if (null != match.getCountPowerUps()) {
-//                holder.mTvNumberofPowerupsUsed.setText(String.valueOf(match.getCountPowerUps()));
-//            }else {
-//                holder.mTvNumberofPowerupsUsed.setText("0");
-//            }
-//
-//        } else {
-//            holder.mTvMatchResult.setVisibility(View.VISIBLE);
-//            holder.mTvMatchResult.setText(match.getStage()+" - "+match.getResult());
-//        }
-//
-//
-//        if (null == match.getMatchPoints()) {
-//
-//            holder.mBtnMatchPoints.setVisibility(View.GONE);
-//            holder.mLlMatchScores.setVisibility(View.GONE);
-//
-//        } else {
-//            holder.mBtnMatchPoints.setVisibility(View.VISIBLE);
-//            holder.mTvResultCorrectCount.setVisibility(View.VISIBLE);
-//            holder.mTvResultWait.setVisibility(View.GONE);
-//            holder.mBtnMatchPoints.setText(match.getMatchPoints().toString());
-//            holder.mTvResultCorrectCount.setText(match.getCorrectCount() + "/" + match.getMatchQuestionCount() + " Answered Correctly");
-//            holder.mTvAvgMatchPoints.setText(String.valueOf(match.getAvgMatchPoints().intValue()));
-//            holder.mTvHighestMatchPoints.setText(String.valueOf(match.getHighestMatchPoints()));
-//
-//            if (null != match.getUserRank()) {
-//                holder.mTvLeaderBoardRank.setText("Rank " + String.valueOf(match.getUserRank()) + "/" + String.valueOf(match.getCountPlayers()));
-//            }else {
-//                holder.mTvLeaderBoardRank.setText("No Rank");
-//            }
-//
-//            if (null !=match.getRankChange()) {
-//                holder.mIvRankStatus.setVisibility(View.VISIBLE);
-//
-//                if (match.getRankChange() < 0) {
-//                    holder.mIvRankStatus.setImageResource(R.drawable.lb_rank_change_icon);
-//                    holder.mIvRankStatus.setRotation(180);
-//                } else {
-//                    holder.mIvRankStatus.setImageResource(R.drawable.lb_rank_change_icon);
-//                }
-//            }
-//
-//            holder.mTvNumberofPowerupsUsed.setText(String.valueOf(match.getCountPowerUps()));
-//            holder.mRlHighestMatchPoints.setTag(match);
-//        }
-
-
         Integer attemptedStatus = match.getisAttempted();
 
         if (match.getMatchQuestionCount() > 0) {
@@ -237,22 +185,12 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
                 holder.mTvHighestMatchPoints.setText(String.valueOf(match.getHighestMatchPoints()));
                 holder.mRlHighestMatchPoints.setTag(match);
 
-                if (null != match.getUserRank()) {
-                    holder.mTvLeaderBoardRank.setText("Rank " + String.valueOf(match.getUserRank()) + "/" + String.valueOf(match.getCountPlayers()));
+                /* if (null != match.getUserRank()) {
+                    holder.mTvLeaderBoardRank.setText(String.valueOf(match.getUserRank()));
+                    holder.mTvLeaderBoardTotalPlayers.setText("/ " + String.valueOf(match.getCountPlayers()));
                 } else {
                     holder.mTvLeaderBoardRank.setText("No Rank");
-                }
-
-                if (null != match.getRankChange()) {
-                    holder.mIvRankStatus.setVisibility(View.VISIBLE);
-
-                    if (match.getRankChange() < 0) {
-                        holder.mIvRankStatus.setImageResource(R.drawable.lb_rank_change_icon);
-                        holder.mIvRankStatus.setRotation(180);
-                    } else {
-                        holder.mIvRankStatus.setImageResource(R.drawable.lb_rank_change_icon);
-                    }
-                }
+                } */
 
 
                 //if not attempted
@@ -261,7 +199,7 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
                     holder.mBtnMatchPoints.setText("Did Not Play");
                     holder.mBtnMatchPoints.setTextSize(14);
                     holder.mTvNumberofPowerupsUsed.setText("No");
-                    holder.mTvResultCorrectCount.setText("Not Answered");
+                    holder.mTvResultCorrectCount.setText("Did Not Play");
                     holder.mTvMatchPointsTxt.setVisibility(View.GONE);
 
                     //if partially or completely attempted
@@ -271,7 +209,7 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
                     holder.mTvResultCorrectCount.setVisibility(View.VISIBLE);
                     holder.mTvResultWait.setVisibility(View.GONE);
                     holder.mBtnMatchPoints.setText(match.getMatchPoints().toString());
-                    holder.mTvResultCorrectCount.setText(match.getCorrectCount() + "/" + match.getMatchQuestionCount() + " Answered Correctly");
+                    holder.mTvResultCorrectCount.setText(match.getCorrectCount() + "/" + match.getMatchQuestionCount() + " Correct Predictions");
                     holder.mTvNumberofPowerupsUsed.setText(String.valueOf(match.getCountPowerUps()));
 
                 }
@@ -301,10 +239,16 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
                     }
                 }
 
-                holder.mTvResultCorrectCount.setText(String.valueOf(mAnsweredQuestionCount) + "/" + match.getMatchQuestionCount() + " Questions Answered");
+                holder.mTvResultCorrectCount.setText(String.valueOf(mAnsweredQuestionCount) + "/" + match.getMatchQuestionCount() + " Predictions Made");
 
                 if (null != match.getUserRank()) {
-                    holder.mTvLeaderBoardRank.setText("Rank " + String.valueOf(match.getUserRank()) + "/" + String.valueOf(match.getCountPlayers()));
+                    if (isPlayingPseudoGame() || isHeadlessFlow()) {
+                        holder.mTvLeaderBoardRank.setText("NA");
+                        holder.mTvLeaderBoardTotalPlayers.setText("");
+                    } else {
+                        holder.mTvLeaderBoardRank.setText(String.valueOf(match.getUserRank()));
+                        holder.mTvLeaderBoardTotalPlayers.setText("/" + String.valueOf(match.getCountPlayers()));
+                    }
                 } else {
                     holder.mTvLeaderBoardRank.setText("No Rank");
                 }
@@ -318,7 +262,7 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
                 if (null == match.getisAttempted() || Constants.GameAttemptedStatus.NOT == attemptedStatus) {
 
                     holder.mTvNumberofPowerupsUsed.setText("No");
-                    holder.mTvResultCorrectCount.setText("Not Answered");
+                    holder.mTvResultCorrectCount.setText("Did Not Play");
 
 
                 }
@@ -329,18 +273,23 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
 
         List<Question> questions = match.getQuestions();
         for (Question question : questions) {
-            holder.mLlPredictionsParent.addView(getMyPrediction(holder.mLlPredictionsParent, question, position));
+            holder.mLlPredictionsParent.addView(getMyPrediction(holder.mLlPredictionsParent, question, position, match.getRoomId()));
         }
 
-        if (match.isResultPublished() && mIsMyResults) {
-            holder.mleaderboard.addView(getLeaderBoardView(holder.mleaderboard, match));
+        if (isPlayingPseudoGame() || isHeadlessFlow()) {
+            holder.leaderBoardMatchInfoLayout.setVisibility(View.GONE);
+        } else {
+            if (match.isResultPublished() && mIsMyResults) {
+                holder.leaderBoardMatchInfoLayout.setVisibility(View.VISIBLE);
+                holder.mleaderboard.addView(getLeaderBoardView(holder.mleaderboard, match));
+            }
         }
 
         return myResultView;
     }
 
     /**
-     * Check that the match started or not
+     * Check that the Match started or not
      */
     private void initMatchStarted(long matchStartTimeMs) {
         long timeSpent = matchStartTimeMs - Nostragamus.getInstance().getServerTime();
@@ -380,11 +329,9 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
         TextView mTvAvgMatchPoints;
         RelativeLayout mRlHighestMatchPoints;
         TextView mTvHighestMatchPoints;
-        TextView mTvLeaderBoardRank;
         TextView mTvNumberofPowerupsUsed;
         RelativeLayout mRlLeaderBoard;
-        LinearLayout mLlMatchScores;
-        ImageView mIvRankStatus;
+        ShadowLayout mLlMatchScores;
         TextView mTvMatchPointsTxt;
 
         LinearLayout mLlMultiParty;
@@ -396,8 +343,11 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
         TextView mTvOnePartyMatchResultWait;
         TextView mTvOnePartyMatchResult;
 
+        TextView mTvLeaderBoardRank;
+        TextView mTvLeaderBoardTotalPlayers;
 
-        ShadowLayout mLeaderBoardLayout;
+        LinearLayout mLeaderBoardLayout;
+        LinearLayout leaderBoardMatchInfoLayout;
 
 
         public MyResultViewHolder(View V) {
@@ -424,8 +374,7 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
             mRlLeaderBoard = (RelativeLayout) V.findViewById(R.id.schedule_row_rl_leaderboard);
             mRlAvgMatchPoints = (RelativeLayout) V.findViewById(R.id.schedule_row_rl_average_score);
             mRlHighestMatchPoints = (RelativeLayout) V.findViewById(R.id.schedule_row_rl_highest_score);
-            mLlMatchScores = (LinearLayout) V.findViewById(R.id.schedule_row_scores_ll);
-            mIvRankStatus = (ImageView) V.findViewById(R.id.schedule_row_rank_status_iv);
+            mLlMatchScores = (ShadowLayout) V.findViewById(R.id.schedule_row_scores_sl);
 
             mLlMultiParty = (LinearLayout) V.findViewById(R.id.schedule_row_ll);
 
@@ -436,8 +385,9 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
             mTvOnePartyMatchResultWait = (TextView) V.findViewById(R.id.schedule_row_one_party_tv_match_result_wait);
             mTvOnePartyMatchResult = (TextView) V.findViewById(R.id.schedule_row_one_party_tv_match_result);
 
-            mLeaderBoardLayout = (ShadowLayout) V.findViewById(R.id.schedule_row_rl_points_summary);
-
+            mLeaderBoardLayout = (LinearLayout) V.findViewById(R.id.schedule_row_rl_points_summary);
+            mTvLeaderBoardTotalPlayers = (TextView) V.findViewById(R.id.schedule_row_tv_leaderboard_total_players);
+            leaderBoardMatchInfoLayout = (LinearLayout) V.findViewById(R.id.match_details_with_leaderboard_layout);
 
             mRlLeaderBoard.setOnClickListener(this);
             mRlAvgMatchPoints.setOnClickListener(this);
@@ -463,6 +413,7 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
                     Bundle bundle = new Bundle();
                     bundle.putInt(BundleKeys.PLAYER_ID, match.getHighestScorerId());
                     bundle.putInt(BundleKeys.MATCH_ID, match.getId());
+                    bundle.putInt(BundleKeys.ROOM_ID, match.getRoomId());
                     bundle.putString(BundleKeys.PLAYER_NAME, match.getHighestScorerName());
                     bundle.putString(BundleKeys.PLAYER_PHOTO, match.getHighestScorerPhoto());
                     navigateToResultsPeek(v.getContext(), bundle);
@@ -476,7 +427,7 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
     }
 
 
-    private View getMyPrediction(final ViewGroup parent, final Question question, final int position) {
+    private View getMyPrediction(final ViewGroup parent, final Question question, final int position, int roomId) {
 
         final View convertView = getLayoutInflater().inflate(R.layout.inflater_my_predictions_row, parent, false);
         convertView.setId(position);    // A unique id of dynamically created view
@@ -501,7 +452,7 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
         if (question.getAnswerPoints() != null) {
 
             if (question.getAnswerPoints().equals(0)) {
-                setTextColor(tvAnswerPoints, R.color.white_60);
+                setTextColor(tvAnswerPoints, R.color.white_999999);
             }
 
             if (question.getAnswerPoints() > 0) {
@@ -535,10 +486,10 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
             if (answerId == 0) {
 
                 /* if question not answered then answerId=0 , set All Options Color as grey */
-                setTextColor(tvOption1, R.color.white_60);
-                setTextColor(tvOption2, R.color.white_60);
+                setTextColor(tvOption1, R.color.white_999999);
+                setTextColor(tvOption2, R.color.white_999999);
                 if (!TextUtils.isEmpty(question.getQuestionOption3())) {
-                    setTextColor(tvOption3, R.color.white_60);
+                    setTextColor(tvOption3, R.color.white_999999);
                 }
 
             } else {
@@ -546,25 +497,25 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
                 /* if answer is 1st option , set Option1 Color as white and other grey */
                 if (answerId == 1) {
                     setTextColor(tvOption1, R.color.white);
-                    setTextColor(tvOption2, R.color.white_60);
-                    setTextColor(tvOption3, R.color.white_60);
+                    setTextColor(tvOption2, R.color.white_999999);
+                    setTextColor(tvOption3, R.color.white_999999);
 
                 }  /* if answer is 2nd option , set Option2 Color as white and other grey */ else {
                     setTextColor(tvOption2, R.color.white);
-                    setTextColor(tvOption1, R.color.white_60);
-                    setTextColor(tvOption3, R.color.white_60);
+                    setTextColor(tvOption1, R.color.white_999999);
+                    setTextColor(tvOption3, R.color.white_999999);
                 }
 
                  /* if answer is 3rd option , set Option3 Color as white and others grey */
                 if (!TextUtils.isEmpty(question.getQuestionOption3()) && answerId == 3) {
-                    setTextColor(tvOption1, R.color.white_60);
-                    setTextColor(tvOption2, R.color.white_60);
+                    setTextColor(tvOption1, R.color.white_999999);
+                    setTextColor(tvOption2, R.color.white_999999);
                     setTextColor(tvOption3, R.color.white);
                 }
             }
 
         }
-        /* if played match but not attempted Question */
+        /* if played Match but not attempted Question */
         else if (answerId == 0) {
 
             /* We can't edit answer if not attempted a Question */
@@ -579,11 +530,11 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
             if (!TextUtils.isEmpty(question.getQuestionOption3())) {
                 tvOption3.setVisibility(View.VISIBLE);
                 tvOption3.setText(question.getQuestionOption3());
-                setTextColor(tvOption3, R.color.white_60);
+                setTextColor(tvOption3, R.color.white_999999);
             }
 
-            setTextColor(tvOption1, R.color.white_60);
-            setTextColor(tvOption2, R.color.white_60);
+            setTextColor(tvOption1, R.color.white_999999);
+            setTextColor(tvOption2, R.color.white_999999);
 
             if (question.getQuestionAnswer() == 1 || question.getQuestionAnswer() == 2) {
                 if (question.getQuestionAnswer() == 1) {
@@ -622,13 +573,13 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
                 /* If your Answer = Option 1 , Set Option 1 color as green and tick icon next to option 1 */
                 if (question.getQuestionAnswer() == 1) {
                     setTextColor(tvOption1, R.color.greencolor);
-                    setTextColor(tvOption2, R.color.white_60);
+                    setTextColor(tvOption2, R.color.white_999999);
                     tvOption1.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.correct_ans_drawable, 0);
                     tvOption2.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.result_cross_icon, 0);
 
                 }   /* If your Answer = Option 2 , Set Option 2 color as green and tick icon next to option 2 */ else {
                     setTextColor(tvOption2, R.color.greencolor);
-                    setTextColor(tvOption1, R.color.white_60);
+                    setTextColor(tvOption1, R.color.white_999999);
                     tvOption2.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.correct_ans_drawable, 0);
                     tvOption1.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.result_cross_icon, 0);
                 }
@@ -642,8 +593,8 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
              /* If your Answer = Option 3 , Set Option 3 color as green and tick icon next to option 3 */
             if (answerId == 3) {
                 setTextColor(tvOption3, R.color.greencolor);
-                setTextColor(tvOption1, R.color.white_60);
-                setTextColor(tvOption2, R.color.white_60);
+                setTextColor(tvOption1, R.color.white_999999);
+                setTextColor(tvOption2, R.color.white_999999);
                 tvOption3.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.correct_ans_drawable, 0);
                 tvOption1.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.result_cross_icon, 0);
                 tvOption2.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.result_cross_icon, 0);
@@ -660,8 +611,8 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
             tvOption2.setVisibility(View.VISIBLE);
 
             /* Set All Options Color as grey */
-            setTextColor(tvOption1, R.color.white_60);
-            setTextColor(tvOption2, R.color.white_60);
+            setTextColor(tvOption1, R.color.white_999999);
+            setTextColor(tvOption2, R.color.white_999999);
 
              /* Set All Options Compound Drawables as null */
             tvOption1.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
@@ -670,7 +621,7 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
             if (!TextUtils.isEmpty(question.getQuestionOption3())) {
                 tvOption3.setText(question.getQuestionOption3());
                 tvOption3.setVisibility(View.VISIBLE);
-                setTextColor(tvOption3, R.color.white_60);
+                setTextColor(tvOption3, R.color.white_999999);
                 tvOption3.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
             }
 
@@ -696,31 +647,31 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
 
                 if (answerId == 1) {
                     setTextColor(tvOption1, R.color.tabcolor);
-                    setTextColor(tvOption2, R.color.white_60);
+                    setTextColor(tvOption2, R.color.white_999999);
                     tvOption1.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.result_cross_icon, 0);
                     tvOption2.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.correct_ans_drawable, 0);
                 } else {
                     setTextColor(tvOption2, R.color.tabcolor);
-                    setTextColor(tvOption1, R.color.white_60);
+                    setTextColor(tvOption1, R.color.white_999999);
                     tvOption1.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.correct_ans_drawable, 0);
                     tvOption2.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.result_cross_icon, 0);
                 }
 
                 if (!TextUtils.isEmpty(question.getQuestionOption3())) {
-                    setTextColor(tvOption3, R.color.white_60);
+                    setTextColor(tvOption3, R.color.white_999999);
                     tvOption3.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.result_cross_icon, 0);
                 }
             } else if (question.getQuestionAnswer() == 3) {
 
                 if (answerId == 1) {
                     setTextColor(tvOption1, R.color.tabcolor);
-                    setTextColor(tvOption2, R.color.white_60);
+                    setTextColor(tvOption2, R.color.white_999999);
                 } else {
                     setTextColor(tvOption2, R.color.tabcolor);
-                    setTextColor(tvOption1, R.color.white_60);
+                    setTextColor(tvOption1, R.color.white_999999);
                 }
 
-                setTextColor(tvOption3, R.color.white_60);
+                setTextColor(tvOption3, R.color.white_999999);
                 tvOption1.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.result_cross_icon, 0);
                 tvOption2.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.result_cross_icon, 0);
                 tvOption3.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.correct_ans_drawable, 0);
@@ -737,15 +688,15 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
                     tvOption1.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.result_cross_icon, 0);
                     tvOption2.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.correct_ans_drawable, 0);
                 }
-                setTextColor(tvOption1, R.color.white_60);
-                setTextColor(tvOption2, R.color.white_60);
+                setTextColor(tvOption1, R.color.white_999999);
+                setTextColor(tvOption2, R.color.white_999999);
                 setTextColor(tvOption3, R.color.tabcolor);
                 tvOption3.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.result_cross_icon, 0);
             }
 
         }
 
-        /* Hide Edit button if match started  */
+        /* Hide Edit button if Match started  */
         showOrHideEditAnswerButton();
 
         /* Showing graph based on percentage */
@@ -753,7 +704,7 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
 
         /* edit Answer on click of Button and change edit Answer to save answer, If saving Answer ,callapi*/
         handleEditAnswerButtonClick(parent, question, convertView, tvOption1,
-                tvOption2, tvOption3);
+                tvOption2, tvOption3, roomId);
 
         return convertView;
     }
@@ -774,14 +725,30 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
     private void showOrHideEditAnswerButton() {
 
         if (BuildConfig.IS_PAID_VERSION) {
-            if (mIsMatchStarted && mRlEditAnswers != null) {
-                // If match started, answers can not be edited
+            if ((mIsMatchStarted && mRlEditAnswers != null) || isPlayingPseudoGame() || isHeadlessFlow()) {
+                // If Match started, answers can not be edited
                 mRlEditAnswers.setVisibility(View.GONE);
             }
         } else {
             // If Playstore App , answers can not be edited
             mRlEditAnswers.setVisibility(View.GONE);
         }
+    }
+
+    private boolean isHeadlessFlow() {
+        boolean isHeadLess = false;
+        if (mResultScreenData != null && mResultScreenData.isHeadLess()) {
+            isHeadLess = true;
+        }
+        return isHeadLess;
+    }
+
+    private boolean isPlayingPseudoGame() {
+        boolean isPseudoGame = false;
+        if (mResultScreenData != null && mResultScreenData.isPlayingPseudoGame()) {
+            isPseudoGame = true;
+        }
+        return isPseudoGame;
     }
 
     private void showOrHidePowerUps(Question question, View convertView) {
@@ -823,10 +790,11 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
      * @param tvOption1
      * @param tvOption2
      * @param tvOption3
+     * @param roomId
      */
     private void handleEditAnswerButtonClick(final ViewGroup parent, final Question question,
                                              final View convertView, final TextView tvOption1,
-                                             final TextView tvOption2, final TextView tvOption3) {
+                                             final TextView tvOption2, final TextView tvOption3, final int roomId) {
 
         final Button editAnswersBtn = (Button) convertView.findViewById(R.id.my_results_btn_edit_answers);
         final ImageView mIvEditAnswers = (ImageView) convertView.findViewById(R.id.my_results_iv_edit_answers_icon);
@@ -835,7 +803,7 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
         editAnswersBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
-                /* If match not started, then only save */
+                /* If Match not started, then only save */
                 initMatchStarted(mMatchStartTimeMs);
                 if (!mIsMatchStarted) {
 
@@ -862,7 +830,7 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
 
 
                         /* call save Answer Api */
-                            mResultsActionListener.saveUpdatedAnswer(question.getQuestionId(), selectedAnswerId);
+                            mResultsActionListener.saveUpdatedAnswer(question.getMatchId(), question.getQuestionId(), selectedAnswerId, roomId);
 
                         /* change save Answer btn back to edit Answer */
                             editAnswersBtn.setText("Edit Answer");
@@ -936,25 +904,25 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
 
         if (selectedAnswerId == 1) {
             setTextColor(tvOption1, R.color.white);
-            setTextColor(tvOption2, R.color.white_60);
+            setTextColor(tvOption2, R.color.white_999999);
 
             if (!TextUtils.isEmpty(question.getQuestionOption3())) {
-                setTextColor(tvOption3, R.color.white_60);
+                setTextColor(tvOption3, R.color.white_999999);
             }
 
         } else if (selectedAnswerId == 2) {
 
-            setTextColor(tvOption1, R.color.white_60);
+            setTextColor(tvOption1, R.color.white_999999);
             setTextColor(tvOption2, R.color.white);
 
             if (!TextUtils.isEmpty(question.getQuestionOption3())) {
-                setTextColor(tvOption3, R.color.white_60);
+                setTextColor(tvOption3, R.color.white_999999);
             }
 
         } else if (selectedAnswerId == 3) {
 
-            setTextColor(tvOption1, R.color.white_60);
-            setTextColor(tvOption2, R.color.white_60);
+            setTextColor(tvOption1, R.color.white_999999);
+            setTextColor(tvOption2, R.color.white_999999);
 
             if (!TextUtils.isEmpty(question.getQuestionOption3())) {
                 setTextColor(tvOption3, R.color.white);
@@ -1044,7 +1012,7 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
             tvcommentary.setMovementMethod(new NostraTextViewLinkClickMovementMethod() {
                 @Override
                 public void onLinkClick(String url) {
-                    OpenWebView(tvcommentary,url);
+                    OpenWebView(tvcommentary, url);
                 }
             });
         }
@@ -1077,20 +1045,37 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
     }
 
     private void navigateToLeaderboards(Context context) {
-        Match match = getItem(0);
 
-        LbLanding lbLanding = new LbLanding(
-                match.getChallengeId(), 0, //groupid=0
-                match.getChallengeName(),
-                match.getChallengeImgUrl(),
-                LBLandingType.CHALLENGE
-        );
+       if (mInPlayContestDto!=null) {
+           Bundle args = new Bundle();
+           args.putParcelable(Constants.BundleKeys.INPLAY_CONTEST, Parcels.wrap(mInPlayContestDto));
+           args.putInt(Constants.BundleKeys.SCREEN_LAUNCH_REQUEST, DetailScreensLaunchRequest.MATCHES_LEADER_BOARD_SCREEN);
 
-        Intent intent = new Intent(context, PointsActivity.class);
-        intent.putExtra(BundleKeys.LB_LANDING_DATA, Parcels.wrap(lbLanding));
-        intent.putExtra(BundleKeys.MATCH_ID, match.getId());
-//        intent.putExtra(BundleKeys.TOURNAMENT_ID, match.getTournamentId());
-        context.startActivity(intent);
+           if (context != null) {
+               Intent intent = new Intent(context, InplayContestDetailsActivity.class);
+               if (args != null) {
+                   intent.putExtras(args);
+               }
+               context.startActivity(intent);
+           }
+       }else if (mCompletedContestDto!=null){
+
+           Bundle args = new Bundle();
+           args.putParcelable(BundleKeys.COMPLETED_CONTEST, Parcels.wrap(mCompletedContestDto));
+           args.putInt(Constants.BundleKeys.SCREEN_LAUNCH_REQUEST, DetailScreensLaunchRequest.MATCHES_LEADER_BOARD_SCREEN);
+
+           if (context != null) {
+               Intent intent = new Intent(context, ChallengeHistoryContestDetailsActivity.class);
+               if (args != null) {
+                   intent.putExtras(args);
+               }
+               context.startActivity(intent);
+           }
+
+       } else {
+           Log.i(Constants.Alerts.SOMETHING_WRONG,"InPlayContestDto = null");
+       }
+
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
@@ -1117,7 +1102,7 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
 
         void onClickEditAnswer(int selectedQuestionId, Question question);
 
-        void saveUpdatedAnswer(int QuestionId, int AnswerId);
+        void saveUpdatedAnswer(int matchId, int QuestionId, int AnswerId, int roomId);
     }
 
     public void changeToEditAnswers(int selectedQuestionId, Question question) {
@@ -1127,7 +1112,7 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
     /**
      * On on click of link open NostragamusWebView Activity for handling links
      */
-    private void OpenWebView(View view,String url) {
+    private void OpenWebView(View view, String url) {
         if (url != null) {
             view.getContext().startActivity(new Intent(view.getContext(), FeedWebView.class).putExtra("url", url));
         }

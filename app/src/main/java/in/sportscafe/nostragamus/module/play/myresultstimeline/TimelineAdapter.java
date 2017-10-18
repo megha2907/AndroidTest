@@ -43,14 +43,16 @@ import in.sportscafe.nostragamus.Constants.GameAttemptedStatus;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
 import in.sportscafe.nostragamus.module.common.Adapter;
-import in.sportscafe.nostragamus.module.feed.FeedWebView;
-import in.sportscafe.nostragamus.module.feed.dto.Match;
-import in.sportscafe.nostragamus.module.feed.dto.Parties;
-import in.sportscafe.nostragamus.module.feed.dto.TournamentPowerupInfo;
+import in.sportscafe.nostragamus.module.common.dto.TournamentPowerupInfo;
+import in.sportscafe.nostragamus.module.inPlay.dto.InPlayContestDto;
+import in.sportscafe.nostragamus.module.inPlay.dto.InPlayMatch;
+import in.sportscafe.nostragamus.module.inPlay.ui.ResultsScreenDataDto;
 import in.sportscafe.nostragamus.module.play.myresults.MyResultsActivity;
-import in.sportscafe.nostragamus.module.play.prediction.PredictionActivity;
-import in.sportscafe.nostragamus.module.play.prediction.dto.Question;
+import in.sportscafe.nostragamus.module.prediction.playScreen.PredictionActivity;
+import in.sportscafe.nostragamus.module.resultspeek.FeedWebView;
 import in.sportscafe.nostragamus.module.resultspeek.ResultsPeekActivity;
+import in.sportscafe.nostragamus.module.resultspeek.dto.Match;
+import in.sportscafe.nostragamus.module.resultspeek.dto.Parties;
 import in.sportscafe.nostragamus.utils.ViewUtils;
 import in.sportscafe.nostragamus.utils.timeutils.TimeAgo;
 import in.sportscafe.nostragamus.utils.timeutils.TimeUnit;
@@ -77,6 +79,8 @@ public class TimelineAdapter extends Adapter<Match, TimelineAdapter.ViewHolder> 
 
     private String mPlayerPhoto;
 
+    private int mRoomId = 0;
+
     private TournamentPowerupInfo mPowerupInfo;
 
     public TimelineAdapter(Context context) {
@@ -84,11 +88,12 @@ public class TimelineAdapter extends Adapter<Match, TimelineAdapter.ViewHolder> 
         mTimerRunnable = new TimerRunnable();
     }
 
-    public TimelineAdapter(Context context, Integer playerId, String playerName, String playerPhoto) {
+    public TimelineAdapter(Context context, int roomId, Integer playerId, String playerName, String playerPhoto) {
         this(context);
         this.mPlayerId = playerId;
         this.mPlayerName = playerName;
         this.mPlayerPhoto = playerPhoto;
+        this.mRoomId = roomId;
     }
 
     public TimelineAdapter(Context context, TournamentPowerupInfo powerupInfo) {
@@ -159,7 +164,7 @@ public class TimelineAdapter extends Adapter<Match, TimelineAdapter.ViewHolder> 
         );
 
         int dayOfMonth = Integer.parseInt(TimeUtils.getDateStringFromMs(startTimeMs, "d"));
-        // Setting date of the match
+        // Setting date of the Match
         holder.mTvDate.setText(
                 TimeUtils.getDateStringFromMs(startTimeMs, "MMM") + "\n"
                         + dayOfMonth + AppSnippet.ordinalOnly(dayOfMonth)
@@ -178,20 +183,20 @@ public class TimelineAdapter extends Adapter<Match, TimelineAdapter.ViewHolder> 
                 holder.mTvChallengeName.setText(match.getChallengeName());
             }
 
-            // Setting match stage, if the stage is not empty & not the "commentary"
+            // Setting Match stage, if the stage is not empty & not the "commentary"
             if (!TextUtils.isEmpty(matchStage)) {
                 holder.mTvMatchStage.setVisibility(View.VISIBLE);
                 holder.mTvMatchStage.setText(match.getStage());
             }
 
-            // Setting starting time of the match
+            // Setting starting time of the Match
             holder.mTvStartTime.setVisibility(View.VISIBLE);
             holder.mTvStartTime.setText(TimeUtils.getDateStringFromMs(startTimeMs, DateFormats.HH_MM_AA));
 
             // Setting party details
             List<Parties> parties = new ArrayList<>();
 
-            // Setting party details : if one party view then set topics for one party match
+            // Setting party details : if one party view then set topics for one party Match
             if (match.getParties() == null) {
                 holder.mTvPartyAName.setText(match.getTopics().getTopicName());
                 holder.mIvPartyAPhoto.setImageUrl(match.getTopics().getTopicUrl());
@@ -199,7 +204,7 @@ public class TimelineAdapter extends Adapter<Match, TimelineAdapter.ViewHolder> 
                 holder.mLlRightPartyLayout.setVisibility(View.GONE);
 
                 RelativeLayout.LayoutParams paramsFour = (RelativeLayout.LayoutParams) holder.mLlLeftPartyLayout.getLayoutParams();
-                paramsFour.addRule(RelativeLayout.ALIGN_PARENT_LEFT,0);
+                paramsFour.addRule(RelativeLayout.ALIGN_PARENT_LEFT, 0);
                 paramsFour.addRule(RelativeLayout.CENTER_IN_PARENT);
                 holder.mLlLeftPartyLayout.setLayoutParams(paramsFour);
 
@@ -214,7 +219,7 @@ public class TimelineAdapter extends Adapter<Match, TimelineAdapter.ViewHolder> 
 
                 RelativeLayout.LayoutParams paramsFour = (RelativeLayout.LayoutParams) holder.mLlLeftPartyLayout.getLayoutParams();
                 paramsFour.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
-                paramsFour.addRule(RelativeLayout.LEFT_OF,R.id.schedule_row_btn_vs);
+                paramsFour.addRule(RelativeLayout.LEFT_OF, R.id.schedule_row_btn_vs);
                 holder.mLlLeftPartyLayout.setLayoutParams(paramsFour);
             }
 
@@ -228,9 +233,9 @@ public class TimelineAdapter extends Adapter<Match, TimelineAdapter.ViewHolder> 
 
             if (match.getMatchQuestionCount() > 0) {
 
-                if (match.isResultPublished()) { // if match Result Published
+                if (match.isResultPublished()) { // if Match Result Published
 
-                    //if match Completely Attempted then IsAttempted = 2 else if Partially Attempted then is Attempted =1
+                    //if Match Completely Attempted then IsAttempted = 2 else if Partially Attempted then is Attempted =1
                     //show Match Results
                     if (GameAttemptedStatus.COMPLETELY == attemptedStatus || GameAttemptedStatus.PARTIALLY == attemptedStatus) {
 
@@ -244,7 +249,7 @@ public class TimelineAdapter extends Adapter<Match, TimelineAdapter.ViewHolder> 
                         holder.mTvMatchResult.setText(Html.fromHtml(match.getResult()));
                         holder.mRlMatchPoints.setTag(match);
                         holder.mBtnMatchPoints.setText(match.getMatchPoints() + " Points");
-                        holder.mTvResultCorrectCount.setText(/*"You got " + */match.getCorrectCount() + "/" + match.getMatchQuestionCount() + " answers correct");
+                        holder.mTvResultCorrectCount.setText(/*"You got " + */match.getCorrectCount() + "/" + match.getMatchQuestionCount() + " Correct Predictions");
 
                         Integer winnerPartyId = match.getWinnerPartyId();
                         if (null != winnerPartyId) {
@@ -260,7 +265,7 @@ public class TimelineAdapter extends Adapter<Match, TimelineAdapter.ViewHolder> 
                         }
                     }
 
-                    //if match not Attempted then IsAttempted=0
+                    //if Match not Attempted then IsAttempted=0
                     if (GameAttemptedStatus.NOT == attemptedStatus) {
                         // Show Opportunity missed at scoring!
                         holder.mTvMatchResult.setVisibility(View.VISIBLE);
@@ -283,12 +288,12 @@ public class TimelineAdapter extends Adapter<Match, TimelineAdapter.ViewHolder> 
                                 holder.mTvMatchResult.setVisibility(View.VISIBLE);
                                 holder.mTvMatchResult.setText("Awaiting Results");
                                 holder.mTvMatchResult.setTextColor(ContextCompat.getColor(holder.mTvDate.getContext(), R.color.white_60));
-                                holder.mQuestionsAnswered.setText(match.getNoOfQuestionsAnswered() +"/" + match.getMatchQuestionCount() + " Questions Answered");
+                                holder.mQuestionsAnswered.setText(match.getNoOfQuestionsAnswered() + "/" + match.getMatchQuestionCount() + " Predictions Made");
                                 holder.mLlResultWait.setVisibility(View.VISIBLE);
                                 holder.mLlResultWait.setTag(match);
                             } else {
 
-                                // You cannot play the match as the match already started
+                                // You cannot play the Match as the Match already started
                                 holder.mVResultLine.setVisibility(View.VISIBLE);
                                 holder.mTvInfo.setVisibility(View.VISIBLE);
                                 holder.mTvInfo.setText("Opportunity missed at scoring!");
@@ -317,7 +322,7 @@ public class TimelineAdapter extends Adapter<Match, TimelineAdapter.ViewHolder> 
                         holder.mTvMatchResult.setVisibility(View.VISIBLE);
                         holder.mTvMatchResult.setText("Awaiting Results");
                         holder.mTvMatchResult.setTextColor(ContextCompat.getColor(holder.mTvDate.getContext(), R.color.white_60));
-                        holder.mQuestionsAnswered.setText(match.getNoOfQuestionsAnswered() +"/" + match.getMatchQuestionCount() + " Questions Answered");
+                        holder.mQuestionsAnswered.setText(match.getNoOfQuestionsAnswered() + "/" + match.getMatchQuestionCount() + " Predictions Made");
                         holder.mLlResultWait.setVisibility(View.VISIBLE);
                         holder.mLlResultWait.setTag(match);
                     }
@@ -475,6 +480,7 @@ public class TimelineAdapter extends Adapter<Match, TimelineAdapter.ViewHolder> 
                     bundle.putInt(BundleKeys.MATCH_ID, match.getId());
                     bundle.putString(BundleKeys.PLAYER_NAME, mPlayerName);
                     bundle.putString(BundleKeys.PLAYER_PHOTO, mPlayerPhoto);
+                    bundle.putInt(BundleKeys.ROOM_ID, match.getRoomId());
                 }
             }
 
@@ -493,17 +499,43 @@ public class TimelineAdapter extends Adapter<Match, TimelineAdapter.ViewHolder> 
                     if (mPlayerId != null) {
                         navigateToResultsPeek(context, bundle);
                     } else {
-                        navigateToMyResults(context, bundle);
+                        launchResultsScreen(context, match,Constants.MatchStatusStrings.POINTS);
                     }
 
                     break;
                 case R.id.schedule_row_ll_waiting_for_result:
                     NostragamusAnalytics.getInstance().trackTimeline(AnalyticsActions.OTHERS_RESULTS_WAITING);
-                    navigateToMyResults(context, bundle);
+                    launchResultsScreen(context,match,Constants.MatchStatusStrings.ANSWER);
                     break;
             }
         }
 
+    }
+
+    private void launchResultsScreen(Context context, Match match,String matchStatus) {
+
+        if (context != null) {
+            if (match != null) {
+                Bundle bundle = new Bundle();
+                ResultsScreenDataDto resultsScreenData = new ResultsScreenDataDto();
+                resultsScreenData.setMatchId(match.getId());
+                resultsScreenData.setRoomId(match.getRoomId());
+                resultsScreenData.setMatchStatus(matchStatus);
+
+                if (resultsScreenData != null) {
+                    bundle.putParcelable(Constants.BundleKeys.RESULTS_SCREEN_DATA, Parcels.wrap(resultsScreenData));
+                    if (mPlayerId != null) {
+                        bundle.putInt(BundleKeys.PLAYER_ID, mPlayerId);
+                    }
+                    Intent resultsIntent = new Intent(context, MyResultsActivity.class);
+                    resultsIntent.putExtras(bundle);
+                    resultsIntent.putExtra(Constants.BundleKeys.SCREEN_LAUNCHED_FROM_PARENT,
+                            MyResultsActivity.LaunchedFrom.IN_PLAY_SCREEN_MATCH_AWAITING_RESULTS);
+                    context.startActivity(resultsIntent);
+
+                }
+            }
+        }
     }
 
     private void navigateToResultsPeek(Context context, Bundle bundle) {

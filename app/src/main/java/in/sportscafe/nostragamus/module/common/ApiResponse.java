@@ -1,21 +1,21 @@
 package in.sportscafe.nostragamus.module.common;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.annotations.SerializedName;
 
 /**
  * Created by Jeeva on 30/6/16.
  */
 public class ApiResponse {
 
-    @JsonProperty("data")
+    @SerializedName("data")
     private String message;
 
-    @JsonProperty("data")
+    @SerializedName("data")
     public String getMessage() {
         return message;
     }
 
-    @JsonProperty("data")
+    @SerializedName("data")
     public void setMessage(String message) {
         this.message = message;
     }

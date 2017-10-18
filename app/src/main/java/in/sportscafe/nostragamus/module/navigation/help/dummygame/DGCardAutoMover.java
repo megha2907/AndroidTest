@@ -8,7 +8,7 @@ import android.view.View;
 
 import com.jeeva.android.Log;
 
-import in.sportscafe.nostragamus.module.play.tindercard.FlingCardListener;
+import in.sportscafe.nostragamus.module.navigation.help.dummygame.tindercard.FlingCardListener;
 
 /**
  * Created by Jeeva on 15/03/17.

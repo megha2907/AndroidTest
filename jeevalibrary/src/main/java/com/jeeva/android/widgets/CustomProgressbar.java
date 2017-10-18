@@ -31,7 +31,7 @@ public class CustomProgressbar extends Dialog {
 //        createProgressBar(context);
     }
 
-    public static CustomProgressbar getProgressbar(Context context) {
+    public synchronized static CustomProgressbar getProgressbar(Context context) {
         if (null == customProgressbar) {
             customProgressbar = new CustomProgressbar(context);
         }

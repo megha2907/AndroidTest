@@ -9,7 +9,6 @@ import com.jeeva.android.Log;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Constants.AnalyticsLabels;
 import in.sportscafe.nostragamus.Constants.BundleKeys;
 import in.sportscafe.nostragamus.Nostragamus;
@@ -17,12 +16,9 @@ import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
 import in.sportscafe.nostragamus.module.getstart.GetStartActivity;
-import in.sportscafe.nostragamus.module.home.HomeActivity;
 import in.sportscafe.nostragamus.module.user.group.joingroup.JoinGroupActivity;
-import io.branch.indexing.BranchUniversalObject;
 import io.branch.referral.Branch;
 import io.branch.referral.BranchError;
-import io.branch.referral.util.LinkProperties;
 
 public class SplashActivity extends Activity {
 
@@ -73,6 +69,10 @@ public class SplashActivity extends Activity {
 
                         if (referringParams.has(BundleKeys.WALLET_INITIAL_AMOUNT)) {
                             nostragamusDataHandler.setWalletInitialAmount(Integer.parseInt(referringParams.getString(BundleKeys.WALLET_INITIAL_AMOUNT)));
+                        }
+
+                        if (referringParams.has(BundleKeys.LINK_NAME)) {
+                            nostragamusDataHandler.setInstallLinkName(referringParams.getString(BundleKeys.LINK_NAME));
                         }
 
                     } catch (JSONException e) {

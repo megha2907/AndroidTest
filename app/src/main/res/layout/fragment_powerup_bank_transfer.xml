@@ -5,7 +5,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:background="@color/black"
-    tools:context="in.sportscafe.nostragamus.module.play.powerup.PowerupBankTransferFragment">
+    tools:context="in.sportscafe.nostragamus.module.prediction.powerupBank.PowerupBankTransferFragment">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -348,7 +348,7 @@
 
             </LinearLayout>
 
-            <!-- Transfer to challenge button -->
+            <!-- Transfer to newChallengesResponse button -->
             <com.jeeva.android.widgets.customfont.CustomButton
                 android:id="@+id/powerup_bank_transfer_to_challenge_button"
                 android:layout_width="@dimen/dp_160"

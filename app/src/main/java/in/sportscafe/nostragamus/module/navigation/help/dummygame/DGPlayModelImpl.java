@@ -13,11 +13,11 @@ import java.util.List;
 import in.sportscafe.nostragamus.Constants.AnswerIds;
 import in.sportscafe.nostragamus.Constants.BundleKeys;
 import in.sportscafe.nostragamus.Constants.Powerups;
-import in.sportscafe.nostragamus.module.play.prediction.dto.AudiencePoll;
-import in.sportscafe.nostragamus.module.play.prediction.dto.AudiencePollResponse;
-import in.sportscafe.nostragamus.module.play.prediction.dto.Question;
-import in.sportscafe.nostragamus.module.play.tindercard.FlingCardListener;
-import in.sportscafe.nostragamus.module.play.tindercard.SwipeFlingAdapterView;
+import in.sportscafe.nostragamus.module.navigation.help.dummygame.tindercard.FlingCardListener;
+import in.sportscafe.nostragamus.module.navigation.help.dummygame.tindercard.SwipeFlingAdapterView;
+import in.sportscafe.nostragamus.module.resultspeek.dto.AudiencePoll;
+import in.sportscafe.nostragamus.module.resultspeek.dto.AudiencePollResponse;
+import in.sportscafe.nostragamus.module.resultspeek.dto.Question;
 
 /**
  * Created by Jeeva on 20/5/16.

@@ -5,14 +5,12 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -23,8 +21,6 @@ import android.widget.TextView;
 import com.jeeva.android.widgets.HmImageView;
 import com.jeeva.android.widgets.ShadowLayout;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import in.sportscafe.nostragamus.AppSnippet;
@@ -32,12 +28,11 @@ import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.Adapter;
-import in.sportscafe.nostragamus.module.feed.dto.Match;
-import in.sportscafe.nostragamus.module.home.HomeActivity;
-import in.sportscafe.nostragamus.module.play.prediction.dto.Question;
+import in.sportscafe.nostragamus.module.nostraHome.ui.NostraHomeActivity;
+import in.sportscafe.nostragamus.module.resultspeek.dto.Match;
+import in.sportscafe.nostragamus.module.resultspeek.dto.Question;
 import in.sportscafe.nostragamus.module.user.playerprofile.PlayerProfileActivity;
 import in.sportscafe.nostragamus.module.user.playerprofile.dto.PlayerInfo;
-import in.sportscafe.nostragamus.module.user.powerups.PowerUp;
 import in.sportscafe.nostragamus.utils.timeutils.TimeUtils;
 
 /**
@@ -115,7 +110,7 @@ public class OthersAnswersAdapter extends Adapter<Match, OthersAnswersAdapter.Vi
             Integer playerId = mPlayerInfo.getId();
 
             if (playerId.equals(NostragamusDataHandler.getInstance().getUserId())) {
-                Intent homeintent = new Intent(view.getContext(), HomeActivity.class);
+                Intent homeintent = new Intent(view.getContext(), NostraHomeActivity.class);
                 homeintent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                 homeintent.putExtra("group", "openprofile");
                 view.getContext().startActivity(homeintent);
@@ -142,7 +137,7 @@ public class OthersAnswersAdapter extends Adapter<Match, OthersAnswersAdapter.Vi
         );
 
         int dayOfMonth = Integer.parseInt(TimeUtils.getDateStringFromMs(startTimeMs, "d"));
-        // Setting date of the match
+        // Setting date of the Match
         holder.mTvDate.setText(dayOfMonth + AppSnippet.ordinalOnly(dayOfMonth) + " " +
                 TimeUtils.getDateStringFromMs(startTimeMs, "MMM") + ", "
                 + TimeUtils.getDateStringFromMs(startTimeMs, Constants.DateFormats.HH_MM_AA)
@@ -182,11 +177,9 @@ public class OthersAnswersAdapter extends Adapter<Match, OthersAnswersAdapter.Vi
         holder.mRlAvgMatchPoints.setVisibility(View.GONE);
         holder.mRlHighestMatchPoints.setVisibility(View.GONE);
         holder.mRlLeaderBoard.setVisibility(View.GONE);
-        holder.mViewAvg.setVisibility(View.INVISIBLE);
-        holder.mViewHighest.setVisibility(View.INVISIBLE);
         holder.mTvMatchPointsTxt.setText("Average Score");
         holder.mTvNumberofPowerupsUsed.setText(String.valueOf(match.getCountMatchPowerupsUsed()));
-        holder.mTvResultCorrectCount.setText(match.getCountMatchPlayers().toString() + " People Answered");
+        holder.mTvResultCorrectCount.setText(match.getCountMatchPlayers().toString() + " People Predicted");
 
         List<Question> questions = match.getQuestions();
         for (Question question : questions) {
@@ -239,10 +232,6 @@ public class OthersAnswersAdapter extends Adapter<Match, OthersAnswersAdapter.Vi
         RelativeLayout mRlLeaderBoard;
         ShadowLayout mSlScrores;
 
-        View mViewAvg;
-        View mViewHighest;
-
-
         public MyResultViewHolder(View V) {
             super(V);
 
@@ -272,8 +261,6 @@ public class OthersAnswersAdapter extends Adapter<Match, OthersAnswersAdapter.Vi
             mRlHighestMatchPoints = (RelativeLayout) V.findViewById(R.id.schedule_row_rl_highest_score);
             mRlMatchPoints = (RelativeLayout) V.findViewById(R.id.schedule_row_rl_my_score);
             mTvMatchPointsTxt = (TextView) V.findViewById(R.id.schedule_row_tv_my_score_txt);
-            mViewAvg = V.findViewById(R.id.schedule_row_avg_line);
-            mViewHighest = V.findViewById(R.id.schedule_row_highest_line);
         }
     }
 
@@ -380,7 +367,7 @@ public class OthersAnswersAdapter extends Adapter<Match, OthersAnswersAdapter.Vi
             }
 
         }
-        /* if played match but not attempted Question */
+        /* if played Match but not attempted Question */
         else if (answerId == 0) {
 
             /* Set All options color as grey */

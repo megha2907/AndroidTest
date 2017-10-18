@@ -1,6 +1,6 @@
 package in.sportscafe.nostragamus.module.navigation.wallet.withdrawMoney.dto;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.annotations.SerializedName;
 
 import org.parceler.Parcel;
 
@@ -10,28 +10,28 @@ import org.parceler.Parcel;
 @Parcel
 public class WithdrawFromWalletRequest {
 
-    @JsonProperty("amount")
+    @SerializedName("amount")
     private double amount;
 
-    @JsonProperty("payout")
+    @SerializedName("payout")
     private String payoutChoice;
 
-    @JsonProperty("amount")
+    @SerializedName("amount")
     public double getAmount() {
         return amount;
     }
 
-    @JsonProperty("amount")
+    @SerializedName("amount")
     public void setAmount(double amount) {
         this.amount = amount;
     }
 
-    @JsonProperty("payout")
+    @SerializedName("payout")
     public String getPayoutChoice() {
         return payoutChoice;
     }
 
-    @JsonProperty("payout")
+    @SerializedName("payout")
     public void setPayoutChoice(String payoutChoice) {
         this.payoutChoice = payoutChoice;
     }

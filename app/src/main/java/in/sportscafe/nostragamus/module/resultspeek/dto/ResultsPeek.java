@@ -1,9 +1,5 @@
 package in.sportscafe.nostragamus.module.resultspeek.dto;
 
-import java.util.List;
-
-import in.sportscafe.nostragamus.module.play.prediction.dto.Question;
-
 /**
  * Created by deepanshi on 2/16/17.
  */

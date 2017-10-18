@@ -196,6 +196,14 @@ public class NostragamusDataHandler extends AbstractDataHandler implements Const
         return getSharedStringData(SharedKeys.INSTALL_REFERRAL_CAMPAIGN_KEY);
     }
 
+    public void setInstallLinkName(String installLinkName) {
+        setSharedStringData(SharedKeys.INSTALL_LINK_NAME, installLinkName);
+    }
+
+    public String getInstallLinkName() {
+        return getSharedStringData(SharedKeys.INSTALL_LINK_NAME);
+    }
+
     public Integer getWalletInitialAmount() {
         return getSharedIntData(SharedKeys.WALLET_INITIAL_AMOUNT, -1);
     }
@@ -394,11 +402,13 @@ public class NostragamusDataHandler extends AbstractDataHandler implements Const
     public void clearAll() {
         boolean formShown = isInitialFeedbackFormShown();
         boolean isProfileDisclaimerAccepted = isProfileDisclaimerAccepted();
+        boolean isFirstMatchPlayed = isPlayedFirstMatch();
 
         super.clearAll();
 
         setInitialFeedbackFormShown(formShown);
         setIsProfileDisclaimerAccepted(isProfileDisclaimerAccepted);
+        setPlayedFirstMatch(isFirstMatchPlayed);
     }
 
     public boolean isPlayedFirstMatch() {

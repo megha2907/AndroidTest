@@ -10,7 +10,7 @@
                     <corners android:radius="@dimen/dp_2" />
                 </shape>
             </item>
-            <item android:bottom="@dimen/dim_3" >
+            <item android:bottom="@dimen/dp_3" >
                 <shape>
                     <solid android:color="#404040" />
                     <corners android:radius="@dimen/dp_2" />
@@ -29,7 +29,7 @@
                     <corners android:radius="@dimen/dp_2" />
                 </shape>
             </item>
-            <item android:bottom="@dimen/dim_3" >
+            <item android:bottom="@dimen/dp_3" >
                 <shape>
                     <solid android:color="#323232" />
                     <corners android:radius="@dimen/dp_2" />
@@ -49,7 +49,7 @@
                 </shape>
             </item>
             <!-- BUTTON -->
-            <item android:bottom="@dimen/dim_3">
+            <item android:bottom="@dimen/dp_3">
                 <shape android:shape="rectangle">
                     <solid android:color="#505050" />
                     <corners android:radius="@dimen/dp_2" />

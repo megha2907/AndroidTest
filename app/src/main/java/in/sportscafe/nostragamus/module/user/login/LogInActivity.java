@@ -8,8 +8,6 @@ import android.os.Bundle;
 import android.text.Html;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.google.android.gms.auth.GoogleAuthException;
@@ -27,20 +25,16 @@ import com.google.android.gms.common.api.Status;
 import com.jeeva.android.ExceptionTracker;
 import com.jeeva.android.Log;
 
-import org.parceler.Parcel;
-
 import java.io.IOException;
 
-import in.sportscafe.nostragamus.BuildConfig;
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.NostragamusActivity;
 import in.sportscafe.nostragamus.module.common.NostragamusDialogBox;
 import in.sportscafe.nostragamus.module.common.TermsConditions;
-import in.sportscafe.nostragamus.module.home.HomeActivity;
+import in.sportscafe.nostragamus.module.nostraHome.ui.NostraHomeActivity;
 import in.sportscafe.nostragamus.module.onboard.OnBoardingFragment;
 import in.sportscafe.nostragamus.module.user.myprofile.edit.EditProfileActivity;
-import me.relex.circleindicator.CircleIndicator;
 
 public class LogInActivity extends NostragamusActivity implements LogInView, View.OnClickListener, GoogleApiClient.OnConnectionFailedListener {
 
@@ -127,7 +121,7 @@ public class LogInActivity extends NostragamusActivity implements LogInView, Vie
 
     @Override
     public void navigateToHome() {
-        Intent intent = new Intent(this, HomeActivity.class);
+        Intent intent = new Intent(this, NostraHomeActivity.class);
         Bundle bundle = new Bundle();
         bundle.putString(Constants.BundleKeys.LOGIN_SCREEN, Constants.BundleKeys.LOGIN_SCREEN);
         intent.putExtras(bundle);
@@ -191,7 +185,7 @@ public class LogInActivity extends NostragamusActivity implements LogInView, Vie
     }
 
     public void gotoTermsConditions() {
-        startActivity(new Intent(this, TermsConditions.class));
+        navigateToWebView(Constants.WebPageUrls.TERMS_SERVICE, "Terms of Service");
     }
 
     private void getGoogleAccessToken(final String email) {
@@ -307,7 +301,7 @@ public class LogInActivity extends NostragamusActivity implements LogInView, Vie
     public void showProgressDialog() {
         showProgressbar();
         /*if (mProgressDialog == null) {
-            mProgressDialog = new ProgressDialog(this);
+            mProgressDialog = new NostraProgressDialog(this);
             mProgressDialog.setMessage("Loading...");
             mProgressDialog.setIndeterminate(true);
         }

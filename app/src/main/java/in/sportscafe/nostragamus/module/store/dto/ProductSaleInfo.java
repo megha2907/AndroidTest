@@ -1,6 +1,6 @@
 package in.sportscafe.nostragamus.module.store.dto;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.annotations.SerializedName;
 
 import org.parceler.Parcel;
 
@@ -12,45 +12,39 @@ import org.parceler.Parcel;
 @Parcel
 public class ProductSaleInfo {
 
-    @JsonProperty("sale")
-    private Boolean saleOn;
+    @SerializedName("sale")
+    private boolean saleOn;
 
-    @JsonProperty("sale_price")
-    private Integer salePrice;
+    @SerializedName("sale_price")
+    private int salePrice;
 
-    @JsonProperty("sale_percentage")
-    private Integer salePercentage;
+    @SerializedName("sale_percentage")
+    private float salePercentage;
 
-    @JsonProperty("sale_description")
+    @SerializedName("sale_description")
     private String saleDesc;
 
-    public Boolean getSaleOn() {
-        if (saleOn==null){
-            return saleOn = false;
-        }
+    public boolean getSaleOn() {
         return saleOn;
     }
 
-    public void setSaleOn(Boolean saleOn) {
+    public void setSaleOn(boolean saleOn) {
         this.saleOn = saleOn;
     }
 
-    public Integer getSalePrice() {
+    public int getSalePrice() {
         return salePrice;
     }
 
-    public void setSalePrice(Integer salePrice) {
+    public void setSalePrice(int salePrice) {
         this.salePrice = salePrice;
     }
 
-    public Integer getSalePercentage() {
-        if (salePercentage==null){
-            return salePercentage = 0;
-        }
+    public float getSalePercentage() {
         return salePercentage;
     }
 
-    public void setSalePercentage(Integer salePercentage) {
+    public void setSalePercentage(float salePercentage) {
         this.salePercentage = salePercentage;
     }
 

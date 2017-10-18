@@ -1,0 +1,329 @@
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="@color/black"
+    tools:context="in.sportscafe.nostragamus.module.prediction.playScreen.PredictionFragment">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <!-- Top Layout -->
+        <RelativeLayout
+            android:id="@+id/prediction_top_layout"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dim_55"
+            android:orientation="horizontal"
+            android:background="#252525"
+            android:layout_alignParentTop="true"
+            android:visibility="gone">
+
+            <ImageView
+                android:id="@+id/prediction_back_btn"
+                android:layout_width="@dimen/dp_32"
+                android:layout_height="@dimen/dp_32"
+                android:layout_gravity="center"
+                android:layout_centerVertical="true"
+                android:padding="@dimen/dim_10"
+                android:layout_marginLeft="@dimen/dim_6"
+                android:src="@drawable/back_icon_grey"
+                android:background="?attr/selectableItemBackgroundBorderless"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:gravity="center"
+                >
+
+                <!-- parties name -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center">
+
+                    <com.jeeva.android.widgets.customfont.CustomTextView
+                        android:id="@+id/prediction_heading_party1_textView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="right"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/sp_13"
+                        app:typeface="lato_regular"
+                        android:layout_marginLeft="@dimen/dim_40"/>
+
+                    <com.jeeva.android.widgets.customfont.CustomTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/white"
+                        android:text="vs"
+                        android:textSize="@dimen/sp_13"
+                        app:typeface="lato_regular"
+                        android:layout_marginLeft="@dimen/dim_3"
+                        android:layout_marginRight="@dimen/dim_3"/>
+
+                    <com.jeeva.android.widgets.customfont.CustomTextView
+                        android:id="@+id/prediction_heading_party2_textView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="left"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/sp_13"
+                        app:typeface="lato_regular"
+                        android:layout_marginRight="@dimen/dim_40"/>
+
+                </LinearLayout>
+
+                <com.jeeva.android.widgets.customfont.CustomTextView
+                    android:id="@+id/prediction_sub_heading_textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/grey_999999"
+                    android:textSize="@dimen/sp_10"
+                    app:typeface="lato_regular"
+                    android:layout_marginTop="@dimen/dim_2"/>
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+        <!-- Questions/card info -->
+        <RelativeLayout
+            android:id="@+id/prediction_questions_info_parent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dim_15"
+            android:layout_below="@id/prediction_top_layout"
+            android:gravity="bottom"
+            android:paddingLeft="@dimen/dim_16"
+            android:paddingRight="@dimen/dim_16"
+            android:visibility="gone">
+
+            <!-- Question number counter -->
+            <com.jeeva.android.widgets.customfont.CustomTextView
+                android:id="@+id/prediction_question_counter_textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp_12"
+                app:typeface="lato_regular"
+                android:text="0/0"
+                android:layout_alignParentLeft="true"/>
+
+            <!-- Next button -->
+            <LinearLayout
+                android:id="@+id/prediction_next_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_alignParentRight="true">
+
+                <com.jeeva.android.widgets.customfont.CustomTextView
+                    android:id="@+id/prediction_question_next_textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/sp_12"
+                    app:typeface="lato_regular"
+                    android:text="NEXT"/>
+
+                <ImageView
+                    android:layout_width="@dimen/dim_12"
+                    android:layout_height="@dimen/dim_12"
+                    android:src="@drawable/play_screen_next_button_icn"
+                    android:layout_marginLeft="@dimen/dim_5"/>
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+        <!-- Card Layouts -->
+        <LinearLayout
+            android:id="@+id/prediction_third_option_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="@dimen/dim_100"
+            android:animateLayoutChanges="true"
+            android:visibility="gone">
+
+            <com.jeeva.android.widgets.customfont.CustomButton
+                android:id="@+id/prediction_third_option_button"
+                android:layout_width="@dimen/dim_100"
+                android:layout_height="@dimen/dp_34"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp_12"
+                android:text="@string/prediction_neither_button_text"
+                app:typeface="lato_bold"
+                android:background="@drawable/prediction_card_bottom_bg"/>
+
+        </LinearLayout>
+
+        <!-- Bottom/ Power-up Layout -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dim_80"
+            android:orientation="horizontal"
+            android:background="#252525"
+            android:layout_alignParentBottom="true"
+            android:gravity="center">
+
+            <LinearLayout
+                android:id="@+id/prediction_bottom_layout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:visibility="gone">
+
+                <ImageView
+                    android:id="@+id/prediction_powerup_bank_imgView"
+                    android:layout_width="@dimen/dim_32"
+                    android:layout_height="@dimen/dim_32"
+                    android:src="@drawable/prediction_powerup_bank_button"
+                    android:layout_marginLeft="@dimen/dim_26"
+                    android:layout_marginRight="@dimen/dim_26"/>
+
+                <RelativeLayout
+                    android:layout_width="@dimen/dim_185"
+                    android:layout_height="@dimen/dim_58">
+
+                    <View
+                        android:id="@+id/background_img"
+                        android:layout_width="@dimen/dim_185"
+                        android:layout_height="@dimen/dim_46"
+                        android:layout_alignParentBottom="true"
+                        android:background="@drawable/prediction_powerup_bg_icn"/>
+
+                    <!-- Doubler -->
+                    <RelativeLayout
+                        android:id="@+id/prediction_doubler_Layout"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true">
+
+                        <ImageView
+                            android:id="@+id/doubler_imgView"
+                            android:layout_width="@dimen/dim_48"
+                            android:layout_height="@dimen/dim_56"
+                            android:adjustViewBounds="true"
+                            android:src="@drawable/prediction_doubler_powerup_button"/>
+
+                        <com.jeeva.android.widgets.customfont.CustomTextView
+                            android:id="@+id/prediction_doubler_counter_textView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerHorizontal="true"
+                            android:gravity="center"
+                            android:padding="@dimen/dim_2"
+                            android:text="0"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/sp_9"
+                            app:typeface="lato_regular"
+                            android:background="@drawable/prediction_powerup_counter_bg"/>
+
+                    </RelativeLayout>
+
+                    <!-- No negative -->
+                    <RelativeLayout
+                        android:id="@+id/prediction_noNeg_Layout"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true">
+
+                        <ImageView
+                            android:id="@+id/noNeg_ingView"
+                            android:layout_width="@dimen/dim_48"
+                            android:layout_height="@dimen/dim_56"
+                            android:src="@drawable/prediction_no_negative_powerup_button"/>
+
+                        <com.jeeva.android.widgets.customfont.CustomTextView
+                            android:id="@+id/prediction_noNeg_counter_textView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerHorizontal="true"
+                            android:gravity="center"
+                            android:padding="@dimen/dim_2"
+                            android:text="0"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/sp_9"
+                            app:typeface="lato_regular"
+                            android:layout_alignTop="@id/noNeg_ingView"
+                            android:background="@drawable/prediction_powerup_counter_bg"/>
+
+                    </RelativeLayout>
+
+                    <!-- Player poll -->
+                    <RelativeLayout
+                        android:id="@+id/prediction_player_poll_Layout"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true">
+
+                        <ImageView
+                            android:id="@+id/player_poll_imgView"
+                            android:layout_width="@dimen/dim_48"
+                            android:layout_height="@dimen/dim_56"
+                            android:src="@drawable/prediction_player_poll_powerup_button"/>
+
+                        <com.jeeva.android.widgets.customfont.CustomTextView
+                            android:id="@+id/prediction_player_poll_counter_textView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerHorizontal="true"
+                            android:gravity="center"
+                            android:padding="@dimen/dim_2"
+                            android:text="0"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/sp_9"
+                            app:typeface="lato_regular"
+                            android:layout_alignTop="@id/player_poll_imgView"
+                            android:background="@drawable/prediction_powerup_counter_bg"/>
+
+                    </RelativeLayout>
+
+                </RelativeLayout>
+
+                <ImageView
+                    android:id="@+id/prediction_help_play_imgView"
+                    android:layout_width="@dimen/dim_32"
+                    android:layout_height="@dimen/dim_32"
+                    android:src="@drawable/prediction_game_help_button"
+                    android:layout_marginLeft="@dimen/dim_26"
+                    android:layout_marginRight="@dimen/dim_26"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <!-- Card swipe area -->
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.sportscafe.nostracardstack.cardstack.CardStack
+                android:id="@+id/prediction_cardStack"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:clipChildren="false"
+                android:clipToPadding="false"
+                android:padding="3dp"
+                app:card_margin="@dimen/dim_3"
+                app:card_gravity="bottom"
+                app:card_top_margin="@dimen/dim_90"
+                app:card_stack_size="4"
+                app:card_enable_rotation="true"
+                android:background="@android:color/transparent"/>
+
+        </FrameLayout>
+
+    </RelativeLayout>
+
+</android.support.design.widget.CoordinatorLayout>

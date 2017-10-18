@@ -3,27 +3,23 @@ package in.sportscafe.nostragamus.module.user.myprofile;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import in.sportscafe.nostragamus.Constants.BundleKeys;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
-import in.sportscafe.nostragamus.module.bank.BankFragment;
 import in.sportscafe.nostragamus.module.common.ViewPagerAdapter;
 import in.sportscafe.nostragamus.module.play.myresultstimeline.TimelineFragment;
 import in.sportscafe.nostragamus.module.user.badges.Badge;
 import in.sportscafe.nostragamus.module.user.badges.BadgeFragment;
 import in.sportscafe.nostragamus.module.user.login.UserInfoModelImpl;
 import in.sportscafe.nostragamus.module.user.login.dto.UserInfo;
-import in.sportscafe.nostragamus.module.user.powerups.PowerUp;
 
 /**
  * Created by Jeeva on 14/6/16.
  */
 public class ProfileModelImpl implements ProfileModel, UserInfoModelImpl.OnGetUserInfoModelListener {
 
-    private Integer mChallengeId;
+    private int mRoomId = 0;
 
     private boolean mSeparateScreen = false;
 
@@ -40,8 +36,8 @@ public class ProfileModelImpl implements ProfileModel, UserInfoModelImpl.OnGetUs
     @Override
     public void init(Bundle bundle) {
         if(null != bundle) {
-            if(bundle.containsKey(BundleKeys.CHALLENGE_ID)) {
-                mChallengeId = bundle.getInt(BundleKeys.CHALLENGE_ID);
+            if(bundle.containsKey(BundleKeys.ROOM_ID)) {
+                mRoomId = bundle.getInt(BundleKeys.ROOM_ID, 0);
             }
 
             mSeparateScreen = bundle.getBoolean(BundleKeys.IS_SEPARATE_SCREEN);
@@ -63,7 +59,7 @@ public class ProfileModelImpl implements ProfileModel, UserInfoModelImpl.OnGetUs
         ViewPagerAdapter pagerAdapter = new ViewPagerAdapter(fm);
 
         UserInfo userInfo = getUserInfo();
-        pagerAdapter.addFragment(TimelineFragment.newInstance(mChallengeId), "Matches");
+        pagerAdapter.addFragment(TimelineFragment.newInstance(mRoomId), "Matches");
 
         // Wallet should NOT be displayed for free app version
         /*if (BuildConfig.IS_PAID_VERSION) {
@@ -88,22 +84,6 @@ public class ProfileModelImpl implements ProfileModel, UserInfoModelImpl.OnGetUs
     @Override
     public boolean isSeparateScreen() {
         return mSeparateScreen;
-    }
-
-    private HashMap<String, PowerUp> getPowerUpMap(HashMap<String, Integer> powerUps) {
-        HashMap<String, PowerUp> powerUpMaps = new HashMap<>();
-        for (Map.Entry<String, Integer> entry : powerUps.entrySet()) {
-            powerUpMaps.put(entry.getKey(), new PowerUp(entry.getKey(), entry.getValue()));
-        }
-        return powerUpMaps;
-    }
-
-    private int getPowerUpTotalCount(List<PowerUp> powerUpList) {
-        int count = 0;
-        for (PowerUp powerUp : powerUpList) {
-            count += powerUp.getCount();
-        }
-        return count;
     }
 
     @Override

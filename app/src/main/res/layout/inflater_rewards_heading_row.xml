@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/black5">
+
+    <com.jeeva.android.widgets.customfont.CustomTextView
+        android:id="@+id/rewards_challenge_end_time"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        app:typeface="lato_regular"
+        android:layout_marginRight="@dimen/dim_30"
+        android:layout_marginLeft="@dimen/dim_30"
+        android:lineSpacingExtra="@dimen/dim_1"
+        android:textSize="@dimen/sp_12"
+        android:textColor="@color/grey6"
+        android:paddingTop="@dimen/dim_12"
+        android:paddingBottom="@dimen/dim_12" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="@dimen/dim_50"
+        android:background="@color/black4"
+        android:layout_below="@+id/rewards_challenge_end_time">
+
+    <com.jeeva.android.widgets.customfont.CustomTextView
+        android:id="@+id/reward_row_tv_heading_one"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:minWidth="@dimen/dim_150"
+        android:maxLines="1"
+        android:text="Rank"
+        android:gravity="center"
+        android:layout_marginLeft="@dimen/dim_26"
+        android:layout_centerVertical="true"
+        android:textColor="@color/grey6"
+        android:textSize="@dimen/sp_12"
+        app:typeface="lato_regular" />
+
+    <View
+        android:layout_width="@dimen/dp_10"
+        android:layout_height="@dimen/dp_2"
+        android:layout_gravity="center"
+        android:layout_centerInParent="true"
+        android:visibility="gone"
+        android:background="@color/code_gray_13"/>
+
+
+    <com.jeeva.android.widgets.customfont.CustomTextView
+        android:id="@+id/reward_row_tv_heading_two"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:minWidth="@dimen/dim_150"
+        android:text="Prizes"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="@dimen/dim_26"
+        android:gravity="center"
+        android:textColor="@color/grey6"
+        android:textSize="@dimen/sp_12"
+        app:typeface="lato_regular" />
+
+    </RelativeLayout>
+
+</RelativeLayout>

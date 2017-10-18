@@ -12,21 +12,36 @@ public interface Constants {
 
     interface ImageFolders {
         String MAIN = "Nostragamus_Images";
-
         String PROFILE = "Profile_Images";
     }
 
-    interface NotificationKeys {
-        String RESULTS_LEADERBOARD = "results_leaderboard";
-        String FROM_NOTIFICATION = "fromNotification";
-        String NEW_CHALLENGE_ID = "challenge_id";
-    }
+    interface Notifications {
+        String IS_LAUNCHED_FROM_NOTIFICATION = "isLaunchedFromNotification";
+        String NOSTRA_NOTIFICATION = "nostraNotification";
+        String SCREEN_NEW_CHALLENGE = "newChallenge";
+        String SCREEN_NEW_CHALLENGE_SPORT = "newChallengeSport";
+        String SCREEN_IN_PLAY_MATCHES = "inPlayGames";
 
-    interface Screens {
-        int CHALLENGES = 1;
-        int GROUP = 2;
-        int LEADER_BOARD = 3;
-        int PROFILE = 4;
+        String SCREEN_CONTEST_DETAILS = "contestDetails"; /* Contest Details with Entries,Rewards & Rules */
+        String SCREEN_CONTEST = "contest"; /* Contest Screen */
+        String SCREEN_IN_PLAY_CONTEST_DETAILS = "inPlayContestDetails"; /* Contest Details with Games,Entries,Rewards & Rules for inPlay */
+        String SCREEN_CHALLENGE_HISTORY_WINNINGS = "challengeHistoryWinnings"; /* Contest Details with Games , Entries , Winners & Rules for Completed */
+        String SCREEN_IN_PLAY_HEADLESS_GAMES = "inPlayHeadlessGames"; /* Headless Games Screen */
+        String SCREEN_NEW_CHALLENGES_GAMES = "newChallengesGames"; /* New Challenges Games Screen  */
+        String SCREEN_HOME = "home"; /* Home Screen with Challenges,inPlay,History & Profile */
+        String SCREEN_PLAY = "play"; /* Play Screen */
+        String SCREEN_RESULTS = "results"; /* Results Screen */
+        String SCREEN_RESULTS_PEEK = "results_peek"; /* Compare Results Screen */
+        String SCREEN_AVERAGE_SCORE = "average_score";  /* Average Score Screen */
+        String SCREEN_WALLET_HOME = "wallet"; /* Wallet Home Screen */
+        String SCREEN_WALLET_HISTORY = "walletHistory"; /* Wallet History Screen */
+        String SCREEN_WALLET_PAYOUT_HOME = "walletPayoutHome"; /* Withdrawal Details Screen ( Paytm & Bank account) */
+        String SCREEN_POWERUP_BANK = "PowerupBank"; /* Powerup Bank Screen */
+        String SCREEN_REFER_FRIEND = "ReferFriend"; /* Refer a Friend Screen */
+        String SCREEN_REFERRAL_CREDITS = "referralCredits";  /* Referral History Screen */
+        String SCREEN_STORE = "Store";  /* Store - Buy Powerups */
+        String SCREEN_APP_UPDATE = "appUpdate"; /* Update the App screen & What's New Screen */
+
     }
 
     interface SharedKeys {
@@ -99,6 +114,7 @@ public interface Constants {
         String PAYMENT_DETAILS_SCREEN_SHOWN_ONCE_ON_HOME = "paymentDetailsShownOnHome";
         String IS_PROFILE_DISCLAIMER_ACCEPTED = "isProfileDisclaimerAccepted";
         String INSTALL_REFERRAL_CAMPAIGN_KEY = "installReferralCampaignKey";
+        String INSTALL_LINK_NAME = "installLinkName";
 
         String LAST_SHOWN_APP_VERSION_CODE = "lastShownAppVersionCode";
         String UPDATE_TYPE = "updateType";
@@ -138,7 +154,7 @@ public interface Constants {
         String USERNAME_EMPTY = "Please enter username";
         String NO_QUESTIONS_FOUND = "No questions found";
         String NO_FEEDS_FOUND = "No upcoming matches.";
-        String NO_UPDATED_LEADERBOARDS = "Your leaderboard will update here after a match you have played is over";
+        String NO_UPDATED_LEADERBOARDS = "Your leaderboard will update here after a Match you have played is over";
         String NO_RESULTS = "No results yet";
         String JOIN_GROUP_SUCCESS = "Your request sent to the group admin for the approval";
         String INVALID_GROUP_CODE = "Invalid group code";
@@ -163,7 +179,7 @@ public interface Constants {
         String AUDIENCE_POLL_FAIL = "Not enough responses for a meaningful poll, you can try after some time";
         String POWERUP_FAIL = "Something went wrong! Please try again!";
         String API_FAIL = "Something went wrong! Please try again!";
-        String MATCH_ALREADY_STARTED = "This match has already started!";
+        String MATCH_ALREADY_STARTED = "This Match has already started!";
         String FLIP_POWERUP_OVER = "You have used all your flip powerups!";
         String REPLAY_POWERUP_OVER = "You have used all your replay powerups!";
         String ADD_PHOTO_FAILED = "Adding photo failed! Try again!";
@@ -191,10 +207,13 @@ public interface Constants {
         String SUBMIT_QUESTION_SUCCESS = "Your question is submitted successfully";
         String EMPTY_MATCHES = "Currently no upcoming matches";
         String DEFAULT_SHARE_MESSAGE = "Use paste, If you want to use the default share message!";
-        String POLL_LIST_EMPTY = "No polls";
+        String POLL_LIST_EMPTY = "No Rewards";
         String NOT_FREE_CHALLENGE = "Please use full version for the paid challenges";
-        String EDIT_PROFILE_DISCLAIMER_CHECK_REQUIRED = "Please select the checkbox to proceed - you must meet these conditions to play the Pro version of Nostragamus";
+        String EDIT_PROFILE_DISCLAIMER_CHECK_REQUIRED = "Please select the checkbox to proceed";
         String FORCE_UPDATE_PROFILE_MSG_FOR_PAID_VERSION = "Please update your profile";
+        String NO_INTERNET_CONNECTION = "No internet connection";
+        String COULD_NOT_FETCH_DATA_FROM_SERVER = "Could not fetch data from Server!";
+        String CHALLENGE_STARTED_ALERT_FOR_TIMER = "Please join other challenges as %s already started";
 
         /*--- Paytm Msg ---*/
         String PAYTM_AUTHENTICATION_FAILED = "Could not transact, please try again";
@@ -225,6 +244,7 @@ public interface Constants {
         String FROM_PROFILE = "fromProfile";
         String TOURNAMENT_ID = "tour_id";
         String CHALLENGE_ID = "challengeId";
+        String ROOM_ID = "roomId";
         String MATCH_ID = "match_id";
         String TOURNAMENT_NAME = "tourName";
         String TOURNAMENT_SUMMARY = "tourSummary";
@@ -309,6 +329,13 @@ public interface Constants {
         String LAUNCH_MODE = "launchMode";
         String IMAGE_URL = "imageUrl";
         String DOWNLOAD_URL = "downloadUrl";
+        String NEW_CHALLENGES_RESPONSE = "newChallengeResponse";
+        String SCREEN_LAUNCHED_FROM_PARENT = "screenLaunchedFromParent";
+        String JOIN_CONTEST_DATA = "joinContestData";
+        String SCREEN_LAUNCH_REQUEST = "screenLaunchRequest";
+        String CONTEST_ENTRIES_SCREEN_DATA = "contestEntriesScreenData";
+        String NEW_CHALLENGE_MATCHES_SCREEN_DATA = "newChallengeMatchesScreenData";
+        String TIMER_FINISHED_SCREEN_DATA = "timerFinishedScreenData";
 
         /* Wallet */
         String WALLET_WITHDRAWAL_AMT = "walletWithdrawAmt";
@@ -319,11 +346,26 @@ public interface Constants {
         String USER_REFERRAL_CODE = "user_referral_code";
         String USER_REFERRAL_NAME = "user_referral_name";
         String USER_REFERRAL_PHOTO = "user_referral_photo";
+        String LINK_NAME = "linkname";
 
         String SUCCESSFUL_REFERRAL = "successfulReferral";
-    }
-
-    interface ParcelableKeys {
+        String CONTEST_ID = "contestId";
+        String CONTEST_TYPE = "contestType";
+        String CONTEST_TYPE_DESC = "contestTypeDesc";
+        String BANK_TRANSFER_POWERUPS = "BankPowerUps";
+        String CONTEST = "Contest";
+        String INPLAY_CONTEST = "InPlayContest";
+        String INPLAY_CHALLENGE_LIST_ITEM = "InPlayChallengeListItem";
+        String INPLAY_MATCH = "InPlayMatch";
+        String COMPLETED_MATCH = "CompletedMatch";
+        String COMPLETED_CONTEST = "CompletedContest";
+        String PLAY_SCREEN_DATA = "playScreenData";
+        String RESULTS_SCREEN_DATA = "resultsScreenData";
+        String CONTEST_SCREEN_DATA = "contestScreenData";
+        String IS_HEADLESS_FLOW = "isHeadLessFlow";
+        String HEADLESS_MATCH_SCREEN_DATA = "headlessMatchScreenData";
+        String COMPLETED_CHALLENGE_LIST_ITEM = "CompletedChallengeListItem";
+        String CONFIG_ID = "configId";
     }
 
     interface DateFormats {
@@ -343,6 +385,7 @@ public interface Constants {
         String HH_MM_AA_D_MMM = "hh:mm aa, d'th' MMM";
         String YYYY_MMM_DD = "yyyy/MMM/dd";
         String FORMAT_DATE_T_TIME_ZONE_ZZ_ZZ = "yyyy-MM-dd'T'HH:mm:ssZ";
+        String CHALLENGE_START_TIME_FORMAT = "HH'h' mm'm' ss's'";
     }
 
     interface IntentActions {
@@ -360,12 +403,7 @@ public interface Constants {
         String ACTION_RELOAD_CHALLENGES = "in.sportscafe.nostragamus.intent.action.RELOAD_CHALLENGES";
         String ACTION_OPEN_WEBVIEW= "in.sportscafe.nostragamus.intent.action.OPEN_WEBVIEW";
         String ACTION_FINISH_POWER_UP_BANK_ACTIVITY = "in.sportscafe.nostragamus.intent.action.FINISH_POWER_UP_BANK";
-    }
-
-    interface LeaderBoardPeriods {
-        String ALL_TIME = "alltime";
-        String MONTH = "monthly";
-        String WEEK = "weekly";
+        String ACTION_INTERNET_STATE_CHANGED = "in.sportscafe.nostragamus.intent.action.INTERNET_STATE_CHANGED";
     }
 
     interface LBLandingType {
@@ -385,6 +423,7 @@ public interface Constants {
         int LEFT = 1;
         int RIGHT = 2;
         int NEITHER = 3;
+        int SHUFFLE = 4;
     }
 
     interface Powerups {
@@ -394,8 +433,6 @@ public interface Constants {
         String AUDIENCE_POLL = "player_poll";
         String MATCH_REPLAY = "match_replay";
         String ANSWER_FLIP = "answer_flip";
-
-        int POWER_UP_TYPE_TAG = 11;
     }
 
     interface AnalyticsCategory {
@@ -457,15 +494,6 @@ public interface Constants {
         /* Refer */
         String REFER_NOW = "Refer Now";
 
-        /* Play screen */
-        String PLAY_BANK = "PowerUp Bank";
-        String PLAY_ASK_FRIEND = "Ask a Friend";
-        String PLAY_GAME_HELP = "Game-Help";
-        String SWIPE_VIEW = "Swipe View";
-        String LIST_VIEW = "List View";
-        String CHALLENGE_INFO = "Challenge Info";
-        String CHALLENGE_JOIN = "Challenge Join";
-        String CHALLENGE_REWARDS = "Challenge Rewards";
         String OTHER_PROFILE = "Other Profile";
     }
 
@@ -535,6 +563,7 @@ public interface Constants {
         String REFERRAL_CHANNEL = "Channel";
         String REFERRAL_CAMPAIGN = "Campaign";
         String WALLET_INIT = "Wallet Initial Amount";
+        String LINK_NAME = "Link Name";
     }
 
     interface AppType {
@@ -562,7 +591,7 @@ public interface Constants {
         String ADMIN_MEMBERS = "admin_members"; //in.sportscafe.nostragamus.module.user.group.admin.adminmembers.AdminMembersActivity
         String FLIP_POWERUP = "flip_powerup"; //in.sportscafe.nostragamus.module.play.myresults.flipPowerup.FlipActivity
         String GOOGLE_FORM = "google_form"; // in.sportscafe.nostragamus.module.feedback.GoogleFormActivity
-        String OTHER_ANSWERS = "other_answers"; // in.sportscafe.nostragamus.module.othersanswers.OthersAnswersActivity
+        String OTHER_ANSWERS = "average_score"; // in.sportscafe.nostragamus.module.othersanswers.OthersAnswersActivity
         String SPORT_SELECTION = "sport_selection"; //in.sportscafe.nostragamus.module.user.sportselection.SportSelectionActivity
         String PLAYER_COMPARISON = "player_comparison"; //in.sportscafe.nostragamus.module.user.comparisons.PlayerComparisonActivity
         String RESULTS_PEEK = "results_peek"; //in.sportscafe.nostragamus.module.resultspeek.ResultsPeekActivity
@@ -595,6 +624,8 @@ public interface Constants {
         String VERIFY_PROFILE = "VerifyProfile";
         String STORE = "Store";
         String EARN_MORE_POWERUPS = "EarnMorePowerups";
+        String MATCHES_TIMELINE = "MatchesTimeline";
+        String CONTEST_DETAILS = "ContestDetails";
     }
 
     interface InAppPopups {
@@ -612,7 +643,6 @@ public interface Constants {
     }
 
     interface AppPermissions {
-
         String[] STORAGE = new String[]{
                 Manifest.permission.READ_EXTERNAL_STORAGE,
                 Manifest.permission.WRITE_EXTERNAL_STORAGE
@@ -620,7 +650,6 @@ public interface Constants {
     }
 
     interface RequestCodes {
-
         int STORAGE_PERMISSION = 134;
     }
 
@@ -708,6 +737,7 @@ public interface Constants {
         String TRANSACTION_TYPE_JOINING = "joining";
         String TRANSACTION_TYPE_WINNING = "winning";
         String TRANSACTION_TYPE_BUY = "buy";
+        String TRANSACTION_TYPE_REFUNDED = "refunded";
 
         String TRANSACTION_STATUS_INITIATED = "initiated";
         String TRANSACTION_STATUS_SUCCESS = "success";
@@ -728,15 +758,19 @@ public interface Constants {
         String STORE = "Store";
     }
 
-    interface ChallengeTabs {
-        String NEW = "New";
-        String IN_PLAY = "In Play";
-        String COMPLETED = "Completed";
+    interface ContestDetailsTabs {
+        String MATCHES = "Games";
+        String ENTRIES = "Entries";
+        String PRIZES = "Prizes";
+        String WINNERS = "Winners";
+        String RULES = "Rules";
+        String LEADERBOARDS = "Leaderboard";
     }
 
-    interface PopUpType {
-        String Losers = "lost_first_challenge";
-        String Winners = "won_first_challenge";
+    interface ContestType {
+        String GUARANTEED = "g";
+        String NON_GUARANTEED = "ng";
+        String POOL = "p";
     }
 
     interface WebPageUrls {
@@ -764,8 +798,6 @@ public interface Constants {
         int SUCCESS = 1;
     }
 
-    interface PowerupLocalId { int DOUBLER = 1; int NO_NEGATIVE = 2; int AUDIENCE_POLL = 3;}
-
     interface StoreBuyProductCategory {
         int POWER_UP_DOUBLER = 1;
         int POWER_UP_NO_NEGATIVE = 2;
@@ -778,5 +810,44 @@ public interface Constants {
 
     interface FaceBookAnalyticsEvents {
         String MATCH_PLAY_COMPLETED = "Played";
+    }
+
+    interface DataStatus {
+        int FROM_SERVER_API_SUCCESS = 1;
+        int FROM_SERVER_API_FAILED = 2;
+        int FROM_DATABASE_AS_SERVER_FAILED = 3;
+        int FROM_DATABASE_AS_NO_INTERNET = 4;
+        int FROM_DATABASE_ERROR = 5;
+        int NO_INTERNET = 6;
+    }
+
+    interface MatchStatusStrings {
+        /* Synced with server as they come in api response */
+        String COMING_UP = "Coming up";
+        String DID_NOT_PLAY = "Did Not Play";
+        String PLAY = "Play";
+        String CONTINUE = "Continue";
+        String ANSWER = "Answers";
+        String POINTS = "Points";
+        String CANCELLED = "Cancelled";
+    }
+
+    interface InPlayMatchStatus {
+        /* Synced with server as they come in api response */
+        String UPCOMING = "upcoming";
+        String ONGOING = "ongoing";
+        String COMPLETED = "completed";
+        String LIVE = "live";
+    }
+
+    interface PredictionPoints {
+        int POSITIVE_POINTS = 10;
+        int NEGATIVE_POINTS = -4;
+    }
+
+    interface TimerOutDialogRequestCode {
+        int CAN_NOT_JOIN = 3111;
+        int CAN_NOT_PLAY_GAME = 3112;
+        int CHALLENGE_STARTED = 3113;
     }
 }

@@ -1,48 +1,57 @@
 package in.sportscafe.nostragamus.webservice;
 
 import java.io.File;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import in.sportscafe.nostragamus.BuildConfig;
 import in.sportscafe.nostragamus.Config;
-import in.sportscafe.nostragamus.module.allchallenges.dto.AllChallengesResponse;
-import in.sportscafe.nostragamus.module.allchallenges.dto.Challenge;
-import in.sportscafe.nostragamus.module.allchallenges.dto.ChallengeConfigsResponse;
-import in.sportscafe.nostragamus.module.allchallenges.join.dto.JoinChallengeRequest;
-import in.sportscafe.nostragamus.module.allchallenges.join.dto.JoinChallengeResponse;
-import in.sportscafe.nostragamus.module.navigation.appupdate.AppUpdateResponse;
+import in.sportscafe.nostragamus.module.challengeCompleted.dto.CompletedMatchesResponse;
+import in.sportscafe.nostragamus.module.challengeCompleted.dto.CompletedResponse;
+import in.sportscafe.nostragamus.module.challengeRewards.dto.RewardsResponse;
+import in.sportscafe.nostragamus.module.challengeRules.dto.RulesResponse;
 import in.sportscafe.nostragamus.module.common.ApiResponse;
-import in.sportscafe.nostragamus.module.common.TimeResponse;
-import in.sportscafe.nostragamus.module.feed.dto.FeedResponse;
-import in.sportscafe.nostragamus.module.feed.dto.MatchesResponse;
-import in.sportscafe.nostragamus.module.fuzzylbs.FuzzyLbResponse;
-import in.sportscafe.nostragamus.module.fuzzyplayers.FuzzyPlayerResponse;
+import in.sportscafe.nostragamus.module.nostraHome.dto.TimeResponse;
+import in.sportscafe.nostragamus.module.common.dto.MatchesResponse;
+import in.sportscafe.nostragamus.module.contest.dto.ContestEntriesRequest;
+import in.sportscafe.nostragamus.module.contest.dto.ContestEntriesResponse;
+import in.sportscafe.nostragamus.module.contest.dto.ContestResponse;
+import in.sportscafe.nostragamus.module.contest.dto.JoinContestQueueRequest;
+import in.sportscafe.nostragamus.module.contest.dto.JoinContestQueueResponse;
+import in.sportscafe.nostragamus.module.contest.dto.VerifyJoinContestRequest;
+import in.sportscafe.nostragamus.module.contest.dto.VerifyJoinContestResponse;
+import in.sportscafe.nostragamus.module.inPlay.dto.InPlayMatchesResponse;
+import in.sportscafe.nostragamus.module.inPlay.dto.InPlayResponse;
+import in.sportscafe.nostragamus.module.navigation.appupdate.AppUpdateResponse;
 import in.sportscafe.nostragamus.module.navigation.edituserprofile.UpdateUserProfileRequest;
 import in.sportscafe.nostragamus.module.navigation.powerupbank.powerupbanktransaction.dto.PBTransactionHistoryResponse;
+import in.sportscafe.nostragamus.module.navigation.submitquestion.add.AddQuestionRequest;
+import in.sportscafe.nostragamus.module.navigation.submitquestion.tourlist.TourListResponse;
 import in.sportscafe.nostragamus.module.navigation.wallet.addMoney.dto.AddMoneyToWalletRequest;
 import in.sportscafe.nostragamus.module.navigation.wallet.dto.UserWalletResponse;
-import in.sportscafe.nostragamus.module.navigation.wallet.withdrawMoney.dto.WithdrawFromWalletRequest;
-import in.sportscafe.nostragamus.module.navigation.wallet.withdrawMoney.dto.WithdrawFromWalletResponse;
 import in.sportscafe.nostragamus.module.navigation.wallet.paytmAndBank.dto.AddBankDetailsRequest;
-import in.sportscafe.nostragamus.module.othersanswers.MatchAnswerStatsResponse;
 import in.sportscafe.nostragamus.module.navigation.wallet.paytmAndBank.dto.AddUserPaymentDetailsResponse;
 import in.sportscafe.nostragamus.module.navigation.wallet.paytmAndBank.dto.AddUserPaymentPaytmRequest;
 import in.sportscafe.nostragamus.module.navigation.wallet.paytmAndBank.dto.GenerateOrderRequest;
 import in.sportscafe.nostragamus.module.navigation.wallet.paytmAndBank.dto.GenerateOrderResponse;
+import in.sportscafe.nostragamus.module.navigation.wallet.walletHistory.WalletHistoryTransaction;
+import in.sportscafe.nostragamus.module.navigation.wallet.withdrawMoney.dto.WithdrawFromWalletRequest;
+import in.sportscafe.nostragamus.module.navigation.wallet.withdrawMoney.dto.WithdrawFromWalletResponse;
+import in.sportscafe.nostragamus.module.newChallenges.dto.JoinPseudoContestRequest;
+import in.sportscafe.nostragamus.module.newChallenges.dto.JoinPseudoContestResponse;
+import in.sportscafe.nostragamus.module.newChallenges.dto.NewChallengeMatchesResponse;
+import in.sportscafe.nostragamus.module.newChallenges.dto.NewChallengesResponse;
+import in.sportscafe.nostragamus.module.othersanswers.MatchAnswerStatsResponse;
 import in.sportscafe.nostragamus.module.play.myresults.MyResultsResponse;
 import in.sportscafe.nostragamus.module.play.myresults.dto.ReplayPowerupResponse;
-import in.sportscafe.nostragamus.module.play.powerup.dto.PowerupBankStatusRequest;
-import in.sportscafe.nostragamus.module.play.powerup.dto.PowerUpBankStatusResponse;
-import in.sportscafe.nostragamus.module.play.prediction.dto.Answer;
-import in.sportscafe.nostragamus.module.play.prediction.dto.AudiencePollRequest;
-import in.sportscafe.nostragamus.module.play.prediction.dto.AudiencePollResponse;
-import in.sportscafe.nostragamus.module.play.prediction.dto.QuestionsResponse;
-import in.sportscafe.nostragamus.module.popups.banktransfer.BankTransferRequest;
-import in.sportscafe.nostragamus.module.popups.banktransfer.BankTransferResponse;
-import in.sportscafe.nostragamus.module.navigation.submitquestion.add.AddQuestionRequest;
-import in.sportscafe.nostragamus.module.navigation.submitquestion.tourlist.TourListResponse;
+import in.sportscafe.nostragamus.module.prediction.playScreen.dto.AnswerRequest;
+import in.sportscafe.nostragamus.module.prediction.playScreen.dto.AnswerResponse;
+import in.sportscafe.nostragamus.module.prediction.playScreen.dto.PlayerPollResponse;
+import in.sportscafe.nostragamus.module.prediction.playScreen.dto.PlayersPollRequest;
+import in.sportscafe.nostragamus.module.prediction.playScreen.dto.PredictionAllQuestionResponse;
+import in.sportscafe.nostragamus.module.prediction.powerupBank.dto.PowerUpBankStatusResponse;
+import in.sportscafe.nostragamus.module.prediction.powerupBank.dto.PowerupBankStatusRequest;
+import in.sportscafe.nostragamus.module.prediction.powerupBank.dto.TransferPowerUpFromBankRequest;
+import in.sportscafe.nostragamus.module.prediction.powerupBank.dto.TransferPowerUpFromBankResponse;
 import in.sportscafe.nostragamus.module.settings.app.dto.AppSettingsResponse;
 import in.sportscafe.nostragamus.module.store.buy.BuyRequest;
 import in.sportscafe.nostragamus.module.store.buy.BuyResponse;
@@ -56,19 +65,17 @@ import in.sportscafe.nostragamus.module.user.group.members.AddGroupRequest;
 import in.sportscafe.nostragamus.module.user.group.members.MembersRequest;
 import in.sportscafe.nostragamus.module.user.group.newgroup.NewGroupRequest;
 import in.sportscafe.nostragamus.module.user.group.newgroup.NewGroupResponse;
-import in.sportscafe.nostragamus.module.user.lblanding.LBLandingResponse;
 import in.sportscafe.nostragamus.module.user.leaderboard.LeaderBoardResponse;
+import in.sportscafe.nostragamus.module.user.leaderboard.dto.UserLeaderBoardResponse;
 import in.sportscafe.nostragamus.module.user.login.dto.JwtToken;
 import in.sportscafe.nostragamus.module.user.login.dto.LogInRequest;
 import in.sportscafe.nostragamus.module.user.login.dto.LogInResponse;
 import in.sportscafe.nostragamus.module.user.myprofile.dto.Result;
 import in.sportscafe.nostragamus.module.user.myprofile.dto.TournamentFeedResponse;
-import in.sportscafe.nostragamus.module.user.myprofile.dto.TournamentsResponse;
 import in.sportscafe.nostragamus.module.user.myprofile.dto.UserInfoResponse;
 import in.sportscafe.nostragamus.module.user.myprofile.edit.UpdateUserRequest;
 import in.sportscafe.nostragamus.module.user.myprofile.edit.VerifyReferralCodeResponse;
 import in.sportscafe.nostragamus.module.user.playerprofile.dto.PlayerInfoResponse;
-import in.sportscafe.nostragamus.module.navigation.wallet.walletHistory.WalletHistoryTransaction;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -81,7 +88,7 @@ public class MyWebService extends AbstractWebService<NostragamusService> {
 
     private static MyWebService sMyWebService = new MyWebService();
 
-    public static MyWebService getInstance() {
+    public static synchronized MyWebService getInstance() {
         return sMyWebService;
     }
 
@@ -108,33 +115,23 @@ public class MyWebService extends AbstractWebService<NostragamusService> {
         return mNostragamusService.getUserInfo();
     }
 
+    public Call<SportsInfoResponse> getSportsInfoRequest() {
+        return mNostragamusService.getSportsInfo();
+    }
+
     public Call<PlayerInfoResponse> getPlayerInfoRequest(Integer playerId) {
         return mNostragamusService.getPlayerInfo(playerId);
     }
 
-    public Call<FeedResponse> getMatches(Integer tourId) {
-        return mNostragamusService.getMatches(tourId);
-    }
 
-    public Call<MatchesResponse> getMatchResults(Boolean isAttempted, Boolean WithoutCommentary) {
-        return mNostragamusService.getMatchResults(isAttempted, WithoutCommentary);
-    }
-
-    public Call<QuestionsResponse> getAllQuestions(Integer matchId) {
-        return mNostragamusService.getQuestions(matchId);
-    }
-
-    public Call<TournamentsResponse> getTournaments(boolean isCurrent, boolean groupbySport) {
-        return mNostragamusService.getTournaments(isCurrent, groupbySport);
+    public Call<PredictionAllQuestionResponse> getAllPredictionQuestions(int matchId, int roomId) {
+        return mNostragamusService.getAllPredictionQuestions(matchId,roomId);
     }
 
     public Call<TournamentFeedResponse> getCurrentTournaments(boolean isCurrent) {
         return mNostragamusService.getCurrentTournaments(isCurrent);
     }
 
-    public Call<ApiResponse> getPostAnswerRequest(Answer answer, boolean isMatchComplete, boolean isMinorityOption) {
-        return mNostragamusService.saveAnswer(answer, isMatchComplete, isMinorityOption);
-    }
 
     public Call<JoinGroupResponse> getJoinGroupRequest(String groupCode) {
         AddGroupRequest memberRequest = new AddGroupRequest();
@@ -158,8 +155,8 @@ public class MyWebService extends AbstractWebService<NostragamusService> {
         return mNostragamusService.leaveGroup(request);
     }
 
-    public Call<MyResultsResponse> getMyResultsRequest(Integer MatchId, Integer playerId) {
-        return mNostragamusService.getMyResults(MatchId, playerId);
+    public Call<MyResultsResponse> getMyResultsRequest(Integer matchId, Integer playerId, int roomId) {
+        return mNostragamusService.getMyResults(matchId, playerId,roomId);
     }
 
     public Call<LeaderBoardResponse> getLeaderBoardDetailRequest(Integer groupId,
@@ -195,10 +192,6 @@ public class MyWebService extends AbstractWebService<NostragamusService> {
         return mNostragamusService.getAppSettings(uniqueId,flavor);
     }
 
-    public Call<AudiencePollResponse> getAudiencePoll(AudiencePollRequest request) {
-        return mNostragamusService.getAudiencePoll(request);
-    }
-
     public Call<JwtToken> getRefreshTokenRequest() {
         return mNostragamusService.refreshAccessToken();
     }
@@ -211,41 +204,16 @@ public class MyWebService extends AbstractWebService<NostragamusService> {
         return mNostragamusService.getFlipPowerup(powerupId, matchId, questionId);
     }
 
-    public Call<MatchesResponse> getTimelinesRequest(Integer challengeId, Integer playerUserId, int skip, int limit) {
-        return mNostragamusService.getTimelines(challengeId, playerUserId, skip, limit);
+    public Call<MatchesResponse> getTimelinesRequest(Integer roomId, Integer playerUserId, int skip, int limit) {
+        return mNostragamusService.getTimelines(roomId, playerUserId, skip, limit);
     }
 
-    public Call<FuzzyPlayerResponse> getFuzzyPlayersRequest(String key, Integer matchId) {
-        return mNostragamusService.fuzzyPlayers(key, matchId);
-    }
-
-    public Call<MyResultsResponse> getPlayerResultRequest(Integer playerId, Integer matchId) {
-        return mNostragamusService.getPlayerResult(playerId, matchId);
+    public Call<MyResultsResponse> getPlayerResultRequest(Integer playerId, Integer matchId,Integer roomId) {
+        return mNostragamusService.getPlayerResult(playerId, matchId,roomId);
     }
 
     public Call<MatchAnswerStatsResponse> getPlayerResultPercentageRequest(Integer matchId) {
         return mNostragamusService.playerResultPercentage(matchId);
-    }
-
-    public Call<LBLandingResponse> getLBLandingSummary(Integer sportsId, Integer groupId, Integer challengeId, Integer tourId) {
-        Map<String, String> queries = new HashMap<>();
-        if (null != sportsId) {
-            queries.put("sports_id", sportsId.toString());
-        }
-        if (null != groupId) {
-            queries.put("group_id", groupId.toString());
-        }
-        if (null != challengeId) {
-            queries.put("challenge_id", challengeId.toString());
-        }
-        if (null != tourId) {
-            queries.put("tournament_id", tourId.toString());
-        }
-        return mNostragamusService.getLBLandingSummary(queries);
-    }
-
-    public Call<FuzzyLbResponse> getFuzzyLbsRequest(String key) {
-        return mNostragamusService.fuzzyLbs(key);
     }
 
     public Call<PopUpResponse> getPopUpsRequest(String screenName) {
@@ -268,28 +236,12 @@ public class MyWebService extends AbstractWebService<NostragamusService> {
         return mNostragamusService.getLeaderBoardComparisonRequest(playerId);
     }
 
-    public Call<AllChallengesResponse> getAllChallengesRequest(String filter) {
-        return mNostragamusService.getAllChallenges(filter);
-    }
-
-    public Call<BankTransferResponse> getBankTransferRequest(BankTransferRequest request) {
-        return mNostragamusService.bankTransfer(request);
-    }
-
     public Call<ApiResponse> getSubmitQuestionRequest(AddQuestionRequest request) {
         return mNostragamusService.submitQuestion(request);
     }
 
     public Call<TourListResponse> getTourListRequest() {
         return mNostragamusService.getTourList();
-    }
-
-    public Call<ChallengeConfigsResponse> getChallengeConfigsRequest(int challengeId, Integer configIndex, String AppFlavor) {
-        return mNostragamusService.getConfigs(challengeId ,configIndex,AppFlavor);
-    }
-
-    public Call<Challenge> getJoinChallengeRequest(int challengeId, int configIndex) {
-        return mNostragamusService.getJoinChallenge(challengeId, configIndex);
     }
 
     public Call<GenerateOrderResponse> getGenerateOrderRequest(GenerateOrderRequest request) {
@@ -310,10 +262,6 @@ public class MyWebService extends AbstractWebService<NostragamusService> {
 
     public Call<TimeResponse> getServerTime() {
         return mNostragamusService.getServerTime();
-    }
-
-    public Call<AllChallengesResponse> getCompletedChallengesRequest(String filter , int skip, int limit) {
-        return mNostragamusService.getCompletedChallengesRequest(filter,skip,limit);
     }
 
     public Call<ApiResponse> getChangeAnswerRequest(ChangeAnswer changeAnswer) {
@@ -338,10 +286,6 @@ public class MyWebService extends AbstractWebService<NostragamusService> {
 
     public Call<WithdrawFromWalletResponse> withdrawFromWallet(WithdrawFromWalletRequest request) {
         return mNostragamusService.withdrawFromWallet(request);
-    }
-
-    public Call<JoinChallengeResponse> joinChallenge(JoinChallengeRequest request) {
-        return mNostragamusService.useWalletToJoinChallenge(request);
     }
 
     public Call<BuyResponse> buyFromStore(BuyRequest request) {
@@ -390,5 +334,78 @@ public class MyWebService extends AbstractWebService<NostragamusService> {
 
     public Call<ApiResponse> getUpdateUserProfileRequest(UpdateUserProfileRequest updateUserProfileRequest) {
         return mNostragamusService.updateUserProfile(updateUserProfileRequest);
+    }
+
+    public Call<List<NewChallengesResponse>> getNewHomeChallenges() {
+        return mNostragamusService.getNewHomeChallenges();
+    }
+
+    public Call<ContestResponse> getContests(int challengeId) {
+        String flavor = "PS";
+        if (BuildConfig.IS_PAID_VERSION) {
+            flavor = "Pro";
+        }
+        return mNostragamusService.getContests(challengeId, flavor);
+    }
+
+    public Call<List<InPlayResponse>> getInPlayChallenges() {
+        return mNostragamusService.getInPlayChallenges();
+    }
+
+    public Call<RewardsResponse> getRewardsDetails(Integer rewardsRequest, Integer configId) {
+        return mNostragamusService.getRewardDetails(rewardsRequest,configId);
+    }
+
+    public Call<ContestEntriesResponse> getContestEntries(int contestId) {
+        return mNostragamusService.getContestEntries(contestId);
+    }
+
+    public Call<InPlayMatchesResponse> getInPlayMatches(int roomId, int challengeId) {
+        return mNostragamusService.getInPlayMatches(roomId, challengeId);
+    }
+
+    public Call<NewChallengeMatchesResponse> getNewChallengeMatches(int challengeId) {
+        return mNostragamusService.getNewChallengeMatches(challengeId);
+    }
+
+    public Call<UserLeaderBoardResponse> getUserLeaderBoardDetails(Integer userLeaderBoardRequest) {
+        return mNostragamusService.getUserLeaderBoardDetails(userLeaderBoardRequest);
+    }
+
+    public Call<RulesResponse> getContestRules(int rulesRequest) {
+        return mNostragamusService.getContestRules(rulesRequest);
+    }
+
+    public Call<PlayerPollResponse> getPlayerPoll(PlayersPollRequest request) {
+        return mNostragamusService.getPlayersPoll(request);
+    }
+
+    public Call<AnswerResponse> savePredictionAnswer(AnswerRequest request,
+                                                     boolean isMatchComplete, boolean isMinorityOption) {
+        return mNostragamusService.savePredictionAnswer(request, isMatchComplete, isMinorityOption);
+    }
+
+    public Call<TransferPowerUpFromBankResponse> transferPowerUpFromBank(TransferPowerUpFromBankRequest request) {
+        return mNostragamusService.transferPowerUpsFromBank(request);
+    }
+
+    public Call<JoinPseudoContestResponse> joinPseudoContest(JoinPseudoContestRequest request) {
+        return mNostragamusService.joinPseudoContest(request);
+    }
+
+    public Call<JoinContestQueueResponse> joinContestQueue(JoinContestQueueRequest request) {
+        return mNostragamusService.joinContestQueue(request);
+    }
+
+    public Call<VerifyJoinContestResponse> verifyJoinContest(VerifyJoinContestRequest request) {
+        return mNostragamusService.verifyJoinContest(request);
+    }
+
+    public Call<List<CompletedResponse>> getCompletedChallenges(int skip, int limit) {
+        return mNostragamusService.getCompletedChallenges(skip, limit);
+    }
+
+    public Call<CompletedMatchesResponse> getCompletedChallengeMatches(int roomId, int challengeId) {
+        return mNostragamusService.getCompletedChallengeMatches(roomId, challengeId);
     }
 }

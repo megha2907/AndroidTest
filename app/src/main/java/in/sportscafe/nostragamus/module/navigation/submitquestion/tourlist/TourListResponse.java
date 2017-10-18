@@ -1,6 +1,6 @@
 package in.sportscafe.nostragamus.module.navigation.submitquestion.tourlist;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,15 +10,15 @@ import java.util.List;
  */
 public class TourListResponse {
 
-    @JsonProperty("data")
+    @SerializedName("data")
     private List<Tour> tourList = new ArrayList<>();
 
-    @JsonProperty("data")
+    @SerializedName("data")
     public List<Tour> getTourList() {
         return tourList;
     }
 
-    @JsonProperty("data")
+    @SerializedName("data")
     public void setTourList(List<Tour> tourList) {
         this.tourList = tourList;
     }

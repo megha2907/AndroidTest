@@ -2,6 +2,8 @@ package in.sportscafe.nostragamus.module.user.leaderboard;
 
 import android.os.Bundle;
 
+import in.sportscafe.nostragamus.module.user.leaderboard.dto.UserLeaderBoard;
+
 
 /**
  * Created by Jeeva on 10/6/16.
@@ -25,24 +27,39 @@ public class LeaderBoardPresenterImpl implements LeaderBoardPresenter, LeaderBoa
     public void onCreateLeaderBoard(Bundle bundle) {
         mLeaderBoardModel.init(bundle);
         mLeaderBoardView.setLeaderBoardAdapter(mLeaderBoardModel.getAdapter(mLeaderBoardView.getContext()));
-        checkSortType();
     }
 
-    @Override
-    public void update(Bundle bundle) {
-        checkSortType();
-    }
 
     @Override
     public void checkSortType() {
         mLeaderBoardModel.sortAndRefreshLeaderBoard();
         //mLeaderBoardView.moveAdapterPosition(mLeaderBoardModel.getUserPosition());
-        //mLeaderBoardModel.setSortType(0);
     }
 
     @Override
+    public void onClickUserPoints() {
+
+    }
+
+    @Override
+    public void setUserLeaderBoard(UserLeaderBoard userLeaderBoard) {
+        mLeaderBoardView.setUserLeaderBoardView(userLeaderBoard);
+    }
+
+
+    @Override
     public void onEmpty() {
-        mLeaderBoardView.showInAppMessage("Your leaderboard will update here after a match you have played is over");
+        mLeaderBoardView.showInAppMessage("Your leaderboard will update here after a Match you have played is over");
+    }
+
+    @Override
+    public void onNoInternet() {
+
+    }
+
+    @Override
+    public void setSortSelectedPos(int sortType) {
+        mLeaderBoardView.setSortSelectedType(sortType);
     }
 
 }

@@ -2,6 +2,6 @@
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item android:drawable="@drawable/menu_profile_selected_icn" android:state_selected="true"/>
-    <item android:drawable="@drawable/menu_profile_icn"/>
+    <item android:drawable="@drawable/menu_profile_unselected_icon"/>
 
 </selector>

@@ -4,49 +4,55 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.media.Image;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.jeeva.android.BaseActivity;
+import com.jeeva.android.BaseFragment;
+import com.jeeva.android.widgets.CustomProgressbar;
+import com.jeeva.android.widgets.CustomToast;
+
 import org.parceler.Parcels;
+
+import java.util.List;
 
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Constants.BundleKeys;
 import in.sportscafe.nostragamus.R;
+import in.sportscafe.nostragamus.module.common.NostraBaseFragment;
 import in.sportscafe.nostragamus.module.common.NostragamusFragment;
-import in.sportscafe.nostragamus.module.home.HomeActivity;
 import in.sportscafe.nostragamus.module.popups.inapppopups.InAppPopupActivity;
 import in.sportscafe.nostragamus.module.user.group.groupinfo.GroupInfoActivity;
 import in.sportscafe.nostragamus.module.user.group.joingroup.JoinGroupActivity;
 import in.sportscafe.nostragamus.module.user.playerprofile.dto.PlayerInfo;
 
 import static android.app.Activity.RESULT_OK;
-import static com.google.android.gms.analytics.internal.zzy.v;
 
 /**
  * Created by deepanshi on 12/7/16.
  */
 
-public class AllGroupsFragment extends NostragamusFragment implements AllGroupsView, View.OnClickListener {
+public class AllGroupsFragment extends NostraBaseFragment implements AllGroupsView, View.OnClickListener {
 
+    private static final String TAG = AllGroupsFragment.class.getSimpleName();
     private static final int GROUP_INFO = 11;
-
     private static final int JOIN_GROUP = 12;
 
     private RecyclerView mRvAllGroups;
-
     private AllGroupsPresenter mAllGroupsPresenter;
-
     private TextView mTvEmptyGroups;
 
     public static AllGroupsFragment newInstance() {
@@ -72,16 +78,23 @@ public class AllGroupsFragment extends NostragamusFragment implements AllGroupsV
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_all_groups, container, false);
+        initRootView(rootView);
         return rootView;
+    }
+
+    private void initRootView(View rootView) {
+        this.mRvAllGroups = (RecyclerView) rootView.findViewById(R.id.all_groups_rcv);
+        this.mRvAllGroups.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+        this.mRvAllGroups.setHasFixedSize(true);
     }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        iniMembers();
+    }
 
-        this.mRvAllGroups = (RecyclerView) findViewById(R.id.all_groups_rcv);
-        this.mRvAllGroups.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
-        this.mRvAllGroups.setHasFixedSize(true);
+    private void iniMembers() {
         this.mAllGroupsPresenter = AllGroupsPresenterImpl.newInstance(this);
         this.mAllGroupsPresenter.onCreateAllGroups(getArguments());
     }
@@ -111,11 +124,13 @@ public class AllGroupsFragment extends NostragamusFragment implements AllGroupsV
 
     @Override
     public void showTitleBar() {
-        Toolbar toolbar = (Toolbar) findViewById(R.id.all_groups_toolbar);
-        toolbar.setVisibility(View.VISIBLE);
-        Button createGroupbtn = (Button) findViewById(R.id.join_grp_btn);
-        createGroupbtn.setVisibility(View.VISIBLE);
-        createGroupbtn.setOnClickListener(this);
+        if (getView() != null) {
+            Toolbar toolbar = (Toolbar) getView().findViewById(R.id.all_groups_toolbar);
+            toolbar.setVisibility(View.VISIBLE);
+            Button createGroupbtn = (Button) getView().findViewById(R.id.join_grp_btn);
+            createGroupbtn.setVisibility(View.VISIBLE);
+            createGroupbtn.setOnClickListener(this);
+        }
     }
 
     @Override
@@ -125,10 +140,12 @@ public class AllGroupsFragment extends NostragamusFragment implements AllGroupsV
 
     @Override
     public void showGroupsEmpty() {
-        mTvEmptyGroups = (TextView) findViewById(R.id.all_groups_empty_tv);
-        mTvEmptyGroups.setVisibility(View.VISIBLE);
-        ImageView mIvEmptyGroups = (ImageView) findViewById(R.id.all_groups_empty_iv);
-        mIvEmptyGroups.setVisibility(View.VISIBLE);
+        if (getView() != null) {
+            mTvEmptyGroups = (TextView) getView().findViewById(R.id.all_groups_empty_tv);
+            mTvEmptyGroups.setVisibility(View.VISIBLE);
+            ImageView mIvEmptyGroups = (ImageView) getView().findViewById(R.id.all_groups_empty_iv);
+            mIvEmptyGroups.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override
@@ -180,4 +197,88 @@ public class AllGroupsFragment extends NostragamusFragment implements AllGroupsV
         }
     };
 
+    /*  ----------------------
+     Temp method as HomeActivity is changed to NostraHomeActivity
+     * and unneccesory methods removed from new-home activity,
+       * As Group fragment is kept older one, need to manage these methods...
+       * ----------- */
+
+
+    public void showMessage(String message) {
+        CustomToast.getToast(getContext()).show(message);
+    }
+
+    public void showMessage(String message, int duration) {
+        CustomToast.getToast(getContext()).show(message, duration);
+    }
+
+    @Override
+    public boolean isMessageShowing() {
+        return CustomToast.getToast(getContext()).isToastShowing();
+    }
+
+    @Override
+    public void dismissMessage() {
+        CustomToast.getToast(getContext()).dismissToast();
+    }
+
+    public void showProgressbar() {
+        CustomProgressbar.getProgressbar(getContext()).show();
+    }
+
+    public void updateProgressbar() {
+    }
+
+    public boolean dismissProgressbar() {
+        return CustomProgressbar.getProgressbar(getContext()).dismissProgress();
+    }
+
+    public void showSoftKeyboard(View view) {
+        getInputMethodManager().showSoftInput(view, InputMethodManager.SHOW_IMPLICIT);
+    }
+
+    public void hideSoftKeyboard() {
+        if (getActivity() != null && getActivity().getCurrentFocus() != null) {
+            getInputMethodManager().hideSoftInputFromWindow(getActivity().getCurrentFocus()
+                    .getApplicationWindowToken(), 0);
+        }
+    }
+
+    @Override
+    public LayoutInflater getLayoutInflater() {
+        return null;
+    }
+
+    private InputMethodManager getInputMethodManager() {
+        return (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+    }
+
+    public String getTrimmedText(TextView textView) {
+        return textView.getText().toString().trim();
+    }
+
+    @Override
+    public void showInApp() {
+        Log.d(TAG, "No action in ShowInApp");
+    }
+
+    @Override
+    public void hideInApp() {
+        Log.d(TAG, "No action in HideInApp");
+    }
+
+    @Override
+    public void showInAppMessage(String message) {
+        showMessage(message);
+    }
+
+    @Override
+    public void showMessage(String message, String positiveButton, View.OnClickListener positiveClickListener) {
+        showMessage(message, positiveButton, positiveClickListener);
+    }
+
+    @Override
+    public void showMessage(String message, String positiveButton, View.OnClickListener positiveClickListener, String negativeButton, View.OnClickListener negativeClickListener) {
+        showMessage(message, positiveButton, positiveClickListener, negativeButton, negativeClickListener);
+    }
 }

@@ -1,5 +1,7 @@
 package in.sportscafe.nostragamus.utils.timeutils;
 
+import android.text.TextUtils;
+
 import com.jeeva.android.ExceptionTracker;
 
 import java.text.DateFormat;
@@ -8,6 +10,9 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.TimeZone;
+
+import in.sportscafe.nostragamus.Constants;
+import in.sportscafe.nostragamus.Nostragamus;
 
 /**
  * Created by Jeeva on 23/3/16.
@@ -138,14 +143,16 @@ public class TimeUtils {
     }
 
     public static Date getDateFromDateString(String dateString, String format, String timeZone) {
-        DateFormat simpleDateFormat = new SimpleDateFormat(format);
-        if (null != timeZone) {
-            simpleDateFormat.setTimeZone(TimeZone.getTimeZone(timeZone));
-        }
-        try {
-            return simpleDateFormat.parse(dateString);
-        } catch (ParseException e) {
-            ExceptionTracker.track(e);
+        if (!TextUtils.isEmpty(dateString) && !TextUtils.isEmpty(format) && !TextUtils.isEmpty(timeZone)) {
+            DateFormat simpleDateFormat = new SimpleDateFormat(format);
+            if (null != timeZone) {
+                simpleDateFormat.setTimeZone(TimeZone.getTimeZone(timeZone));
+            }
+            try {
+                return simpleDateFormat.parse(dateString);
+            } catch (ParseException e) {
+                ExceptionTracker.track(e);
+            }
         }
         return null;
     }
@@ -184,7 +191,23 @@ public class TimeUtils {
         return finalFormat;
     }
 
+    /**
+     * Get current server time to save as answer for predictions
+     * @param neededFormat
+     * @param timeZone
+     * @return
+     */
     public static String getCurrentTime(String neededFormat, String timeZone) {
-        return getDateStringFromDate(Calendar.getInstance().getTime(), neededFormat, timeZone);
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(Nostragamus.getInstance().getServerTime());
+        return getDateStringFromDate(calendar.getTime(), neededFormat, timeZone);
+    }
+
+    public static long getMillisecondsFromDateString(String dateString) {
+        Date date = getDateFromDateString(dateString, Constants.DateFormats.FORMAT_DATE_T_TIME_ZONE, Constants.DateFormats.GMT);
+        if (date != null) {
+            return date.getTime();
+        }
+        return 0;
     }
 }

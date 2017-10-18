@@ -1,6 +1,6 @@
 package in.sportscafe.nostragamus.module.navigation.powerupbank.powerupbanktransaction.dto;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.annotations.SerializedName;
 
 import org.parceler.Parcel;
 
@@ -14,56 +14,56 @@ import in.sportscafe.nostragamus.module.navigation.referfriends.referralcredits.
 @Parcel
 public class PBTransactionHistory {
 
-    @JsonProperty("type")
+    @SerializedName("type")
     private String type;
 
-    @JsonProperty("info")
+    @SerializedName("info")
     private TransactionTypeInfo transactionTypeInfo;
 
-    @JsonProperty("createdAt")
+    @SerializedName("createdAt")
     private String createdAt;
 
-    @JsonProperty("powerups")
+    @SerializedName("powerups")
     private HashMap<String, Integer> powerUps = new HashMap<>();
 
-    @JsonProperty("powerups")
+    @SerializedName("powerups")
     public HashMap<String, Integer> getPowerUps() {
         return powerUps;
     }
 
-    @JsonProperty("powerups")
+    @SerializedName("powerups")
     public void setPowerUps(HashMap<String, Integer> powerUps) {
         this.powerUps = powerUps;
     }
 
 
-    @JsonProperty("info")
+    @SerializedName("info")
     public TransactionTypeInfo getTransactionTypeInfo() {
         return transactionTypeInfo;
     }
 
-    @JsonProperty("info")
+    @SerializedName("info")
     public void setTransactionTypeInfo(TransactionTypeInfo transactionTypeInfo) {
         this.transactionTypeInfo = transactionTypeInfo;
     }
 
 
-    @JsonProperty("type")
+    @SerializedName("type")
     public String getType() {
         return type;
     }
 
-    @JsonProperty("type")
+    @SerializedName("type")
     public void setType(String type) {
         this.type = type;
     }
 
-    @JsonProperty("createdAt")
+    @SerializedName("createdAt")
     public String getCreatedAt() {
         return createdAt;
     }
 
-    @JsonProperty("createdAt")
+    @SerializedName("createdAt")
     public void setCreatedAt(String createdAt) {
         this.createdAt = createdAt;
     }

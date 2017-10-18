@@ -1,6 +1,6 @@
 package in.sportscafe.nostragamus.module.navigation.wallet.dto;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.annotations.SerializedName;
 
 import in.sportscafe.nostragamus.module.user.login.dto.UserPaymentInfo;
 
@@ -10,60 +10,60 @@ import in.sportscafe.nostragamus.module.user.login.dto.UserPaymentInfo;
 
 public class UserWalletResponse {
 
-    @JsonProperty("winningsAmount")
+    @SerializedName("winningsAmount")
     private double winningsAmount;
 
-    @JsonProperty("depositAmount")
+    @SerializedName("depositAmount")
     private double depositAmount;
 
-    @JsonProperty("promoAmount")
+    @SerializedName("promoAmount")
     private double promoAmount;
 
-    @JsonProperty("withdrawalProgress")
+    @SerializedName("withdrawalProgress")
     private int withdrawalProgress;
 
-    @JsonProperty("lockedAmount")
+    @SerializedName("lockedAmount")
     private double lockedAmount;
 
-    @JsonProperty("payment_info")
+    @SerializedName("payment_info")
     private UserPaymentInfo userPaymentInfo;
 
-    @JsonProperty("winningsAmount")
+    @SerializedName("winningsAmount")
     public double getWinningsAmount() {
         return winningsAmount;
     }
 
-    @JsonProperty("winningsAmount")
+    @SerializedName("winningsAmount")
     public void setWinningsAmount(double winningsAmount) {
         this.winningsAmount = winningsAmount;
     }
 
-    @JsonProperty("depositAmount")
+    @SerializedName("depositAmount")
     public double getDepositAmount() {
         return depositAmount;
     }
 
-    @JsonProperty("depositAmount")
+    @SerializedName("depositAmount")
     public void setDepositAmount(double depositAmount) {
         this.depositAmount = depositAmount;
     }
 
-    @JsonProperty("promoAmount")
+    @SerializedName("promoAmount")
     public double getPromoAmount() {
         return promoAmount;
     }
 
-    @JsonProperty("promoAmount")
+    @SerializedName("promoAmount")
     public void setPromoAmount(double promoAmount) {
         this.promoAmount = promoAmount;
     }
 
-    @JsonProperty("withdrawalProgress")
+    @SerializedName("withdrawalProgress")
     public int getWithdrawalProgress() {
         return withdrawalProgress;
     }
 
-    @JsonProperty("withdrawalProgress")
+    @SerializedName("withdrawalProgress")
     public void setWithdrawalProgress(int withdrawalProgress) {
         this.withdrawalProgress = withdrawalProgress;
     }
@@ -76,12 +76,12 @@ public class UserWalletResponse {
         this.lockedAmount = lockedAmount;
     }
 
-    @JsonProperty("payment_info")
+    @SerializedName("payment_info")
     public UserPaymentInfo getUserPaymentInfo() {
         return userPaymentInfo;
     }
 
-    @JsonProperty("payment_info")
+    @SerializedName("payment_info")
     public void setUserPaymentInfo(UserPaymentInfo userPaymentInfo) {
         this.userPaymentInfo = userPaymentInfo;
     }

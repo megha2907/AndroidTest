@@ -1,6 +1,6 @@
 package in.sportscafe.nostragamus.module.navigation.wallet.paytmAndBank.dto;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.annotations.SerializedName;
 
 /**
  * Created by sandip on 10/04/17.
@@ -8,10 +8,10 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class AddUserPaymentPaytmRequest {
 
-    @JsonProperty("payment_mode")
+    @SerializedName("payment_mode")
     private String paymentMode;
 
-    @JsonProperty("mobile")
+    @SerializedName("mobile")
     private String mobile;
 
     public String getPaymentMode() {

@@ -2,7 +2,7 @@ package in.sportscafe.nostragamus.module.play.myresults;
 
 import com.jeeva.android.InAppView;
 
-import in.sportscafe.nostragamus.module.feed.dto.Match;
+import in.sportscafe.nostragamus.module.resultspeek.dto.Match;
 
 /**
  * Created by Jeeva on 15/6/16.
@@ -29,7 +29,9 @@ public interface MyResultsView extends InAppView {
 
     void setToolbarHeading(String result);
 
-    void showResultsToBeDeclaredView(Boolean playedFirstMatch, Match match);
+    void showResultsToBeDeclaredView(Boolean playedFirstMatch, String matchEndTime);
 
     void updateAnswers(Match match);
+
+    void setUserRank(Match match);
 }

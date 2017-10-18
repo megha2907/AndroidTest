@@ -14,7 +14,7 @@
     <string name="next">NEXT</string>
     <string name="st1_no_notification">No notifications yet!!!</string>
     <string name="st2_no_notification">Come back again &amp; check \n for notifications</string>
-    <string name="accuracy_streak">More than 80% accuracy in your last 5 matches</string>
+    <string name="accuracy_streak">More than 80% accuracy in your last 5 matchList</string>
     <string name="table_topper">Top 5 in this leaderboard</string>
 
     <!-- Start App update -->
@@ -33,7 +33,7 @@
     <string name="sports">Sports</string>
     <string name="groups">Groups</string>
     <string name="challenges">Challenges</string>
-    <string name="fuzzy_lbs_hint">Search by tournament/group/challenge</string>
+    <string name="fuzzy_lbs_hint">Search by tournament/group/newChallengesResponse</string>
     <string name="play">Play</string>
     <string name="neither">Neither</string>
 
@@ -42,7 +42,7 @@
     <string name="dummy_start_desc">Let\'s go through a sample game to help you understand how to ace it at Nostragamus. You may skip if you are familiar with the gameplay, and you can always access this sample game from the Settings menu inside your Profile section.</string>
     <string name="dummy_start_action">Next</string>
     <string name="dummy_done_title">Well Done!</string>
-    <string name="dummy_done_desc">You just finished your first game, but its now time for the real deal. Proceed to your tournament feed to start swiping on upcoming sporting matches!</string>
+    <string name="dummy_done_desc">You just finished your first game, but its now time for the real deal. Proceed to your tournament feed to start swiping on upcoming sporting matchList!</string>
     <string name="dummy_done_action">Proceed</string>
 
     <string name="left_right_coach_title">Swipe left or right</string>
@@ -70,9 +70,9 @@
     <string name="powerup_bank_running_low">You seem to be running low!</string>
     <string name="powerup_bank_refer_benefit">You get one of each powerup , everytime a friend joins the game</string>
     <string name="powerup_bank_add_info">button on the game screen, to add</string>
-    <string name="powerup_bank_add_info_two">these powerups to that challenge</string>
+    <string name="powerup_bank_add_info_two">these powerups to that newChallengesResponse</string>
     <string name="empty_group">Keep track of how you\'re doing compared to friends, family and colleagues!</string>
-    <string name="empty_leaderboard">Start playing a challenge to view leaderboards!</string>
+    <string name="empty_leaderboard">Start playing a newChallengesResponse to view leaderboards!</string>
     <string name="empty_results">Matches you play will appear here</string>
 
     <string name="ob_how_play_title">How to play?</string>
@@ -112,8 +112,8 @@
     <string name="sample_checksum_generation_url">https://api-stage.sportscafe.in/v2/game/generateChecksum</string>
     <string name="sample_checksum_verification_url">https://api-stage.sportscafe.in/v2/game/verifyChecksum</string>
     <string name="tap_powerup">You can tap on the icon if you need any help with the powerups!</string>
-    <string name="info_powerup_desc">You have %1$s powerups to use across 5 matches in this challenge, Use them to score higher!</string>
-    <string name="question_context_hint">Eg. Avg. 1st innings score at this venue in the IPL is 154 compared to 146 in the 2nd innings. However, RCB haven’t managed to score more than 150 runs in their last 3 matches here.</string>
+    <string name="info_powerup_desc">You have %1$s powerups to use across 5 matchList in this newChallengesResponse, Use them to score higher!</string>
+    <string name="question_context_hint">Eg. Avg. 1st innings score at this venue in the IPL is 154 compared to 146 in the 2nd innings. However, RCB haven’t managed to score more than 150 runs in their last 3 matchList here.</string>
     <string name="question_hint">Eg. How many aggregate runs will be scored?</string>
     <string name="question_left_optn_hint">Eg. Less than 270</string>
     <string name="question_right_optn_hint">Eg. 270-330</string>
@@ -130,14 +130,14 @@
     <string name="split_str">Options had a tie , Split points were awarded.</string>
     <string name="ok">OK</string>
     <string name="double_back_press_msg">Press back button again to exit</string>
-    <string name="match_results">Match Result</string>
+    <string name="match_results">Game Result</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_add_payment_bank">AddPaymentBankActivity</string>
     <string name="profile_disclaimer"> Nostragamus is built as a Game of Skill, which are legally protected as games involving money in the majority of states of India. To proceed, please check the box to confirm you are above 18 years old and are not playing Nostragamus from Assam or Odisha.</string>
     <string name="download_app_text">Gain access to contests with prizes upto ₹ 10,000 on the full version of Nostragamus!</string>
-    <string name="prize_money_disclaimer">In case two or more people tie for a particular rank, the prize money will be re-calculated and may (or) may not be the same. Please refer to Section 7 in <![CDATA[<a href="http://nostragamus.in/rules.html">Nostragamus Rules</a>]]></string>
+    <string name="prize_money_disclaimer">In case two or more people tie for a particular rank, the prize money will be re-calculated and may (or) may not be the same. Please refer to Section 7 in <![CDATA[<br/><a href="http://nostragamus.in/rules.html">Nostragamus Rules</a>]]></string>
 
     <item name="timeAgo" type="id" />
     <item name="onePartyMatch" type="id" />
@@ -149,10 +149,16 @@
     ]]>
     </string>
     <string name="app_downloading">Your app is being downloaded in the background, click on Install after the download is over!</string>
-    <string name="pb_text_one"><![CDATA[- These powerups can be transferred to and used in <b><font color=\'#ffffff\'>any challenge</font></b>]]></string>
-    <string name="pb_text_two"><![CDATA[- To transfer powerups from your bank, click the @ powerup bank icon on the bottom left while playing any match in that challenge]]></string>
+    <string name="pb_text_one"><![CDATA[- Powerups in your bank can be transferred to and used in any challenge you play]]></string>
+    <string name="pb_text_two"><![CDATA[- To transfer them to a challenge, click the @ powerup bank icon on the bottom left while playing any match in that challenge]]></string>
 
     <string name="max_added">Max Added</string>
     <string name="earn_more_powerups_text">- You can add more powerups to your bank by referring friends or buying powerups</string>
+
+    <string name="bottom_nav_challenge">Challenges</string>
+    <string name="bottom_nav_join">Join</string>
+    <string name="bottom_nav_group">Group</string>
+    <string name="bottom_nav_profile">Profile</string>
+    <string name="prediction_neither_button_text">NEITHER</string>
 
 </resources>

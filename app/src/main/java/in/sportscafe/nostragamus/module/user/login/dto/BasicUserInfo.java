@@ -1,6 +1,6 @@
 package in.sportscafe.nostragamus.module.user.login.dto;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.annotations.SerializedName;
 
 import org.parceler.Parcel;
 
@@ -10,28 +10,28 @@ import org.parceler.Parcel;
 @Parcel
 public class BasicUserInfo {
 
-    @JsonProperty("user_id")
+    @SerializedName("user_id")
     private Integer id;
 
-    @JsonProperty("user_nick")
+    @SerializedName("user_nick")
     private String userNickName;
 
-    @JsonProperty("user_id")
+    @SerializedName("user_id")
     public Integer getId() {
         return id;
     }
 
-    @JsonProperty("user_id")
+    @SerializedName("user_id")
     public void setId(Integer id) {
         this.id = id;
     }
 
-    @JsonProperty("user_nick")
+    @SerializedName("user_nick")
     public String getUserNickName() {
         return userNickName;
     }
 
-    @JsonProperty("user_nick")
+    @SerializedName("user_nick")
     public void setUserNickName(String userNickName) {
         this.userNickName = userNickName;
     }

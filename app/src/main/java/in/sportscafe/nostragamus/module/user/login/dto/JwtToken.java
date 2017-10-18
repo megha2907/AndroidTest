@@ -1,6 +1,6 @@
 package in.sportscafe.nostragamus.module.user.login.dto;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.annotations.SerializedName;
 
 /**
  * Created by deepanshi on 12/2/16.
@@ -8,28 +8,28 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class JwtToken {
 
-    @JsonProperty("jwt_token")
+    @SerializedName("jwt_token")
     private String token;
 
-    @JsonProperty("expiry")
+    @SerializedName("expiry")
     private Long expiry;
 
-    @JsonProperty("jwt_token")
+    @SerializedName("jwt_token")
     public String getToken() {
         return token;
     }
 
-    @JsonProperty("jwt_token")
+    @SerializedName("jwt_token")
     public void setToken(String token) {
         this.token = token;
     }
 
-    @JsonProperty("expiry")
+    @SerializedName("expiry")
     public Long getExpiry() {
         return expiry;
     }
 
-    @JsonProperty("expiry")
+    @SerializedName("expiry")
     public void setExpiry(Long expiry) {
         this.expiry = expiry;
     }

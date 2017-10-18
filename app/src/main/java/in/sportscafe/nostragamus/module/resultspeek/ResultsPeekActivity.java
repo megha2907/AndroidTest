@@ -68,23 +68,19 @@ public class ResultsPeekActivity extends NostragamusActivity implements ResultsP
     }
 
     @Override
-    public void setPointsAndMatch(Integer myPoints, Integer playerPoints, String matchStage, String challengeName) {
+    public void setPointsAndMatch(int myPoints, int playerPoints, String matchStage, String challengeName) {
         Button btnUserPoints = (Button) findViewById(R.id.player_comparison_user_btn_points);
         Button btnPlayerPoints = (Button) findViewById(R.id.player_comparison_player_btn_points);
         TextView tvMatchStage = (TextView) findViewById(R.id.results_peek_tv_match_name);
         TextView tvChallengeName = (TextView) findViewById(R.id.results_peek_tv_challenge_name);
         tvMatchStage.setText(matchStage);
         tvChallengeName.setText(challengeName);
-        if (null==myPoints) {
-            btnUserPoints.setText("0");
-        }else {
-            btnUserPoints.setText(myPoints.toString());
-        }
-        btnPlayerPoints.setText(playerPoints.toString());
+        btnUserPoints.setText(String.valueOf(myPoints));
+        btnPlayerPoints.setText(String.valueOf(playerPoints));
     }
 
     @Override
     public String getScreenName() {
-        return Constants.ScreenNames.RESULTS_PEEK;
+        return Constants.Notifications.SCREEN_RESULTS_PEEK;
     }
 }

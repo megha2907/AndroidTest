@@ -1,6 +1,6 @@
 package in.sportscafe.nostragamus.webservice;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
@@ -11,15 +11,15 @@ import in.sportscafe.nostragamus.module.user.group.allgroups.AllGroups;
  */
 public class CompareLeaderBoardResponse {
 
-    @JsonProperty("data")
+    @SerializedName("data")
     private List<CompareLeaderBoard> compareLeaderBoards;
 
-    @JsonProperty("data")
+    @SerializedName("data")
     public List<CompareLeaderBoard> getCompareLeaderBoards() {
         return compareLeaderBoards;
     }
 
-    @JsonProperty("data")
+    @SerializedName("data")
     public void setCompareLeaderBoards(List<CompareLeaderBoard> compareLeaderBoards) {
         this.compareLeaderBoards = compareLeaderBoards;
     }

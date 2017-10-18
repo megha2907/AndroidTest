@@ -215,7 +215,7 @@
                 android:layout_marginTop="@dimen/dim_10"
                 android:gravity="center"
                 android:includeFontPadding="false"
-                android:text="No Transaction have occurred yet"
+                android:text="No transactions yet!"
                 android:textColor="@color/white"
                 android:textSize="@dimen/sp_13"
                 app:typeface="lato_regular" />

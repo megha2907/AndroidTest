@@ -21,10 +21,9 @@ import java.util.List;
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.Adapter;
-import in.sportscafe.nostragamus.module.play.prediction.dto.Question;
+import in.sportscafe.nostragamus.module.resultspeek.dto.Question;
 import in.sportscafe.nostragamus.module.resultspeek.dto.ResultsPeek;
 import in.sportscafe.nostragamus.module.user.playerprofile.dto.PlayerInfo;
-import in.sportscafe.nostragamus.module.user.powerups.PowerUp;
 
 /**
  * Created by deepanshi on 2/15/17.
@@ -101,7 +100,7 @@ public class ResultsPeekAdapter extends Adapter<ResultsPeek, ResultsPeekAdapter.
         } else {
             int myAnswerId = myQuestion.getAnswerId();
 
-            // if played match but not attempted Question
+            // if played Match but not attempted Question
             if (myAnswerId == 0) {
                 tvPlayerOneAnswer.setText("Did not Play");
                 setTextColor(tvPlayerOneAnswer, R.color.white_60);
@@ -192,7 +191,7 @@ public class ResultsPeekAdapter extends Adapter<ResultsPeek, ResultsPeekAdapter.
         } else {
             otherPlayerAnswerId = playerQuestion.getAnswerId();
 
-            // if played match but not attempted Question
+            // if played Match but not attempted Question
             if (otherPlayerAnswerId == 0) {
                 tvPlayerTwoAnswer.setText("Did not Play");
                 setTextColor(tvPlayerTwoAnswer, R.color.white_60);

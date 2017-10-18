@@ -1,6 +1,6 @@
 package in.sportscafe.nostragamus.webservice;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.annotations.SerializedName;
 
 import in.sportscafe.nostragamus.module.user.myprofile.dto.GroupInfo;
 
@@ -10,15 +10,15 @@ import in.sportscafe.nostragamus.module.user.myprofile.dto.GroupInfo;
 public class GroupSummaryResponse {
 
 
-    @JsonProperty("data")
+    @SerializedName("data")
     private GroupInfo groupInfo;
 
-    @JsonProperty("data")
+    @SerializedName("data")
     public GroupInfo getGroupInfo() {
         return groupInfo;
     }
 
-    @JsonProperty("data")
+    @SerializedName("data")
     public void setGroupInfo(GroupInfo groupInfo) {
         this.groupInfo = groupInfo;
     }

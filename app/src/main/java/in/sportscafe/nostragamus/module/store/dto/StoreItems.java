@@ -1,12 +1,13 @@
 package in.sportscafe.nostragamus.module.store.dto;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.annotations.SerializedName;
 
 import org.parceler.Parcel;
 
 import java.util.HashMap;
 
-import in.sportscafe.nostragamus.module.allchallenges.dto.ConfigRewardDetails;
+import in.sportscafe.nostragamus.module.prediction.playScreen.dto.PowerUp;
+
 
 /**
  * Created by deepanshi on 7/25/17.
@@ -15,38 +16,38 @@ import in.sportscafe.nostragamus.module.allchallenges.dto.ConfigRewardDetails;
 @Parcel
 public class StoreItems {
 
-    @JsonProperty("product_id")
-    private Integer productId;
+    @SerializedName("product_id")
+    private int productId;
 
-    @JsonProperty("product_name")
+    @SerializedName("product_name")
     private String productName;
 
-    @JsonProperty("product_image")
+    @SerializedName("product_image")
     private String productImage;
 
-    @JsonProperty("product_desc")
+    @SerializedName("product_desc")
     private String productDesc;
 
-    @JsonProperty("product_category")
+    @SerializedName("product_category")
     private String productCategory;
 
-    @JsonProperty("product_price")
-    private Integer productPrice;
+    @SerializedName("product_price")
+    private int productPrice;
 
-    @JsonProperty("product")
-    private HashMap<String, Integer> powerUps = new HashMap<>();
+    @SerializedName("product")
+    private PowerUp powerUp;
 
-//    @JsonProperty("inventory")
-//    private Integer productInventory;
+//    @SerializedName("inventory")
+//    private int productInventory;
 
-    @JsonProperty("sale_info")
+    @SerializedName("sale_info")
     private ProductSaleInfo productSaleInfo;
 
-    public Integer getProductId() {
+    public int getProductId() {
         return productId;
     }
 
-    public void setProductId(Integer productId) {
+    public void setProductId(int productId) {
         this.productId = productId;
     }
 
@@ -83,19 +84,19 @@ public class StoreItems {
         this.productCategory = productCategory;
     }
 
-    public Integer getProductPrice() {
+    public int getProductPrice() {
         return productPrice;
     }
 
-    public void setProductPrice(Integer productPrice) {
+    public void setProductPrice(int productPrice) {
         this.productPrice = productPrice;
     }
 
-//    public Integer getProductInventory() {
+//    public int getProductInventory() {
 //        return productInventory;
 //    }
 //
-//    public void setProductInventory(Integer productInventory) {
+//    public void setProductInventory(int productInventory) {
 //        this.productInventory = productInventory;
 //    }
 
@@ -107,12 +108,11 @@ public class StoreItems {
         this.productSaleInfo = productSaleInfo;
     }
 
-    public HashMap<String, Integer> getPowerUps() {
-        return powerUps;
+    public PowerUp getPowerUps() {
+        return powerUp;
     }
 
-    public void setPowerUps(HashMap<String, Integer> powerUps) {
-        this.powerUps = powerUps;
+    public void setPowerUps(PowerUp powerUp) {
+        this.powerUp = powerUp;
     }
-
 }

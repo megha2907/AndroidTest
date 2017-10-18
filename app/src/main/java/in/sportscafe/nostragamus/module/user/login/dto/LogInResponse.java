@@ -1,18 +1,18 @@
 package in.sportscafe.nostragamus.module.user.login.dto;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.annotations.SerializedName;
 
 public class LogInResponse {
 
-    @JsonProperty("data")
+    @SerializedName("data")
     private UserLoginInResponse userLoginInResponse;
 
-    @JsonProperty("data")
+    @SerializedName("data")
     public UserLoginInResponse getUserLoginInResponse() {
         return userLoginInResponse;
     }
 
-    @JsonProperty("data")
+    @SerializedName("data")
     public void setUserLoginInResponse(UserLoginInResponse userLoginInResponse) {
         this.userLoginInResponse = userLoginInResponse;
     }

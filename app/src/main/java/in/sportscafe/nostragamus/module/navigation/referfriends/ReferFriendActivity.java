@@ -34,7 +34,7 @@ public class ReferFriendActivity extends NostragamusActivity implements ReferFri
 
     @Override
     public String getScreenName() {
-        return Constants.ScreenNames.REFER_FRIEND;
+        return Constants.Notifications.SCREEN_REFER_FRIEND;
     }
 
     @Override
@@ -82,6 +82,9 @@ public class ReferFriendActivity extends NostragamusActivity implements ReferFri
     public void onReferralCreditsClicked(Bundle bundle) {
         if (getActivity() != null) {
             Intent intent = new Intent(getActivity(), ReferralCreditActivity.class);
+            if (bundle == null) {
+                bundle = new Bundle();
+            }
             intent.putExtras(bundle);
             startActivity(intent);
         }

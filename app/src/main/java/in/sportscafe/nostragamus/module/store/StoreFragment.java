@@ -29,8 +29,9 @@ import in.sportscafe.nostragamus.BuildConfig;
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.R;
-import in.sportscafe.nostragamus.module.allchallenges.join.CompletePaymentDialogFragment;
 import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
+import in.sportscafe.nostragamus.module.contest.contestDetailsBeforeJoining.CompletePaymentDialogFragment;
+import in.sportscafe.nostragamus.module.navigation.powerupbank.earnmorepowerups.PowerUp;
 import in.sportscafe.nostragamus.module.navigation.wallet.WalletApiModelImpl;
 import in.sportscafe.nostragamus.module.navigation.wallet.WalletHelper;
 import in.sportscafe.nostragamus.module.navigation.wallet.dto.UserWalletResponse;
@@ -42,8 +43,6 @@ import in.sportscafe.nostragamus.module.store.dto.StoreItems;
 import in.sportscafe.nostragamus.module.store.dto.StoreSections;
 import in.sportscafe.nostragamus.module.user.login.UserInfoModelImpl;
 import in.sportscafe.nostragamus.module.user.login.dto.UserInfo;
-import in.sportscafe.nostragamus.module.user.powerups.PowerUp;
-
 /**
  * Created by deepanshi on 7/25/17.
  */
@@ -402,25 +401,28 @@ public class StoreFragment extends BaseFragment {
     }
 
     private void setPowerUpCount(TextView textView, int count, boolean runningLow, String powerUp) {
-        textView.setText(String.valueOf(count));
-        if (runningLow) {
-            textView.setTextColor(ContextCompat.getColor(getContext(), R.color.white_999999));
+        if (textView != null) {
+            textView.setText(String.valueOf(count));
+            Context textViewContext = textView.getContext();
+            if (runningLow) {
+                textView.setTextColor(ContextCompat.getColor(textViewContext, R.color.white_999999));
 
-            if (powerUp.equalsIgnoreCase(Constants.Powerups.XX)) {
-                ivPBPowerup2x.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.double_grey_powerup));
-            } else if (powerUp.equalsIgnoreCase(Constants.Powerups.NO_NEGATIVE)) {
-                ivPBPowerupNoneg.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.no_negative_grey_powerup));
-            } else if (powerUp.equalsIgnoreCase(Constants.Powerups.AUDIENCE_POLL)) {
-                ivPBPowerupPlayerPoll.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.audience_poll_grey_powerup));
-            }
-        } else {
-            textView.setTextColor(ContextCompat.getColor(getContext(), R.color.white));
-            if (powerUp.equalsIgnoreCase(Constants.Powerups.XX)) {
-                ivPBPowerup2x.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.double_powerup));
-            } else if (powerUp.equalsIgnoreCase(Constants.Powerups.NO_NEGATIVE)) {
-                ivPBPowerupNoneg.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.no_negative_powerup));
-            } else if (powerUp.equalsIgnoreCase(Constants.Powerups.AUDIENCE_POLL)) {
-                ivPBPowerupPlayerPoll.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.audience_poll_powerup));
+                if (powerUp.equalsIgnoreCase(Constants.Powerups.XX)) {
+                    ivPBPowerup2x.setBackground(ContextCompat.getDrawable(textViewContext, R.drawable.double_grey_powerup));
+                } else if (powerUp.equalsIgnoreCase(Constants.Powerups.NO_NEGATIVE)) {
+                    ivPBPowerupNoneg.setBackground(ContextCompat.getDrawable(textViewContext, R.drawable.no_negative_grey_powerup));
+                } else if (powerUp.equalsIgnoreCase(Constants.Powerups.AUDIENCE_POLL)) {
+                    ivPBPowerupPlayerPoll.setBackground(ContextCompat.getDrawable(textViewContext, R.drawable.audience_poll_grey_powerup));
+                }
+            } else {
+                textView.setTextColor(ContextCompat.getColor(textViewContext, R.color.white));
+                if (powerUp.equalsIgnoreCase(Constants.Powerups.XX)) {
+                    ivPBPowerup2x.setBackground(ContextCompat.getDrawable(textViewContext, R.drawable.double_powerup));
+                } else if (powerUp.equalsIgnoreCase(Constants.Powerups.NO_NEGATIVE)) {
+                    ivPBPowerupNoneg.setBackground(ContextCompat.getDrawable(textViewContext, R.drawable.no_negative_powerup));
+                } else if (powerUp.equalsIgnoreCase(Constants.Powerups.AUDIENCE_POLL)) {
+                    ivPBPowerupPlayerPoll.setBackground(ContextCompat.getDrawable(textViewContext, R.drawable.audience_poll_powerup));
+                }
             }
         }
     }

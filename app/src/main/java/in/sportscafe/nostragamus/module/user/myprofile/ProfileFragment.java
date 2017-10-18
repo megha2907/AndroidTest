@@ -23,13 +23,10 @@ import in.sportscafe.nostragamus.animator.AppBarStateChangeListener;
 import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
 import in.sportscafe.nostragamus.module.common.CustomViewPager;
 import in.sportscafe.nostragamus.module.common.NostragamusFragment;
-import in.sportscafe.nostragamus.module.common.RoundImage;
 import in.sportscafe.nostragamus.module.common.ViewPagerAdapter;
 import in.sportscafe.nostragamus.module.navigation.edituserprofile.EditUserProfileActivity;
 import in.sportscafe.nostragamus.module.play.myresultstimeline.TimelineFragment;
-import in.sportscafe.nostragamus.module.settings.SettingActivity;
 import in.sportscafe.nostragamus.module.user.login.LogInActivity;
-import in.sportscafe.nostragamus.module.user.myprofile.edit.EditProfileActivity;
 
 /**
  * Created by Jeeva on 14/6/16.
@@ -224,10 +221,6 @@ public class ProfileFragment extends NostragamusFragment implements ProfileView,
                 getActivity().onBackPressed();
                 break;
         }
-    }
-
-    private void navigateToSettings() {
-        startActivity(new Intent(getContext(), SettingActivity.class));
     }
 
     private void navigateToEditProfile() {
