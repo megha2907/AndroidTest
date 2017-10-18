@@ -17,6 +17,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.jeeva.android.Log;
 import com.jeeva.android.widgets.HmImageView;
 
 import org.parceler.Parcels;
@@ -29,7 +30,11 @@ import java.util.List;
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.NostraBaseFragment;
+import in.sportscafe.nostragamus.module.contest.contestDetailsAfterJoining.InplayContestDetailsActivity;
+import in.sportscafe.nostragamus.module.inPlay.adapter.InPlayAdapterItemType;
 import in.sportscafe.nostragamus.module.inPlay.dataProvider.InPlayDataProvider;
+import in.sportscafe.nostragamus.module.inPlay.dto.InPlayContestDto;
+import in.sportscafe.nostragamus.module.inPlay.dto.InPlayListItem;
 import in.sportscafe.nostragamus.module.inPlay.dto.InPlayResponse;
 import in.sportscafe.nostragamus.module.inPlay.helper.InPlayFilterHelper;
 import in.sportscafe.nostragamus.module.inPlay.ui.headless.dto.HeadLessMatchScreenData;
@@ -46,6 +51,7 @@ import in.sportscafe.nostragamus.module.prediction.playScreen.dto.PlayScreenData
  */
 public class InPlayFragment extends NostraBaseFragment implements View.OnClickListener {
 
+    private static final String TAG = InPlayFragment.class.getSimpleName();
     private Snackbar mSnackBar;
     private NostraHomeActivityListener mFragmentListener;
 
@@ -275,34 +281,64 @@ public class InPlayFragment extends NostraBaseFragment implements View.OnClickLi
         Bundle args = getArguments();
         if (isServerResponse && args != null) {
 
-            /* Handle Pseudo game play
-            * If so, launch headless matches screen */
             PlayScreenDataDto playScreenDataDto = Parcels.unwrap(args.getParcelable(Constants.BundleKeys.PLAY_SCREEN_DATA));
             if (playScreenDataDto != null && inPlayResponseList != null) {
+
                 if (playScreenDataDto.isPlayingPseudoGame()) {
+                    launchHeadLessMatchesScreen(playScreenDataDto);
+                } else {
 
-                    HeadLessMatchScreenData data = new HeadLessMatchScreenData();
-                    data.setChallengeName(playScreenDataDto.getSubTitle());
-                    data.setChallengeId(playScreenDataDto.getChallengeId());
-                    data.setPowerUp(playScreenDataDto.getPowerUp());
-                    data.setContestName(playScreenDataDto.getSubTitle());
-                    data.setRoomId(playScreenDataDto.getRoomId());
-                    data.setPlayingPseudoGame(playScreenDataDto.isPlayingPseudoGame());
-                    data.setInPlayContestDto(playScreenDataDto.getInPlayContestDto());
-                    data.setStartTime(playScreenDataDto.getChallengeStartTime());
-
-                    playScreenDataDto.setPlayingPseudoGame(false);  // Action is taken once so remove this flag
-
-                    /* New bundle as older one has unnecessary values which can lead improper flow */
-                    Bundle bundle = new Bundle();
-                    bundle.putParcelable(Constants.BundleKeys.HEADLESS_MATCH_SCREEN_DATA, Parcels.wrap(data));
-
-                    Intent intent = new Intent(getActivity(), InPlayHeadLessMatchActivity.class);
-                    intent.putExtras(bundle);
-                    getActivity().startActivity(intent);
+                    /* launch appropriate matches screen */
+                    for (InPlayResponse inPlayResponse : inPlayResponseList) {
+                        if (inPlayResponse.getChallengeId() == playScreenDataDto.getChallengeId()) {
+                            launchInplayContestDetailsScreen(playScreenDataDto);
+                            break;
+                        }
+                    }
                 }
             }
         }
+    }
+
+    private void launchInplayContestDetailsScreen(PlayScreenDataDto playScreenDataDto) {
+        if (getActivity() != null && !getActivity().isFinishing() && playScreenDataDto != null) {
+            if (playScreenDataDto.isShouldLaunchMatchesScreen()) {
+                playScreenDataDto.setShouldLaunchMatchesScreen(false);
+
+                Bundle args = new Bundle();
+                if (playScreenDataDto.getInPlayContestDto() != null) {
+                    args.putParcelable(Constants.BundleKeys.INPLAY_CONTEST, Parcels.wrap(playScreenDataDto.getInPlayContestDto()));
+                }
+
+                Intent intent = new Intent(getActivity(), InplayContestDetailsActivity.class);
+                intent.putExtras(args);
+                startActivity(intent);
+            } else {
+                Log.d(TAG, "Not require to launch Matches screen");
+            }
+        }
+    }
+
+    private void launchHeadLessMatchesScreen(PlayScreenDataDto playScreenDataDto) {
+        HeadLessMatchScreenData data = new HeadLessMatchScreenData();
+        data.setChallengeName(playScreenDataDto.getSubTitle());
+        data.setChallengeId(playScreenDataDto.getChallengeId());
+        data.setPowerUp(playScreenDataDto.getPowerUp());
+        data.setContestName(playScreenDataDto.getSubTitle());
+        data.setRoomId(playScreenDataDto.getRoomId());
+        data.setPlayingPseudoGame(playScreenDataDto.isPlayingPseudoGame());
+        data.setInPlayContestDto(playScreenDataDto.getInPlayContestDto());
+        data.setStartTime(playScreenDataDto.getChallengeStartTime());
+
+        playScreenDataDto.setPlayingPseudoGame(false);  // Action is taken once so remove this flag
+
+                    /* New bundle as older one has unnecessary values which can lead improper flow */
+        Bundle bundle = new Bundle();
+        bundle.putParcelable(Constants.BundleKeys.HEADLESS_MATCH_SCREEN_DATA, Parcels.wrap(data));
+
+        Intent intent = new Intent(getActivity(), InPlayHeadLessMatchActivity.class);
+        intent.putExtras(bundle);
+        getActivity().startActivity(intent);
     }
 
     private void showLoadingProgressBar() {

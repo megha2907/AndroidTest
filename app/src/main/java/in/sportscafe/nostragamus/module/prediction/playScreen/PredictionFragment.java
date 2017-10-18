@@ -886,11 +886,13 @@ public class PredictionFragment extends NostraBaseFragment implements View.OnCli
             data.setChallengeId(mPlayScreenData.getChallengeId());
             data.setMatchId(mPlayScreenData.getMatchId());
             data.setMatchStatus(mPlayScreenData.getMatchStatus());
-            data.setSubTitle(mPlayScreenData.getInPlayContestDto().getContestName());
             data.setChallengeName(mPlayScreenData.getChallengeName());
             data.setPlayingPseudoGame(mPlayScreenData.isPlayingPseudoGame());
             data.setChallengeStartTime(mPlayScreenData.getChallengeStartTime());
-            data.setInPlayContestDto(mPlayScreenData.getInPlayContestDto());
+            if (mPlayScreenData.getInPlayContestDto() != null) {
+                data.setInPlayContestDto(mPlayScreenData.getInPlayContestDto());
+                data.setSubTitle(mPlayScreenData.getInPlayContestDto().getContestName());
+            }
         }
 
         Bundle args = getArguments();
