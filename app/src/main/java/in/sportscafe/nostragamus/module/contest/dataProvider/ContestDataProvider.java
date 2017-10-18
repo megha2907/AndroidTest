@@ -115,7 +115,8 @@ public class ContestDataProvider {
             /* create list of all contest-types based on contest-names  */
             for (String contestName : contestSet) {
                 for (Contest contest : contestList) {
-                    if (contestName.equalsIgnoreCase(contest.getContestType().getCategoryName())) {
+                    if (contest.getContestType() != null &&
+                            contestName.equalsIgnoreCase(contest.getContestType().getCategoryName())) {
                         contestTypes.add(contest.getContestType());
                         break;
                     }
