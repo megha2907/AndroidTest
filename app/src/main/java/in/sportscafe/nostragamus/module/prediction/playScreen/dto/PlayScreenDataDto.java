@@ -21,6 +21,7 @@ public class PlayScreenDataDto {
     private String matchStatus;
     private PowerUp powerUp;
     private boolean isPlayingPseudoGame = false;
+    private boolean shouldLaunchMatchesScreen = false;
     private InPlayContestDto inPlayContestDto;
 
     public int getChallengeId() {
@@ -117,5 +118,13 @@ public class PlayScreenDataDto {
 
     public void setInPlayContestDto(InPlayContestDto inPlayContestDto) {
         this.inPlayContestDto = inPlayContestDto;
+    }
+
+    public boolean isShouldLaunchMatchesScreen() {
+        return shouldLaunchMatchesScreen;
+    }
+
+    public void setShouldLaunchMatchesScreen(boolean shouldLaunchMatchesScreen) {
+        this.shouldLaunchMatchesScreen = shouldLaunchMatchesScreen;
     }
 }

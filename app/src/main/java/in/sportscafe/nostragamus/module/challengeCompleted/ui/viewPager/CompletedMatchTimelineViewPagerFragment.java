@@ -77,8 +77,8 @@ public class CompletedMatchTimelineViewPagerFragment extends NostraBaseFragment 
             if (args.containsKey(Constants.BundleKeys.COMPLETED_CONTEST)) {
                 mCompletedContestDto = Parcels.unwrap(args.getParcelable(Constants.BundleKeys.COMPLETED_CONTEST));
                 loadData(mCompletedContestDto);
-                }
             }
+        }
     }
 
     private void loadData(CompletedContestDto completedContestDto) {
@@ -150,33 +150,34 @@ public class CompletedMatchTimelineViewPagerFragment extends NostraBaseFragment 
             titleParent.removeAllViews();
 
              /* Timeline */
-            int totalMatches = mCompletedContestDto.getMatches().size();
-            for (int temp = 0; temp < totalMatches; temp++) {
-                CompletedContestMatchDto match = mCompletedContestDto.getMatches().get(temp);
+            if (mCompletedContestDto.getMatches() != null) {
+                int totalMatches = mCompletedContestDto.getMatches().size();
+                for (int temp = 0; temp < totalMatches; temp++) {
+                    CompletedContestMatchDto match = mCompletedContestDto.getMatches().get(temp);
 
-                boolean isNodeLineRequired = true;
-                if (temp == 0){
-                    isNodeLineRequired = false;
-                }
+                    boolean isNodeLineRequired = true;
+                    if (temp == 0) {
+                        isNodeLineRequired = false;
+                    }
 
-                int matchAttemptedStatus = match.isPlayed();
-                boolean isPlayed;
-                if (Constants.GameAttemptedStatus.COMPLETELY == matchAttemptedStatus) {
-                    isPlayed = true;
-                } else if (Constants.GameAttemptedStatus.PARTIALLY == matchAttemptedStatus) {
-                    isPlayed = false;
-                } else {
-                    isPlayed = false;
-                }
+                    int matchAttemptedStatus = match.isPlayed();
+                    boolean isPlayed;
+                    if (Constants.GameAttemptedStatus.COMPLETELY == matchAttemptedStatus) {
+                        isPlayed = true;
+                    } else if (Constants.GameAttemptedStatus.PARTIALLY == matchAttemptedStatus) {
+                        isPlayed = false;
+                    } else {
+                        isPlayed = false;
+                    }
 
                     /* Content */
-                TimelineHelper.addNode(parent, match.getStatus(), matchAttemptedStatus, isPlayed,
-                        isNodeLineRequired, TimelineHelper.MatchTimelineTypeEnum.IN_PLAY_MATCHES_SCREEN, mCompletedContestDto.getMatches().size());
+                    TimelineHelper.addNode(parent, match.getStatus(), matchAttemptedStatus, isPlayed,
+                            isNodeLineRequired, TimelineHelper.MatchTimelineTypeEnum.IN_PLAY_MATCHES_SCREEN, mCompletedContestDto.getMatches().size());
 
                     /* Title */
-                TimelineHelper.addTextNode(titleParent, "Game " + (temp + 1), mCompletedContestDto.getMatches().size(),
-                        match.getStatus(), TimelineHelper.MatchTimelineTypeEnum.IN_PLAY_MATCHES_SCREEN, isPlayed, matchAttemptedStatus);
-
+                    TimelineHelper.addTextNode(titleParent, "Game " + (temp + 1), mCompletedContestDto.getMatches().size(),
+                            match.getStatus(), TimelineHelper.MatchTimelineTypeEnum.IN_PLAY_MATCHES_SCREEN, isPlayed, matchAttemptedStatus);
+                }
             }
         }
     }
@@ -203,17 +204,17 @@ public class CompletedMatchTimelineViewPagerFragment extends NostraBaseFragment 
             } else {
                 powerUpLayout.setVisibility(View.VISIBLE);
 
-                    powerUp2xImageView.setBackgroundResource(R.drawable.double_powerup_small);
-                    powerUp2xImageView.setVisibility(View.VISIBLE);
-                    powerUp2xTextView.setText(String.valueOf(powerUp2xCount));
+                powerUp2xImageView.setBackgroundResource(R.drawable.double_powerup_small);
+                powerUp2xImageView.setVisibility(View.VISIBLE);
+                powerUp2xTextView.setText(String.valueOf(powerUp2xCount));
 
-                    powerUpNoNegativeImageView.setBackgroundResource(R.drawable.no_negative_powerup_small);
-                    powerUpNoNegativeImageView.setVisibility(View.VISIBLE);
-                    powerUpNoNegativeTextView.setText(String.valueOf(powerUpNonNegsCount));
+                powerUpNoNegativeImageView.setBackgroundResource(R.drawable.no_negative_powerup_small);
+                powerUpNoNegativeImageView.setVisibility(View.VISIBLE);
+                powerUpNoNegativeTextView.setText(String.valueOf(powerUpNonNegsCount));
 
-                    powerUpAudienceImageView.setBackgroundResource(R.drawable.audience_poll_powerup_small);
-                    powerUpAudienceImageView.setVisibility(View.VISIBLE);
-                    powerUpAudienceTextView.setText(String.valueOf(powerUpPlayerPollCount));
+                powerUpAudienceImageView.setBackgroundResource(R.drawable.audience_poll_powerup_small);
+                powerUpAudienceImageView.setVisibility(View.VISIBLE);
+                powerUpAudienceTextView.setText(String.valueOf(powerUpPlayerPollCount));
 
             }
         }
@@ -325,14 +326,16 @@ public class CompletedMatchTimelineViewPagerFragment extends NostraBaseFragment 
     }
 
     private void handleError(int status) {
-        switch (status) {
-            case Constants.DataStatus.NO_INTERNET:
-                Snackbar.make(getView(), Constants.Alerts.NO_INTERNET_CONNECTION, Snackbar.LENGTH_LONG).show();
-                break;
+        if (getView() != null && !getActivity().isFinishing()) {
+            switch (status) {
+                case Constants.DataStatus.NO_INTERNET:
+                    Snackbar.make(getView(), Constants.Alerts.NO_INTERNET_CONNECTION, Snackbar.LENGTH_LONG).show();
+                    break;
 
-            default:
-                Snackbar.make(getView(), Constants.Alerts.SOMETHING_WRONG, Snackbar.LENGTH_LONG).show();
-                break;
+                default:
+                    Snackbar.make(getView(), Constants.Alerts.SOMETHING_WRONG, Snackbar.LENGTH_LONG).show();
+                    break;
+            }
         }
     }
 

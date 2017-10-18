@@ -41,6 +41,7 @@ import in.sportscafe.nostragamus.module.permission.PermissionsActivity;
 import in.sportscafe.nostragamus.module.permission.PermissionsChecker;
 import in.sportscafe.nostragamus.module.popups.timerPopup.TimerFinishDialogHelper;
 import in.sportscafe.nostragamus.module.prediction.playScreen.PredictionActivity;
+import in.sportscafe.nostragamus.module.prediction.playScreen.dto.PlayScreenDataDto;
 import in.sportscafe.nostragamus.module.resultspeek.dto.Match;
 import in.sportscafe.nostragamus.utils.timeutils.TimeUtils;
 
@@ -175,42 +176,39 @@ public class MyResultsActivity extends NostragamusActivity implements MyResultsV
 
     @Override
     public void onBackPressed() {
-
         Bundle args = null;
         if (getIntent() != null && getIntent().getExtras() != null) {
             args = getIntent().getExtras();
             if (args.containsKey(Constants.BundleKeys.SCREEN_LAUNCH_REQUEST)) {
-                if (args.getInt(Constants.BundleKeys.SCREEN_LAUNCH_REQUEST)
-                        == (NostraHomeActivity.LaunchedFrom.SHOW_IN_PLAY)) {
+                int launchRequest = args.getInt(Constants.BundleKeys.SCREEN_LAUNCH_REQUEST);
 
+                if (launchRequest == (NostraHomeActivity.LaunchedFrom.SHOW_IN_PLAY)) {
                     finishStackAndLaunchMatchesInPlay();
-                } else {
-                    finish();
                 }
-            } else {
-                finish();
             }
-        } else {
-            finish();
         }
 
+        super.onBackPressed();
     }
 
     private void finishStackAndLaunchMatchesInPlay() {
         Bundle args = null;
         if (getIntent() != null && getIntent().getExtras() != null) {
             args = getIntent().getExtras();
-        }
+            if (args.containsKey(BundleKeys.PLAY_SCREEN_DATA)) {
+                PlayScreenDataDto playScreenData = Parcels.unwrap(args.getParcelable(BundleKeys.PLAY_SCREEN_DATA));
+                if (playScreenData != null) {
+                    playScreenData.setShouldLaunchMatchesScreen(true);
+                    com.jeeva.android.Log.d(TAG, "Should launch headless-matches OR inplayContestDetails screen activity");
+                }
 
-        Intent clearTaskIntent = new Intent(getApplicationContext(), InplayContestDetailsActivity.class);
-        clearTaskIntent.putExtra(Constants.BundleKeys.SCREEN_LAUNCH_REQUEST, DetailScreensLaunchRequest.MATCHES_DEFAULT_SCREEN);
-        clearTaskIntent.putExtra(Constants.BundleKeys.SCREEN_LAUNCHED_FROM_PARENT, LaunchedFrom.IN_PLAY_SCREEN_MATCH_AWAITING_RESULTS);
-        clearTaskIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-
-        if (args != null) {
-            clearTaskIntent.putExtras(args);
+                Intent clearTaskIntent = new Intent(getApplicationContext(), NostraHomeActivity.class);
+                clearTaskIntent.putExtra(Constants.BundleKeys.SCREEN_LAUNCH_REQUEST, NostraHomeActivity.LaunchedFrom.SHOW_IN_PLAY);
+                clearTaskIntent.putExtras(args);
+                clearTaskIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                startActivity(clearTaskIntent);
+            }
         }
-        startActivity(clearTaskIntent);
     }
 
     private final boolean shouldUpRecreateTask(Activity from) {

@@ -27,7 +27,7 @@ import in.sportscafe.nostragamus.module.challengeCompleted.dto.CompletedContestD
 import in.sportscafe.nostragamus.module.challengeCompleted.dto.CompletedListChallengeItem;
 import in.sportscafe.nostragamus.module.challengeCompleted.dto.CompletedListItem;
 import in.sportscafe.nostragamus.module.challengeCompleted.dto.CompletedResponse;
-import in.sportscafe.nostragamus.module.contest.contestDetailsCompletedChallenges.ContestDetailCompletedActivity;
+import in.sportscafe.nostragamus.module.contest.contestDetailsCompletedChallenges.ChallengeHistoryContestDetailsActivity;
 import in.sportscafe.nostragamus.module.newChallenges.dataProvider.SportsDataProvider;
 import in.sportscafe.nostragamus.module.newChallenges.dto.SportsTab;
 
@@ -182,7 +182,7 @@ public class CompleteChallengeViewPagerFragment extends BaseFragment {
     private void goToHistoryDetails(Bundle args) {
         if (Nostragamus.getInstance().hasNetworkConnection()) {
             if (getActivity() != null && !getActivity().isFinishing()) {
-                Intent intent = new Intent(getActivity(), ContestDetailCompletedActivity.class);
+                Intent intent = new Intent(getActivity(), ChallengeHistoryContestDetailsActivity.class);
                 if (args != null) {
                     intent.putExtras(args);
                 }

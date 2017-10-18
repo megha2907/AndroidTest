@@ -27,11 +27,11 @@ import in.sportscafe.nostragamus.module.user.leaderboard.LeaderBoardFragment;
  * Created by sc on 4/10/17.
  */
 
-public class ContestDetailCompletedFragment  extends NostraBaseFragment implements View.OnClickListener {
+public class ChallengeHistoryContestDetailFragment extends NostraBaseFragment implements View.OnClickListener {
 
-    private static final String TAG = ContestDetailCompletedFragment.class.getSimpleName();
+    private static final String TAG = ChallengeHistoryContestDetailFragment.class.getSimpleName();
 
-    public ContestDetailCompletedFragment() {
+    public ChallengeHistoryContestDetailFragment() {
     }
 
     private ContestDetailCompletedFragmentListener mContestDetailCompletedFragmentListener;
@@ -44,7 +44,7 @@ public class ContestDetailCompletedFragment  extends NostraBaseFragment implemen
     public void onAttach(Context context) {
         super.onAttach(context);
 
-        if (context instanceof ContestDetailCompletedActivity) {
+        if (context instanceof ChallengeHistoryContestDetailsActivity) {
             mContestDetailCompletedFragmentListener = (ContestDetailCompletedFragmentListener) context;
         } else {
             throw new RuntimeException("Activity must implement " + TAG);

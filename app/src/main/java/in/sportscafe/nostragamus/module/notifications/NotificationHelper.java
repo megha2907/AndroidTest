@@ -11,6 +11,9 @@ import com.jeeva.android.Log;
 import org.parceler.Parcels;
 
 import in.sportscafe.nostragamus.Constants;
+import in.sportscafe.nostragamus.module.challengeCompleted.dto.CompletedContestDto;
+import in.sportscafe.nostragamus.module.contest.contestDetailsCompletedChallenges.ChallengeHistoryContestDetailsActivity;
+import in.sportscafe.nostragamus.module.contest.ui.DetailScreensLaunchRequest;
 import in.sportscafe.nostragamus.module.inPlay.ui.ResultsScreenDataDto;
 import in.sportscafe.nostragamus.module.navigation.appupdate.AppUpdateActivity;
 import in.sportscafe.nostragamus.module.navigation.referfriends.ReferFriendActivity;
@@ -94,6 +97,29 @@ public class NotificationHelper {
         args.putParcelable(Constants.BundleKeys.RESULTS_SCREEN_DATA, Parcels.wrap(screenData));
 
         Intent intent = new Intent(context, MyResultsActivity.class);
+        intent.putExtras(args);
+        return intent;
+    }
+
+    @NonNull
+    public Intent getChallengeHistoryWinningsScreenIntent(Context context, NostraNotification notification) {
+        Bundle args = new Bundle();
+        CompletedContestDto completedContestDto = new CompletedContestDto();
+
+        if (notification != null && notification.getData() != null) {
+            completedContestDto.setChallengeId(notification.getData().getChallengeId());
+            completedContestDto.setRoomId(notification.getData().getRoomId());
+            completedContestDto.setContestId(notification.getData().getContestId());
+            completedContestDto.setContestName(notification.getData().getContestName());
+            completedContestDto.setChallengeName(notification.getData().getChallengeName());
+
+            args.putBoolean(Constants.Notifications.IS_LAUNCHED_FROM_NOTIFICATION, true);
+            args.putParcelable(Constants.Notifications.NOSTRA_NOTIFICATION, Parcels.wrap(notification));
+            args.putInt(Constants.BundleKeys.SCREEN_LAUNCH_REQUEST, DetailScreensLaunchRequest.MATCHES_REWARDS_SCREEN);
+        }
+        args.putParcelable(Constants.BundleKeys.COMPLETED_CONTEST, Parcels.wrap(completedContestDto));
+
+        Intent intent = new Intent(context, ChallengeHistoryContestDetailsActivity.class);
         intent.putExtras(args);
         return intent;
     }
