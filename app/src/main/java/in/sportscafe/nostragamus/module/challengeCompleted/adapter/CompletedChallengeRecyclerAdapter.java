@@ -308,9 +308,10 @@ public class CompletedChallengeRecyclerAdapter extends RecyclerView.Adapter<Recy
 
                     /* Content */
                 String matchPoints;
-                if (isPlayed) {
+                if (Constants.GameAttemptedStatus.COMPLETELY == matchAttemptedStatus ||
+                        Constants.GameAttemptedStatus.PARTIALLY == matchAttemptedStatus) {
                     matchPoints = String.valueOf(match.getScore()) + " Points";
-                }else {
+                } else {
                     matchPoints = "   DNP    ";
                 }
 

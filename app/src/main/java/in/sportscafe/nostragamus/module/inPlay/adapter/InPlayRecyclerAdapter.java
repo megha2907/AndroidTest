@@ -348,12 +348,16 @@ public class InPlayRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                 /* Footer */
                 String footerStr = DateTimeHelper.getInPlayMatchTime(match.getStartTime());
                 if (match.getStatus().equalsIgnoreCase(Constants.InPlayMatchStatus.COMPLETED)) {
-                    if (isPlayed) {
+
+                    if (Constants.GameAttemptedStatus.COMPLETELY == matchAttemptedStatus ||
+                            Constants.GameAttemptedStatus.PARTIALLY == matchAttemptedStatus) {
                         footerStr = String.valueOf(match.getScore()) + " Points";
                     } else {
                         footerStr = "   DNP    ";
                     }
+
                     params.setMargins(10, 0, 0, 0);
+
                 } else if (match.getStatus().equalsIgnoreCase(Constants.InPlayMatchStatus.LIVE)) {
                     footerStr = "In Progress";
                 }
