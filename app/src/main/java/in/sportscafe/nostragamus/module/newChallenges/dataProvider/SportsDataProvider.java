@@ -36,7 +36,7 @@ public class SportsDataProvider {
         SportsTab mixed = new SportsTab();
         mixed.setSportsId(FILTER_MIXED_SPORTS_ID);
         mixed.setSportsName("Mixed");
-        mixed.setSportIconDrawable(R.drawable.sport_mix);
+        mixed.setSportIconDrawable(R.drawable.sport_mixed);
         mixed.setSportIconUnSelectedDrawable(R.drawable.sport_mix_grey);
 
         SportsTab cricket = new SportsTab();
@@ -84,8 +84,38 @@ public class SportsDataProvider {
         SportsTab formulaOne = new SportsTab();
         formulaOne.setSportsId(7);
         formulaOne.setSportsName("Formula One");
-        formulaOne.setSportIconDrawable(R.drawable.sport_racing);
+        formulaOne.setSportIconDrawable(R.drawable.sport_formula_one);
         formulaOne.setSportIconUnSelectedDrawable(R.drawable.sport_racing_grey);
+
+        SportsTab boxing = new SportsTab();
+        boxing.setSportsId(10);
+        boxing.setSportsName("Boxing");
+        boxing.setSportIconDrawable(R.drawable.sport_boxing);
+        boxing.setSportIconUnSelectedDrawable(R.drawable.sport_boxing_grey);
+
+        SportsTab golf = new SportsTab();
+        golf.setSportsId(11);
+        golf.setSportsName("Golf");
+        golf.setSportIconDrawable(R.drawable.sport_golf);
+        golf.setSportIconUnSelectedDrawable(R.drawable.sport_golf_grey);
+
+        SportsTab rugby = new SportsTab();
+        rugby.setSportsId(12);
+        rugby.setSportsName("Rugby");
+        rugby.setSportIconDrawable(R.drawable.sport_rugby);
+        rugby.setSportIconUnSelectedDrawable(R.drawable.sport_rugby_grey);
+
+        SportsTab volleyball = new SportsTab();
+        volleyball.setSportsId(14);
+        volleyball.setSportsName("Volleyball");
+        volleyball.setSportIconDrawable(R.drawable.sport_volleyball);
+        volleyball.setSportIconUnSelectedDrawable(R.drawable.sport_volleyball_grey);
+
+        SportsTab motoGP = new SportsTab();
+        motoGP.setSportsId(13);
+        motoGP.setSportsName("Moto GP");
+        motoGP.setSportIconDrawable(R.drawable.sport_motogp);
+        motoGP.setSportIconUnSelectedDrawable(R.drawable.sport_racing_grey);
 
         /* This is priority order, to show tabs */
         sportsList.add(all);
@@ -99,6 +129,11 @@ public class SportsDataProvider {
         sportsList.add(badminton);
         sportsList.add(hockey);
         sportsList.add(formulaOne);
+        sportsList.add(boxing);
+        sportsList.add(golf);
+        sportsList.add(rugby);
+        sportsList.add(volleyball);
+        sportsList.add(motoGP);
 
         return sportsList;
     }
