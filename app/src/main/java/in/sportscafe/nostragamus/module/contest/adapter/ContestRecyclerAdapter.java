@@ -73,7 +73,7 @@ public class ContestRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
             case ContestAdapterItemType.NON_JOINABLE_CONTEST:
                 View nonJoinable = inflater.inflate(R.layout.contest_card_non_joinable_item_layout, parent, false);
-                viewHolder = new NonJoinablaContestViewHolder(nonJoinable);
+                viewHolder = new NonJoinableContestViewHolder(nonJoinable);
                 break;
         }
 
@@ -106,7 +106,7 @@ public class ContestRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     private void bindNonJoinableContestValues(RecyclerView.ViewHolder holder, int position) {
         if (mContestList != null && mContestList.size() > position) {
             Contest contest = mContestList.get(position);
-            NonJoinablaContestViewHolder viewHolder = (NonJoinablaContestViewHolder) holder;
+            NonJoinableContestViewHolder viewHolder = (NonJoinableContestViewHolder) holder;
 
             if (contest != null) {
                 viewHolder.mTvPoolName.setText(contest.getConfigName());
@@ -120,6 +120,7 @@ public class ContestRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                 if (!TextUtils.isEmpty(contest.getSubtitle())) {
                     viewHolder.mTvNumberOfPrizes.setText("(" + contest.getSubtitle() + ")");
                 }
+                viewHolder.mTvFilledContests.setText(String.valueOf(contest.getFilledRooms()));
 
                 String contestMode = contest.getContestMode();
                 if (!TextUtils.isEmpty(contestMode)) {
@@ -400,7 +401,7 @@ public class ContestRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         }
     }
 
-    public class NonJoinablaContestViewHolder extends RecyclerView.ViewHolder {
+    public class NonJoinableContestViewHolder extends RecyclerView.ViewHolder {
 
         public TextView mTvPoolName;
         public Button mBtnJoin;
@@ -415,7 +416,7 @@ public class ContestRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         LinearLayout mEntriesLayout;
         LinearLayout mEntryFeeLayout;
 
-        public NonJoinablaContestViewHolder(View itemView) {
+        public NonJoinableContestViewHolder(View itemView) {
             super(itemView);
             mTvPoolName = (TextView) itemView.findViewById(R.id.pool_row_tv_name);
             mBtnJoin = (Button) itemView.findViewById(R.id.pool_row_btn_join);
