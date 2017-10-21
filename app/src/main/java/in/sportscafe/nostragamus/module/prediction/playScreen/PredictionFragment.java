@@ -205,6 +205,7 @@ public class PredictionFragment extends NostraBaseFragment implements View.OnCli
 
     private void loadQuestions() {
         if (mPlayScreenData != null && getActivity() != null) {
+            showProgress();
             PredictionQuestionsDataProvider dataProvider = new PredictionQuestionsDataProvider();
             dataProvider.getAllQuestions(mPlayScreenData.getMatchId(), mPlayScreenData.getRoomId(), getAllQuestionsApiListener());
         } else {
@@ -217,11 +218,13 @@ public class PredictionFragment extends NostraBaseFragment implements View.OnCli
         return new PredictionQuestionsDataProvider.QuestionDataProviderListener() {
             @Override
             public void onData(int status, @Nullable PredictionAllQuestionResponse questionsResponse) {
+                hideProgress();
                 onAllQuestionApiSuccessResponse(questionsResponse);
             }
 
             @Override
             public void onError(int status) {
+                hideProgress();
                 handleError(null, status);
             }
         };
