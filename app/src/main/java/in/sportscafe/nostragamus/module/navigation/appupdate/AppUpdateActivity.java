@@ -22,7 +22,8 @@ import in.sportscafe.nostragamus.utils.FragmentHelper;
 
 public class AppUpdateActivity extends NostragamusActivity implements OnDismissListener {
 
-    private static final int DISMISS_SCREEN = 58;
+    public static final int FINISH_APP_UPDATE_ACTIVITY = 58;
+    public static final int NAVIGATE_TO_HOME = 60;
     private boolean mIsFirstBackPressed = false;
     public static final int DOUBLE_BACK_PRESSED_DELAY_ALLOWED = 3000;
 
@@ -67,8 +68,12 @@ public class AppUpdateActivity extends NostragamusActivity implements OnDismissL
     @Override
     public void onDismiss(int requestCode, Bundle bundle) {
         switch (requestCode) {
-            case DISMISS_SCREEN:
+            case FINISH_APP_UPDATE_ACTIVITY:
                 onBackPressed();
+                break;
+
+            case NAVIGATE_TO_HOME:
+                navigateToHome();
                 break;
         }
     }
@@ -96,7 +101,6 @@ public class AppUpdateActivity extends NostragamusActivity implements OnDismissL
         }
     }
 
-
     private void navigateToHome() {
         Intent intent = new Intent(getContext(), NostraHomeActivity.class);
         intent.putExtra(Constants.BundleKeys.SCREEN, Constants.BundleKeys.LOGIN_SCREEN);
@@ -108,9 +112,9 @@ public class AppUpdateActivity extends NostragamusActivity implements OnDismissL
     public void onBackPressed() {
 
         if (getIntent().getExtras() != null) {
-
             if (getIntent().getExtras().getString(Constants.BundleKeys.SCREEN).equals(Constants.ScreenNames.APP_FORCE_UPDATE)) {
                 handleDoubleBackPressLogicToExit();
+
             } else if (getIntent().getExtras().getString(Constants.BundleKeys.SCREEN).equals(Constants.ScreenNames.APP_UPDATE)) {
                 if (NostragamusDataHandler.getInstance().isLoggedInUser()) {
                     navigateToHome();
