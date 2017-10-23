@@ -22,6 +22,9 @@ import com.jeeva.android.widgets.CustomProgressbar;
 
 import org.parceler.Parcels;
 
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import in.sportscafe.nostragamus.Constants;
@@ -98,8 +101,9 @@ public class ContestViewPagerFragment extends NostraBaseFragment {
 
     private void populateDataOnUi() {
         if (mContestList != null && !mContestList.isEmpty()) {
+            List<Contest> filteredSortedList = getSortedList(getContestListPreparedForAdapterItemTypes(mContestList));
             mRecyclerView.setAdapter(new ContestRecyclerAdapter(mRecyclerView.getContext(),
-                    getContestListPreparedForAdapterItemTypes(mContestList),
+                    filteredSortedList,
                     getContestAdapterListener()));
 
         } else {
@@ -142,6 +146,37 @@ public class ContestViewPagerFragment extends NostraBaseFragment {
                     contest.setContestItemType(ContestAdapterItemType.JOINED_CONTEST);
                 }
             }
+        }
+
+        return contestList;
+    }
+
+    private List<Contest> getSortedList(List<Contest> contestList) {
+        if (contestList != null) {
+
+            Collections.sort(contestList, new Comparator<Contest>() {
+                @Override
+                public int compare(Contest contest1, Contest contest2) {
+                    if (contest2.isContestJoined()) {
+                        return 0;   // No sort
+                    } else {
+                        if (contest2.getContestItemType() == ContestAdapterItemType.REFER_FRIEND_AD) {
+                            return 1;
+                        } else {
+                            if (contest2.isJoinable()) {   // Join
+                                if (contest1.getPriority() < contest2.getPriority()) {
+                                    return 1;
+                                } else if (contest1.getPriority() > contest2.getPriority()) {
+                                    return -1;
+                                }
+                                return 0;
+                            } else {                        // closed
+                                return 1;
+                            }
+                        }
+                    }
+                }
+            });
         }
 
         return contestList;
