@@ -145,17 +145,20 @@ public class Nostragamus extends Application {
     }
 
     private void doInstallOrUpdateChanges() {
-        NostragamusDataHandler dataHandler = NostragamusDataHandler.getInstance();
+        MoEHelper moEHelper = MoEHelper.getInstance(getApplicationContext());
+        moEHelper.setExistingUser(!NostragamusDataHandler.getInstance().isFirstTimeUser());
+
+        /*NostragamusDataHandler dataHandler = NostragamusDataHandler.getInstance();
 
         int previousAppVersionCode = dataHandler.getPreviousAppVersionCode();
         int currentAppVersionCode = getAppVersionCode();
         if (previousAppVersionCode != currentAppVersionCode) {
             // previousAppVersionCode = 0 is new user
             MoEHelper moEHelper = MoEHelper.getInstance(getApplicationContext());
-            moEHelper.setExistingUser(previousAppVersionCode != 0);
+            moEHelper.setExistingUser(dataHandler.isFirstTimeUser());
             dataHandler.setPreviousAppVersionCode(currentAppVersionCode);
 
-        }
+        }*/
     }
 
     public void setUserEmail(String email) {

@@ -365,15 +365,17 @@ public class AppUpdateFragment extends BaseFragment implements View.OnClickListe
             case R.id.update_app_later:
                 NostragamusAnalytics.getInstance().trackUpdateLater(Constants.AnalyticsActions.CLICKED);
                 if (getArguments().getString(Constants.BundleKeys.SCREEN) != null) {
-                    navigateToHome();
+                    mDismissListener.onDismiss(AppUpdateActivity.NAVIGATE_TO_HOME, null);
                 } else {
-                    mDismissListener.onDismiss(DISMISS_SCREEN, null);
+                    mDismissListener.onDismiss(AppUpdateActivity.FINISH_APP_UPDATE_ACTIVITY, null);
                 }
                 break;
 
             case R.id.update_app_btn_skip:
                 callWhatsNewShownApi();
-                navigateToHome();
+                if (mDismissListener != null) {
+                    mDismissListener.onDismiss(AppUpdateActivity.NAVIGATE_TO_HOME, null);
+                }
                 break;
 
             case R.id.update_app_btn_next:
@@ -403,7 +405,7 @@ public class AppUpdateFragment extends BaseFragment implements View.OnClickListe
                 break;
 
             case R.id.update_app_iv_back:
-                mDismissListener.onDismiss(DISMISS_SCREEN, null);
+                mDismissListener.onDismiss(AppUpdateActivity.FINISH_APP_UPDATE_ACTIVITY, null);
                 break;
 
         }
@@ -440,12 +442,6 @@ public class AppUpdateFragment extends BaseFragment implements View.OnClickListe
         } catch (ActivityNotFoundException e) {
             ExceptionTracker.track(e);
         }
-    }
-
-    private void navigateToHome() {
-        Intent intent = new Intent(getContext(), NostraHomeActivity.class);
-        intent.putExtra(Constants.BundleKeys.SCREEN, Constants.BundleKeys.LOGIN_SCREEN);
-        startActivity(intent);
     }
 
 }
