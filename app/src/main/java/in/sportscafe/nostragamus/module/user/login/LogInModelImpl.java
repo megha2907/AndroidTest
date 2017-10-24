@@ -219,6 +219,7 @@ public class LogInModelImpl implements LogInModel {
 
         UserInfo userInfo = userLoginInResponse.getUserInfo();
         nostragamusDataHandler.setUserId(userInfo.getId().toString());
+        Nostragamus.getInstance().getServerDataManager().setUserInfo(userInfo);
 
         UserInfoModelImpl.newInstance(null).handleUserInfoResponse(userInfo);
 

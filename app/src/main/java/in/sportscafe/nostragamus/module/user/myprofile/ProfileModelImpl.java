@@ -6,6 +6,7 @@ import android.support.v4.app.FragmentManager;
 import java.util.List;
 
 import in.sportscafe.nostragamus.Constants.BundleKeys;
+import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.module.common.ViewPagerAdapter;
 import in.sportscafe.nostragamus.module.play.myresultstimeline.TimelineFragment;
@@ -51,14 +52,13 @@ public class ProfileModelImpl implements ProfileModel, UserInfoModelImpl.OnGetUs
 
     @Override
     public UserInfo getUserInfo() {
-        return NostragamusDataHandler.getInstance().getUserInfo();
+        return Nostragamus.getInstance().getServerDataManager().getUserInfo();
     }
 
     @Override
     public ViewPagerAdapter getAdapter(FragmentManager fm) {
         ViewPagerAdapter pagerAdapter = new ViewPagerAdapter(fm);
 
-        UserInfo userInfo = getUserInfo();
         pagerAdapter.addFragment(TimelineFragment.newInstance(mRoomId), "Matches");
 
         // Wallet should NOT be displayed for free app version
@@ -73,8 +73,11 @@ public class ProfileModelImpl implements ProfileModel, UserInfoModelImpl.OnGetUs
         /*HashMap<String, PowerUp> powerUpMaps = getPowerUpMap(userInfo.getPowerUps());
         pagerAdapter.addFragment(BankFragment.newInstance(powerUpMaps), "Powerup Bank");*/
 
-        List<Badge> badgeList = userInfo.getBadges();
-        pagerAdapter.addFragment(BadgeFragment.newInstance(badgeList), "Achievements");
+        UserInfo userInfo = getUserInfo();
+        if (userInfo!=null) {
+            List<Badge> badgeList = userInfo.getBadges();
+            pagerAdapter.addFragment(BadgeFragment.newInstance(badgeList), "Achievements");
+        }
 
 //        pagerAdapter.addFragment(ProfileSportSelectionFragment.newInstance(this), "Sports");
 

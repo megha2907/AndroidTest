@@ -10,9 +10,11 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import in.sportscafe.nostragamus.Constants;
+import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.NostragamusFragment;
+import in.sportscafe.nostragamus.module.user.login.dto.UserInfo;
 
 /**
  * Created by deepanshi on 2/13/17.
@@ -82,22 +84,25 @@ public class CompareProfileFragment extends NostragamusFragment {
     private void setPlayerData(Integer playerPoints, Integer playerPredictions, Integer playerAccuracy, Integer playerBadgeCount,
                                Integer playerSportsFollowed, String playerLevel) {
 
-        String userLevel = NostragamusDataHandler.getInstance().getUserInfo().getInfoDetails().getLevel();
+        UserInfo userInfo = Nostragamus.getInstance().getServerDataManager().getUserInfo();
 
-        if (!TextUtils.isEmpty(userLevel) && !TextUtils.isEmpty(playerLevel)) {
-            setLevel(userLevel, playerLevel);
-        } else if (TextUtils.isEmpty(userLevel) && !TextUtils.isEmpty(playerLevel)) {
-            setLevel("1", playerLevel);
-        } else if (TextUtils.isEmpty(playerLevel) && !TextUtils.isEmpty(userLevel)) {
-            setLevel(userLevel, "1");
-        } else {
-            setLevel("1", "1");
+        if (userInfo != null) {
+            String userLevel = userInfo.getInfoDetails().getLevel();
+            if (!TextUtils.isEmpty(userLevel) && !TextUtils.isEmpty(playerLevel)) {
+                setLevel(userLevel, playerLevel);
+            } else if (TextUtils.isEmpty(userLevel) && !TextUtils.isEmpty(playerLevel)) {
+                setLevel("1", playerLevel);
+            } else if (TextUtils.isEmpty(playerLevel) && !TextUtils.isEmpty(userLevel)) {
+                setLevel(userLevel, "1");
+            } else {
+                setLevel("1", "1");
+            }
+
+            setPoints(userInfo.getTotalPoints(), playerPoints);
+            setAccuracy(userInfo.getAccuracy(), playerAccuracy);
+            setPredictionCount(userInfo.getPredictionCount(), playerPredictions);
+            setBadgesCount(userInfo.getBadges().size(), playerBadgeCount);
         }
-
-        setPoints(NostragamusDataHandler.getInstance().getUserInfo().getTotalPoints(), playerPoints);
-        setAccuracy(NostragamusDataHandler.getInstance().getUserInfo().getAccuracy(), playerAccuracy);
-        setPredictionCount(NostragamusDataHandler.getInstance().getUserInfo().getPredictionCount(), playerPredictions);
-        setBadgesCount(NostragamusDataHandler.getInstance().getUserInfo().getBadges().size(), playerBadgeCount);
 //        setSportsFollowedCount(NostragamusDataHandler.newInstance().getFavoriteSportsIdList().size(), playerSportsFollowed);
 
     }

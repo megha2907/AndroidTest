@@ -5,7 +5,9 @@ import android.text.TextUtils;
 import android.view.View;
 
 import in.sportscafe.nostragamus.Constants;
+import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
+import in.sportscafe.nostragamus.module.user.login.dto.UserInfo;
 import in.sportscafe.nostragamus.module.user.playerprofile.dto.PlayerInfo;
 
 /**
@@ -50,10 +52,12 @@ public class PlayerComparisonPresenterImpl implements PlayerComparisonPresenter,
     }
 
     @Override
-    public void getPlayerComparisonData(Bundle bundle,String playerName,String playerPhoto) {
-
-        mProfileCompView.setName(NostragamusDataHandler.getInstance().getUserInfo().getUserNickName(),playerName);
-        mProfileCompView.setProfileImage(NostragamusDataHandler.getInstance().getUserInfo().getPhoto(),playerPhoto);
+    public void getPlayerComparisonData(Bundle bundle, String playerName, String playerPhoto) {
+        UserInfo userInfo = Nostragamus.getInstance().getServerDataManager().getUserInfo();
+        if (userInfo != null) {
+            mProfileCompView.setName(userInfo.getUserNickName(), playerName);
+            mProfileCompView.setProfileImage(userInfo.getPhoto(), playerPhoto);
+        }
         mProfileCompView.initMyPosition(bundle);
     }
 

@@ -224,10 +224,11 @@ public class ReferralCreditFragment extends BaseFragment implements View.OnClick
             mReferralHistoryAdapter.addReferralHistoryIntoList(referralHistoryList);
         }
 
-        RelativeLayout recyclerViewLayout = (RelativeLayout) getView().findViewById(R.id.referral_credits_friends_act_rl);
-
         /* Empty list view */
         if (getActivity() != null && getView() != null && mReferralHistoryAdapter != null) {
+
+            RelativeLayout recyclerViewLayout = (RelativeLayout) getView().findViewById(R.id.referral_credits_friends_act_rl);
+
             if (mReferralHistoryAdapter.getReferralHistoryList() == null || mReferralHistoryAdapter.getReferralHistoryList().isEmpty()) {
                 mReferralHistoryRecyclerView.setVisibility(View.GONE);
                 recyclerViewLayout.setVisibility(View.GONE);

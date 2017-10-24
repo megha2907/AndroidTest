@@ -260,7 +260,7 @@ public class MyResultsModelImpl implements MyResultsModel, MyResultsAdapter.OnMy
                             mResultsModelListener.onGetShareText(
                                     String.format(
                                             mResultsModelListener.getContext().getString(R.string.fb_share_result_text),
-                                            NostragamusDataHandler.getInstance().getUserInfo().getUserName(),
+                                            Nostragamus.getInstance().getServerDataManager().getUserInfo().getUserName(),
                                             getMatchResult(),
                                             getMatchName(),
                                             getMatchPoints(),

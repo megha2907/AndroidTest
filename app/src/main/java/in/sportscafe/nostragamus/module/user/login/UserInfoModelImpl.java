@@ -67,7 +67,7 @@ public class UserInfoModelImpl {
             performLogoutIfRequired(userInfo);
 
             NostragamusDataHandler nostragamusDataHandler = NostragamusDataHandler.getInstance();
-            nostragamusDataHandler.setUserInfo(userInfo);
+            Nostragamus.getInstance().getServerDataManager().setUserInfo(userInfo);
 
             HashMap<String, Integer> powerUpMap = userInfo.getPowerUps();
 

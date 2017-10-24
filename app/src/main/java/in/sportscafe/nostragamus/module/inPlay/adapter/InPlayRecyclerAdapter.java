@@ -20,6 +20,7 @@ import org.parceler.Parcels;
 
 import java.util.List;
 
+import in.sportscafe.nostragamus.AppSnippet;
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.R;
@@ -296,10 +297,14 @@ public class InPlayRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             viewHolder.entryFeeTextView.setText(Constants.RUPEE_SYMBOL + String.valueOf(contest.getEntryFee()));
             viewHolder.prizesTextView.setText(Constants.RUPEE_SYMBOL + String.valueOf(contest.getWinningAmount()));
 
-            if (contest.getRank() > 0 && contest.getTotalParticipants() > 0) {
-                viewHolder.currentRankTextView.setText(contest.getRank() + "/" + contest.getTotalParticipants());
-            } else {
+            if (contest.getRank() > 0) {
+                viewHolder.currentRankTextView.setText(AppSnippet.ordinal(contest.getRank()));
+            }else {
                 viewHolder.currentRankTextView.setText("NA");
+            }
+
+            if (contest.getTotalParticipants() > 0) {
+                viewHolder.totalPlayersTextView.setText(" / " + contest.getTotalParticipants());
             }
 
             if (contest.getContestMode().equalsIgnoreCase(Constants.ContestType.GUARANTEED)) {
@@ -453,6 +458,7 @@ public class InPlayRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         ImageView contestModeImageView;
         TextView entryFeeTextView;
         TextView currentRankTextView;
+        TextView totalPlayersTextView;
         TextView prizesTextView;
 
         public InPlayJoinedItemViewHolder(View itemView) {
@@ -468,6 +474,7 @@ public class InPlayRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             entryFeeTextView = (TextView) itemView.findViewById(R.id.inplay_contest_card_header_entry_fee_textView);
             currentRankTextView = (TextView) itemView.findViewById(R.id.inplay_contest_card_header_current_rank_textView);
             prizesTextView = (TextView) itemView.findViewById(R.id.inplay_contest_card_header_prizes_textView);
+            totalPlayersTextView = (TextView) itemView.findViewById(R.id.inplay_contest_card_header_total_players);
             root.setOnClickListener(this);
             currentRankLayout.setOnClickListener(this);
             prizesLayout.setOnClickListener(this);

@@ -181,7 +181,11 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
                 } else {
                     holder.mTvMatchResult.setText(match.getStage() + " - " + match.getResult());
                 }
-                holder.mTvAvgMatchPoints.setText(String.valueOf(match.getAvgMatchPoints().intValue()));
+
+                if (match.getAvgMatchPoints()!=null) {
+                    holder.mTvAvgMatchPoints.setText(String.valueOf(match.getAvgMatchPoints().intValue()));
+                }
+
                 holder.mTvHighestMatchPoints.setText(String.valueOf(match.getHighestMatchPoints()));
                 holder.mRlHighestMatchPoints.setTag(match);
 
