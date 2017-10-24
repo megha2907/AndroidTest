@@ -951,7 +951,7 @@ public class PredictionFragment extends NostraBaseFragment implements View.OnCli
                 onMatchCompleted();
 
             } else {
-                mCurrentQuestionPos++;
+//                mCurrentQuestionPos++;
                 mTotalQuestions--;
                 showQuestionsCounter();
                 showNeitherIfRequired();
