@@ -117,7 +117,7 @@
                         android:layout_width="@dimen/dim_20"
                         android:layout_height="@dimen/dim_20"
                         android:layout_marginTop="@dimen/dim_10"
-                        android:src="@drawable/pool_icon" />
+                        android:src="@drawable/no_guarantee_icon" />
 
 
                     <LinearLayout
@@ -134,7 +134,7 @@
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
                             android:layout_gravity="center_vertical"
-                            android:text="Pool Contests"
+                            android:text="Non-Guaranteed Contests"
                             android:textColor="@color/white"
                             android:textSize="@dimen/sp_14"
                             app:typeface="lato_bold" />
@@ -170,7 +170,7 @@
                         android:layout_width="@dimen/dim_20"
                         android:layout_height="@dimen/dim_20"
                         android:layout_marginTop="@dimen/dim_10"
-                        android:src="@drawable/no_guarantee_icon" />
+                        android:src="@drawable/pool_icon" />
 
 
                     <LinearLayout
@@ -187,7 +187,7 @@
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
                             android:layout_gravity="center_vertical"
-                            android:text="Non-Guaranteed Contests"
+                            android:text="Pool Contests"
                             android:textColor="@color/white"
                             android:textSize="@dimen/sp_14"
                             app:typeface="lato_bold" />

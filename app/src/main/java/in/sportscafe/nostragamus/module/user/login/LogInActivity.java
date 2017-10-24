@@ -151,15 +151,16 @@ public class LogInActivity extends NostragamusActivity implements LogInView, Vie
             GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
             handleSignInResult(result);
 
-            if (null != result.getSignInAccount()) {
+            if (null != result) {
                 GoogleSignInAccount acct = result.getSignInAccount();
-                personName = acct.getDisplayName();
-                personEmail = acct.getEmail();
-                personId = acct.getId();
-                persongender = "";
-                profileUrl = "";
-                personPhoto = String.valueOf(acct.getPhotoUrl());
-
+                if(acct != null) {
+                    personName = acct.getDisplayName();
+                    personEmail = acct.getEmail();
+                    personId = acct.getId();
+                    persongender = "";
+                    profileUrl = "";
+                    personPhoto = String.valueOf(acct.getPhotoUrl());
+                }
             }
 
             int statusCode = result.getStatus().getStatusCode();
@@ -355,7 +356,7 @@ public class LogInActivity extends NostragamusActivity implements LogInView, Vie
 
     @Override
     public String getScreenName() {
-        return Constants.ScreenNames.LOGIN;
+        return null;
     }
 
     public boolean hasNavBar (Resources resources)

@@ -120,14 +120,14 @@ public class LeaderBoardFragment extends BaseFragment implements LeaderBoardView
             userPoints.setVisibility(View.VISIBLE);
             gradientView.setVisibility(View.VISIBLE);
 
-            ImageView mIvStatus = (ImageView) findViewById(R.id.leaderboard_iv_status);
-            TextView mTvRank = (TextView) findViewById(R.id.leaderboard_tv_rank);
-            HmImageView mIvUser = (HmImageView) findViewById(R.id.leaderboard_iv_user_img);
-            TextView mTvName = (TextView) findViewById(R.id.leaderboard_tv_user_name);
-            TextView mTvPoints = (TextView) findViewById(R.id.leaderboard_tv_points);
-            TextView mTvPlayed = (TextView) findViewById(R.id.leaderboard_tv_played);
-            TextView mTvAccuracy = (TextView) findViewById(R.id.leaderboard_tv_accuracy);
-            TextView mTvMatchPoints = (TextView) findViewById(R.id.leaderboard_tv_match_points);
+            ImageView mIvStatus = (ImageView) findViewById(R.id.leaderboard_row_iv_status);
+            TextView mTvRank = (TextView) findViewById(R.id.leaderboard_row_tv_rank);
+            HmImageView mIvUser = (HmImageView) findViewById(R.id.leaderboard_row_iv_user_img);
+            TextView mTvName = (TextView) findViewById(R.id.leaderboard_row_tv_user_name);
+            TextView mTvPoints = (TextView) findViewById(R.id.leaderboard_row_tv_points);
+            TextView mTvPlayed = (TextView) findViewById(R.id.leaderboard_row_tv_played);
+            TextView mTvAccuracy = (TextView) findViewById(R.id.leaderboard_row_tv_accuracy);
+            TextView mTvMatchPoints = (TextView) findViewById(R.id.leaderboard_row_tv_match_points);
 
             if (null == userLeaderBoard.getRank()) {
                 mTvRank.setText("-");

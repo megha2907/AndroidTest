@@ -105,49 +105,43 @@ public class DGPlayModelImpl implements DGPlayModel, SwipeFlingAdapterView.OnSwi
 
     @Override
     public void apply2xPowerup() {
-//        if (isNotPowerupApplied()) {
-            if (m2xPowerups > 0) {
-                boolean isApplied = mPredictionAdapter.getTopQuestion().apply2xPowerUp();
-                if (isApplied) {
-                    mPredictionAdapter.add2xPowerup();
-                    mModelListener.notifyTopQuestion();
+        if (m2xPowerups > 0 && mPredictionAdapter != null) {
+            boolean isApplied = mPredictionAdapter.getTopQuestion().apply2xPowerUp();
+            if (isApplied) {
+                mPredictionAdapter.add2xPowerup();
+                mModelListener.notifyTopQuestion();
 
-                    m2xPowerups--;
-                    mModelListener.on2xApplied(m2xPowerups, false);
-                }
-            } else {
-                mModelListener.onNoPowerUps();
+                m2xPowerups--;
+                mModelListener.on2xApplied(m2xPowerups, false);
             }
-//        }
+        } else {
+            mModelListener.onNoPowerUps();
+        }
     }
 
     @Override
     public void applyNonegsPowerup() {
-//        if (isNotPowerupApplied()) {
-            if (mNonegsPowerups > 0) {
-                boolean isApplied = mPredictionAdapter.getTopQuestion().applyNonegsPowerUp();
-                if (isApplied) {
-                    mPredictionAdapter.addNoNegativePowerup();
-                    mModelListener.notifyTopQuestion();
+        if (mNonegsPowerups > 0 && mPredictionAdapter != null) {
+            boolean isApplied = mPredictionAdapter.getTopQuestion().applyNonegsPowerUp();
+            if (isApplied) {
+                mPredictionAdapter.addNoNegativePowerup();
+                mModelListener.notifyTopQuestion();
 
-                    mNonegsPowerups--;
-                    mModelListener.onNonegsApplied(mNonegsPowerups, false);
-                }
-            } else {
-                mModelListener.onNoPowerUps();
+                mNonegsPowerups--;
+                mModelListener.onNonegsApplied(mNonegsPowerups, false);
             }
-//        }
+        } else {
+            mModelListener.onNoPowerUps();
+        }
     }
 
     @Override
     public void applyPollPowerup() {
-//        if (isNotPowerupApplied()) {
-            if (mPollPowerups > 0) {
-                handleAudiencePollResponse(getDummyGameAudiencePoll().getAudiencePoll());
-            } else {
-                mModelListener.onNoPowerUps();
-            }
-//        }
+        if (mPollPowerups > 0) {
+            handleAudiencePollResponse(getDummyGameAudiencePoll().getAudiencePoll());
+        } else {
+            mModelListener.onNoPowerUps();
+        }
     }
 
     @Override

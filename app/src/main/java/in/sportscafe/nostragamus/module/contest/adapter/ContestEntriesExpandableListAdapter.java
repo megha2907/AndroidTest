@@ -139,7 +139,7 @@ public class ContestEntriesExpandableListAdapter extends BaseExpandableListAdapt
         if (mRoomsList != null && mRoomsList.size() > groupPosition) {
             ContestRoomDto roomDto = mRoomsList.get(groupPosition);
             holder.groupTitleTextView.setText(roomDto.getRoomTitle());
-            holder.groupSizeTextView.setText(String.valueOf(roomDto.getRoomSize()));
+            holder.groupSizeTextView.setText(String.valueOf(roomDto.getEntries().size()));
 
             if (roomDto.getEntries().size()==0){
                 holder.groupIndicatorImageView.setVisibility(View.GONE);

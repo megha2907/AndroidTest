@@ -114,26 +114,26 @@
             android:paddingRight="@dimen/dp_6">
 
             <View
-                android:id="@+id/leaderboard_view_user"
+                android:id="@+id/leaderboard_row_view_user"
                 android:layout_width="@dimen/dp_3"
                 android:layout_height="fill_parent"
                 android:background="@color/btn_powerup_screen_color"
                 android:visibility="gone" />
 
             <ImageView
-                android:id="@+id/leaderboard_iv_rank_indicator"
-                android:layout_width="@dimen/dim_12"
-                android:layout_height="wrap_content"
-                android:src="@drawable/rank_indicator"
-                android:visibility="invisible" />
-
-            <com.jeeva.android.widgets.customfont.CustomTextView
-                android:id="@+id/leaderboard_tv_rank"
+                android:id="@+id/leaderboard_row_iv_rank_indicator"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/dim_10"
-                android:gravity="center"
+                android:src="@drawable/rank_indicator"
+                android:visibility="invisible"/>
+
+            <com.jeeva.android.widgets.customfont.CustomTextView
+                android:id="@+id/leaderboard_row_tv_rank"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:minWidth="@dimen/dim_22"
+                android:gravity="center"
+                android:layout_marginLeft="@dimen/dim_10"
                 android:text="-"
                 android:textColor="@color/white"
                 android:textSize="@dimen/sp_14"
@@ -141,19 +141,19 @@
 
 
             <ImageView
-                android:id="@+id/leaderboard_iv_status"
+                android:id="@+id/leaderboard_row_iv_status"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:minWidth="@dimen/dim_20"
-                android:src="@drawable/status_arrow_down"
-                android:visibility="gone" />
+                android:visibility="gone"
+                android:src="@drawable/status_arrow_down" />
 
 
             <com.jeeva.android.widgets.HmImageView
-                android:id="@+id/leaderboard_iv_user_img"
+                android:id="@+id/leaderboard_row_iv_user_img"
                 android:layout_width="@dimen/dim_36"
-                android:layout_height="@dimen/dim_36"
                 android:layout_marginLeft="@dimen/dim_18"
+                android:layout_height="@dimen/dim_36"
                 android:scaleType="fitXY"
                 android:src="@drawable/left_placeholder_icon" />
 
@@ -164,7 +164,7 @@
                 android:layout_weight="2.5">
 
                 <com.jeeva.android.widgets.customfont.CustomTextView
-                    android:id="@+id/leaderboard_tv_user_name"
+                    android:id="@+id/leaderboard_row_tv_user_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:ellipsize="end"
@@ -175,10 +175,10 @@
                     app:typeface="lato_regular" />
 
                 <com.jeeva.android.widgets.customfont.CustomTextView
-                    android:id="@+id/leaderboard_tv_played"
+                    android:id="@+id/leaderboard_row_tv_played"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/leaderboard_tv_user_name"
+                    android:layout_below="@+id/leaderboard_row_tv_user_name"
                     android:textColor="@color/white_999999"
                     android:textSize="@dimen/sp_10"
                     app:typeface="lato_regular" />
@@ -186,7 +186,7 @@
             </RelativeLayout>
 
             <com.jeeva.android.widgets.customfont.CustomTextView
-                android:id="@+id/leaderboard_tv_match_points"
+                android:id="@+id/leaderboard_row_tv_match_points"
                 android:layout_width="@dimen/dp_0"
                 android:layout_height="wrap_content"
                 android:layout_weight="1.5"
@@ -200,21 +200,21 @@
 
 
             <com.jeeva.android.widgets.customfont.CustomTextView
-                android:id="@+id/leaderboard_tv_accuracy"
+                android:id="@+id/leaderboard_row_tv_accuracy"
                 android:layout_width="@dimen/dp_0"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/dim_5"
                 android:layout_weight="1.5"
                 android:drawableLeft="@drawable/leaderboards_accuracy_icon"
                 android:drawablePadding="@dimen/dim_5"
                 android:text="0%"
                 android:textColor="@color/white"
                 android:textSize="@dimen/sp_12"
+                android:layout_marginLeft="@dimen/dim_5"
                 app:typeface="lato_regular" />
 
 
             <com.jeeva.android.widgets.customfont.CustomTextView
-                android:id="@+id/leaderboard_tv_points"
+                android:id="@+id/leaderboard_row_tv_points"
                 android:layout_width="@dimen/dp_0"
                 android:layout_height="wrap_content"
                 android:layout_weight="1.5"

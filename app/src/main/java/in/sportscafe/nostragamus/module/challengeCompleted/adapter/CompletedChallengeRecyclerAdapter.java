@@ -20,6 +20,7 @@ import org.parceler.Parcels;
 
 import java.util.List;
 
+import in.sportscafe.nostragamus.AppSnippet;
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.R;
@@ -267,10 +268,14 @@ public class CompletedChallengeRecyclerAdapter extends RecyclerView.Adapter<Recy
             viewHolder.entryFeeTextView.setText(Constants.RUPEE_SYMBOL + String.valueOf(contest.getEntryFee()));
             viewHolder.prizesTextView.setText(Constants.RUPEE_SYMBOL + String.valueOf(contest.getWinningAmount()));
 
-            if (contest.getRank() > 0 && contest.getTotalParticipants() > 0) {
-                viewHolder.currentRankTextView.setText(contest.getRank() + "/" + contest.getTotalParticipants());
+            if (contest.getRank() > 0) {
+                viewHolder.currentRankTextView.setText(AppSnippet.ordinal(contest.getRank()));
             }else {
                 viewHolder.currentRankTextView.setText("NA");
+            }
+
+            if (contest.getTotalParticipants() > 0) {
+                viewHolder.totalPlayersTextView.setText(" / " + contest.getTotalParticipants());
             }
 
             if (contest.getContestMode().equalsIgnoreCase(Constants.ContestType.GUARANTEED)) {
@@ -377,6 +382,7 @@ public class CompletedChallengeRecyclerAdapter extends RecyclerView.Adapter<Recy
         TextView entryFeeTextView;
         TextView currentRankTextView;
         TextView prizesTextView;
+        TextView totalPlayersTextView;
 
 
         public CompletedContestItemViewHolder(View itemView) {
@@ -390,6 +396,7 @@ public class CompletedChallengeRecyclerAdapter extends RecyclerView.Adapter<Recy
             entryFeeTextView = (TextView) itemView.findViewById(R.id.completed_contest_card_header_entry_fee_textView);
             currentRankTextView = (TextView) itemView.findViewById(R.id.completed_contest_card_header_current_rank_textView);
             prizesTextView = (TextView) itemView.findViewById(R.id.completed_contest_card_header_prizes_textView);
+            totalPlayersTextView = (TextView) itemView.findViewById(R.id.completed_contest_card_header_total_players);
             itemView.findViewById(R.id.completed_challenge_rank_layout).setOnClickListener(this);
             itemView.findViewById(R.id.completed_challenge_winnings_layout).setOnClickListener(this);
             contestModeImageView.setOnClickListener(this);

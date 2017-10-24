@@ -13,8 +13,10 @@ import in.sportscafe.nostragamus.Constants.Alerts;
 import in.sportscafe.nostragamus.Constants.AnalyticsActions;
 import in.sportscafe.nostragamus.Constants.AnalyticsLabels;
 import in.sportscafe.nostragamus.Constants.BundleKeys;
+import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
+import in.sportscafe.nostragamus.module.user.login.dto.UserInfo;
 import in.sportscafe.nostragamus.module.user.myprofile.dto.GroupInfo;
 import io.branch.indexing.BranchUniversalObject;
 import io.branch.referral.Branch;
@@ -57,14 +59,16 @@ public class GroupInfoPresenterImpl implements GroupInfoPresenter, GroupInfoMode
     public void onClickShareCode() {
         final GroupInfo groupInfo = mGroupInfoModel.getGroupInfo();
 
+        UserInfo userInfo = Nostragamus.getInstance().getServerDataManager().getUserInfo();
+
         BranchUniversalObject buo = new BranchUniversalObject()
                 .setContentIndexingMode(BranchUniversalObject.CONTENT_INDEX_MODE.PUBLIC)
                 .addContentMetadata(BundleKeys.GROUP_CODE, groupInfo.getGroupCode())
                 .addContentMetadata(BundleKeys.GROUP_NAME, groupInfo.getName())
-                .addContentMetadata(BundleKeys.USER_REFERRAL_CODE, NostragamusDataHandler.getInstance().getUserInfo().getInfoDetails().getReferUserCode())
+                .addContentMetadata(BundleKeys.USER_REFERRAL_CODE, userInfo.getInfoDetails().getReferUserCode())
                 .addContentMetadata(BundleKeys.WALLET_INITIAL_AMOUNT, String.valueOf(groupInfo.getWalletInitialAmount()))
-                .addContentMetadata(Constants.BundleKeys.USER_REFERRAL_PHOTO, NostragamusDataHandler.getInstance().getUserInfo().getPhoto())
-                .addContentMetadata(Constants.BundleKeys.USER_REFERRAL_NAME, NostragamusDataHandler.getInstance().getUserInfo().getUserName());
+                .addContentMetadata(Constants.BundleKeys.USER_REFERRAL_PHOTO,userInfo.getPhoto())
+                .addContentMetadata(Constants.BundleKeys.USER_REFERRAL_NAME, userInfo.getUserName());
 
         LinkProperties linkProperties = new LinkProperties();
 
