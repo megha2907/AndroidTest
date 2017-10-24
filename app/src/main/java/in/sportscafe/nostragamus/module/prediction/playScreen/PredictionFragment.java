@@ -54,6 +54,7 @@ import in.sportscafe.nostragamus.module.prediction.playScreen.dto.PowerUp;
 import in.sportscafe.nostragamus.module.prediction.playScreen.dto.PowerUpEnum;
 import in.sportscafe.nostragamus.module.prediction.playScreen.dto.PredictionAllQuestionResponse;
 import in.sportscafe.nostragamus.module.prediction.playScreen.dto.PredictionQuestion;
+import in.sportscafe.nostragamus.module.prediction.playScreen.helper.PlayerPollHelper;
 import in.sportscafe.nostragamus.module.prediction.playScreen.helper.PredictionUiHelper;
 import in.sportscafe.nostragamus.module.prediction.powerupBank.PowerupBankTransferToPlayActivity;
 import in.sportscafe.nostragamus.module.resultspeek.FeedWebView;
@@ -204,6 +205,7 @@ public class PredictionFragment extends NostraBaseFragment implements View.OnCli
 
     private void loadQuestions() {
         if (mPlayScreenData != null && getActivity() != null) {
+            showProgress();
             PredictionQuestionsDataProvider dataProvider = new PredictionQuestionsDataProvider();
             dataProvider.getAllQuestions(mPlayScreenData.getMatchId(), mPlayScreenData.getRoomId(), getAllQuestionsApiListener());
         } else {
@@ -216,11 +218,13 @@ public class PredictionFragment extends NostraBaseFragment implements View.OnCli
         return new PredictionQuestionsDataProvider.QuestionDataProviderListener() {
             @Override
             public void onData(int status, @Nullable PredictionAllQuestionResponse questionsResponse) {
+                hideProgress();
                 onAllQuestionApiSuccessResponse(questionsResponse);
             }
 
             @Override
             public void onError(int status) {
+                hideProgress();
                 handleError(null, status);
             }
         };
@@ -612,8 +616,7 @@ public class PredictionFragment extends NostraBaseFragment implements View.OnCli
         /* NOTE: same logic for PredictionCardAdapter.preFillIfPlayerPollAlreadyApplied() tobe followed */
 
         if (getView() != null && getActivity() != null && playersPolls != null &&
-                playersPolls.getPlayersPollList() != null &&
-                playersPolls.getPlayersPollList().size() == 2) {    // for both the options
+                playersPolls.getPlayersPollList() != null && !playersPolls.getPlayersPollList().isEmpty()) {
 
             List<PlayersPoll> playersPollList = playersPolls.getPlayersPollList();
 
@@ -625,18 +628,16 @@ public class PredictionFragment extends NostraBaseFragment implements View.OnCli
                 }
             }
 
-            String poll1Str = playersPollList.get(0).getAnswerPercentage();
-            String poll2Str = playersPollList.get(1).getAnswerPercentage();
-            int pollPercentForOption1 = Integer.parseInt(poll1Str.replaceAll("%",""));
-            int pollPercentForOption2 = Integer.parseInt(poll2Str.replaceAll("%", ""));
+            String leftPollAnswer = PlayerPollHelper.getLeftAnswerString(playersPollList);
+            String rightPollAnswer = PlayerPollHelper.getRightAnswerString(playersPollList);
 
             if (mCardStack != null && mCardStack.getTopView() != null && mQuestionsCardAdapter != null) {
                 View view = mCardStack.getTopView();
                 TextView playerPollOption1TextView = (TextView) view.findViewById(R.id.prediction_card_player_poll_1_textView);
                 TextView playerPollOption2TextView = (TextView) view.findViewById(R.id.prediction_card_player_poll_2_textView);
 
-                playerPollOption1TextView.setText(poll1Str);
-                playerPollOption2TextView.setText(poll2Str);
+                playerPollOption1TextView.setText(leftPollAnswer);
+                playerPollOption2TextView.setText(rightPollAnswer);
 
                 playerPollOption1TextView.setVisibility(View.VISIBLE);
                 playerPollOption2TextView.setVisibility(View.VISIBLE);
@@ -649,13 +650,7 @@ public class PredictionFragment extends NostraBaseFragment implements View.OnCli
                 if (mQuestionsCardAdapter != null && pos < mQuestionsCardAdapter.getCount()) {
                     PredictionQuestion question = mQuestionsCardAdapter.getItem(pos);
                     if (question != null) {
-                        if (pollPercentForOption1 > pollPercentForOption2) {
-                            question.setMinorityAnswerId(Constants.AnswerIds.RIGHT);
-                        } else if (pollPercentForOption1 < pollPercentForOption2) {
-                            question.setMinorityAnswerId(Constants.AnswerIds.LEFT);
-                        } else {
-                            question.setMinorityAnswerId(-1);
-                        }
+                        PlayerPollHelper.setMinorityAnswerId(question, leftPollAnswer, rightPollAnswer);
                     }
                 }
             }

@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
@@ -122,16 +123,24 @@ public class InPlayHeadLessMatchesFragment extends BaseFragment implements View.
         if (mHeadLessMatchScreenData != null && !TextUtils.isEmpty(mHeadLessMatchScreenData.getStartTime())) {
             boolean isMatchStarted = DateTimeHelper.isMatchStarted(mHeadLessMatchScreenData.getStartTime());
             if (isMatchStarted) {
-                String msg = String.format(Constants.Alerts.CHALLENGE_STARTED_ALERT_FOR_TIMER, mHeadLessMatchScreenData.getChallengeName());
 
-                TimerFinishDialogHelper.showChallengeStartedTimerOutDialog(getChildFragmentManager(), msg, new View.OnClickListener() {
+                new Handler().postDelayed(new Runnable() {
                     @Override
-                    public void onClick(View v) {
-                        if (mInPlayHeadLessMatchFragmentListener != null) {
-                            mInPlayHeadLessMatchFragmentListener.onBackClicked();
+                    public void run() {
+                        if (InPlayHeadLessMatchesFragment.this.isVisible()) {
+                            String msg = String.format(Constants.Alerts.CHALLENGE_STARTED_ALERT_FOR_TIMER, mHeadLessMatchScreenData.getChallengeName());
+
+                            TimerFinishDialogHelper.showChallengeStartedTimerOutDialog(getChildFragmentManager(), msg, new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    if (mInPlayHeadLessMatchFragmentListener != null) {
+                                        mInPlayHeadLessMatchFragmentListener.onBackClicked();
+                                    }
+                                }
+                            });
                         }
                     }
-                });
+                }, 500);
             }
         }
     }

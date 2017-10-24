@@ -56,6 +56,9 @@ public class AppSettingsModelImpl implements AppSettingsModel {
         if (null != response && response.isSuccessful()) {
             AppSettingsResponse appSettings = response.body();
             if (null != appSettings) {
+                /* Save settings info into local memory as well */
+                Nostragamus.getInstance().getServerDataManager().setAppSettingsResponse(appSettings);
+
                 handleVersion(appSettings.getSettingsDetails(), appSettings.getAppUpdateInfo());
             }
         }
@@ -76,15 +79,15 @@ public class AppSettingsModelImpl implements AppSettingsModel {
 
             /* New App Update Code */
 
-            int lastShownAppVersion = NostragamusDataHandler.getInstance().getLastShownAppVersionCode();
+            /*int lastShownAppVersion = NostragamusDataHandler.getInstance().getLastShownAppVersionCode();
             int reqAppVersion = appUpdateInfo.getReqVersion();
             dataHandler.setReqUpdateVersion(appUpdateInfo.getReqVersion());
 
-            /* Check if current Ver is not equal to Required App Version */
+            *//* Check if current Ver is not equal to Required App Version *//*
             if (lastShownAppVersion != reqAppVersion) {
                 Log.d("inside", "currentAppVersion!=reqAppVersion");
                 dataHandler.setAppUpdateType(appUpdateInfo.getUpdateType());
-            }
+            }*/
 
         }
     }

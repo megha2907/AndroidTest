@@ -31,14 +31,6 @@ public class NostragamusDataHandler extends AbstractDataHandler implements Const
         return "in.sportscafe.nostragamus";
     }
 
-    public int getPreviousAppVersionCode() {
-        return getSharedIntData(SharedKeys.PREVIOUS_APP_VERSION_CODE, 0);
-    }
-
-    public void setPreviousAppVersionCode(int versionCode) {
-        setSharedIntData(SharedKeys.PREVIOUS_APP_VERSION_CODE, versionCode);
-    }
-
     public boolean isLoggedInUser() {
         return getSharedBooleanData(SharedKeys.LOGGED_USER, false);
     }
@@ -236,143 +228,6 @@ public class NostragamusDataHandler extends AbstractDataHandler implements Const
         clearData(BundleKeys.USER_REFERRAL_ID);
     }*/
 
-    public int getReqUpdateVersion() {
-        return getSharedIntData(SharedKeys.REQUIRED_UPDATE_VERSION, -1);
-    }
-
-    public void setReqUpdateVersion(int reqUpdateVersion) {
-        setSharedIntData(SharedKeys.REQUIRED_UPDATE_VERSION, reqUpdateVersion);
-    }
-
-    public int getNormalUpdateVersion() {
-        return getSharedIntData(SharedKeys.NORMAL_UPDATE_VERSION, -1);
-    }
-
-    public void setNormalUpdateVersion(int version) {
-        setSharedIntData(SharedKeys.NORMAL_UPDATE_VERSION, version);
-    }
-
-    public int getNormalPaidUpdateVersion() {
-        return getSharedIntData(SharedKeys.NORMAL_PAID_UPDATE_VERSION, -1);
-    }
-
-    public void setNormalPaidUpdateVersion(int version) {
-        setSharedIntData(SharedKeys.NORMAL_PAID_UPDATE_VERSION, version);
-    }
-
-    public String getNormalUpdateMessage() {
-        return getSharedStringData(SharedKeys.NORMAL_UPDATE_MESSAGE);
-    }
-
-    public void setNormalUpdateMessage(String message) {
-        setSharedStringData(SharedKeys.NORMAL_UPDATE_MESSAGE, message);
-    }
-
-    public String getNormalPaidUpdateMessage() {
-        return getSharedStringData(SharedKeys.NORMAL_PAID_UPDATE_MESSAGE);
-    }
-
-    public void setNormalPaidUpdateMessage(String message) {
-        setSharedStringData(SharedKeys.NORMAL_PAID_UPDATE_MESSAGE, message);
-    }
-
-    public Integer getForceUpdateVersion() {
-        return getSharedIntData(SharedKeys.FORCE_UPDATE_VERSION, -1);
-    }
-
-    public void setForceUpdateVersion(int version) {
-        setSharedIntData(SharedKeys.FORCE_UPDATE_VERSION, version);
-    }
-
-    public Integer getForcePaidUpdateVersion() {
-        return getSharedIntData(SharedKeys.FORCE_PAID_UPDATE_VERSION, -1);
-    }
-
-    public void setForcePaidUpdateVersion(int version) {
-        setSharedIntData(SharedKeys.FORCE_PAID_UPDATE_VERSION, version);
-    }
-
-    public String getForceUpdateMessage() {
-        return getSharedStringData(SharedKeys.FORCE_UPDATE_MESSAGE);
-    }
-
-    public void setForceUpdateMessage(String message) {
-        setSharedStringData(SharedKeys.FORCE_UPDATE_MESSAGE, message);
-    }
-
-    public String getForcePaidUpdateMessage() {
-        return getSharedStringData(SharedKeys.FORCE_PAID_UPDATE_MESSAGE);
-    }
-
-    public void setForcePaidUpdateMessage(String message) {
-        setSharedStringData(SharedKeys.FORCE_PAID_UPDATE_MESSAGE, message);
-    }
-
-    public boolean isNormalPaidUpdateEnabled() {
-        if (getSharedBooleanData(SharedKeys.NORMAL_PAID_UPDATE_ENABLED, true)) {
-            long currentTimeMs = Calendar.getInstance().getTimeInMillis();
-            long updateShownTimeMs = getNormalPaidUpdateShownTime();
-            if (updateShownTimeMs == -1
-                    || TimeUtils.getDaysDifference(currentTimeMs - updateShownTimeMs) > 0) {
-                setNormalPaidUpdateShownTime(currentTimeMs);
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    public boolean isNormalUpdateEnabled() {
-        return getSharedBooleanData(SharedKeys.NORMAL_UPDATE_ENABLED, false);
-    }
-
-    public void setNormalUpdateEnabled(boolean enabled) {
-        setSharedBooleanData(SharedKeys.NORMAL_UPDATE_ENABLED, enabled);
-    }
-
-    public boolean isForceUpdateEnabled() {
-        return getSharedBooleanData(SharedKeys.FORCE_UPDATE_ENABLED, false);
-    }
-
-    public void setForceUpdateEnabled(boolean forceUpdateEnabled) {
-        setSharedBooleanData(SharedKeys.FORCE_UPDATE_ENABLED, forceUpdateEnabled);
-    }
-
-    public void setNormalPaidUpdateEnabled(boolean enabled) {
-        setSharedBooleanData(SharedKeys.NORMAL_PAID_UPDATE_ENABLED, enabled);
-    }
-
-    private long getNormalUpdateShownTime() {
-        return getSharedLongData(SharedKeys.NORMAL_UPDATE_SHOWN_TIME, -1);
-    }
-
-    private void setNormalUpdateShownTime(long normalUpdateShownTime) {
-        setSharedLongData(SharedKeys.NORMAL_UPDATE_SHOWN_TIME, normalUpdateShownTime);
-    }
-
-    private long getNormalPaidUpdateShownTime() {
-        return getSharedLongData(SharedKeys.NORMAL_PAID_UPDATE_SHOWN_TIME, -1);
-    }
-
-    private void setNormalPaidUpdateShownTime(long normalPaidUpdateShownTime) {
-        setSharedLongData(SharedKeys.NORMAL_PAID_UPDATE_SHOWN_TIME, normalPaidUpdateShownTime);
-    }
-
-    public void setPaidForceApkLink(String apkLink) {
-        setSharedStringData(SharedKeys.PAID_FORCE_UPDATE_APK_LINK, apkLink);
-    }
-
-    public String getPaidForceApkLink() {
-        return getSharedStringData(SharedKeys.PAID_FORCE_UPDATE_APK_LINK);
-    }
-
-    public void setPaidNormalApkLink(String apkLink) {
-        setSharedStringData(SharedKeys.PAID_NORMAL_UPDATE_APK_LINK, apkLink);
-    }
-
-    public String getPaidNormalApkLink() {
-        return getSharedStringData(SharedKeys.PAID_NORMAL_UPDATE_APK_LINK);
-    }
 
     public boolean isInitialFeedbackFormShown() {
         return getSharedBooleanData(SharedKeys.INITIAL_FORM_SHOWN, false);
@@ -553,22 +408,6 @@ public class NostragamusDataHandler extends AbstractDataHandler implements Const
 
     public boolean isProfileDisclaimerAccepted() {
         return getSharedBooleanData(SharedKeys.IS_PROFILE_DISCLAIMER_ACCEPTED, false);
-    }
-
-    public int getLastShownAppVersionCode() {
-        return getSharedIntData(SharedKeys.LAST_SHOWN_APP_VERSION_CODE, Nostragamus.getInstance().getAppVersionCode());
-    }
-
-    public void setLastShownAppVersionCode(int lastShownAppVersionCode) {
-        setSharedIntData(SharedKeys.LAST_SHOWN_APP_VERSION_CODE, lastShownAppVersionCode);
-    }
-
-    public String getAppUpdateType() {
-        return getSharedStringData(SharedKeys.UPDATE_TYPE);
-    }
-
-    public void setAppUpdateType(String appUpdateType) {
-        setSharedStringData(SharedKeys.UPDATE_TYPE, appUpdateType);
     }
 
     public boolean isMarketingCampaign() {

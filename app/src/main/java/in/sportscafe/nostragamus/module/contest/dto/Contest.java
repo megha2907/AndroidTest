@@ -68,6 +68,9 @@ public class Contest {
     @SerializedName("joined_contest")
     private boolean isContestJoined;
 
+    @SerializedName("priority")
+    private int priority;
+
     private int contestItemType = ContestAdapterItemType.CONTEST;
 
     private int challengeId;
@@ -222,5 +225,13 @@ public class Contest {
 
     public void setJoinable(boolean joinable) {
         isJoinable = joinable;
+    }
+
+    public int getPriority() {
+        return priority;
+    }
+
+    public void setPriority(int priority) {
+        this.priority = priority;
     }
 }

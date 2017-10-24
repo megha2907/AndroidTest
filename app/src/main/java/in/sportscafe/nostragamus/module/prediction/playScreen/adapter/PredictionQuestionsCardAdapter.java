@@ -23,6 +23,7 @@ import in.sportscafe.nostragamus.module.prediction.playScreen.dto.PlayersPoll;
 import in.sportscafe.nostragamus.module.prediction.playScreen.dto.PowerUp;
 import in.sportscafe.nostragamus.module.prediction.playScreen.dto.PowerUpEnum;
 import in.sportscafe.nostragamus.module.prediction.playScreen.dto.PredictionQuestion;
+import in.sportscafe.nostragamus.module.prediction.playScreen.helper.PlayerPollHelper;
 
 /**
  * Created by sandip on 10/08/17.
@@ -144,30 +145,22 @@ public class PredictionQuestionsCardAdapter extends ArrayAdapter<PredictionQuest
                                                    TextView playerPollOption2TextView, PredictionQuestion question) {
         /* NOTE: Same logic for PredictionFragment.onPlayerPollSuccess() tobe followed */
 
-        if (question != null && question.getPlayersPollList() != null && question.getPlayersPollList().size() == 2) {
+        if (question != null && question.getPlayersPollList() != null && !question.getPlayersPollList().isEmpty()) {
             List<PlayersPoll> playersPollList = question.getPlayersPollList();
 
-            String option1 = playersPollList.get(0).getAnswerPercentage().replaceAll("%", "");
-            String option2 = playersPollList.get(1).getAnswerPercentage().replaceAll("%", "");
-            int pollPercentForOption1 = Integer.parseInt(option1);
-            int pollPercentForOption2 = Integer.parseInt(option2);
+            String leftPollAnswer = PlayerPollHelper.getLeftAnswerString(playersPollList);
+            String rightPollAnswer = PlayerPollHelper.getRightAnswerString(playersPollList);
 
-            playerPollOption1TextView.setText(playersPollList.get(0).getAnswerPercentage());
-            playerPollOption2TextView.setText(playersPollList.get(1).getAnswerPercentage());
+            playerPollOption1TextView.setText(leftPollAnswer);
+            playerPollOption2TextView.setText(rightPollAnswer);
 
             playerPollOption1TextView.setVisibility(View.VISIBLE);
             playerPollOption2TextView.setVisibility(View.VISIBLE);
 
             applyOrRemovePowerUp(PowerUpEnum.PLAYER_POLL, position, true);
 
-                /* Set Minority Answer */
-            if (pollPercentForOption1 > pollPercentForOption2) {
-                question.setMinorityAnswerId(Constants.AnswerIds.RIGHT);
-            } else if (pollPercentForOption1 < pollPercentForOption2) {
-                question.setMinorityAnswerId(Constants.AnswerIds.LEFT);
-            } else {
-                question.setMinorityAnswerId(-1);
-            }
+            /* Set Minority Answer */
+            PlayerPollHelper.setMinorityAnswerId(question, leftPollAnswer, rightPollAnswer);
         }
     }
 

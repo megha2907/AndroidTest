@@ -212,46 +212,49 @@ public class AppUpdateFragment extends BaseFragment implements View.OnClickListe
 
     /* Set Details of App Update */
     private void initAppUpdateSlides() {
-        ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getChildFragmentManager());
-        for (AppUpdateDto appUpdateDto : mAppUpdateList) {
-            viewPagerAdapter.addFragment(AppUpdateTextFragment.newInstance(appUpdateDto), "");
-        }
 
-        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+        if (mViewPager != null && mAppUpdateList != null) {
+            ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getChildFragmentManager());
+            for (AppUpdateDto appUpdateDto : mAppUpdateList) {
+                viewPagerAdapter.addFragment(AppUpdateTextFragment.newInstance(appUpdateDto), "");
+            }
 
-                if (position < mAppUpdateList.size() - 1) {
-                    mTvUpdateAppNext.setText("Next");
+            mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+                @Override
+                public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+                    if (position < mAppUpdateList.size() - 1) {
+                        mTvUpdateAppNext.setText("Next");
 //                    if (NostragamusDataHandler.getInstance().getUserInfo().getInfoDetails().getWhatsNewShown() == null) {
 //                        mChangeToSkip = false;
 //                        mBtnSkip.setVisibility(View.VISIBLE);
 //                    }
-                } else {
-                    mTvUpdateAppNext.setText("Done");
+                    } else {
+                        mTvUpdateAppNext.setText("Done");
 //                    if (NostragamusDataHandler.getInstance().getUserInfo().getInfoDetails().getWhatsNewShown() == null) {
 //                        mChangeToSkip = true;
 //                        mBtnSkip.setVisibility(View.GONE);
 //                    }
+                    }
+
                 }
 
-            }
+                @Override
+                public void onPageSelected(int position) {
+                    // onPositionChanged(position);
+                }
 
-            @Override
-            public void onPageSelected(int position) {
-               // onPositionChanged(position);
-            }
+                @Override
+                public void onPageScrollStateChanged(int state) {
+                }
+            });
+            mViewPager.setAdapter(viewPagerAdapter);
 
-            @Override
-            public void onPageScrollStateChanged(int state) {
-            }
-        });
-        mViewPager.setAdapter(viewPagerAdapter);
+            CircleIndicator cpi = (CircleIndicator) findViewById(R.id.update_app_cpi_indicator);
+            cpi.setViewPager(mViewPager);
 
-        CircleIndicator cpi = (CircleIndicator) findViewById(R.id.update_app_cpi_indicator);
-        cpi.setViewPager(mViewPager);
-
-        //onPositionChanged(0);
+            //onPositionChanged(0);
+        }
     }
 
     /* Alpha animation on slide changed */
@@ -301,19 +304,20 @@ public class AppUpdateFragment extends BaseFragment implements View.OnClickListe
                     @Override
                     public void onResponse(Call<AppUpdateResponse> call, Response<AppUpdateResponse> response) {
                         super.onResponse(call, response);
-
-                        if (response.isSuccessful() && response.body() != null && response.body().getAppUpdateDetails() != null) {
-
-                            mAppUpdateResponse = response.body();
-                            mAppUpdateList = mAppUpdateResponse.getAppUpdateDetails().getAppUpdateSlides();
-                            mAppLink = mAppUpdateResponse.getAppUpdateDetails().getUpdateUrl();
-                            initAppUpdateSlides();
-
-                        } else {
-                            NoUpdatesAvailable();
-                        }
-
                         dismissProgressbar();
+
+                        if (getView() != null && getView().isShown() && getActivity() != null && !getActivity().isFinishing()) {
+                            if (response.isSuccessful() && response.body() != null && response.body().getAppUpdateDetails() != null) {
+
+                                mAppUpdateResponse = response.body();
+                                mAppUpdateList = mAppUpdateResponse.getAppUpdateDetails().getAppUpdateSlides();
+                                mAppLink = mAppUpdateResponse.getAppUpdateDetails().getUpdateUrl();
+                                initAppUpdateSlides();
+
+                            } else {
+                                NoUpdatesAvailable();
+                            }
+                        }
                     }
                 }
         );
@@ -361,15 +365,17 @@ public class AppUpdateFragment extends BaseFragment implements View.OnClickListe
             case R.id.update_app_later:
                 NostragamusAnalytics.getInstance().trackUpdateLater(Constants.AnalyticsActions.CLICKED);
                 if (getArguments().getString(Constants.BundleKeys.SCREEN) != null) {
-                    navigateToHome();
+                    mDismissListener.onDismiss(AppUpdateActivity.NAVIGATE_TO_HOME, null);
                 } else {
-                    mDismissListener.onDismiss(DISMISS_SCREEN, null);
+                    mDismissListener.onDismiss(AppUpdateActivity.FINISH_APP_UPDATE_ACTIVITY, null);
                 }
                 break;
 
             case R.id.update_app_btn_skip:
                 callWhatsNewShownApi();
-                navigateToHome();
+                if (mDismissListener != null) {
+                    mDismissListener.onDismiss(AppUpdateActivity.NAVIGATE_TO_HOME, null);
+                }
                 break;
 
             case R.id.update_app_btn_next:
@@ -377,7 +383,7 @@ public class AppUpdateFragment extends BaseFragment implements View.OnClickListe
 //                    callWhatsNewShownApi();
 //                    navigateToHome();
 //                } else {
-                    mViewPager.setCurrentItem(getItem(+1), true);
+                mViewPager.setCurrentItem(getItem(+1), true);
                 //}
                 break;
 
@@ -399,7 +405,7 @@ public class AppUpdateFragment extends BaseFragment implements View.OnClickListe
                 break;
 
             case R.id.update_app_iv_back:
-                mDismissListener.onDismiss(DISMISS_SCREEN, null);
+                mDismissListener.onDismiss(AppUpdateActivity.FINISH_APP_UPDATE_ACTIVITY, null);
                 break;
 
         }
@@ -436,12 +442,6 @@ public class AppUpdateFragment extends BaseFragment implements View.OnClickListe
         } catch (ActivityNotFoundException e) {
             ExceptionTracker.track(e);
         }
-    }
-
-    private void navigateToHome() {
-        Intent intent = new Intent(getContext(), NostraHomeActivity.class);
-        intent.putExtra(Constants.BundleKeys.SCREEN, Constants.BundleKeys.LOGIN_SCREEN);
-        startActivity(intent);
     }
 
 }
