@@ -325,7 +325,7 @@ public class NavigationFragment extends NostraBaseFragment implements View.OnCli
         AppSettingsResponse appSettingsResponse = Nostragamus.getInstance().getServerDataManager().getAppSettingsResponse();
         if (appSettingsResponse != null && appSettingsResponse.getAppUpdateInfo() != null) {
             AppUpdateInfo appUpdateInfo = appSettingsResponse.getAppUpdateInfo();
-            appRequestVer = appUpdateInfo.getReqVersion();
+            appRequestVer = appUpdateInfo.getUpdateRequestVersion();
         }
         int currentAppVersion = Nostragamus.getInstance().getAppVersionCode();
         
