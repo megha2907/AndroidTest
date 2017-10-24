@@ -20,6 +20,7 @@ import in.sportscafe.nostragamus.module.user.leaderboard.dto.UserLeaderBoard;
 import in.sportscafe.nostragamus.module.user.leaderboard.dto.UserLeaderBoardInfo;
 import in.sportscafe.nostragamus.module.user.leaderboard.dto.UserLeaderBoardRequest;
 import in.sportscafe.nostragamus.module.user.leaderboard.dto.UserLeaderBoardResponse;
+import in.sportscafe.nostragamus.module.user.login.dto.UserInfo;
 import in.sportscafe.nostragamus.webservice.MyWebService;
 import in.sportscafe.nostragamus.webservice.NostragamusCallBack;
 import retrofit2.Call;
@@ -93,17 +94,17 @@ public class LeaderBoardModelImpl implements LeaderBoardModel {
                         super.onResponse(call, response);
                         if (response.isSuccessful()) {
 
-                            if (response.body()!=null) {
+                            if (response.body() != null) {
                                 mUserLeaderBoardInfo = response.body().getUserLeaderBoardInfo();
                                 if (null == mUserLeaderBoardInfo) {
                                     onLeaderBoardModelListener.onEmpty();
                                     return;
-                                }else {
+                                } else {
                                     sortAndRefreshLeaderBoard();
                                     updateUserLeaderBoard();
-                                  //  onLeaderBoardModelListener.setSortSelectedPos(0);
+                                    //  onLeaderBoardModelListener.setSortSelectedPos(0);
                                 }
-                            }else {
+                            } else {
                                 onLeaderBoardModelListener.onEmpty();
                             }
 
@@ -117,30 +118,48 @@ public class LeaderBoardModelImpl implements LeaderBoardModel {
 
     private void refreshUserPosition() {
 
-        Integer userId = Integer.valueOf(NostragamusDataHandler.getInstance().getUserId());
+        UserInfo userInfo = Nostragamus.getInstance().getServerDataManager().getUserInfo();
+        
+        Integer userId = null;
+        if (userInfo!=null) {
+            userId = userInfo.getId();
+        }
 
         UserLeaderBoard userLeaderBoard;
 
-        for (int i = 0; i < mUserLeaderBoardInfo.getUserLeaderBoardList().size(); i++) {
+        if (mUserLeaderBoardInfo != null) {
 
-            userLeaderBoard = mUserLeaderBoardInfo.getUserLeaderBoardList().get(i);
+            for (int i = 0; i < mUserLeaderBoardInfo.getUserLeaderBoardList().size(); i++) {
 
-            if (userId.equals(userLeaderBoard.getUserId())) {
-                mUserPosition = i;
-                Log.i("userpos", String.valueOf(mUserPosition));
+                userLeaderBoard = mUserLeaderBoardInfo.getUserLeaderBoardList().get(i);
+                
+                if (userId!=null) {
+                    if (userId.equals(userLeaderBoard.getUserId())) {
+                        mUserPosition = i;
+                        Log.i("userpos", String.valueOf(mUserPosition));
+                    }
+                }
+                mLeaderBoardAdapter.add(userLeaderBoard);
             }
-            mLeaderBoardAdapter.add(userLeaderBoard);
-        }
 
-        mLeaderBoardAdapter.notifyDataSetChanged();
+            mLeaderBoardAdapter.notifyDataSetChanged();
+        }
     }
 
     public void updateUserLeaderBoard() {
-        String userId = NostragamusDataHandler.getInstance().getUserId();
-        for (UserLeaderBoard userLeaderBoard : mUserLeaderBoardInfo.getUserLeaderBoardList()) {
-            if (userId.equalsIgnoreCase(userLeaderBoard.getUserId() + "")) {
-                onLeaderBoardModelListener.setUserLeaderBoard(userLeaderBoard);
-                return;
+
+        UserInfo userInfo = Nostragamus.getInstance().getServerDataManager().getUserInfo();
+        String userId = "";
+        if (userInfo!=null) {
+            userId = String.valueOf(userInfo.getId());
+        }
+        
+        if (mUserLeaderBoardInfo!=null) {
+            for (UserLeaderBoard userLeaderBoard : mUserLeaderBoardInfo.getUserLeaderBoardList()) {
+                if (userId.equalsIgnoreCase(userLeaderBoard.getUserId() + "")) {
+                    onLeaderBoardModelListener.setUserLeaderBoard(userLeaderBoard);
+                    return;
+                }
             }
         }
 
@@ -151,7 +170,7 @@ public class LeaderBoardModelImpl implements LeaderBoardModel {
     @Override
     public void sortAndRefreshLeaderBoard() {
 
-        if (mUserLeaderBoardInfo!=null) {
+        if (mUserLeaderBoardInfo != null) {
             if (SORT_TYPE == 0) {
                 Collections.sort(mUserLeaderBoardInfo.getUserLeaderBoardList(), UserLeaderBoard.UserRankComparator);
             } else if (SORT_TYPE == 1) {
@@ -168,7 +187,7 @@ public class LeaderBoardModelImpl implements LeaderBoardModel {
         mLeaderBoardAdapter.clear();
         mLeaderBoardAdapter.setPositionSelected(SORT_TYPE);
         mLeaderBoardAdapter.notifyDataSetChanged();
-        if (SORT_TYPE == 0){
+        if (SORT_TYPE == 0) {
             onLeaderBoardModelListener.setSortSelectedPos(0);
         }
         refreshUserPosition();

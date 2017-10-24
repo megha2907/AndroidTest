@@ -102,7 +102,7 @@ public class NewChallengeMatchesAdapter extends RecyclerView.Adapter<RecyclerVie
                 }
             }
 
-            viewHolder.venueTextView.setText(match.getMatchVenue());
+            viewHolder.venueTextView.setText(match.getMatchStage()+", "+match.getMatchVenue());
 
             /* Match status */
             String matchStatus = match.getMatchStatus();

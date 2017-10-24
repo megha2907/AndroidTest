@@ -16,7 +16,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:minHeight="@dimen/dim_100"
         android:paddingLeft="@dimen/dim_12"
         android:paddingRight="@dimen/dim_12"
         android:gravity="center_vertical">
@@ -26,7 +25,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:gravity="center">
+            android:gravity="center"
+            android:layout_marginTop="@dimen/dim_10">
 
             <com.jeeva.android.widgets.customfont.CustomTextView
                 android:id="@+id/newChallenge_match_date_time_textView"
@@ -151,7 +151,8 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:gravity="center"
-            android:layout_marginTop="@dimen/dim_10">
+            android:layout_marginTop="@dimen/dim_10"
+            android:layout_marginBottom="@dimen/dim_10">
 
             <com.jeeva.android.widgets.customfont.CustomTextView
                 android:id="@+id/newChallenge_match_venue_textView"
@@ -159,6 +160,7 @@
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
                 android:maxLines="2"
+                android:gravity="center"
                 android:textAllCaps="false"
                 android:textColor="@color/grey6"
                 android:textSize="@dimen/sp_10"

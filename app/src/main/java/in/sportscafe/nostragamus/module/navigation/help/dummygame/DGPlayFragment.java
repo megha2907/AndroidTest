@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import org.parceler.Parcels;
 
+import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Constants.BundleKeys;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.NostragamusFragment;
@@ -254,7 +255,9 @@ public class DGPlayFragment extends NostragamusFragment implements DGPlayView, V
     }
 
     public void addQuestion(Question question, String questionType) {
-        mDummyGamePlayPresenter.onGetQuestions(question, questionType);
+        if (mDummyGamePlayPresenter != null) {
+            mDummyGamePlayPresenter.onGetQuestions(question, questionType);
+        }
     }
 
     private static final float MAX_WIGGLE_ROTATION = 15;

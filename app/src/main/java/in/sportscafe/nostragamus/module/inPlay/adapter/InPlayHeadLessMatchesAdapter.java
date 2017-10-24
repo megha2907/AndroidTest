@@ -102,7 +102,7 @@ public class InPlayHeadLessMatchesAdapter extends RecyclerView.Adapter<RecyclerV
                 }
             }
 
-            viewHolder.venueTextView.setText(match.getMatchVenue());
+            viewHolder.venueTextView.setText(match.getMatchStage()+", "+match.getMatchVenue());
 
             /* Action Button */
             String matchStatus = match.getMatchStatus();

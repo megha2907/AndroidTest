@@ -35,8 +35,10 @@ import in.sportscafe.nostragamus.Constants.AnalyticsActions;
 import in.sportscafe.nostragamus.Constants.AnalyticsCategory;
 import in.sportscafe.nostragamus.Constants.AnalyticsLabels;
 import in.sportscafe.nostragamus.Constants.UserProperties;
+import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.R;
+import in.sportscafe.nostragamus.module.user.login.dto.UserInfo;
 
 /**
  * Created by deepanshu on 8/8/16.
@@ -535,8 +537,9 @@ public class NostragamusAnalytics {
             }
 
             /* setEmail() mandatory to get notification - DO NOT REMOVE  */
-            if (NostragamusDataHandler.getInstance().getUserInfo() != null) {
-                String email = NostragamusDataHandler.getInstance().getUserInfo().getEmail();
+            UserInfo userInfo = Nostragamus.getInstance().getServerDataManager().getUserInfo();
+            if (userInfo != null) {
+                String email = userInfo.getEmail();
                 if (!TextUtils.isEmpty(email)) {
                     mMoEHelper.setEmail(email);
                 }

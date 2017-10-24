@@ -35,7 +35,7 @@ public class EditProfileModelImpl implements EditProfileModel {
 
     private EditProfileModelImpl(OnEditProfileListener listener) {
         this.mEditProfileListener = listener;
-        this.mUserInfo = NostragamusDataHandler.getInstance().getUserInfo();
+        this.mUserInfo = Nostragamus.getInstance().getServerDataManager().getUserInfo();
     }
 
     public static EditProfileModel newInstance(OnEditProfileListener listener) {
@@ -96,7 +96,7 @@ public class EditProfileModelImpl implements EditProfileModel {
 
                         if (response.isSuccessful()) {
                             mUserInfo.setPhoto(response.body().getResult());
-                            NostragamusDataHandler.getInstance().setUserInfo(mUserInfo);
+                            Nostragamus.getInstance().getServerDataManager().setUserInfo(mUserInfo);
                             //callUpdateUserApi(NostragamusDataHandler.getInstance().getUserInfo().getUserNickName());
 
                             mEditProfileListener.onPhotoUpdate();
@@ -133,7 +133,7 @@ public class EditProfileModelImpl implements EditProfileModel {
                                 mEditProfileListener.onUserNameConflict();
                             } else {
                                 mUserInfo.setUserNickName(nickname);
-                                NostragamusDataHandler.getInstance().setUserInfo(mUserInfo);
+                                Nostragamus.getInstance().getServerDataManager().setUserInfo(mUserInfo);
 
                                 NostragamusDataHandler.getInstance().setFirstTimeUser(false);
                                 NostragamusDataHandler.getInstance().setIsProfileDisclaimerAccepted(true);

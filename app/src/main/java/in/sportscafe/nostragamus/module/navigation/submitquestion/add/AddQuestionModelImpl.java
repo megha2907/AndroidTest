@@ -76,7 +76,7 @@ public class AddQuestionModelImpl implements AddQuestionModel {
             addQuestionRequest.setNeitherOption(neitherOption);
         }
 
-        UserInfo userInfo = NostragamusDataHandler.getInstance().getUserInfo();
+        UserInfo userInfo = Nostragamus.getInstance().getServerDataManager().getUserInfo();
         QuestionSubmitBy submitBy = new QuestionSubmitBy();
         submitBy.setUserId(userInfo.getId());
         submitBy.setUserName(userInfo.getUserName());

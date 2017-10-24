@@ -95,7 +95,7 @@ public class InPlayMatchesRecyclerAdapter extends RecyclerView.Adapter<RecyclerV
                 viewHolder.actionButton.setEnabled(false);
             }
 
-            viewHolder.venueTextView.setText(match.getMatchVenue());
+            viewHolder.venueTextView.setText(match.getMatchStage()+", "+match.getMatchVenue());
 
                /* Set timer */
             String matchStartTime = match.getMatchStartTime();
@@ -114,6 +114,7 @@ public class InPlayMatchesRecyclerAdapter extends RecyclerView.Adapter<RecyclerV
                 if (matchStatus.equalsIgnoreCase(Constants.MatchStatusStrings.POINTS)) {
                     viewHolder.actionButton.setClickable(true);
                     viewHolder.dateTimeTextView.setText("Completed");
+                    viewHolder.venueTextView.setText(match.getMatchStage()+" - "+match.getMatchResult());
                     matchStatus = match.getMatchPoints() + " " + matchStatus;
                     viewHolder.actionButton.setTextColor(ContextCompat.getColor(viewHolder.actionButton.getContext(), R.color.black));
                     viewHolder.actionButton.setBackground(ContextCompat.getDrawable(viewHolder.actionButton.getContext(), R.drawable.btn_points_bg));
@@ -139,6 +140,7 @@ public class InPlayMatchesRecyclerAdapter extends RecyclerView.Adapter<RecyclerV
 
                     if (match.getMatchResult() != null && !match.getMatchResult().isEmpty()) {
                         viewHolder.dateTimeTextView.setText("Completed");
+                        viewHolder.venueTextView.setText(match.getMatchStage()+"-"+match.getMatchResult());
                     }else {
                         viewHolder.dateTimeTextView.setText("In Progress");
                     }

@@ -1,7 +1,6 @@
 package com.sportscafe.nostracardstack.cardstack;
 
 import android.content.res.Resources;
-import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;

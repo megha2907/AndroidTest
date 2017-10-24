@@ -161,7 +161,7 @@ public class NavigationFragment extends NostraBaseFragment implements View.OnCli
 
     private void initProfileDetails() {
         View rootView = getView();
-        UserInfo userInfo = NostragamusDataHandler.getInstance().getUserInfo();
+        UserInfo userInfo = Nostragamus.getInstance().getServerDataManager().getUserInfo();
 
         if (userInfo != null && rootView != null) {
             String userNickName = userInfo.getUserNickName();
