@@ -8,6 +8,7 @@ import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Constants.AnalyticsActions;
 import in.sportscafe.nostragamus.Constants.AnalyticsLabels;
 import in.sportscafe.nostragamus.Constants.BundleKeys;
+import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
 import in.sportscafe.nostragamus.module.user.login.dto.UserInfo;
@@ -38,18 +39,23 @@ public class EditProfilePresenterImpl implements EditProfilePresenter, EditProfi
 
     @Override
     public void onCreateEditProfile(Bundle bundle) {
+
         screen = bundle.getString("screen");
+        UserInfo userInfo = Nostragamus.getInstance().getServerDataManager().getUserInfo();
 
         if (screen.equals(BundleKeys.HOME_SCREEN)) {
             mEditProfileView.changeViewforProfile();
         } else {
-            mEditProfileView.changeViewforLogin(NostragamusDataHandler.getInstance().getUserInfo().getUserName());
+            if (userInfo != null) {
+                mEditProfileView.changeViewforLogin(userInfo.getUserName());
+            }
         }
 
-        UserInfo userInfo = mEditProfileModel.getUserInfo();
-        mEditProfileView.setProfileImage(userInfo.getPhoto());
-        if (userInfo.getUserNickName() != null) {
-            mEditProfileView.setNickName(userInfo.getUserNickName());
+        if (userInfo != null) {
+            mEditProfileView.setProfileImage(userInfo.getPhoto());
+            if (userInfo.getUserNickName() != null) {
+                mEditProfileView.setNickName(userInfo.getUserNickName());
+            }
         }
     }
 

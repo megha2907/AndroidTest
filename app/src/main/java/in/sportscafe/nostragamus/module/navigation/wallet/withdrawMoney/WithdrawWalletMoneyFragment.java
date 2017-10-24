@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.jeeva.android.BaseFragment;
 
 import in.sportscafe.nostragamus.Constants;
+import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.navigation.wallet.WalletHelper;
@@ -72,7 +73,7 @@ public class WithdrawWalletMoneyFragment extends BaseFragment implements View.On
     }
 
     private void initMessages() {
-        UserInfo userInfo = NostragamusDataHandler.getInstance().getUserInfo();
+        UserInfo userInfo = Nostragamus.getInstance().getServerDataManager().getUserInfo();
         if (userInfo != null && userInfo.getInfoDetails() != null && getView() != null) {
             LinearLayout msgLayout = (LinearLayout) getView().findViewById(R.id.withdraw_first_time_msg_layout);
             TextView msgTextView = (TextView) getView().findViewById(R.id.withdraw_first_time_msg_textView);

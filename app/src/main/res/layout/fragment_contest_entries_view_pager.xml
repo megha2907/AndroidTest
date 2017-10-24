@@ -1,14 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/entries_parent_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/black"
-    android:fillViewport="true">
+    android:fillViewport="true"
+    android:clipToPadding="false"
+    android:paddingBottom="@dimen/dim_90">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical">
 
         <RelativeLayout
@@ -137,8 +140,7 @@
             android:childDivider="@android:color/transparent"
             android:clipToPadding="false"
             android:divider="@null"
-            android:groupIndicator="@null"
-            android:paddingBottom="@dimen/dim_90" />
+            android:groupIndicator="@null"/>
 
     </LinearLayout>
 </ScrollView>

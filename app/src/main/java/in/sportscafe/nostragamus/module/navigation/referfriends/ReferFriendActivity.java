@@ -18,11 +18,13 @@ import org.parceler.Parcels;
 import in.sportscafe.nostragamus.AppSnippet;
 import in.sportscafe.nostragamus.BuildConfig;
 import in.sportscafe.nostragamus.Constants;
+import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
 import in.sportscafe.nostragamus.module.common.NostragamusActivity;
 import in.sportscafe.nostragamus.module.navigation.referfriends.referralcredits.ReferralCreditActivity;
+import in.sportscafe.nostragamus.module.user.login.dto.UserInfo;
 import in.sportscafe.nostragamus.utils.FragmentHelper;
 import in.sportscafe.nostragamus.webservice.UserReferralInfo;
 import io.branch.indexing.BranchUniversalObject;
@@ -102,12 +104,15 @@ public class ReferFriendActivity extends NostragamusActivity implements ReferFri
     }
 
     private void navigateToReferFriend(final String referralCode, final String walletInit, final String downloadLink) {
+
+        UserInfo userInfo = Nostragamus.getInstance().getServerDataManager().getUserInfo();
+
         BranchUniversalObject buo = new BranchUniversalObject()
                 .setContentIndexingMode(BranchUniversalObject.CONTENT_INDEX_MODE.PUBLIC)
                 .addContentMetadata(Constants.BundleKeys.WALLET_INITIAL_AMOUNT, walletInit)
                 .addContentMetadata(Constants.BundleKeys.USER_REFERRAL_CODE, referralCode)
-                .addContentMetadata(Constants.BundleKeys.USER_REFERRAL_PHOTO, NostragamusDataHandler.getInstance().getUserInfo().getPhoto())
-                .addContentMetadata(Constants.BundleKeys.USER_REFERRAL_NAME, NostragamusDataHandler.getInstance().getUserInfo().getUserName());
+                .addContentMetadata(Constants.BundleKeys.USER_REFERRAL_PHOTO, userInfo.getPhoto())
+                .addContentMetadata(Constants.BundleKeys.USER_REFERRAL_NAME, userInfo.getUserName());
 
 
         LinkProperties linkProperties = new LinkProperties();

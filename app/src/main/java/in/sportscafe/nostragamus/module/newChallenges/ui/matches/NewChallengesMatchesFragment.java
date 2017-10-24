@@ -224,20 +224,24 @@ public class NewChallengesMatchesFragment extends BaseFragment implements View.O
     }
 
     private void startPredictionActivity(Bundle bundle) {
-        Intent predictionIntent = new Intent(getActivity(), PredictionActivity.class);
-        predictionIntent.putExtras(bundle);
-        predictionIntent.putExtra(Constants.BundleKeys.SCREEN_LAUNCHED_FROM_PARENT,
-                PredictionActivity.LaunchedFrom.NEW_CHALLENGES_SCREEN_PSEUDO_PLAY);
-        startActivity(predictionIntent);
+        if (getActivity() != null) {
+            Intent predictionIntent = new Intent(getActivity(), PredictionActivity.class);
+            predictionIntent.putExtras(bundle);
+            predictionIntent.putExtra(Constants.BundleKeys.SCREEN_LAUNCHED_FROM_PARENT,
+                    PredictionActivity.LaunchedFrom.NEW_CHALLENGES_SCREEN_PSEUDO_PLAY);
+            startActivity(predictionIntent);
+        }
     }
 
     private void startDummyGameActivity(Bundle bundle) {
-        Intent intent = new Intent(getActivity(), DummyGameActivity.class);
-        intent.putExtras(bundle);
-        startActivity(intent);
+        if (getActivity() != null) {
+            Intent intent = new Intent(getActivity(), DummyGameActivity.class);
+            intent.putExtras(bundle);
+            startActivity(intent);
 
         /*  Set first match played param */
-        NostragamusDataHandler.getInstance().setPlayedFirstMatch(true);
+            NostragamusDataHandler.getInstance().setPlayedFirstMatch(true);
+        }
     }
 
     @Override
@@ -271,7 +275,7 @@ public class NewChallengesMatchesFragment extends BaseFragment implements View.O
 
     private void setMatchesLeftValue(List<InPlayMatch> matches){
         if (matches!=null && !matches.isEmpty()) {
-            mMatchesLeftTextView.setText(String.valueOf(getGamesLeftCount(matches)));
+            mMatchesLeftTextView.setText(String.valueOf(matches.size()));
         }
     }
 

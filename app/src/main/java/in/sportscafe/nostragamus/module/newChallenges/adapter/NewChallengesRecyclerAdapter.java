@@ -77,6 +77,7 @@ public class NewChallengesRecyclerAdapter extends RecyclerView.Adapter<RecyclerV
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+
         if (holder != null) {
             switch (holder.getItemViewType()) {
                 case NewChallengeAdapterItemType.CHALLENGE:

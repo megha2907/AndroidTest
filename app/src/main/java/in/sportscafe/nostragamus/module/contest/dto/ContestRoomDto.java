@@ -22,6 +22,9 @@ public class ContestRoomDto {
     @SerializedName("room_name")
     private String roomTitle;
 
+    @SerializedName("entries_size")
+    private int entriesSize;
+
     @SerializedName("entries")
     private List<ContestRoomEntryDto> entries = null;
 
@@ -63,5 +66,13 @@ public class ContestRoomDto {
 
     public void setEntries(List<ContestRoomEntryDto> entries) {
         this.entries = entries;
+    }
+
+    public int getEntriesSize() {
+        return entriesSize;
+    }
+
+    public void setEntriesSize(int entriesSize) {
+        this.entriesSize = entriesSize;
     }
 }

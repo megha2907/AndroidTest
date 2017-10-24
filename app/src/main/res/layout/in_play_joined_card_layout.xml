@@ -143,14 +143,32 @@
                         android:textSize="@dimen/sp_9"
                         app:typeface="lato_regular" />
 
-                    <com.jeeva.android.widgets.customfont.CustomTextView
-                        android:id="@+id/inplay_contest_card_header_current_rank_textView"
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/dim_4"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/sp_10"
-                        app:typeface="lato_bold" />
+                        android:orientation="horizontal"
+                        android:layout_marginTop="@dimen/dim_4">
+
+                        <com.jeeva.android.widgets.customfont.CustomTextView
+                            android:id="@+id/inplay_contest_card_header_current_rank_textView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="NA"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/sp_10"
+                            app:typeface="lato_bold" />
+
+                        <com.jeeva.android.widgets.customfont.CustomTextView
+                            android:id="@+id/inplay_contest_card_header_total_players"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textAllCaps="true"
+                            android:textColor="@color/white_999999"
+                            android:textSize="@dimen/sp_10"
+                            android:layout_alignParentRight="true"
+                            app:typeface="lato_bold" />
+
+                    </LinearLayout>
 
                 </LinearLayout>
 

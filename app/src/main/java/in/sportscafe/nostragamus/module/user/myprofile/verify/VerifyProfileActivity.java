@@ -12,12 +12,14 @@ import com.jeeva.android.widgets.HmImageView;
 import java.util.Calendar;
 
 import in.sportscafe.nostragamus.Constants;
+import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
 import in.sportscafe.nostragamus.module.common.NostragamusActivity;
 import in.sportscafe.nostragamus.module.navigation.referfriends.SuccessfulReferralActivity;
 import in.sportscafe.nostragamus.module.nostraHome.ui.NostraHomeActivity;
+import in.sportscafe.nostragamus.module.user.login.dto.UserInfo;
 import in.sportscafe.nostragamus.utils.FragmentHelper;
 
 /**
@@ -57,8 +59,11 @@ public class VerifyProfileActivity extends NostragamusActivity implements Verify
     }
 
     private void setInfo() {
-        userPhoto.setImageUrl(NostragamusDataHandler.getInstance().getUserInfo().getPhoto());
-        userName.setText(NostragamusDataHandler.getInstance().getUserInfo().getUserName());
+        UserInfo userInfo = Nostragamus.getInstance().getServerDataManager().getUserInfo();
+        if (userInfo!=null) {
+            userPhoto.setImageUrl(userInfo.getPhoto());
+            userName.setText(userInfo.getUserName());
+        }
     }
 
     private void loadVerifyPhoneNumberFragment() {
