@@ -37,6 +37,8 @@ import in.sportscafe.nostragamus.module.navigation.wallet.WalletHelper;
 import in.sportscafe.nostragamus.module.navigation.wallet.WalletHomeActivity;
 import in.sportscafe.nostragamus.module.navigation.wallet.dto.UserWalletResponse;
 import in.sportscafe.nostragamus.module.popups.challengepopups.ContestDetailsPopupActivity;
+import in.sportscafe.nostragamus.module.settings.app.dto.AppSettingsResponse;
+import in.sportscafe.nostragamus.module.settings.app.dto.AppUpdateInfo;
 import in.sportscafe.nostragamus.module.store.StoreActivity;
 import in.sportscafe.nostragamus.module.user.login.UserInfoModelImpl;
 import in.sportscafe.nostragamus.module.user.login.dto.UserInfo;
@@ -319,10 +321,15 @@ public class NavigationFragment extends NostraBaseFragment implements View.OnCli
     private boolean isNewVersionAvailable() {
         boolean isNewVersion = false;
 
-        NostragamusDataHandler dataHandler = NostragamusDataHandler.getInstance();
+        int appRequestVer = -1;
+        AppSettingsResponse appSettingsResponse = Nostragamus.getInstance().getServerDataManager().getAppSettingsResponse();
+        if (appSettingsResponse != null && appSettingsResponse.getAppUpdateInfo() != null) {
+            AppUpdateInfo appUpdateInfo = appSettingsResponse.getAppUpdateInfo();
+            appRequestVer = appUpdateInfo.getReqVersion();
+        }
         int currentAppVersion = Nostragamus.getInstance().getAppVersionCode();
-
-        if ((currentAppVersion < dataHandler.getReqUpdateVersion())) {
+        
+        if (appRequestVer > 0 && currentAppVersion < appRequestVer) {
             isNewVersion = true;
         }
         return isNewVersion;
