@@ -303,7 +303,7 @@ public class InPlayHeadLessMatchesFragment extends BaseFragment implements View.
 
     private void setMatchesLeftValue(List<InPlayMatch> matches){
         if (matches!=null && !matches.isEmpty()) {
-            mMatchesLeftTextView.setText(String.valueOf(getGamesLeftCount(matches)));
+            mMatchesLeftTextView.setText(String.valueOf(matches.size()));
         }
     }
 
