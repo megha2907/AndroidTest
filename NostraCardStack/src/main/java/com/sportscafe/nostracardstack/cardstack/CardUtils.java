@@ -3,6 +3,7 @@ package com.sportscafe.nostracardstack.cardstack;
 import android.content.res.Resources;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.RelativeLayout.LayoutParams;
 
@@ -13,17 +14,7 @@ public class CardUtils {
     final static int DIRECTION_BOTTOM_RIGHT = 3;
 
     public static void scale(View v, int pixel, int gravity) {
-
-        int screenHeightPx = Resources.getSystem().getDisplayMetrics().heightPixels;
-        int screenWidthPx = Resources.getSystem().getDisplayMetrics().widthPixels;
-        int height = (int)((screenHeightPx * 80) / 100);
-        int width = (int)((screenHeightPx * 53) / 100);
-
         RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) v.getLayoutParams();
-        params.width = width;
-        params.height = height;
-
-      //  RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) v.getLayoutParams();
         params.leftMargin -= pixel * 3;
         params.rightMargin -= pixel * 3;
         if (gravity == CardAnimator.TOP) {

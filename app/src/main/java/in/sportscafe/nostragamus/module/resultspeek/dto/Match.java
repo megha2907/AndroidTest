@@ -83,7 +83,7 @@ public class Match {
     private List<Question> questions = new ArrayList<>();
 
     @SerializedName("challenge_id")
-    private Integer challengeId;
+    private int challengeId=0;
 
     @SerializedName("challenge_name")
     private String challengeName;
@@ -435,12 +435,12 @@ public class Match {
     }
 
     @SerializedName("challenge_id")
-    public Integer getChallengeId() {
+    public int getChallengeId() {
         return challengeId;
     }
 
     @SerializedName("challenge_id")
-    public void setChallengeId(Integer challengeId) {
+    public void setChallengeId(int challengeId) {
         this.challengeId = challengeId;
     }
 
