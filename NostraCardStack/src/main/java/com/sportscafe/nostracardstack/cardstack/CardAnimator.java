@@ -85,7 +85,7 @@ public class CardAnimator {
             LayoutParams params = cloneParams(baseLayout);
             v.setLayoutParams(params);
 
-            scale(v, -(size - index) * 5, mGravity);
+            scale(v, -(size - index - 1) * 5, mGravity);
 
             int margin = index * mStackMargin;
             move(v, mGravity == TOP ? -margin : margin, 0);

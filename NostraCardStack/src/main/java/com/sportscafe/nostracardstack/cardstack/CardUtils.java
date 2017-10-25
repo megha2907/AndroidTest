@@ -14,15 +14,7 @@ public class CardUtils {
     final static int DIRECTION_BOTTOM_RIGHT = 3;
 
     public static void scale(View v, int pixel, int gravity) {
-        int screenHeightPx = Resources.getSystem().getDisplayMetrics().heightPixels;
-        int screenWidthPx = Resources.getSystem().getDisplayMetrics().widthPixels;
-        int height = (int)((screenHeightPx * CardSize.TOTAL_CARD_HEIGHT) / 100);
-        int width = (int)((screenHeightPx * CardSize.TOTAL_CARD_WIDTH) / 100);
-
         RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) v.getLayoutParams();
-        params.width = width;
-        params.height = height;
-
         params.leftMargin -= pixel * 3;
         params.rightMargin -= pixel * 3;
         if (gravity == CardAnimator.TOP) {
