@@ -5,9 +5,11 @@ import android.animation.Animator.AnimatorListener;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
 import android.animation.ValueAnimator;
+import android.content.res.Resources;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.RelativeLayout.LayoutParams;
 
@@ -83,7 +85,7 @@ public class CardAnimator {
             LayoutParams params = cloneParams(baseLayout);
             v.setLayoutParams(params);
 
-            scale(v, -(size - index) * 5, mGravity);
+            scale(v, -(size - index - 1) * 5, mGravity);
 
             int margin = index * mStackMargin;
             move(v, mGravity == TOP ? -margin : margin, 0);

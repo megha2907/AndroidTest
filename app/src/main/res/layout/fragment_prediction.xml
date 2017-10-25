@@ -314,6 +314,7 @@
                 android:layout_height="match_parent"
                 android:clipChildren="false"
                 android:clipToPadding="false"
+                android:gravity="center_horizontal"
                 android:padding="3dp"
                 app:card_margin="@dimen/dim_3"
                 app:card_gravity="bottom"

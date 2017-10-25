@@ -5,6 +5,7 @@ import android.app.ActivityManager;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.text.TextUtils;
 
 import com.jeeva.android.ExceptionTracker;
 import com.jeeva.android.Log;
@@ -64,6 +65,20 @@ public class CodeSnippet {
                 }
                 Log.d(tag, str.toString());
             }
+    }
+
+    public static int convertStringToInt(String str) {
+        int result = -1;
+
+        if (!TextUtils.isEmpty(str)) {
+            try {
+                result = Integer.parseInt(str);
+            } catch (NumberFormatException ex) {
+                ex.printStackTrace();
+            }
+        }
+
+        return result;
     }
 
 }
