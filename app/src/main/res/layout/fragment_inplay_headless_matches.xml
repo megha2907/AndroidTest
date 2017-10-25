@@ -42,7 +42,11 @@
                     android:textColor="@color/white"
                     android:textSize="@dimen/sp_14"
                     android:layout_centerVertical="true"
-                    app:typeface="lato_regular" />
+                    app:typeface="lato_regular"
+                    android:singleLine="true"
+                    android:ellipsize="end"
+                    android:layout_alignParentLeft="true"
+                    android:layout_toLeftOf="@+id/toolbar_wallet_rl"/>
 
                 <RelativeLayout
                     android:id="@+id/toolbar_wallet_rl"

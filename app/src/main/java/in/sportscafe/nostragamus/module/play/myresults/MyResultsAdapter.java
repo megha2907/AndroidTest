@@ -182,7 +182,7 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
                     holder.mTvMatchResult.setText(match.getStage() + " - " + match.getResult());
                 }
 
-                if (match.getAvgMatchPoints()!=null) {
+                if (match.getAvgMatchPoints() != null) {
                     holder.mTvAvgMatchPoints.setText(String.valueOf(match.getAvgMatchPoints().intValue()));
                 }
 
@@ -274,6 +274,7 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
         }
 
         initMatchStarted(startTimeMs);
+        holder.mRlLeaderBoard.setTag(match);
 
         List<Question> questions = match.getQuestions();
         for (Question question : questions) {
@@ -403,7 +404,8 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
 
             switch (v.getId()) {
                 case R.id.schedule_row_rl_leaderboard:
-                    navigateToLeaderboards(v.getContext());
+                    Match leaderBoardMatch = (Match) v.getTag();
+                    navigateToLeaderboards(v.getContext(), leaderBoardMatch);
                     break;
 
                 case R.id.schedule_row_rl_average_score:
@@ -413,7 +415,6 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
                 case R.id.schedule_row_rl_highest_score:
 
                     Match match = (Match) v.getTag();
-
                     Bundle bundle = new Bundle();
                     bundle.putInt(BundleKeys.PLAYER_ID, match.getHighestScorerId());
                     bundle.putInt(BundleKeys.MATCH_ID, match.getId());
@@ -1031,7 +1032,7 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
                 navigateToOthersAnswers(view.getContext());
                 break;
             case R.id.my_results_ll_leaderboards:
-                navigateToLeaderboards(view.getContext());
+                navigateToLeaderboards(view.getContext(), null);
                 break;
         }
     }
@@ -1048,37 +1049,72 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
         context.startActivity(intent);
     }
 
-    private void navigateToLeaderboards(Context context) {
+    private void navigateToLeaderboards(Context context, Match leaderBoardMatch) {
 
-       if (mInPlayContestDto!=null) {
-           Bundle args = new Bundle();
-           args.putParcelable(Constants.BundleKeys.INPLAY_CONTEST, Parcels.wrap(mInPlayContestDto));
-           args.putInt(Constants.BundleKeys.SCREEN_LAUNCH_REQUEST, DetailScreensLaunchRequest.MATCHES_LEADER_BOARD_SCREEN);
+        if (mInPlayContestDto != null) {
 
-           if (context != null) {
-               Intent intent = new Intent(context, InplayContestDetailsActivity.class);
-               if (args != null) {
-                   intent.putExtras(args);
-               }
-               context.startActivity(intent);
-           }
-       }else if (mCompletedContestDto!=null){
+            Bundle args = new Bundle();
+            args.putParcelable(Constants.BundleKeys.INPLAY_CONTEST, Parcels.wrap(mInPlayContestDto));
+            args.putInt(Constants.BundleKeys.SCREEN_LAUNCH_REQUEST, DetailScreensLaunchRequest.MATCHES_LEADER_BOARD_SCREEN);
 
-           Bundle args = new Bundle();
-           args.putParcelable(BundleKeys.COMPLETED_CONTEST, Parcels.wrap(mCompletedContestDto));
-           args.putInt(Constants.BundleKeys.SCREEN_LAUNCH_REQUEST, DetailScreensLaunchRequest.MATCHES_LEADER_BOARD_SCREEN);
+            if (context != null) {
+                Intent intent = new Intent(context, InplayContestDetailsActivity.class);
+                if (args != null) {
+                    intent.putExtras(args);
+                }
+                context.startActivity(intent);
+            }
 
-           if (context != null) {
-               Intent intent = new Intent(context, ChallengeHistoryContestDetailsActivity.class);
-               if (args != null) {
-                   intent.putExtras(args);
-               }
-               context.startActivity(intent);
-           }
+        } else if (mCompletedContestDto != null) {
 
-       } else {
-           Log.i(Constants.Alerts.SOMETHING_WRONG,"InPlayContestDto = null");
-       }
+            Bundle args = new Bundle();
+            args.putParcelable(BundleKeys.COMPLETED_CONTEST, Parcels.wrap(mCompletedContestDto));
+            args.putInt(Constants.BundleKeys.SCREEN_LAUNCH_REQUEST, DetailScreensLaunchRequest.MATCHES_LEADER_BOARD_SCREEN);
+
+            if (context != null) {
+                Intent intent = new Intent(context, ChallengeHistoryContestDetailsActivity.class);
+                if (args != null) {
+                    intent.putExtras(args);
+                }
+                context.startActivity(intent);
+            }
+
+        } else {
+
+            //todo Add challengeId , challenge Name , contest id , contest name in the Matches Api
+
+            /*
+
+            if (leaderBoardMatch != null) {
+
+                InPlayContestDto inPlayContestDto = new InPlayContestDto();
+                inPlayContestDto.setChallengeId(leaderBoardMatch.getChallengeId());
+                inPlayContestDto.setChallengeName(leaderBoardMatch.getChallengeName());
+                inPlayContestDto.setRoomId(leaderBoardMatch.getRoomId());
+                inPlayContestDto.setContestId(leaderBoardMatch.getContestId);
+                inPlayContestDto.setContestName(leaderBoardMatch.getContestName());
+
+                Bundle args = new Bundle();
+                args.putParcelable(Constants.BundleKeys.INPLAY_CONTEST, Parcels.wrap(inPlayContestDto));
+                args.putInt(Constants.BundleKeys.SCREEN_LAUNCH_REQUEST, DetailScreensLaunchRequest.MATCHES_LEADER_BOARD_SCREEN);
+
+                if (context != null) {
+                    Intent intent = new Intent(context, InplayContestDetailsActivity.class);
+                    if (args != null) {
+                        intent.putExtras(args);
+                    }
+                    context.startActivity(intent);
+                }
+
+            } else {
+                Log.i(Constants.Alerts.SOMETHING_WRONG, "InPlayContestDto = null");
+            }
+
+            */
+
+            Log.i(Constants.Alerts.SOMETHING_WRONG, "InPlayContestDto = null");
+
+        }
 
     }
 
