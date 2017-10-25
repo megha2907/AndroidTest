@@ -69,7 +69,7 @@ public class GetStartActivity extends Activity {
             if (!TextUtils.isEmpty(updateType)) {
                 if (updateType.equalsIgnoreCase(Constants.AppUpdateTypes.FORCE_UPDATE)) {
 
-                    if (appUpdateInfo.getReqVersion() > Nostragamus.getInstance().getAppVersionCode()) {
+                    if (appUpdateInfo.getUpdateRequestVersion() > Nostragamus.getInstance().getAppVersionCode()) {
                         showForceUpdateScreen();
                     } else {
                         handleGetStart();
@@ -77,7 +77,7 @@ public class GetStartActivity extends Activity {
 
                 } else if (updateType.equalsIgnoreCase(Constants.AppUpdateTypes.NORMAL_UPDATE)) {
 
-                    if (appUpdateInfo.getReqVersion() > Nostragamus.getInstance().getAppVersionCode()) {
+                    if (appUpdateInfo.getUpdateRequestVersion() > Nostragamus.getInstance().getAppVersionCode()) {
                         showNormalUpdateScreen();
                     } else {
                         handleGetStart();

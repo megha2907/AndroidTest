@@ -4,6 +4,8 @@ import com.google.gson.annotations.SerializedName;
 
 import org.parceler.Parcel;
 
+import in.sportscafe.nostragamus.utils.CodeSnippet;
+
 /**
  * Created by deepanshi on 6/8/17.
  */
@@ -17,7 +19,7 @@ public class AppUpdateInfo {
     private String updateType;
 
     @SerializedName("req_version")
-    private int reqVersion;
+    private String reqVersion;
 
     @SerializedName("update_url")
     public String getUpdateUrl() {
@@ -40,13 +42,21 @@ public class AppUpdateInfo {
     }
 
     @SerializedName("req_version")
-    public int getReqVersion() {
+    private String getReqVersion() {
         return reqVersion;
     }
 
     @SerializedName("req_version")
-    public void setReqVersion(int reqVersion) {
+    public void setReqVersion(String reqVersion) {
         this.reqVersion = reqVersion;
     }
 
+    /**
+     * Always use this method to get requested version code, as API response for this param comes as String
+     * This method converts string to int
+     * @return - request version code
+     */
+    public int getUpdateRequestVersion() {
+        return CodeSnippet.convertStringToInt(getReqVersion());
+    }
 }
