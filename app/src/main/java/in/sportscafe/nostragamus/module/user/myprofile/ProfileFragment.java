@@ -211,9 +211,6 @@ public class ProfileFragment extends NostragamusFragment implements ProfileView,
             /*case R.id.profile_btn_settings:
                 navigateToSettings();
                 break;*/
-            case R.id.profile_iv_image:
-                navigateToEditProfile();
-                break;
             case R.id.profile_btn_edit:
                 navigateToEditProfile();
                 break;

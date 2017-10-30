@@ -5,6 +5,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.content.ContextCompat;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -64,6 +65,15 @@ public class CompleteChallengeViewPagerAdapter extends FragmentStatePagerAdapter
                 }else {
                     tabImageView.setBackground(ContextCompat.getDrawable(context, sportsTab.getSportIconDrawable()));
                 }
+
+                if (!TextUtils.isEmpty(sportsTab.getSportsName())) {
+                    if (sportsTab.getSportsName().length() > 8) {
+                        parentLayout.setPadding(20, 2, 20, 0);
+                    } else {
+                        parentLayout.setPadding(0, 2, 0, 0);
+                    }
+                }
+
 
                 return parentLayout;
             }

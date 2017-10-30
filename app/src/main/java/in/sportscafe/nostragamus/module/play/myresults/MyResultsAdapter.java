@@ -1079,19 +1079,17 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
                 context.startActivity(intent);
             }
 
+
         } else {
 
-            //todo Add challengeId , challenge Name , contest id , contest name in the Matches Api
-
-            /*
-
+            /* For Match Results Notifications */
             if (leaderBoardMatch != null) {
 
                 InPlayContestDto inPlayContestDto = new InPlayContestDto();
                 inPlayContestDto.setChallengeId(leaderBoardMatch.getChallengeId());
                 inPlayContestDto.setChallengeName(leaderBoardMatch.getChallengeName());
                 inPlayContestDto.setRoomId(leaderBoardMatch.getRoomId());
-                inPlayContestDto.setContestId(leaderBoardMatch.getContestId);
+                inPlayContestDto.setContestId(leaderBoardMatch.getContestId());
                 inPlayContestDto.setContestName(leaderBoardMatch.getContestName());
 
                 Bundle args = new Bundle();
@@ -1109,10 +1107,6 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
             } else {
                 Log.i(Constants.Alerts.SOMETHING_WRONG, "InPlayContestDto = null");
             }
-
-            */
-
-            Log.i(Constants.Alerts.SOMETHING_WRONG, "InPlayContestDto = null");
 
         }
 

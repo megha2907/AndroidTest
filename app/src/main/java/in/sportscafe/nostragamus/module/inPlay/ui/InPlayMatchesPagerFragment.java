@@ -158,39 +158,45 @@ public class InPlayMatchesPagerFragment extends NostraBaseFragment {
             /* Timeline */
             LinearLayout parent = (LinearLayout) getView().findViewById(R.id.match_status_timeline);
             LinearLayout titleParent = (LinearLayout) getView().findViewById(R.id.match_status_timeline_title_parent);
+            LinearLayout matchTimelineLayout = (LinearLayout) getView().findViewById(R.id.match_timeline_layout);
 
             parent.removeAllViews();
             titleParent.removeAllViews();
 
+            if (mInPlayContestDto.getMatches() != null){
+
              /* Timeline */
-            int totalMatches = mInPlayContestDto.getMatches().size();
-            for (int temp = 0; temp < totalMatches; temp++) {
-                InPlayContestMatchDto match = mInPlayContestDto.getMatches().get(temp);
+                int totalMatches = mInPlayContestDto.getMatches().size();
+                for (int temp = 0; temp < totalMatches; temp++) {
+                    InPlayContestMatchDto match = mInPlayContestDto.getMatches().get(temp);
 
-                boolean isNodeLineRequired = true;
-                if (temp == 0) {
-                    isNodeLineRequired = false;
-                }
+                    boolean isNodeLineRequired = true;
+                    if (temp == 0) {
+                        isNodeLineRequired = false;
+                    }
 
-                int matchAttemptedStatus = match.isPlayed();
-                boolean isPlayed;
-                if (Constants.GameAttemptedStatus.COMPLETELY == matchAttemptedStatus) {
-                    isPlayed = true;
-                } else if (Constants.GameAttemptedStatus.PARTIALLY == matchAttemptedStatus) {
-                    isPlayed = false;
-                } else {
-                    isPlayed = false;
-                }
+                    int matchAttemptedStatus = match.isPlayed();
+                    boolean isPlayed;
+                    if (Constants.GameAttemptedStatus.COMPLETELY == matchAttemptedStatus) {
+                        isPlayed = true;
+                    } else if (Constants.GameAttemptedStatus.PARTIALLY == matchAttemptedStatus) {
+                        isPlayed = false;
+                    } else {
+                        isPlayed = false;
+                    }
 
                     /* Content */
-                TimelineHelper.addNode(parent, match.getStatus(), matchAttemptedStatus, isPlayed,
-                        isNodeLineRequired, TimelineHelper.MatchTimelineTypeEnum.IN_PLAY_MATCHES_SCREEN,
-                        mInPlayContestDto.getMatches().size());
+                    TimelineHelper.addNode(parent, match.getStatus(), matchAttemptedStatus, isPlayed,
+                            isNodeLineRequired, TimelineHelper.MatchTimelineTypeEnum.IN_PLAY_MATCHES_SCREEN,
+                            mInPlayContestDto.getMatches().size());
 
                     /* Title */
-                TimelineHelper.addTextNode(titleParent, "Game " + (temp + 1), mInPlayContestDto.getMatches().size(),
-                        match.getStatus(), TimelineHelper.MatchTimelineTypeEnum.IN_PLAY_MATCHES_SCREEN, isPlayed, matchAttemptedStatus);
+                    TimelineHelper.addTextNode(titleParent, "Game " + (temp + 1), mInPlayContestDto.getMatches().size(),
+                            match.getStatus(), TimelineHelper.MatchTimelineTypeEnum.IN_PLAY_MATCHES_SCREEN, isPlayed, matchAttemptedStatus);
 
+                }
+            }else {
+                matchTimelineLayout.setVisibility(View.GONE);
             }
         }
     }

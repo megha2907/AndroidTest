@@ -62,7 +62,6 @@
                 android:layout_centerHorizontal="true"
                 android:alpha="0.9"
                 android:background="@color/black_30"
-                android:onClick="showImagePopup"
                 android:scaleType="centerCrop" />
 
         </LinearLayout>
