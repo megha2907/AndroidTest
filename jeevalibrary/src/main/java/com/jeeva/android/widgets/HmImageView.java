@@ -97,7 +97,7 @@ public class HmImageView extends ImageView {
     private boolean mImageLoaded = false;
 
     public interface OnImageLoadedListener {
-        void onImageLoaded();
+        void onImageLoaded(String url, Bitmap bitmap);
     }
 
     public HmImageView(Context context) {
@@ -251,7 +251,7 @@ public class HmImageView extends ImageView {
                                 mImageLoaded = true;
 
                                 if(null != mImageLoadedListener) {
-                                    mImageLoadedListener.onImageLoaded();
+                                    mImageLoadedListener.onImageLoaded(mUrl, bitmap);
                                 }
 
                             } else if (mDefaultImageId != 0) {
