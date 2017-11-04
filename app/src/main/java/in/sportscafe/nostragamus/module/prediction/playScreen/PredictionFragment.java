@@ -770,6 +770,18 @@ public class PredictionFragment extends NostraBaseFragment implements View.OnCli
         return new CardStack.CardEventListener() {
             @Override
             public boolean swipeEnd(int direction, float distance) {
+                /* While dragging, based on chosen direct, intented answer was shown; which should be removed now */
+                if (mCardStack != null) {
+                    View view = mCardStack.getTopView();
+                    if (view != null) {
+                        TextView dragChoiceTextView = (TextView) view.findViewById(R.id.prediction_drag_choice_textView);
+                        LinearLayout optionsLayout = (LinearLayout) view.findViewById(R.id.prediction_options_parent);
+
+                        dragChoiceTextView.setText("");
+                        optionsLayout.setVisibility(View.VISIBLE);
+                    }
+                }
+
                 boolean endSwipe = false;
                 if (distance > CARD_SWIPE_DISTANCE_TO_END_SWIPE) {
                     endSwipe = true;
@@ -779,11 +791,45 @@ public class PredictionFragment extends NostraBaseFragment implements View.OnCli
 
             @Override
             public boolean swipeStart(int i, float v) {
+                /* Show intented answer based on direction of swipe */
+                if (mCardStack != null) {
+                    View view = mCardStack.getTopView();
+                    if (view != null) {
+                        LinearLayout optionsLayout = (LinearLayout) view.findViewById(R.id.prediction_options_parent);
+                        optionsLayout.setVisibility(View.INVISIBLE);
+                    }
+                }
                 return true;
             }
 
             @Override
-            public boolean swipeContinue(int i, float v, float v1) {
+            public boolean swipeContinue(int direction, float v, float v1) {
+                if (mCardStack != null && mQuestionsCardAdapter != null) {
+                    View view = mCardStack.getTopView();
+                    PredictionQuestion question = mQuestionsCardAdapter.getItem(getTopVisibleCardPosition());
+
+                    if (view != null && question != null) {
+                        TextView dragChoiceTextView = (TextView) view.findViewById(R.id.prediction_drag_choice_textView);
+                        switch (direction) {
+                            case CardDirection.LEFT:
+                                dragChoiceTextView.setText(question.getQuestionOption1());
+                                break;
+
+                            case CardDirection.RIGHT:
+                                dragChoiceTextView.setText(question.getQuestionOption2());
+                                break;
+
+                            case CardDirection.UP:
+                                if (!TextUtils.isEmpty(question.getQuestionOption3())) {
+                                    dragChoiceTextView.setText(question.getQuestionOption3());
+                                }
+                                break;
+
+                            case CardDirection.DOWN:
+                                break;
+                        }
+                    }
+                }
                 return true;
             }
 
