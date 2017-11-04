@@ -26,6 +26,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/dim_170"
+                    android:layout_weight="1"
                     android:orientation="vertical">
 
                     <!-- Points -->
@@ -131,20 +132,21 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/dim_170"
+                    android:layout_weight="1"
                     android:orientation="horizontal">
 
                     <!-- Image option 1 -->
                     <FrameLayout
                         android:layout_width="0dp"
                         android:layout_weight="1"
-                        android:layout_height="@dimen/dim_170">
+                        android:layout_height="match_parent">
 
                         <com.jeeva.android.widgets.HmImageView
                             android:id="@+id/prediction_question_option_1_imgView"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:scaleType="fitXY"
-                            android:src="@drawable/empty_leaderboard_image"/>
+                            android:src="@drawable/prediction_left_empty_img"/>
 
                         <com.jeeva.android.widgets.customfont.CustomTextView
                             android:id="@+id/prediction_card_player_poll_1_textView"
@@ -163,14 +165,14 @@
                     <FrameLayout
                         android:layout_width="0dp"
                         android:layout_weight="1"
-                        android:layout_height="@dimen/dim_170">
+                        android:layout_height="match_parent">
 
                         <com.jeeva.android.widgets.HmImageView
                             android:id="@+id/prediction_question_option_2_imgView"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:scaleType="fitXY"
-                            android:src="@drawable/empty_leaderboard_image"/>
+                            android:src="@drawable/prediction_right_empty_img"/>
 
                         <com.jeeva.android.widgets.customfont.CustomTextView
                             android:id="@+id/prediction_card_player_poll_2_textView"
