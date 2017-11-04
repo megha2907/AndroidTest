@@ -537,37 +537,41 @@ public class PredictionFragment extends NostraBaseFragment implements View.OnCli
     }
 
     private void onPlayerPollClicked() {
-        if (canApplyPowerUp(PowerUpEnum.PLAYER_POLL)) {
+        if (isEnoughPowerUpAvailableToApply(PowerUpEnum.PLAYER_POLL)) {
+            if (canAddPlayerPollPowerUpCheckUiLayout()) {
 
-            int questionId = getTopVisibleCardQuestionId();
-            if (mPlayScreenData != null && questionId >= 0) {
+                int questionId = getTopVisibleCardQuestionId();
+                if (mPlayScreenData != null && questionId >= 0) {
 
-                showProgress();
-                PredictionPlayersPollDataProvider playersPollDataProvider = new PredictionPlayersPollDataProvider();
-                playersPollDataProvider.getPlayersPoll(questionId, mPlayScreenData.getRoomId(),
-                        new PredictionPlayersPollDataProvider.PlayersPollDataProviderListener() {
-                            @Override
-                            public void onData(int status, @Nullable PlayerPollResponse playersPolls) {
-                                hideProgress();
-                                onPlayerPollSuccess(playersPolls);
-                            }
+                    showProgress();
+                    PredictionPlayersPollDataProvider playersPollDataProvider = new PredictionPlayersPollDataProvider();
+                    playersPollDataProvider.getPlayersPoll(questionId, mPlayScreenData.getRoomId(),
+                            new PredictionPlayersPollDataProvider.PlayersPollDataProviderListener() {
+                                @Override
+                                public void onData(int status, @Nullable PlayerPollResponse playersPolls) {
+                                    hideProgress();
+                                    onPlayerPollSuccess(playersPolls);
+                                }
 
-                            @Override
-                            public void onError(int status) {
-                                hideProgress();
-                                handleError(null, status);
-                            }
-                        });
+                                @Override
+                                public void onError(int status) {
+                                    hideProgress();
+                                    handleError(null, status);
+                                }
+                            });
+                } else {
+                    Log.e(TAG, "QuestionId / roomId can not be found for players-poll info");
+                    handleError(null, -1);
+                }
             } else {
-                Log.e(TAG, "QuestionId / roomId can not be found for players-poll info");
-                handleError(null, -1);
+                Log.d(TAG, "Player poll already applied on the card");
             }
         } else {
             onPowerUpBankClicked();
         }
     }
 
-    private boolean canApplyPowerUp(PowerUpEnum powerUpEnum) {
+    private boolean isEnoughPowerUpAvailableToApply(PowerUpEnum powerUpEnum) {
         boolean canApply = false;
 
         if (mCurrentPowerUp != null) {
@@ -660,7 +664,7 @@ public class PredictionFragment extends NostraBaseFragment implements View.OnCli
     }
 
     private void onNoNegativeClicked() {
-        if (canApplyPowerUp(PowerUpEnum.NO_NEGATIVE)) {
+        if (isEnoughPowerUpAvailableToApply(PowerUpEnum.NO_NEGATIVE)) {
 
             if (mCardStack != null && mCardStack.getTopView() != null && mUiHelper != null) {
                 View topView = mCardStack.getTopView();
@@ -677,7 +681,7 @@ public class PredictionFragment extends NostraBaseFragment implements View.OnCli
     }
 
     private void onDoublerPowerUpClicked() {
-        if (canApplyPowerUp(PowerUpEnum.DOUBLER)) {
+        if (isEnoughPowerUpAvailableToApply(PowerUpEnum.DOUBLER)) {
 
             if (mCardStack != null && mCardStack.getTopView() != null && mUiHelper != null) {
                 View topView = mCardStack.getTopView();
@@ -748,6 +752,13 @@ public class PredictionFragment extends NostraBaseFragment implements View.OnCli
         });
     }
 
+    /**
+     * Check that powerup already applied & UI is created for the same question/card
+     * so that multi-tap can be prevented
+     * @param powerUpParent
+     * @param powerUpEnum
+     * @return
+     */
     private boolean canAddPowerUpCheckUiLayout(RelativeLayout powerUpParent, PowerUpEnum powerUpEnum) {
         boolean canAdd = true;
         if (powerUpParent.getChildCount() > 0) {
@@ -756,6 +767,21 @@ public class PredictionFragment extends NostraBaseFragment implements View.OnCli
                 if (powerupView == powerUpEnum) {
                     canAdd = false;
                 }
+            }
+        }
+        return canAdd;
+    }
+
+    private boolean canAddPlayerPollPowerUpCheckUiLayout() {
+        boolean canAdd = true;
+        if (mCardStack != null && mCardStack.getTopView() != null) {
+            View view = mCardStack.getTopView();
+            TextView playerPollOption1TextView = (TextView) view.findViewById(R.id.prediction_card_player_poll_1_textView);
+            TextView playerPollOption2TextView = (TextView) view.findViewById(R.id.prediction_card_player_poll_2_textView);
+
+            if (playerPollOption1TextView.getVisibility() == View.VISIBLE ||
+                    playerPollOption2TextView.getVisibility() == View.VISIBLE) {
+                canAdd = false;
             }
         }
         return canAdd;
