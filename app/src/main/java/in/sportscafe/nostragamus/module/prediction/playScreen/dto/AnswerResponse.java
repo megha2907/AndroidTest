@@ -11,11 +11,22 @@ public class AnswerResponse {
     @SerializedName("data")
     private AnswerResponseData answerResponseData;
 
+    @SerializedName("error")
+    private String error;
+
     public AnswerResponseData getAnswerResponseData() {
         return answerResponseData;
     }
 
     public void setAnswerResponseData(AnswerResponseData answerResponseData) {
         this.answerResponseData = answerResponseData;
+    }
+
+    public String getError() {
+        return error;
+    }
+
+    public void setError(String error) {
+        this.error = error;
     }
 }
