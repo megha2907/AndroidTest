@@ -251,9 +251,12 @@ public class MyResultsActivity extends NostragamusActivity implements MyResultsV
             screenData.setChallengeId(mResultScreenData.getChallengeId());
             screenData.setChallengeName(mResultScreenData.getChallengeName());
             screenData.setChallengeStartTime(mResultScreenData.getChallengeStartTime());
+            screenData.setPseudoRoomId(mResultScreenData.getRoomId());
             if (isHeadlessFlow()) {
                 screenData.setHeadLessFlow(true);
-                screenData.setPseudoRoomId(mResultScreenData.getRoomId());
+            }
+            if (isPlayingPseudoGame()) {
+                screenData.setPseudoGameFlow(true);
             }
 
             Bundle args = new Bundle();

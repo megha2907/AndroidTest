@@ -1008,6 +1008,21 @@ public class PredictionFragment extends NostraBaseFragment implements View.OnCli
                                 }
                                 handleError("Could not save your prediction, try again!", -1);
                             }
+
+                            @Override
+                            public void onServerSentError(String error) {
+                                hideProgress();
+                                /* Undo card */
+                                if (mCardStack != null) {
+                                    mCardStack.undo();
+                                }
+
+                                String errorMsg = "Could not save your prediction, try again!";
+                                if (!TextUtils.isEmpty(error)) {
+                                    errorMsg = error;
+                                }
+                                handleError(errorMsg, -1);
+                            }
                         });
             }
         } else {

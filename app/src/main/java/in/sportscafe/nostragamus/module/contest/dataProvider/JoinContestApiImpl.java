@@ -39,7 +39,7 @@ public class JoinContestApiImpl {
             request.setChallengeName(challengeName);
             request.setContestId(contestId);
 
-            /* Should send pseudoRoomId / roomId ONLY in headless flow of inPlay
+            /* Should send pseudoRoomId / roomId ONLY in headless flow OR PseudoGame flow
              * else should pass 0 */
             if (shouldSendPseudoRoomId) {
                 request.setPseudoRoomId(pseudoRoomId);
