@@ -3,7 +3,6 @@ package in.sportscafe.nostragamus.module.play.myresults;
 import android.content.Context;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.widget.TextView;
 
 import com.jeeva.android.ExceptionTracker;
 
@@ -19,6 +18,7 @@ import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
 import in.sportscafe.nostragamus.module.challengeCompleted.dto.CompletedContestDto;
 import in.sportscafe.nostragamus.module.common.ApiResponse;
+import in.sportscafe.nostragamus.module.common.ErrorResponse;
 import in.sportscafe.nostragamus.module.inPlay.dto.InPlayContestDto;
 import in.sportscafe.nostragamus.module.inPlay.ui.ResultsScreenDataDto;
 import in.sportscafe.nostragamus.module.play.myresults.dto.ReplayPowerupResponse;
@@ -316,7 +316,20 @@ public class MyResultsModelImpl implements MyResultsModel, MyResultsAdapter.OnMy
             @Override
             public void onResponse(Call<ApiResponse> call, Response<ApiResponse> response) {
                 super.onResponse(call, response);
-                if (response.isSuccessful()) {
+                if (response.code() == 400 && response.errorBody() != null) {
+
+                    ErrorResponse errorResponse = null;
+                    try {
+                        errorResponse = MyWebService.getInstance().getObjectFromJson(response.errorBody().string(), ErrorResponse.class);
+                    } catch (Exception e) {e.printStackTrace();}
+
+                    if (errorResponse != null) {
+                        mResultsModelListener.onSaveEditedAnswerServerError(errorResponse.getError());
+                    } else {
+                        mResultsModelListener.onFailedChangeAnswerResponse();
+                    }
+
+                } else if (response.isSuccessful()) {
                     if (response.body().equals(null)) {
                         mResultsModelListener.onFailedChangeAnswerResponse();
                     } else {
@@ -391,5 +404,7 @@ public class MyResultsModelImpl implements MyResultsModel, MyResultsAdapter.OnMy
         void onFailedChangeAnswerResponse();
 
         void StartProgressbar();
+
+        void onSaveEditedAnswerServerError(String msg);
     }
 }
