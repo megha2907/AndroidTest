@@ -323,7 +323,7 @@ public class PredictionFragment extends NostraBaseFragment implements View.OnCli
                             topLayout.setVisibility(View.VISIBLE);
 
                             bottomLayout.clearAnimation();
-                            bottomLayout.animate().translationYBy(-bottomLayout.getHeight()).setDuration(1000).
+                            bottomLayout.animate().translationYBy(bottomLayout.getHeight()).setDuration(1000).
                                     setInterpolator(new LinearInterpolator()).
                                     setListener(new Animator.AnimatorListener() {
                                         @Override

@@ -73,7 +73,7 @@ public class PowerupBankTransferToPlayActivity extends NostragamusActivity imple
             getWindowManager().getDefaultDisplay().getRealMetrics(dm);
 
             RelativeLayout.LayoutParams rlp = (RelativeLayout.LayoutParams) findViewById(R.id.transfer_powerup_bottom_empty_layout).getLayoutParams();
-            rlp.height = (int) getResources().getDimension(R.dimen.dim_80); //(dm.heightPixels * 0.1);
+            rlp.height = (int) getResources().getDimension(R.dimen.dim_64); //(dm.heightPixels * 0.1);
 
             int total = dm.heightPixels - rlp.height;
             rlp = (RelativeLayout.LayoutParams) findViewById(R.id.transfer_powerup_top_layout).getLayoutParams();

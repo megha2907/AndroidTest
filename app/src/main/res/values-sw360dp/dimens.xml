@@ -204,5 +204,6 @@
     <dimen name="dim_64">64dp</dimen>
     <dimen name="dim_35">35dp</dimen>
     <dimen name="dim_44">44dp</dimen>
+    <dimen name="dim_34">34dp</dimen>
 
 </resources>
