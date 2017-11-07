@@ -28,6 +28,7 @@ import java.util.List;
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.R;
+import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
 import in.sportscafe.nostragamus.module.contest.dto.ContestScreenData;
 import in.sportscafe.nostragamus.module.contest.ui.ContestsActivity;
 import in.sportscafe.nostragamus.module.inPlay.adapter.MatchesAdapterAction;
@@ -145,6 +146,7 @@ public class NewChallengesMatchesFragment extends BaseFragment implements View.O
                 switch (actionType) {
                     case MatchesAdapterAction.PLAY:
                         joinPseudoContest(match);
+                        NostragamusAnalytics.getInstance().trackClickEvent(Constants.AnalyticsCategory.NEW_CHALLENGES_GAMES, String.valueOf(match.getMatchId()));
                         break;
                 }
             }
@@ -374,6 +376,7 @@ public class NewChallengesMatchesFragment extends BaseFragment implements View.O
     private void onWalletClicked() {
         if (mNewChallengeMatchFragmentListener != null) {
             mNewChallengeMatchFragmentListener.onWalletClicked();
+            NostragamusAnalytics.getInstance().trackClickEvent(Constants.AnalyticsCategory.NEW_CHALLENGES_GAMES, Constants.AnalyticsClickLabels.WALLET);
         }
     }
 
@@ -394,6 +397,9 @@ public class NewChallengesMatchesFragment extends BaseFragment implements View.O
             args.putParcelable(Constants.BundleKeys.CONTEST_SCREEN_DATA, Parcels.wrap(screenData));
             args.putInt(Constants.BundleKeys.SCREEN_LAUNCHED_FROM_PARENT, ContestsActivity.LaunchedFrom.NEW_CHALLENGE_MATCHES);
             mNewChallengeMatchFragmentListener.launchContestActivity(ContestsActivity.LaunchedFrom.NEW_CHALLENGE_MATCHES, args);
+
+            NostragamusAnalytics.getInstance().trackClickEvent(Constants.AnalyticsCategory.NEW_CHALLENGES_GAMES, Constants.AnalyticsClickLabels.JOIN_CONTEST);
+
         }
     }
 

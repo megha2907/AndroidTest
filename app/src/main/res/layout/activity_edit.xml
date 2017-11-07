@@ -22,16 +22,16 @@
                 android:id="@+id/rl1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
                 android:layout_below="@+id/edit_profile_toolbar"
-                android:background="@drawable/profile_screen_bg">
+                android:background="@drawable/profile_screen_bg"
+                android:orientation="vertical">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
                     android:gravity="center"
-                    android:minHeight="@dimen/dim_60">
+                    android:minHeight="@dimen/dim_60"
+                    android:orientation="horizontal">
 
                     <com.jeeva.android.widgets.customfont.CustomTextView
                         android:id="@+id/edit_tv_screen_title"
@@ -52,8 +52,8 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:gravity="center">
+                    android:gravity="center"
+                    android:orientation="vertical">
 
                     <com.jeeva.android.widgets.HmImageView
                         android:id="@+id/edit_iv_user_image"
@@ -80,9 +80,9 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
                     android:gravity="center"
-                    android:minHeight="@dimen/dim_60">
+                    android:minHeight="@dimen/dim_60"
+                    android:orientation="vertical">
 
                     <com.jeeva.android.widgets.customfont.CustomTextView
                         android:id="@+id/edit_tv_upload_pic"
@@ -104,9 +104,9 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
                 android:layout_marginLeft="@dimen/dim_16"
-                android:layout_marginRight="@dimen/dim_16">
+                android:layout_marginRight="@dimen/dim_16"
+                android:orientation="vertical">
 
                 <com.jeeva.android.widgets.customfont.CustomTextView
                     android:id="@+id/edit_tv_nickname_label"
@@ -122,14 +122,14 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/dim_40"
-                    android:orientation="horizontal"
+                    android:layout_marginTop="@dimen/dim_6"
                     android:gravity="center_vertical"
-                    android:layout_marginTop="@dimen/dim_6">
+                    android:orientation="horizontal">
 
                     <ImageView
                         style="@style/EditTextIconStyle"
-                        android:src="@drawable/profile_edittext_icon"
-                        android:padding="@dimen/dim_12"/>
+                        android:padding="@dimen/dim_12"
+                        android:src="@drawable/profile_edittext_icon" />
 
                     <com.jeeva.android.widgets.customfont.CustomEditText
                         android:id="@+id/edit_et_nickname_new"
@@ -145,8 +145,8 @@
                     android:layout_marginTop="@dimen/dim_6"
                     android:textColor="@color/radical_red"
                     android:textSize="@dimen/sp_14"
-                    app:typeface="lato_regular"
-                    android:visibility="gone"/>
+                    android:visibility="gone"
+                    app:typeface="lato_regular" />
 
             </LinearLayout>
 
@@ -155,10 +155,10 @@
                 android:id="@+id/edit_profile_referral_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_marginTop="@dimen/dim_16"
                 android:layout_marginLeft="@dimen/dim_16"
-                android:layout_marginRight="@dimen/dim_16">
+                android:layout_marginRight="@dimen/dim_16"
+                android:layout_marginTop="@dimen/dim_16"
+                android:orientation="vertical">
 
                 <com.jeeva.android.widgets.customfont.CustomTextView
                     android:id="@+id/edit_profile_tv_referral_label"
@@ -173,14 +173,14 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/dim_40"
-                    android:orientation="horizontal"
+                    android:layout_marginTop="@dimen/dim_6"
                     android:gravity="center_vertical"
-                    android:layout_marginTop="@dimen/dim_6">
+                    android:orientation="horizontal">
 
                     <ImageView
                         style="@style/EditTextIconStyle"
-                        android:src="@drawable/referral_edittext_icon"
-                        android:padding="@dimen/dim_12"/>
+                        android:padding="@dimen/dim_12"
+                        android:src="@drawable/referral_edittext_icon" />
 
                     <com.jeeva.android.widgets.customfont.CustomEditText
                         android:id="@+id/edit_profile_tv_referral_code_editText"
@@ -198,8 +198,8 @@
                     android:text="edit_profile_referral_code_error_text"
                     android:textColor="@color/radical_red"
                     android:textSize="@dimen/sp_14"
-                    app:typeface="lato_regular"
-                    android:visibility="gone"/>
+                    android:visibility="gone"
+                    app:typeface="lato_regular" />
 
             </LinearLayout>
 
@@ -224,24 +224,59 @@
 
             </android.support.v7.widget.Toolbar>
 
-            <android.support.v7.widget.AppCompatCheckBox
-                android:id="@+id/edit_disclaimer_checkbox"
+            <RelativeLayout
+                android:id="@+id/edit_disclaimer_layout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/edit_et_nickname_new"
                 android:layout_marginTop="@dimen/dim_16"
-                android:layout_marginLeft="@dimen/dim_16"
-                android:layout_marginRight="@dimen/dim_16"
-                android:buttonTint="@color/line_separator_two"
-                android:checked="false"
-                android:gravity="left"
-                android:paddingLeft="@dimen/dim_2"
-                android:paddingTop="@dimen/dim_2"
-                android:text="@string/profile_disclaimer"
-                android:textColor="@color/white_60"
-                android:textSize="@dimen/sp_12"
-                android:visibility="gone"
-                app:typeface="lato_regular" />
+                android:visibility="visible">
+
+                <android.support.v7.widget.AppCompatCheckBox
+                    android:id="@+id/edit_disclaimer_checkbox"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dim_10"
+                    android:buttonTint="#186aa2"
+                    android:checked="false"
+                    android:gravity="left"
+                    android:scaleX="0.8"
+                    android:scaleY="0.8"
+                    android:paddingLeft="@dimen/dim_2"
+                    android:paddingTop="@dimen/dim_2"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/sp_12"
+                    app:typeface="lato_regular" />
+
+                <com.jeeva.android.widgets.customfont.CustomTextView
+                    android:id="@+id/edit_disclaimer_heading"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dim_2"
+                    android:layout_marginTop="@dimen/dim_6"
+                    android:layout_toRightOf="@+id/edit_disclaimer_checkbox"
+                    android:text="Click here to get predicting!"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/sp_13"
+                    app:typeface="lato_bold" />
+
+                <com.jeeva.android.widgets.customfont.CustomTextView
+                    android:id="@+id/edit_disclaimer_sub_heading"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dim_2"
+                    android:layout_marginTop="@dimen/dim_3"
+                    android:layout_marginRight="@dimen/dim_20"
+                    android:layout_below="@+id/edit_disclaimer_heading"
+                    android:layout_toRightOf="@+id/edit_disclaimer_checkbox"
+                    android:text="@string/profile_disclaimer"
+                    android:textColor="@color/white_999999"
+                    android:textSize="@dimen/sp_11"
+                    android:gravity="left"
+                    app:typeface="lato_regular" />
+
+            </RelativeLayout>
+
 
         </LinearLayout>
 

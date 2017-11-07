@@ -119,23 +119,27 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
         View myResultView = getLayoutInflater().inflate(R.layout.inflater_schedule_match_results_row, parent, false);
         MyResultViewHolder holder = new MyResultViewHolder(myResultView);
 
-        String startTime = match.getStartTime().replace("+00:00", ".000Z");
-        com.jeeva.android.Log.d("StartTime", startTime);
+
+        if (!TextUtils.isEmpty(match.getStartTime())) {
+            String startTime = match.getStartTime().replace("+00:00", ".000Z");
+            com.jeeva.android.Log.d("StartTime", startTime);
 //        String startTime = "2017-01-27T18:00:00.000Z";
-        long startTimeMs = TimeUtils.getMillisecondsFromDateString(
-                startTime,
-                Constants.DateFormats.FORMAT_DATE_T_TIME_ZONE,
-                Constants.DateFormats.GMT
-        );
+            long startTimeMs = TimeUtils.getMillisecondsFromDateString(
+                    startTime,
+                    Constants.DateFormats.FORMAT_DATE_T_TIME_ZONE,
+                    Constants.DateFormats.GMT
+            );
 
-        mMatchStartTimeMs = startTimeMs;
+            mMatchStartTimeMs = startTimeMs;
 
-        int dayOfMonth = Integer.parseInt(TimeUtils.getDateStringFromMs(startTimeMs, "d"));
-        // Setting date of the Match
-        holder.mTvDate.setText(dayOfMonth + AppSnippet.ordinalOnly(dayOfMonth) + " " +
-                TimeUtils.getDateStringFromMs(startTimeMs, "MMM") + ", "
-                + TimeUtils.getDateStringFromMs(startTimeMs, Constants.DateFormats.HH_MM_AA)
-        );
+            int dayOfMonth = Integer.parseInt(TimeUtils.getDateStringFromMs(startTimeMs, "d"));
+            // Setting date of the Match
+            holder.mTvDate.setText(dayOfMonth + AppSnippet.ordinalOnly(dayOfMonth) + " " +
+                    TimeUtils.getDateStringFromMs(startTimeMs, "MMM") + ", "
+                    + TimeUtils.getDateStringFromMs(startTimeMs, Constants.DateFormats.HH_MM_AA)
+            );
+
+        }
 
 
         if (null == match.getStage()) {
@@ -273,7 +277,7 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
             }
         }
 
-        initMatchStarted(startTimeMs);
+        initMatchStarted(mMatchStartTimeMs);
         holder.mRlLeaderBoard.setTag(match);
 
         List<Question> questions = match.getQuestions();
@@ -419,6 +423,7 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
                     bundle.putInt(BundleKeys.PLAYER_ID, match.getHighestScorerId());
                     bundle.putInt(BundleKeys.MATCH_ID, match.getId());
                     bundle.putInt(BundleKeys.ROOM_ID, match.getRoomId());
+                    bundle.putInt(BundleKeys.HIGHEST_PLAYER_ROOM_ID, match.getHighestPlayerRoomId());
                     bundle.putString(BundleKeys.PLAYER_NAME, match.getHighestScorerName());
                     bundle.putString(BundleKeys.PLAYER_PHOTO, match.getHighestScorerPhoto());
                     navigateToResultsPeek(v.getContext(), bundle);
@@ -452,7 +457,9 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
         tvotheroption.setCompoundDrawablePadding(10);
         tvNeitherAnswer.setCompoundDrawablePadding(10);*/
 
-        answerId = question.getAnswerId();
+        if (question.getAnswerId() != null) {
+            answerId = question.getAnswerId();
+        }
 
         if (question.getAnswerPoints() != null) {
 
@@ -1065,6 +1072,9 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
                 context.startActivity(intent);
             }
 
+            NostragamusAnalytics.getInstance().trackClickEvent(Constants.AnalyticsCategory.RESULTS,
+                    Constants.AnalyticsClickLabels.LEADERBOARD + " - InPlay");
+
         } else if (mCompletedContestDto != null) {
 
             Bundle args = new Bundle();
@@ -1079,19 +1089,20 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
                 context.startActivity(intent);
             }
 
+            NostragamusAnalytics.getInstance().trackClickEvent(Constants.AnalyticsCategory.RESULTS,
+                    Constants.AnalyticsClickLabels.LEADERBOARD + " - History");
+
+
         } else {
 
-            //todo Add challengeId , challenge Name , contest id , contest name in the Matches Api
-
-            /*
-
+            /* For Match Results Notifications */
             if (leaderBoardMatch != null) {
 
                 InPlayContestDto inPlayContestDto = new InPlayContestDto();
                 inPlayContestDto.setChallengeId(leaderBoardMatch.getChallengeId());
                 inPlayContestDto.setChallengeName(leaderBoardMatch.getChallengeName());
                 inPlayContestDto.setRoomId(leaderBoardMatch.getRoomId());
-                inPlayContestDto.setContestId(leaderBoardMatch.getContestId);
+                inPlayContestDto.setContestId(leaderBoardMatch.getContestId());
                 inPlayContestDto.setContestName(leaderBoardMatch.getContestName());
 
                 Bundle args = new Bundle();
@@ -1106,13 +1117,12 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
                     context.startActivity(intent);
                 }
 
+                NostragamusAnalytics.getInstance().trackClickEvent(Constants.AnalyticsCategory.RESULTS,
+                        Constants.AnalyticsClickLabels.LEADERBOARD + " - Notification");
+
             } else {
                 Log.i(Constants.Alerts.SOMETHING_WRONG, "InPlayContestDto = null");
             }
-
-            */
-
-            Log.i(Constants.Alerts.SOMETHING_WRONG, "InPlayContestDto = null");
 
         }
 

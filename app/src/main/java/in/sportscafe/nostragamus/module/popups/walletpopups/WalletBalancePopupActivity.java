@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.jeeva.android.BaseActivity;
@@ -11,12 +12,17 @@ import com.jeeva.android.BaseActivity;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.navigation.wallet.WalletHelper;
 import in.sportscafe.nostragamus.module.navigation.wallet.addMoney.AddWalletMoneyActivity;
+import in.sportscafe.nostragamus.utils.AnimationHelper;
 
 /**
  * Created by deepanshi on 8/25/17.
  */
 
 public class WalletBalancePopupActivity extends BaseActivity implements View.OnClickListener {
+
+    private LinearLayout mWalletMoneyInfoLayout;
+    private LinearLayout mPromoMoneyInfoLayout;
+    private LinearLayout mWinningInfoLayout;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -37,6 +43,16 @@ public class WalletBalancePopupActivity extends BaseActivity implements View.OnC
         TextView promoBalanceTextView = (TextView) findViewById(R.id.wallet_balance_promo_tv);
         TextView winningsTextView = (TextView) findViewById(R.id.wallet_balance_winnings_tv);
 
+        mWalletMoneyInfoLayout = (LinearLayout)findViewById(R.id.wallet_deposit_info_layout);
+        mPromoMoneyInfoLayout = (LinearLayout)findViewById(R.id.wallet_promo_info_layout);
+        mWinningInfoLayout = (LinearLayout) findViewById(R.id.wallet_winning_info_layout);
+        mWalletMoneyInfoLayout.setOnClickListener(this);
+        mPromoMoneyInfoLayout.setOnClickListener(this);
+        mWalletMoneyInfoLayout.setOnClickListener(this);
+        findViewById(R.id.wallet_popup_card_deposit_layout).setOnClickListener(this);
+        findViewById(R.id.wallet_popup_card_promo_layout).setOnClickListener(this);
+        findViewById(R.id.wallet_popup_card_winnings_layout).setOnClickListener(this);
+
         double walletBalAmount = WalletHelper.getTotalBalance();
         tvBalanceAmount.setText(WalletHelper.getFormattedStringOfAmount(walletBalAmount));
         depositTextView.setText(WalletHelper.getFormattedStringOfAmount(WalletHelper.getDepositAmount()));
@@ -54,11 +70,47 @@ public class WalletBalancePopupActivity extends BaseActivity implements View.OnC
             case R.id.wallet_balance_add_money_btn:
                 onAddMoneyClicked();
                 break;
+
+            case R.id.wallet_popup_card_deposit_layout:
+                onMoneyInfoLayoutClicked();
+                break;
+
+            case R.id.wallet_popup_card_promo_layout:
+                onPayoutInfoLayoutClicked();
+                break;
+
+            case R.id.wallet_popup_card_winnings_layout:
+                onWinningInfoLayoutClicked();
+                break;
         }
     }
 
     private void onAddMoneyClicked() {
         Intent intent = new Intent(this, AddWalletMoneyActivity.class);
         startActivity(intent);
+    }
+
+    private void onWinningInfoLayoutClicked() {
+        if (mWinningInfoLayout.getVisibility() == View.VISIBLE) {
+            AnimationHelper.collapse(mWinningInfoLayout);
+        } else {
+            AnimationHelper.expand(mWinningInfoLayout);
+        }
+    }
+
+    private void onPayoutInfoLayoutClicked() {
+        if (mPromoMoneyInfoLayout.getVisibility() == View.VISIBLE) {
+            AnimationHelper.collapse(mPromoMoneyInfoLayout);
+        } else {
+            AnimationHelper.expand(mPromoMoneyInfoLayout);
+        }
+    }
+
+    private void onMoneyInfoLayoutClicked() {
+        if (mWalletMoneyInfoLayout.getVisibility() == View.VISIBLE) {
+            AnimationHelper.collapse(mWalletMoneyInfoLayout);
+        } else {
+            AnimationHelper.expand(mWalletMoneyInfoLayout);
+        }
     }
 }

@@ -274,8 +274,8 @@
                     <com.jeeva.android.widgets.customfont.CustomEditText
                         android:id="@+id/low_bal_add_amount_editText"
                         style="@style/EditTextStyle"
-                        android:inputType="numberDecimal"
-                        android:imeOptions="actionDone"/>
+                        android:imeOptions="actionDone"
+                        android:inputType="number"/>
 
                 </com.jeeva.android.widgets.ShadowLayout>
 

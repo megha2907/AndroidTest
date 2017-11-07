@@ -192,7 +192,7 @@ public interface NostragamusService {
     @GET("v3/game/getPlayerMatchResult")
     Call<MyResultsResponse> getPlayerResult(@Query("player_id") Integer playerId,
                                             @Query("match_id") Integer matchId,
-                                            @Query("room_id") Integer roomId);
+                                            @Query("room_id") int roomId);
 
     @GET("v3/game/getMatchAnswersStats")
     Call<MatchAnswerStatsResponse> playerResultPercentage(@Query("match_id") Integer matchId);

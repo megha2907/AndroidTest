@@ -505,7 +505,13 @@ public class TimelineAdapter extends Adapter<Match, TimelineAdapter.ViewHolder> 
                     break;
                 case R.id.schedule_row_ll_waiting_for_result:
                     NostragamusAnalytics.getInstance().trackTimeline(AnalyticsActions.OTHERS_RESULTS_WAITING);
-                    launchResultsScreen(context,match,Constants.MatchStatusStrings.ANSWER);
+
+                    if (mPlayerId != null) {
+                        navigateToResultsPeek(context, bundle);
+                    } else {
+                        launchResultsScreen(context,match,Constants.MatchStatusStrings.ANSWER);
+                    }
+
                     break;
             }
         }

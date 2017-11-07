@@ -29,6 +29,7 @@ import in.sportscafe.nostragamus.Constants.BundleKeys;
 import in.sportscafe.nostragamus.Constants.Notifications;
 import in.sportscafe.nostragamus.Constants.RequestCodes;
 import in.sportscafe.nostragamus.R;
+import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
 import in.sportscafe.nostragamus.module.common.NostragamusActivity;
 import in.sportscafe.nostragamus.module.contest.contestDetailsAfterJoining.InplayContestDetailsActivity;
 import in.sportscafe.nostragamus.module.contest.dto.ContestScreenData;
@@ -114,6 +115,9 @@ public class MyResultsActivity extends NostragamusActivity implements MyResultsV
 
             Button btnJoinContest = (Button) findViewById(R.id.results_join_contest_button);
             btnJoinContest.setOnClickListener(this);
+
+            NostragamusAnalytics.getInstance().trackScreenShown(Constants.AnalyticsCategory.RESULTS, Constants.AnalyticsClickLabels.PSEUDO_GAME_FLOW);
+
         }
 
     }
@@ -236,6 +240,7 @@ public class MyResultsActivity extends NostragamusActivity implements MyResultsV
 
             case R.id.results_join_contest_button:
                 navigateToContestScreen();
+                NostragamusAnalytics.getInstance().trackClickEvent(Constants.AnalyticsCategory.RESULTS, Constants.AnalyticsClickLabels.JOIN_CONTEST);
                 break;
 
             case R.id.my_results_challenge_back_btn_layout:

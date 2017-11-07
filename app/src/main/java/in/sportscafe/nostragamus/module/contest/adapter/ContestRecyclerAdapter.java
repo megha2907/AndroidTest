@@ -20,6 +20,7 @@ import java.util.List;
 
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
+import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
 import in.sportscafe.nostragamus.module.contest.dto.Contest;
 
 /**
@@ -166,9 +167,9 @@ public class ContestRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                     viewHolder.mTvPrizes.setText("No Prizes");
                 } else {
                     viewHolder.mTvPrizes.setText(Constants.RUPEE_SYMBOL + String.valueOf(contest.getPrizes()));
+                    viewHolder.mTvNumberOfPrizes.setText("(" + contest.getSubtitle() + ")");
                 }
 
-                viewHolder.mTvNumberOfPrizes.setText("(" + contest.getSubtitle() + ")");
                 viewHolder.mTvFilledContests.setText(String.valueOf(contest.getFilledRooms()));
                 viewHolder.mTvContestsAvailable.setText(String.valueOf(contest.getFillingRooms()));
 
@@ -322,12 +323,14 @@ public class ContestRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                             clickListener.onContestClicked(getContestBundle(adapterPos));
                         }
                     }
+                    NostragamusAnalytics.getInstance().trackClickEvent(Constants.AnalyticsCategory.CONTEST, Constants.AnalyticsClickLabels.CARD);
                     break;
 
                 case R.id.pool_row_ll_reward_layout:
                     if (clickListener != null) {
                         clickListener.onPrizesClicked(getContestBundle(getAdapterPosition()));
                     }
+                    NostragamusAnalytics.getInstance().trackClickEvent(Constants.AnalyticsCategory.CONTEST, Constants.AnalyticsClickLabels.PRIZES);
                     break;
 
                 case R.id.pool_row_iv_contest_type:
@@ -335,6 +338,7 @@ public class ContestRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                         Bundle args = getContestBundle(getAdapterPosition());
                         clickListener.onRulesClicked(args);
                     }
+                    NostragamusAnalytics.getInstance().trackClickEvent(Constants.AnalyticsCategory.CONTEST, Constants.AnalyticsClickLabels.MODE);
                     break;
 
                 case R.id.pool_row_ll_member_layout:
@@ -342,6 +346,7 @@ public class ContestRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                         Bundle args = getContestBundle(getAdapterPosition());
                         clickListener.onEntriesClicked(args);
                     }
+                    NostragamusAnalytics.getInstance().trackClickEvent(Constants.AnalyticsCategory.CONTEST, Constants.AnalyticsClickLabels.MAX_ENTRIES);
                     break;
 
                 case R.id.pool_row_ll_entry_fee_layout:
@@ -349,6 +354,7 @@ public class ContestRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                         Bundle args = getContestBundle(getAdapterPosition());
                         clickListener.onEntryFeeClicked(args);
                     }
+                    NostragamusAnalytics.getInstance().trackClickEvent(Constants.AnalyticsCategory.CONTEST, Constants.AnalyticsClickLabels.ENTRY_FEE);
                     break;
 
             }
