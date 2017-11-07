@@ -2,10 +2,12 @@ package in.sportscafe.nostragamus.module.prediction.playScreen.dataProvider;
 
 import android.support.annotation.Nullable;
 
+import com.google.gson.Gson;
 import com.jeeva.android.Log;
 
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Nostragamus;
+import in.sportscafe.nostragamus.module.common.ErrorResponse;
 import in.sportscafe.nostragamus.module.prediction.playScreen.dto.PlayerPollResponse;
 import in.sportscafe.nostragamus.module.prediction.playScreen.dto.PlayersPollRequest;
 import in.sportscafe.nostragamus.webservice.ApiCallBack;
@@ -46,15 +48,33 @@ public class PredictionPlayersPollDataProvider {
             public void onResponse(Call<PlayerPollResponse> call, Response<PlayerPollResponse> response) {
                 super.onResponse(call, response);
 
-                if (response.isSuccessful() && response.body() != null && response.body() != null) {
-                    Log.d(TAG, "Server response success");
+                if (response.code() == 400 && response.errorBody() != null) {
+                    Log.d(TAG, "Response code 400");
+                    ErrorResponse errorResponse = null;
+
+                    try {
+                        errorResponse = new Gson().fromJson(response.errorBody().string(), ErrorResponse.class);
+                    } catch (Exception e) {e.printStackTrace();}
                     if (listener != null) {
-                        listener.onData(Constants.DataStatus.FROM_SERVER_API_SUCCESS, response.body());
+                        if (errorResponse != null) {
+                            listener.onServerSentError(errorResponse.getError());
+                        } else {
+                            listener.onError(Constants.DataStatus.FROM_SERVER_API_FAILED);
+                        }
                     }
+
                 } else {
-                    Log.d(TAG, "Server response null");
-                    if (listener != null) {
-                        listener.onError(Constants.DataStatus.FROM_SERVER_API_FAILED);
+
+                    if (response.isSuccessful() && response.body() != null) {
+                        Log.d(TAG, "Server response success");
+                        if (listener != null) {
+                            listener.onData(Constants.DataStatus.FROM_SERVER_API_SUCCESS, response.body());
+                        }
+                    } else {
+                        Log.d(TAG, "Server response null");
+                        if (listener != null) {
+                            listener.onError(Constants.DataStatus.FROM_SERVER_API_FAILED);
+                        }
                     }
                 }
             }
@@ -74,6 +94,7 @@ public class PredictionPlayersPollDataProvider {
     public interface PlayersPollDataProviderListener {
         void onData(int status, @Nullable PlayerPollResponse playersPolls);
         void onError(int status);
+        void onServerSentError(String msg);
     }
 
 }

@@ -558,6 +558,15 @@ public class PredictionFragment extends NostraBaseFragment implements View.OnCli
                                     hideProgress();
                                     handleError(null, status);
                                 }
+
+                                @Override
+                                public void onServerSentError(String msg) {
+                                    hideProgress();
+                                    if (TextUtils.isEmpty(msg)) {
+                                        msg = Constants.Alerts.SOMETHING_WRONG;
+                                    }
+                                    handleError(msg, -1);
+                                }
                             });
                 } else {
                     Log.e(TAG, "QuestionId / roomId can not be found for players-poll info");
