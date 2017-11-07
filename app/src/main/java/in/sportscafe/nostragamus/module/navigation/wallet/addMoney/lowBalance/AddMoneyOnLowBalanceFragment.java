@@ -5,8 +5,10 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.text.InputFilter;
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
+import android.text.Spanned;
 import android.text.TextUtils;
 import android.text.style.RelativeSizeSpan;
 import android.view.LayoutInflater;
@@ -45,6 +47,20 @@ public class AddMoneyOnLowBalanceFragment extends BaseFragment implements View.O
         return mFragmentListener;
     }
 
+    private final String blockCharacterSet = ".~#^|$%&*!@_-+/:;!?,";
+
+    private InputFilter filter = new InputFilter() {
+
+        @Override
+        public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart, int dend) {
+            if (source != null && blockCharacterSet.contains(("" + source))) {
+                return "";
+            }
+            return null;
+        }
+    };
+
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -72,6 +88,7 @@ public class AddMoneyOnLowBalanceFragment extends BaseFragment implements View.O
         rootView.findViewById(R.id.low_bal_add_amount_button).setOnClickListener(this);
 
         mAmountEditText = (EditText) rootView.findViewById(R.id.low_bal_add_amount_editText);
+        mAmountEditText.setFilters(new InputFilter[]{filter});
     }
 
     @Override

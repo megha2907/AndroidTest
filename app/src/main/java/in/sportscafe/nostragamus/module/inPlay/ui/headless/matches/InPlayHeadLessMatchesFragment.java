@@ -27,6 +27,7 @@ import java.util.List;
 
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
+import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
 import in.sportscafe.nostragamus.module.contest.dto.ContestScreenData;
 import in.sportscafe.nostragamus.module.contest.ui.ContestsActivity;
 import in.sportscafe.nostragamus.module.inPlay.adapter.InPlayHeadLessMatchAdapterListener;
@@ -312,12 +313,14 @@ public class InPlayHeadLessMatchesFragment extends BaseFragment implements View.
         if (matches != null && matches.size() > 0) {
             for (InPlayMatch match : matches) {
                 if (!DateTimeHelper.isMatchStarted(match.getMatchStartTime())) {
-                    if (match.getMatchStatus().equalsIgnoreCase(Constants.MatchStatusStrings.CONTINUE) ||
-                            match.getMatchStatus().equalsIgnoreCase(Constants.MatchStatusStrings.PLAY) ||
-                            match.getMatchStatus().equalsIgnoreCase(Constants.MatchStatusStrings.COMING_UP) ||
-                            match.getMatchStatus().equalsIgnoreCase(Constants.MatchStatusStrings.ANSWER)) {
+                    if (!TextUtils.isEmpty(match.getMatchStatus())) {
+                        if (match.getMatchStatus().equalsIgnoreCase(Constants.MatchStatusStrings.CONTINUE) ||
+                                match.getMatchStatus().equalsIgnoreCase(Constants.MatchStatusStrings.PLAY) ||
+                                match.getMatchStatus().equalsIgnoreCase(Constants.MatchStatusStrings.COMING_UP) ||
+                                match.getMatchStatus().equalsIgnoreCase(Constants.MatchStatusStrings.ANSWER)) {
 
-                        gameLeft++;
+                            gameLeft++;
+                        }
                     }
                 }
             }
@@ -398,6 +401,8 @@ public class InPlayHeadLessMatchesFragment extends BaseFragment implements View.
         switch (view.getId()) {
             case R.id.new_challenge_matches_join_button:
                 onJoinContestClicked();
+                NostragamusAnalytics.getInstance().trackScreenShown(Constants.AnalyticsCategory.IN_PLAY_HEADLESS_GAMES,
+                        Constants.AnalyticsClickLabels.JOIN_CONTEST);
                 break;
 
             case R.id.back_button:
@@ -407,6 +412,8 @@ public class InPlayHeadLessMatchesFragment extends BaseFragment implements View.
             case R.id.toolbar_wallet_rl:
                 if (mInPlayHeadLessMatchFragmentListener != null) {
                     mInPlayHeadLessMatchFragmentListener.onWalletClicked();
+                    NostragamusAnalytics.getInstance().trackScreenShown(Constants.AnalyticsCategory.IN_PLAY_HEADLESS_GAMES,
+                            Constants.AnalyticsClickLabels.WALLET);
                 }
                 break;
         }

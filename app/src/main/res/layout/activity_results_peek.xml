@@ -119,10 +119,11 @@
 
                             <com.jeeva.android.widgets.customfont.CustomButton
                                 android:id="@+id/player_comparison_user_btn_points"
-                                android:layout_width="@dimen/dp_72"
-                                android:layout_height="@dimen/dp_30"
+                                android:layout_width="wrap_content"
+                                android:layout_height="@dimen/dim_30"
                                 android:background="@drawable/profile_screen_btns_bg"
                                 android:clickable="false"
+                                android:minWidth="@dimen/dim_75"
                                 android:layout_gravity="center"
                                 android:drawableLeft="@drawable/profile_screen_points_icon"
                                 android:gravity="center"
@@ -179,10 +180,11 @@
 
                             <com.jeeva.android.widgets.customfont.CustomButton
                                 android:id="@+id/player_comparison_player_btn_points"
-                                android:layout_width="@dimen/dp_72"
-                                android:layout_height="@dimen/dp_30"
+                                android:layout_width="wrap_content"
+                                android:layout_height="@dimen/dim_30"
                                 android:background="@drawable/profile_screen_btns_bg"
                                 android:clickable="false"
+                                android:minWidth="@dimen/dim_75"
                                 android:layout_gravity="center"
                                 android:drawableLeft="@drawable/profile_screen_points_icon"
                                 android:gravity="center"

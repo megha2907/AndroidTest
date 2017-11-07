@@ -162,9 +162,8 @@ public class EditUserProfileActivity extends NostragamusActivity implements Edit
     @Override
     public void navigateToHome(boolean fromHome) {
         Intent intent = new Intent(this, NostraHomeActivity.class);
-        Bundle bundle = new Bundle();
-        bundle.putString(Constants.BundleKeys.LOGIN_SCREEN, Constants.BundleKeys.LOGIN_SCREEN);
-        intent.putExtras(bundle);
+        intent.putExtra(Constants.BundleKeys.SCREEN_LAUNCH_REQUEST, NostraHomeActivity.LaunchedFrom.SHOW_NAVIGATION);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
         startActivity(intent);
         finish();
     }

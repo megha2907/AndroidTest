@@ -65,7 +65,6 @@
                         android:layout_marginLeft="@dimen/dim_20"
                         android:layout_marginRight="@dimen/dim_20"
                         android:layout_marginTop="@dimen/dim_18"
-                        android:onClick="onClick"
                         android:layout_centerHorizontal="true"
                         android:src="@drawable/left_placeholder_icon" />
 

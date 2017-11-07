@@ -22,6 +22,7 @@ import java.util.List;
 
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
+import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
 import in.sportscafe.nostragamus.module.common.NostraBaseFragment;
 import in.sportscafe.nostragamus.module.contest.adapter.ContestAdapterItemType;
 import in.sportscafe.nostragamus.module.contest.dataProvider.ContestDataProvider;
@@ -286,10 +287,12 @@ public class ContestFragment extends NostraBaseFragment implements View.OnClickL
                 break;
             case R.id.toolbar_icon:
                 mContestsFragmentListener.onContestDetailsPopUpButtonClicked();
+                NostragamusAnalytics.getInstance().trackClickEvent(Constants.AnalyticsCategory.CONTEST, Constants.AnalyticsClickLabels.CONTEST_MODES_POPUP);
                 break;
 
             case R.id.toolbar_wallet_rl:
                 mContestsFragmentListener.onWalletClicked();
+                NostragamusAnalytics.getInstance().trackClickEvent(Constants.AnalyticsCategory.CONTEST, Constants.AnalyticsClickLabels.WALLET);
                 break;
         }
     }

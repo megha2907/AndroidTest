@@ -27,6 +27,7 @@ import in.sportscafe.nostragamus.AppSnippet;
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.R;
+import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
 import in.sportscafe.nostragamus.module.common.NostraBaseFragment;
 import in.sportscafe.nostragamus.module.customViews.TimelineHelper;
 import in.sportscafe.nostragamus.module.inPlay.adapter.MatchesAdapterAction;
@@ -158,39 +159,45 @@ public class InPlayMatchesPagerFragment extends NostraBaseFragment {
             /* Timeline */
             LinearLayout parent = (LinearLayout) getView().findViewById(R.id.match_status_timeline);
             LinearLayout titleParent = (LinearLayout) getView().findViewById(R.id.match_status_timeline_title_parent);
+            LinearLayout matchTimelineLayout = (LinearLayout) getView().findViewById(R.id.match_timeline_layout);
 
             parent.removeAllViews();
             titleParent.removeAllViews();
 
+            if (mInPlayContestDto.getMatches() != null){
+
              /* Timeline */
-            int totalMatches = mInPlayContestDto.getMatches().size();
-            for (int temp = 0; temp < totalMatches; temp++) {
-                InPlayContestMatchDto match = mInPlayContestDto.getMatches().get(temp);
+                int totalMatches = mInPlayContestDto.getMatches().size();
+                for (int temp = 0; temp < totalMatches; temp++) {
+                    InPlayContestMatchDto match = mInPlayContestDto.getMatches().get(temp);
 
-                boolean isNodeLineRequired = true;
-                if (temp == 0) {
-                    isNodeLineRequired = false;
-                }
+                    boolean isNodeLineRequired = true;
+                    if (temp == 0) {
+                        isNodeLineRequired = false;
+                    }
 
-                int matchAttemptedStatus = match.isPlayed();
-                boolean isPlayed;
-                if (Constants.GameAttemptedStatus.COMPLETELY == matchAttemptedStatus) {
-                    isPlayed = true;
-                } else if (Constants.GameAttemptedStatus.PARTIALLY == matchAttemptedStatus) {
-                    isPlayed = false;
-                } else {
-                    isPlayed = false;
-                }
+                    int matchAttemptedStatus = match.isPlayed();
+                    boolean isPlayed;
+                    if (Constants.GameAttemptedStatus.COMPLETELY == matchAttemptedStatus) {
+                        isPlayed = true;
+                    } else if (Constants.GameAttemptedStatus.PARTIALLY == matchAttemptedStatus) {
+                        isPlayed = false;
+                    } else {
+                        isPlayed = false;
+                    }
 
                     /* Content */
-                TimelineHelper.addNode(parent, match.getStatus(), matchAttemptedStatus, isPlayed,
-                        isNodeLineRequired, TimelineHelper.MatchTimelineTypeEnum.IN_PLAY_MATCHES_SCREEN,
-                        mInPlayContestDto.getMatches().size());
+                    TimelineHelper.addNode(parent, match.getStatus(), matchAttemptedStatus, isPlayed,
+                            isNodeLineRequired, TimelineHelper.MatchTimelineTypeEnum.IN_PLAY_MATCHES_SCREEN,
+                            mInPlayContestDto.getMatches().size());
 
                     /* Title */
-                TimelineHelper.addTextNode(titleParent, "Game " + (temp + 1), mInPlayContestDto.getMatches().size(),
-                        match.getStatus(), TimelineHelper.MatchTimelineTypeEnum.IN_PLAY_MATCHES_SCREEN, isPlayed, matchAttemptedStatus);
+                    TimelineHelper.addTextNode(titleParent, "Game " + (temp + 1), mInPlayContestDto.getMatches().size(),
+                            match.getStatus(), TimelineHelper.MatchTimelineTypeEnum.IN_PLAY_MATCHES_SCREEN, isPlayed, matchAttemptedStatus);
 
+                }
+            }else {
+                matchTimelineLayout.setVisibility(View.GONE);
             }
         }
     }
@@ -251,12 +258,14 @@ public class InPlayMatchesPagerFragment extends NostraBaseFragment {
         if (matches != null && matches.size() > 0) {
             for (InPlayMatch match : matches) {
                 if (!DateTimeHelper.isMatchStarted(match.getMatchStartTime())) {
-                    if (match.getMatchStatus().equalsIgnoreCase(Constants.MatchStatusStrings.CONTINUE) ||
-                            match.getMatchStatus().equalsIgnoreCase(Constants.MatchStatusStrings.PLAY) ||
-                            match.getMatchStatus().equalsIgnoreCase(Constants.MatchStatusStrings.COMING_UP) ||
-                            match.getMatchStatus().equalsIgnoreCase(Constants.MatchStatusStrings.ANSWER)) {
+                    if (!TextUtils.isEmpty(match.getMatchStatus())) {
+                        if (match.getMatchStatus().equalsIgnoreCase(Constants.MatchStatusStrings.CONTINUE) ||
+                                match.getMatchStatus().equalsIgnoreCase(Constants.MatchStatusStrings.PLAY) ||
+                                match.getMatchStatus().equalsIgnoreCase(Constants.MatchStatusStrings.COMING_UP) ||
+                                match.getMatchStatus().equalsIgnoreCase(Constants.MatchStatusStrings.ANSWER)) {
 
-                        gameLeft++;
+                            gameLeft++;
+                        }
                     }
                 }
             }
@@ -276,6 +285,8 @@ public class InPlayMatchesPagerFragment extends NostraBaseFragment {
             public void onMatchActionClicked(int action, Bundle args) {
                 Log.d(TAG, "action button clicked : " + action);
 
+                NostragamusAnalytics.getInstance().trackClickEvent(Constants.AnalyticsCategory.IN_PLAY_GAMES, String.valueOf(action));
+
                 switch (action) {
                     case MatchesAdapterAction.COMING_UP:
                         /* Disabled - No action */
@@ -292,6 +303,7 @@ public class InPlayMatchesPagerFragment extends NostraBaseFragment {
                         launchResultsScreen(args);
                         break;
                 }
+
             }
         };
     }

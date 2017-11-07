@@ -63,7 +63,6 @@
                             android:layout_marginTop="@dimen/dim_1"
                             android:layout_toRightOf="@+id/pool_row_tv_name"
                             android:maxLines="1"
-                            android:text="No Prizes"
                             android:textColor="@color/white_999999"
                             android:textSize="@dimen/sp_12"
                             android:visibility="visible"
