@@ -81,4 +81,11 @@ public class CodeSnippet {
         return result;
     }
 
+    public static String formatUrl(String url) {
+        if (null != url) {
+            url = url.replaceAll(" ", "%20");
+        }
+        return url;
+    }
+
 }

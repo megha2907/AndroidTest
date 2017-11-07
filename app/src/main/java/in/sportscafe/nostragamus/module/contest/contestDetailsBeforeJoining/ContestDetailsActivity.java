@@ -120,8 +120,9 @@ public class ContestDetailsActivity extends NostraBaseActivity implements Contes
                 joinContestData = Parcels.unwrap(args.getParcelable(Constants.BundleKeys.JOIN_CONTEST_DATA));
             }
 
-            /* For InPlay Headless flow, send pseudoRoomId */
-            if (mContestScreenData != null && mContestScreenData.isHeadLessFlow()) {
+            /* For InPlay Headless flow, && PseudoGame flow; send pseudoRoomId */
+            if (mContestScreenData != null &&
+                    (mContestScreenData.isHeadLessFlow() || mContestScreenData.isPseudoGameFlow())) {
                 joinContestData.setShouldSendPseudoRoomId(true);
                 joinContestData.setPseudoRoomId(mContestScreenData.getPseudoRoomId());
             }

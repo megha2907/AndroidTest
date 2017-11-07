@@ -1,6 +1,9 @@
 package in.sportscafe.nostragamus.module.prediction.playScreen.adapter;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.text.Html;
@@ -24,6 +27,8 @@ import in.sportscafe.nostragamus.module.prediction.playScreen.dto.PowerUp;
 import in.sportscafe.nostragamus.module.prediction.playScreen.dto.PowerUpEnum;
 import in.sportscafe.nostragamus.module.prediction.playScreen.dto.PredictionQuestion;
 import in.sportscafe.nostragamus.module.prediction.playScreen.helper.PlayerPollHelper;
+import in.sportscafe.nostragamus.utils.BitmapMemoryLruCache;
+import in.sportscafe.nostragamus.utils.CodeSnippet;
 
 /**
  * Created by sandip on 10/08/17.
@@ -32,12 +37,14 @@ import in.sportscafe.nostragamus.module.prediction.playScreen.helper.PlayerPollH
 public class PredictionQuestionsCardAdapter extends ArrayAdapter<PredictionQuestion> {
 
     private PredictionQuestionAdapterListener mAdapterListener;
+    private BitmapMemoryLruCache mImageCache;
 
     public PredictionQuestionsCardAdapter(@NonNull Context context,
                                           @NonNull List<PredictionQuestion> list,
                                           @NonNull PredictionQuestionAdapterListener listener) {
         super(context, R.layout.prediction_card_layout, list);
         mAdapterListener = listener;
+        mImageCache = new BitmapMemoryLruCache();
     }
 
     @NonNull
@@ -58,7 +65,7 @@ public class PredictionQuestionsCardAdapter extends ArrayAdapter<PredictionQuest
             TextView playerPollOption2TextView = (TextView) contentView.findViewById(R.id.prediction_card_player_poll_2_textView);
 
             setActionListeners(position, option1Layout, option2Layout);
-
+            setImageListenerAndCacheImages(option1ImgView, option2ImgView);
             setWebLinkListener(questionDescriptionTextView);
 
             /* Populate data on ui */
@@ -78,6 +85,35 @@ public class PredictionQuestionsCardAdapter extends ArrayAdapter<PredictionQuest
         return contentView;
     }
 
+    /**
+     * Fills images if cached, else setImageUrl will download it & cache
+     * @param option1ImgView
+     * @param option2ImgView
+     * @param question
+     */
+    private void showCachedImagesOrFill(final HmImageView option1ImgView, final HmImageView option2ImgView, PredictionQuestion question) {
+        if (!TextUtils.isEmpty(question.getQuestionImage1())) {
+            final String url = CodeSnippet.formatUrl(question.getQuestionImage1());
+            if (mImageCache.contains(url)) {
+                Drawable drawable = new BitmapDrawable(getContext().getResources(), Bitmap.createBitmap(mImageCache.getBitmap(url)));
+                option1ImgView.setBackground(drawable);
+            } else {
+                option1ImgView.setImageUrl(question.getQuestionImage1());
+            }
+        }
+
+        if (!TextUtils.isEmpty(question.getQuestionImage2())) {
+            final String url = CodeSnippet.formatUrl(question.getQuestionImage2());
+            if (mImageCache.contains(url)) {
+                Drawable drawable = new BitmapDrawable(option2ImgView.getResources(), Bitmap.createBitmap(mImageCache.getBitmap(url)));
+                option2ImgView.setBackground(drawable);
+            } else {
+                option2ImgView.setImageUrl(question.getQuestionImage2());
+            }
+        }
+    }
+
+
     private void setWebLinkListener(TextView questionDescriptionTextView) {
         questionDescriptionTextView.setMovementMethod(new NostraTextViewLinkClickMovementMethod() {
             @Override
@@ -85,6 +121,24 @@ public class PredictionQuestionsCardAdapter extends ArrayAdapter<PredictionQuest
                 if (mAdapterListener != null) {
                     mAdapterListener.onWebLinkClicked(url);
                 }
+            }
+        });
+    }
+
+    private void setImageListenerAndCacheImages(HmImageView option1ImgView, HmImageView option2ImgView) {
+        option1ImgView.setImageLoadedListener(new HmImageView.OnImageLoadedListener() {
+            @Override
+            public void onImageLoaded(String url, Bitmap bitmap) {
+                mImageCache.putBitmap(url, bitmap);
+
+            }
+        });
+
+        option2ImgView.setImageLoadedListener(new HmImageView.OnImageLoadedListener() {
+            @Override
+            public void onImageLoaded(String url, Bitmap bitmap) {
+                mImageCache.putBitmap(url, bitmap);
+
             }
         });
     }
@@ -114,6 +168,8 @@ public class PredictionQuestionsCardAdapter extends ArrayAdapter<PredictionQuest
                               TextView option1TextView, TextView option2TextView, PredictionQuestion question) {
 
         if (question != null) {
+            showCachedImagesOrFill(option1ImgView, option2ImgView, question);
+
             if (!TextUtils.isEmpty(question.getQuestionText())) {
                 questionTitleTextView.setText(question.getQuestionText());
             }
@@ -123,12 +179,6 @@ public class PredictionQuestionsCardAdapter extends ArrayAdapter<PredictionQuest
                     spanned = Html.fromHtml(question.getQuestionContext(), Html.FROM_HTML_MODE_LEGACY);
                 }
                 questionDescriptionTextView.setText(spanned);
-            }
-            if (!TextUtils.isEmpty(question.getQuestionImage1())) {
-                option1ImgView.setImageUrl(question.getQuestionImage1());
-            }
-            if (!TextUtils.isEmpty(question.getQuestionImage2())) {
-                option2ImgView.setImageUrl(question.getQuestionImage2());
             }
             if (!TextUtils.isEmpty(question.getQuestionOption1())) {
                 option1TextView.setText(question.getQuestionOption1());
