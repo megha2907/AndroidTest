@@ -67,9 +67,9 @@ public class ResultsPeekPresenterImpl implements ResultsPeekPresenter, ResultsPe
     }
 
     @Override
-    public void onSuccessBothResults(int myPoints, int playerPoints, String matchStage, String challengeName) {
+    public void onSuccessBothResults(int myPoints, int playerPoints, String matchStage, String challengeName,String resultPublished) {
         mResultsPeekBoardView.dismissProgressbar();
-        mResultsPeekBoardView.setPointsAndMatch(myPoints,playerPoints,matchStage,challengeName);
+        mResultsPeekBoardView.setPointsAndMatch(myPoints,playerPoints,matchStage,challengeName,resultPublished);
         onCreateResultsPeekAdapter();
     }
 

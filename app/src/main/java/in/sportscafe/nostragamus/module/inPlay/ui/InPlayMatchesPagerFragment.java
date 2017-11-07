@@ -27,6 +27,7 @@ import in.sportscafe.nostragamus.AppSnippet;
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.R;
+import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
 import in.sportscafe.nostragamus.module.common.NostraBaseFragment;
 import in.sportscafe.nostragamus.module.customViews.TimelineHelper;
 import in.sportscafe.nostragamus.module.inPlay.adapter.MatchesAdapterAction;
@@ -257,12 +258,14 @@ public class InPlayMatchesPagerFragment extends NostraBaseFragment {
         if (matches != null && matches.size() > 0) {
             for (InPlayMatch match : matches) {
                 if (!DateTimeHelper.isMatchStarted(match.getMatchStartTime())) {
-                    if (match.getMatchStatus().equalsIgnoreCase(Constants.MatchStatusStrings.CONTINUE) ||
-                            match.getMatchStatus().equalsIgnoreCase(Constants.MatchStatusStrings.PLAY) ||
-                            match.getMatchStatus().equalsIgnoreCase(Constants.MatchStatusStrings.COMING_UP) ||
-                            match.getMatchStatus().equalsIgnoreCase(Constants.MatchStatusStrings.ANSWER)) {
+                    if (!TextUtils.isEmpty(match.getMatchStatus())) {
+                        if (match.getMatchStatus().equalsIgnoreCase(Constants.MatchStatusStrings.CONTINUE) ||
+                                match.getMatchStatus().equalsIgnoreCase(Constants.MatchStatusStrings.PLAY) ||
+                                match.getMatchStatus().equalsIgnoreCase(Constants.MatchStatusStrings.COMING_UP) ||
+                                match.getMatchStatus().equalsIgnoreCase(Constants.MatchStatusStrings.ANSWER)) {
 
-                        gameLeft++;
+                            gameLeft++;
+                        }
                     }
                 }
             }
@@ -282,6 +285,8 @@ public class InPlayMatchesPagerFragment extends NostraBaseFragment {
             public void onMatchActionClicked(int action, Bundle args) {
                 Log.d(TAG, "action button clicked : " + action);
 
+                NostragamusAnalytics.getInstance().trackClickEvent(Constants.AnalyticsCategory.IN_PLAY_GAMES, String.valueOf(action));
+
                 switch (action) {
                     case MatchesAdapterAction.COMING_UP:
                         /* Disabled - No action */
@@ -298,6 +303,7 @@ public class InPlayMatchesPagerFragment extends NostraBaseFragment {
                         launchResultsScreen(args);
                         break;
                 }
+
             }
         };
     }

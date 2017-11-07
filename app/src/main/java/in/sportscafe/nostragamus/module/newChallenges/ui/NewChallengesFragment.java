@@ -28,6 +28,7 @@ import java.util.List;
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.R;
+import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
 import in.sportscafe.nostragamus.module.common.NostraBaseFragment;
 import in.sportscafe.nostragamus.module.navigation.wallet.WalletApiModelImpl;
 import in.sportscafe.nostragamus.module.navigation.wallet.WalletHelper;
@@ -342,6 +343,7 @@ public class NewChallengesFragment extends NostraBaseFragment implements View.On
         switch (v.getId()) {
             case R.id.toolbar_wallet_rl:
                 onWalletClicked();
+                NostragamusAnalytics.getInstance().trackClickEvent(Constants.AnalyticsCategory.NEW_CHALLENGES, Constants.AnalyticsClickLabels.WALLET);
                 break;
         }
     }

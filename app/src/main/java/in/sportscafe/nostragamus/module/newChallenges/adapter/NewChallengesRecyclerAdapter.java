@@ -25,6 +25,7 @@ import java.util.List;
 
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
+import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
 import in.sportscafe.nostragamus.module.navigation.wallet.WalletHelper;
 import in.sportscafe.nostragamus.module.newChallenges.dataProvider.SportsDataProvider;
 import in.sportscafe.nostragamus.module.newChallenges.dto.NewChallengeMatchesScreenData;
@@ -302,6 +303,8 @@ public class NewChallengesRecyclerAdapter extends RecyclerView.Adapter<RecyclerV
 
                 args.putParcelable(Constants.BundleKeys.NEW_CHALLENGE_MATCHES_SCREEN_DATA, Parcels.wrap(screenData));
                 mChallengeListener.onChallengeClicked(args);
+                NostragamusAnalytics.getInstance().trackNewChallenges(newChallengesResponse.getChallengeId(),
+                        newChallengesResponse.getChallengeName(),newChallengesResponse.getSportsIdArray());
             }
         }
     }

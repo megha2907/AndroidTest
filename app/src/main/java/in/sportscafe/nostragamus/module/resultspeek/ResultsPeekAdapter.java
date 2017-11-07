@@ -3,6 +3,7 @@ package in.sportscafe.nostragamus.module.resultspeek;
 import android.content.Context;
 import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -86,6 +87,8 @@ public class ResultsPeekAdapter extends Adapter<ResultsPeek, ResultsPeekAdapter.
         HmImageView powerUpUsedPlayerTwo = (HmImageView) convertView.findViewById(R.id.results_peek_row_player_two_powerup_used);
         RelativeLayout powerUpPlayerTwo = (RelativeLayout) convertView.findViewById(R.id.results_peek_row_player_two_powerup_rl);
 
+        RelativeLayout itemLayout = (RelativeLayout) convertView.findViewById(R.id.result_peek_item_content_layout);
+
 
         if (null == playerQuestion) {
             tvPlayerQuestionText.setText(myQuestion.getQuestionText().replaceAll("\n", ""));
@@ -93,20 +96,55 @@ public class ResultsPeekAdapter extends Adapter<ResultsPeek, ResultsPeekAdapter.
             tvPlayerQuestionText.setText(playerQuestion.getQuestionText().replaceAll("\n", ""));
         }
 
+        int myAnswerId;
+
         if (myQuestion == null) {
             tvPlayerOneAnswer.setText("Did not Play");
             setTextColor(tvPlayerOneAnswer, R.color.white_60);
             tvPlayerOneAnswerPoints.setText("-");
-        } else {
-            int myAnswerId = myQuestion.getAnswerId();
+        }
+          /* Before the Result is published */
+          else if (null == myQuestion.getQuestionAnswer()) {
+
+            myAnswerId = myQuestion.getAnswerId();
+            setTextColor(tvPlayerOneAnswer, R.color.white);
+            tvPlayerOneAnswerPoints.setVisibility(View.GONE);
+
+            RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) tvPlayerOneAnswer.getLayoutParams();
+            layoutParams.setMargins(0, 1, 0,10);
+            tvPlayerOneAnswer.setLayoutParams(layoutParams);
+
+            if (myAnswerId == 0) {
+                /* if question not answered then answerId=0 , set Not Answered */
+                tvPlayerOneAnswer.setText("Not Answered");
+                setTextColor(tvPlayerOneAnswer, R.color.white_60);
+
+            } else {
+
+                /* if answer is 1st option , set Option1 */
+                if (myAnswerId == 1) {
+                    tvPlayerOneAnswer.setText(myQuestion.getQuestionOption1());
+                }  /* if answer is 2nd option , set Option2 */ else {
+                    tvPlayerOneAnswer.setText(myQuestion.getQuestionOption2());
+                }
+
+                 /* if answer is 3rd option , set Option3  */
+                if (!TextUtils.isEmpty(myQuestion.getQuestionOption3()) && myAnswerId == 3) {
+                    tvPlayerOneAnswer.setText(myQuestion.getQuestionOption3());
+                }
+
+            }
+
+        }/* After the Result is published */
+          else {
+            myAnswerId = myQuestion.getAnswerId();
 
             // if played Match but not attempted Question
             if (myAnswerId == 0) {
                 tvPlayerOneAnswer.setText("Did not Play");
                 setTextColor(tvPlayerOneAnswer, R.color.white_60);
                 tvPlayerOneAnswerPoints.setText("-");
-            }
-            //if your answer = correct answer
+            }//if your answer = correct answer
             else if (myAnswerId == myQuestion.getQuestionAnswer()) {
 
                 setTextColor(tvPlayerOneAnswer, R.color.greencolor);
@@ -178,7 +216,6 @@ public class ResultsPeekAdapter extends Adapter<ResultsPeek, ResultsPeekAdapter.
             }*/
 
 
-
         }
 
 
@@ -188,7 +225,40 @@ public class ResultsPeekAdapter extends Adapter<ResultsPeek, ResultsPeekAdapter.
             tvPlayerTwoAnswer.setText("Did not Play");
             setTextColor(tvPlayerTwoAnswer, R.color.white_60);
             tvPlayerTwoAnswerPoints.setText("-");
+        }
+        /* Before the Result is published */
+         else if (null == playerQuestion.getQuestionAnswer()) {
+
+            otherPlayerAnswerId = playerQuestion.getAnswerId();
+            setTextColor(tvPlayerTwoAnswer, R.color.white);
+            tvPlayerTwoAnswerPoints.setVisibility(View.GONE);
+
+            RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) tvPlayerTwoAnswer.getLayoutParams();
+            layoutParams.setMargins(0, 1, 0, 10);
+            tvPlayerTwoAnswer.setLayoutParams(layoutParams);
+
+            if (otherPlayerAnswerId == 0) {
+                /* if question not answered then answerId=0 , set Not Answered */
+                tvPlayerTwoAnswer.setText("Not Answered");
+                setTextColor(tvPlayerTwoAnswer, R.color.white_60);
+
+            } else {
+
+                /* if answer is 1st option , set Option1 */
+                if (otherPlayerAnswerId == 1) {
+                    tvPlayerTwoAnswer.setText(playerQuestion.getQuestionOption1());
+                }  /* if answer is 2nd option , set Option2 */ else {
+                    tvPlayerTwoAnswer.setText(playerQuestion.getQuestionOption2());
+                }
+
+                 /* if answer is 3rd option , set Option3  */
+                if (!TextUtils.isEmpty(playerQuestion.getQuestionOption3()) && otherPlayerAnswerId == 3) {
+                    tvPlayerTwoAnswer.setText(playerQuestion.getQuestionOption3());
+                }
+            }
+
         } else {
+
             otherPlayerAnswerId = playerQuestion.getAnswerId();
 
             // if played Match but not attempted Question
@@ -268,6 +338,14 @@ public class ResultsPeekAdapter extends Adapter<ResultsPeek, ResultsPeekAdapter.
                 powerUpUsedPlayerTwo.setBackgroundResource(powerUpOtherPlayerIcons);
             }*/
         }
+
+
+//        if (tvPlayerOneAnswerPoints.getVisibility()==View.GONE) {
+//            RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) itemLayout.getLayoutParams();
+//            layoutParams.addRule(RelativeLayout.CENTER_VERTICAL);
+//            tvPlayerOneAnswer.setLayoutParams(layoutParams);
+//            tvPlayerTwoAnswer.setLayoutParams(layoutParams);
+//        }
 
         showOrHidePowerUps(myQuestion, playerQuestion, convertView);
 

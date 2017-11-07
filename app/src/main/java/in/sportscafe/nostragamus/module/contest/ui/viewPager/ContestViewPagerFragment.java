@@ -30,6 +30,7 @@ import java.util.List;
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.R;
+import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
 import in.sportscafe.nostragamus.module.common.NostraBaseFragment;
 import in.sportscafe.nostragamus.module.contest.adapter.ContestAdapterItemType;
 import in.sportscafe.nostragamus.module.contest.adapter.ContestAdapterListener;
@@ -239,6 +240,13 @@ public class ContestViewPagerFragment extends NostraBaseFragment {
                     joinContestData.setChallengeName(contest.getChallengeName());
                     joinContestData.setEntryFee(contest.getEntryFee());
                     joinContestData.setJoiContestDialogLaunchMode(CompletePaymentDialogFragment.DialogLaunchMode.JOINING_CHALLENGE_LAUNCH);
+
+                    if (contest.getContestType()!=null) {
+                        NostragamusAnalytics.getInstance().trackContestJoined(contest.getContestId(),
+                                contest.getConfigName(), contest.getContestType().getCategoryName(),
+                                contest.getEntryFee(), contest.getChallengeId());
+                    }
+
                 }
             }
 
@@ -271,12 +279,16 @@ public class ContestViewPagerFragment extends NostraBaseFragment {
                                 public void lowWalletBalance(JoinContestData joinContestData) {
                                     CustomProgressbar.getProgressbar(getContext()).dismissProgress();
                                     launchLowBalanceActivity(joinContestData);
+                                    NostragamusAnalytics.getInstance().trackClickEvent(Constants.AnalyticsCategory.CONTEST,
+                                            Constants.AnalyticsClickLabels.JOIN_CONTEST+"-"+Constants.AnalyticsClickLabels.CONTEST_LOW_MONEY);
                                 }
 
                                 @Override
                                 public void joinContestSuccess(JoinContestData contestJoinedSuccessfully) {
                                     CustomProgressbar.getProgressbar(getContext()).dismissProgress();
                                     onContestJoinedSuccessfully(contestJoinedSuccessfully);
+                                    NostragamusAnalytics.getInstance().trackClickEvent(Constants.AnalyticsCategory.CONTEST_JOINED,
+                                            String.valueOf(contestJoinedSuccessfully.getContestId()));
                                 }
 
                                 @Override

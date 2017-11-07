@@ -16,6 +16,7 @@ import in.sportscafe.nostragamus.module.othersanswers.MatchAnswerStats;
 
 @Parcel
 public class Match {
+
     @SerializedName("match_id")
     private int id;
 
@@ -127,6 +128,8 @@ public class Match {
     @SerializedName("highest_player_photo")
     private String highestScorerPhoto;
 
+    @SerializedName("highest_player_room_id")
+    private int highestPlayerRoomId;
 
     private boolean isOnePartyMatch;
 
@@ -641,5 +644,13 @@ public class Match {
 
     public void setContestId(int contestId) {
         this.contestId = contestId;
+    }
+
+    public int getHighestPlayerRoomId() {
+        return highestPlayerRoomId;
+    }
+
+    public void setHighestPlayerRoomId(int highestPlayerRoomId) {
+        this.highestPlayerRoomId = highestPlayerRoomId;
     }
 }

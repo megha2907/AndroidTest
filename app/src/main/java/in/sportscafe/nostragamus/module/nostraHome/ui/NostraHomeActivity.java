@@ -269,26 +269,31 @@ public class NostraHomeActivity extends NostraBaseActivity implements View.OnCli
     private void onNavigationClicked(Bundle args) {
         setProfileSelected();
         loadNavigationFragment(args);
+        NostragamusAnalytics.getInstance().trackScreenShown(Constants.AnalyticsCategory.HOME_SCREEN, Constants.AnalyticsClickLabels.NAVIGATION);
     }
 
     private void onGroupClicked(Bundle args) {
         setGroupSelected();
         loadGroupFragment(args);
+        NostragamusAnalytics.getInstance().trackScreenShown(Constants.AnalyticsCategory.HOME_SCREEN, Constants.AnalyticsClickLabels.GROUPS);
     }
 
     private void onInPlayClicked(Bundle args) {
         setInPlaySelected();
         loadInPlayFragment(args);
+        NostragamusAnalytics.getInstance().trackScreenShown(Constants.AnalyticsCategory.HOME_SCREEN, Constants.AnalyticsClickLabels.IN_PLAY);
     }
 
     private void onHistoryClicked(Bundle args) {
         setHistorySelected();
         loadHistoryFragment(args);
+        NostragamusAnalytics.getInstance().trackScreenShown(Constants.AnalyticsCategory.HOME_SCREEN, Constants.AnalyticsClickLabels.HISTORY);
     }
 
     private void onNewChallengesClicked(Bundle args) {
         setNewChallengesSelected();
         loadNewChallengeFragment(args);
+        NostragamusAnalytics.getInstance().trackScreenShown(Constants.AnalyticsCategory.HOME_SCREEN, Constants.AnalyticsClickLabels.NEW_CHALLENGES);
     }
 
     private void loadNavigationFragment(Bundle args) {
