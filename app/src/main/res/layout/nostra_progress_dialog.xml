@@ -7,9 +7,17 @@
     android:gravity="center"
     android:background="@color/transparent">
 
-    <in.sportscafe.nostragamus.module.common.NostraProgressBar
+    <!--<in.sportscafe.nostragamus.module.common.NostraProgressBar
         android:id="@+id/nostraProgressBar"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"/>-->
+
+    <in.sportscafe.nostragamus.utils.loadingAnim.LoadingIndicatorView
+        android:id="@+id/nostraProgressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:indicatorColor="@color/loading_animation_color"
+        />
+
 
 </LinearLayout>
