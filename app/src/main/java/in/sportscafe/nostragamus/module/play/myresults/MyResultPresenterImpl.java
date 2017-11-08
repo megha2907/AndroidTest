@@ -2,10 +2,12 @@ package in.sportscafe.nostragamus.module.play.myresults;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Toast;
 
 import in.sportscafe.nostragamus.AppSnippet;
+import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Constants.Alerts;
 import in.sportscafe.nostragamus.Constants.Powerups;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
@@ -146,6 +148,17 @@ public class MyResultPresenterImpl implements MyResultsPresenter, MyResultsModel
                         getResultDetails();
                     }
                 });
+    }
+
+    @Override
+    public void onSaveEditedAnswerServerError(String msg) {
+        if (TextUtils.isEmpty(msg)) {
+            msg = Alerts.SOMETHING_WRONG;
+        }
+        if (mResultsView != null) {
+            mResultsView.dismissProgressbar();
+            mResultsView.showMessage(msg);
+        }
     }
 
     @Override

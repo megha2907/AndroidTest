@@ -87,4 +87,13 @@
         <attr name="dot_color" format="color"/>
     </declare-styleable>
 
+    <declare-styleable name="LoadingIndicatorView">
+        <attr format="dimension" name="minViewWidth"/>
+        <attr format="dimension" name="maxViewWidth"/>
+        <attr format="dimension" name="minViewHeight"/>
+        <attr format="dimension" name="maxViewHeight"/>
+        <attr format="string" name="indicatorName"/>
+        <attr format="color" name="indicatorColor"/>
+    </declare-styleable>
+
 </resources>

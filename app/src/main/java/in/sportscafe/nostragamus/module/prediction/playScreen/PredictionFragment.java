@@ -323,7 +323,7 @@ public class PredictionFragment extends NostraBaseFragment implements View.OnCli
                             topLayout.setVisibility(View.VISIBLE);
 
                             bottomLayout.clearAnimation();
-                            bottomLayout.animate().translationYBy(-bottomLayout.getHeight()).setDuration(1000).
+                            bottomLayout.animate().translationYBy(bottomLayout.getHeight()).setDuration(1000).
                                     setInterpolator(new LinearInterpolator()).
                                     setListener(new Animator.AnimatorListener() {
                                         @Override
@@ -557,6 +557,15 @@ public class PredictionFragment extends NostraBaseFragment implements View.OnCli
                                 public void onError(int status) {
                                     hideProgress();
                                     handleError(null, status);
+                                }
+
+                                @Override
+                                public void onServerSentError(String msg) {
+                                    hideProgress();
+                                    if (TextUtils.isEmpty(msg)) {
+                                        msg = Constants.Alerts.SOMETHING_WRONG;
+                                    }
+                                    handleError(msg, -1);
                                 }
                             });
                 } else {
