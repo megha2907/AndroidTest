@@ -87,10 +87,18 @@
             android:gravity="center"
             android:orientation="vertical">
 
-            <in.sportscafe.nostragamus.module.common.NostraProgressBar
+            <!--<in.sportscafe.nostragamus.module.common.NostraProgressBar
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_gravity="center" />
+                android:layout_gravity="center" />-->
+
+            <in.sportscafe.nostragamus.utils.loadingAnim.LoadingIndicatorView
+                android:id="@+id/avi"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:indicatorName="LineSpinFadeLoaderIndicator"
+                app:indicatorColor="@color/loading_animation_color"
+                />
 
         </LinearLayout>
 
