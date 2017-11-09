@@ -673,25 +673,26 @@ public class NostragamusAnalytics {
 
     /**
      * Tracks Challenges Opened
-     *
-     * @param challengeId
+     *  @param challengeId
      * @param sportId
+     * @param category
      */
-    public void trackNewChallenges(int challengeId, String challengeName, int[] sportId) {
+    public void trackNewChallenges(int challengeId, String challengeName, int[] sportId, String category) {
 
         if (BuildConfig.IS_PAID_VERSION && mAmplitude != null) {
 
-            SportsDataProvider sportsDataProvider = new SportsDataProvider();
-            List<SportsTab> sportsTabList = sportsDataProvider.getSportsList();
-            JSONObject sportsJson = new JSONObject();
-            for (SportsTab sportsTab : sportsTabList) {
-                if (sportId != null) {
+            JSONObject sportsJson = null;
+            if (sportId != null) {
+                SportsDataProvider sportsDataProvider = new SportsDataProvider();
+                List<SportsTab> sportsTabList = sportsDataProvider.getSportsList();
+                sportsJson = new JSONObject();
+                for (SportsTab sportsTab : sportsTabList) {
                     for (int temp = 0; temp < sportId.length; temp++) {
 
                         if (sportId[temp] == sportsTab.getSportsId()) {
 
                             try {
-                                sportsJson.put("sportsName",sportsTab.getSportsName());
+                                sportsJson.put("sportsName", sportsTab.getSportsName());
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
@@ -708,8 +709,6 @@ public class NostragamusAnalytics {
             } catch (JSONException ex) {
                 ex.printStackTrace();
             }
-
-            String category = AnalyticsCategory.NEW_CHALLENGES;
 
             if (mAmplitude != null) {
                 mAmplitude.logEvent(category, jsonObject);
@@ -731,8 +730,9 @@ public class NostragamusAnalytics {
      * @param contestType
      * @param entryFee
      * @param challengeId
+     * @param screenName
      */
-    public void trackContestJoined(int contestId, String contestName, String contestType, int entryFee, int challengeId) {
+    public void trackContestJoined(int contestId, String contestName, String contestType, int entryFee, int challengeId, String screenName) {
 
         if (BuildConfig.IS_PAID_VERSION && mAmplitude != null) {
 
@@ -743,6 +743,7 @@ public class NostragamusAnalytics {
                 jsonObject.put("contestType",contestType);
                 jsonObject.put("contestEntryFee", entryFee);
                 jsonObject.put("contestChallengeId", challengeId);
+                jsonObject.put("screenJoinedFrom", screenName);
             } catch (JSONException ex) {
                 ex.printStackTrace();
             }
