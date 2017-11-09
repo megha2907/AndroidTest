@@ -1167,16 +1167,21 @@ public class PredictionFragment extends NostraBaseFragment implements View.OnCli
         if (powerUp != null) {
             if (powerUp.getDoubler() <= 0) {
                 doublerTextView.setBackgroundResource(R.drawable.prediction_powerup_counter_0_bg);
+                doublerTextView.setText("+");
             } else {
                 doublerTextView.setBackgroundResource(R.drawable.prediction_powerup_counter_bg);
             }
+
             if (powerUp.getNoNegative() <= 0) {
                 noNegTextView.setBackgroundResource(R.drawable.prediction_powerup_counter_0_bg);
+                noNegTextView.setText("+");
             } else {
                 noNegTextView.setBackgroundResource(R.drawable.prediction_powerup_counter_bg);
             }
+
             if (powerUp.getPlayerPoll() <= 0) {
                 playerPollTextView.setBackgroundResource(R.drawable.prediction_powerup_counter_0_bg);
+                playerPollTextView.setText("+");
             } else {
                 playerPollTextView.setBackgroundResource(R.drawable.prediction_powerup_counter_bg);
             }
