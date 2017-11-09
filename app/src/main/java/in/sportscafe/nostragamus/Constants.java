@@ -480,6 +480,7 @@ public interface Constants {
         String IN_PLAY_CONTEST_DETAILS = "In Play Contest Details";
         String HISTORY_GAMES = "History Games";
         String RESULTS = "Results";
+        String WALLET_POPUP = "Wallet Popup";
     }
 
     interface AnalyticsClickLabels {
@@ -539,6 +540,8 @@ public interface Constants {
 
         /* Play */
         String PSEUDO_GAME_FLOW = "Pseudo Game Flow";
+
+        String DEPOSIT_MONEY = "Deposit Money";
     }
 
     interface AnalyticsActions {

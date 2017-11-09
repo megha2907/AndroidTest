@@ -9,7 +9,10 @@ import android.widget.TextView;
 
 import com.jeeva.android.BaseActivity;
 
+import in.sportscafe.nostragamus.Constants;
+import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.R;
+import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
 import in.sportscafe.nostragamus.module.navigation.wallet.WalletHelper;
 import in.sportscafe.nostragamus.module.navigation.wallet.addMoney.AddWalletMoneyActivity;
 import in.sportscafe.nostragamus.utils.AnimationHelper;
@@ -88,6 +91,8 @@ public class WalletBalancePopupActivity extends BaseActivity implements View.OnC
     private void onAddMoneyClicked() {
         Intent intent = new Intent(this, AddWalletMoneyActivity.class);
         startActivity(intent);
+        NostragamusAnalytics.getInstance().trackClickEvent(Constants.AnalyticsCategory.WALLET_POPUP, Constants.AnalyticsClickLabels.DEPOSIT_MONEY);
+
     }
 
     private void onWinningInfoLayoutClicked() {
