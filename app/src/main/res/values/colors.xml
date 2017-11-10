@@ -175,6 +175,6 @@
     <color name="err_color">#c43763</color>
 
     <color name="new_challenge_tab_bg">#102c4e</color>
-    <color name="loading_animation_color">#454545</color>
+    <color name="loading_animation_color">#186aa2</color>
 
 </resources>
