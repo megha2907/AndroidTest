@@ -94,9 +94,9 @@ public class LoadingIndicatorView extends View {
 
     private void init(Context context,AttributeSet attrs,int defStyleAttr, int defStyleRes) {
         mMinWidth = 24;
-        mMaxWidth = 48;
+        mMaxWidth = 32;
         mMinHeight = 24;
-        mMaxHeight = 48;
+        mMaxHeight = 32;
 
         final TypedArray a = context.obtainStyledAttributes(
                 attrs, R.styleable.LoadingIndicatorView, defStyleAttr, defStyleRes);

@@ -276,6 +276,7 @@ public class NewChallengesRecyclerAdapter extends RecyclerView.Adapter<RecyclerV
         public NewChallengesItemViewHolder(View itemView) {
             super(itemView);
 
+            setIsRecyclable(false);
             itemView.setOnClickListener(this);
             challengeNameTextView = (TextView) itemView.findViewById(R.id.challenge_name_textView);
             tournamentsLinearLayout = (LinearLayout) itemView.findViewById(R.id.challenge_tournaments_layout);

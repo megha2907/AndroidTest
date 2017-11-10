@@ -18,7 +18,7 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/dim_55"
             android:orientation="horizontal"
-            android:background="@drawable/playscreen_powerup_bg"
+            android:background="@drawable/playscreen_top_bg"
             android:layout_alignParentTop="true"
             android:visibility="gone">
 
@@ -170,7 +170,7 @@
         <!-- Bottom/ Power-up Layout -->
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dim_64"
+            android:layout_height="@dimen/dim_68"
             android:orientation="horizontal"
             android:background="@drawable/playscreen_powerup_bg"
             android:layout_alignParentBottom="true"
