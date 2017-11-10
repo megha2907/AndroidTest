@@ -121,3 +121,7 @@
 
 -keep class com.lsjwzh.widget.recyclerviewpager.**
 -dontwarn com.lsjwzh.widget.recyclerviewpager.**
+
+#Loading Animation
+-keep class com.wang.avi.** { *; }
+-keep class com.wang.avi.indicators.** { *; }

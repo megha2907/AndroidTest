@@ -288,6 +288,7 @@ public interface Constants {
         String NO_OF_SPORTS_FOLLOWED = "sportsFollowed";
         String PLAYER_NAME = "playerName";
         String PLAYER_PHOTO = "playerPhoto";
+        String HIGHEST_PLAYER_ROOM_ID = "highestPlayerRoomId";
         String CHALLENGE_LIST = "challengeList";
         String CHALLENGE_TAG_ID = "challengeTagId";
         String UPDATED_CHALLENGE_USER_INFO = "updatedPowerups";
@@ -467,6 +468,19 @@ public interface Constants {
         String NAVIGATION = "Navigation";
         String CHALLENGES = "Challenges";
         String COMPARE_PROFILE = "Compare Results";
+        String HOME_SCREEN = "Home";
+        String NEW_CHALLENGES = "New Challenges";
+        String NEW_CHALLENGES_GAMES = "New Challenges Games";
+        String CONTEST = "Contest";
+        String CONTEST_JOINED = "Contest Joined";
+        String CONTEST_DETAILS = "Contest Details";
+        String IN_PLAY = "In Play";
+        String IN_PLAY_HEADLESS_GAMES = "In Play Headless Games";
+        String IN_PLAY_GAMES = "In Play Games";
+        String IN_PLAY_CONTEST_DETAILS = "In Play Contest Details";
+        String HISTORY_GAMES = "History Games";
+        String RESULTS = "Results";
+        String WALLET_POPUP = "Wallet Popup";
     }
 
     interface AnalyticsClickLabels {
@@ -484,6 +498,13 @@ public interface Constants {
         String BUY_PRODUCT = "Buy Product";
         String PRODUCT_PURCHASED = "Product Purchased";
 
+        /* Home */
+        String NEW_CHALLENGES = "New Challenges";
+        String IN_PLAY = "In Play";
+        String HISTORY = "History";
+        String GROUPS = "Groups";
+        String NAVIGATION = "Navigation";
+
         /* Wallet */
         String EARN_MORE = "Earn More";
         String ADD_MONEY = "Add Money";
@@ -495,6 +516,32 @@ public interface Constants {
         String REFER_NOW = "Refer Now";
 
         String OTHER_PROFILE = "Other Profile";
+        String JOIN_CONTEST = "Join Contest";
+
+        /* Contest */
+        String CARD = "Card";
+        String PRIZES = "Prizes";
+        String MAX_ENTRIES = "Max Entries";
+        String ENTRY_FEE = "Entry Fee";
+        String MODE = "Mode";
+        String CONTEST_JOIN_POPUP = "Join Popup";
+        String CONTEST_LOW_MONEY = "Low Money";
+        String CONTEST_MODES_POPUP = "Contest Modes Popup";
+
+        /* in play */
+        String HEADLESS_CARD = "Headless Card";
+        String JOINED_CARD = "Joined Card";
+        String RANK ="Rank";
+
+        /* in play contest details */
+        String GAMES = "Games";
+        String LEADERBOARD = "Leaderboard";
+        String RULES = "Rules";
+
+        /* Play */
+        String PSEUDO_GAME_FLOW = "Pseudo Game Flow";
+
+        String DEPOSIT_MONEY = "Deposit Money";
     }
 
     interface AnalyticsActions {

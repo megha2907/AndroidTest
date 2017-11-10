@@ -21,7 +21,8 @@
         <RelativeLayout
             android:id="@+id/results_peek_row_question_rl"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:minHeight="@dimen/dim_36">
 
             <com.jeeva.android.widgets.customfont.CustomTextView
                 android:id="@+id/results_peek_row_question_tv"
@@ -31,9 +32,11 @@
                 android:layout_marginRight="@dimen/dp_20"
                 android:textColor="@color/white"
                 android:gravity="center"
+                android:layout_centerVertical="true"
+                android:textSize="@dimen/sp_12"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="@dimen/dp_10"
-                android:layout_marginBottom="@dimen/dp_8"
+                android:layout_marginBottom="@dimen/dp_10"
                 app:typeface="lato_regular"
                 />
 
@@ -66,12 +69,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/white"
-                android:textSize="@dimen/dp_14"
+                android:textSize="@dimen/sp_13"
                 android:layout_alignParentLeft="true"
                 app:typeface="lato_regular"
                 android:ellipsize="end"
                 android:maxLength="15"
-                />
+                android:layout_marginBottom="@dimen/dp_10" />
 
             <com.jeeva.android.widgets.customfont.CustomTextView
                 android:id="@+id/results_peek_row_player_one_points"
@@ -80,9 +83,8 @@
                 android:textColor="@color/white_60"
                 android:layout_alignParentLeft="true"
                 app:typeface="lato_regular"
-                android:textSize="@dimen/dp_12"
+                android:textSize="@dimen/sp_12"
                 android:layout_below="@+id/results_peek_row_player_one_answer"
-                android:layout_marginTop="@dimen/dp_10"
                 />
 
             <!--<com.jeeva.android.widgets.customfont.CustomTextView
@@ -120,13 +122,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/white"
-                android:textSize="@dimen/dp_14"
+                android:textSize="@dimen/sp_13"
                 android:gravity="right"
                 android:layout_alignParentRight="true"
                 app:typeface="lato_regular"
                 android:maxLength="15"
                 android:ellipsize="end"
-                />
+                android:layout_marginBottom="@dimen/dp_10" />
 
             <com.jeeva.android.widgets.customfont.CustomTextView
                 android:id="@+id/results_peek_row_player_two_points"
@@ -135,10 +137,8 @@
                 android:textColor="@color/white_60"
                 android:layout_alignParentRight="true"
                 app:typeface="lato_regular"
-                android:textSize="@dimen/dp_12"
-                android:layout_marginTop="@dimen/dp_10"
-                android:layout_below="@+id/results_peek_row_player_two_answer"
-                />
+                android:textSize="@dimen/sp_12"
+                android:layout_below="@+id/results_peek_row_player_two_answer" />
 
             <!--<com.jeeva.android.widgets.customfont.CustomTextView
                 android:id="@+id/results_peek_row_player_two_points_splitView"
@@ -187,14 +187,14 @@
                 android:layout_marginLeft="@dimen/dp_12"
                 android:layout_marginRight="@dimen/dp_12"
                 android:background="@color/line_separator"
-                android:visibility="visible"
-                android:layout_marginTop="@dimen/dp_8"/>
+                android:visibility="visible" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:minHeight="@dimen/dp_44"
+                android:minHeight="@dimen/dim_36"
                 android:orientation="horizontal"
+                android:layout_marginBottom="@dimen/dim_2"
                 android:gravity="center_vertical"
                 android:layout_marginLeft="@dimen/dp_20"
                 android:layout_marginRight="@dimen/dp_20">
@@ -213,7 +213,8 @@
                         android:layout_height="@dimen/dp_16"
                         android:background="@android:color/transparent"
                         android:src="@drawable/double_powerup"
-                        android:visibility="gone"/>
+                        android:visibility="gone"
+                        android:layout_marginRight="@dimen/dp_20"/>
 
                     <com.jeeva.android.widgets.HmImageView
                         android:id="@+id/result_peek_powerup_noNeg_left"
@@ -222,7 +223,7 @@
                         android:background="@android:color/transparent"
                         android:src="@drawable/no_negative_powerup"
                         android:visibility="gone"
-                        android:layout_marginLeft="@dimen/dp_20"/>
+                        android:layout_marginRight="@dimen/dp_20"/>
 
                     <com.jeeva.android.widgets.HmImageView
                         android:id="@+id/result_peek_powerup_audience_left"
@@ -230,8 +231,7 @@
                         android:layout_height="@dimen/dp_16"
                         android:background="@android:color/transparent"
                         android:src="@drawable/audience_poll_powerup"
-                        android:visibility="gone"
-                        android:layout_marginLeft="@dimen/dp_20"/>
+                        android:visibility="gone" />
 
                 </LinearLayout>
 

@@ -15,6 +15,7 @@ import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.jeeva.android.ExceptionTracker;
@@ -67,6 +68,7 @@ public class EditProfileActivity extends NostragamusActivity implements EditProf
     private LinearLayout mReferralLayout;
     private TextView userNickNameLabel;
     private TextView mReferralLabel;
+    private RelativeLayout editDisclaimerLayout;
 
     private final String blockCharacterSet = "~#^|$%&*!@_-+/:;!?";
 
@@ -104,6 +106,7 @@ public class EditProfileActivity extends NostragamusActivity implements EditProf
         mIvProfileImage = (HmImageView) findViewById(R.id.edit_iv_user_image);
         mBtnUpdateDone = (CustomButton) findViewById(R.id.edit_btn_done);
         mCbProfileDisclaimer = (CheckBox) findViewById(R.id.edit_disclaimer_checkbox);
+        editDisclaimerLayout = (RelativeLayout) findViewById(R.id.edit_disclaimer_layout);
         initListener();
         this.mEditProfilePresenter = EditProfilePresenterImpl.newInstance(this);
         this.mEditProfilePresenter.onCreateEditProfile(getIntent().getExtras());
@@ -171,12 +174,7 @@ public class EditProfileActivity extends NostragamusActivity implements EditProf
     private void initOnBoardFlow() {
         if (BuildConfig.IS_PAID_VERSION) {
             mIsOnBoardFlow = true;
-            mCbProfileDisclaimer.setVisibility(View.VISIBLE);
-            if (!TextUtils.isEmpty(NostragamusDataHandler.getInstance().getDisclaimerText())) {
-                mCbProfileDisclaimer.setText(NostragamusDataHandler.getInstance().getDisclaimerText());
-            } else {
-                mCbProfileDisclaimer.setText(getResources().getString(R.string.profile_disclaimer));
-            }
+            editDisclaimerLayout.setVisibility(View.VISIBLE);
         }
     }
 

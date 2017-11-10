@@ -3,6 +3,7 @@ package in.sportscafe.nostragamus.module.resultspeek;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -68,15 +69,30 @@ public class ResultsPeekActivity extends NostragamusActivity implements ResultsP
     }
 
     @Override
-    public void setPointsAndMatch(int myPoints, int playerPoints, String matchStage, String challengeName) {
+    public void setPointsAndMatch(int myPoints, int playerPoints, String matchStage, String challengeName, String resultPublished) {
         Button btnUserPoints = (Button) findViewById(R.id.player_comparison_user_btn_points);
         Button btnPlayerPoints = (Button) findViewById(R.id.player_comparison_player_btn_points);
         TextView tvMatchStage = (TextView) findViewById(R.id.results_peek_tv_match_name);
         TextView tvChallengeName = (TextView) findViewById(R.id.results_peek_tv_challenge_name);
         tvMatchStage.setText(matchStage);
         tvChallengeName.setText(challengeName);
-        btnUserPoints.setText(String.valueOf(myPoints));
-        btnPlayerPoints.setText(String.valueOf(playerPoints));
+
+        if (!TextUtils.isEmpty(resultPublished)) {
+            btnUserPoints.setText(String.valueOf(myPoints));
+            btnPlayerPoints.setText(String.valueOf(playerPoints));
+        }else {
+            btnUserPoints.setText("Awaiting Result");
+            btnPlayerPoints.setText("Awaiting Result");
+            btnUserPoints.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+            btnPlayerPoints.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+            btnUserPoints.setTextSize(10);
+            btnPlayerPoints.setTextSize(10);
+            btnUserPoints.setAllCaps(false);
+            btnPlayerPoints.setAllCaps(false);
+            btnPlayerPoints.setPadding(15,0,15,0);
+            btnUserPoints.setPadding(15,0,15,0);
+        }
+
     }
 
     @Override

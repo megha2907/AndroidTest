@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         android:minHeight="@dimen/nav_header_height"
         android:orientation="horizontal"
-        android:background="@color/grey1"
+        android:background="@drawable/toolbar_bg"
         >
 
         <LinearLayout
@@ -41,7 +41,7 @@
                 android:layout_height="wrap_content"
                 android:text="View and edit your profile"
                 android:textAllCaps="false"
-                android:textColor="#808080"
+                android:textColor="@color/white_60"
                 android:textSize="@dimen/sp_12"
                 android:layout_marginTop="@dimen/dp_4"
                 app:typeface="lato_regular" />

@@ -325,4 +325,27 @@
         <item name="android:background">@android:color/transparent</item>
     </style>
 
+    <!-- Loading Animation styles -->
+    <style name="LoadingIndicatorView">
+        <item name="minViewWidth">32dip</item>
+        <item name="maxViewWidth">32dip</item>
+        <item name="minViewHeight">32dip</item>
+        <item name="maxViewHeight">32dip</item>
+        <item name="indicatorName">LineSpinFadeLoaderIndicator</item>
+    </style>
+    <style name="LoadingIndicatorView.Large">
+        <item name="minViewWidth">76dip</item>
+        <item name="maxViewWidth">76dip</item>
+        <item name="minViewHeight">76dip</item>
+        <item name="maxViewHeight">76dip</item>
+        <item name="indicatorName">LineSpinFadeLoaderIndicator</item>
+    </style>
+    <style name="LoadingIndicatorView.Small">
+        <item name="minViewWidth">24dip</item>
+        <item name="maxViewWidth">24dip</item>
+        <item name="minViewHeight">24dip</item>
+        <item name="maxViewHeight">24dip</item>
+        <item name="indicatorName">LineSpinFadeLoaderIndicator</item>
+    </style>
+
 </resources>

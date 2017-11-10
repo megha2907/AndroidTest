@@ -11,6 +11,7 @@ public class ContestScreenData {
     private int challengeId;
     private String challengeName;
     private boolean isHeadLessFlow = false;
+    private boolean isPseudoGameFlow = false;
     private int pseudoRoomId;
     private String challengeStartTime;
 
@@ -52,5 +53,13 @@ public class ContestScreenData {
 
     public void setChallengeStartTime(String challengeStartTime) {
         this.challengeStartTime = challengeStartTime;
+    }
+
+    public boolean isPseudoGameFlow() {
+        return isPseudoGameFlow;
+    }
+
+    public void setPseudoGameFlow(boolean pseudoGameFlow) {
+        isPseudoGameFlow = pseudoGameFlow;
     }
 }

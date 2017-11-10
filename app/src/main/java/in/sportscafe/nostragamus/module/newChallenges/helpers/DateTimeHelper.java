@@ -2,6 +2,8 @@ package in.sportscafe.nostragamus.module.newChallenges.helpers;
 
 import android.text.TextUtils;
 
+import com.jeeva.android.Log;
+
 import java.util.Calendar;
 
 import in.sportscafe.nostragamus.AppSnippet;
@@ -27,9 +29,23 @@ public class DateTimeHelper {
         int startDayOfMonth = Integer.parseInt(TimeUtils.getDateStringFromMs(startMillis, "d"));
         int endDayOfMonth = Integer.parseInt(TimeUtils.getDateStringFromMs(endMillis, "d"));
 
-        timeDurationStr = startDayOfMonth + AppSnippet.ordinalOnly(startDayOfMonth) + " " + TimeUtils.getDateStringFromMs(startMillis, "MMM")
-                + " - " +
-                endDayOfMonth + AppSnippet.ordinalOnly(endDayOfMonth) + " " + TimeUtils.getDateStringFromMs(endMillis, "MMM");
+        if (startDayOfMonth == endDayOfMonth) {
+
+            timeDurationStr = startDayOfMonth + AppSnippet.ordinalOnly(startDayOfMonth)
+                    + " " + TimeUtils.getDateStringFromMs(startMillis, "MMM");
+
+        } else if (TimeUtils.getDateStringFromMs(startMillis, "MMM")
+                .equalsIgnoreCase(TimeUtils.getDateStringFromMs(endMillis, "MMM"))) {
+
+            timeDurationStr = startDayOfMonth + AppSnippet.ordinalOnly(startDayOfMonth)
+                    + " - " + endDayOfMonth + AppSnippet.ordinalOnly(endDayOfMonth)
+                    + " " + TimeUtils.getDateStringFromMs(endMillis, "MMM");
+
+        } else {
+            timeDurationStr = startDayOfMonth + AppSnippet.ordinalOnly(startDayOfMonth) + " " + TimeUtils.getDateStringFromMs(startMillis, "MMM")
+                    + " - " +
+                    endDayOfMonth + AppSnippet.ordinalOnly(endDayOfMonth) + " " + TimeUtils.getDateStringFromMs(endMillis, "MMM");
+        }
 
         return timeDurationStr;
     }

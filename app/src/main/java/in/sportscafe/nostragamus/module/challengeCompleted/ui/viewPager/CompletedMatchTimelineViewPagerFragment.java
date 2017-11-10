@@ -25,6 +25,7 @@ import java.util.List;
 import in.sportscafe.nostragamus.AppSnippet;
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
+import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
 import in.sportscafe.nostragamus.module.challengeCompleted.dto.CompletedContestDto;
 import in.sportscafe.nostragamus.module.challengeCompleted.dto.CompletedContestMatchDto;
 import in.sportscafe.nostragamus.module.common.NostraBaseFragment;
@@ -256,7 +257,7 @@ public class CompletedMatchTimelineViewPagerFragment extends NostraBaseFragment 
             @Override
             public void onMatchActionClicked(int action, Bundle args) {
                 Log.d(TAG, "action button clicked : " + action);
-
+                NostragamusAnalytics.getInstance().trackClickEvent(Constants.AnalyticsCategory.HISTORY_GAMES, String.valueOf(action));
                 switch (action) {
                     case MatchesAdapterAction.ANSWER:
                         launchResultsScreen(args);

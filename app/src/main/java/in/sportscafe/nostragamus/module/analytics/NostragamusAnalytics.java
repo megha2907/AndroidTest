@@ -27,6 +27,7 @@ import org.json.JSONObject;
 
 import java.math.BigDecimal;
 import java.util.Currency;
+import java.util.List;
 import java.util.Map;
 
 import in.sportscafe.nostragamus.BuildConfig;
@@ -38,6 +39,8 @@ import in.sportscafe.nostragamus.Constants.UserProperties;
 import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.R;
+import in.sportscafe.nostragamus.module.newChallenges.dataProvider.SportsDataProvider;
+import in.sportscafe.nostragamus.module.newChallenges.dto.SportsTab;
 import in.sportscafe.nostragamus.module.user.login.dto.UserInfo;
 
 /**
@@ -665,6 +668,97 @@ public class NostragamusAnalytics {
     public void logFbPlayCompleted(@Nullable Bundle args) {
         if (sFaceBookAppEventLogger != null) {
             sFaceBookAppEventLogger.logEvent(Constants.FaceBookAnalyticsEvents.MATCH_PLAY_COMPLETED, args);
+        }
+    }
+
+    /**
+     * Tracks Challenges Opened
+     *  @param challengeId
+     * @param sportId
+     * @param category
+     */
+    public void trackNewChallenges(int challengeId, String challengeName, int[] sportId, String category) {
+
+        if (BuildConfig.IS_PAID_VERSION && mAmplitude != null) {
+
+            JSONObject sportsJson = null;
+            if (sportId != null) {
+                SportsDataProvider sportsDataProvider = new SportsDataProvider();
+                List<SportsTab> sportsTabList = sportsDataProvider.getSportsList();
+                sportsJson = new JSONObject();
+                for (SportsTab sportsTab : sportsTabList) {
+                    for (int temp = 0; temp < sportId.length; temp++) {
+
+                        if (sportId[temp] == sportsTab.getSportsId()) {
+
+                            try {
+                                sportsJson.put("sportsName", sportsTab.getSportsName());
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+                }
+            }
+
+            JSONObject jsonObject = new JSONObject();
+            try {
+                jsonObject.put("challengeId", challengeId);
+                jsonObject.put("challengeName", challengeName);
+                jsonObject.put("sports",sportsJson);
+            } catch (JSONException ex) {
+                ex.printStackTrace();
+            }
+
+            if (mAmplitude != null) {
+                mAmplitude.logEvent(category, jsonObject);
+            }
+            if (mMoEHelper != null) {
+                mMoEHelper.trackEvent(category, jsonObject);
+            }
+
+        } else {
+            Log.d("App", "Can't log revenue, Amplitude null!");
+        }
+    }
+
+
+    /**
+     * Tracks Contest Joined
+     * @param contestId
+     * @param contestName
+     * @param contestType
+     * @param entryFee
+     * @param challengeId
+     * @param screenName
+     */
+    public void trackContestJoined(int contestId, String contestName, String contestType, int entryFee, int challengeId, String screenName) {
+
+        if (BuildConfig.IS_PAID_VERSION && mAmplitude != null) {
+
+            JSONObject jsonObject = new JSONObject();
+            try {
+                jsonObject.put("contestId", contestId);
+                jsonObject.put("contestName", contestName);
+                jsonObject.put("contestType",contestType);
+                jsonObject.put("contestEntryFee", entryFee);
+                jsonObject.put("contestChallengeId", challengeId);
+                jsonObject.put("screenJoinedFrom", screenName);
+            } catch (JSONException ex) {
+                ex.printStackTrace();
+            }
+
+            String category = AnalyticsCategory.CONTEST_JOINED;
+
+            if (mAmplitude != null) {
+                mAmplitude.logEvent(category, jsonObject);
+            }
+            if (mMoEHelper != null) {
+                mMoEHelper.trackEvent(category, jsonObject);
+            }
+
+        } else {
+            Log.d("App", "Can't log revenue, Amplitude null!");
         }
     }
 

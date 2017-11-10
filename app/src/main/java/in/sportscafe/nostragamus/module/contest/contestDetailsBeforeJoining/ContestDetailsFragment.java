@@ -16,6 +16,7 @@ import org.parceler.Parcels;
 
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
+import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
 import in.sportscafe.nostragamus.module.challengeRewards.RewardsFragment;
 import in.sportscafe.nostragamus.module.challengeRules.RulesFragment;
 import in.sportscafe.nostragamus.module.common.NostraBaseFragment;
@@ -182,6 +183,7 @@ public class ContestDetailsFragment extends NostraBaseFragment implements View.O
             case R.id.join_contest_btn:
                 if (mContestDetailsFragmentListener != null) {
                     mContestDetailsFragmentListener.onJoinContestClicked(getArguments());
+                    NostragamusAnalytics.getInstance().trackClickEvent(Constants.AnalyticsCategory.CONTEST_DETAILS, Constants.AnalyticsClickLabels.JOIN_CONTEST);
                 }
                 break;
             case R.id.contest_details_back_btn:
@@ -191,6 +193,7 @@ public class ContestDetailsFragment extends NostraBaseFragment implements View.O
                 break;
             case R.id.toolbar_wallet_rl:
                 mContestDetailsFragmentListener.onWalletClicked();
+                NostragamusAnalytics.getInstance().trackClickEvent(Constants.AnalyticsCategory.CONTEST_DETAILS, Constants.AnalyticsClickLabels.WALLET);
                 break;
 
         }

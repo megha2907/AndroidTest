@@ -306,6 +306,7 @@ public class InPlayViewPagerFragment extends BaseFragment {
 
                     Bundle bundle = new Bundle();
                     bundle.putParcelable(Constants.BundleKeys.CONTEST_SCREEN_DATA, Parcels.wrap(contestScreenData));
+                    bundle.putInt(Constants.BundleKeys.SCREEN_LAUNCHED_FROM_PARENT, ContestsActivity.LaunchedFrom.IN_PLAY_JOIN_CONTEST);
 
                     if (Nostragamus.getInstance().hasNetworkConnection()) {
                         Intent intent = new Intent(getActivity(), ContestsActivity.class);

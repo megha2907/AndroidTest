@@ -24,6 +24,7 @@ import in.sportscafe.nostragamus.AppSnippet;
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.R;
+import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
 import in.sportscafe.nostragamus.module.contest.ui.DetailScreensLaunchRequest;
 import in.sportscafe.nostragamus.module.customViews.TimelineHelper;
 import in.sportscafe.nostragamus.module.inPlay.dto.InPlayContestDto;
@@ -488,6 +489,7 @@ public class InPlayRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                     if (mInPlayAdapterListener != null) {
                         Bundle args = getContestDataBundle();
                         mInPlayAdapterListener.onJoinedContestCardClicked(args);
+                        NostragamusAnalytics.getInstance().trackClickEvent(Constants.AnalyticsCategory.IN_PLAY, Constants.AnalyticsClickLabels.JOINED_CARD);
                     }
                     break;
 
@@ -496,6 +498,7 @@ public class InPlayRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                         Bundle args = getContestDataBundle();
                         args.putInt(Constants.BundleKeys.SCREEN_LAUNCH_REQUEST, DetailScreensLaunchRequest.MATCHES_LEADER_BOARD_SCREEN);
                         mInPlayAdapterListener.onJoinedContestCurrentRankClicked(args);
+                        NostragamusAnalytics.getInstance().trackClickEvent(Constants.AnalyticsCategory.IN_PLAY, Constants.AnalyticsClickLabels.RANK);
                     }
                     break;
 
@@ -504,6 +507,7 @@ public class InPlayRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                         Bundle args = getContestDataBundle();
                         args.putInt(Constants.BundleKeys.SCREEN_LAUNCH_REQUEST, DetailScreensLaunchRequest.MATCHES_REWARDS_SCREEN);
                         mInPlayAdapterListener.onJoinedContestPrizesClicked(args);
+                        NostragamusAnalytics.getInstance().trackClickEvent(Constants.AnalyticsCategory.IN_PLAY, Constants.AnalyticsClickLabels.PRIZES);
                     }
                     break;
 
@@ -512,6 +516,7 @@ public class InPlayRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                         Bundle args = getContestDataBundle();
                         args.putInt(Constants.BundleKeys.SCREEN_LAUNCH_REQUEST, DetailScreensLaunchRequest.MATCHES_RULES_SCREEN);
                         mInPlayAdapterListener.onContestModeClicked(args);
+                        NostragamusAnalytics.getInstance().trackClickEvent(Constants.AnalyticsCategory.IN_PLAY, Constants.AnalyticsClickLabels.MODE);
                     }
                     break;
             }
@@ -561,8 +566,8 @@ public class InPlayRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                 case R.id.in_play_headless_card_parent:
                     if (mInPlayAdapterListener != null) {
                         Bundle args = getHeadLessContestDataBundle();
-
                         mInPlayAdapterListener.onHeadLessContestCardClicked(args, getHeadLessContest());
+                        NostragamusAnalytics.getInstance().trackClickEvent(Constants.AnalyticsCategory.IN_PLAY, Constants.AnalyticsClickLabels.HEADLESS_CARD);
                     }
                     break;
             }
@@ -627,6 +632,7 @@ public class InPlayRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                         }
 
                         mInPlayAdapterListener.onJoinAnotherContestClicked(args);
+                        NostragamusAnalytics.getInstance().trackClickEvent(Constants.AnalyticsCategory.IN_PLAY, Constants.AnalyticsClickLabels.JOIN_CONTEST);
                     }
                     break;
             }
