@@ -42,7 +42,9 @@ import in.sportscafe.nostragamus.module.contest.dto.ContestScreenData;
 import in.sportscafe.nostragamus.module.contest.dto.ContestType;
 import in.sportscafe.nostragamus.module.contest.dto.JoinContestData;
 import in.sportscafe.nostragamus.module.contest.helper.JoinContestHelper;
+import in.sportscafe.nostragamus.module.contest.ui.ContestsActivity;
 import in.sportscafe.nostragamus.module.contest.ui.DetailScreensLaunchRequest;
+import in.sportscafe.nostragamus.module.inPlay.adapter.MatchesAdapterAction;
 import in.sportscafe.nostragamus.module.navigation.referfriends.ReferFriendActivity;
 import in.sportscafe.nostragamus.module.navigation.wallet.addMoney.lowBalance.AddMoneyOnLowBalanceActivity;
 import in.sportscafe.nostragamus.module.nostraHome.helper.TimerHelper;
@@ -242,9 +244,7 @@ public class ContestViewPagerFragment extends NostraBaseFragment {
                     joinContestData.setJoiContestDialogLaunchMode(CompletePaymentDialogFragment.DialogLaunchMode.JOINING_CHALLENGE_LAUNCH);
 
                     if (contest.getContestType()!=null) {
-                        NostragamusAnalytics.getInstance().trackContestJoined(contest.getContestId(),
-                                contest.getConfigName(), contest.getContestType().getCategoryName(),
-                                contest.getEntryFee(), contest.getChallengeId());
+                        sendContestJoinedDataToAmplitude(contest);
                     }
 
                 }
@@ -412,5 +412,60 @@ public class ContestViewPagerFragment extends NostraBaseFragment {
     public void onContestData(List<Contest> contests, ContestScreenData contestScreenData) {
         mContestList = contests;
         mContestScreenData = contestScreenData;
+    }
+
+    private void sendContestJoinedDataToAmplitude(Contest contest) {
+
+        Bundle activityBundle = null;
+        if (getActivity()!=null) {
+            if (getActivity().getIntent() != null && getActivity().getIntent().getExtras() != null) {
+                activityBundle = getActivity().getIntent().getExtras();
+
+                if (activityBundle.containsKey(Constants.BundleKeys.SCREEN_LAUNCHED_FROM_PARENT)) {
+
+                    int screenLaunchedFrom = activityBundle.getInt(Constants.BundleKeys.SCREEN_LAUNCHED_FROM_PARENT);
+                    String screenName = "Contest";
+
+                    switch (screenLaunchedFrom) {
+                        case ContestsActivity.LaunchedFrom.NEW_CHALLENGE_MATCHES:
+                            screenName = "New Challenge Games";
+                            break;
+
+                        case ContestsActivity.LaunchedFrom.IN_PLAY_HEAD_LESS_MATCHES:
+                            screenName = "In Play Headless Games";
+                            break;
+
+                        case ContestsActivity.LaunchedFrom.IN_PLAY_MATCHES:
+                            screenName = "In Play Matches";
+                            break;
+
+                        case ContestsActivity.LaunchedFrom.PLAY_SCREEN_HEAD_LESS:
+                            screenName = "Play Screen Headless";
+                            break;
+
+                        case ContestsActivity.LaunchedFrom.RESULTS:
+                            screenName = "Results";
+                            break;
+
+                        case ContestsActivity.LaunchedFrom.IN_PLAY_JOIN_CONTEST:
+                            screenName = "In Play Join Contest";
+                            break;
+
+                    }
+
+                    NostragamusAnalytics.getInstance().trackContestJoined(contest.getContestId(),
+                            contest.getConfigName(), contest.getContestType().getCategoryName(),
+                            contest.getEntryFee(), contest.getChallengeId(),screenName);
+                }else {
+                    NostragamusAnalytics.getInstance().trackContestJoined(contest.getContestId(),
+                            contest.getConfigName(), contest.getContestType().getCategoryName(),
+                            contest.getEntryFee(), contest.getChallengeId(),"contest");
+                }
+            }
+        }else {
+            NostragamusAnalytics.getInstance().trackContestJoined(contest.getContestId(),
+                    contest.getConfigName(), contest.getContestType().getCategoryName(),
+                    contest.getEntryFee(), contest.getChallengeId(),"contest");
+        }
     }
 }

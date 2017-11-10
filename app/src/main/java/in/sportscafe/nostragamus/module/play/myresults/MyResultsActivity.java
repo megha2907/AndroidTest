@@ -266,7 +266,7 @@ public class MyResultsActivity extends NostragamusActivity implements MyResultsV
 
             Bundle args = new Bundle();
             args.putParcelable(Constants.BundleKeys.CONTEST_SCREEN_DATA, Parcels.wrap(screenData));
-            args.putInt(Constants.BundleKeys.SCREEN_LAUNCHED_FROM_PARENT, ContestsActivity.LaunchedFrom.IN_PLAY_HEAD_LESS_MATCHES);
+            args.putInt(Constants.BundleKeys.SCREEN_LAUNCHED_FROM_PARENT, ContestsActivity.LaunchedFrom.RESULTS);
 
             Intent contestScreen = new Intent(this, ContestsActivity.class);
             contestScreen.putExtras(args);
