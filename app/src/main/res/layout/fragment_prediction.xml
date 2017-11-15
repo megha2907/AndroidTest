@@ -18,7 +18,7 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/dim_55"
             android:orientation="horizontal"
-            android:background="@drawable/playscreen_powerup_bg"
+            android:background="@drawable/playscreen_top_bar_gradient"
             android:layout_alignParentTop="true"
             android:visibility="gone">
 
@@ -37,8 +37,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
-                android:gravity="center"
-                >
+                android:gravity="center">
 
                 <!-- parties name -->
                 <LinearLayout
@@ -172,7 +171,7 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/dim_64"
             android:orientation="horizontal"
-            android:background="@drawable/playscreen_powerup_bg"
+            android:background="@drawable/playscreen_bottom_bar_gradient"
             android:layout_alignParentBottom="true"
             android:gravity="center">
 
