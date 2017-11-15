@@ -169,7 +169,7 @@
         <!-- Bottom/ Power-up Layout -->
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dim_64"
+            android:layout_height="@dimen/dim_68"
             android:orientation="horizontal"
             android:background="@drawable/playscreen_bottom_bar_gradient"
             android:layout_alignParentBottom="true"

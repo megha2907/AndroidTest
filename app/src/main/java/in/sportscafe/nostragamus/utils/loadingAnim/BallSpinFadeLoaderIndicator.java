@@ -52,11 +52,11 @@ public class BallSpinFadeLoaderIndicator extends Indicator {
     @Override
     public ArrayList<ValueAnimator> onCreateAnimators() {
         ArrayList<ValueAnimator> animators=new ArrayList<>();
-        int[] delays= {0, 120, 240, 360, 480, 600, 720, 780, 840};
+        int[] delays= {0, 60, 120, 180, 240, 300, 360, 420, 480};
         for (int i = 0; i < 8; i++) {
             final int index=i;
             ValueAnimator scaleAnim=ValueAnimator.ofFloat(1,0.4f,1);
-            scaleAnim.setDuration(1000);
+            scaleAnim.setDuration(500);
             scaleAnim.setRepeatCount(-1);
             scaleAnim.setStartDelay(delays[i]);
             addUpdateListener(scaleAnim,new ValueAnimator.AnimatorUpdateListener() {
@@ -68,7 +68,7 @@ public class BallSpinFadeLoaderIndicator extends Indicator {
             });
 
             ValueAnimator alphaAnim=ValueAnimator.ofInt(255, 77, 255);
-            alphaAnim.setDuration(1000);
+            alphaAnim.setDuration(500);
             alphaAnim.setRepeatCount(-1);
             alphaAnim.setStartDelay(delays[i]);
             addUpdateListener(alphaAnim,new ValueAnimator.AnimatorUpdateListener() {

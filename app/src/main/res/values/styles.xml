@@ -327,10 +327,10 @@
 
     <!-- Loading Animation styles -->
     <style name="LoadingIndicatorView">
-        <item name="minViewWidth">48dip</item>
-        <item name="maxViewWidth">48dip</item>
-        <item name="minViewHeight">48dip</item>
-        <item name="maxViewHeight">48dip</item>
+        <item name="minViewWidth">32dip</item>
+        <item name="maxViewWidth">32dip</item>
+        <item name="minViewHeight">32dip</item>
+        <item name="maxViewHeight">32dip</item>
         <item name="indicatorName">LineSpinFadeLoaderIndicator</item>
     </style>
     <style name="LoadingIndicatorView.Large">
