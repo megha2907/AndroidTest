@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Pressed state -->
+    <item android:state_pressed="true">
+        <layer-list>
+            <item android:bottom="@dimen/dim_2">
+                <shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="rectangle">
+                    <stroke android:width="@dimen/dim_1" android:color="#af332d" />
+                    <corners android:radius="@dimen/dim_2" />
+                </shape>
+            </item>
+        </layer-list>
+    </item>
+
+    <!-- Default -->
+    <item>
+        <layer-list>
+            <!-- BUTTON -->
+            <item android:bottom="@dimen/dim_2">
+                <shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="rectangle">
+                    <stroke android:width="@dimen/dim_1" android:color="#f13f37" />
+                    <corners android:radius="@dimen/dim_2" />
+                </shape>
+            </item>
+        </layer-list>
+    </item>
+
+</selector>

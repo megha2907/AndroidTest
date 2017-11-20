@@ -77,7 +77,7 @@ public class PlayerProfilePresenterImpl implements PlayerProfilePresenter, Playe
 
 
     private void getProfile(Bundle bundle) {
-        mProfileView.showProgressbar();
+        mProfileView.startProgressAnim();
         mProfileModel.getProfileDetails(bundle);
     }
 
@@ -126,19 +126,19 @@ public class PlayerProfilePresenterImpl implements PlayerProfilePresenter, Playe
 
     @Override
     public void onNoInternet() {
-        mProfileView.dismissProgressbar();
+        mProfileView.stopProgressAnim();
         showAlert(Constants.Alerts.NO_NETWORK_CONNECTION);
     }
 
     @Override
     public void onSuccessPlayerInfo(PlayerInfo playerInfo) {
-        mProfileView.dismissProgressbar();
+        mProfileView.stopProgressAnim();
         populateUserInfo();
     }
 
     @Override
     public void onFailedPlayerInfo() {
-        mProfileView.dismissProgressbar();
+        mProfileView.stopProgressAnim();
     }
 
     private void showAlert(String message) {

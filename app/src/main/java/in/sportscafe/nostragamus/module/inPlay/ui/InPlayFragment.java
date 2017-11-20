@@ -27,6 +27,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import in.sportscafe.nostragamus.BuildConfig;
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.NostraBaseFragment;
@@ -169,6 +170,12 @@ public class InPlayFragment extends NostraBaseFragment implements View.OnClickLi
             TabLayout inPlayTabLayout = (TabLayout) getView().findViewById(R.id.inplay_tabs);
             ViewPager inPlayViewPager = (ViewPager) getView().findViewById(R.id.inplay_viewPager);
 
+            if (BuildConfig.IS_ACL_VERSION) {
+                inPlayTabLayout.setTabMode(TabLayout.MODE_FIXED);
+            }else {
+                inPlayTabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
+            }
+
             SportsDataProvider sportsDataProvider = new SportsDataProvider();
             List<SportsTab> sportsTabList = sportsDataProvider.getSportsList();
 
@@ -212,6 +219,7 @@ public class InPlayFragment extends NostraBaseFragment implements View.OnClickLi
                 }
 
             /* Sort tabs */
+            if (!BuildConfig.IS_ACL_VERSION) {
                 Collections.sort(fragmentList, new Comparator<InPlayViewPagerFragment>() {
                     @Override
                     public int compare(InPlayViewPagerFragment fragment1, InPlayViewPagerFragment fragment2) {
@@ -230,6 +238,7 @@ public class InPlayFragment extends NostraBaseFragment implements View.OnClickLi
                         return -1;
                     }
                 });
+            }
 
             /* create adapter */
                 InPlayViewPagerAdapter viewPagerAdapter = new InPlayViewPagerAdapter

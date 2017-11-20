@@ -27,6 +27,7 @@ public class LoadingIndicatorView extends View {
     private static final String TAG = LoadingIndicatorView.class.getSimpleName();
 
     private static final LineSpinFadeLoaderIndicator DEFAULT_INDICATOR = new LineSpinFadeLoaderIndicator();
+    private static final BallPulseIndicator DEFAULT_INDICATOR_TWO = new BallPulseIndicator();
 
     private static final int MIN_SHOW_TIME = 0; // ms
     private static final int MIN_DELAY = 0; // ms
@@ -109,7 +110,7 @@ public class LoadingIndicatorView extends View {
         mIndicatorColor=a.getColor(R.styleable.LoadingIndicatorView_indicatorColor, Color.WHITE);
         setIndicator(indicatorName);
         if (mIndicator==null){
-            setIndicator(DEFAULT_INDICATOR);
+            setIndicator(DEFAULT_INDICATOR_TWO);
         }
         a.recycle();
     }
