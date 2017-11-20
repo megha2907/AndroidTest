@@ -3,6 +3,7 @@ package in.sportscafe.nostragamus.module.newChallenges.dataProvider;
 import java.util.ArrayList;
 import java.util.List;
 
+import in.sportscafe.nostragamus.BuildConfig;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.inPlay.helper.InPlayFilterHelper;
 import in.sportscafe.nostragamus.module.newChallenges.dto.SportsTab;
@@ -20,10 +21,15 @@ public class SportsDataProvider {
 
     public List<SportsTab> getSportsList() {
         List<SportsTab> sportsList = new ArrayList<>();
+        List<SportsTab> sportsAclList = new ArrayList<>();
 
         SportsTab all = new SportsTab();
         all.setSportsId(FILTER_ALL_SPORTS_ID);
-        all.setSportsName("All");
+        if (BuildConfig.IS_ACL_VERSION) {
+            all.setSportsName("Others");
+        }else {
+            all.setSportsName("All");
+        }
         all.setSportIconDrawable(R.drawable.sport_all);
         all.setSportIconUnSelectedDrawable(R.drawable.sport_all_grey);
 
@@ -117,6 +123,12 @@ public class SportsDataProvider {
         motoGP.setSportIconDrawable(R.drawable.sport_motogp);
         motoGP.setSportIconUnSelectedDrawable(R.drawable.sport_racing_grey);
 
+        SportsTab ACL = new SportsTab();
+        ACL.setSportsId(15);
+        ACL.setSportsName("ACL 2017-18");
+        ACL.setSportIconDrawable(R.drawable.acl_icon);
+        ACL.setSportIconUnSelectedDrawable(R.drawable.acl_icon);
+
         /* This is priority order, to show tabs */
         sportsList.add(all);
         sportsList.add(daily);
@@ -135,7 +147,15 @@ public class SportsDataProvider {
         sportsList.add(volleyball);
         sportsList.add(motoGP);
 
-        return sportsList;
+        /* For Ahmedabad Champions League , Show only All and ACL Tabs */
+        sportsAclList.add(ACL);
+        sportsAclList.add(all);
+
+        if (BuildConfig.IS_ACL_VERSION) {
+            return sportsAclList;
+        }else {
+            return sportsList;
+        }
     }
 
 }

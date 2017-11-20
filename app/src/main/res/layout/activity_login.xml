@@ -155,4 +155,22 @@
         android:src="@drawable/onboard_how_to_play"
         android:visibility="gone" />
 
+    <!-- Loading View -->
+    <LinearLayout
+        android:id="@+id/progressBarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <in.sportscafe.nostragamus.utils.loadingAnim.LoadingIndicatorView
+            android:id="@+id/login_loading_anim"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:indicatorColor="@color/loading_animation_color"
+            android:visibility="gone"
+            />
+
+    </LinearLayout>
+
 </RelativeLayout>

@@ -367,6 +367,8 @@ public interface Constants {
         String HEADLESS_MATCH_SCREEN_DATA = "headlessMatchScreenData";
         String COMPLETED_CHALLENGE_LIST_ITEM = "CompletedChallengeListItem";
         String CONFIG_ID = "configId";
+        String REPORT_TITLE = "reportTitle";
+        String REPORT_DESC = "reportDesc";
     }
 
     interface DateFormats {
@@ -611,6 +613,7 @@ public interface Constants {
         String REFERRAL_CAMPAIGN = "Campaign";
         String WALLET_INIT = "Wallet Initial Amount";
         String LINK_NAME = "Link Name";
+        String ACL_APP = "Acl App";
     }
 
     interface AppType {

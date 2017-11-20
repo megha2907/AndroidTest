@@ -19,4 +19,8 @@ public interface TimelineView extends InAppView {
     void setChallengeFilter(String challengeName);
 
     void removeChallengeFilter();
+
+    void startProgressAnim();
+
+    void stopProgressAnim();
 }

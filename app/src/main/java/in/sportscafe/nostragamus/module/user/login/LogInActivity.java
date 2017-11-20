@@ -35,6 +35,7 @@ import in.sportscafe.nostragamus.module.common.TermsConditions;
 import in.sportscafe.nostragamus.module.nostraHome.ui.NostraHomeActivity;
 import in.sportscafe.nostragamus.module.onboard.OnBoardingFragment;
 import in.sportscafe.nostragamus.module.user.myprofile.edit.EditProfileActivity;
+import in.sportscafe.nostragamus.utils.loadingAnim.LoadingIndicatorView;
 
 public class LogInActivity extends NostragamusActivity implements LogInView, View.OnClickListener, GoogleApiClient.OnConnectionFailedListener {
 
@@ -300,7 +301,7 @@ public class LogInActivity extends NostragamusActivity implements LogInView, Vie
 
     @Override
     public void showProgressDialog() {
-        showProgressbar();
+        startProgressAnim();
         /*if (mProgressDialog == null) {
             mProgressDialog = new NostraProgressDialog(this);
             mProgressDialog.setMessage("Loading...");
@@ -312,11 +313,26 @@ public class LogInActivity extends NostragamusActivity implements LogInView, Vie
 
     @Override
     public void hideProgressDialog() {
-        dismissProgressbar();
+        stopProgressAnim();
         /*if (mProgressDialog != null && mProgressDialog.isShowing()) {
             mProgressDialog.hide();
         }*/
     }
+
+    public void startProgressAnim() {
+        if (getActivity()!=null) {
+            LoadingIndicatorView loadingIndicatorView = (LoadingIndicatorView) findViewById(R.id.login_loading_anim);
+            loadingIndicatorView.show();
+        }
+    }
+
+    public void stopProgressAnim() {
+        if (getActivity()!=null) {
+            LoadingIndicatorView loadingIndicatorView = (LoadingIndicatorView) findViewById(R.id.login_loading_anim);
+            loadingIndicatorView.hide();
+        }
+    }
+
 
     private NostragamusDialogBox mAlertDialog;
 

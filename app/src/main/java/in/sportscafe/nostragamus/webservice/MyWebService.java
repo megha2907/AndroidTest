@@ -408,4 +408,8 @@ public class MyWebService extends AbstractWebService<NostragamusService> {
     public Call<CompletedMatchesResponse> getCompletedChallengeMatches(int roomId, int challengeId) {
         return mNostragamusService.getCompletedChallengeMatches(roomId, challengeId);
     }
+
+    public Call<ApiResponse> sendErrorReport(String type, String id) {
+        return mNostragamusService.sendErrorReport(type, id);
+    }
 }

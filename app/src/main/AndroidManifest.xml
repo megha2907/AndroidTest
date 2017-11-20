@@ -348,6 +348,11 @@
             android:name=".module.play.myresults.MyResultsActivity"
             android:screenOrientation="portrait" />
 
+        <activity
+            android:name=".module.popups.submitReport.SubmitReportPopupActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.PopupTheme"/>
+
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />

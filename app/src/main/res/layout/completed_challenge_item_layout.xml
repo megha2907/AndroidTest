@@ -36,7 +36,8 @@
                     android:textColor="@color/white"
                     android:textSize="@dimen/sp_12"
                     app:typeface="lato_regular"
-                    />
+                    android:maxLines="1"
+                    android:ellipsize="end" />
 
                 <com.jeeva.android.widgets.customfont.CustomTextView
                     android:id="@+id/completed_challenge_count_textView"
@@ -59,9 +60,8 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="@dimen/dim_30"
-            android:layout_weight="1.5"
             android:orientation="vertical"
             android:gravity="right|center_vertical">
 

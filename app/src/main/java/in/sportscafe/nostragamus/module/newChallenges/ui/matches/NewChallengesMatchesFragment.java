@@ -146,7 +146,7 @@ public class NewChallengesMatchesFragment extends BaseFragment implements View.O
                 switch (actionType) {
                     case MatchesAdapterAction.PLAY:
                         joinPseudoContest(match);
-                        NostragamusAnalytics.getInstance().trackClickEvent(Constants.AnalyticsCategory.NEW_CHALLENGES_GAMES, String.valueOf(match.getMatchId()));
+                        NostragamusAnalytics.getInstance().trackClickEvent(Constants.AnalyticsCategory.NEW_CHALLENGES_GAMES, "Play");
                         break;
                 }
             }

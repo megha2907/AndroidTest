@@ -84,12 +84,23 @@ android {
             manifestPlaceholders = [buildTypeSuffix: "", branchState: "true"]
             resValue "string", "app_name", "Nostra Stage"
             buildConfigField("boolean", "IS_PAID_VERSION", "false")
+            buildConfigField("boolean", "IS_ACL_VERSION", "false")
         }
+
         stagePro {
             applicationIdSuffix ".pro"
             manifestPlaceholders = [buildTypeSuffix: ".pro", branchState: "true"]
             resValue "string", "app_name", "NostraPro Stage"
             buildConfigField("boolean", "IS_PAID_VERSION", "true")
+            buildConfigField("boolean", "IS_ACL_VERSION", "false")
+        }
+
+        stageProAcl {
+            applicationIdSuffix ".acl.pro"
+            manifestPlaceholders = [buildTypeSuffix: ".acl.pro", branchState: "true"]
+            resValue "string", "app_name", "NostraPro ACL Stage"
+            buildConfigField("boolean", "IS_PAID_VERSION", "true")
+            buildConfigField("boolean", "IS_ACL_VERSION", "true")
         }
 
         NostragamusPS {
@@ -97,24 +108,37 @@ android {
             manifestPlaceholders = [buildTypeSuffix: ".ps", branchState: "false"]
             resValue "string", "app_name", "Nostragamus"
             buildConfigField("boolean", "IS_PAID_VERSION", "false")
+            buildConfigField("boolean", "IS_ACL_VERSION", "false")
         }
+
         NostragamusPro {
             applicationIdSuffix ".pro"
             manifestPlaceholders = [buildTypeSuffix: ".pro", branchState: "false"]
             resValue "string", "app_name", "Nostra Pro"
             buildConfigField("boolean", "IS_PAID_VERSION", "true")
+            buildConfigField("boolean", "IS_ACL_VERSION", "false")
+        }
+
+        NostragamusProAcl {
+            applicationIdSuffix ".acl.pro"
+            manifestPlaceholders = [buildTypeSuffix: ".acl.pro", branchState: "false"]
+            resValue "string", "app_name", "NostraPro ACL"
+            buildConfigField("boolean", "IS_PAID_VERSION", "true")
+            buildConfigField("boolean", "IS_ACL_VERSION", "true")
         }
 
         local {
             manifestPlaceholders = [buildTypeSuffix: "", branchState: "false"]
             resValue "string", "app_name", "Nostragamus"
             buildConfigField("boolean", "IS_PAID_VERSION", "false")
+            buildConfigField("boolean", "IS_ACL_VERSION", "false")
         }
 
         dev {
             manifestPlaceholders = [buildTypeSuffix: "", branchState: "false"]
             resValue "string", "app_name", "Nostragamus Dev"
             buildConfigField("boolean", "IS_PAID_VERSION", "false")
+            buildConfigField("boolean", "IS_ACL_VERSION", "false")
         }
     }
 

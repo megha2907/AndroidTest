@@ -54,7 +54,7 @@ public class NewChallengesViewPagerFragment extends BaseFragment implements View
     }
 
     private void initRootView(View rootView) {
-        setupAdsWebView(rootView);
+        //setupAdsWebView(rootView);
 
         mRecyclerView = (RecyclerView) rootView.findViewById(R.id.challenge_recycler);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(mRecyclerView.getContext(), LinearLayoutManager.VERTICAL, false));
