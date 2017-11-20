@@ -25,6 +25,7 @@ import in.sportscafe.nostragamus.module.nostraHome.ui.NostraHomeActivity;
 import in.sportscafe.nostragamus.module.popups.timerPopup.TimerFinishDialogHelper;
 import in.sportscafe.nostragamus.module.popups.walletpopups.WalletBalancePopupActivity;
 import in.sportscafe.nostragamus.utils.FragmentHelper;
+import in.sportscafe.nostragamus.utils.loadingAnim.LoadingIndicatorView;
 
 /**
  * Created by deepanshi on 9/10/17.
@@ -129,41 +130,40 @@ public class ContestDetailsActivity extends NostraBaseActivity implements Contes
 
             if (joinContestData != null) {
 
-                if (TimerFinishDialogHelper.canJoinContest( (mContestScreenData != null) ? mContestScreenData.getChallengeStartTime() : "")) {
+                if (TimerFinishDialogHelper.canJoinContest((mContestScreenData != null) ? mContestScreenData.getChallengeStartTime() : "")) {
 
                     if (Nostragamus.getInstance().hasNetworkConnection()) {
-                        CustomProgressbar.getProgressbar(this).show();
-
+                        startAnim();
                         JoinContestHelper joinContestHelper = new JoinContestHelper();
                         joinContestHelper.JoinContest(joinContestData, this,
                                 new JoinContestHelper.JoinContestProcessListener() {
                                     @Override
                                     public void noInternet() {
-                                        CustomProgressbar.getProgressbar(ContestDetailsActivity.this).dismissProgress();
+                                        stopAnim();
                                         handleError(Constants.DataStatus.NO_INTERNET, "");
                                     }
 
                                     @Override
                                     public void lowWalletBalance(JoinContestData joinContestData) {
-                                        CustomProgressbar.getProgressbar(ContestDetailsActivity.this).dismissProgress();
+                                        stopAnim();
                                         launchLowBalanceActivity(joinContestData);
                                     }
 
                                     @Override
                                     public void joinContestSuccess(JoinContestData contestJoinedSuccessfully) {
-                                        CustomProgressbar.getProgressbar(ContestDetailsActivity.this).dismissProgress();
+                                        stopAnim();
                                         onContestJoinedSuccessfully(contestJoinedSuccessfully);
                                     }
 
                                     @Override
                                     public void onApiFailure() {
-                                        CustomProgressbar.getProgressbar(ContestDetailsActivity.this).dismissProgress();
+                                       stopAnim();
                                         handleError(Constants.DataStatus.FROM_SERVER_API_FAILED, "");
                                     }
 
                                     @Override
                                     public void onServerReturnedError(String msg) {
-                                        CustomProgressbar.getProgressbar(ContestDetailsActivity.this).dismissProgress();
+                                        stopAnim();
                                         if (TextUtils.isEmpty(msg)) {
                                             msg = Constants.Alerts.SOMETHING_WRONG;
                                         }
@@ -172,12 +172,12 @@ public class ContestDetailsActivity extends NostraBaseActivity implements Contes
 
                                     @Override
                                     public void hideProgressBar() {
-                                        CustomProgressbar.getProgressbar(ContestDetailsActivity.this).dismissProgress();
+                                        stopAnim();
                                     }
 
                                     @Override
                                     public void showProgressBar() {
-                                        CustomProgressbar.getProgressbar(ContestDetailsActivity.this).show();
+                                        startAnim();
                                     }
                                 });
 
@@ -192,7 +192,6 @@ public class ContestDetailsActivity extends NostraBaseActivity implements Contes
             }
         }
     }
-
 
 
     private void launchLowBalanceActivity(JoinContestData joinContestData) {
@@ -247,6 +246,16 @@ public class ContestDetailsActivity extends NostraBaseActivity implements Contes
                 Snackbar.make(view, Constants.Alerts.SOMETHING_WRONG, Snackbar.LENGTH_LONG).show();
             }
         }
+    }
+
+    void startAnim() {
+        LoadingIndicatorView loadingIndicatorView = (LoadingIndicatorView) findViewById(R.id.loading_anim_contest);
+        loadingIndicatorView.smoothToShow();
+    }
+
+    void stopAnim() {
+        LoadingIndicatorView loadingIndicatorView = (LoadingIndicatorView) findViewById(R.id.loading_anim_contest);
+        loadingIndicatorView.smoothToHide();
     }
 
 
