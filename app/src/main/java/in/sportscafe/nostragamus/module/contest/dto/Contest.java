@@ -71,6 +71,9 @@ public class Contest {
     @SerializedName("priority")
     private int priority;
 
+    @SerializedName("last_filling_room")
+    private boolean isLastFillingRoom;
+
     private int contestItemType = ContestAdapterItemType.CONTEST;
 
     private int challengeId;
@@ -233,5 +236,13 @@ public class Contest {
 
     public void setPriority(int priority) {
         this.priority = priority;
+    }
+
+    public boolean isLastFillingRoom() {
+        return isLastFillingRoom;
+    }
+
+    public void setLastFillingRoom(boolean lastFillingRoom) {
+        isLastFillingRoom = lastFillingRoom;
     }
 }
