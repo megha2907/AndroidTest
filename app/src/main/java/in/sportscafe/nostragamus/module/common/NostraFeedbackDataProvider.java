@@ -7,6 +7,7 @@ import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.webservice.ApiCallBack;
 import in.sportscafe.nostragamus.webservice.MyWebService;
+import in.sportscafe.nostragamus.webservice.SubmitReportRequest;
 import retrofit2.Call;
 import retrofit2.Response;
 
@@ -33,7 +34,11 @@ public class NostraFeedbackDataProvider {
 
     private void callSendReport(String type, String id, final NostraFeedbackDataProvider.NostraFeedbackDataProviderListener listener) {
 
-        MyWebService.getInstance().sendErrorReport(type, id).enqueue(new ApiCallBack<ApiResponse>() {
+        SubmitReportRequest request = new SubmitReportRequest();
+        request.setId(id);
+        request.setType(type);
+
+        MyWebService.getInstance().sendErrorReport(request).enqueue(new ApiCallBack<ApiResponse>() {
             @Override
             public void onResponse(Call<ApiResponse> call, Response<ApiResponse> response) {
                 super.onResponse(call, response);

@@ -369,6 +369,10 @@ public interface Constants {
         String CONFIG_ID = "configId";
         String REPORT_TITLE = "reportTitle";
         String REPORT_DESC = "reportDesc";
+        String REPORT_HEADING = "reportHeading";
+        String REPORT_THANKYOU_TEXT = "reportThankyouText";
+        String REPORT_ID = "reportID";
+        String REPORT_TYPE = "reportType";
     }
 
     interface DateFormats {
