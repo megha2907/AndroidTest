@@ -286,6 +286,16 @@ public class InPlayFragment extends NostraBaseFragment implements View.OnClickLi
         return parentLayout;
     }
 
+    /**
+     * After fetching and populating inplay contests, do this
+     * 1. If playing pseudoGame (And back pressed in Play screen) then launch Headless matches screen
+     *      (Headless contest should be available in fetched list)
+     * 2. If Back Pressed in Results OR Awaiting results screen, then launch matches screen as per contest-status
+     *      (Headless OR joined-contest matches screen as returned from server-list)
+     *
+     * @param isServerResponse
+     * @param inPlayResponseList
+     */
     private void handleFurtherFlow(boolean isServerResponse, List<InPlayResponse> inPlayResponseList) {
         Bundle args = getArguments();
         if (isServerResponse && args != null) {
@@ -298,12 +308,19 @@ public class InPlayFragment extends NostraBaseFragment implements View.OnClickLi
                     if (inPlayResponse.getChallengeId() == playScreenDataDto.getChallengeId()) {
 
                         if (playScreenDataDto.isPlayingPseudoGame()) {
-                            launchHeadLessMatchesScreen(playScreenDataDto);
+                            launchHeadLessMatchesScreen(playScreenDataDto); /* Playing pseudoGame and challenge found */
                         } else {
-                            if (playScreenDataDto.getInPlayContestDto() != null) {
+                            /* If PlayScreenData obj AND inPlayContestDto found then,
+                              * Check that screen is not launched any-time previously, then launch matches screen
+                               * as per contest type, e.g Headless OR joined-contest matches screen
+                               * NOTE: Contest should be found in list (in server sent list) for all cases */
+
+                            if (playScreenDataDto.getInPlayContestDto() != null &&
+                                    playScreenDataDto.getInPlayContestDto().isShouldLaunchMatchesScreen()) {
                                 for (InPlayContestDto contestDto : inPlayResponse.getContestList()) {
                                     if (contestDto.getContestId() == playScreenDataDto.getInPlayContestDto().getContestId()) {
 
+                                        playScreenDataDto.getInPlayContestDto().setShouldLaunchMatchesScreen(false);    /* For this contest, already launched once; so should not be launch */
                                         if (contestDto.isHeadlessState()) {
                                             launchHeadLessMatchesScreen(playScreenDataDto);
                                         } else {
@@ -311,6 +328,7 @@ public class InPlayFragment extends NostraBaseFragment implements View.OnClickLi
                                             contestDto.setChallengeName(inPlayResponse.getChallengeName());
                                             launchInplayContestDetailsScreen(contestDto);
                                         }
+
                                         shouldBreak = true;
                                         break;
                                     }
