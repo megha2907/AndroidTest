@@ -150,6 +150,7 @@
                         <com.jeeva.android.widgets.customfont.CustomTextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:minHeight="@dimen/dim_40"
                             android:text="Credits you've earned from our offers (referrals, promotions etc). Use it to join challenges and win money!"
                             android:textColor="@color/white_999999"
                             android:textSize="@dimen/sp_10"
@@ -224,6 +225,7 @@
                         <com.jeeva.android.widgets.customfont.CustomTextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:minHeight="@dimen/dim_40"
                             android:text="Money you’ve deposited into your wallet, using which you can join challenges. Note that this money cannot be directly withdrawn."
                             android:textColor="@color/white_999999"
                             android:textSize="@dimen/sp_10"
@@ -290,6 +292,7 @@
                         <com.jeeva.android.widgets.customfont.CustomTextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:minHeight="@dimen/dim_40"
                             android:text="Money that you've won! You may withdraw this money or use it to join other challenges."
                             android:textColor="@color/white_999999"
                             android:textSize="@dimen/sp_10"

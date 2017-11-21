@@ -51,6 +51,11 @@ public class InPlayContestDto {
     private int challengeId;
     private String challengeName;
     private String challengeStartTime;
+    /**
+     * Indicator to launch OR block Inplay-Matches screens (Headless / Contest) once it's been launched
+     * Once These screens are launched, set flag to false
+     */
+    private boolean shouldLaunchMatchesScreen = true;
 
     public int getContestId() {
         return contestId;
@@ -162,5 +167,13 @@ public class InPlayContestDto {
 
     public void setChallengeStartTime(String challengeStartTime) {
         this.challengeStartTime = challengeStartTime;
+    }
+
+    public boolean isShouldLaunchMatchesScreen() {
+        return shouldLaunchMatchesScreen;
+    }
+
+    public void setShouldLaunchMatchesScreen(boolean shouldLaunchMatchesScreen) {
+        this.shouldLaunchMatchesScreen = shouldLaunchMatchesScreen;
     }
 }
