@@ -171,7 +171,11 @@ public class ContestRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                 }
 
                 viewHolder.mTvFilledContests.setText(String.valueOf(contest.getFilledRooms()));
-                viewHolder.mTvContestsAvailable.setText(String.valueOf(contest.getFillingRooms()));
+                if (contest.isLastFillingRoom()) {
+                    viewHolder.mTvContestsAvailable.setText("Last 1 ");
+                } else {
+                    viewHolder.mTvContestsAvailable.setText(String.valueOf(contest.getFillingRooms()));
+                }
 
                 if (contest.getContestMode().equalsIgnoreCase(Constants.ContestType.GUARANTEED)) {
                     viewHolder.mIvContestsType.setImageResource(R.drawable.guaranteed_icon);

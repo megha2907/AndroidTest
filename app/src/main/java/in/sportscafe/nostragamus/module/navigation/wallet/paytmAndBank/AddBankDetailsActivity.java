@@ -124,6 +124,12 @@ public class AddBankDetailsActivity extends NostragamusActivity implements View.
                 dismissProgressbar();
                 showMessage(Constants.Alerts.API_FAIL);
             }
+
+            @Override
+            public void onServerSentError(String errorMsg) {
+                dismissProgressbar();
+                showMessage(errorMsg);
+            }
         };
     }
 
