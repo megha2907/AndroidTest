@@ -39,11 +39,16 @@ public class CompleteChallengeViewPagerFragment extends BaseFragment {
 
     private static final String TAG = CompleteChallengeViewPagerFragment.class.getSimpleName();
 
+    private ChallengeHistoryViewPagerFragmentListener mViewPagerFragmentListener;
     private RecyclerView mRecyclerView;
     private SportsTab mSportsTab;
     private List<CompletedResponse> mFilteredContests;
 
     public CompleteChallengeViewPagerFragment() {}
+
+    public void setViewPagerFragmentListener(ChallengeHistoryViewPagerFragmentListener pagerFragmentListener) {
+        mViewPagerFragmentListener = pagerFragmentListener;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -130,6 +135,11 @@ public class CompleteChallengeViewPagerFragment extends BaseFragment {
                     }
                 }
             }
+
+            /* -------------- Add Load More at Last ------------ */
+            CompletedListItem loadMoreItem = new CompletedListItem();
+            loadMoreItem.setCompletedAdapterItemType(CompletedChallengeAdapterItemType.LOAD_MORE);
+            itemList.add(loadMoreItem);
         }
 
         return itemList;
@@ -174,6 +184,13 @@ public class CompleteChallengeViewPagerFragment extends BaseFragment {
             @Override
             public void onContestModeClicked(Bundle args) {
                 goToHistoryDetails(args);
+            }
+
+            @Override
+            public void onLoadMoreClicked() {
+                if (mViewPagerFragmentListener != null) {
+                    mViewPagerFragmentListener.onLoadMoreClicked();
+                }
             }
 
         };
@@ -223,4 +240,5 @@ public class CompleteChallengeViewPagerFragment extends BaseFragment {
             mRecyclerView.getAdapter().notifyDataSetChanged();
         }
     }
+
 }

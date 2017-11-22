@@ -4,6 +4,8 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
+import in.sportscafe.nostragamus.module.challengeCompleted.adapter.CompletedChallengeAdapterItemType;
+
 /**
  * Created by deepanshi on 9/27/17.
  */
@@ -40,6 +42,7 @@ public class CompletedResponse {
     @SerializedName("challenge_tournaments_short_names")
     private List<String> tournaments = null;
 
+    private int itemType = CompletedChallengeAdapterItemType.CHALLENGE_ITEM;
 
     public int getChallengeId() {
         return challengeId;
@@ -119,5 +122,13 @@ public class CompletedResponse {
 
     public void setChallengeEndTime(String challengeEndTime) {
         this.challengeEndTime = challengeEndTime;
+    }
+
+    public int getItemType() {
+        return itemType;
+    }
+
+    public void setItemType(int itemType) {
+        this.itemType = itemType;
     }
 }
