@@ -6,12 +6,13 @@ import android.view.View;
 
 import com.jeeva.android.BaseActivity;
 import in.sportscafe.nostragamus.R;
+import in.sportscafe.nostragamus.module.popups.PopUpDialogActivity;
 
 /**
  * Created by deepanshi on 8/25/17.
  */
 
-public class ContestDetailsPopupActivity extends BaseActivity implements View.OnClickListener {
+public class ContestDetailsPopupActivity extends PopUpDialogActivity implements View.OnClickListener {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

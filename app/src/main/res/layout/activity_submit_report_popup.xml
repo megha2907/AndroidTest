@@ -148,6 +148,23 @@
 
     </RelativeLayout>
 
+    <!-- Loading View -->
+    <LinearLayout
+        android:id="@+id/submitReportProgressBarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <in.sportscafe.nostragamus.utils.loadingAnim.LoadingIndicatorView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:indicatorColor="@color/loading_animation_color"
+            />
+
+    </LinearLayout>
+
     <ImageView
         android:id="@+id/popup_report_cross_btn"
         android:layout_width="@dimen/dim_32"

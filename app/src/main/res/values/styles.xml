@@ -329,8 +329,8 @@
     <style name="LoadingIndicatorView">
         <item name="minViewWidth">32dip</item>
         <item name="maxViewWidth">32dip</item>
-        <item name="minViewHeight">32dip</item>
-        <item name="maxViewHeight">32dip</item>
+        <item name="minViewHeight">29dip</item>
+        <item name="maxViewHeight">29dip</item>
         <item name="indicatorName">LineSpinFadeLoaderIndicator</item>
     </style>
     <style name="LoadingIndicatorView.Large">

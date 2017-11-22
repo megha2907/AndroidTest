@@ -232,7 +232,7 @@ public class TimelineFragment extends NostragamusFragment implements TimelineVie
                 }
                 break;
             case R.id.timeline_rl_challenge_filter:
-                myResultsTimelinePresenter.onClickFilter();
+               // myResultsTimelinePresenter.onClickFilter();
                 break;
         }
     }

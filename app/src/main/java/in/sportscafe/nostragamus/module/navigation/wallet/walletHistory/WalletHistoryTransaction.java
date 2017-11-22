@@ -32,6 +32,9 @@ public class WalletHistoryTransaction {
     @SerializedName("money_flow")
     private String moneyFlow;
 
+    @SerializedName("show_flag")
+    private boolean showReportButton;
+
     public String getTransactionType() {
         return transactionType;
     }
@@ -94,5 +97,13 @@ public class WalletHistoryTransaction {
 
     public void setMoneyFlow(String moneyFlow) {
         this.moneyFlow = moneyFlow;
+    }
+
+    public boolean isShowReportButton() {
+        return showReportButton;
+    }
+
+    public void setShowReportButton(boolean showReportButton) {
+        this.showReportButton = showReportButton;
     }
 }

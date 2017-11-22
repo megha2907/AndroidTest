@@ -409,7 +409,7 @@ public class MyWebService extends AbstractWebService<NostragamusService> {
         return mNostragamusService.getCompletedChallengeMatches(roomId, challengeId);
     }
 
-    public Call<ApiResponse> sendErrorReport(String type, String id) {
-        return mNostragamusService.sendErrorReport(type, id);
+    public Call<ApiResponse> sendErrorReport(SubmitReportRequest request) {
+        return mNostragamusService.sendErrorReport(request);
     }
 }

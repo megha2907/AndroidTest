@@ -162,7 +162,29 @@ public class ResultsPeekAdapter extends Adapter<ResultsPeek, ResultsPeekAdapter.
                     setTextColor(tvPlayerOneAnswer, R.color.greencolor);
                 }
 
-            }  // if your answer & other option both are correct
+            }
+
+            /* If questionAns == -1, means question was invalid ; Don't highlight anything and show split*/
+            else if (myQuestion.getQuestionAnswer() == -1) {
+
+                // IF USER ANSWER = OPTION 1 OR OPTION 2
+                if (myAnswerId == 1) {
+                    tvPlayerOneAnswer.setText(myQuestion.getQuestionOption1());
+                } else {
+                    tvPlayerOneAnswer.setText(myQuestion.getQuestionOption2());
+                }
+
+                // IF USER ANSWER = NEITHER
+                if (myAnswerId == 3) {
+                    tvPlayerOneAnswer.setText(myQuestion.getQuestionOption3());
+                }
+
+                setTextColor(tvPlayerOneAnswer, R.color.white_999999);
+
+                convertView.findViewById(R.id.results_peek_row_splitView).setVisibility(View.VISIBLE);
+            }
+
+            // if your answer & other option both are correct
             else if (myQuestion.getQuestionAnswer() == 0) {
 
                 Log.i("answer", "both correct");
@@ -285,7 +307,29 @@ public class ResultsPeekAdapter extends Adapter<ResultsPeek, ResultsPeekAdapter.
                     setTextColor(tvPlayerTwoAnswer, R.color.greencolor);
                 }
 
-            }  // if your answer & other option both are correct
+            }
+             /* If questionAns == -1, means question was invalid ; Don't highlight anything and show split*/
+            else if (playerQuestion.getQuestionAnswer() == -1) {
+
+                // IF USER ANSWER = OPTION 1 OR OPTION 2
+                if (otherPlayerAnswerId == 1) {
+                    tvPlayerTwoAnswer.setText(playerQuestion.getQuestionOption1());
+                } else {
+                    tvPlayerTwoAnswer.setText(playerQuestion.getQuestionOption2());
+                }
+
+                // IF USER ANSWER = NEITHER
+                if (otherPlayerAnswerId == 3) {
+                    tvPlayerTwoAnswer.setText(playerQuestion.getQuestionOption3());
+                }
+
+                setTextColor(tvPlayerTwoAnswer, R.color.white_999999);
+
+                convertView.findViewById(R.id.results_peek_row_splitView).setVisibility(View.VISIBLE);
+            }
+
+
+            // if your answer & other option both are correct
             else if (playerQuestion.getQuestionAnswer() == 0) {
 
                 Log.i("answer", "both correct");
