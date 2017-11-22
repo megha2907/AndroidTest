@@ -475,6 +475,7 @@ public class ContestViewPagerFragment extends NostraBaseFragment {
     void startAnim(){
         if (getActivity()!=null && getView()!=null) {
             LoadingIndicatorView loadingIndicatorView = (LoadingIndicatorView) getView().findViewById(R.id.loading_anim);
+            getView().findViewById(R.id.contestJoinProgressBarLayout).setVisibility(View.VISIBLE);
             loadingIndicatorView.smoothToShow();
         }
     }
@@ -482,6 +483,7 @@ public class ContestViewPagerFragment extends NostraBaseFragment {
     void stopAnim(){
         if (getActivity()!=null && getView()!=null) {
             LoadingIndicatorView loadingIndicatorView = (LoadingIndicatorView) getView().findViewById(R.id.loading_anim);
+            getView().findViewById(R.id.contestJoinProgressBarLayout).setVisibility(View.GONE);
             loadingIndicatorView.smoothToHide();
         }
     }

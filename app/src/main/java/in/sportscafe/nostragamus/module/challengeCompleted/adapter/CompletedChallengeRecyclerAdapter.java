@@ -157,18 +157,18 @@ public class CompletedChallengeRecyclerAdapter extends RecyclerView.Adapter<Recy
                 LinearLayout.LayoutParams lpImage = new LinearLayout.LayoutParams(
                         LinearLayout.LayoutParams.WRAP_CONTENT,
                         LinearLayout.LayoutParams.WRAP_CONTENT);
-                lpImage.setMargins(0,2,0,0);
+                lpImage.setMargins(0,3,0,0);
                 tournamentImageView.setLayoutParams(lpImage);
 
                 LinearLayout.LayoutParams lpText = new LinearLayout.LayoutParams(
                         LinearLayout.LayoutParams.WRAP_CONTENT,
                         LinearLayout.LayoutParams.WRAP_CONTENT);
 
-                lpText.setMargins(0,0,5,0);
+                lpText.setMargins(0,0,7,0);
                 tournamentName.setLayoutParams(lpText);
 
                 tournamentName.setTextSize(TypedValue.COMPLEX_UNIT_PX,mContext.getResources().getDimension(R.dimen.sp_9_5));
-                tournamentName.setTextColor(ContextCompat.getColor(mContext,R.color.grey_999999));
+                tournamentName.setTextColor(ContextCompat.getColor(mContext,R.color.grey6));
                 tournamentName.setTypeface(face);
 
                 tournamentName.setText(tournamentList.get(temp));
@@ -187,7 +187,7 @@ public class CompletedChallengeRecyclerAdapter extends RecyclerView.Adapter<Recy
                 LinearLayout.LayoutParams relativeParams =
                         new LinearLayout.LayoutParams(
                                 LinearLayout.LayoutParams.WRAP_CONTENT,  LinearLayout.LayoutParams.WRAP_CONTENT);
-                relativeParams.setMargins(0,0,5,0);
+                relativeParams.setMargins(0,0,7,0);
                 layout2.addView(childLayout, relativeParams);
 
             }

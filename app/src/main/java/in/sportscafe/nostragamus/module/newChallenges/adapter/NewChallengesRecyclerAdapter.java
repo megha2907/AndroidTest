@@ -158,11 +158,11 @@ public class NewChallengesRecyclerAdapter extends RecyclerView.Adapter<RecyclerV
                     LinearLayout.LayoutParams lpText = new LinearLayout.LayoutParams(
                             LinearLayout.LayoutParams.WRAP_CONTENT,
                             LinearLayout.LayoutParams.WRAP_CONTENT);
-                    lpText.setMargins(0,0,5,0);
+                    lpText.setMargins(0,0,7,0);
                     mType.setLayoutParams(lpText);
 
                     mType.setTextSize(TypedValue.COMPLEX_UNIT_PX,mContext.getResources().getDimension(R.dimen.sp_9_5));
-                    mType.setTextColor(ContextCompat.getColor(mContext,R.color.grey_999999));
+                    mType.setTextColor(ContextCompat.getColor(mContext,R.color.grey6));
                     mType.setTypeface(face);
 
                     mType.setText(tournamentList.get(temp));
@@ -181,7 +181,7 @@ public class NewChallengesRecyclerAdapter extends RecyclerView.Adapter<RecyclerV
                     LinearLayout.LayoutParams relativeParams =
                             new LinearLayout.LayoutParams(
                                     LinearLayout.LayoutParams.WRAP_CONTENT,  LinearLayout.LayoutParams.WRAP_CONTENT);
-                    relativeParams.setMargins(0,0,5,0);
+                    relativeParams.setMargins(0,0,7,0);
                     layout2.addView(childLayout, relativeParams);
 
                 }

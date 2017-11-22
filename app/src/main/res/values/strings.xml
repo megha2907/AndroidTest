@@ -127,7 +127,7 @@
     <string name="proceed">Proceed</string>
     <string name="invalid_email">Enter valid email id</string>
 
-    <string name="split_str">Options had a tie , Split points were awarded.</string>
+    <string name="split_str">Options had a tie, Split points were awarded.</string>
     <string name="ok">OK</string>
     <string name="double_back_press_msg">Press back button again to exit</string>
     <string name="match_results">Game Result</string>

@@ -1051,9 +1051,18 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
 
     private void openSubmitReportPopup(Context context) {
         Intent intent = new Intent(context, SubmitReportPopupActivity.class);
-        intent.putExtra(BundleKeys.REPORT_TITLE,getItem(0).getStage()+", "+getItem(0).getTournamentName());
-        intent.putExtra(BundleKeys.REPORT_DESC,getItem(0).getParties().get(0).getPartyName()
-        +" vs "+getItem(0).getParties().get(1).getPartyName());
+        intent.putExtra(Constants.BundleKeys.REPORT_TYPE,"results");
+        intent.putExtra(BundleKeys.REPORT_HEADING,"Report Answers");
+        if (getItem(0)!=null) {
+            intent.putExtra(Constants.BundleKeys.REPORT_ID, String.valueOf(getItem(0).getId()));
+            intent.putExtra(BundleKeys.REPORT_TITLE, getItem(0).getStage() + ", " + getItem(0).getTournamentName());
+            if (getItem(0).getParties()!=null) {
+                intent.putExtra(BundleKeys.REPORT_DESC, getItem(0).getParties().get(0).getPartyName() + " vs " + getItem(0).getParties().get(1).getPartyName());
+            }
+        }
+
+
+        intent.putExtra(BundleKeys.REPORT_THANKYOU_TEXT,"Thanks for helping us get better! In case of any issue, we will review the match result and update it.");
         context.startActivity(intent);
     }
 

@@ -15,13 +15,14 @@ import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
 import in.sportscafe.nostragamus.module.navigation.wallet.WalletHelper;
 import in.sportscafe.nostragamus.module.navigation.wallet.addMoney.AddWalletMoneyActivity;
+import in.sportscafe.nostragamus.module.popups.PopUpDialogActivity;
 import in.sportscafe.nostragamus.utils.AnimationHelper;
 
 /**
  * Created by deepanshi on 8/25/17.
  */
 
-public class WalletBalancePopupActivity extends BaseActivity implements View.OnClickListener {
+public class WalletBalancePopupActivity extends PopUpDialogActivity implements View.OnClickListener {
 
     private LinearLayout mWalletMoneyInfoLayout;
     private LinearLayout mPromoMoneyInfoLayout;
