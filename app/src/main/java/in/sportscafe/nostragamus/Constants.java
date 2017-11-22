@@ -21,6 +21,8 @@ public interface Constants {
         String SCREEN_NEW_CHALLENGE = "newChallenge";
         String SCREEN_NEW_CHALLENGE_SPORT = "newChallengeSport";
         String SCREEN_IN_PLAY_MATCHES = "inPlayGames";
+        String SCREEN_CHALLENGE_HISTORY = "challengeHistory";   /* Completed challenge history tab in Home */
+        String SCREEN_CHALLENGE_HISTORY_GAMES = "challengeHistoryGames";    /* Completed challenge history matches screen */
 
         String SCREEN_CONTEST_DETAILS = "contestDetails"; /* Contest Details with Entries,Rewards & Rules */
         String SCREEN_CONTEST = "contest"; /* Contest Screen */
@@ -34,6 +36,7 @@ public interface Constants {
         String SCREEN_RESULTS_PEEK = "results_peek"; /* Compare Results Screen */
         String SCREEN_AVERAGE_SCORE = "average_score";  /* Average Score Screen */
         String SCREEN_WALLET_HOME = "wallet"; /* Wallet Home Screen */
+        String SCREEN_WALLET_ADD_MONEY = "addMoney"; /* Add money to wallet */
         String SCREEN_WALLET_HISTORY = "walletHistory"; /* Wallet History Screen */
         String SCREEN_WALLET_PAYOUT_HOME = "walletPayoutHome"; /* Withdrawal Details Screen ( Paytm & Bank account) */
         String SCREEN_POWERUP_BANK = "PowerupBank"; /* Powerup Bank Screen */
@@ -41,7 +44,7 @@ public interface Constants {
         String SCREEN_REFERRAL_CREDITS = "referralCredits";  /* Referral History Screen */
         String SCREEN_STORE = "Store";  /* Store - Buy Powerups */
         String SCREEN_APP_UPDATE = "appUpdate"; /* Update the App screen & What's New Screen */
-
+        String SCREEN_WEB_VIEW = "webView";
     }
 
     interface SharedKeys {
