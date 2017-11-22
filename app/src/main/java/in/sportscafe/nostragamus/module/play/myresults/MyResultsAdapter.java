@@ -1060,6 +1060,8 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
                 intent.putExtra(BundleKeys.REPORT_DESC, getItem(0).getParties().get(0).getPartyName() + " vs " + getItem(0).getParties().get(1).getPartyName());
             }
         }
+
+
         intent.putExtra(BundleKeys.REPORT_THANKYOU_TEXT,"Thanks for helping us get better! In case of any issue, we will review the match result and update it.");
         context.startActivity(intent);
     }

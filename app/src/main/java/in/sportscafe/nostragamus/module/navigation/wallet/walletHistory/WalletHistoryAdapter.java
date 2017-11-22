@@ -22,7 +22,6 @@ import java.util.List;
 
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
-import in.sportscafe.nostragamus.module.inPlay.dto.InPlayListItem;
 import in.sportscafe.nostragamus.module.navigation.wallet.WalletHelper;
 import in.sportscafe.nostragamus.module.popups.submitReport.SubmitReportPopupActivity;
 import in.sportscafe.nostragamus.utils.AnimationHelper;

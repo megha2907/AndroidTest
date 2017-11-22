@@ -225,6 +225,7 @@ public interface Constants {
         String INVALID_PHONE_NUMBER = "Enter 10 digit number";
         String PHONE_NUMBER_EXIST = "Mobile Number is already registered";
         String INVALID_OTP = "Invalid OTP";
+        String REPORT_SUBMITTED ="Report Submitted";
     }
 
     interface BundleKeys {
