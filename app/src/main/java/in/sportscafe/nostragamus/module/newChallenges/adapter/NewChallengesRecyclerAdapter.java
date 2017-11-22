@@ -61,6 +61,14 @@ public class NewChallengesRecyclerAdapter extends RecyclerView.Adapter<RecyclerV
     }
 
     @Override
+    public void onViewAttachedToWindow(final RecyclerView.ViewHolder holder) {
+        if (holder instanceof NewChallengesItemViewHolder) {
+            holder.setIsRecyclable(false);
+        }
+        super.onViewAttachedToWindow(holder);
+    }
+
+    @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
         RecyclerView.ViewHolder viewHolder = null;
