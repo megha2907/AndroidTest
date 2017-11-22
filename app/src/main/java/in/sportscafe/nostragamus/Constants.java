@@ -214,6 +214,7 @@ public interface Constants {
         String NO_INTERNET_CONNECTION = "No internet connection";
         String COULD_NOT_FETCH_DATA_FROM_SERVER = "Could not fetch data from Server!";
         String CHALLENGE_STARTED_ALERT_FOR_TIMER = "Please join other challenges as %s already started";
+        String NO_MORE_HISTORY = "No more history available";
 
         /*--- Paytm Msg ---*/
         String PAYTM_AUTHENTICATION_FAILED = "Could not transact, please try again";
@@ -874,6 +875,7 @@ public interface Constants {
         int FROM_DATABASE_AS_NO_INTERNET = 4;
         int FROM_DATABASE_ERROR = 5;
         int NO_INTERNET = 6;
+        int NO_MORE_DATA_WHILE_LOAD_MORE = 7;
     }
 
     interface MatchStatusStrings {

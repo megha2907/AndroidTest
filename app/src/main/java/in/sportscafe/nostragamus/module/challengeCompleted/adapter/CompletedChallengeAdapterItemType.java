@@ -7,4 +7,5 @@ package in.sportscafe.nostragamus.module.challengeCompleted.adapter;
 public interface CompletedChallengeAdapterItemType {
     int CHALLENGE_ITEM = 1;
     int COMPLETED_CONTEST = 2;
+    int LOAD_MORE = 3;
 }

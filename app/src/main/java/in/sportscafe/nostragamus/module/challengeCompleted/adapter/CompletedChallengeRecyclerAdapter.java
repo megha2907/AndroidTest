@@ -75,6 +75,11 @@ public class CompletedChallengeRecyclerAdapter extends RecyclerView.Adapter<Recy
                 View v2 = inflater.inflate(R.layout.completed_contest_card_layout, parent, false);
                 viewHolder = new CompletedContestItemViewHolder(v2);
                 break;
+
+            case CompletedChallengeAdapterItemType.LOAD_MORE:
+                View v3 = inflater.inflate(R.layout.challenge_history_load_more_item, parent, false);
+                viewHolder = new LoadMoreItemViewHolder(v3);
+                break;
         }
 
         return viewHolder;
@@ -94,6 +99,9 @@ public class CompletedChallengeRecyclerAdapter extends RecyclerView.Adapter<Recy
                 case CompletedChallengeAdapterItemType.COMPLETED_CONTEST:
                     CompletedContestDto contest = (CompletedContestDto) listItem.getItemData();
                     bindCompletedValues(holder, contest);
+                    break;
+
+                case CompletedChallengeAdapterItemType.LOAD_MORE:
                     break;
             }
         }
@@ -371,6 +379,7 @@ public class CompletedChallengeRecyclerAdapter extends RecyclerView.Adapter<Recy
         return counter;
     }
 
+    /* View Holders */
     private class CompletedContestItemViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         LinearLayout root;
@@ -474,6 +483,28 @@ public class CompletedChallengeRecyclerAdapter extends RecyclerView.Adapter<Recy
         public void onClick(View view) {
             switch (view.getId()) {
                 case R.id.inplay_challenge_button:
+            }
+        }
+    }
+
+    private class LoadMoreItemViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+
+        LinearLayout loadMoreButton;
+
+        public LoadMoreItemViewHolder(View itemView) {
+            super(itemView);
+            loadMoreButton = (LinearLayout) itemView.findViewById(R.id.challenge_history_load_more_button);
+            loadMoreButton.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View view) {
+            switch (view.getId()) {
+                case R.id.challenge_history_load_more_button:
+                    if (mCompletedAdapterListener != null) {
+                        mCompletedAdapterListener.onLoadMoreClicked();
+                    }
+                    break;
             }
         }
     }
