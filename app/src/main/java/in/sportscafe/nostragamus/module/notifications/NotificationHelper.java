@@ -12,12 +12,15 @@ import org.parceler.Parcels;
 
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.module.challengeCompleted.dto.CompletedContestDto;
+import in.sportscafe.nostragamus.module.common.NostragamusActivity;
+import in.sportscafe.nostragamus.module.common.WebViewActivity;
 import in.sportscafe.nostragamus.module.contest.contestDetailsCompletedChallenges.ChallengeHistoryContestDetailsActivity;
 import in.sportscafe.nostragamus.module.contest.ui.DetailScreensLaunchRequest;
 import in.sportscafe.nostragamus.module.inPlay.ui.ResultsScreenDataDto;
 import in.sportscafe.nostragamus.module.navigation.appupdate.AppUpdateActivity;
 import in.sportscafe.nostragamus.module.navigation.referfriends.ReferFriendActivity;
 import in.sportscafe.nostragamus.module.navigation.referfriends.referralcredits.ReferralCreditActivity;
+import in.sportscafe.nostragamus.module.navigation.wallet.addMoney.AddWalletMoneyActivity;
 import in.sportscafe.nostragamus.module.navigation.wallet.walletHistory.WalletHistoryActivity;
 import in.sportscafe.nostragamus.module.newChallenges.dto.NewChallengeMatchesScreenData;
 import in.sportscafe.nostragamus.module.newChallenges.ui.matches.NewChallengesMatchActivity;
@@ -193,6 +196,19 @@ public class NotificationHelper {
     }
 
     @NonNull
+    public Intent getAddWalletMoneyScreenIntent(Context context, NostraNotification notification) {
+        Bundle args = new Bundle();
+        if (notification != null) {
+            args.putBoolean(Constants.Notifications.IS_LAUNCHED_FROM_NOTIFICATION, true);
+            args.putParcelable(Constants.Notifications.NOSTRA_NOTIFICATION, Parcels.wrap(notification));
+        }
+
+        Intent intent = new Intent(context, AddWalletMoneyActivity.class);
+        intent.putExtras(args);
+        return intent;
+    }
+
+    @NonNull
     public Bundle getBundleAddedNotificationDetailsIntoArgs(Intent intent, NostraNotification notification) {
         Bundle args = null;
         if (intent != null && intent.getExtras() != null) {
@@ -206,6 +222,45 @@ public class NotificationHelper {
         }
 
         return args;
+    }
+
+    @NonNull
+    public Intent getChallengeHistoryMatchesScreenIntent(Context context, NostraNotification notification) {
+        Bundle args = new Bundle();
+        CompletedContestDto completedContestDto = new CompletedContestDto();
+
+        if (notification != null && notification.getData() != null) {
+            completedContestDto.setChallengeId(notification.getData().getChallengeId());
+            completedContestDto.setRoomId(notification.getData().getRoomId());
+            completedContestDto.setContestId(notification.getData().getContestId());
+            completedContestDto.setContestName(notification.getData().getContestName());
+            completedContestDto.setChallengeName(notification.getData().getChallengeName());
+
+            args.putBoolean(Constants.Notifications.IS_LAUNCHED_FROM_NOTIFICATION, true);
+            args.putParcelable(Constants.Notifications.NOSTRA_NOTIFICATION, Parcels.wrap(notification));
+            args.putInt(Constants.BundleKeys.SCREEN_LAUNCH_REQUEST, DetailScreensLaunchRequest.MATCHES_DEFAULT_SCREEN);
+        }
+        args.putParcelable(Constants.BundleKeys.COMPLETED_CONTEST, Parcels.wrap(completedContestDto));
+
+        Intent intent = new Intent(context, ChallengeHistoryContestDetailsActivity.class);
+        intent.putExtras(args);
+        return intent;
+    }
+
+    @NonNull
+    public Intent getWebViewScreenIntent(Context context, NostraNotification notification) {
+        Bundle args = new Bundle();
+        if (notification != null && notification.getData() != null) {
+            args.putString("url", notification.getData().getWebViewUrl());
+            args.putString("heading", notification.getData().getWebViewHeading());
+
+            args.putBoolean(Constants.Notifications.IS_LAUNCHED_FROM_NOTIFICATION, true);
+            args.putParcelable(Constants.Notifications.NOSTRA_NOTIFICATION, Parcels.wrap(notification));
+        }
+
+        Intent intent = new Intent(context, WebViewActivity.class);
+        intent.putExtras(args);
+        return intent;
     }
 
 }
