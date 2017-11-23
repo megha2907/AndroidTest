@@ -84,19 +84,19 @@ public class EditProfilePresenterImpl implements EditProfilePresenter, EditProfi
 
     @Override
     public void verifyReferralCode(String referralCode) {
-        mEditProfileView.showProgressbar();
+        mEditProfileView.startProgressAnim();
         mEditProfileModel.callVerifyReferralCodeApi(referralCode);
     }
 
     @Override
     public void onUpdating() {
-        mEditProfileView.showProgressbar();
+        mEditProfileView.startProgressAnim();
     }
 
     @Override
     public void onEditSuccess(boolean referralCodeExists) {
 
-        mEditProfileView.dismissProgressbar();
+        mEditProfileView.stopProgressAnim();
 
         if (BuildConfig.IS_PAID_VERSION) {
 
@@ -123,12 +123,12 @@ public class EditProfilePresenterImpl implements EditProfilePresenter, EditProfi
     public void onPhotoUpdate() {
         UserInfo userInfo = mEditProfileModel.getUserInfo();
         mEditProfileView.setProfileImage(userInfo.getPhoto());
-        mEditProfileView.dismissProgressbar();
+        mEditProfileView.stopProgressAnim();
     }
 
     @Override
     public void onEditFailed(String message) {
-        mEditProfileView.dismissProgressbar();
+        mEditProfileView.stopProgressAnim();
         mEditProfileView.showMessage(message);
     }
 
@@ -149,13 +149,13 @@ public class EditProfilePresenterImpl implements EditProfilePresenter, EditProfi
 
     @Override
     public void onNoInternet() {
-        mEditProfileView.dismissProgressbar();
+        mEditProfileView.stopProgressAnim();
         mEditProfileView.showMessage(Constants.Alerts.NO_NETWORK_CONNECTION);
     }
 
     @Override
     public void onUserNameConflict() {
-        mEditProfileView.dismissProgressbar();
+        mEditProfileView.stopProgressAnim();
         mEditProfileView.setNicknameConflict();
     }
 
@@ -166,13 +166,13 @@ public class EditProfilePresenterImpl implements EditProfilePresenter, EditProfi
 
     @Override
     public void onReferralCodeVerified() {
-        mEditProfileView.dismissProgressbar();
+        mEditProfileView.stopProgressAnim();
         mEditProfileView.onCorrectReferralCode();
     }
 
     @Override
     public void onReferralCodeFailed(String message) {
-        mEditProfileView.dismissProgressbar();
+        mEditProfileView.stopProgressAnim();
         mEditProfileView.onIncorrectReferralCode();
     }
 }

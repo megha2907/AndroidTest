@@ -34,4 +34,8 @@ public interface MyResultsView extends InAppView {
     void updateAnswers(Match match);
 
     void setUserRank(Match match);
+
+    void showLoadingProgressBar();
+
+    void hideLoadingProgressBar();
 }

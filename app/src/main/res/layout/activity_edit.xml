@@ -295,5 +295,23 @@
         android:textSize="@dimen/sp_15"
         app:typeface="lato_bold" />
 
+    <!-- Loading View -->
+    <LinearLayout
+        android:id="@+id/progressBarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <in.sportscafe.nostragamus.utils.loadingAnim.LoadingIndicatorView
+            android:id="@+id/edit_profile_loading_anim"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:indicatorColor="@color/loading_animation_color"
+            android:visibility="gone"
+            />
+
+    </LinearLayout>
+
 </RelativeLayout>
 

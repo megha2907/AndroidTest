@@ -50,10 +50,10 @@ public class SuccessfulReferralActivity extends NostragamusActivity implements V
     private void setSuccessfulReferralInfo() {
 
         if (!TextUtils.isEmpty(NostragamusDataHandler.getInstance().getUserReferralName())) {
-            tvSuccessfulReferralOne.setText("Welcome to Nostragamus! Here's a gift from us and "
+            tvSuccessfulReferralOne.setText("Here's a gift from us and "
                     + WordUtils.capitalize(NostragamusDataHandler.getInstance().getUserReferralName()) + " to start you off!");
         } else {
-            tvSuccessfulReferralOne.setText("Welcome to Nostragamus! Here's a gift from us to start you off!");
+            tvSuccessfulReferralOne.setText("Here's a gift from us to start you off!");
         }
 
         if (NostragamusDataHandler.getInstance().getWalletInitialAmount() != null) {
@@ -80,7 +80,7 @@ public class SuccessfulReferralActivity extends NostragamusActivity implements V
     }
 
     private void onStartPlayingClicked() {
-      navigateToHome();
+        navigateToHome();
     }
 
     public void navigateToHome() {
