@@ -80,7 +80,7 @@
         android:visibility="visible"
         android:paddingLeft="@dimen/dim_8"
         android:paddingRight="@dimen/dim_8"
-        android:background="#151515">
+        android:background="#66151515">
 
         <in.sportscafe.nostragamus.utils.loadingAnim.LoadingIndicatorView
             android:id="@+id/loading_anim"

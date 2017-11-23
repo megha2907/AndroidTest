@@ -39,6 +39,7 @@ public class WalletBalancePopupActivity extends PopUpDialogActivity implements V
     private void initView() {
         (findViewById(R.id.popup_cross_btn)).setOnClickListener(this);
         (findViewById(R.id.wallet_balance_add_money_btn)).setOnClickListener(this);
+        (findViewById(R.id.popup_bg)).setOnClickListener(this);
     }
 
     private void setWalletInfo() {
@@ -85,6 +86,10 @@ public class WalletBalancePopupActivity extends PopUpDialogActivity implements V
 
             case R.id.wallet_popup_card_winnings_layout:
                 onWinningInfoLayoutClicked();
+                break;
+
+            case R.id.popup_bg:
+                onBackPressed();
                 break;
         }
     }

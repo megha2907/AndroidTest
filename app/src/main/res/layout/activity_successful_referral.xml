@@ -11,7 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:typeface="lato_regular"
-        android:textColor="@color/white_999999"
+        android:textColor="@color/grey6"
         android:lineSpacingExtra="@dimen/dp_7"
         android:layout_centerHorizontal="true"
         android:layout_marginLeft="@dimen/dim_20"
@@ -73,7 +73,7 @@
         android:lineSpacingExtra="@dimen/dp_7"
         android:layout_below="@+id/successful_referral_text_two"
         android:text="Join multiple challenges from your favorite sports.\n Win big and double your money"
-        android:textSize="@dimen/sp_12"
+        android:textSize="@dimen/sp_13"
         android:gravity="center"/>
 
     <com.jeeva.android.widgets.customfont.CustomButton

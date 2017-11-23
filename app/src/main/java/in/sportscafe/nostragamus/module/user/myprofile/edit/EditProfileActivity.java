@@ -40,6 +40,7 @@ import in.sportscafe.nostragamus.module.nostraHome.ui.NostraHomeActivity;
 import in.sportscafe.nostragamus.module.permission.PermissionsActivity;
 import in.sportscafe.nostragamus.module.permission.PermissionsChecker;
 import in.sportscafe.nostragamus.module.user.myprofile.verify.VerifyProfileActivity;
+import in.sportscafe.nostragamus.utils.loadingAnim.LoadingIndicatorView;
 
 /**
  * Created by Jeeva on 12/6/16.
@@ -446,6 +447,22 @@ public class EditProfileActivity extends NostragamusActivity implements EditProf
             }
         });
 
+    }
+
+    @Override
+    public void startProgressAnim() {
+        if (getActivity()!=null) {
+            LoadingIndicatorView loadingIndicatorView = (LoadingIndicatorView) findViewById(R.id.edit_profile_loading_anim);
+            loadingIndicatorView.show();
+        }
+    }
+
+    @Override
+    public void stopProgressAnim() {
+        if (getActivity()!=null) {
+            LoadingIndicatorView loadingIndicatorView = (LoadingIndicatorView) findViewById(R.id.edit_profile_loading_anim);
+            loadingIndicatorView.hide();
+        }
     }
 
 

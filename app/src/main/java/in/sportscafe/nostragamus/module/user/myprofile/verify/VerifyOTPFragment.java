@@ -210,6 +210,18 @@ public class VerifyOTPFragment extends BaseFragment implements View.OnClickListe
         errorTextView.setText(Constants.Alerts.API_FAIL);
     }
 
+    public void showLoadingProgressBar() {
+        if (getActivity() != null) {
+            findViewById(R.id.verifyOTPProgressBarLayout).setVisibility(View.VISIBLE);
+        }
+    }
+
+    public void hideLoadingProgressBar() {
+        if (getActivity() != null) {
+            findViewById(R.id.verifyOTPProgressBarLayout).setVisibility(View.GONE);
+        }
+    }
+
     private void startOTPCountDownTimer() {
 
         countDownTimer = new CountDownTimer((15 + 1) * 1000, 1000) {

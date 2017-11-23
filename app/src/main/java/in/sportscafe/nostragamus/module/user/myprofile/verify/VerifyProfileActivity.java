@@ -97,48 +97,62 @@ public class VerifyProfileActivity extends NostragamusActivity implements Verify
     }
 
     private void getOTPRequest(String phoneNumber) {
-
-        showProgressbar();
+        if (verifyPhoneNumberFragment != null) {
+            verifyPhoneNumberFragment.showLoadingProgressBar();
+        }
         GetOTPApiModelImpl.newInstance(new GetOTPApiModelImpl.GetOTPApiListener() {
             @Override
             public void noInternet() {
-                dismissProgressbar();
+                if (verifyPhoneNumberFragment != null) {
+                    verifyPhoneNumberFragment.hideLoadingProgressBar();
+                }
                 showMessage(Constants.Alerts.NO_NETWORK_CONNECTION);
             }
 
             @Override
             public void onApiFailed() {
-                dismissProgressbar();
+                if (verifyPhoneNumberFragment != null) {
+                    verifyPhoneNumberFragment.hideLoadingProgressBar();
+                }
                 showMessage(Constants.Alerts.API_FAIL);
             }
 
             @Override
             public void onSuccessResponse(VerifyOTPInfo verifyOTPInfo, String phoneNumber) {
-                dismissProgressbar();
+                if (verifyPhoneNumberFragment != null) {
+                    verifyPhoneNumberFragment.hideLoadingProgressBar();
+                }
                 verifyPhoneNumberValid(verifyOTPInfo, phoneNumber);
             }
         }).performApiCall(phoneNumber);
     }
 
     private void getOTPResendRequest(String phoneNumber) {
-
-        showProgressbar();
+        if (verifyOTPFragment != null) {
+            verifyOTPFragment.showLoadingProgressBar();
+        }
         GetOTPApiModelImpl.newInstance(new GetOTPApiModelImpl.GetOTPApiListener() {
             @Override
             public void noInternet() {
-                dismissProgressbar();
+                if (verifyOTPFragment != null) {
+                    verifyOTPFragment.hideLoadingProgressBar();
+                }
                 showMessage(Constants.Alerts.NO_NETWORK_CONNECTION);
             }
 
             @Override
             public void onApiFailed() {
-                dismissProgressbar();
+                if (verifyOTPFragment!=null) {
+                    verifyOTPFragment.hideLoadingProgressBar();
+                }
                 showMessage(Constants.Alerts.API_FAIL);
             }
 
             @Override
             public void onSuccessResponse(VerifyOTPInfo verifyOTPInfo, String phoneNumber) {
-                dismissProgressbar();
+                if (verifyOTPFragment!=null) {
+                    verifyOTPFragment.hideLoadingProgressBar();
+                }
             }
         }).performApiCall(phoneNumber);
     }
@@ -166,24 +180,31 @@ public class VerifyProfileActivity extends NostragamusActivity implements Verify
     }
 
     private void verifyOTPRequest(String OTP) {
-
-        showProgressbar();
+        if (verifyOTPFragment != null) {
+            verifyOTPFragment.showLoadingProgressBar();
+        }
         VerifyOTPApiModelImpl.newInstance(new VerifyOTPApiModelImpl.VerifyOTPApiListener() {
             @Override
             public void noInternet() {
-                dismissProgressbar();
+                if (verifyOTPFragment != null) {
+                    verifyOTPFragment.hideLoadingProgressBar();
+                }
                 showMessage(Constants.Alerts.NO_NETWORK_CONNECTION);
             }
 
             @Override
             public void onApiFailed() {
-                dismissProgressbar();
+                if (verifyOTPFragment != null) {
+                    verifyOTPFragment.hideLoadingProgressBar();
+                }
                 showMessage(Constants.Alerts.API_FAIL);
             }
 
             @Override
             public void onSuccessResponse(VerifyOTPInfo verifyOTPInfo) {
-                dismissProgressbar();
+                if (verifyOTPFragment != null) {
+                    verifyOTPFragment.hideLoadingProgressBar();
+                }
                 verifyOTPValid(verifyOTPInfo);
             }
         }).performApiCall(OTP);
@@ -200,7 +221,7 @@ public class VerifyProfileActivity extends NostragamusActivity implements Verify
                     }
                 }
             } else {
-                checkForSuccessfulReferral();
+                checkForSuccessfulReferral(verifyOTPInfo.getWalletBalance());
             }
         }else {
             if (getActivity() != null) {
@@ -212,9 +233,13 @@ public class VerifyProfileActivity extends NostragamusActivity implements Verify
 
     }
 
-    private void checkForSuccessfulReferral() {
+    private void checkForSuccessfulReferral(int walletBalance) {
 
-        Intent intent = getIntent();
+        NostragamusDataHandler.getInstance().setWalletInitialAmount(walletBalance);
+        navigateToSuccessfulReferral();
+        getAndSendTimeForOnBoarding();
+
+        /* Intent intent = getIntent();
         Bundle extras = intent.getExtras();
         if (extras != null) {
             if (extras.containsKey(Constants.BundleKeys.SUCCESSFUL_REFERRAL)) {
@@ -230,7 +255,7 @@ public class VerifyProfileActivity extends NostragamusActivity implements Verify
             navigateToHome();
         }
 
-        getAndSendTimeForOnBoarding();
+        getAndSendTimeForOnBoarding(); */
 
     }
 
@@ -291,5 +316,6 @@ public class VerifyProfileActivity extends NostragamusActivity implements Verify
             super.onBackPressed();
         }
     }
+
 
 }

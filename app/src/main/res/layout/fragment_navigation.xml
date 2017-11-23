@@ -1,10 +1,10 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     android:background="@color/black"
+    android:orientation="vertical"
     tools:context="in.sportscafe.nostragamus.module.navigation.NavigationFragment">
 
     <!-- Profile section -->
@@ -12,55 +12,59 @@
         android:id="@+id/navigation_profile_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:minHeight="@dimen/nav_header_height"
-        android:orientation="horizontal"
         android:background="@drawable/toolbar_bg"
-        >
+        android:minHeight="@dimen/nav_header_height"
+        android:orientation="horizontal">
 
         <LinearLayout
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="4"
-            android:orientation="vertical"
-            android:gravity="center_vertical"
-            android:layout_marginLeft="@dimen/dp_20"
             android:background="?android:attr/selectableItemBackground">
 
-            <com.jeeva.android.widgets.customfont.CustomTextView
-                android:id="@+id/profile_name_textView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Hello"
-                android:textAllCaps="false"
-                android:textColor="@color/white"
-                android:textSize="@dimen/sp_20"
-                app:typeface="lato_bold" />
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/dp_20"
+                android:layout_weight="4"
+                android:gravity="center_vertical"
+                android:orientation="vertical">
 
-            <com.jeeva.android.widgets.customfont.CustomTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="View and edit your profile"
-                android:textAllCaps="false"
-                android:textColor="@color/white_60"
-                android:textSize="@dimen/sp_12"
-                android:layout_marginTop="@dimen/dp_4"
-                app:typeface="lato_regular" />
+                <com.jeeva.android.widgets.customfont.CustomTextView
+                    android:id="@+id/profile_name_textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Hello"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/sp_20"
+                    app:typeface="lato_bold" />
 
-        </LinearLayout>
+                <com.jeeva.android.widgets.customfont.CustomTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_4"
+                    android:text="View and edit your profile"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white_60"
+                    android:textSize="@dimen/sp_12"
+                    app:typeface="lato_regular" />
 
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            android:gravity="center"
-            android:layout_marginRight="@dimen/dp_12">
+            </LinearLayout>
 
-            <com.jeeva.android.widgets.HmImageView
-                android:id="@+id/profile_imageView"
-                android:layout_width="@dimen/nav_profile_pic_dimen"
-                android:layout_height="@dimen/nav_profile_pic_dimen"
-                />
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginRight="@dimen/dp_12"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <com.jeeva.android.widgets.HmImageView
+                    android:id="@+id/profile_imageView"
+                    android:layout_width="@dimen/nav_profile_pic_dimen"
+                    android:layout_height="@dimen/nav_profile_pic_dimen" />
+
+            </LinearLayout>
 
         </LinearLayout>
 
@@ -80,38 +84,38 @@
                 android:id="@+id/navigation_wallet_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:minHeight="@dimen/nav_row_height"
-                android:orientation="horizontal"
                 android:layout_marginLeft="@dimen/dp_24"
                 android:layout_marginRight="@dimen/dp_24"
-                android:background="?android:attr/selectableItemBackground">
+                android:background="?android:attr/selectableItemBackground"
+                android:gravity="center_vertical"
+                android:minHeight="@dimen/nav_row_height"
+                android:orientation="horizontal">
 
                 <ImageView
                     android:id="@+id/wallet_img"
                     android:layout_width="@dimen/nav_row_icon_dimen"
                     android:layout_height="@dimen/nav_row_icon_dimen"
-                    android:src="@drawable/navigation_wallet_icn"/>
+                    android:src="@drawable/navigation_wallet_icn" />
 
                 <com.jeeva.android.widgets.customfont.CustomTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Wallet"
+                    android:layout_marginLeft="@dimen/dp_20"
                     android:layout_toRightOf="@id/wallet_img"
+                    android:text="Wallet"
                     android:textColor="@color/white"
                     android:textSize="@dimen/sp_14"
-                    android:layout_marginLeft="@dimen/dp_20"
                     app:typeface="lato_regular" />
 
                 <com.jeeva.android.widgets.customfont.CustomTextView
                     android:id="@+id/navigation_wallet_amount_textView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="₹ 0.00"
                     android:layout_alignParentRight="true"
+                    android:layout_marginLeft="@dimen/dp_20"
+                    android:text="₹ 0.00"
                     android:textColor="#00a99d"
                     android:textSize="@dimen/sp_14"
-                    android:layout_marginLeft="@dimen/dp_20"
                     app:typeface="lato_regular" />
 
             </RelativeLayout>
@@ -120,34 +124,34 @@
                 android:id="@+id/navigation_powerup_bank_separator"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_0.5"
-                android:background="@color/line_separator"
                 android:layout_marginLeft="@dimen/dp_10"
-                android:layout_marginRight="@dimen/dp_10"/>
+                android:layout_marginRight="@dimen/dp_10"
+                android:background="@color/line_separator" />
 
             <!--Powerup Bank section -->
             <LinearLayout
                 android:id="@+id/navigation_powerup_bank_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:minHeight="@dimen/nav_row_height"
-                android:orientation="horizontal"
-                android:gravity="center_vertical"
                 android:layout_marginLeft="@dimen/dp_24"
                 android:layout_marginRight="@dimen/dp_24"
-                android:background="?android:attr/selectableItemBackground">
+                android:background="?android:attr/selectableItemBackground"
+                android:gravity="center_vertical"
+                android:minHeight="@dimen/nav_row_height"
+                android:orientation="horizontal">
 
                 <ImageView
                     android:layout_width="@dimen/nav_row_icon_dimen"
                     android:layout_height="@dimen/nav_row_icon_dimen"
-                    android:src="@drawable/navigation_powerup_icn"/>
+                    android:src="@drawable/navigation_powerup_icn" />
 
                 <com.jeeva.android.widgets.customfont.CustomTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp_20"
                     android:text="Powerup Bank"
                     android:textColor="@color/white"
                     android:textSize="@dimen/sp_14"
-                    android:layout_marginLeft="@dimen/dp_20"
                     app:typeface="lato_regular" />
 
             </LinearLayout>
@@ -156,34 +160,34 @@
                 android:id="@+id/navigation_store_separator"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_0.5"
-                android:background="@color/line_separator"
                 android:layout_marginLeft="@dimen/dp_10"
-                android:layout_marginRight="@dimen/dp_10"/>
+                android:layout_marginRight="@dimen/dp_10"
+                android:background="@color/line_separator" />
 
             <!--Store section -->
             <LinearLayout
                 android:id="@+id/navigation_store_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:minHeight="@dimen/nav_row_height"
-                android:orientation="horizontal"
-                android:gravity="center_vertical"
                 android:layout_marginLeft="@dimen/dp_24"
                 android:layout_marginRight="@dimen/dp_24"
-                android:background="?android:attr/selectableItemBackground">
+                android:background="?android:attr/selectableItemBackground"
+                android:gravity="center_vertical"
+                android:minHeight="@dimen/nav_row_height"
+                android:orientation="horizontal">
 
                 <ImageView
                     android:layout_width="@dimen/nav_row_icon_dimen"
                     android:layout_height="@dimen/nav_row_icon_dimen"
-                    android:src="@drawable/navigation_store_icon"/>
+                    android:src="@drawable/navigation_store_icon" />
 
                 <com.jeeva.android.widgets.customfont.CustomTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp_20"
                     android:text="Buy Powerups"
                     android:textColor="@color/white"
                     android:textSize="@dimen/sp_14"
-                    android:layout_marginLeft="@dimen/dp_20"
                     app:typeface="lato_regular" />
 
             </LinearLayout>
@@ -192,36 +196,36 @@
                 android:id="@+id/navigation_refer_separator"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_0.5"
-                android:background="@color/line_separator"
                 android:layout_marginLeft="@dimen/dp_10"
-                android:layout_marginRight="@dimen/dp_10"/>
+                android:layout_marginRight="@dimen/dp_10"
+                android:background="@color/line_separator" />
 
             <!--Refer a Friend section -->
             <LinearLayout
                 android:id="@+id/navigation_refer_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:minHeight="@dimen/nav_row_height"
-                android:orientation="horizontal"
-                android:gravity="center_vertical"
                 android:layout_marginLeft="@dimen/dp_24"
                 android:layout_marginRight="@dimen/dp_24"
-                android:visibility="visible"
-                android:background="?android:attr/selectableItemBackground">
+                android:background="?android:attr/selectableItemBackground"
+                android:gravity="center_vertical"
+                android:minHeight="@dimen/nav_row_height"
+                android:orientation="horizontal"
+                android:visibility="visible">
 
                 <ImageView
                     android:layout_width="@dimen/nav_row_icon_dimen"
                     android:layout_height="@dimen/nav_row_icon_dimen"
-                    android:src="@drawable/navigation_refer_icon"/>
+                    android:src="@drawable/navigation_refer_icon" />
 
                 <com.jeeva.android.widgets.customfont.CustomTextView
                     android:id="@+id/navigation_earn_more_tv_one"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp_20"
                     android:text="Refer a friend and earn "
                     android:textColor="@color/white"
                     android:textSize="@dimen/sp_14"
-                    android:layout_marginLeft="@dimen/dp_20"
                     app:typeface="lato_regular" />
 
                 <ImageView
@@ -245,35 +249,35 @@
                 android:id="@+id/navigation_whats_new_separator"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_0.5"
-                android:background="@color/line_separator"
                 android:layout_marginLeft="@dimen/dp_10"
-                android:layout_marginRight="@dimen/dp_10"/>
+                android:layout_marginRight="@dimen/dp_10"
+                android:background="@color/line_separator" />
 
             <!--Whats new section -->
             <LinearLayout
                 android:id="@+id/navigation_whats_new_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:minHeight="@dimen/nav_row_height"
-                android:orientation="horizontal"
-                android:gravity="center_vertical"
                 android:layout_marginLeft="@dimen/dp_24"
                 android:layout_marginRight="@dimen/dp_24"
-                android:visibility="visible"
-                android:background="?android:attr/selectableItemBackground">
+                android:background="?android:attr/selectableItemBackground"
+                android:gravity="center_vertical"
+                android:minHeight="@dimen/nav_row_height"
+                android:orientation="horizontal"
+                android:visibility="visible">
 
                 <ImageView
                     android:layout_width="@dimen/nav_row_icon_dimen"
                     android:layout_height="@dimen/nav_row_icon_dimen"
-                    android:src="@drawable/navigation_whats_new_icon"/>
+                    android:src="@drawable/navigation_whats_new_icon" />
 
                 <com.jeeva.android.widgets.customfont.CustomTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp_20"
                     android:text="What's New?"
                     android:textColor="@color/white"
                     android:textSize="@dimen/sp_14"
-                    android:layout_marginLeft="@dimen/dp_20"
                     app:typeface="lato_regular" />
 
             </LinearLayout>
@@ -281,9 +285,9 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_0.5"
-                android:background="@color/line_separator"
                 android:layout_marginLeft="@dimen/dp_10"
-                android:layout_marginRight="@dimen/dp_10"/>
+                android:layout_marginRight="@dimen/dp_10"
+                android:background="@color/line_separator" />
 
             <!--Submit question section -->
             <!--<LinearLayout
@@ -325,25 +329,25 @@
                 android:id="@+id/navigation_help_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:minHeight="@dimen/nav_row_height"
-                android:orientation="horizontal"
-                android:gravity="center_vertical"
                 android:layout_marginLeft="@dimen/dp_24"
                 android:layout_marginRight="@dimen/dp_24"
-                android:background="?android:attr/selectableItemBackground">
+                android:background="?android:attr/selectableItemBackground"
+                android:gravity="center_vertical"
+                android:minHeight="@dimen/nav_row_height"
+                android:orientation="horizontal">
 
                 <ImageView
                     android:layout_width="@dimen/nav_row_icon_dimen"
                     android:layout_height="@dimen/nav_row_icon_dimen"
-                    android:src="@drawable/navigation_help_icn"/>
+                    android:src="@drawable/navigation_help_icn" />
 
                 <com.jeeva.android.widgets.customfont.CustomTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp_20"
                     android:text="Help"
                     android:textColor="@color/white"
                     android:textSize="@dimen/sp_14"
-                    android:layout_marginLeft="@dimen/dp_20"
                     app:typeface="lato_regular" />
 
             </LinearLayout>
@@ -351,21 +355,21 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_0.5"
-                android:background="@color/line_separator"
                 android:layout_marginLeft="@dimen/dp_10"
-                android:layout_marginRight="@dimen/dp_10"/>
+                android:layout_marginRight="@dimen/dp_10"
+                android:background="@color/line_separator" />
 
             <!--Update section -->
             <LinearLayout
                 android:id="@+id/navigation_app_update_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:minHeight="@dimen/nav_row_height"
-                android:orientation="horizontal"
-                android:gravity="center_vertical"
                 android:layout_marginLeft="@dimen/dp_24"
                 android:layout_marginRight="@dimen/dp_24"
-                android:background="?android:attr/selectableItemBackground">
+                android:background="?android:attr/selectableItemBackground"
+                android:gravity="center_vertical"
+                android:minHeight="@dimen/nav_row_height"
+                android:orientation="horizontal">
 
                 <ImageView
                     android:id="@+id/navigation_app_update_app_iv"
@@ -376,10 +380,10 @@
                     android:id="@+id/navigation_update_str_textView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp_20"
                     android:text="App is up to date"
                     android:textColor="@color/scrollbar_indicator"
                     android:textSize="@dimen/sp_14"
-                    android:layout_marginLeft="@dimen/dp_20"
                     app:typeface="lato_regular" />
 
                 <ImageView
@@ -388,7 +392,7 @@
                     android:layout_height="@dimen/dp_16"
                     android:layout_marginLeft="@dimen/dp_13"
                     android:src="@drawable/app_update_red_icn"
-                    android:visibility="gone"/>
+                    android:visibility="gone" />
 
                 <com.jeeva.android.widgets.customfont.CustomTextView
                     android:id="@+id/navigation_version_textView"
@@ -405,34 +409,34 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_0.5"
-                android:background="@color/line_separator"
                 android:layout_marginLeft="@dimen/dp_10"
-                android:layout_marginRight="@dimen/dp_10"/>
+                android:layout_marginRight="@dimen/dp_10"
+                android:background="@color/line_separator" />
 
             <!--Settings section -->
             <LinearLayout
                 android:id="@+id/navigation_settings_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:minHeight="@dimen/nav_row_height"
-                android:orientation="horizontal"
-                android:gravity="center_vertical"
                 android:layout_marginLeft="@dimen/dp_24"
                 android:layout_marginRight="@dimen/dp_24"
-                android:background="?android:attr/selectableItemBackground">
+                android:background="?android:attr/selectableItemBackground"
+                android:gravity="center_vertical"
+                android:minHeight="@dimen/nav_row_height"
+                android:orientation="horizontal">
 
                 <ImageView
                     android:layout_width="@dimen/nav_row_icon_dimen"
                     android:layout_height="@dimen/nav_row_icon_dimen"
-                    android:src="@drawable/navigation_settings_icn"/>
+                    android:src="@drawable/navigation_settings_icn" />
 
                 <com.jeeva.android.widgets.customfont.CustomTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp_20"
                     android:text="Settings"
                     android:textColor="@color/white"
                     android:textSize="@dimen/sp_14"
-                    android:layout_marginLeft="@dimen/dp_20"
                     app:typeface="lato_regular" />
 
             </LinearLayout>
@@ -440,9 +444,9 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_0.5"
-                android:background="@color/line_separator"
                 android:layout_marginLeft="@dimen/dp_10"
-                android:layout_marginRight="@dimen/dp_10"/>
+                android:layout_marginRight="@dimen/dp_10"
+                android:background="@color/line_separator" />
 
         </LinearLayout>
 
