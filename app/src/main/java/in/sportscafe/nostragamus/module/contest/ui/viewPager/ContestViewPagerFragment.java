@@ -168,16 +168,16 @@ public class ContestViewPagerFragment extends NostraBaseFragment {
                         if (contest1.getContestItemType() == ContestAdapterItemType.REFER_FRIEND_AD) {
                             return 1;
                         } else {
-                            if (contest2.isJoinable()) {   // Join
+//                            if (contest2.isJoinable()) {   // Join
                                 if (contest1.getPriority() < contest2.getPriority()) {
                                     return 1;
                                 } else if (contest1.getPriority() > contest2.getPriority()) {
                                     return -1;
                                 }
                                 return 0;
-                            } else {                        // closed
+                            /*} else {                        // closed
                                 return -1;
-                            }
+                            }*/
                         }
                     }
                 }
