@@ -3,6 +3,7 @@ package in.sportscafe.nostragamus.module.contest.adapter;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -172,9 +173,13 @@ public class ContestRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
                 viewHolder.mTvFilledContests.setText(String.valueOf(contest.getFilledRooms()));
                 if (contest.isLastFillingRoom()) {
-                    viewHolder.mTvContestsAvailable.setText("Last 1 ");
+                    viewHolder.mTvContestsAvailable.setText("Last 1");
+                    viewHolder.mFillingStrTextView.setTextColor(
+                            ContextCompat.getColor(viewHolder.mFillingStrTextView.getContext(), R.color.white));
                 } else {
                     viewHolder.mTvContestsAvailable.setText(String.valueOf(contest.getFillingRooms()));
+                    viewHolder.mFillingStrTextView.setTextColor(
+                            ContextCompat.getColor(viewHolder.mFillingStrTextView.getContext(), R.color.white_60));
                 }
 
                 if (contest.getContestMode().equalsIgnoreCase(Constants.ContestType.GUARANTEED)) {
@@ -275,6 +280,7 @@ public class ContestRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         public TextView mTvPrizes;
         public TextView mTvNumberOfPrizes;
         public TextView mTvFilledContests;
+        public TextView mFillingStrTextView;
         public TextView mTvContestsAvailable;
         public RelativeLayout mRlContestLayout;
         public ImageView mIvContestsType;
@@ -301,6 +307,7 @@ public class ContestRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             mRewardsPrizesLayout = (LinearLayout) itemView.findViewById(R.id.pool_row_ll_reward_layout);
             mEntriesLayout = (LinearLayout) itemView.findViewById(R.id.pool_row_ll_member_layout);
             mEntryFeeLayout = (LinearLayout) itemView.findViewById(R.id.pool_row_ll_entry_fee_layout);
+            mFillingStrTextView = (TextView) itemView.findViewById(R.id.pool_row_tv_rooms_available_txt);
 
             itemView.setOnClickListener(this);
             mBtnJoin.setOnClickListener(this);

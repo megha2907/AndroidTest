@@ -50,6 +50,13 @@ public class CompletedChallengeRecyclerAdapter extends RecyclerView.Adapter<Recy
         mCompletedAdapterListener = listener;
     }
 
+    public CompletedListItem getItem(int position) {
+        if (position >= 0 && position < mItemsList.size()) {
+            return mItemsList.get(position);
+        }
+        return null;
+    }
+
     @Override
     public int getItemViewType(int position) {
         int viewType = CompletedChallengeAdapterItemType.COMPLETED_CONTEST;
@@ -355,6 +362,15 @@ public class CompletedChallengeRecyclerAdapter extends RecyclerView.Adapter<Recy
         return (mItemsList != null) ? mItemsList.size() : 0;
     }
 
+    public void removeLoadMoreItem() {
+        if (mItemsList != null && mItemsList.size() > 0) {
+            CompletedListItem lastItem = mItemsList.get(mItemsList.size()-1);
+            if (lastItem != null && lastItem.getCompletedAdapterItemType() == CompletedChallengeAdapterItemType.LOAD_MORE) {
+                mItemsList.remove(mItemsList.size()-1);
+                notifyDataSetChanged();
+            }
+        }
+    }
 
     public int getAdapterPositionFromContestId(int contestId) {
         int counter = -1;
