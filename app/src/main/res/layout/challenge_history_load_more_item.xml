@@ -23,7 +23,7 @@
             android:id="@+id/completed_contest_card_header_mode_imgView"
             android:layout_width="@dimen/dim_8"
             android:layout_height="@dimen/dim_8"
-            android:src="@drawable/challenge_down_arrow"/>
+            android:src="@drawable/white_down_arrow"/>
 
         <com.jeeva.android.widgets.customfont.CustomTextView
             android:id="@+id/completed_completed_card_title_textView"
@@ -33,7 +33,8 @@
             android:textAllCaps="false"
             android:textColor="@color/white"
             android:textSize="@dimen/sp_12"
-            android:layout_marginLeft="@dimen/dim_5"/>
+            android:layout_marginLeft="@dimen/dim_8"
+            app:typeface="lato_regular"/>
 
     </LinearLayout>
 
