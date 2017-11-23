@@ -350,6 +350,7 @@ public interface Constants {
         String USER_REFERRAL_NAME = "user_referral_name";
         String USER_REFERRAL_PHOTO = "user_referral_photo";
         String LINK_NAME = "linkname";
+        String WALLET_BALANCE = "wallet_balance";
 
         String SUCCESSFUL_REFERRAL = "successfulReferral";
         String CONTEST_ID = "contestId";

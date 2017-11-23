@@ -40,4 +40,8 @@ public interface EditProfileView extends View {
     void navigateToSuccessfulReferral();
 
     void navigateToOTPVerification(boolean successfulReferral);
+
+    void startProgressAnim();
+
+    void stopProgressAnim();
 }

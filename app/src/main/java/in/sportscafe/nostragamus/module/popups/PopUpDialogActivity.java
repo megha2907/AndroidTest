@@ -18,11 +18,21 @@ public class PopUpDialogActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Window window = getWindow();
-        window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
-        window.setBackgroundDrawableResource(R.color.transparent);
-        window.getAttributes().windowAnimations = R.style.DialogAnimation;
-        window.getAttributes().dimAmount = 0.7f;
+        performActivityEntryAnimation();
+    }
+
+    private void performActivityExitAnimation() {
+            overridePendingTransition(0, R.anim.popup_slide_out);
+    }
+
+    private void performActivityEntryAnimation() {
+            overridePendingTransition(R.anim.popup_slide_in, 0);
+    }
+
+    @Override
+    public void finish() {
+        super.finish();
+        performActivityExitAnimation();
     }
 
 }

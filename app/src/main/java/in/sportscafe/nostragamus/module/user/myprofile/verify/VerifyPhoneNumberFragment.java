@@ -132,6 +132,18 @@ public class VerifyPhoneNumberFragment extends BaseFragment implements View.OnCl
         errorTextView.setVisibility(View.VISIBLE);
     }
 
+    public void showLoadingProgressBar() {
+        if (getActivity() != null) {
+            findViewById(R.id.verifyPhoneNumberProgressBarLayout).setVisibility(View.VISIBLE);
+        }
+    }
+
+    public void hideLoadingProgressBar() {
+        if (getActivity() != null) {
+            findViewById(R.id.verifyPhoneNumberProgressBarLayout).setVisibility(View.GONE);
+        }
+    }
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
