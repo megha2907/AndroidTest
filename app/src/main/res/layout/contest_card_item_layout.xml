@@ -292,7 +292,7 @@
                         android:textAllCaps="true"
                         android:textColor="@color/white"
                         android:textSize="@dimen/sp_10"
-                        app:typeface="lato_bold" />
+                        app:typeface="lato_regular" />
 
                     <com.jeeva.android.widgets.customfont.CustomTextView
                         android:id="@+id/pool_row_tv_rooms_available_txt"

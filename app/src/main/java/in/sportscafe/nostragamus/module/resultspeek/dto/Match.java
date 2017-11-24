@@ -142,6 +142,9 @@ public class Match {
     @SerializedName("contest_id")
     private int contestId;
 
+    @SerializedName("show_report")
+    private boolean showReportButton = true;
+
 
     /**
      *
@@ -652,5 +655,13 @@ public class Match {
 
     public void setHighestPlayerRoomId(int highestPlayerRoomId) {
         this.highestPlayerRoomId = highestPlayerRoomId;
+    }
+
+    public boolean isShowReportButton() {
+        return showReportButton;
+    }
+
+    public void setShowReportButton(boolean showReportButton) {
+        this.showReportButton = showReportButton;
     }
 }

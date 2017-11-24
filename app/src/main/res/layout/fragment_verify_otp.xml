@@ -124,6 +124,22 @@
                 android:textSize="@dimen/sp_15"
                 app:typeface="lato_regular" />
 
+            <!-- Loading View -->
+            <LinearLayout
+                android:id="@+id/verifyOTPProgressBarLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:visibility="gone">
+
+                <in.sportscafe.nostragamus.utils.loadingAnim.LoadingIndicatorView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:indicatorColor="@color/loading_animation_color"
+                    />
+
+            </LinearLayout>
+
         </RelativeLayout>
 
     </ScrollView>

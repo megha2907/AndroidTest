@@ -21,6 +21,8 @@ public interface Constants {
         String SCREEN_NEW_CHALLENGE = "newChallenge";
         String SCREEN_NEW_CHALLENGE_SPORT = "newChallengeSport";
         String SCREEN_IN_PLAY_MATCHES = "inPlayGames";
+        String SCREEN_CHALLENGE_HISTORY = "challengeHistory";   /* Completed challenge history tab in Home */
+        String SCREEN_CHALLENGE_HISTORY_GAMES = "challengeHistoryGames";    /* Completed challenge history matches screen */
 
         String SCREEN_CONTEST_DETAILS = "contestDetails"; /* Contest Details with Entries,Rewards & Rules */
         String SCREEN_CONTEST = "contest"; /* Contest Screen */
@@ -34,6 +36,7 @@ public interface Constants {
         String SCREEN_RESULTS_PEEK = "results_peek"; /* Compare Results Screen */
         String SCREEN_AVERAGE_SCORE = "average_score";  /* Average Score Screen */
         String SCREEN_WALLET_HOME = "wallet"; /* Wallet Home Screen */
+        String SCREEN_WALLET_ADD_MONEY = "addMoney"; /* Add money to wallet */
         String SCREEN_WALLET_HISTORY = "walletHistory"; /* Wallet History Screen */
         String SCREEN_WALLET_PAYOUT_HOME = "walletPayoutHome"; /* Withdrawal Details Screen ( Paytm & Bank account) */
         String SCREEN_POWERUP_BANK = "PowerupBank"; /* Powerup Bank Screen */
@@ -41,7 +44,7 @@ public interface Constants {
         String SCREEN_REFERRAL_CREDITS = "referralCredits";  /* Referral History Screen */
         String SCREEN_STORE = "Store";  /* Store - Buy Powerups */
         String SCREEN_APP_UPDATE = "appUpdate"; /* Update the App screen & What's New Screen */
-
+        String SCREEN_WEB_VIEW = "webView";
     }
 
     interface SharedKeys {
@@ -214,6 +217,7 @@ public interface Constants {
         String NO_INTERNET_CONNECTION = "No internet connection";
         String COULD_NOT_FETCH_DATA_FROM_SERVER = "Could not fetch data from Server!";
         String CHALLENGE_STARTED_ALERT_FOR_TIMER = "Please join other challenges as %s already started";
+        String NO_MORE_HISTORY = "No more history available";
 
         /*--- Paytm Msg ---*/
         String PAYTM_AUTHENTICATION_FAILED = "Could not transact, please try again";
@@ -225,6 +229,7 @@ public interface Constants {
         String INVALID_PHONE_NUMBER = "Enter 10 digit number";
         String PHONE_NUMBER_EXIST = "Mobile Number is already registered";
         String INVALID_OTP = "Invalid OTP";
+        String REPORT_SUBMITTED ="Report Submitted";
     }
 
     interface BundleKeys {
@@ -348,6 +353,7 @@ public interface Constants {
         String USER_REFERRAL_NAME = "user_referral_name";
         String USER_REFERRAL_PHOTO = "user_referral_photo";
         String LINK_NAME = "linkname";
+        String WALLET_BALANCE = "wallet_balance";
 
         String SUCCESSFUL_REFERRAL = "successfulReferral";
         String CONTEST_ID = "contestId";
@@ -367,6 +373,12 @@ public interface Constants {
         String HEADLESS_MATCH_SCREEN_DATA = "headlessMatchScreenData";
         String COMPLETED_CHALLENGE_LIST_ITEM = "CompletedChallengeListItem";
         String CONFIG_ID = "configId";
+        String REPORT_TITLE = "reportTitle";
+        String REPORT_DESC = "reportDesc";
+        String REPORT_HEADING = "reportHeading";
+        String REPORT_THANKYOU_TEXT = "reportThankyouText";
+        String REPORT_ID = "reportID";
+        String REPORT_TYPE = "reportType";
     }
 
     interface DateFormats {
@@ -611,6 +623,7 @@ public interface Constants {
         String REFERRAL_CAMPAIGN = "Campaign";
         String WALLET_INIT = "Wallet Initial Amount";
         String LINK_NAME = "Link Name";
+        String ACL_APP = "Acl App";
     }
 
     interface AppType {
@@ -866,6 +879,7 @@ public interface Constants {
         int FROM_DATABASE_AS_NO_INTERNET = 4;
         int FROM_DATABASE_ERROR = 5;
         int NO_INTERNET = 6;
+        int NO_MORE_DATA_WHILE_LOAD_MORE = 7;
     }
 
     interface MatchStatusStrings {

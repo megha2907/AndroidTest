@@ -2,6 +2,7 @@ package in.sportscafe.nostragamus.module.user.myprofile.edit;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
@@ -39,6 +40,7 @@ import in.sportscafe.nostragamus.module.nostraHome.ui.NostraHomeActivity;
 import in.sportscafe.nostragamus.module.permission.PermissionsActivity;
 import in.sportscafe.nostragamus.module.permission.PermissionsChecker;
 import in.sportscafe.nostragamus.module.user.myprofile.verify.VerifyProfileActivity;
+import in.sportscafe.nostragamus.utils.loadingAnim.LoadingIndicatorView;
 
 /**
  * Created by Jeeva on 12/6/16.
@@ -334,6 +336,7 @@ public class EditProfileActivity extends NostragamusActivity implements EditProf
         TextView incorrectReferralCode = (TextView) findViewById(R.id.edit_profile_referral_error_textView);
         incorrectReferralCode.setVisibility(View.VISIBLE);
         incorrectReferralCode.setText("The referral code is invalid.");
+        incorrectReferralCode.setTextColor(ContextCompat.getColor(getContext(),R.color.radical_red));
         mReferralCode = "";
     }
 
@@ -342,6 +345,7 @@ public class EditProfileActivity extends NostragamusActivity implements EditProf
         TextView correctReferralCode = (TextView) findViewById(R.id.edit_profile_referral_error_textView);
         correctReferralCode.setVisibility(View.VISIBLE);
         correctReferralCode.setText("Referral Code applied successfully.");
+        correctReferralCode.setTextColor(ContextCompat.getColor(getContext(),R.color.paid_entry_tv_color));
     }
 
     @Override
@@ -443,6 +447,22 @@ public class EditProfileActivity extends NostragamusActivity implements EditProf
             }
         });
 
+    }
+
+    @Override
+    public void startProgressAnim() {
+        if (getActivity()!=null) {
+            LoadingIndicatorView loadingIndicatorView = (LoadingIndicatorView) findViewById(R.id.edit_profile_loading_anim);
+            loadingIndicatorView.show();
+        }
+    }
+
+    @Override
+    public void stopProgressAnim() {
+        if (getActivity()!=null) {
+            LoadingIndicatorView loadingIndicatorView = (LoadingIndicatorView) findViewById(R.id.edit_profile_loading_anim);
+            loadingIndicatorView.hide();
+        }
     }
 
 

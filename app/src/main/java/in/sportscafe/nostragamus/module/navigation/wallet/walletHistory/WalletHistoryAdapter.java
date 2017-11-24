@@ -1,6 +1,7 @@
 package in.sportscafe.nostragamus.module.navigation.wallet.walletHistory;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
@@ -13,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -21,6 +23,7 @@ import java.util.List;
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.navigation.wallet.WalletHelper;
+import in.sportscafe.nostragamus.module.popups.submitReport.SubmitReportPopupActivity;
 import in.sportscafe.nostragamus.utils.AnimationHelper;
 import in.sportscafe.nostragamus.utils.timeutils.TimeUtils;
 
@@ -46,6 +49,7 @@ public abstract class WalletHistoryAdapter extends RecyclerView.Adapter<WalletHi
 
     /**
      * Add more history items
+     *
      * @param transactions
      */
     public void addWalletHistoryIntoList(List<WalletHistoryTransaction> transactions) {
@@ -281,7 +285,13 @@ public abstract class WalletHistoryAdapter extends RecyclerView.Adapter<WalletHi
             ex.printStackTrace();
         }
 
-        holder.txnIdTextView.setText("Transaction ID - " + String.valueOf(transaction.getOrderId()));
+        holder.txnIdTextView.setText("ID - " + String.valueOf(transaction.getOrderId()));
+
+        if (transaction.isShowReportButton()){
+            holder.historyReportBtn.setVisibility(View.VISIBLE);
+        }else {
+            holder.historyReportBtn.setVisibility(View.GONE);
+        }
     }
 
     private void changeItemBackground(WalletHistoryViewHolder holder, int position) {
@@ -305,16 +315,16 @@ public abstract class WalletHistoryAdapter extends RecyclerView.Adapter<WalletHi
             txt3 = " to your Paytm wallet";
         }
 
-        SpannableString priceTxt1Spannable= new SpannableString(txt1);
+        SpannableString priceTxt1Spannable = new SpannableString(txt1);
         priceTxt1Spannable.setSpan(new ForegroundColorSpan(Color.WHITE), 0, txt1.length(), 0);
         builder.append(priceTxt1Spannable);
 
         String txt2 = "₹" + amount;
-        SpannableString priceTxt2Spannable= new SpannableString(txt2);
+        SpannableString priceTxt2Spannable = new SpannableString(txt2);
         priceTxt2Spannable.setSpan(new ForegroundColorSpan(Color.parseColor("#22b573")), 0, txt2.length(), 0);
         builder.append(priceTxt2Spannable);
 
-        SpannableString priceTxt3Spannable= new SpannableString(txt3);
+        SpannableString priceTxt3Spannable = new SpannableString(txt3);
         priceTxt3Spannable.setSpan(new ForegroundColorSpan(Color.WHITE), 0, txt3.length(), 0);
         builder.append(priceTxt3Spannable);
 
@@ -337,6 +347,7 @@ public abstract class WalletHistoryAdapter extends RecyclerView.Adapter<WalletHi
         LinearLayout moreDetailsLayout;
         LinearLayout itemRootLayout;
         LinearLayout moreDetailsButton;
+        RelativeLayout historyReportBtn;
 
         public WalletHistoryViewHolder(View itemView) {
             super(itemView);
@@ -350,7 +361,9 @@ public abstract class WalletHistoryAdapter extends RecyclerView.Adapter<WalletHi
             txnIdTextView = (TextView) itemView.findViewById(R.id.wallet_item_txn_id_textview);
             moreDetailBtnImageView = (ImageView) itemView.findViewById(R.id.wallet_more_details_imgView);
             moreDetailsButton = (LinearLayout) itemView.findViewById(R.id.wallet_history_more_details_btn);
+            historyReportBtn = (RelativeLayout) itemView.findViewById(R.id.wallet_item_rl_report_btn);
             moreDetailsButton.setOnClickListener(this);
+            historyReportBtn.setOnClickListener(this);
         }
 
         @Override
@@ -363,6 +376,23 @@ public abstract class WalletHistoryAdapter extends RecyclerView.Adapter<WalletHi
                     } else {
                         AnimationHelper.collapse(moreDetailsLayout);
                         moreDetailBtnImageView.setImageResource(R.drawable.thin_arrow_min);
+                    }
+                    break;
+
+                case R.id.wallet_item_rl_report_btn:
+                    if (mContext != null) {
+                        WalletHistoryTransaction walletHistoryTransaction = mTransactionList.get(getAdapterPosition());
+                        if (walletHistoryTransaction != null) {
+                            Intent intent = new Intent(mContext, SubmitReportPopupActivity.class);
+                            intent.putExtra(Constants.BundleKeys.REPORT_TYPE,"wallet");
+                            intent.putExtra(Constants.BundleKeys.REPORT_ID, walletHistoryTransaction.getOrderId().toString());
+                            intent.putExtra(Constants.BundleKeys.REPORT_HEADING, "Report Transactions");
+                            intent.putExtra(Constants.BundleKeys.REPORT_TITLE,"Transaction Id");
+                            intent.putExtra(Constants.BundleKeys.REPORT_DESC, walletHistoryTransaction.getOrderId());
+                            intent.putExtra(Constants.BundleKeys.REPORT_THANKYOU_TEXT, "You can let us know about any issues with your " +
+                                    "transactions. We will review them and make the necessary changes!");
+                            mContext.startActivity(intent);
+                        }
                     }
                     break;
             }

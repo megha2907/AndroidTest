@@ -17,6 +17,7 @@ import in.sportscafe.nostragamus.db.NostragamusDatabase;
 import in.sportscafe.nostragamus.db.tableDto.ApiCacheDbDto;
 import in.sportscafe.nostragamus.db.tables.ApiCacheDbTable;
 import in.sportscafe.nostragamus.module.challengeCompleted.dto.CompletedResponse;
+import in.sportscafe.nostragamus.module.challengeCompleted.ui.CompletedChallengeHistoryFragment;
 import in.sportscafe.nostragamus.webservice.ApiCallBack;
 import in.sportscafe.nostragamus.webservice.MyWebService;
 import retrofit2.Call;
@@ -43,7 +44,7 @@ public class CompletedChallengeDataProvider {
         }
     }
 
-    private void loadCompletedChallengeDataFromServer(final Context appContext, int skip, int limit,
+    private void loadCompletedChallengeDataFromServer(final Context appContext, final int skip, final int limit,
                                                       final CompletedChallengeDataProviderListener listener) {
 
         MyWebService.getInstance().getCompletedChallenges(skip, limit).enqueue(new ApiCallBack<List<CompletedResponse>>() {
@@ -51,15 +52,22 @@ public class CompletedChallengeDataProvider {
             public void onResponse(Call<List<CompletedResponse>> call, Response<List<CompletedResponse>> response) {
                 super.onResponse(call, response);
 
-                if (response.isSuccessful() && response.body() != null && response.body() != null) {
+                if (response.isSuccessful() && response.body() != null) {
                     Log.d(TAG, "Server response success");
-                    insertCompletedResponseIntoDatabase(appContext, response.body(), listener);
+
+                    /* Save only first page as first page always contains updated and recent history
+                     * Also, older history need not to be saved. In case user wants older history,
+                      * he can load but caching of those data not required */
+                    if (skip == 0) {
+                        insertCompletedResponseIntoDatabase(appContext, response.body(), listener);
+                    }
+
                     if (listener != null) {
                         listener.onData(Constants.DataStatus.FROM_SERVER_API_SUCCESS, response.body());
                     }
                 } else {
-                    Log.d(TAG, "Server response null");
-                    loadCompletedDataFromDatabase(Constants.DataStatus.FROM_DATABASE_AS_SERVER_FAILED, appContext, listener);
+                    Log.d(TAG, "Server response not successful");
+                    onApiErrorOrUnSuccessfulResponse(skip, appContext, listener);
                 }
             }
 
@@ -67,9 +75,21 @@ public class CompletedChallengeDataProvider {
             public void onFailure(Call<List<CompletedResponse>> call, Throwable t) {
                 super.onFailure(call, t);
                 Log.d(TAG, "Server response Failed");
-                loadCompletedDataFromDatabase(Constants.DataStatus.FROM_DATABASE_AS_SERVER_FAILED, appContext, listener);
+                onApiErrorOrUnSuccessfulResponse(skip, appContext, listener);
             }
         });
+    }
+
+    private void onApiErrorOrUnSuccessfulResponse(int skip, Context appContext, CompletedChallengeDataProviderListener listener) {
+    /* If no data is loaded then ONLY cached data should be provided
+        * else send error */
+        if (skip == 0) {
+            loadCompletedDataFromDatabase(Constants.DataStatus.FROM_DATABASE_AS_SERVER_FAILED, appContext, listener);
+        } else {
+            if (listener != null) {
+                listener.onError(Constants.DataStatus.FROM_SERVER_API_FAILED);    // As this case occurs only in pagination, if API fails, just show error msg
+            }
+        }
     }
 
     private void insertCompletedResponseIntoDatabase(final Context appContext,
@@ -142,5 +162,6 @@ public class CompletedChallengeDataProvider {
     public interface CompletedChallengeDataProviderListener {
         void onData(int status, @Nullable List<CompletedResponse> completedResponseList);
         void onError(int status);
+        void onNoMoreListData();
     }
 }

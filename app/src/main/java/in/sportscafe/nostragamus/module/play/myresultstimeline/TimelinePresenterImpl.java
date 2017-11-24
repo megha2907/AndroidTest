@@ -55,14 +55,12 @@ public class TimelinePresenterImpl implements TimelinePresenter, TimelineModelIm
     }
 
     private void getFeedDetails() {
-        myResultsTimelineView.showProgressbar();
         myResultsTimelineModel.getFeeds();
     }
 
     @Override
     public void onSuccessFeeds() {
 //        myResultsTimelineView.moveAdapterPosition(movePosition);
-        myResultsTimelineView.dismissProgressbar();
 
         String challengeName = myResultsTimelineModel.getChallengeNameIfAvailable();
         if(null != challengeName) {
@@ -72,19 +70,16 @@ public class TimelinePresenterImpl implements TimelinePresenter, TimelineModelIm
 
     @Override
     public void onFailedFeeds(String message) {
-        myResultsTimelineView.dismissProgressbar();
         showAlertMessage(message);
     }
 
     @Override
     public void onNoInternet() {
-        myResultsTimelineView.dismissProgressbar();
         showAlertMessage(Constants.Alerts.NO_NETWORK_CONNECTION);
     }
 
     @Override
     public void onEmpty(Boolean isMyProfile) {
-        myResultsTimelineView.dismissProgressbar();
         if (myResultsTimelineModel.isAdapterEmpty()) {
             myResultsTimelineView.showTimelineEmpty(isMyProfile);
         }

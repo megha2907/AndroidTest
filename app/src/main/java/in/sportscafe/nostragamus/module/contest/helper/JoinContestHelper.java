@@ -101,7 +101,7 @@ public class JoinContestHelper {
                             args,
                             getCompletePaymentDialogActionListener(joinContestData));
 
-            /* Hide progress dialog from UI */
+             /* Hide progress dialog from UI */
             if (mListener != null) {
                 mListener.hideProgressBar();
             }

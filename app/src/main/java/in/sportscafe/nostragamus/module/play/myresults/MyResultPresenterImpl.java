@@ -55,7 +55,7 @@ public class MyResultPresenterImpl implements MyResultsPresenter, MyResultsModel
 
     @Override
     public void onGetShareText(String shareText) {
-        mResultsView.dismissProgressbar();
+        mResultsView.hideLoadingProgressBar();
 
         AppSnippet.copyToClipBoard(mResultsView.getContext(), shareText);
         mResultsView.showMessage(Alerts.DEFAULT_SHARE_MESSAGE, 15000);
@@ -63,7 +63,7 @@ public class MyResultPresenterImpl implements MyResultsPresenter, MyResultsModel
 
     @Override
     public void onGetShareTextFailed() {
-        mResultsView.dismissProgressbar();
+        mResultsView.hideLoadingProgressBar();
         mResultsView.showMessage("Sharing failed, Try again", Toast.LENGTH_LONG);
     }
 
@@ -80,18 +80,18 @@ public class MyResultPresenterImpl implements MyResultsPresenter, MyResultsModel
     @Override
     public void onSuccessChangeAnswerResponse(Match match) {
         //mResultsView.updateAnswers(Match);
-        mResultsView.dismissProgressbar();
+        mResultsView.hideLoadingProgressBar();
     }
 
     @Override
     public void onFailedChangeAnswerResponse() {
-        mResultsView.dismissProgressbar();
+        mResultsView.hideLoadingProgressBar();
         mResultsView.showMessage(Alerts.SOMETHING_WRONG);
     }
 
     @Override
     public void StartProgressbar() {
-        mResultsView.showProgressbar();
+        mResultsView.showLoadingProgressBar();
     }
 
     @Override
@@ -111,18 +111,18 @@ public class MyResultPresenterImpl implements MyResultsPresenter, MyResultsModel
 
     @Override
     public void onDoneScreenShot() {
-        mResultsView.showProgressbar();
+        mResultsView.showLoadingProgressBar();
         mResultsModel.getShareText();
     }
 
     private void getResultDetails() {
-        mResultsView.showProgressbar();
+        mResultsView.showLoadingProgressBar();
         mResultsModel.getMyResultsData(mResultsView.getContext());
     }
 
     @Override
     public void onSuccessMyResults(MyResultsAdapter myResultsAdapter) {
-        mResultsView.dismissProgressbar();
+        mResultsView.hideLoadingProgressBar();
         mResultsView.setAdapter(myResultsAdapter);
         mResultsView.setMatchName(mResultsModel.getMatchName());
         mResultsView.setUserRank(mResultsModel.getMatch());
@@ -130,13 +130,13 @@ public class MyResultPresenterImpl implements MyResultsPresenter, MyResultsModel
 
     @Override
     public void onFailedMyResults(String message) {
-        mResultsView.dismissProgressbar();
+        mResultsView.hideLoadingProgressBar();
         showAlertMessage(Alerts.RESULTS_INFO_ERROR);
     }
 
     @Override
     public void onNoInternet() {
-        mResultsView.dismissProgressbar();
+        mResultsView.hideLoadingProgressBar();
         showAlertMessage(Alerts.NO_NETWORK_CONNECTION);
     }
 
@@ -156,14 +156,14 @@ public class MyResultPresenterImpl implements MyResultsPresenter, MyResultsModel
             msg = Alerts.SOMETHING_WRONG;
         }
         if (mResultsView != null) {
-            mResultsView.dismissProgressbar();
+            mResultsView.hideLoadingProgressBar();
             mResultsView.showMessage(msg);
         }
     }
 
     @Override
     public void onEmpty() {
-        mResultsView.dismissProgressbar();
+        mResultsView.hideLoadingProgressBar();
         mResultsView.showInAppMessage(Alerts.NO_RESULTS_FOUND);
     }
 

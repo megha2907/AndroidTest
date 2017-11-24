@@ -24,6 +24,7 @@ import in.sportscafe.nostragamus.module.common.NostragamusFragment;
 import in.sportscafe.nostragamus.module.common.OnHomeActionListener;
 import in.sportscafe.nostragamus.module.user.playerprofile.dto.PlayerInfo;
 import in.sportscafe.nostragamus.utils.ViewUtils;
+import in.sportscafe.nostragamus.utils.loadingAnim.LoadingIndicatorView;
 
 /**
  * Created by Jeeva on 15/6/16.
@@ -231,8 +232,20 @@ public class TimelineFragment extends NostragamusFragment implements TimelineVie
                 }
                 break;
             case R.id.timeline_rl_challenge_filter:
-                myResultsTimelinePresenter.onClickFilter();
+               // myResultsTimelinePresenter.onClickFilter();
                 break;
         }
+    }
+
+    @Override
+    public void startProgressAnim() {
+        LoadingIndicatorView loadingIndicatorView = (LoadingIndicatorView) findViewById(R.id.other_timeline_loading_anim);
+        loadingIndicatorView.show();
+    }
+
+    @Override
+    public void stopProgressAnim() {
+        LoadingIndicatorView loadingIndicatorView = (LoadingIndicatorView) findViewById(R.id.other_timeline_loading_anim);
+        loadingIndicatorView.hide();
     }
 }

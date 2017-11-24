@@ -502,4 +502,19 @@ public class MyResultsActivity extends NostragamusActivity implements MyResultsV
         startActivity(intent);
         finish();
     }
+
+    @Override
+    public void showLoadingProgressBar() {
+        if (getActivity() != null) {
+            findViewById(R.id.myResultsProgressBarLayout).setVisibility(View.VISIBLE);
+        }
+    }
+
+    @Override
+    public void hideLoadingProgressBar() {
+        if (getActivity() != null) {
+            findViewById(R.id.myResultsProgressBarLayout).setVisibility(View.GONE);
+        }
+    }
+
 }

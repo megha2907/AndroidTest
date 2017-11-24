@@ -36,4 +36,8 @@ public interface PlayerProfileView extends InAppView {
     void setPredictionCount(Integer predictionCount);
 
     void navigateToPlayerComparison(Bundle playerInfoBundle);
+
+    void startProgressAnim();
+
+    void stopProgressAnim();
 }

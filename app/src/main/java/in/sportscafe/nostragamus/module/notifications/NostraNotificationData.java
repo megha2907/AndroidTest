@@ -42,6 +42,12 @@ public class NostraNotificationData {
     @SerializedName("challenge_starttime")
     private String challengeStartTime;
 
+    @SerializedName("webview_url")
+    private String webViewUrl;
+
+    @SerializedName("webview_heading")
+    private String webViewHeading;
+
     public int getChallengeId() {
         return challengeId;
     }
@@ -120,5 +126,21 @@ public class NostraNotificationData {
 
     public void setContestName(String contestName) {
         this.contestName = contestName;
+    }
+
+    public String getWebViewUrl() {
+        return webViewUrl;
+    }
+
+    public void setWebViewUrl(String webViewUrl) {
+        this.webViewUrl = webViewUrl;
+    }
+
+    public String getWebViewHeading() {
+        return webViewHeading;
+    }
+
+    public void setWebViewHeading(String webViewHeading) {
+        this.webViewHeading = webViewHeading;
     }
 }

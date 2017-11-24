@@ -82,7 +82,7 @@
                     android:gravity="right"
                     android:text=""
                     android:textAllCaps="false"
-                    android:textColor="@color/grey_999999"
+                    android:textColor="@color/grey6"
                     android:textSize="@dimen/sp_9.5"
                     app:typeface="lato_regular" />
 

@@ -28,6 +28,7 @@ import in.sportscafe.nostragamus.module.user.comparisons.PlayerComparisonActivit
 import in.sportscafe.nostragamus.module.user.group.allgroups.AllGroupsFragment;
 import in.sportscafe.nostragamus.module.user.playerbadges.PlayerBadgeFragment;
 import in.sportscafe.nostragamus.module.user.playerprofile.dto.PlayerInfo;
+import in.sportscafe.nostragamus.utils.loadingAnim.LoadingIndicatorView;
 
 
 /**
@@ -204,6 +205,18 @@ public class PlayerProfileActivity extends NostragamusActivity implements Player
     @Override
     public String getScreenName() {
         return Constants.ScreenNames.PLAYER_PROFILE;
+    }
+
+    @Override
+    public void startProgressAnim() {
+        LoadingIndicatorView loadingIndicatorView = (LoadingIndicatorView) findViewById(R.id.other_profile_loading_anim);
+        loadingIndicatorView.show();
+    }
+
+    @Override
+    public void stopProgressAnim() {
+        LoadingIndicatorView loadingIndicatorView = (LoadingIndicatorView) findViewById(R.id.other_profile_loading_anim);
+        loadingIndicatorView.hide();
     }
 
 }

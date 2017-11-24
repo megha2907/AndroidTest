@@ -35,15 +35,21 @@ import in.sportscafe.nostragamus.module.newChallenges.dto.SportsTab;
  * Created by deepanshi on 9/27/17.
  */
 
-public class CompleteChallengeViewPagerFragment extends BaseFragment {
+public class ChallengeHistoryViewPagerFragment extends BaseFragment {
 
-    private static final String TAG = CompleteChallengeViewPagerFragment.class.getSimpleName();
+    private static final String TAG = ChallengeHistoryViewPagerFragment.class.getSimpleName();
 
+    private ChallengeHistoryViewPagerFragmentListener mViewPagerFragmentListener;
     private RecyclerView mRecyclerView;
     private SportsTab mSportsTab;
     private List<CompletedResponse> mFilteredContests;
+    private boolean mShouldAddLoadMore = true;
 
-    public CompleteChallengeViewPagerFragment() {}
+    public ChallengeHistoryViewPagerFragment() {}
+
+    public void setViewPagerFragmentListener(ChallengeHistoryViewPagerFragmentListener pagerFragmentListener) {
+        mViewPagerFragmentListener = pagerFragmentListener;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -130,6 +136,15 @@ public class CompleteChallengeViewPagerFragment extends BaseFragment {
                     }
                 }
             }
+
+            /* -------------- Add Load More at Last ------------
+             * ONLY for All Tab */
+            if (mSportsTab != null && mShouldAddLoadMore &&
+                    mSportsTab.getSportsId() == SportsDataProvider.FILTER_ALL_SPORTS_ID) {
+                    CompletedListItem loadMoreItem = new CompletedListItem();
+                    loadMoreItem.setCompletedAdapterItemType(CompletedChallengeAdapterItemType.LOAD_MORE);
+                    itemList.add(loadMoreItem);
+            }
         }
 
         return itemList;
@@ -176,6 +191,13 @@ public class CompleteChallengeViewPagerFragment extends BaseFragment {
                 goToHistoryDetails(args);
             }
 
+            @Override
+            public void onLoadMoreClicked() {
+                if (mViewPagerFragmentListener != null) {
+                    mViewPagerFragmentListener.onLoadMoreClicked();
+                }
+            }
+
         };
     }
 
@@ -216,11 +238,13 @@ public class CompleteChallengeViewPagerFragment extends BaseFragment {
         return mSportsTab;
     }
 
-    public void onChallengeData(List<CompletedResponse> inPlayFilterred) {
+    public void onChallengeData(List<CompletedResponse> inPlayFilterred, boolean shouldAddLoadMore) {
         mFilteredContests = inPlayFilterred;
+        mShouldAddLoadMore = shouldAddLoadMore;
 
         if (mRecyclerView != null && mRecyclerView.getAdapter() != null) {
             mRecyclerView.getAdapter().notifyDataSetChanged();
         }
     }
+
 }

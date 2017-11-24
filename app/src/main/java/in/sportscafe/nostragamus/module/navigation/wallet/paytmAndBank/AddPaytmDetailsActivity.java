@@ -4,9 +4,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Constants.ScreenNames;
 import in.sportscafe.nostragamus.R;
@@ -112,6 +115,16 @@ public class AddPaytmDetailsActivity extends NostragamusActivity implements View
             public void onAddDetailFailed() {
                 dismissProgressbar();
                 showMessage(Constants.Alerts.API_FAIL);
+            }
+
+            @Override
+            public void onServerSentError(String errorMsg) {
+                dismissProgressbar();
+                if (TextUtils.isEmpty(errorMsg)) {
+                    errorMsg = Constants.Alerts.SOMETHING_WRONG;
+                }
+                Toast.makeText(AddPaytmDetailsActivity.this, errorMsg, Toast.LENGTH_LONG).show();
+//                showMessage(errorMsg);
             }
         };
     }

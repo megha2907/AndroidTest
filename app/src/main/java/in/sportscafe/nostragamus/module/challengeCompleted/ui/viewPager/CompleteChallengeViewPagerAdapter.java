@@ -16,7 +16,6 @@ import com.jeeva.android.widgets.HmImageView;
 import java.util.ArrayList;
 
 import in.sportscafe.nostragamus.R;
-import in.sportscafe.nostragamus.module.inPlay.ui.viewPager.InPlayViewPagerFragment;
 import in.sportscafe.nostragamus.module.newChallenges.dto.SportsTab;
 
 /**
@@ -25,9 +24,9 @@ import in.sportscafe.nostragamus.module.newChallenges.dto.SportsTab;
 
 public class CompleteChallengeViewPagerAdapter extends FragmentStatePagerAdapter {
 
-    ArrayList<CompleteChallengeViewPagerFragment> tabFragments;
+    ArrayList<ChallengeHistoryViewPagerFragment> tabFragments;
 
-    public CompleteChallengeViewPagerAdapter(FragmentManager fm, ArrayList<CompleteChallengeViewPagerFragment> fragments) {
+    public CompleteChallengeViewPagerAdapter(FragmentManager fm, ArrayList<ChallengeHistoryViewPagerFragment> fragments) {
         super(fm);
         tabFragments = fragments;
     }

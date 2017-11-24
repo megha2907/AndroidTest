@@ -2,8 +2,12 @@ package in.sportscafe.nostragamus.module.navigation.wallet.paytmAndBank;
 
 import android.support.annotation.NonNull;
 
+import com.google.gson.Gson;
+import com.jeeva.android.Log;
+
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Nostragamus;
+import in.sportscafe.nostragamus.module.common.ErrorResponse;
 import in.sportscafe.nostragamus.module.navigation.wallet.paytmAndBank.dto.AddBankDetailsRequest;
 import in.sportscafe.nostragamus.module.navigation.wallet.paytmAndBank.dto.AddUserPaymentDetailsResponse;
 import in.sportscafe.nostragamus.module.navigation.wallet.paytmAndBank.dto.AddUserPaymentPaytmRequest;
@@ -17,6 +21,7 @@ import retrofit2.Response;
  */
 public class AddPaytmOrBankDetailModelModelImpl implements AddPaytmDetailModel, AddBankDetailModel {
 
+    private static final String TAG = AddPaytmOrBankDetailModelModelImpl.class.getSimpleName();
     private PaytmOrBankDetailModelListener paytmOrBankDetailModelListener;
 
     private AddPaytmOrBankDetailModelModelImpl(@NonNull PaytmOrBankDetailModelListener listener) {
@@ -61,13 +66,30 @@ public class AddPaytmOrBankDetailModelModelImpl implements AddPaytmDetailModel, 
             @Override
             public void onResponse(Call<AddUserPaymentDetailsResponse> call, Response<AddUserPaymentDetailsResponse> response) {
                 super.onResponse(call, response);
-                if (response != null && response.isSuccessful()) {
-                    onPaytmOrBankDetailsAddedSuccessfully();
+
+                if (response.code() == 400 && response.errorBody() != null) {
+                    Log.d(TAG, "Response code 400");
+                    ErrorResponse errorResponse = null;
+
+                    try {
+                        errorResponse = new Gson().fromJson(response.errorBody().string(), ErrorResponse.class);
+                    } catch (Exception e) {e.printStackTrace();}
+                    if (paytmOrBankDetailModelListener != null) {
+                        if (errorResponse != null) {
+                            paytmOrBankDetailModelListener.onServerSentError(errorResponse.getError());
+                        } else {
+                            paytmOrBankDetailModelListener.onAddDetailFailed();
+                        }
+                    }
 
                 } else {
-                    paytmOrBankDetailModelListener.onAddDetailFailed();
-                }
+                    if (response.isSuccessful() && response.body() != null) {
+                        onPaytmOrBankDetailsAddedSuccessfully();
 
+                    } else {
+                        paytmOrBankDetailModelListener.onAddDetailFailed();
+                    }
+                }
             }
         };
     }
@@ -80,5 +102,6 @@ public class AddPaytmOrBankDetailModelModelImpl implements AddPaytmDetailModel, 
         void onAddDetailSuccess();
         void onNoInternet();
         void onAddDetailFailed();
+        void onServerSentError(String errorMsg);
     }
 }

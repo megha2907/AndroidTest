@@ -15,13 +15,14 @@ import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
 import in.sportscafe.nostragamus.module.navigation.wallet.WalletHelper;
 import in.sportscafe.nostragamus.module.navigation.wallet.addMoney.AddWalletMoneyActivity;
+import in.sportscafe.nostragamus.module.popups.PopUpDialogActivity;
 import in.sportscafe.nostragamus.utils.AnimationHelper;
 
 /**
  * Created by deepanshi on 8/25/17.
  */
 
-public class WalletBalancePopupActivity extends BaseActivity implements View.OnClickListener {
+public class WalletBalancePopupActivity extends PopUpDialogActivity implements View.OnClickListener {
 
     private LinearLayout mWalletMoneyInfoLayout;
     private LinearLayout mPromoMoneyInfoLayout;
@@ -38,6 +39,7 @@ public class WalletBalancePopupActivity extends BaseActivity implements View.OnC
     private void initView() {
         (findViewById(R.id.popup_cross_btn)).setOnClickListener(this);
         (findViewById(R.id.wallet_balance_add_money_btn)).setOnClickListener(this);
+        (findViewById(R.id.popup_bg)).setOnClickListener(this);
     }
 
     private void setWalletInfo() {
@@ -84,6 +86,10 @@ public class WalletBalancePopupActivity extends BaseActivity implements View.OnC
 
             case R.id.wallet_popup_card_winnings_layout:
                 onWinningInfoLayoutClicked();
+                break;
+
+            case R.id.popup_bg:
+                onBackPressed();
                 break;
         }
     }

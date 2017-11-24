@@ -50,6 +50,13 @@ public class CompletedChallengeRecyclerAdapter extends RecyclerView.Adapter<Recy
         mCompletedAdapterListener = listener;
     }
 
+    public CompletedListItem getItem(int position) {
+        if (position >= 0 && position < mItemsList.size()) {
+            return mItemsList.get(position);
+        }
+        return null;
+    }
+
     @Override
     public int getItemViewType(int position) {
         int viewType = CompletedChallengeAdapterItemType.COMPLETED_CONTEST;
@@ -75,6 +82,11 @@ public class CompletedChallengeRecyclerAdapter extends RecyclerView.Adapter<Recy
                 View v2 = inflater.inflate(R.layout.completed_contest_card_layout, parent, false);
                 viewHolder = new CompletedContestItemViewHolder(v2);
                 break;
+
+            case CompletedChallengeAdapterItemType.LOAD_MORE:
+                View v3 = inflater.inflate(R.layout.challenge_history_load_more_item, parent, false);
+                viewHolder = new LoadMoreItemViewHolder(v3);
+                break;
         }
 
         return viewHolder;
@@ -94,6 +106,9 @@ public class CompletedChallengeRecyclerAdapter extends RecyclerView.Adapter<Recy
                 case CompletedChallengeAdapterItemType.COMPLETED_CONTEST:
                     CompletedContestDto contest = (CompletedContestDto) listItem.getItemData();
                     bindCompletedValues(holder, contest);
+                    break;
+
+                case CompletedChallengeAdapterItemType.LOAD_MORE:
                     break;
             }
         }
@@ -149,18 +164,18 @@ public class CompletedChallengeRecyclerAdapter extends RecyclerView.Adapter<Recy
                 LinearLayout.LayoutParams lpImage = new LinearLayout.LayoutParams(
                         LinearLayout.LayoutParams.WRAP_CONTENT,
                         LinearLayout.LayoutParams.WRAP_CONTENT);
-                lpImage.setMargins(0,2,0,0);
+                lpImage.setMargins(0,3,0,0);
                 tournamentImageView.setLayoutParams(lpImage);
 
                 LinearLayout.LayoutParams lpText = new LinearLayout.LayoutParams(
                         LinearLayout.LayoutParams.WRAP_CONTENT,
                         LinearLayout.LayoutParams.WRAP_CONTENT);
 
-                lpText.setMargins(0,0,5,0);
+                lpText.setMargins(0,0,8,0);
                 tournamentName.setLayoutParams(lpText);
 
                 tournamentName.setTextSize(TypedValue.COMPLEX_UNIT_PX,mContext.getResources().getDimension(R.dimen.sp_9_5));
-                tournamentName.setTextColor(ContextCompat.getColor(mContext,R.color.grey_999999));
+                tournamentName.setTextColor(ContextCompat.getColor(mContext,R.color.grey6));
                 tournamentName.setTypeface(face);
 
                 tournamentName.setText(tournamentList.get(temp));
@@ -179,7 +194,7 @@ public class CompletedChallengeRecyclerAdapter extends RecyclerView.Adapter<Recy
                 LinearLayout.LayoutParams relativeParams =
                         new LinearLayout.LayoutParams(
                                 LinearLayout.LayoutParams.WRAP_CONTENT,  LinearLayout.LayoutParams.WRAP_CONTENT);
-                relativeParams.setMargins(0,0,5,0);
+                relativeParams.setMargins(0,0,8,0);
                 layout2.addView(childLayout, relativeParams);
 
             }
@@ -347,6 +362,15 @@ public class CompletedChallengeRecyclerAdapter extends RecyclerView.Adapter<Recy
         return (mItemsList != null) ? mItemsList.size() : 0;
     }
 
+    public void removeLoadMoreItem() {
+        if (mItemsList != null && mItemsList.size() > 0) {
+            CompletedListItem lastItem = mItemsList.get(mItemsList.size()-1);
+            if (lastItem != null && lastItem.getCompletedAdapterItemType() == CompletedChallengeAdapterItemType.LOAD_MORE) {
+                mItemsList.remove(mItemsList.size()-1);
+                notifyDataSetChanged();
+            }
+        }
+    }
 
     public int getAdapterPositionFromContestId(int contestId) {
         int counter = -1;
@@ -371,6 +395,7 @@ public class CompletedChallengeRecyclerAdapter extends RecyclerView.Adapter<Recy
         return counter;
     }
 
+    /* View Holders */
     private class CompletedContestItemViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         LinearLayout root;
@@ -474,6 +499,28 @@ public class CompletedChallengeRecyclerAdapter extends RecyclerView.Adapter<Recy
         public void onClick(View view) {
             switch (view.getId()) {
                 case R.id.inplay_challenge_button:
+            }
+        }
+    }
+
+    private class LoadMoreItemViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+
+        LinearLayout loadMoreButton;
+
+        public LoadMoreItemViewHolder(View itemView) {
+            super(itemView);
+            loadMoreButton = (LinearLayout) itemView.findViewById(R.id.challenge_history_load_more_button);
+            loadMoreButton.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View view) {
+            switch (view.getId()) {
+                case R.id.challenge_history_load_more_button:
+                    if (mCompletedAdapterListener != null) {
+                        mCompletedAdapterListener.onLoadMoreClicked();
+                    }
+                    break;
             }
         }
     }

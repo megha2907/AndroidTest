@@ -366,4 +366,7 @@ public interface NostragamusService {
 
     @GET("v3/game/challenges/getUserMatches")
     Call<CompletedMatchesResponse> getCompletedChallengeMatches(@Query("room_id") int roomId, @Query("challenge_id") int challengeId);
+
+    @POST("v3/game/users/ticket")
+    Call<ApiResponse> sendErrorReport(@Body SubmitReportRequest request);
 }

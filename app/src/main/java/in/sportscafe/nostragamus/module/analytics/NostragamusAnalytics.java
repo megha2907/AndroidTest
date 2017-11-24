@@ -483,6 +483,12 @@ public class NostragamusAnalytics {
                     userProperties.put(UserProperties.PRO_APP, "No");
                 }
 
+                if (BuildConfig.IS_ACL_VERSION) {
+                    userProperties.put(UserProperties.ACL_APP, "yes");
+                } else {
+                    userProperties.put(UserProperties.ACL_APP, "No");
+                }
+
                 String channel = NostragamusDataHandler.getInstance().getInstallChannel();
                 if (!TextUtils.isEmpty(channel)) {
                     userProperties.put(UserProperties.REFERRAL_CHANNEL, channel);
@@ -518,6 +524,12 @@ public class NostragamusAnalytics {
                 mMoEHelper.setUserAttribute(UserProperties.PRO_APP, true);
             } else {
                 mMoEHelper.setUserAttribute(UserProperties.PRO_APP, false);
+            }
+
+            if (BuildConfig.IS_ACL_VERSION) {
+                mMoEHelper.setUserAttribute(UserProperties.ACL_APP, true);
+            } else {
+                mMoEHelper.setUserAttribute(UserProperties.ACL_APP, false);
             }
 
             String channel = NostragamusDataHandler.getInstance().getInstallChannel();
