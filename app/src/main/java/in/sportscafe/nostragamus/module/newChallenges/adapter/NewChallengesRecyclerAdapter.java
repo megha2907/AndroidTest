@@ -166,7 +166,7 @@ public class NewChallengesRecyclerAdapter extends RecyclerView.Adapter<RecyclerV
                     LinearLayout.LayoutParams lpText = new LinearLayout.LayoutParams(
                             LinearLayout.LayoutParams.WRAP_CONTENT,
                             LinearLayout.LayoutParams.WRAP_CONTENT);
-                    lpText.setMargins(0,0,7,0);
+                    lpText.setMargins(0,0,8,0);
                     mType.setLayoutParams(lpText);
 
                     mType.setTextSize(TypedValue.COMPLEX_UNIT_PX,mContext.getResources().getDimension(R.dimen.sp_9_5));
@@ -189,7 +189,7 @@ public class NewChallengesRecyclerAdapter extends RecyclerView.Adapter<RecyclerV
                     LinearLayout.LayoutParams relativeParams =
                             new LinearLayout.LayoutParams(
                                     LinearLayout.LayoutParams.WRAP_CONTENT,  LinearLayout.LayoutParams.WRAP_CONTENT);
-                    relativeParams.setMargins(0,0,7,0);
+                    relativeParams.setMargins(0,0,8,0);
                     layout2.addView(childLayout, relativeParams);
 
                 }

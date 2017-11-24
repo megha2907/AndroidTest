@@ -1019,6 +1019,14 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
         leaderboardView.findViewById(R.id.my_results_ll_share_score).setOnClickListener(this);
         leaderboardView.findViewById(R.id.schedule_row_rl_report_btn).setOnClickListener(this);
 
+        if (match.isShowReportButton()){
+            leaderboardView.findViewById(R.id.schedule_row_rl_report_btn).setVisibility(View.VISIBLE);
+            leaderboardView.findViewById(R.id.schedule_row_tv_match_result_report_txt).setVisibility(View.VISIBLE);
+        }else {
+            leaderboardView.findViewById(R.id.schedule_row_rl_report_btn).setVisibility(View.GONE);
+            leaderboardView.findViewById(R.id.schedule_row_tv_match_result_report_txt).setVisibility(View.GONE);
+        }
+
         if (null != match.getResultdesc() && !match.getResultdesc().trim().isEmpty()) {
             final TextView tvcommentary = (TextView) leaderboardView.findViewById(R.id.schedule_row_tv_match_result_commentary);
             tvcommentary.setVisibility(View.VISIBLE);
@@ -1052,7 +1060,7 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
     private void openSubmitReportPopup(Context context) {
         Intent intent = new Intent(context, SubmitReportPopupActivity.class);
         intent.putExtra(Constants.BundleKeys.REPORT_TYPE,"results");
-        intent.putExtra(BundleKeys.REPORT_HEADING,"Report Answers");
+        intent.putExtra(BundleKeys.REPORT_HEADING,"Report Answers / Points");
         if (getItem(0)!=null) {
             intent.putExtra(Constants.BundleKeys.REPORT_ID, String.valueOf(getItem(0).getId()));
             intent.putExtra(BundleKeys.REPORT_TITLE, getItem(0).getStage() + ", " + getItem(0).getTournamentName());
@@ -1062,7 +1070,8 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
         }
 
 
-        intent.putExtra(BundleKeys.REPORT_THANKYOU_TEXT,"Thanks for helping us get better! In case of any issue, we will review the match result and update it.");
+        intent.putExtra(BundleKeys.REPORT_THANKYOU_TEXT,"You can let us know about issues with the answers or points awarded for this game, by reporting it." +
+                " We will review it and make any necessary corrections!");
         context.startActivity(intent);
     }
 
