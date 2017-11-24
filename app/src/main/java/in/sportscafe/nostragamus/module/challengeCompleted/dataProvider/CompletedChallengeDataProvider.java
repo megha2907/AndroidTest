@@ -67,7 +67,7 @@ public class CompletedChallengeDataProvider {
                     }
                 } else {
                     Log.d(TAG, "Server response not successful");
-                    loadCompletedDataFromDatabase(Constants.DataStatus.FROM_DATABASE_AS_SERVER_FAILED, appContext, listener);
+                    onApiErrorOrUnSuccessfulResponse(skip, appContext, listener);
                 }
             }
 
@@ -75,18 +75,21 @@ public class CompletedChallengeDataProvider {
             public void onFailure(Call<List<CompletedResponse>> call, Throwable t) {
                 super.onFailure(call, t);
                 Log.d(TAG, "Server response Failed");
-
-                /* If no data is loaded then ONLY cached data should be provided
-                 * else send error */
-                if (skip == 0) {
-                    loadCompletedDataFromDatabase(Constants.DataStatus.FROM_DATABASE_AS_SERVER_FAILED, appContext, listener);
-                } else {
-                    if (listener != null) {
-                        listener.onError(Constants.DataStatus.NO_MORE_DATA_WHILE_LOAD_MORE);    // As this case occurs only in pagination, if API fails, just show msg with no more-data
-                    }
-                }
+                onApiErrorOrUnSuccessfulResponse(skip, appContext, listener);
             }
         });
+    }
+
+    private void onApiErrorOrUnSuccessfulResponse(int skip, Context appContext, CompletedChallengeDataProviderListener listener) {
+    /* If no data is loaded then ONLY cached data should be provided
+        * else send error */
+        if (skip == 0) {
+            loadCompletedDataFromDatabase(Constants.DataStatus.FROM_DATABASE_AS_SERVER_FAILED, appContext, listener);
+        } else {
+            if (listener != null) {
+                listener.onError(Constants.DataStatus.FROM_SERVER_API_FAILED);    // As this case occurs only in pagination, if API fails, just show error msg
+            }
+        }
     }
 
     private void insertCompletedResponseIntoDatabase(final Context appContext,
@@ -159,5 +162,6 @@ public class CompletedChallengeDataProvider {
     public interface CompletedChallengeDataProviderListener {
         void onData(int status, @Nullable List<CompletedResponse> completedResponseList);
         void onError(int status);
+        void onNoMoreListData();
     }
 }

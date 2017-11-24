@@ -26,13 +26,12 @@ import java.util.List;
 import in.sportscafe.nostragamus.BuildConfig;
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
-import in.sportscafe.nostragamus.module.challengeCompleted.adapter.CompletedChallengeAdapterItemType;
 import in.sportscafe.nostragamus.module.challengeCompleted.dataProvider.CompletedChallengeDataProvider;
 import in.sportscafe.nostragamus.module.challengeCompleted.dto.CompletedResponse;
 import in.sportscafe.nostragamus.module.challengeCompleted.helper.CompleteChallengeFilterHelper;
 import in.sportscafe.nostragamus.module.challengeCompleted.ui.viewPager.ChallengeHistoryViewPagerFragmentListener;
 import in.sportscafe.nostragamus.module.challengeCompleted.ui.viewPager.CompleteChallengeViewPagerAdapter;
-import in.sportscafe.nostragamus.module.challengeCompleted.ui.viewPager.CompleteChallengeViewPagerFragment;
+import in.sportscafe.nostragamus.module.challengeCompleted.ui.viewPager.ChallengeHistoryViewPagerFragment;
 import in.sportscafe.nostragamus.module.common.NostraBaseFragment;
 import in.sportscafe.nostragamus.module.newChallenges.dataProvider.SportsDataProvider;
 import in.sportscafe.nostragamus.module.newChallenges.dto.SportsTab;
@@ -55,6 +54,7 @@ public class CompletedChallengeHistoryFragment extends NostraBaseFragment implem
     private List<CompletedResponse> mCompletedChallengeHistoryList;
     private Snackbar mSnackBar;
     private int mStartIndex = 0;
+    private boolean mShouldLoadMore = true;
 
     @Override
     public void onAttach(Context context) {
@@ -118,6 +118,11 @@ public class CompletedChallengeHistoryFragment extends NostraBaseFragment implem
                             hideLoadingProgressBar();
                             handleError(status);
                         }
+
+                        @Override
+                        public void onNoMoreListData() {
+                            mShouldLoadMore = false;
+                        }
                     });
         }
     }
@@ -146,7 +151,7 @@ public class CompletedChallengeHistoryFragment extends NostraBaseFragment implem
                     break;
 
                 case Constants.DataStatus.NO_MORE_DATA_WHILE_LOAD_MORE:
-                    mSnackBar = Snackbar.make(getView(), Constants.Alerts.NO_MORE_HISTORY, Snackbar.LENGTH_LONG);
+//                    mSnackBar = Snackbar.make(getView(), Constants.Alerts.NO_MORE_HISTORY, Snackbar.LENGTH_LONG);
                     break;
 
                 default:
@@ -166,6 +171,7 @@ public class CompletedChallengeHistoryFragment extends NostraBaseFragment implem
 
             case Constants.DataStatus.FROM_DATABASE_AS_NO_INTERNET:
             case Constants.DataStatus.FROM_DATABASE_AS_SERVER_FAILED:
+                mCompletedChallengeHistoryList = null;
                 showDataOnUi(completedResponseList);
                 handleError(status);
                 break;
@@ -194,12 +200,12 @@ public class CompletedChallengeHistoryFragment extends NostraBaseFragment implem
             completedResponseList = getMergedHistoryListWithPreviouslyLoadedList(completedResponseList);
 
             if (completedResponseList != null && completedResponseList.size() > 0) {
-                ArrayList<CompleteChallengeViewPagerFragment> fragmentList = new ArrayList<>();
+                ArrayList<ChallengeHistoryViewPagerFragment> fragmentList = new ArrayList<>();
                 CompleteChallengeFilterHelper filterHelper = new CompleteChallengeFilterHelper();
-                CompleteChallengeViewPagerFragment tabFragment = null;
+                ChallengeHistoryViewPagerFragment tabFragment = null;
 
                 for (SportsTab sportsTab : sportsTabList) {
-                    tabFragment = new CompleteChallengeViewPagerFragment();
+                    tabFragment = new ChallengeHistoryViewPagerFragment();
                     tabFragment.setArguments(getArguments());
                     tabFragment.setViewPagerFragmentListener(getPagerFragmentListener());
 
@@ -225,7 +231,7 @@ public class CompletedChallengeHistoryFragment extends NostraBaseFragment implem
 
                     if (completedFilteredList != null) {
                         sportsTab.setChallengeCount(completedFilteredList.size());
-                        tabFragment.onChallengeData(completedFilteredList);
+                        tabFragment.onChallengeData(completedFilteredList, mShouldLoadMore);
                         tabFragment.setTabDetails(sportsTab);
                         fragmentList.add(tabFragment);
                     }
@@ -265,14 +271,15 @@ public class CompletedChallengeHistoryFragment extends NostraBaseFragment implem
              * If server succeeds and list is empty/null (in server-response)
              * BUT alreadyFetched list is not empty then show msg that no more records */
             if (mCompletedChallengeHistoryList != null && !mCompletedChallengeHistoryList.isEmpty()) {
-                handleError(Constants.DataStatus.NO_MORE_DATA_WHILE_LOAD_MORE);
+//                handleError(Constants.DataStatus.NO_MORE_DATA_WHILE_LOAD_MORE);
+                mShouldLoadMore = false;
             }
         }
         return mCompletedChallengeHistoryList;
     }
 
     private void setPagerAdapter(TabLayout completedTabLayout, ViewPager completedViewPager,
-                                 ArrayList<CompleteChallengeViewPagerFragment> fragmentList) {
+                                 ArrayList<ChallengeHistoryViewPagerFragment> fragmentList) {
         CompleteChallengeViewPagerAdapter viewPagerAdapter = new CompleteChallengeViewPagerAdapter
                 (getActivity().getSupportFragmentManager(), fragmentList);
         completedViewPager.setAdapter(viewPagerAdapter);
@@ -287,11 +294,11 @@ public class CompletedChallengeHistoryFragment extends NostraBaseFragment implem
         }
     }
 
-    private void sortTabs(ArrayList<CompleteChallengeViewPagerFragment> fragmentList) {
+    private void sortTabs(ArrayList<ChallengeHistoryViewPagerFragment> fragmentList) {
         if (!BuildConfig.IS_ACL_VERSION) {
-            Collections.sort(fragmentList, new Comparator<CompleteChallengeViewPagerFragment>() {
+            Collections.sort(fragmentList, new Comparator<ChallengeHistoryViewPagerFragment>() {
                 @Override
-                public int compare(CompleteChallengeViewPagerFragment fragment1, CompleteChallengeViewPagerFragment fragment2) {
+                public int compare(ChallengeHistoryViewPagerFragment fragment1, ChallengeHistoryViewPagerFragment fragment2) {
                     int sportId = fragment2.getTabDetails().getSportsId();
                     if (sportId == SportsDataProvider.FILTER_ALL_SPORTS_ID ||
                             sportId == SportsDataProvider.FILTER_DAILY_SPORTS_ID) {
