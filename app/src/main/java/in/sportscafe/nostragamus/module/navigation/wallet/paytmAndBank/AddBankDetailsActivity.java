@@ -8,6 +8,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.parceler.Parcels;
 
@@ -128,7 +129,11 @@ public class AddBankDetailsActivity extends NostragamusActivity implements View.
             @Override
             public void onServerSentError(String errorMsg) {
                 dismissProgressbar();
-                showMessage(errorMsg);
+                if (TextUtils.isEmpty(errorMsg)) {
+                    errorMsg = Constants.Alerts.SOMETHING_WRONG;
+                }
+                Toast.makeText(AddBankDetailsActivity.this, errorMsg, Toast.LENGTH_LONG).show();
+//                showMessage(errorMsg);
             }
         };
     }
