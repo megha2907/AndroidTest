@@ -17,7 +17,7 @@
         android:layout_marginLeft="@dimen/dim_20"
         android:layout_marginRight="@dimen/dim_20"
         android:layout_marginTop="@dimen/dim_40"
-        android:textSize="@dimen/sp_12"
+        android:textSize="@dimen/sp_13"
         android:text="Welcome to Nostragamus!"
         android:gravity="center"/>
 

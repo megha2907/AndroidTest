@@ -389,7 +389,7 @@ public abstract class WalletHistoryAdapter extends RecyclerView.Adapter<WalletHi
                             intent.putExtra(Constants.BundleKeys.REPORT_HEADING, "Report Transactions");
                             intent.putExtra(Constants.BundleKeys.REPORT_TITLE,"Transaction Id");
                             intent.putExtra(Constants.BundleKeys.REPORT_DESC, walletHistoryTransaction.getOrderId());
-                            intent.putExtra(Constants.BundleKeys.REPORT_THANKYOU_TEXT, "Thanks for helping us get better! We will check out the issue and get back to you ASAP.");
+                            intent.putExtra(Constants.BundleKeys.REPORT_THANKYOU_TEXT, "You can let us know about any issues with your transactions. We will review them and make the necessary corrections!");
                             mContext.startActivity(intent);
                         }
                     }
