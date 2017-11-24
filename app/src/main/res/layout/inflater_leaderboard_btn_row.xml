@@ -32,33 +32,28 @@
         android:textColor="@color/silver_chalice"
         android:textColorLink="#29abe2"
         android:text="In case of any issue, you can report the answers to our team for review, with the button below - "
-        android:textSize="@dimen/sp_12"
+        android:textSize="@dimen/sp_11"
         app:typeface="lato_regular" />
-
 
     <RelativeLayout
         android:id="@+id/schedule_row_rl_report_btn"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dim_40"
-        android:layout_gravity="bottom"
-        android:layout_marginTop="@dimen/dim_10"
-        android:layout_marginLeft="@dimen/dim_2"
-        android:layout_marginRight="@dimen/dim_2"
+        android:layout_width="@dimen/dim_60"
+        android:layout_height="@dimen/dim_24"
+        android:layout_alignParentRight="true"
         android:background="@drawable/red_border_box"
-        android:paddingBottom="@dimen/dim_12"
-        android:paddingTop="@dimen/dim_12">
+        android:layout_centerVertical="true"
+        android:layout_marginTop="@dimen/dim_8">
 
         <com.jeeva.android.widgets.customfont.CustomTextView
-            android:id="@+id/schedule_row_tv_report"
+            android:id="@+id/wallet_item_tv_report"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="@dimen/dp_1"
-            android:gravity="bottom"
-            android:text="REPORT RESULTS"
+            android:text="REPORT"
+            android:paddingBottom="@dimen/dim_3"
+            android:layout_centerInParent="true"
             android:textColor="@drawable/report_tv_selector"
-            android:textSize="@dimen/dp_12"
-            app:typeface="lato_bold" />
+            android:textSize="@dimen/sp_10"
+            app:typeface="lato_regular" />
 
     </RelativeLayout>
 
