@@ -1,11 +1,15 @@
 package in.sportscafe.nostragamus.module.contest.adapter;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
+import android.text.style.StyleSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -173,13 +177,24 @@ public class ContestRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
                 viewHolder.mTvFilledContests.setText(String.valueOf(contest.getFilledRooms()));
                 if (contest.isLastFillingRoom()) {
-                    viewHolder.mTvContestsAvailable.setText("Last 1");
-                    viewHolder.mFillingStrTextView.setTextColor(
-                            ContextCompat.getColor(viewHolder.mFillingStrTextView.getContext(), R.color.white));
+                    SpannableStringBuilder builder = new SpannableStringBuilder();
+                    SpannableString spannableString = new SpannableString("LAST ");
+                    StyleSpan spanStyle = new StyleSpan(Typeface.NORMAL);
+                    spannableString.setSpan(spanStyle, 0, spannableString.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+                    SpannableString spannableString1 = new SpannableString("1");
+                    StyleSpan spanStyle1 = new StyleSpan(Typeface.BOLD);
+                    spannableString1.setSpan(spanStyle1, 0, spannableString1.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+                    builder.append(spannableString).append(spannableString1);
+
+                    viewHolder.mTvContestsAvailable.setText(builder, TextView.BufferType.SPANNABLE);
                 } else {
-                    viewHolder.mTvContestsAvailable.setText(String.valueOf(contest.getFillingRooms()));
-                    viewHolder.mFillingStrTextView.setTextColor(
-                            ContextCompat.getColor(viewHolder.mFillingStrTextView.getContext(), R.color.white_60));
+                    StyleSpan spanStyle = new StyleSpan(Typeface.BOLD);
+                    SpannableString spannableString = new SpannableString(String.valueOf(contest.getFillingRooms()));
+                    spannableString.setSpan(spanStyle, 0, spannableString.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+                    viewHolder.mTvContestsAvailable.setText(spannableString, TextView.BufferType.SPANNABLE);
                 }
 
                 if (contest.getContestMode().equalsIgnoreCase(Constants.ContestType.GUARANTEED)) {
