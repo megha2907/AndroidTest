@@ -26,12 +26,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="left"
-        android:layout_marginTop="@dimen/dim_10"
+        android:layout_marginTop="@dimen/dim_32"
         android:layout_marginRight="@dimen/dp_10"
         android:gravity="left"
+        android:lineSpacingExtra="@dimen/dim_2"
         android:textColor="@color/silver_chalice"
         android:textColorLink="#29abe2"
-        android:text="In case of any issue, you can report the answers to our team for review, with the button below - "
+        android:text="See something incorrect about an answer? Report it to us by clicking on the button below - "
         android:textSize="@dimen/sp_11"
         app:typeface="lato_regular" />
 
