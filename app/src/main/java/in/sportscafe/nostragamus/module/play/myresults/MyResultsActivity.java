@@ -503,7 +503,7 @@ public class MyResultsActivity extends NostragamusActivity implements MyResultsV
         finish();
     }
 
-    @Override
+    /*@Override
     public void showLoadingProgressBar() {
         if (getActivity() != null) {
             findViewById(R.id.myResultsProgressBarLayout).setVisibility(View.VISIBLE);
@@ -515,6 +515,6 @@ public class MyResultsActivity extends NostragamusActivity implements MyResultsV
         if (getActivity() != null) {
             findViewById(R.id.myResultsProgressBarLayout).setVisibility(View.GONE);
         }
-    }
+    }*/
 
 }

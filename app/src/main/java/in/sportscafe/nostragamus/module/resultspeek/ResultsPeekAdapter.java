@@ -195,10 +195,10 @@ public class ResultsPeekAdapter extends Adapter<ResultsPeek, ResultsPeekAdapter.
                 setTextColor(tvPlayerOneAnswer, R.color.tabcolor);
 
                 // IF USER ANSWER = OPTION 1 OR OPTION 2
-                if (myQuestion.getQuestionAnswer() == 1) {
-                    tvPlayerOneAnswer.setText(myQuestion.getQuestionOption2());
-                } else {
+                if (myAnswerId == 1) {
                     tvPlayerOneAnswer.setText(myQuestion.getQuestionOption1());
+                } else {
+                    tvPlayerOneAnswer.setText(myQuestion.getQuestionOption2());
                 }
 
                 // IF USER ANSWER = NEITHER
@@ -340,10 +340,10 @@ public class ResultsPeekAdapter extends Adapter<ResultsPeek, ResultsPeekAdapter.
                 setTextColor(tvPlayerTwoAnswer, R.color.tabcolor);
 
                 // IF USER ANSWER = OPTION 1 OR OPTION 2
-                if (playerQuestion.getQuestionAnswer() == 1) {
-                    tvPlayerTwoAnswer.setText(playerQuestion.getQuestionOption2());
-                } else {
+                if (otherPlayerAnswerId == 1) {
                     tvPlayerTwoAnswer.setText(playerQuestion.getQuestionOption1());
+                } else {
+                    tvPlayerTwoAnswer.setText(playerQuestion.getQuestionOption2());
                 }
 
                 // IF USER ANSWER = NEITHER
