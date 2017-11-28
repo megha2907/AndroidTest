@@ -10,6 +10,8 @@ import in.sportscafe.nostragamus.module.challengeCompleted.dto.CompletedResponse
 import in.sportscafe.nostragamus.module.challengeRewards.dto.RewardsResponse;
 import in.sportscafe.nostragamus.module.challengeRules.dto.RulesResponse;
 import in.sportscafe.nostragamus.module.common.ApiResponse;
+import in.sportscafe.nostragamus.module.navigation.wallet.addMoney.dto.AddMoneyPaymentCouponRequest;
+import in.sportscafe.nostragamus.module.navigation.wallet.addMoney.dto.AddMoneyPaymentCouponResponse;
 import in.sportscafe.nostragamus.module.nostraHome.dto.TimeResponse;
 import in.sportscafe.nostragamus.module.common.dto.MatchesResponse;
 import in.sportscafe.nostragamus.module.contest.dto.ContestEntriesRequest;
@@ -274,6 +276,10 @@ public class MyWebService extends AbstractWebService<NostragamusService> {
 
     public Call<GenerateOrderResponse> addMoneyToWalletRequest(AddMoneyToWalletRequest request) {
         return mNostragamusService.addMoneyToWallet(request);
+    }
+
+    public Call<AddMoneyPaymentCouponResponse> addMoneyPaymentCouponRequest(AddMoneyPaymentCouponRequest request) {
+        return mNostragamusService.addMoneyPaymentCouponToWallet(request);
     }
 
     public Call<UserWalletResponse> getUserWallet() {

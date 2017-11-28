@@ -1,0 +1,131 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="@color/black"
+    tools:context="in.sportscafe.nostragamus.module.navigation.wallet.addMoney.addByPaymentCoupon.AddMoneyThroughPaymentCouponFragment">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <!-- Add Money bottom layout -->
+        <FrameLayout
+            android:id="@+id/add_money_bottom_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true">
+
+            <!-- Add Amount layout -->
+            <LinearLayout
+                android:id="@+id/wallet_add_amount_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="@dimen/button_height_48"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:background="@drawable/flat_blue_btn_selector">
+
+                <com.jeeva.android.widgets.customfont.CustomTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Add Amount"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/sp_16"
+                    app:typeface="lato_bold" />
+
+            </LinearLayout>
+
+        </FrameLayout>
+
+        <!-- Scrollable top layout -->
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/add_money_bottom_layout"
+            android:layout_alignParentTop="true">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <!-- Enter Amount layout -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginLeft="@dimen/dp_20"
+                    android:layout_marginRight="@dimen/dp_20"
+                    android:layout_marginTop="@dimen/dp_18">
+
+                    <com.jeeva.android.widgets.customfont.CustomTextView
+                        android:id="@+id/add_bank_accNumber_head_textview"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="left"
+                        android:text="Enter Payment Code"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/sp_14"
+                        app:typeface="lato_regular" />
+
+                    <com.jeeva.android.widgets.ShadowLayout
+                        android:id="@+id/paytm_add_detail_sl_confirm_number"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dp_6"
+                        app:sl_cornerRadius="@dimen/dp_5"
+                        app:sl_fillColor="@color/edittext_selection_bg"
+                        app:sl_shadowRadius="@dimen/dp_4">
+
+                        <com.jeeva.android.widgets.customfont.CustomEditText
+                            android:id="@+id/wallet_add_payment_coupon_editText"
+                            style="@style/EditTextStyle"
+                            android:imeOptions="actionDone"/>
+
+                    </com.jeeva.android.widgets.ShadowLayout>
+
+                    <com.jeeva.android.widgets.customfont.CustomTextView
+                        android:id="@+id/add_payment_coupon_error_textView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right"
+                        android:layout_marginTop="@dimen/dp_6"
+                        android:text="Invalid Payment Code!"
+                        android:textColor="@color/radical_red"
+                        android:textSize="@dimen/dp_14"
+                        app:typeface="lato_regular"
+                        android:visibility="gone"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginLeft="@dimen/dp_20"
+                    android:layout_marginRight="@dimen/dp_20"
+                    android:layout_marginTop="@dimen/dp_18">
+
+                    <com.jeeva.android.widgets.customfont.CustomTextView
+                        android:id="@+id/add_money_by_payment_coupon_msg_textView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="left"
+                        android:text="Enter your payment code in the box to redeem your money"
+                        android:textColor="#cccccc"
+                        android:textSize="@dimen/sp_12"
+                        app:typeface="lato_regular" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </ScrollView>
+
+    </RelativeLayout>
+
+</LinearLayout>
