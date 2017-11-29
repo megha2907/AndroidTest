@@ -53,8 +53,6 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-
-
                 <!-- Add amounts buttons -->
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -147,23 +145,25 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="right"
-                        android:layout_marginTop="@dimen/dp_6"
+                        android:layout_marginTop="@dimen/dim_6"
                         android:text="Please enter amount"
                         android:textColor="@color/radical_red"
                         android:textSize="@dimen/dp_14"
                         app:typeface="lato_regular"
-                        android:visibility="gone"/>
+                        android:visibility="invisible"/>
 
                 </LinearLayout>
 
                 <!-- Payment coupon layout -->
                 <LinearLayout
+                    android:id="@+id/payment_coupon_button_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:layout_marginLeft="@dimen/dp_20"
                     android:layout_marginRight="@dimen/dp_20"
-                    android:layout_marginTop="@dimen/dp_18">
+                    android:layout_marginTop="@dimen/dim_10"
+                    android:visibility="invisible">
 
                     <com.jeeva.android.widgets.customfont.CustomTextView
                         android:id="@+id/add_money_by_payment_coupon_msg_textView"
@@ -183,8 +183,9 @@
                         android:text="Use Payment Code"
                         android:textColor="#186cc2"
                         android:textSize="@dimen/sp_14"
-                        app:typeface="lato_regular"
-                        android:layout_marginTop="@dimen/dim_8"/>
+                        app:typeface="lato_bold"
+                        android:layout_marginTop="@dimen/dim_8"
+                        android:padding="@dimen/dim_5"/>
 
                 </LinearLayout>
 

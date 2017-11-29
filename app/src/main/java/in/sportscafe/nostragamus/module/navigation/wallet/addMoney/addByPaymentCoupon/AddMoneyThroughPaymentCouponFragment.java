@@ -63,7 +63,7 @@ public class AddMoneyThroughPaymentCouponFragment extends BaseFragment implement
 
             String couponCode = mCouponCodeEditText.getText().toString().trim();
             if (!TextUtils.isEmpty(couponCode)) {
-                errorTextView.setVisibility(View.GONE);
+                errorTextView.setVisibility(View.INVISIBLE);
                 onPaymentCouponAdded(couponCode);
             } else {
                 showError("Please Enter Coupon Code");

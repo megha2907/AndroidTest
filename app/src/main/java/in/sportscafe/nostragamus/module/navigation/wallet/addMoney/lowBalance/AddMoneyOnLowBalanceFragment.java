@@ -31,6 +31,7 @@ import in.sportscafe.nostragamus.module.navigation.wallet.WalletHelper;
 import in.sportscafe.nostragamus.module.navigation.wallet.addMoney.AddMoneyWalletHelper;
 import in.sportscafe.nostragamus.module.navigation.wallet.addMoney.addByPaymentCoupon.AddMoneyThroughPaymentCouponFragment;
 import in.sportscafe.nostragamus.module.navigation.wallet.addMoney.addByPaymentCoupon.AddMoneyThroughPaymentCouponFragmentListener;
+import in.sportscafe.nostragamus.module.navigation.wallet.addMoney.addByPaytm.AddMoneyPaytmFragmentLaunchedFrom;
 import in.sportscafe.nostragamus.module.navigation.wallet.addMoney.addByPaytm.AddMoneyThroughPaytmFragment;
 import in.sportscafe.nostragamus.module.navigation.wallet.addMoney.addByPaytm.AddMoneyThroughPaytmFragmentListener;
 import in.sportscafe.nostragamus.module.navigation.wallet.paytmAndBank.PaytmTransactionSuccessDialogFragment;
@@ -45,8 +46,6 @@ public class AddMoneyOnLowBalanceFragment extends BaseFragment implements View.O
     private static final String TAG = AddMoneyOnLowBalanceFragment.class.getSimpleName();
 
     private AddMoneyOnLowBalanceFragmentListener mFragmentListener;
-    private EditText mAmountEditText;
-
     private double mLowBalanceDifferenceAmount = 0d;
 
     public AddMoneyOnLowBalanceFragment() {}
@@ -54,20 +53,6 @@ public class AddMoneyOnLowBalanceFragment extends BaseFragment implements View.O
     public AddMoneyOnLowBalanceFragmentListener getFragmentListener() {
         return mFragmentListener;
     }
-
-    private final String blockCharacterSet = ".~#^|$%&*!@_-+/:;!?,";
-
-    private InputFilter filter = new InputFilter() {
-
-        @Override
-        public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart, int dend) {
-            if (source != null && blockCharacterSet.contains(("" + source))) {
-                return "";
-            }
-            return null;
-        }
-    };
-
 
     @Override
     public void onAttach(Context context) {
@@ -103,6 +88,7 @@ public class AddMoneyOnLowBalanceFragment extends BaseFragment implements View.O
     private void loadAddMoneyByPaytmFragment() {
         if (getActivity() != null) {
             AddMoneyThroughPaytmFragment fragment = new AddMoneyThroughPaytmFragment();
+            fragment.setLaunchedFrom(AddMoneyPaytmFragmentLaunchedFrom.ADD_MONEY_LOW_BALANCE);
             fragment.setFragmentListener(this);
 
             FragmentManager fragmentManager = getChildFragmentManager();
@@ -186,16 +172,17 @@ public class AddMoneyOnLowBalanceFragment extends BaseFragment implements View.O
                 entryFeeTextView.setText(WalletHelper.getFormattedStringOfAmount(entryFee));
             }
 
-            if (mAmountEditText != null) {
-                mAmountEditText.setText(String.valueOf(mLowBalanceDifferenceAmount));
-                setEditTextSelection();
-            }
+            sendLowMoneyDifferenceToPaytmFragment(mLowBalanceDifferenceAmount);
         }
     }
 
-    private void setEditTextSelection() {
-        int length = mAmountEditText.getText().length();
-        mAmountEditText.setSelection(length, length);
+    private void sendLowMoneyDifferenceToPaytmFragment(double lowBalAmt) {
+        if (getView() != null && getChildFragmentManager() != null) {
+            Fragment fragment = getChildFragmentManager().findFragmentById(R.id.add_money_fragment_container);
+            if (fragment != null && fragment instanceof AddMoneyThroughPaytmFragment) {
+                ((AddMoneyThroughPaytmFragment) fragment).setDifferenceAmount(lowBalAmt);
+            }
+        }
     }
 
     private void setMessageText(String buyProductName, String operationStr) {
