@@ -3,6 +3,7 @@ package com.jeeva.android.widgets;
 import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Typeface;
+import android.support.v4.content.ContextCompat;
 import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
@@ -76,7 +77,7 @@ public class CustomProgressbar extends Dialog {
     private View getAppProgressbar(Context context) {
         ProgressBar progressBar = new ProgressBar(context);
         progressBar.setBackgroundResource(android.R.color.transparent);
-        progressBar.getIndeterminateDrawable().setColorFilter(context.getResources().getColor(R.color.bright_turquoise), android.graphics.PorterDuff.Mode.MULTIPLY);
+        progressBar.getIndeterminateDrawable().setColorFilter(ContextCompat.getColor(context, R.color.loading_animation_color), android.graphics.PorterDuff.Mode.MULTIPLY);
         if (null != mMessage) {
             LinearLayout linearLayout = new LinearLayout(context);
             linearLayout.setOrientation(LinearLayout.HORIZONTAL);

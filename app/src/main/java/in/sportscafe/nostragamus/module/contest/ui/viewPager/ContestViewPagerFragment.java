@@ -268,20 +268,20 @@ public class ContestViewPagerFragment extends NostraBaseFragment {
             if (TimerFinishDialogHelper.canJoinContest((mContestScreenData != null) ? mContestScreenData.getChallengeStartTime() : "")) {
 
                 if (Nostragamus.getInstance().hasNetworkConnection()) {
-                    startAnim();
+                    CustomProgressbar.getProgressbar(getContext()).show();
 
                     JoinContestHelper joinContestHelper = new JoinContestHelper();
                     joinContestHelper.JoinContest(joinContestData, (AppCompatActivity) this.getActivity(),
                             new JoinContestHelper.JoinContestProcessListener() {
                                 @Override
                                 public void noInternet() {
-                                    stopAnim();
+                                    CustomProgressbar.getProgressbar(getContext()).dismissProgress();
                                     handleError(Constants.DataStatus.NO_INTERNET, "");
                                 }
 
                                 @Override
                                 public void lowWalletBalance(JoinContestData joinContestData) {
-                                    stopAnim();
+                                    CustomProgressbar.getProgressbar(getContext()).dismissProgress();
                                     launchLowBalanceActivity(joinContestData);
                                     NostragamusAnalytics.getInstance().trackClickEvent(Constants.AnalyticsCategory.CONTEST,
                                             Constants.AnalyticsClickLabels.JOIN_CONTEST + "-" + Constants.AnalyticsClickLabels.CONTEST_LOW_MONEY);
@@ -289,7 +289,7 @@ public class ContestViewPagerFragment extends NostraBaseFragment {
 
                                 @Override
                                 public void joinContestSuccess(JoinContestData contestJoinedSuccessfully) {
-                                    stopAnim();
+                                    CustomProgressbar.getProgressbar(getContext()).dismissProgress();
                                     onContestJoinedSuccessfully(contestJoinedSuccessfully);
                                     NostragamusAnalytics.getInstance().trackClickEvent(Constants.AnalyticsCategory.CONTEST_JOINED,
                                             String.valueOf(contestJoinedSuccessfully.getContestId()));
@@ -297,13 +297,13 @@ public class ContestViewPagerFragment extends NostraBaseFragment {
 
                                 @Override
                                 public void onApiFailure() {
-                                    stopAnim();
+                                    CustomProgressbar.getProgressbar(getContext()).dismissProgress();
                                     handleError(Constants.DataStatus.FROM_SERVER_API_FAILED, "");
                                 }
 
                                 @Override
                                 public void onServerReturnedError(String msg) {
-                                    stopAnim();
+                                    CustomProgressbar.getProgressbar(getContext()).dismissProgress();
                                     if (TextUtils.isEmpty(msg)) {
                                         msg = Constants.Alerts.SOMETHING_WRONG;
                                     }
@@ -312,12 +312,12 @@ public class ContestViewPagerFragment extends NostraBaseFragment {
 
                                 @Override
                                 public void hideProgressBar() {
-                                    stopAnim();
+                                    CustomProgressbar.getProgressbar(getContext()).dismissProgress();
                                 }
 
                                 @Override
                                 public void showProgressBar() {
-                                    startAnim();
+                                    CustomProgressbar.getProgressbar(getContext()).show();
                                 }
                             });
 
