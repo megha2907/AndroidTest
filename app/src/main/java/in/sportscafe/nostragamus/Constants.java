@@ -837,7 +837,7 @@ public interface Constants {
         String GAME_PLAY = "http://nostragamus.in/gameplayapp.html";
         String RULES = "http://nostragamus.in/rulesapp.html";
         String FAQ = "http://nostragamus.in/faqapp.html";
-        String ABOUT_NOSTRAGAMUS = "http://nostragamus.in/about.html";
+        String ABOUT_NOSTRAGAMUS = "http://nostragamus.in/aboutus.html";
         String TERMS_SERVICE = "http://nostragamus.in/terms.html";
         String PRIVACY = "http://nostragamus.in/privacy.html";
         String REFERRAL_TERMS = "http://nostragamus.in/referralapp.html";
