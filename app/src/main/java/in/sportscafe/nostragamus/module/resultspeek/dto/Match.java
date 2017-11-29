@@ -92,6 +92,9 @@ public class Match {
     @SerializedName("contest_name")
     private String contestName;
 
+    @SerializedName("config_name")
+    private String configName;
+
     @SerializedName("challenge_img_url")
     private String challengeImgUrl;
 
@@ -639,6 +642,14 @@ public class Match {
 
     public void setContestName(String contestName) {
         this.contestName = contestName;
+    }
+
+    public String getConfigName() {
+        return configName;
+    }
+
+    public void setConfigName(String configName) {
+        this.configName = configName;
     }
 
     public int getContestId() {

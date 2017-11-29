@@ -106,7 +106,7 @@ public class TimelineModelImpl implements TimelineModel {
     @Override
     public String getChallengeNameIfAvailable() {
         if (null != mRoomId && null != mTimelineAdapter && mTimelineAdapter.getItemCount() > 0) {
-            return mTimelineAdapter.getItem(0).getChallengeName()+" - "+mTimelineAdapter.getItem(0).getContestName();
+            return mTimelineAdapter.getItem(0).getChallengeName()+" - "+mTimelineAdapter.getItem(0).getConfigName();
         }
         return null;
     }

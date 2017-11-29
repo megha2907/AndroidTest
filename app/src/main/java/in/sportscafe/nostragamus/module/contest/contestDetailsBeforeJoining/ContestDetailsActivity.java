@@ -122,7 +122,7 @@ public class ContestDetailsActivity extends NostraBaseActivity implements Contes
             }
 
             /* For InPlay Headless flow, && PseudoGame flow; send pseudoRoomId */
-            if (mContestScreenData != null &&
+            if (mContestScreenData != null && joinContestData != null &&
                     (mContestScreenData.isHeadLessFlow() || mContestScreenData.isPseudoGameFlow())) {
                 joinContestData.setShouldSendPseudoRoomId(true);
                 joinContestData.setPseudoRoomId(mContestScreenData.getPseudoRoomId());
@@ -133,37 +133,38 @@ public class ContestDetailsActivity extends NostraBaseActivity implements Contes
                 if (TimerFinishDialogHelper.canJoinContest((mContestScreenData != null) ? mContestScreenData.getChallengeStartTime() : "")) {
 
                     if (Nostragamus.getInstance().hasNetworkConnection()) {
-                        startAnim();
+                        CustomProgressbar.getProgressbar(ContestDetailsActivity.this).show();
+
                         JoinContestHelper joinContestHelper = new JoinContestHelper();
                         joinContestHelper.JoinContest(joinContestData, this,
                                 new JoinContestHelper.JoinContestProcessListener() {
                                     @Override
                                     public void noInternet() {
-                                        stopAnim();
+                                        CustomProgressbar.getProgressbar(ContestDetailsActivity.this).dismissProgress();
                                         handleError(Constants.DataStatus.NO_INTERNET, "");
                                     }
 
                                     @Override
                                     public void lowWalletBalance(JoinContestData joinContestData) {
-                                        stopAnim();
+                                        CustomProgressbar.getProgressbar(ContestDetailsActivity.this).dismissProgress();
                                         launchLowBalanceActivity(joinContestData);
                                     }
 
                                     @Override
                                     public void joinContestSuccess(JoinContestData contestJoinedSuccessfully) {
-                                        stopAnim();
+                                        CustomProgressbar.getProgressbar(ContestDetailsActivity.this).dismissProgress();
                                         onContestJoinedSuccessfully(contestJoinedSuccessfully);
                                     }
 
                                     @Override
                                     public void onApiFailure() {
-                                       stopAnim();
+                                        CustomProgressbar.getProgressbar(ContestDetailsActivity.this).dismissProgress();
                                         handleError(Constants.DataStatus.FROM_SERVER_API_FAILED, "");
                                     }
 
                                     @Override
                                     public void onServerReturnedError(String msg) {
-                                        stopAnim();
+                                        CustomProgressbar.getProgressbar(ContestDetailsActivity.this).dismissProgress();
                                         if (TextUtils.isEmpty(msg)) {
                                             msg = Constants.Alerts.SOMETHING_WRONG;
                                         }
@@ -172,12 +173,12 @@ public class ContestDetailsActivity extends NostraBaseActivity implements Contes
 
                                     @Override
                                     public void hideProgressBar() {
-                                        stopAnim();
+                                        CustomProgressbar.getProgressbar(ContestDetailsActivity.this).dismissProgress();
                                     }
 
                                     @Override
                                     public void showProgressBar() {
-                                        startAnim();
+                                        CustomProgressbar.getProgressbar(ContestDetailsActivity.this).show();
                                     }
                                 });
 
