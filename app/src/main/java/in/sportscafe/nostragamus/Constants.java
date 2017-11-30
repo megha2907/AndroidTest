@@ -911,4 +911,10 @@ public interface Constants {
         int CAN_NOT_PLAY_GAME = 3112;
         int CHALLENGE_STARTED = 3113;
     }
+
+    interface ScreenDetails {
+        int DPI = 21;
+        int HEIGHT = 22;
+        int WIDTH = 23;
+    }
 }
