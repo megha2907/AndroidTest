@@ -324,7 +324,7 @@ public class Nostragamus extends Application {
         try {
             switch (screenDetails) {
                 case Constants.ScreenDetails.DPI:
-                    value = getResources().getDisplayMetrics().density;
+                    value = getResources().getDisplayMetrics().densityDpi;
                     break;
 
                 case Constants.ScreenDetails.HEIGHT:
