@@ -1,0 +1,76 @@
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/black"
+    tools:context="in.sportscafe.nostragamus.module.contest.poolContest.PoolPrizesEstimationFragment">
+
+    <LinearLayout
+        android:id="@+id/estimate_parent_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <!-- Header -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/toolbar_bg"
+            android:minHeight="@dimen/dim_60">
+
+            <ImageView
+                android:id="@+id/back_btn"
+                android:layout_width="@dimen/dp_32"
+                android:layout_height="@dimen/dp_32"
+                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/dim_6"
+                android:padding="@dimen/dim_10"
+                android:src="@drawable/back_icon_grey"
+                android:background="?attr/selectableItemBackgroundBorderless"/>
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/dim_6">
+
+                <com.jeeva.android.widgets.customfont.CustomTextView
+                    android:id="@+id/toolbar_heading_one"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Pool Prizes Structure"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/sp_14"
+                    app:typeface="lato_regular" />
+
+                <com.jeeva.android.widgets.customfont.CustomTextView
+                    android:id="@+id/toolbar_heading_two"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/toolbar_heading_one"
+                    android:textColor="@color/white_60"
+                    android:textSize="@dimen/sp_12"
+                    app:typeface="lato_regular" />
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+        <!--  -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center">
+
+            <Button
+                android:id="@+id/estimate_participants_number_button"
+                android:layout_width="@dimen/dim_80"
+                android:layout_height="@dimen/dim_50" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</android.support.design.widget.CoordinatorLayout>

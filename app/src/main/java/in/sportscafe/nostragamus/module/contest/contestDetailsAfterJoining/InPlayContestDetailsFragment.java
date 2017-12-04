@@ -3,6 +3,7 @@ package in.sportscafe.nostragamus.module.contest.contestDetailsAfterJoining;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
@@ -19,6 +20,8 @@ import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
 import in.sportscafe.nostragamus.module.challengeRewards.RewardsFragment;
+import in.sportscafe.nostragamus.module.challengeRewards.RewardsLaunchedFrom;
+import in.sportscafe.nostragamus.module.challengeRewards.dto.RewardScreenData;
 import in.sportscafe.nostragamus.module.challengeRules.RulesFragment;
 import in.sportscafe.nostragamus.module.common.NostraBaseFragment;
 import in.sportscafe.nostragamus.module.contest.ui.DetailScreensLaunchRequest;
@@ -138,8 +141,7 @@ public class InPlayContestDetailsFragment extends NostraBaseFragment implements 
             LeaderBoardFragment leaderBoardFragment = LeaderBoardFragment.newInstance(contestDto.getRoomId());
             mViewPagerAdapter.addFragment(leaderBoardFragment, Constants.ContestDetailsTabs.LEADERBOARDS);
 
-            RewardsFragment rewardsFragment = RewardsFragment.newInstance(contestDto.getRoomId(),-1);
-            mViewPagerAdapter.addFragment(rewardsFragment, Constants.ContestDetailsTabs.PRIZES);
+            mViewPagerAdapter.addFragment(getRewardsFragment(contestDto), Constants.ContestDetailsTabs.PRIZES);
 
             RulesFragment rulesFragment = RulesFragment.newInstance(contestDto.getContestId());
             mViewPagerAdapter.addFragment(rulesFragment, Constants.ContestDetailsTabs.RULES);
@@ -179,6 +181,21 @@ public class InPlayContestDetailsFragment extends NostraBaseFragment implements 
                 }
             });
         }
+    }
+
+    @NonNull
+    private RewardsFragment getRewardsFragment(InPlayContestDto contestDto) {
+        RewardScreenData rewardScreenData = new RewardScreenData();
+        rewardScreenData.setRoomId(contestDto.getRoomId());
+        rewardScreenData.setConfigId(-1);
+        rewardScreenData.setContestName(contestDto.getContestName());
+        if (contestDto.getContestMode().equalsIgnoreCase(Constants.ContestType.POOL)) {
+            rewardScreenData.setPoolContest(true);
+        }
+        RewardsFragment rewardsFragment = new RewardsFragment();// RewardsFragment.newInstance(contestDto.getRoomId(),-1);
+        rewardsFragment.setScreenData(rewardScreenData);
+        rewardsFragment.setLauncherParent(RewardsLaunchedFrom.IN_PLAY_CONTEST_DETAILS);
+        return rewardsFragment;
     }
 
 

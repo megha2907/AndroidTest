@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/black">
+
+    <com.jeeva.android.widgets.customfont.CustomTextView
+        android:id="@+id/pool_rewards_footer_msg_textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="The pize money for this contest vary with the participation of players. To know more"
+        android:layout_marginLeft="@dimen/dim_30"
+        android:layout_marginRight="@dimen/dim_30"
+        android:paddingTop="@dimen/dim_10"
+        android:paddingBottom="@dimen/dim_10"
+        android:textColor="@color/grey6"
+        android:textSize="@dimen/sp_12"
+        app:typeface="lato_regular" />
+
+    <com.jeeva.android.widgets.customfont.CustomTextView
+        android:id="@+id/pool_rewards_footer_button_textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="CLICK HERE"
+        android:clickable="true"
+        android:layout_gravity="center_horizontal"
+        android:padding="@dimen/dim_10"
+        android:textColor="@color/venice_blue"
+        android:textSize="@dimen/sp_12"
+        app:typeface="lato_regular" />
+
+</LinearLayout>
