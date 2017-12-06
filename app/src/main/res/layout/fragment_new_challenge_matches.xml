@@ -182,7 +182,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="@color/grey6"
-                        android:text="Or you can play a game before you decide to join"
+                        android:text="Or play a game before you decide to join a contest"
                         android:layout_marginTop="@dimen/dim_6"
                         android:textSize="@dimen/sp_11"
                         app:typeface="lato_regular" />
