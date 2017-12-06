@@ -26,8 +26,11 @@ import in.sportscafe.nostragamus.utils.timeutils.TimeUtils;
 
 public class RewardsPoolContestAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
+    private final String NOSTRAGAMUS_RULE_STR = "NOSTRAGAMUS RULES";
+    private String mChallengeStartTime;
     private String mChallengeEndTime;
     private List<Rewards> mRewardsList;
+    private int mJoined = 0, mPoolSize = 0;
     private RewardsPoolContestAdapterListener mAdapterListener;
 
     private static final int TYPE_HEADER = 0;
@@ -35,9 +38,13 @@ public class RewardsPoolContestAdapter extends RecyclerView.Adapter<RecyclerView
     private static final int TYPE_FOOTER = 2;
 
     public RewardsPoolContestAdapter(
-                              List<Rewards> rewardsList, String ChallengeEndTime,
+                              List<Rewards> rewardsList, String ChallengeEndTime, String challengeStartTime,
+                              int joined, int poolSize,
                               RewardsPoolContestAdapterListener adapterListener) {
         mChallengeEndTime = ChallengeEndTime;
+        mChallengeStartTime = challengeStartTime;
+        mJoined = joined;
+        mPoolSize = poolSize;
         mRewardsList = rewardsList;
         mAdapterListener = adapterListener;
     }
@@ -123,20 +130,42 @@ public class RewardsPoolContestAdapter extends RecyclerView.Adapter<RecyclerView
 
     private void bindFooter(final RewardsPoolFooterVH holder) {
         RewardsPoolFooterVH footerVH = (RewardsPoolFooterVH) holder;
+
         footerVH.clickHereTextViewButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View view) {
                 if (mAdapterListener != null) {
-                    mAdapterListener.onClickHereButtonClicked();
+                    TextView textView = (TextView) view;
+                    String buttonText = textView.getText().toString();
+                    if (buttonText.equalsIgnoreCase(NOSTRAGAMUS_RULE_STR)) {
+                        mAdapterListener.onNostragamusRulesButtonClicked();
+                    } else {    /* CLICK HERE */
+                        mAdapterListener.onClickHereButtonClicked();
+                    }
                 }
             }
         });
+
+        /* If challenge is started BUT challenge is not completed
+         * AND joined participants are lesser than pool-size, then only show this msg */
+        if (isChallengeStarted(mChallengeStartTime) && !isChallengeCompleted(mChallengeEndTime)) {
+            String str = "Prize money has been recalculated as only " + mJoined + " members joined the contest out of a possible " + mPoolSize;
+            footerVH.prizesRecalculatedTextView.setText(str);
+            footerVH.prizesRecalculatedTextView.setVisibility(View.VISIBLE);
+        }
+
+        /* If challenge started, then change footer msg and button text... Now, button action carries to RULES section */
+        if (isChallengeStarted(mChallengeStartTime)) {
+            String str = footerVH.msgTextView.getContext().getString(R.string.prize_money_disclaimer);
+            footerVH.msgTextView.setText(str);
+            footerVH.clickHereTextViewButton.setText(NOSTRAGAMUS_RULE_STR);
+        }
     }
 
     private void bindHeader(RewardsPoolHeaderVH holder) {
         RewardsPoolHeaderVH headerVH = (RewardsPoolHeaderVH) holder;
         String prizesHandOutDate = getPrizesHandoutDate();
-        if (getChallengeOver(mChallengeEndTime)) {
+        if (isChallengeCompleted(mChallengeEndTime)) {
         /* set when challenge is over */
             headerVH.mTvChallengeEndTime.setText("Prizes were handed out on "+prizesHandOutDate+".");
         }else {
@@ -158,12 +187,31 @@ public class RewardsPoolContestAdapter extends RecyclerView.Adapter<RecyclerView
                 TimeUtils.getDateStringFromMs(endTimeMs, "MMM");
     }
 
-    private boolean getChallengeOver(String challengeEndTime) {
-
+    private boolean isChallengeCompleted(String challengeEndTime) {
         boolean isChallengeOver = false;
 
         if (!TextUtils.isEmpty(challengeEndTime)) {
-            String startTime = challengeEndTime.replace("+00:00", ".000Z");
+            String endTime = challengeEndTime.replace("+00:00", ".000Z");
+            long endTimeMs = TimeUtils.getMillisecondsFromDateString(
+                    endTime,
+                    Constants.DateFormats.FORMAT_DATE_T_TIME_ZONE,
+                    Constants.DateFormats.GMT
+            );
+            TimeAgo timeAgo = TimeUtils.calcTimeAgo(Nostragamus.getInstance().getServerTime(), endTimeMs);
+
+            isChallengeOver = timeAgo.timeDiff <= 0
+                    || timeAgo.timeUnit == TimeUnit.MILLISECOND
+                    || timeAgo.timeUnit == TimeUnit.SECOND;
+        }
+
+        return isChallengeOver;
+    }
+
+    private boolean isChallengeStarted(String challengeStartTime) {
+        boolean isChallengeOver = false;
+
+        if (!TextUtils.isEmpty(challengeStartTime)) {
+            String startTime = challengeStartTime.replace("+00:00", ".000Z");
             long startTimeMs = TimeUtils.getMillisecondsFromDateString(
                     startTime,
                     Constants.DateFormats.FORMAT_DATE_T_TIME_ZONE,
@@ -237,11 +285,13 @@ public class RewardsPoolContestAdapter extends RecyclerView.Adapter<RecyclerView
     }
 
     private class RewardsPoolFooterVH extends RecyclerView.ViewHolder {
+        TextView prizesRecalculatedTextView;
         TextView msgTextView;
         TextView clickHereTextViewButton;
 
         public RewardsPoolFooterVH(View itemView) {
             super(itemView);
+            prizesRecalculatedTextView = (TextView) itemView.findViewById(R.id.pool_rewards_footer_textView);
             msgTextView = (TextView) itemView.findViewById(R.id.pool_rewards_footer_msg_textView);
             clickHereTextViewButton = (TextView) itemView.findViewById(R.id.pool_rewards_footer_button_textView);
         }

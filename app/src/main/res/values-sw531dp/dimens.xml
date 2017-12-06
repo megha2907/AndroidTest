@@ -43,6 +43,7 @@
     <dimen name="dim_1">2dp</dimen>
     <dimen name="dim_1.2">1.3dp</dimen>
     <dimen name="dim_2">3dp</dimen>
+    <dimen name="dim_2.5">3.25dp</dimen>
     <dimen name="dim_3">4dp</dimen>
     <dimen name="dim_4">5dp</dimen>
     <dimen name="dim_5">6dp</dimen>

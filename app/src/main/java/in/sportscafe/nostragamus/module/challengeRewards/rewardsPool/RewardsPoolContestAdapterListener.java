@@ -6,4 +6,5 @@ package in.sportscafe.nostragamus.module.challengeRewards.rewardsPool;
 
 public interface RewardsPoolContestAdapterListener {
     void onClickHereButtonClicked();
+    void onNostragamusRulesButtonClicked();
 }

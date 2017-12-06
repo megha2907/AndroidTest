@@ -113,6 +113,7 @@
     <dimen name="dim_1">1dp</dimen>
     <dimen name="dim_1.2">1.2dp</dimen>
     <dimen name="dim_2">2dp</dimen>
+    <dimen name="dim_2.5">2.5dp</dimen>
     <dimen name="dim_3">3dp</dimen>
     <dimen name="dim_4">4dp</dimen>
     <dimen name="dim_5">5dp</dimen>

@@ -24,6 +24,7 @@ import in.sportscafe.nostragamus.module.challengeRewards.rewardsPool.RewardsPool
 import in.sportscafe.nostragamus.module.common.NostraBaseFragment;
 import in.sportscafe.nostragamus.module.contest.dto.PoolPrizeEstimationScreenData;
 import in.sportscafe.nostragamus.module.contest.poolContest.PoolPrizesEstimationActivity;
+import in.sportscafe.nostragamus.module.resultspeek.FeedWebView;
 
 /**
  * Created by deepanshi on 9/6/17.
@@ -90,7 +91,9 @@ public class RewardsFragment extends NostraBaseFragment implements View.OnClickL
                     if (mScreenData != null && mRcvRewards != null) {
 
                         if (mScreenData.isPoolContest()) {
-                            RewardsPoolContestAdapter poolAdapter = new RewardsPoolContestAdapter(rewardsList, challengeEndTime,
+                            RewardsPoolContestAdapter poolAdapter = new RewardsPoolContestAdapter(rewardsList,
+                                    challengeEndTime, ""/* TODO - chg start time */,
+                                    1, 100,
                                     getPoolRewardsAdapterListener());
                             mRcvRewards.setAdapter(poolAdapter);
                             mRcvRewards.setVisibility(View.VISIBLE);
@@ -138,6 +141,11 @@ public class RewardsFragment extends NostraBaseFragment implements View.OnClickL
             public void onClickHereButtonClicked() {
                 launchPoolContestRewardCalculation();
             }
+
+            @Override
+            public void onNostragamusRulesButtonClicked() {
+                openRulesWebView();
+            }
         };
     }
 
@@ -156,7 +164,16 @@ public class RewardsFragment extends NostraBaseFragment implements View.OnClickL
     }
 
     private RewardsAdapter createAdapter(List<Rewards> rewardsList,String challengeEndTime) {
-        return new RewardsAdapter(getContext(), rewardsList, challengeEndTime);
+        return new RewardsAdapter(getContext(), rewardsList, challengeEndTime, new RewardsAdapterListener() {
+            @Override
+            public void onNostraRulesClicked() {
+                openRulesWebView();
+            }
+        });
+    }
+
+    private void openRulesWebView() {
+        startActivity(new Intent(getContext(), FeedWebView.class).putExtra("url", Constants.WebPageUrls.RULES));
     }
 
     private void handleError(int status) {
