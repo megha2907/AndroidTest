@@ -31,6 +31,7 @@ import in.sportscafe.nostragamus.module.challengeRewards.dto.RewardScreenData;
 import in.sportscafe.nostragamus.module.challengeRewards.dto.Rewards;
 import in.sportscafe.nostragamus.module.contest.adapter.PoolPrizeEstimationAdapter;
 import in.sportscafe.nostragamus.module.contest.dto.PoolPrizeEstimationScreenData;
+import in.sportscafe.nostragamus.module.contest.dto.pool.PoolContestResponse;
 
 import static android.content.Context.LAYOUT_INFLATER_SERVICE;
 
@@ -39,12 +40,14 @@ import static android.content.Context.LAYOUT_INFLATER_SERVICE;
  */
 public class PoolPrizesEstimationFragment extends BaseFragment implements View.OnClickListener {
 
+    private PoolEstimationHelper mPoolEstimationHelper;
     private PoolPrizesEstimationFragmentListener mFragmentListener;
     private PoolPrizeEstimationScreenData mScreenData;
     private RecyclerView mRecyclerView;
     private SeekBar mSeekBar;
 
     public PoolPrizesEstimationFragment() {
+        mPoolEstimationHelper = new PoolEstimationHelper();
     }
 
     @Override
@@ -106,12 +109,13 @@ public class PoolPrizesEstimationFragment extends BaseFragment implements View.O
     private void setEntries(int progress) {
         if (getView() != null) {
             TextView entriesTextView = (TextView) getView().findViewById(R.id.estimation_slider_progress_textView);
-            entriesTextView.setText(progress + " Entries");
+            int entries = mPoolEstimationHelper.getPoolResponse().getMinParticipants() + progress;
+            entriesTextView.setText(entries + " Entries");
         }
     }
 
     private List<Rewards> getEstimatedRewardsList(int progress) {
-        List<Rewards> rewardsList = new ArrayList<>();
+        /*List<Rewards> rewardsList = new ArrayList<>();
 
         Rewards rewards = new Rewards();
         rewards.setAmount(100);
@@ -123,8 +127,19 @@ public class PoolPrizesEstimationFragment extends BaseFragment implements View.O
         rewardsList.add(rewards);
         rewardsList.add(rewards);
         rewardsList.add(rewards);
-
         return rewardsList;
+        */
+
+        PoolContestResponse pool = mPoolEstimationHelper.getPoolResponse();
+        int participants = pool.getMinParticipants() + progress;
+
+        int totalPrize = mPoolEstimationHelper.getTotalPrize(participants, pool.getPrizePerUser());
+        return mPoolEstimationHelper.getEstimatedRewardsList(participants,
+                pool.getPoolPayoutMapList(),
+                pool.getRoundingLevel(),
+                totalPrize);
+
+
     }
 
     @Override
@@ -146,7 +161,6 @@ public class PoolPrizesEstimationFragment extends BaseFragment implements View.O
 
     private void populateInitDetails() {
         if (mScreenData != null && getView() != null) {
-            int poolSize = 100;
 
              /*Show contest name on heading*/
             String contestName = mScreenData.getContestName();
@@ -156,29 +170,36 @@ public class PoolPrizesEstimationFragment extends BaseFragment implements View.O
             }
 
             /* Message */
-            String msgStr = String.format(getString(R.string.pool_prize_estimation_msg), String.valueOf(poolSize));
+            String msgStr = String.format(getString(R.string.pool_prize_estimation_msg), String.valueOf(mPoolEstimationHelper.getPoolResponse().getMaxParticipants()));
             TextView msgTextview = (TextView) getView().findViewById(R.id.estimation_msg_textView);
             msgTextview.setText(msgStr);
 
-            int max = getMaxValue(poolSize);
+            int max = getMaxValue();
+            int min = getMinValue();
             /* Min , Max values */
             TextView minEntryTextView = (TextView) getView().findViewById(R.id.estimation_seekbar_min_textView);
             TextView maxEntryTextView = (TextView) getView().findViewById(R.id.estimation_seekbar_max_textView);
-            minEntryTextView.setText(String.valueOf(2));
+            minEntryTextView.setText(String.valueOf(min));
             maxEntryTextView.setText(String.valueOf(max));
 
             /* Seekbar values */
-            mSeekBar.setMax(max);
-            mSeekBar.setProgress(10);
+            mSeekBar.setMax(max-min);   // As min can not be set into Seekbar, add min while considering progress
         }
     }
 
-    private int getMaxValue(int poolSize) {
-        int max = poolSize;
+    private int getMinValue() {
+        int min = 0;
+        min = mPoolEstimationHelper.getPoolResponse().getMinParticipants();
+        return min;
+    }
 
-        if (poolSize > 0) {
+    private int getMaxValue() {
+        int max = 0;
+
+        /*if (poolSize > 0) {
             max = (int) (poolSize * 0.75);
-        }
+        }*/
+        max = mPoolEstimationHelper.getPoolResponse().getMaxParticipants();
 
         return max;
     }

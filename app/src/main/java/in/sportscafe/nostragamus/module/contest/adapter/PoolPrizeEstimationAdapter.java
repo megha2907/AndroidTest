@@ -1,5 +1,6 @@
 package in.sportscafe.nostragamus.module.contest.adapter;
 
+import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -22,7 +23,7 @@ public class PoolPrizeEstimationAdapter extends RecyclerView.Adapter<RecyclerVie
 
     private List<Rewards> mRewardsList;
 
-    public PoolPrizeEstimationAdapter(List<Rewards> rewardsList) {
+    public PoolPrizeEstimationAdapter(@Nullable List<Rewards> rewardsList) {
         mRewardsList = rewardsList;
     }
 

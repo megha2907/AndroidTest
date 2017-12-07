@@ -8,7 +8,7 @@ public class RewardScreenData {
 
     private int roomId = -1;
     private int configId = -1;
-    private boolean isPoolContest = false;
+    private boolean isPoolContest = true;
     private String contestName;
 
     public int getRoomId() {

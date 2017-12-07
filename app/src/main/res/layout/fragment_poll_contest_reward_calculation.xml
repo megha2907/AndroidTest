@@ -73,7 +73,7 @@
                 android:layout_marginTop="@dimen/dim_12"
                 android:layout_marginLeft="@dimen/dim_20"
                 android:layout_marginRight="@dimen/dim_20"
-                android:layout_marginBottom="@dimen/dim_16">
+                android:layout_marginBottom="@dimen/dim_12">
 
                 <com.jeeva.android.widgets.customfont.CustomTextView
                     android:id="@+id/estimation_msg_textView"
