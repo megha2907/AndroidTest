@@ -343,6 +343,7 @@ public interface Constants {
         String NEW_CHALLENGE_MATCHES_SCREEN_DATA = "newChallengeMatchesScreenData";
         String TIMER_FINISHED_SCREEN_DATA = "timerFinishedScreenData";
         String POOL_PRIZE_ESTIMATION_SCREEN_DATA = "poolPrizeEstimationScreenData";
+        String REWARDS_SCREEN_DATA = "rewardsScreenData";
 
         /* Wallet */
         String WALLET_WITHDRAWAL_AMT = "walletWithdrawAmt";

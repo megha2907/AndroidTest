@@ -160,6 +160,6 @@
     <string name="bottom_nav_group">Group</string>
     <string name="bottom_nav_profile">Profile</string>
     <string name="prediction_neither_button_text">NEITHER</string>
-    <string name="pool_prize_estimation_msg">If less than %1s members join, prizes will be re-adjusted. Using the slider below, select the number of entries to check prizes accordingly</string>
+    <string name="pool_prize_estimation_msg">This is prize list for %1s entries. The prizes for pool contests might vary with the participation of the players</string>
 
 </resources>

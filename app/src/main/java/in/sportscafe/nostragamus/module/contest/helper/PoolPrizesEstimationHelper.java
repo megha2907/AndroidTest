@@ -1,4 +1,6 @@
-package in.sportscafe.nostragamus.module.contest.poolContest;
+package in.sportscafe.nostragamus.module.contest.helper;
+
+import android.text.TextUtils;
 
 import com.jeeva.android.Log;
 
@@ -13,9 +15,9 @@ import in.sportscafe.nostragamus.module.contest.dto.pool.PoolPayoutMap;
  * Created by sc on 7/12/17.
  */
 
-public class PoolEstimationHelper {
+public class PoolPrizesEstimationHelper {
 
-    private static final String TAG = PoolEstimationHelper.class.getSimpleName();
+    private static final String TAG = PoolPrizesEstimationHelper.class.getSimpleName();
 
     /**
      * @param participants [ >0 ]
@@ -38,6 +40,20 @@ public class PoolEstimationHelper {
      * Total percents in payoutMap (summation of all percents of all items) will ALWAYS be 100% in api response
      * Format of percentage in payoutMap api response will be as per given example here: 0.2/0.20 (20%), 0.05 (5%)
      *
+     * ------------ ALGORITHM ------------
+     * 1. For each payout-level :
+     1.1 Find participants-ration (participants * percents)
+     1.2 Convert participants-ratio into whole number-of-participants
+     (only if float value of participants-ratio)
+
+     1.2.1 if 'step' == 'up' then increase 1 number-of-participants
+
+     1.3 Find prize-ratio (totalPrize * share)
+     1.4 Find per-participant-reward (prize-ratio / number-of-participants)
+
+     1.5 For each participants IN number-of-participants :
+     1.5.1 create a reward entry (add into rank list)
+     *-----------------------------------------
      *
      * @param participants - participants (seekbarProgress + min-participants ) [ >0 ]
      * @param payoutMapArrayList - server response [NonNull/nonEmpty]
@@ -75,7 +91,7 @@ public class PoolEstimationHelper {
                     /* If percentage-of-users number is fraction decimal THEN
                      * based on values of rounding/step from api,
                      * ONLY for UP , increase a countable-user */
-                    if (participantsRation % 1 != 0 && rounding.equalsIgnoreCase("up")) {
+                    if (participantsRation % 1 != 0 && !TextUtils.isEmpty(rounding) && rounding.equalsIgnoreCase("up")) {
                         usersCount++;
                     }
 
@@ -111,34 +127,4 @@ public class PoolEstimationHelper {
         return rewardsList;
     }
 
-    /* Temporary values -- should be replaced with server response */
-    public PoolContestResponse getPoolResponse() {
-        PoolContestResponse pool = new PoolContestResponse();
-        pool.setPrizePerUser(10);
-        pool.setMaxParticipants(10);
-        pool.setMinParticipants(2);
-        pool.setRoundingLevel("up");
-
-        List<PoolPayoutMap> poolPayoutMapList = new ArrayList<>();
-
-        PoolPayoutMap poolMap = new PoolPayoutMap();
-        poolMap.setPercent(0.50f);
-        poolMap.setShare(0.5f);
-
-        /*PoolPayoutMap poolMap1 = new PoolPayoutMap();
-        poolMap1.setPercent(0.20f);
-        poolMap1.setShare(0.3f);
-
-        PoolPayoutMap poolMap2 = new PoolPayoutMap();
-        poolMap2.setPercent(0.30f);
-        poolMap2.setShare(0.1f);*/
-
-        poolPayoutMapList.add(poolMap);
-        /*poolPayoutMapList.add(poolMap1);
-        poolPayoutMapList.add(poolMap2);*/
-
-        pool.setPoolPayoutMapList(poolPayoutMapList);
-
-        return pool;
-    }
 }

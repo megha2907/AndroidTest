@@ -2,21 +2,23 @@ package in.sportscafe.nostragamus.module.contest.dto.pool;
 
 import com.google.gson.annotations.SerializedName;
 
+import org.parceler.Parcel;
+
 import java.util.List;
 
 /**
  * Created by sc on 7/12/17.
  */
-
+@Parcel
 public class PoolContestResponse {
 
-    @SerializedName("min_particpants")
+    @SerializedName("min_participants")
     private int minParticipants;
 
     @SerializedName("max_participants")
     private int maxParticipants;
 
-    @SerializedName("prize_per_user")
+    @SerializedName("per_user_prize")
     private int prizePerUser;
 
     @SerializedName("step")

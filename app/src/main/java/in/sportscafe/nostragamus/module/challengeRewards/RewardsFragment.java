@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,11 +20,8 @@ import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.challengeRewards.dto.RewardScreenData;
 import in.sportscafe.nostragamus.module.challengeRewards.dto.Rewards;
-import in.sportscafe.nostragamus.module.challengeRewards.rewardsPool.RewardsPoolContestAdapter;
-import in.sportscafe.nostragamus.module.challengeRewards.rewardsPool.RewardsPoolContestAdapterListener;
+import in.sportscafe.nostragamus.module.challengeRewards.dto.RewardsResponse;
 import in.sportscafe.nostragamus.module.common.NostraBaseFragment;
-import in.sportscafe.nostragamus.module.contest.dto.PoolPrizeEstimationScreenData;
-import in.sportscafe.nostragamus.module.contest.poolContest.PoolPrizesEstimationActivity;
 import in.sportscafe.nostragamus.module.resultspeek.FeedWebView;
 
 /**
@@ -42,14 +40,6 @@ public class RewardsFragment extends NostraBaseFragment implements View.OnClickL
 
     }
 
-    public void setScreenData(RewardScreenData screenData) {
-        this.mScreenData = screenData;
-    }
-
-    public void setLauncherParent(int mLauncherParent) {
-        this.mLauncherParent = mLauncherParent;
-    }
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -62,7 +52,20 @@ public class RewardsFragment extends NostraBaseFragment implements View.OnClickL
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
+        initMembers();
         fetchRewardsDataFromServer();
+    }
+
+    private void initMembers() {
+        Bundle args = getArguments();
+        if (args != null) {
+            if (args.containsKey(Constants.BundleKeys.REWARDS_SCREEN_DATA)) {
+                mScreenData = Parcels.unwrap(args.getParcelable(Constants.BundleKeys.REWARDS_SCREEN_DATA));
+            }
+
+            mLauncherParent = args.getInt(Constants.BundleKeys.SCREEN_LAUNCHED_FROM_PARENT,
+                    RewardsLaunchedFrom.NEW_CHALLENGE_CONTEST_DETAILS);
+        }
     }
 
 
@@ -85,107 +88,87 @@ public class RewardsFragment extends NostraBaseFragment implements View.OnClickL
     private RewardsApiModelImpl.RewardsDataListener getApiListener() {
         return new RewardsApiModelImpl.RewardsDataListener() {
             @Override
-            public void onData(@Nullable List<Rewards> rewardsList, String challengeEndTime) {
+            public void onData(RewardsResponse rewardsResponse) {
                 hideLoadingProgressBar();
-                if (getView() != null && getActivity() != null && !getActivity().isFinishing()) {
-                    if (mScreenData != null && mRcvRewards != null) {
 
-                        if (mScreenData.isPoolContest()) {
-                            RewardsPoolContestAdapter poolAdapter = new RewardsPoolContestAdapter(rewardsList,
-                                    challengeEndTime, ""/* TODO - chg start time */,
-                                    1, 100,
-                                    getPoolRewardsAdapterListener());
-                            mRcvRewards.setAdapter(poolAdapter);
-                            mRcvRewards.setVisibility(View.VISIBLE);
-
-                        } else {
-                            RewardsAdapter mConfigAdapter = createAdapter(rewardsList, challengeEndTime);
-                            mRcvRewards.setAdapter(mConfigAdapter);
-                            mRcvRewards.setVisibility(View.VISIBLE);
-                        }
-                    }
-                }
+                onRewardsDataFetchedSuccessfully(rewardsResponse);
             }
 
             @Override
             public void onError(int status) {
                 hideLoadingProgressBar();
-                handleError(status);
+                handleError("", status);
             }
 
             @Override
             public void onNoInternet() {
                 hideLoadingProgressBar();
-                handleError(Constants.DataStatus.NO_INTERNET);
+                handleError("", Constants.DataStatus.NO_INTERNET);
             }
 
             @Override
             public void onFailedConfigsApi() {
                 hideLoadingProgressBar();
-                handleError(Constants.DataStatus.FROM_SERVER_API_FAILED);
+                handleError("", Constants.DataStatus.FROM_SERVER_API_FAILED);
                 // showMessage(Constants.Alerts.API_FAIL);
             }
 
             @Override
             public void onEmpty() {
                 hideLoadingProgressBar();
+                /* If empty data, while showing/resuming screen; it should be shown */
                 // showMessage(Constants.Alerts.POLL_LIST_EMPTY);
             }
         };
     }
 
-    @NonNull
-    private RewardsPoolContestAdapterListener getPoolRewardsAdapterListener() {
-        return new RewardsPoolContestAdapterListener() {
-            @Override
-            public void onClickHereButtonClicked() {
-                launchPoolContestRewardCalculation();
-            }
+    private void onRewardsDataFetchedSuccessfully(RewardsResponse rewardsResponse) {
+        if (getView() != null && getActivity() != null && !getActivity().isFinishing()) {
+            if (rewardsResponse != null && rewardsResponse.getRewardsList() != null) {
 
-            @Override
-            public void onNostragamusRulesButtonClicked() {
-                openRulesWebView();
+                RewardsAdapter rewardsAdapter =
+                        createAdapter(rewardsResponse.getRewardsList(), rewardsResponse.getChallengeEndTime());
+                if (rewardsAdapter != null) {
+                    mRcvRewards.setAdapter(rewardsAdapter);
+                    mRcvRewards.setVisibility(View.VISIBLE);
+                }
+            } else {
+                handleError("", -1);
             }
-        };
+        }
     }
 
-    private void launchPoolContestRewardCalculation() {
-        PoolPrizeEstimationScreenData screenData = new PoolPrizeEstimationScreenData();
-        screenData.setRewardScreenLauncherParent(mLauncherParent);
-        screenData.setContestName(mScreenData.getContestName());
-
-        Bundle args = new Bundle();
-        args.putInt(Constants.BundleKeys.SCREEN_LAUNCHED_FROM_PARENT, mLauncherParent);
-        args.putParcelable(Constants.BundleKeys.POOL_PRIZE_ESTIMATION_SCREEN_DATA, Parcels.wrap(screenData));
-
-        Intent intent = new Intent(this.getContext(), PoolPrizesEstimationActivity.class);
-        intent.putExtras(args);
-        startActivity(intent);
-    }
-
-    private RewardsAdapter createAdapter(List<Rewards> rewardsList,String challengeEndTime) {
-        return new RewardsAdapter(getContext(), rewardsList, challengeEndTime, new RewardsAdapterListener() {
-            @Override
-            public void onNostraRulesClicked() {
-                openRulesWebView();
-            }
-        });
+    @Nullable
+    private RewardsAdapter createAdapter(List<Rewards> rewardsList, String challengeEndTime) {
+        if (rewardsList != null && !TextUtils.isEmpty(challengeEndTime)) {
+            return new RewardsAdapter(getContext(), rewardsList, challengeEndTime, new RewardsAdapterListener() {
+                @Override
+                public void onNostraRulesClicked() {
+                    openRulesWebView();
+                }
+            });
+        }
+        return null;
     }
 
     private void openRulesWebView() {
         startActivity(new Intent(getContext(), FeedWebView.class).putExtra("url", Constants.WebPageUrls.RULES));
     }
 
-    private void handleError(int status) {
+    private void handleError(String msg, int status) {
         if (getView() != null && getActivity() != null && !getActivity().isFinishing()) {
-            switch (status) {
-                case Constants.DataStatus.NO_INTERNET:
-                    Snackbar.make(getView(), Constants.Alerts.NO_INTERNET_CONNECTION, Snackbar.LENGTH_LONG).show();
-                    break;
+            if (!TextUtils.isEmpty(msg)) {
+                Snackbar.make(getView(), msg, Snackbar.LENGTH_LONG).show();
+            } else {
+                switch (status) {
+                    case Constants.DataStatus.NO_INTERNET:
+                        Snackbar.make(getView(), Constants.Alerts.NO_INTERNET_CONNECTION, Snackbar.LENGTH_LONG).show();
+                        break;
 
-                default:
-                    Snackbar.make(getView(), Constants.Alerts.SOMETHING_WRONG, Snackbar.LENGTH_LONG).show();
-                    break;
+                    default:
+                        Snackbar.make(getView(), Constants.Alerts.SOMETHING_WRONG, Snackbar.LENGTH_LONG).show();
+                        break;
+                }
             }
         }
     }
@@ -203,7 +186,6 @@ public class RewardsFragment extends NostraBaseFragment implements View.OnClickL
             getView().findViewById(R.id.rewards_rcv).setVisibility(View.VISIBLE);
         }
     }
-
 
     @Override
     public void onClick(View v) {

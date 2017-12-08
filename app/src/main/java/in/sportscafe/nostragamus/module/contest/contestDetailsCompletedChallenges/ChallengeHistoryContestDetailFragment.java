@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,6 +24,8 @@ import in.sportscafe.nostragamus.module.challengeRewards.RewardsLaunchedFrom;
 import in.sportscafe.nostragamus.module.challengeRewards.dto.RewardScreenData;
 import in.sportscafe.nostragamus.module.challengeRules.RulesFragment;
 import in.sportscafe.nostragamus.module.common.NostraBaseFragment;
+import in.sportscafe.nostragamus.module.contest.dto.PoolPrizeEstimationScreenData;
+import in.sportscafe.nostragamus.module.contest.ui.poolContest.PoolPrizesEstimationFragment;
 import in.sportscafe.nostragamus.module.contest.ui.DetailScreensLaunchRequest;
 import in.sportscafe.nostragamus.module.user.leaderboard.LeaderBoardFragment;
 
@@ -154,18 +157,36 @@ public class ChallengeHistoryContestDetailFragment extends NostraBaseFragment im
     }
 
     @NonNull
-    private RewardsFragment getRewardsFragment(CompletedContestDto completedContestDto) {
-        RewardScreenData rewardScreenData = new RewardScreenData();
-        rewardScreenData.setRoomId(completedContestDto.getRoomId());
-        rewardScreenData.setConfigId(-1);
-        rewardScreenData.setContestName(completedContestDto.getContestName());
+    private Fragment getRewardsFragment(CompletedContestDto completedContestDto) {
+        Fragment fragment = null;
+        Bundle args = new Bundle();
+        args.putInt(Constants.BundleKeys.SCREEN_LAUNCHED_FROM_PARENT, RewardsLaunchedFrom.CHALLENGE_HISTORY_CONTEST_DETAILS);
+
         if (completedContestDto.getContestMode().equalsIgnoreCase(Constants.ContestType.POOL)) {
-            rewardScreenData.setPoolContest(true);
+
+            PoolPrizeEstimationScreenData screenData = new PoolPrizeEstimationScreenData();
+            screenData.setRewardScreenLauncherParent(RewardsLaunchedFrom.CHALLENGE_HISTORY_CONTEST_DETAILS);
+            screenData.setContestName(completedContestDto.getContestName());
+            screenData.setRoomId(completedContestDto.getRoomId());
+            screenData.setConfigId(-1);
+            args.putParcelable(Constants.BundleKeys.POOL_PRIZE_ESTIMATION_SCREEN_DATA, Parcels.wrap(screenData));
+
+            fragment = new PoolPrizesEstimationFragment();
+            fragment.setArguments(args);
+
+        } else {
+            RewardScreenData rewardScreenData = new RewardScreenData();
+            rewardScreenData.setRoomId(completedContestDto.getRoomId());
+            rewardScreenData.setConfigId(-1);
+            rewardScreenData.setContestName(completedContestDto.getContestName());
+            rewardScreenData.setPoolContest(false);
+            args.putParcelable(Constants.BundleKeys.REWARDS_SCREEN_DATA, Parcels.wrap(rewardScreenData));
+
+            fragment = new RewardsFragment();
+            fragment.setArguments(args);
         }
-        RewardsFragment rewardsFragment = new RewardsFragment(); //RewardsFragment.newInstance(completedContestDto.getRoomId(),-1);
-        rewardsFragment.setScreenData(rewardScreenData);
-        rewardsFragment.setLauncherParent(RewardsLaunchedFrom.CHALLENGE_HISTORY_CONTEST_DETAILS);
-        return rewardsFragment;
+
+        return fragment;
     }
 
     private void setTabLayout(ViewPager mViewPager) {

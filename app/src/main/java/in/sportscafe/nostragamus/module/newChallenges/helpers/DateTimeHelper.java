@@ -120,5 +120,26 @@ public class DateTimeHelper {
         return isMatchStarted;
     }
 
+    /**
+     * Use to check that challenge / match started/completed
+     * @param startTime
+     * @return
+     */
+    public static boolean isChallengeTimeOver(String startTime) {
+        boolean isStarted = false;
+
+        if (!TextUtils.isEmpty(startTime)) {
+            startTime = startTime.replace("+00:00", ".000Z");
+            long startTimeMs = TimeUtils.getMillisecondsFromDateString(startTime,
+                    Constants.DateFormats.FORMAT_DATE_T_TIME_ZONE, Constants.DateFormats.GMT);
+            TimeAgo timeAgo = TimeUtils.calcTimeAgo(Nostragamus.getInstance().getServerTime(), startTimeMs);
+
+            isStarted = timeAgo.timeDiff <= 0
+                    || timeAgo.timeUnit == TimeUnit.MILLISECOND
+                    || timeAgo.timeUnit == TimeUnit.SECOND;
+        }
+
+        return isStarted;
+    }
 
 }

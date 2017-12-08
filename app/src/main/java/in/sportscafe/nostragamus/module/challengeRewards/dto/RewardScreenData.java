@@ -1,9 +1,11 @@
 package in.sportscafe.nostragamus.module.challengeRewards.dto;
 
+import org.parceler.Parcel;
+
 /**
  * Created by sc on 2/12/17.
  */
-
+@Parcel
 public class RewardScreenData {
 
     private int roomId = -1;

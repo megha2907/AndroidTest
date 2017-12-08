@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/black"
-    tools:context="in.sportscafe.nostragamus.module.contest.poolContest.PoolPrizesEstimationFragment">
+    tools:context="in.sportscafe.nostragamus.module.contest.ui.poolContest.PoolPrizesEstimationFragment">
 
     <LinearLayout
         android:id="@+id/estimate_parent_layout"
@@ -12,57 +12,14 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <!-- Header -->
+        <!-- Prize estimation layout -->
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/toolbar_bg"
-            android:minHeight="@dimen/dim_60">
-
-            <ImageView
-                android:id="@+id/back_btn"
-                android:layout_width="@dimen/dp_32"
-                android:layout_height="@dimen/dp_32"
-                android:layout_gravity="center"
-                android:layout_marginLeft="@dimen/dim_6"
-                android:padding="@dimen/dim_10"
-                android:src="@drawable/back_icon_grey"
-                android:background="?attr/selectableItemBackgroundBorderless"/>
-
-            <RelativeLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginLeft="@dimen/dim_6">
-
-                <com.jeeva.android.widgets.customfont.CustomTextView
-                    android:id="@+id/toolbar_heading_one"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Pool Prizes Structure"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/sp_14"
-                    app:typeface="lato_regular" />
-
-                <com.jeeva.android.widgets.customfont.CustomTextView
-                    android:id="@+id/toolbar_heading_two"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/toolbar_heading_one"
-                    android:textColor="@color/white_60"
-                    android:textSize="@dimen/sp_12"
-                    app:typeface="lato_regular" />
-
-            </RelativeLayout>
-
-        </LinearLayout>
-
-        <!--  -->
-        <LinearLayout
+            android:id="@+id/pool_prize_estimation_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:gravity="center">
+            android:gravity="center"
+            android:visibility="gone">
 
             <!-- Text section -->
             <LinearLayout
@@ -73,7 +30,7 @@
                 android:layout_marginTop="@dimen/dim_12"
                 android:layout_marginLeft="@dimen/dim_20"
                 android:layout_marginRight="@dimen/dim_20"
-                android:layout_marginBottom="@dimen/dim_12">
+                android:layout_marginBottom="@dimen/dim_20">
 
                 <com.jeeva.android.widgets.customfont.CustomTextView
                     android:id="@+id/estimation_msg_textView"
@@ -90,7 +47,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                >
 
                 <com.jeeva.android.widgets.customfont.CustomTextView
                     android:id="@+id/estimation_slider_progress_textView"
@@ -99,7 +57,7 @@
                     android:layout_gravity="center_horizontal"
                     android:gravity="center"
                     android:textColor="@color/white_dim"
-                    android:textSize="@dimen/sp_12"
+                    android:textSize="@dimen/sp_14"
                     app:typeface="lato_bold" />
 
                 <!-- Slider -->
@@ -107,7 +65,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/dim_32"
                     android:orientation="horizontal"
-                    android:layout_marginTop="@dimen/dim_12"
+                    android:layout_marginTop="@dimen/dim_18"
                     android:layout_marginLeft="@dimen/dim_20"
                     android:layout_marginRight="@dimen/dim_20"
                     android:layout_marginBottom="@dimen/dim_12"
@@ -130,11 +88,13 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:thumb="@drawable/seekbar_thumb"
-                        android:paddingLeft="0dp"
-                        android:paddingRight="0dp"
+                        android:paddingLeft="@dimen/dim_5"
+                        android:paddingRight="@dimen/dim_5"
                         android:progressDrawable="@drawable/seek_bar_progress_drawable"
                         android:layout_marginLeft="@dimen/dim_8"
-                        android:layout_marginRight="@dimen/dim_8"/>
+                        android:layout_marginRight="@dimen/dim_8"
+                        android:paddingTop="@dimen/dim_10"
+                        android:paddingBottom="@dimen/dim_10"/>
 
                     <com.jeeva.android.widgets.customfont.CustomTextView
                         android:id="@+id/estimation_seekbar_max_textView"
@@ -148,7 +108,54 @@
 
                 </LinearLayout>
 
+                <!-- Slider msg -->
+                <com.jeeva.android.widgets.customfont.CustomTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:gravity="center"
+                    android:text="Use the slider to select number if members entering this contest and to check the prizes accordingly"
+                    android:textColor="@color/white_dim"
+                    android:textSize="@dimen/sp_11"
+                    app:typeface="lato_regular"
+                    android:layout_marginLeft="@dimen/dim_20"
+                    android:layout_marginRight="@dimen/dim_20"
+                    android:layout_marginBottom="@dimen/dim_12"/>
+
             </LinearLayout>
+
+        </LinearLayout>
+
+        <!-- challenge started layout -->
+        <LinearLayout
+            android:id="@+id/pool_prize_challenge_started_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_marginTop="@dimen/dim_12"
+            android:layout_marginLeft="@dimen/dim_20"
+            android:layout_marginRight="@dimen/dim_20"
+            android:layout_marginBottom="@dimen/dim_20">
+
+            <com.jeeva.android.widgets.customfont.CustomTextView
+                android:id="@+id/pool_clng_started_all_entries_filled_textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp_12"
+                app:typeface="lato_bold"
+                android:visibility="gone"/>
+
+            <com.jeeva.android.widgets.customfont.CustomTextView
+                android:id="@+id/pool_clng_started_msg_textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textColor="@color/white_dim"
+                android:textSize="@dimen/sp_12"
+                app:typeface="lato_regular" />
 
         </LinearLayout>
 
@@ -156,7 +163,31 @@
         <android.support.v7.widget.RecyclerView
             android:id="@+id/pool_estimation_recyclerView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent"
+            android:paddingBottom="@dimen/dp_100"
+            android:clipToPadding="false"/>
+
+        <!-- Loading View -->
+        <LinearLayout
+            android:id="@+id/rewards_progress_bar_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:visibility="gone">
+
+            <!--<in.sportscafe.nostragamus.module.common.NostraProgressBar
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"/>-->
+
+            <in.sportscafe.nostragamus.utils.loadingAnim.LoadingIndicatorView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:indicatorColor="@color/loading_animation_color"
+                />
+
+        </LinearLayout>
 
     </LinearLayout>
 
