@@ -211,7 +211,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:textColor="@color/bluecolor1"
-                                android:text="YOUR PREDICTIONS WERE SAVED"
+                                android:text="NOW JOIN A CONTEST"
                                 android:textAllCaps="true"
                                 android:textSize="@dimen/sp_12"
                                 app:typeface="lato_bold" />
@@ -221,7 +221,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:textColor="@color/grey6"
-                                android:text="To continue playing with these answers, you will need to join a contest before the first match begins."
+                                android:text="Your predictions were saved, but to continue playing with these predictions, you need to join a contest before the games begin."
                                 android:layout_marginTop="@dimen/dim_6"
                                 android:textSize="@dimen/sp_11"
                                 app:typeface="lato_regular" />

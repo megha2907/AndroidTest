@@ -343,7 +343,7 @@ public class NewChallengesMatchesFragment extends BaseFragment implements View.O
                 imgView.setImageResource(R.drawable.win_more);
                 infoHeadingTextView.setText("Join more contests, to win more!");
                 infoHeadingTextView.setText("You are playing "+ responses.getContestJoined() +" contests...");
-                infoMsgTextView.setText("Continue playing from the 'In Play' section. Or, you can join another contest to give yourself another chance to win!");
+                infoMsgTextView.setText("Continue playing these contests from the 'In Play' section. Or, you can join another contest and give yourself another chance to win!");
  
             } else if (responses.getHeadLessJoined() > 0) {
                 mJoinContestButton.setText("Join Another Contest");

@@ -129,7 +129,7 @@ public class LeaderBoardFragment extends BaseFragment implements LeaderBoardView
             TextView mTvAccuracy = (TextView) findViewById(R.id.leaderboard_row_tv_accuracy);
             TextView mTvMatchPoints = (TextView) findViewById(R.id.leaderboard_row_tv_match_points);
 
-            if (null == userLeaderBoard.getRank()) {
+            if (null == userLeaderBoard.getRank() || userLeaderBoard.getRank() <= 0) {
                 mTvRank.setText("-");
             } else {
                 mTvRank.setText(userLeaderBoard.getRank().toString());

@@ -30,7 +30,8 @@ public class RulesFragment extends NostraBaseFragment implements RulesApiModelIm
 
     private TextView TvContestRuleOne;
     private TextView TvContestRuleTwo;
-    private TextView TvContestRuleThree;
+    private TextView TvContestTypeHeading;
+    private TextView TvContestTypeMsg;
     private TextView TvPowerUpsRuleOne;
     private TextView TvPowerUpsRuleTwo;
     private TextView TvCancelledRuleOne;
@@ -101,7 +102,8 @@ public class RulesFragment extends NostraBaseFragment implements RulesApiModelIm
     private void initViews(View rootView) {
         TvContestRuleOne = (TextView) rootView.findViewById(R.id.contest_rule_one);
         TvContestRuleTwo = (TextView) rootView.findViewById(R.id.contest_rule_two);
-        TvContestRuleThree = (TextView) rootView.findViewById(R.id.contest_rule_three);
+        TvContestTypeHeading = (TextView) rootView.findViewById(R.id.contest_type_heading);
+        TvContestTypeMsg = (TextView) rootView.findViewById(R.id.contest_type_msg_textView);
         IvContestRuleThree = (ImageView) rootView.findViewById(R.id.contest_rule_three_iv);
         TvPowerUpsRuleOne = (TextView) rootView.findViewById(R.id.powerup_rule_one);
         TvPowerUpsRuleTwo = (TextView) rootView.findViewById(R.id.powerup_rule_two);
@@ -113,9 +115,10 @@ public class RulesFragment extends NostraBaseFragment implements RulesApiModelIm
 
     private void setInfo(Rules rules) {
 
+        showContestTypeHeading(rules);
+
         showContestRuleOne(rules);
         showContestRuleTwo(rules);
-        showContestRuleThree(rules);
 
         showPowerUpsRuleOne(rules);
         showPowerUpsRuleTwo(rules);
@@ -153,7 +156,7 @@ public class RulesFragment extends NostraBaseFragment implements RulesApiModelIm
                 " before the timer runs out as predictions are frozen once the live match starts!");
     }
 
-    private void showContestRuleThree(Rules rules) {
+    private void showContestTypeHeading(Rules rules) {
         if (rules.getContestModeInfo() != null) {
             String modeName = rules.getContestModeInfo().getName();
             if (!TextUtils.isEmpty(modeName)) {
@@ -166,13 +169,13 @@ public class RulesFragment extends NostraBaseFragment implements RulesApiModelIm
                 }
 
                 if (rules.getContestModeInfo().getDescription() != null) {
-                    TvContestRuleThree.setText(AppSnippet.capitalize(rules.getContestModeInfo().getModeId())
-                            + " - " + rules.getContestModeInfo().getDescription());
+                    TvContestTypeHeading.setText(AppSnippet.capitalize(rules.getContestModeInfo().getModeId()));
+                    TvContestTypeMsg.setText(rules.getContestModeInfo().getDescription());
                 }
             }
         } else {
             if (getView() != null) {
-                getView().findViewById(R.id.contest_rule_three_rl).setVisibility(View.GONE);
+                getView().findViewById(R.id.contest_type_layout).setVisibility(View.GONE);
             }
         }
     }

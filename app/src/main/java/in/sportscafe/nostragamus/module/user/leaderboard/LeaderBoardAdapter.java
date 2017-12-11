@@ -66,7 +66,7 @@ public class LeaderBoardAdapter extends Adapter<UserLeaderBoard, LeaderBoardAdap
         }
 
 
-        if (null == userLeaderBoard.getRank()) {
+        if (null == userLeaderBoard.getRank() || userLeaderBoard.getRank() <= 0) {
             holder.mTvRank.setText("-");
         } else {
 //            String rank = AppSnippet.ordinal(userLeaderBoard.getRank());
