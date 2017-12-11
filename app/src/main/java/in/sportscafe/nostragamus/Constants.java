@@ -342,6 +342,8 @@ public interface Constants {
         String CONTEST_ENTRIES_SCREEN_DATA = "contestEntriesScreenData";
         String NEW_CHALLENGE_MATCHES_SCREEN_DATA = "newChallengeMatchesScreenData";
         String TIMER_FINISHED_SCREEN_DATA = "timerFinishedScreenData";
+        String POOL_PRIZE_ESTIMATION_SCREEN_DATA = "poolPrizeEstimationScreenData";
+        String REWARDS_SCREEN_DATA = "rewardsScreenData";
 
         /* Wallet */
         String WALLET_WITHDRAWAL_AMT = "walletWithdrawAmt";
@@ -686,6 +688,7 @@ public interface Constants {
         String EARN_MORE_POWERUPS = "EarnMorePowerups";
         String MATCHES_TIMELINE = "MatchesTimeline";
         String CONTEST_DETAILS = "ContestDetails";
+        String POOL_CONTEST_REWARD_CALCULATION = "poolContestRewardCalculation";
     }
 
     interface InAppPopups {
@@ -910,5 +913,11 @@ public interface Constants {
         int CAN_NOT_JOIN = 3111;
         int CAN_NOT_PLAY_GAME = 3112;
         int CHALLENGE_STARTED = 3113;
+    }
+
+    interface ScreenDetails {
+        int DPI = 21;
+        int HEIGHT = 22;
+        int WIDTH = 23;
     }
 }

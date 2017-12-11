@@ -4,23 +4,30 @@ package in.sportscafe.nostragamus.module.navigation.wallet.addMoney;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import com.jeeva.android.BaseFragment;
 
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.navigation.wallet.WalletHelper;
+import in.sportscafe.nostragamus.module.navigation.wallet.addMoney.addByPaymentCoupon.AddMoneyThroughPaymentCouponFragment;
+import in.sportscafe.nostragamus.module.navigation.wallet.addMoney.addByPaymentCoupon.AddMoneyThroughPaymentCouponFragmentListener;
+import in.sportscafe.nostragamus.module.navigation.wallet.addMoney.addByPaytm.AddMoneyThroughPaytmFragment;
+import in.sportscafe.nostragamus.module.navigation.wallet.addMoney.addByPaytm.AddMoneyThroughPaytmFragmentListener;
+import in.sportscafe.nostragamus.module.navigation.wallet.paytmAndBank.PaytmTransactionSuccessDialogFragment;
 
-public class AddWalletMoneyFragment extends BaseFragment implements View.OnClickListener {
+public class AddWalletMoneyFragment extends BaseFragment implements View.OnClickListener,
+        AddMoneyThroughPaytmFragmentListener, AddMoneyThroughPaymentCouponFragmentListener {
 
     private static final String TAG = AddWalletMoneyFragment.class.getSimpleName();
 
     private AddWalletMoneyFragmentListener mFragmentListener;
-    private EditText mAmountEditText;
 
     public AddWalletMoneyFragment() {
     }
@@ -50,12 +57,7 @@ public class AddWalletMoneyFragment extends BaseFragment implements View.OnClick
 
     private void initRootView(View rootView) {
         rootView.findViewById(R.id.back_button).setOnClickListener(this);
-        rootView.findViewById(R.id.add_money_50_textView).setOnClickListener(this);
-        rootView.findViewById(R.id.add_money_100_textView).setOnClickListener(this);
-        rootView.findViewById(R.id.add_money_250_textView).setOnClickListener(this);
-        rootView.findViewById(R.id.wallet_add_amount_button).setOnClickListener(this);
 
-        mAmountEditText = (EditText) rootView.findViewById(R.id.wallet_add_amount_editText);
     }
 
     @Override
@@ -65,7 +67,20 @@ public class AddWalletMoneyFragment extends BaseFragment implements View.OnClick
     }
 
     private void initialize() {
+        loadAddMoneyByPaytmFragment();
         showWalletBalance();
+    }
+
+    private void loadAddMoneyByPaytmFragment() {
+        if (getActivity() != null) {
+            AddMoneyThroughPaytmFragment fragment = new AddMoneyThroughPaytmFragment();
+            fragment.setFragmentListener(this);
+
+            FragmentManager fragmentManager = getChildFragmentManager();
+            fragmentManager.beginTransaction().replace(R.id.add_money_fragment_container,
+                    fragment, fragment.getClass().getSimpleName()).commit();
+            fragmentManager.executePendingTransactions();
+        }
     }
 
     private void showWalletBalance() {
@@ -85,66 +100,76 @@ public class AddWalletMoneyFragment extends BaseFragment implements View.OnClick
                     mFragmentListener.onBackClicked();
                 }
                 break;
-
-            case R.id.add_money_50_textView:
-                onAddMoney50Clicked();
-                break;
-
-            case R.id.add_money_100_textView:
-                onAddMoney100Clicked();
-                break;
-
-            case R.id.add_money_250_textView:
-                onAddMoney250Clicked();
-                break;
-
-            case R.id.wallet_add_amount_button:
-                onAddAmountClicked();
-                break;
         }
     }
 
-    private void onAddAmountClicked() {
-        double amount = AddMoneyWalletHelper.validateAddMoneyAmountValid(mAmountEditText.getText().toString().trim());
-        if (getView() != null) {
-            TextView errorTextView = (TextView) getView().findViewById(R.id.add_wallet_money_amt_error_textView);
+    @Override
+    public void onPaymentCouponFragmentBackPressed() {
 
-            if (amount > 0) {
-                errorTextView.setVisibility(View.GONE);
+    }
 
-                AddMoneyWalletHelper.initTransaction(this, amount);
+    @Override
+    public void onPaytmMoneyAddSuccess() {
+        if (mFragmentListener != null) {
+            mFragmentListener.onSuccess();
+        }
+    }
+
+    @Override
+    public void onPaymentCouponSuccess(int moneyAdded) {
+        PaytmTransactionSuccessDialogFragment successDialogFragment =
+                PaytmTransactionSuccessDialogFragment.newInstance(1200, moneyAdded,
+                        getSuccessActionListener());
+
+        successDialogFragment.show(getChildFragmentManager(), "SUCCESS_DIALOG");
+    }
+
+    private PaytmTransactionSuccessDialogFragment.IPaytmSuccessActionListener
+    getSuccessActionListener() {
+        return new PaytmTransactionSuccessDialogFragment.IPaytmSuccessActionListener() {
+            @Override
+            public void onBackToHomeClicked() {
+                if (mFragmentListener != null) {
+                    mFragmentListener.onSuccess();
+                }
+            }
+        };
+    }
+
+    @Override
+    public void launchPaymentCouponFragment(Bundle args) {
+        if (getView() != null && getActivity() != null && !getActivity().isFinishing()) {
+            AddMoneyThroughPaymentCouponFragment fragment = new AddMoneyThroughPaymentCouponFragment();
+            fragment.setFragmentListener(this);
+
+            FragmentManager manager = getChildFragmentManager();
+            FragmentTransaction ft = manager.beginTransaction();
+            ft.setCustomAnimations(R.anim.slide_left_from_right, R.anim.activity_anim_stay, R.anim.activity_anim_stay, R.anim.slide_right_from_right);
+            ft.add(R.id.add_money_fragment_container, fragment).addToBackStack(null).commit();
+
+            if (manager.getBackStackEntryCount() > 0) {
+                manager.popBackStackImmediate();
             } else {
-                /*if (mAmountEditText != null) {
-                    mAmountEditText.setError("Please enter amount");
-                }*/
-                errorTextView.setVisibility(View.VISIBLE);
+                manager.executePendingTransactions();
             }
         }
     }
 
+    public void onBackPressed() {
+        if (getView() != null && getActivity() != null && !getActivity().isFinishing()) {
 
-    private void onAddMoney250Clicked() {
-        double amt = WalletHelper.addMoreAmount(mAmountEditText.getText().toString().trim(), 250);
-        mAmountEditText.setText(String.valueOf((int)amt));
-        setEditTextSelection();
+            Fragment fragment = getChildFragmentManager().findFragmentById(R.id.add_money_fragment_container);
+            if (fragment != null && fragment instanceof AddMoneyThroughPaymentCouponFragment) {
+                FragmentManager manager = getChildFragmentManager();
+                FragmentTransaction ft = manager.beginTransaction();
+                ft.setCustomAnimations(R.anim.activity_anim_stay, R.anim.slide_right_from_right);
+                ft.remove(fragment);
+                ft.commit();
+                manager.popBackStackImmediate();
+            } else {
+                getActivity().finish();
+            }
+        }
     }
-
-    private void onAddMoney100Clicked() {
-        double amt = WalletHelper.addMoreAmount(mAmountEditText.getText().toString().trim(), 100);
-        mAmountEditText.setText(String.valueOf((int)amt));
-        setEditTextSelection();
-    }
-
-    private void onAddMoney50Clicked() {
-        double amt = WalletHelper.addMoreAmount(mAmountEditText.getText().toString().trim(), 50);
-        mAmountEditText.setText(String.valueOf((int)amt));
-        setEditTextSelection();
-    }
-
-    private void setEditTextSelection() {
-        int length = mAmountEditText.getText().length();
-        mAmountEditText.setSelection(length, length);
-    }
-
 
 }

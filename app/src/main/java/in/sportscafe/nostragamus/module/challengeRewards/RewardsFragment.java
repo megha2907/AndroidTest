@@ -1,6 +1,8 @@
 package in.sportscafe.nostragamus.module.challengeRewards;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.LinearLayoutManager;
@@ -9,50 +11,33 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
+
+import org.parceler.Parcels;
 
 import java.util.List;
 
-import in.sportscafe.nostragamus.AppSnippet;
 import in.sportscafe.nostragamus.Constants;
-import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.R;
+import in.sportscafe.nostragamus.module.challengeRewards.dto.RewardScreenData;
 import in.sportscafe.nostragamus.module.challengeRewards.dto.Rewards;
+import in.sportscafe.nostragamus.module.challengeRewards.dto.RewardsResponse;
 import in.sportscafe.nostragamus.module.common.NostraBaseFragment;
-import in.sportscafe.nostragamus.utils.timeutils.TimeAgo;
-import in.sportscafe.nostragamus.utils.timeutils.TimeUnit;
-import in.sportscafe.nostragamus.utils.timeutils.TimeUtils;
+import in.sportscafe.nostragamus.module.resultspeek.FeedWebView;
 
 /**
  * Created by deepanshi on 9/6/17.
  */
 
-public class RewardsFragment extends NostraBaseFragment implements RewardsApiModelImpl.RewardsDataListener
-        , View.OnClickListener {
+public class RewardsFragment extends NostraBaseFragment implements View.OnClickListener {
 
     private static final String TAG = RewardsFragment.class.getSimpleName();
 
-    private int mRoomId = -1;
-
-    private int mConfigId = -1;
-
-    private RewardsAdapter mConfigAdapter;
-
+    private RewardScreenData mScreenData;
     private RecyclerView mRcvRewards;
+    private int mLauncherParent = RewardsLaunchedFrom.NEW_CHALLENGE_CONTEST_DETAILS;
 
     public RewardsFragment() {
 
-    }
-
-    public static RewardsFragment newInstance(int roomId,int configId) {
-
-        Bundle bundle = new Bundle();
-        bundle.putInt(Constants.BundleKeys.ROOM_ID, roomId);
-        bundle.putInt(Constants.BundleKeys.CONFIG_ID, configId);
-
-        RewardsFragment fragment = new RewardsFragment();
-        fragment.setArguments(bundle);
-        return fragment;
     }
 
     @Nullable
@@ -67,16 +52,22 @@ public class RewardsFragment extends NostraBaseFragment implements RewardsApiMod
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        openBundle(getArguments());
+        initMembers();
+        fetchRewardsDataFromServer();
     }
 
-    private void openBundle(Bundle bundle) {
-        if (bundle != null) {
-            mRoomId = bundle.getInt(Constants.BundleKeys.ROOM_ID);
-            mConfigId = bundle.getInt(Constants.BundleKeys.CONFIG_ID);
-            getRewardsData();
+    private void initMembers() {
+        Bundle args = getArguments();
+        if (args != null) {
+            if (args.containsKey(Constants.BundleKeys.REWARDS_SCREEN_DATA)) {
+                mScreenData = Parcels.unwrap(args.getParcelable(Constants.BundleKeys.REWARDS_SCREEN_DATA));
+            }
+
+            mLauncherParent = args.getInt(Constants.BundleKeys.SCREEN_LAUNCHED_FROM_PARENT,
+                    RewardsLaunchedFrom.NEW_CHALLENGE_CONTEST_DETAILS);
         }
     }
+
 
     private void initViews(View rootView) {
         this.mRcvRewards = (RecyclerView)rootView. findViewById(R.id.rewards_rcv);
@@ -85,55 +76,99 @@ public class RewardsFragment extends NostraBaseFragment implements RewardsApiMod
         this.mRcvRewards.setHasFixedSize(true);
     }
 
-    private void getRewardsData() {
-        showLoadingProgressBar();
-        new RewardsApiModelImpl().getRewardsData(mRoomId,mConfigId,this);
+    private void fetchRewardsDataFromServer() {
+        if (mScreenData != null) {
+            showLoadingProgressBar();
+            new RewardsApiModelImpl().getRewardsData(mScreenData.getRoomId(),
+                    mScreenData.getConfigId(), getApiListener());
+        }
     }
 
-    private RewardsAdapter createAdapter(List<Rewards> rewardsList,String challengeEndTime) {
-        return new RewardsAdapter(getContext(),
-                rewardsList, challengeEndTime);
+    @NonNull
+    private RewardsApiModelImpl.RewardsDataListener getApiListener() {
+        return new RewardsApiModelImpl.RewardsDataListener() {
+            @Override
+            public void onData(RewardsResponse rewardsResponse) {
+                hideLoadingProgressBar();
+
+                onRewardsDataFetchedSuccessfully(rewardsResponse);
+            }
+
+            @Override
+            public void onError(int status) {
+                hideLoadingProgressBar();
+                handleError("", status);
+            }
+
+            @Override
+            public void onNoInternet() {
+                hideLoadingProgressBar();
+                handleError("", Constants.DataStatus.NO_INTERNET);
+            }
+
+            @Override
+            public void onFailedConfigsApi() {
+                hideLoadingProgressBar();
+                handleError("", Constants.DataStatus.FROM_SERVER_API_FAILED);
+                // showMessage(Constants.Alerts.API_FAIL);
+            }
+
+            @Override
+            public void onEmpty() {
+                hideLoadingProgressBar();
+                /* If empty data, while showing/resuming screen; it should be shown */
+                // showMessage(Constants.Alerts.POLL_LIST_EMPTY);
+            }
+        };
     }
 
-
-    @Override
-    public void onEmpty() {
-        // showMessage(Constants.Alerts.POLL_LIST_EMPTY);
-    }
-
-    @Override
-    public void onFailedConfigsApi() {
-        // showMessage(Constants.Alerts.API_FAIL);
-    }
-
-    @Override
-    public void onData(@Nullable List<Rewards> rewardsList,String challengeEndTime) {
-        hideLoadingProgressBar();
-        mConfigAdapter = createAdapter(rewardsList,challengeEndTime);
-        mRcvRewards.setAdapter(mConfigAdapter);
-        mRcvRewards.setVisibility(View.VISIBLE);
-    }
-
-    @Override
-    public void onError(int status) {
-        handleError(status);
-    }
-
-    @Override
-    public void onNoInternet() {
-        handleError(Constants.DataStatus.NO_INTERNET);
-    }
-
-    private void handleError(int status) {
+    private void onRewardsDataFetchedSuccessfully(RewardsResponse rewardsResponse) {
         if (getView() != null && getActivity() != null && !getActivity().isFinishing()) {
-            switch (status) {
-                case Constants.DataStatus.NO_INTERNET:
-                    Snackbar.make(getView(), Constants.Alerts.NO_INTERNET_CONNECTION, Snackbar.LENGTH_LONG).show();
-                    break;
+            if (rewardsResponse != null && rewardsResponse.getRewardsList() != null) {
 
-                default:
-                    Snackbar.make(getView(), Constants.Alerts.SOMETHING_WRONG, Snackbar.LENGTH_LONG).show();
-                    break;
+                RewardsAdapter rewardsAdapter =
+                        createAdapter(rewardsResponse.getRewardsList(), rewardsResponse.getChallengeEndTime());
+                if (rewardsAdapter != null) {
+                    mRcvRewards.setAdapter(rewardsAdapter);
+                    mRcvRewards.setVisibility(View.VISIBLE);
+                }
+            } else {
+                handleError("", -1);
+            }
+        }
+    }
+
+    @Nullable
+    private RewardsAdapter createAdapter(List<Rewards> rewardsList, String challengeEndTime) {
+        if (rewardsList != null && !TextUtils.isEmpty(challengeEndTime)) {
+            return new RewardsAdapter(getContext(), rewardsList, challengeEndTime, new RewardsAdapterListener() {
+                @Override
+                public void onNostraRulesClicked() {
+                    openRulesWebView();
+                }
+            });
+        }
+        return null;
+    }
+
+    private void openRulesWebView() {
+        startActivity(new Intent(getContext(), FeedWebView.class).putExtra("url", Constants.WebPageUrls.RULES));
+    }
+
+    private void handleError(String msg, int status) {
+        if (getView() != null && getActivity() != null && !getActivity().isFinishing()) {
+            if (!TextUtils.isEmpty(msg)) {
+                Snackbar.make(getView(), msg, Snackbar.LENGTH_LONG).show();
+            } else {
+                switch (status) {
+                    case Constants.DataStatus.NO_INTERNET:
+                        Snackbar.make(getView(), Constants.Alerts.NO_INTERNET_CONNECTION, Snackbar.LENGTH_LONG).show();
+                        break;
+
+                    default:
+                        Snackbar.make(getView(), Constants.Alerts.SOMETHING_WRONG, Snackbar.LENGTH_LONG).show();
+                        break;
+                }
             }
         }
     }
@@ -151,7 +186,6 @@ public class RewardsFragment extends NostraBaseFragment implements RewardsApiMod
             getView().findViewById(R.id.rewards_rcv).setVisibility(View.VISIBLE);
         }
     }
-
 
     @Override
     public void onClick(View v) {

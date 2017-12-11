@@ -74,8 +74,8 @@
                             android:layout_width="@dimen/dim_25"
                             android:layout_height="@dimen/dim_20"
                             android:layout_alignParentRight="true"
-                            android:paddingLeft="@dimen/dim_8"
-                            android:paddingBottom="@dimen/dim_8"
+                            android:paddingLeft="@dimen/dim_5"
+                            android:paddingBottom="@dimen/dim_5"
                             android:layout_marginTop="@dimen/dim_3" />
 
                         <LinearLayout
