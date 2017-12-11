@@ -3,8 +3,10 @@ package in.sportscafe.nostragamus.module.contest.contestDetailsCompletedChalleng
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,8 +20,12 @@ import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.challengeCompleted.dto.CompletedContestDto;
 import in.sportscafe.nostragamus.module.challengeCompleted.ui.viewPager.CompletedMatchTimelineViewPagerFragment;
 import in.sportscafe.nostragamus.module.challengeRewards.RewardsFragment;
+import in.sportscafe.nostragamus.module.challengeRewards.RewardsLaunchedFrom;
+import in.sportscafe.nostragamus.module.challengeRewards.dto.RewardScreenData;
 import in.sportscafe.nostragamus.module.challengeRules.RulesFragment;
 import in.sportscafe.nostragamus.module.common.NostraBaseFragment;
+import in.sportscafe.nostragamus.module.contest.dto.PoolPrizeEstimationScreenData;
+import in.sportscafe.nostragamus.module.contest.ui.poolContest.PoolPrizesEstimationFragment;
 import in.sportscafe.nostragamus.module.contest.ui.DetailScreensLaunchRequest;
 import in.sportscafe.nostragamus.module.user.leaderboard.LeaderBoardFragment;
 
@@ -27,7 +33,8 @@ import in.sportscafe.nostragamus.module.user.leaderboard.LeaderBoardFragment;
  * Created by sc on 4/10/17.
  */
 
-public class ChallengeHistoryContestDetailFragment extends NostraBaseFragment implements View.OnClickListener {
+public class ChallengeHistoryContestDetailFragment extends NostraBaseFragment implements
+        View.OnClickListener {
 
     private static final String TAG = ChallengeHistoryContestDetailFragment.class.getSimpleName();
 
@@ -135,8 +142,8 @@ public class ChallengeHistoryContestDetailFragment extends NostraBaseFragment im
             LeaderBoardFragment leaderBoardFragment = LeaderBoardFragment.newInstance(completedContestDto.getRoomId());
             mViewPagerAdapter.addFragment(leaderBoardFragment, Constants.ContestDetailsTabs.LEADERBOARDS);
 
-            RewardsFragment rewardsFragment = RewardsFragment.newInstance(completedContestDto.getRoomId(),-1);
-            mViewPagerAdapter.addFragment(rewardsFragment, Constants.ContestDetailsTabs.WINNERS);
+            /* Rewards */
+            mViewPagerAdapter.addFragment(getRewardsFragment(completedContestDto), Constants.ContestDetailsTabs.WINNERS);
 
             RulesFragment rulesFragment = RulesFragment.newInstance(completedContestDto.getContestId());
             mViewPagerAdapter.addFragment(rulesFragment, Constants.ContestDetailsTabs.RULES);
@@ -147,6 +154,39 @@ public class ChallengeHistoryContestDetailFragment extends NostraBaseFragment im
 
             setTabLayout(mViewPager);
         }
+    }
+
+    @NonNull
+    private Fragment getRewardsFragment(CompletedContestDto completedContestDto) {
+        Fragment fragment = null;
+        Bundle args = new Bundle();
+        args.putInt(Constants.BundleKeys.SCREEN_LAUNCHED_FROM_PARENT, RewardsLaunchedFrom.CHALLENGE_HISTORY_CONTEST_DETAILS);
+
+        if (completedContestDto.getContestMode().equalsIgnoreCase(Constants.ContestType.POOL)) {
+
+            PoolPrizeEstimationScreenData screenData = new PoolPrizeEstimationScreenData();
+            screenData.setRewardScreenLauncherParent(RewardsLaunchedFrom.CHALLENGE_HISTORY_CONTEST_DETAILS);
+            screenData.setContestName(completedContestDto.getContestName());
+            screenData.setRoomId(completedContestDto.getRoomId());
+            screenData.setConfigId(-1);
+            args.putParcelable(Constants.BundleKeys.POOL_PRIZE_ESTIMATION_SCREEN_DATA, Parcels.wrap(screenData));
+
+            fragment = new PoolPrizesEstimationFragment();
+            fragment.setArguments(args);
+
+        } else {
+            RewardScreenData rewardScreenData = new RewardScreenData();
+            rewardScreenData.setRoomId(completedContestDto.getRoomId());
+            rewardScreenData.setConfigId(-1);
+            rewardScreenData.setContestName(completedContestDto.getContestName());
+            rewardScreenData.setPoolContest(false);
+            args.putParcelable(Constants.BundleKeys.REWARDS_SCREEN_DATA, Parcels.wrap(rewardScreenData));
+
+            fragment = new RewardsFragment();
+            fragment.setArguments(args);
+        }
+
+        return fragment;
     }
 
     private void setTabLayout(ViewPager mViewPager) {
@@ -176,5 +216,4 @@ public class ChallengeHistoryContestDetailFragment extends NostraBaseFragment im
 
         }
     }
-
 }

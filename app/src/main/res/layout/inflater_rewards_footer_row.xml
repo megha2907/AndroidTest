@@ -17,6 +17,20 @@
         android:paddingBottom="@dimen/dim_10"
         android:textColor="@color/grey6"
         android:textSize="@dimen/sp_12"
+        app:typeface="lato_regular"
+        android:text="@string/prize_money_disclaimer"/>
+
+    <com.jeeva.android.widgets.customfont.CustomTextView
+        android:id="@+id/rewards_footer_button_textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="NOSTRAGAMUS RULES"
+        android:clickable="true"
+        android:layout_gravity="center_horizontal"
+        android:padding="@dimen/dim_10"
+        android:textColor="@color/venice_blue"
+        android:textSize="@dimen/sp_12"
         app:typeface="lato_regular" />
 
 </LinearLayout>

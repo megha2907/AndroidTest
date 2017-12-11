@@ -2,9 +2,11 @@ package in.sportscafe.nostragamus.module.navigation.wallet.addMoney.lowBalance;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.NostragamusActivity;
+import in.sportscafe.nostragamus.module.navigation.wallet.addMoney.AddWalletMoneyFragment;
 import in.sportscafe.nostragamus.utils.FragmentHelper;
 
 public class AddMoneyOnLowBalanceActivity extends NostragamusActivity implements AddMoneyOnLowBalanceFragmentListener {
@@ -33,7 +35,18 @@ public class AddMoneyOnLowBalanceActivity extends NostragamusActivity implements
 
     @Override
     public void onBackClicked() {
-        finish();
+        onBackPressed();
+    }
+
+    @Override
+    public void onBackPressed() {
+        Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.fragment_container);
+        if (fragment != null && fragment instanceof AddMoneyOnLowBalanceFragment) {
+            ((AddMoneyOnLowBalanceFragment)fragment).onBackPressed();
+        } else {
+            super.onBackPressed();
+        }
+
     }
 
     @Override

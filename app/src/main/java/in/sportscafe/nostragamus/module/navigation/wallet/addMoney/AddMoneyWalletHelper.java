@@ -12,8 +12,10 @@ import com.jeeva.android.Log;
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
-import in.sportscafe.nostragamus.module.navigation.wallet.addMoney.lowBalance.AddMoneyOnLowBalanceFragment;
-import in.sportscafe.nostragamus.module.navigation.wallet.addMoney.lowBalance.AddMoneyOnLowBalanceFragmentListener;
+import in.sportscafe.nostragamus.module.navigation.wallet.addMoney.addByPaymentCoupon.AddMoneyThroughPaymentCouponFragment;
+import in.sportscafe.nostragamus.module.navigation.wallet.addMoney.addByPaymentCoupon.AddMoneyThroughPaymentCouponFragmentListener;
+import in.sportscafe.nostragamus.module.navigation.wallet.addMoney.addByPaytm.AddMoneyThroughPaytmFragment;
+import in.sportscafe.nostragamus.module.navigation.wallet.addMoney.addByPaytm.AddMoneyThroughPaytmFragmentListener;
 import in.sportscafe.nostragamus.module.navigation.wallet.paytmAndBank.PaytmApiModelImpl;
 import in.sportscafe.nostragamus.module.navigation.wallet.paytmAndBank.PaytmTransactionFailureDialogFragment;
 import in.sportscafe.nostragamus.module.navigation.wallet.paytmAndBank.PaytmTransactionSuccessDialogFragment;
@@ -246,16 +248,29 @@ public class AddMoneyWalletHelper {
             @Override
             public void onBackToHomeClicked() {
                 if (fragment != null) {
-                    if (fragment instanceof  AddWalletMoneyFragment) {
+                    if (fragment instanceof AddMoneyThroughPaytmFragment) {
+                        AddMoneyThroughPaytmFragmentListener fragmentListener = ((AddMoneyThroughPaytmFragment) fragment).getFragmentListener();
+                        if (fragmentListener != null) {
+                            fragmentListener.onPaytmMoneyAddSuccess();
+                        }
+                    }
+                    if (fragment instanceof AddMoneyThroughPaymentCouponFragment) {
+                        AddMoneyThroughPaymentCouponFragmentListener fragmentListener = ((AddMoneyThroughPaymentCouponFragment) fragment).getFragmentListener();
+                        if (fragmentListener != null) {
+                            fragmentListener.onPaytmMoneyAddSuccess();
+                        }
+                    }
+
+                    /*if (fragment instanceof  AddWalletMoneyFragment) {
                         AddWalletMoneyFragmentListener fragmentListener = ((AddWalletMoneyFragment) fragment).getFragmentListener();
                         fragmentListener.onSuccess();
                     }
                     if (fragment instanceof AddMoneyOnLowBalanceFragment) {
-                        /*AddMoneyOnLowBalanceFragmentListener fragmentListener = ((AddMoneyOnLowBalanceFragment) fragment).getFragmentListener();
-                        fragmentListener.onTimerSuccess();*/
+                        *//*AddMoneyOnLowBalanceFragmentListener fragmentListener = ((AddMoneyOnLowBalanceFragment) fragment).getFragmentListener();
+                        fragmentListener.onTimerSuccess();*//*
 
                         ((AddMoneyOnLowBalanceFragment) fragment).onAddMoneySuccess();
-                    }
+                    }*/
                 }
             }
         };

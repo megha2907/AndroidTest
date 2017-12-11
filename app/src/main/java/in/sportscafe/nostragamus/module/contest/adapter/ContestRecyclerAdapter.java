@@ -34,6 +34,8 @@ import in.sportscafe.nostragamus.module.contest.dto.Contest;
 
 public class ContestRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
+    private final String PRIZES_UPTO_STR = "PRIZES UPTO";
+    private final String PRIZES_STR = "PRIZES";
     private Context mContext;
     private List<Contest> mContestList;
     private ContestAdapterListener mContestAdapterListener;
@@ -130,10 +132,13 @@ public class ContestRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
                 String contestMode = contest.getContestMode();
                 if (!TextUtils.isEmpty(contestMode)) {
+                    viewHolder.mTvPrizeLable.setText(PRIZES_STR);
+
                     if (contestMode.equalsIgnoreCase(Constants.ContestType.GUARANTEED)) {
                         viewHolder.mIvContestsType.setImageResource(R.drawable.guaranteed_icon);
                     } else if (contestMode.equalsIgnoreCase(Constants.ContestType.POOL)) {
                         viewHolder.mIvContestsType.setImageResource(R.drawable.pool_icon);
+                        viewHolder.mTvPrizeLable.setText(PRIZES_UPTO_STR);
                     } else if (contestMode.equalsIgnoreCase(Constants.ContestType.NON_GUARANTEED)) {
                         viewHolder.mIvContestsType.setImageResource(R.drawable.no_guarantee_icon);
                     }
@@ -197,12 +202,18 @@ public class ContestRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                     viewHolder.mTvContestsAvailable.setText(spannableString, TextView.BufferType.SPANNABLE);
                 }
 
-                if (contest.getContestMode().equalsIgnoreCase(Constants.ContestType.GUARANTEED)) {
-                    viewHolder.mIvContestsType.setImageResource(R.drawable.guaranteed_icon);
-                } else if (contest.getContestMode().equalsIgnoreCase(Constants.ContestType.POOL)) {
-                    viewHolder.mIvContestsType.setImageResource(R.drawable.pool_icon);
-                } else if (contest.getContestMode().equalsIgnoreCase(Constants.ContestType.NON_GUARANTEED)) {
-                    viewHolder.mIvContestsType.setImageResource(R.drawable.no_guarantee_icon);
+                String contestMode = contest.getContestMode();
+                if (!TextUtils.isEmpty(contestMode)) {
+                    viewHolder.mTvPrizeLable.setText(PRIZES_STR);
+
+                    if (contestMode.equalsIgnoreCase(Constants.ContestType.GUARANTEED)) {
+                        viewHolder.mIvContestsType.setImageResource(R.drawable.guaranteed_icon);
+                    } else if (contestMode.equalsIgnoreCase(Constants.ContestType.POOL)) {
+                        viewHolder.mIvContestsType.setImageResource(R.drawable.pool_icon);
+                        viewHolder.mTvPrizeLable.setText(PRIZES_UPTO_STR);
+                    } else if (contestMode.equalsIgnoreCase(Constants.ContestType.NON_GUARANTEED)) {
+                        viewHolder.mIvContestsType.setImageResource(R.drawable.no_guarantee_icon);
+                    }
                 }
 
                 if (contest.isFreeEntry()) {
@@ -242,10 +253,13 @@ public class ContestRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
                 String contestMode = contest.getContestMode();
                 if (!TextUtils.isEmpty(contestMode)) {
+                    viewHolder.mTvPrizeLable.setText(PRIZES_STR);
+
                     if (contestMode.equalsIgnoreCase(Constants.ContestType.GUARANTEED)) {
                         viewHolder.mIvContestsType.setImageResource(R.drawable.guaranteed_icon);
                     } else if (contestMode.equalsIgnoreCase(Constants.ContestType.POOL)) {
                         viewHolder.mIvContestsType.setImageResource(R.drawable.pool_icon);
+                        viewHolder.mTvPrizeLable.setText(PRIZES_UPTO_STR);
                     } else if (contestMode.equalsIgnoreCase(Constants.ContestType.NON_GUARANTEED)) {
                         viewHolder.mIvContestsType.setImageResource(R.drawable.no_guarantee_icon);
                     }
@@ -293,6 +307,7 @@ public class ContestRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         public TextView mTvEntryFee;
         public TextView mTvMaxEntries;
         public TextView mTvPrizes;
+        public TextView mTvPrizeLable;
         public TextView mTvNumberOfPrizes;
         public TextView mTvFilledContests;
         public TextView mFillingStrTextView;
@@ -314,6 +329,7 @@ public class ContestRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             mTvEntryFee = (TextView) itemView.findViewById(R.id.pool_row_tv_entry_fee);
             mTvMaxEntries = (TextView) itemView.findViewById(R.id.pool_row_tv_member_count);
             mTvPrizes = (TextView) itemView.findViewById(R.id.pool_row_tv_reward);
+            mTvPrizeLable = (TextView) itemView.findViewById(R.id.pool_row_tv_label_rewards);
             mTvNumberOfPrizes = (TextView) itemView.findViewById(R.id.pool_row_tv_number_of_prizes);
             mTvFilledContests = (TextView) itemView.findViewById(R.id.pool_row_tv_rooms_filled);
             mTvContestsAvailable = (TextView) itemView.findViewById(R.id.pool_row_tv_rooms_available);
@@ -392,6 +408,7 @@ public class ContestRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         public TextView mTvPoolName;
         public TextView mTvEntryFee;
         public TextView mTvMaxEntries;
+        public TextView mTvPrizeLable;
         public TextView mTvPrizes;
         public TextView mTvNumberOfPrizes;
         public ImageView mIvContestsType;
@@ -402,6 +419,7 @@ public class ContestRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             mTvPoolName = (TextView) itemView.findViewById(R.id.pool_row_tv_name);
             mTvEntryFee = (TextView) itemView.findViewById(R.id.pool_row_tv_entry_fee);
             mTvMaxEntries = (TextView) itemView.findViewById(R.id.pool_row_tv_member_count);
+            mTvPrizeLable = (TextView) itemView.findViewById(R.id.pool_row_tv_label_rewards);
             mTvPrizes = (TextView) itemView.findViewById(R.id.pool_row_tv_reward);
             mTvNumberOfPrizes = (TextView) itemView.findViewById(R.id.pool_row_tv_number_of_prizes);
             mIvContestsType = (ImageView) itemView.findViewById(R.id.pool_row_iv_contest_type);
@@ -440,6 +458,7 @@ public class ContestRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         public TextView mTvEntryFee;
         public TextView mTvMaxEntries;
         public TextView mTvPrizes;
+        public TextView mTvPrizeLable;
         public TextView mTvNumberOfPrizes;
         public TextView mTvFilledContests;
         public RelativeLayout mRlContestLayout;
@@ -454,6 +473,7 @@ public class ContestRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             mBtnJoin = (Button) itemView.findViewById(R.id.pool_row_btn_join);
             mTvEntryFee = (TextView) itemView.findViewById(R.id.pool_row_tv_entry_fee);
             mTvMaxEntries = (TextView) itemView.findViewById(R.id.pool_row_tv_member_count);
+            mTvPrizeLable = (TextView) itemView.findViewById(R.id.pool_row_tv_label_rewards);
             mTvPrizes = (TextView) itemView.findViewById(R.id.pool_row_tv_reward);
             mTvNumberOfPrizes = (TextView) itemView.findViewById(R.id.pool_row_tv_number_of_prizes);
             mTvFilledContests = (TextView) itemView.findViewById(R.id.pool_row_tv_rooms_filled);
@@ -462,6 +482,7 @@ public class ContestRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             mRewardsPrizesLayout = (LinearLayout) itemView.findViewById(R.id.pool_row_ll_reward_layout);
             mEntriesLayout = (LinearLayout) itemView.findViewById(R.id.pool_row_ll_member_layout);
             mEntryFeeLayout = (LinearLayout) itemView.findViewById(R.id.pool_row_ll_entry_fee_layout);
+
         }
     }
 }

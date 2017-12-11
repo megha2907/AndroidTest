@@ -78,6 +78,8 @@ public class Contest {
 
     private int challengeId;
 
+    private String challengeStartTime;
+
     public int getContestId() {
         return contestId;
     }
@@ -244,5 +246,13 @@ public class Contest {
 
     public void setLastFillingRoom(boolean lastFillingRoom) {
         isLastFillingRoom = lastFillingRoom;
+    }
+
+    public String getChallengeStartTime() {
+        return challengeStartTime;
+    }
+
+    public void setChallengeStartTime(String challengeStartTime) {
+        this.challengeStartTime = challengeStartTime;
     }
 }

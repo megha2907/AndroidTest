@@ -22,6 +22,9 @@ public class LogInRequest {
     @SerializedName("profile")
     private UserProfile userProfile;
 
+    @SerializedName("device")
+    private Device device;
+
     @SerializedName("accessToken")
     public String getAccessToken() {
         return accessToken;
@@ -70,5 +73,13 @@ public class LogInRequest {
     @SerializedName("refreshToken")
     public void setRefreshToken(String refreshToken) {
         this.refreshToken = refreshToken;
+    }
+
+    public Device getDevice() {
+        return device;
+    }
+
+    public void setDevice(Device device) {
+        this.device = device;
     }
 }
