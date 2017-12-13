@@ -326,7 +326,7 @@ public interface NostragamusService {
 
     @GET("v3/game/challenges/getContests")
     Call<ContestResponse> getContests(@Query("challenge_id") int challengeId,
-                                      @Query("flavor") String flavor);
+                                      @Query("flavor") String flavor, @Query("pooled") boolean needPoolContests);
 
     @GET("v3/game/challenges/inPlay")
     Call<List<InPlayResponse>> getInPlayChallenges();

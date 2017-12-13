@@ -37,8 +37,7 @@
                 <ImageView
                     android:id="@+id/contest_rule_three_iv"
                     android:layout_width="@dimen/dim_13"
-                    android:layout_height="@dimen/dim_13"
-                    android:layout_marginLeft="@dimen/dim_12"/>
+                    android:layout_height="@dimen/dim_13" />
 
                 <com.jeeva.android.widgets.customfont.CustomTextView
                     android:id="@+id/contest_type_heading"

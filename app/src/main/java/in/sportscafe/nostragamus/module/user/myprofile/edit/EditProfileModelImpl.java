@@ -111,7 +111,9 @@ public class EditProfileModelImpl implements EditProfileModel {
 
     private void callUpdateUserApi(final String nickname) {
         UpdateUserRequest updateUserRequest = new UpdateUserRequest();
-        updateUserRequest.setUserPhoto(mUserInfo.getPhoto());
+        if (mUserInfo!=null) {
+            updateUserRequest.setUserPhoto(mUserInfo.getPhoto());
+        }
         updateUserRequest.setUserNickName(nickname);
         updateUserRequest.setDisclaimerAccepted(mDisclaimerAccepted);
 

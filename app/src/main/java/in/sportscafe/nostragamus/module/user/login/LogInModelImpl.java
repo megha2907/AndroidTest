@@ -21,6 +21,8 @@ import in.sportscafe.nostragamus.Constants.AnalyticsLabels;
 import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
+import in.sportscafe.nostragamus.module.permission.PermissionsActivity;
+import in.sportscafe.nostragamus.module.permission.PermissionsChecker;
 import in.sportscafe.nostragamus.module.user.group.JoinGroupApiModelImpl;
 import in.sportscafe.nostragamus.module.user.login.dto.Device;
 import in.sportscafe.nostragamus.module.user.login.dto.LogInRequest;
@@ -206,7 +208,8 @@ public class LogInModelImpl implements LogInModel {
     private Device getDeviceDetails() {
         Device device = new Device();
 
-        device.setImei(Nostragamus.getInstance().getDeviceImeI());
+        //Todo Add Permission to get device id android.permission.READ_PHONE_STATE
+        //device.setImei(Nostragamus.getInstance().getDeviceImeI());
         device.setAndroidId(Nostragamus.getInstance().getAndroidId());
         device.setAppVersion(Nostragamus.getInstance().getAppVersionCode());
         device.setOsApiLevel(Build.VERSION.SDK_INT);

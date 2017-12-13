@@ -19,7 +19,7 @@ public class PoolContestResponse {
     private int maxParticipants;
 
     @SerializedName("per_user_prize")
-    private int prizePerUser;
+    private double prizePerUser;
 
     @SerializedName("step")
     private String roundingLevel;
@@ -43,11 +43,11 @@ public class PoolContestResponse {
         this.maxParticipants = maxParticipants;
     }
 
-    public int getPrizePerUser() {
+    public double getPrizePerUser() {
         return prizePerUser;
     }
 
-    public void setPrizePerUser(int prizePerUser) {
+    public void setPrizePerUser(double prizePerUser) {
         this.prizePerUser = prizePerUser;
     }
 
