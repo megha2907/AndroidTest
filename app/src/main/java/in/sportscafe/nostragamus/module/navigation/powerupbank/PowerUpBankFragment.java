@@ -85,12 +85,7 @@ public class PowerUpBankFragment extends BaseFragment implements View.OnClickLis
 
     /* private void fetchPowerUpBankInfoFromServer() {
 
-        String appFlavor;
-        if (BuildConfig.IS_PAID_VERSION) {
-            appFlavor = "PRO";
-        } else {
-            appFlavor = "PS";
-        }
+        String flavor = Nostragamus.getInstance().getAppTypeFlavor();
 
         showProgressbar();
         PowerUpBankApiModelImpl.newInstance(new PowerUpBankApiModelImpl.PowerUpBankApiListener() {
@@ -111,7 +106,7 @@ public class PowerUpBankFragment extends BaseFragment implements View.OnClickLis
                 dismissProgressbar();
                 setInfo();
             }
-        }).performApiCall(appFlavor);
+        }).performApiCall(flavor);
     } */
 
     private void initRootView(View rootView) {

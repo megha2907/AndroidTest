@@ -85,6 +85,7 @@
                             android:id="@+id/wallet_add_payment_coupon_editText"
                             style="@style/EditTextStyle"
                             android:inputType="text"
+                            android:maxLength="8"
                             android:imeOptions="actionDone"/>
 
                     </com.jeeva.android.widgets.ShadowLayout>

@@ -631,6 +631,7 @@ public interface Constants {
     interface AppType {
         String PRO = "PRO";
         String PLAYSTORE = "PS";
+        String ACL = "ACL";
     }
 
     interface ScreenNames {

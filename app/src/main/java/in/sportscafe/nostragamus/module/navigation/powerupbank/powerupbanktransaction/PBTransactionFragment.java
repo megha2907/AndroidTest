@@ -22,6 +22,7 @@ import java.util.List;
 
 import in.sportscafe.nostragamus.BuildConfig;
 import in.sportscafe.nostragamus.Constants;
+import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.navigation.powerupbank.earnmorepowerups.PowerUp;
 import in.sportscafe.nostragamus.module.navigation.powerupbank.powerupbanktransaction.dto.PBTransactionHistory;
@@ -88,12 +89,6 @@ public class PBTransactionFragment extends BaseFragment implements View.OnClickL
 
     private void fetchPBTransactionHistoryFromServer() {
 
-        String appFlavor;
-        if (BuildConfig.IS_PAID_VERSION) {
-            appFlavor = "PRO";
-        } else {
-            appFlavor = "PS";
-        }
         showProgressbar();
         PBTransactionApiModelImpl.newInstance(new PBTransactionApiModelImpl.PBTransactionHistoryApiListener() {
             @Override
@@ -113,7 +108,7 @@ public class PBTransactionFragment extends BaseFragment implements View.OnClickL
                 dismissProgressbar();
                 onPBTransactionHistoryListFetchedSuccessful(pbTransactionHistory);
             }
-        }).performApiCall(appFlavor);
+        }).performApiCall(Nostragamus.getInstance().getAppTypeFlavor());
     }
 
     private void initRootView(View rootView) {

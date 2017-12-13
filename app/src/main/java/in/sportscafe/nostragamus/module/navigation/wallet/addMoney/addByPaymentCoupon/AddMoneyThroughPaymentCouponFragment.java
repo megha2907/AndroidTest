@@ -14,7 +14,8 @@ import com.jeeva.android.BaseFragment;
 
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
-import in.sportscafe.nostragamus.module.navigation.wallet.addMoney.dto.AddMoneyPaymentCouponResponse;
+import in.sportscafe.nostragamus.module.common.CountDownTimer;
+import in.sportscafe.nostragamus.module.navigation.wallet.addMoney.dto.VerifyPaymentCouponResponse;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -23,6 +24,12 @@ public class AddMoneyThroughPaymentCouponFragment extends BaseFragment implement
 
     private AddMoneyThroughPaymentCouponFragmentListener mFragmentListener;
     private EditText mCouponCodeEditText;
+
+    /**
+     * Param used to identify that api call should be fired or not
+     * If server sent any error ; then for next 15 secs, do not allow to make api call
+     */
+    private boolean mShouldMakeApiCall = true;
 
     public AddMoneyThroughPaymentCouponFragment() {
     }
@@ -60,11 +67,23 @@ public class AddMoneyThroughPaymentCouponFragment extends BaseFragment implement
     private void onAddAmountClicked() {
         if (getView() != null && mCouponCodeEditText != null) {
             TextView errorTextView = (TextView) getView().findViewById(R.id.add_payment_coupon_error_textView);
-
             String couponCode = mCouponCodeEditText.getText().toString().trim();
+
             if (!TextUtils.isEmpty(couponCode)) {
-                errorTextView.setVisibility(View.INVISIBLE);
-                onPaymentCouponAdded(couponCode);
+
+                if (couponCode.length() == 8) {
+
+                    if (mShouldMakeApiCall) {
+
+                        errorTextView.setVisibility(View.INVISIBLE);
+                        onPaymentCouponAdded(couponCode);
+
+                    } else {
+                        showMessage("Please wait for sometimes to add amount");
+                    }
+                } else {
+                    showError("Please Enter Correct Coupon Code");
+                }
             } else {
                 showError("Please Enter Coupon Code");
             }
@@ -94,7 +113,7 @@ public class AddMoneyThroughPaymentCouponFragment extends BaseFragment implement
             }
 
             @Override
-            public void onSuccessResponse(AddMoneyPaymentCouponResponse response) {
+            public void onSuccessResponse(VerifyPaymentCouponResponse response) {
                 dismissProgressbar();
                 if (response != null && mFragmentListener != null) {
                     mFragmentListener.onPaymentCouponSuccess(response.getMoneyAdded());
@@ -106,9 +125,26 @@ public class AddMoneyThroughPaymentCouponFragment extends BaseFragment implement
             @Override
             public void onServerSentError(String msg) {
                 dismissProgressbar();
+                setToWaitBeforeNextApiCallIfServerSentAnError();
                 showError(msg);
             }
         };
+    }
+
+    private void setToWaitBeforeNextApiCallIfServerSentAnError() {
+        mShouldMakeApiCall = false;
+        new CountDownTimer(15000, 15000) {
+
+            @Override
+            public void onTick(long millisUntilFinished) {
+                // No action required
+            }
+
+            @Override
+            public void onFinish() {
+                mShouldMakeApiCall = true;
+            }
+        }.start();
     }
 
     private void showError(String msg) {
