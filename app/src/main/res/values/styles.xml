@@ -348,4 +348,13 @@
         <item name="indicatorName">LineSpinFadeLoaderIndicator</item>
     </style>
 
+    <style name="SeekBarTheme" parent="Theme.AppCompat.Light.Dialog.Alert">
+            <item name="android:minHeight">20dip</item>
+            <item name="android:maxHeight">20dip</item>
+            <item name="android:thumbOffset">10dp</item>
+            <item name="android:focusable">true</item>
+            <item name="colorControlActivated">@color/venice_blue</item>
+            <item name="colorControlHighlight">#00303f</item>
+    </style>
+
 </resources>

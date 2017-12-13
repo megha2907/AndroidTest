@@ -7,6 +7,7 @@ import com.jeeva.android.Log;
 import java.util.ArrayList;
 import java.util.List;
 
+import in.sportscafe.nostragamus.AppSnippet;
 import in.sportscafe.nostragamus.module.challengeRewards.dto.Rewards;
 import in.sportscafe.nostragamus.module.contest.dto.pool.PoolContestResponse;
 import in.sportscafe.nostragamus.module.contest.dto.pool.PoolPayoutMap;
@@ -24,8 +25,8 @@ public class PoolPrizesEstimationHelper {
      * @param perUserPrize [ >0 ]
      * @return Total Pool prizes
      */
-    public int getTotalPrize(int participants, int perUserPrize) {
-        int total = 0;
+    public double getTotalPrize(int participants, double perUserPrize) {
+        double total = 0;
 
         if (participants > 0 && perUserPrize > 0) {
             total = participants * perUserPrize;
@@ -65,7 +66,7 @@ public class PoolPrizesEstimationHelper {
     public List<Rewards> getEstimatedRewardsList(int participants,
                                                  List<PoolPayoutMap> payoutMapArrayList,
                                                  String rounding,
-                                                 int totalPrize) {
+                                                 double totalPrize) {
         List<Rewards> rewardsList = null;
 
         if (payoutMapArrayList != null && !payoutMapArrayList.isEmpty() &&
@@ -79,7 +80,7 @@ public class PoolPrizesEstimationHelper {
                 if (poolPayoutMap.getPercent() >= 0 && poolPayoutMap.getShare() >= 0) {
 
                     int prizeAmount = 0, usersCount = 0;
-                    float winningMoney = 0;
+                    double winningMoney = 0;
 
                     /* Percentage-of-users out of total participants who should be considered
                     combined for a share in payout-level(this iteration) */
@@ -106,7 +107,7 @@ public class PoolPrizesEstimationHelper {
                             rank++;
 
                             Rewards rewards = new Rewards();
-                            rewards.setRank(String.valueOf(rank) + "th");
+                            rewards.setRank(AppSnippet.ordinal(rank));
                             rewards.setAmount(prizeAmount);
 
                             rewardsList.add(rewards);

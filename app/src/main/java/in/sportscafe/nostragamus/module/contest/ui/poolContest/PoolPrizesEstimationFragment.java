@@ -2,6 +2,8 @@ package in.sportscafe.nostragamus.module.contest.ui.poolContest;
 
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -9,7 +11,11 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.SpannableString;
+import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
+import android.text.style.ForegroundColorSpan;
+import android.text.style.StyleSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -74,7 +80,7 @@ public class PoolPrizesEstimationFragment extends BaseFragment implements View.O
         return new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-
+                setEntries(progress);
             }
 
             @Override
@@ -91,7 +97,6 @@ public class PoolPrizesEstimationFragment extends BaseFragment implements View.O
     }
 
     private void onSeekBarTrackingCompleted(int progress) {
-        setEntries(progress);
         if (mRewardsApiResponse != null) {
             PoolRewardsAdapter adapter = new PoolRewardsAdapter(
                     getEstimatedRewardsList(progress),
@@ -112,7 +117,14 @@ public class PoolPrizesEstimationFragment extends BaseFragment implements View.O
             String msgStr = String.format(getString(R.string.pool_prize_estimation_msg),
                     String.valueOf(entries));
             TextView msgTextview = (TextView) getView().findViewById(R.id.estimation_msg_textView);
-            msgTextview.setText(msgStr);
+
+            SpannableStringBuilder builder = new SpannableStringBuilder();
+            SpannableString whiteSpannable= new SpannableString(msgStr);
+            whiteSpannable.setSpan(new ForegroundColorSpan(Color.WHITE), 23, 33, 0);
+            whiteSpannable.setSpan(new StyleSpan(Typeface.BOLD), 23, 33, 0);
+            builder.append(whiteSpannable);
+            msgTextview.setText(builder, TextView.BufferType.SPANNABLE);
+
         }
     }
 
@@ -123,7 +135,7 @@ public class PoolPrizesEstimationFragment extends BaseFragment implements View.O
         if (mRewardsApiResponse != null && mPoolPrizesEstimationHelper != null) {
             int participants = getMinParticipants() + progress;
 
-            int totalPrize = mPoolPrizesEstimationHelper.getTotalPrize(participants, getPerUserPrizeValue());
+            double totalPrize = mPoolPrizesEstimationHelper.getTotalPrize(participants, getPerUserPrizeValue());
 
             estimatedRewardsList = mPoolPrizesEstimationHelper.getEstimatedRewardsList(participants,
                     getPoolPayoutMapList(), getRoundingLevel(), totalPrize);
@@ -203,7 +215,7 @@ public class PoolPrizesEstimationFragment extends BaseFragment implements View.O
 
                 /* Prior challenge starts */
                 if (!isChallengeStarted) {
-                    showPrizeEstimationViews();
+                    showPrizeEstimationViews(rewardsResponse.getRewardsList());
 
                 } else {
                     showChallengeStartedView();
@@ -265,13 +277,22 @@ public class PoolPrizesEstimationFragment extends BaseFragment implements View.O
         startActivity(new Intent(getContext(), FeedWebView.class).putExtra("url", Constants.WebPageUrls.RULES));
     }
 
-    private void showPrizeEstimationViews() {
+    private void showPrizeEstimationViews(List<Rewards> rewardsList) {
         if (getView() != null) {
             LinearLayout estimationLayout = (LinearLayout) getView().findViewById(R.id.pool_prize_estimation_layout);
             estimationLayout.setVisibility(View.VISIBLE);
 
             populateSeekbarValues();
             onSeekBarTrackingCompleted(0);
+
+            if (rewardsList != null && !rewardsList.isEmpty()) {
+                PoolRewardsAdapter adapter = new PoolRewardsAdapter(
+                        rewardsList,
+                        mRewardsApiResponse.getChallengeEndTime(),
+                        mRewardsApiResponse.getChallengeStartTime(), null);
+                mRecyclerView.setAdapter(adapter);
+                mRecyclerView.setVisibility(View.VISIBLE);
+            }
         }
     }
 
@@ -315,8 +336,8 @@ public class PoolPrizesEstimationFragment extends BaseFragment implements View.O
         return max;
     }
 
-    private int getPerUserPrizeValue() {
-        int prize = 0;
+    private double getPerUserPrizeValue() {
+        double prize = 0;
         if (mRewardsApiResponse != null && mRewardsApiResponse.getPoolContestResponse() != null) {
             prize = mRewardsApiResponse.getPoolContestResponse().getPrizePerUser();
         }

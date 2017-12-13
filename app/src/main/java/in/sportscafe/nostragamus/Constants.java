@@ -224,12 +224,12 @@ public interface Constants {
         String PAYTM_TRANSACTION_CANCELLED = "You have cancelled transaction, can not continue to join";
         String PAYTM_TRANSACTION_FAILED = "Transaction failed, please try again";
         String PAYTM_FAILURE = "Could not initiate transaction, please try again";
-        String SOMETHING_WRONG ="Something went wrong! Please try again!";
+        String SOMETHING_WRONG = "Something went wrong! Please try again!";
         String NO_UPDATES = "No New Updates Available";
         String INVALID_PHONE_NUMBER = "Enter 10 digit number";
         String PHONE_NUMBER_EXIST = "Mobile Number is already registered";
         String INVALID_OTP = "Invalid OTP";
-        String REPORT_SUBMITTED ="Report Submitted";
+        String REPORT_SUBMITTED = "Report Submitted";
     }
 
     interface BundleKeys {
@@ -416,7 +416,7 @@ public interface Constants {
         String ACTION_ALL_CHALLENGE_DATA_LOADED = "in.sportscafe.nostragamus.intent.action.ALL_CHALLENGE_DATA_LOADED";
         String ACTION_SCROLL_CHALLENGE = "in.sportscafe.nostragamus.intent.action.SCROLL_CHALLENGE";
         String ACTION_RELOAD_CHALLENGES = "in.sportscafe.nostragamus.intent.action.RELOAD_CHALLENGES";
-        String ACTION_OPEN_WEBVIEW= "in.sportscafe.nostragamus.intent.action.OPEN_WEBVIEW";
+        String ACTION_OPEN_WEBVIEW = "in.sportscafe.nostragamus.intent.action.OPEN_WEBVIEW";
         String ACTION_FINISH_POWER_UP_BANK_ACTIVITY = "in.sportscafe.nostragamus.intent.action.FINISH_POWER_UP_BANK";
         String ACTION_INTERNET_STATE_CHANGED = "in.sportscafe.nostragamus.intent.action.INTERNET_STATE_CHANGED";
     }
@@ -545,7 +545,7 @@ public interface Constants {
         /* in play */
         String HEADLESS_CARD = "Headless Card";
         String JOINED_CARD = "Joined Card";
-        String RANK ="Rank";
+        String RANK = "Rank";
 
         /* in play contest details */
         String GAMES = "Games";
@@ -710,10 +710,16 @@ public interface Constants {
                 Manifest.permission.READ_EXTERNAL_STORAGE,
                 Manifest.permission.WRITE_EXTERNAL_STORAGE
         };
+
+        String[] READ_PHONE_STATE = new String[]{
+                Manifest.permission.READ_PHONE_STATE
+        };
+
     }
 
     interface RequestCodes {
         int STORAGE_PERMISSION = 134;
+        int READ_PHONE_PERMISSION = 135;
     }
 
     interface PaytmParamsKeys {
@@ -760,29 +766,29 @@ public interface Constants {
         String PAYMENT_MODE = "PAYMENTMODE";
         String CHECKSUM_HASH = "CHECKSUMHASH";
         String JOINED_CHALLENGE_INFO = "joined_challenge_info";
-     }
+    }
 
-     interface PaytmTransactionResponseStatusValues {
+    interface PaytmTransactionResponseStatusValues {
           /* NOTE: Values are from Paytm API documentation, should be compared against response_status to know transaction status
           * DO NOT CHANGE VALUES ... */
 
-         String TRANSACTION_SUCCESS = "TXN_SUCCESS";
-         String TRANSACTION_FAILURE = "TXN_FAILURE";
-         String TRANSACTION_PENDING = "PENDING";
-         String TRANSACTION_OPEN = "OPEN";
-     }
+        String TRANSACTION_SUCCESS = "TXN_SUCCESS";
+        String TRANSACTION_FAILURE = "TXN_FAILURE";
+        String TRANSACTION_PENDING = "PENDING";
+        String TRANSACTION_OPEN = "OPEN";
+    }
 
-     interface AddUserPaymentDetailsPaymentModes {
-         String BANK = "bank";
-         String PAYTM = "paytm";
-     }
+    interface AddUserPaymentDetailsPaymentModes {
+        String BANK = "bank";
+        String PAYTM = "paytm";
+    }
 
-     interface AppUpdateTypes {
-         String NORMAL_UPDATE = "Normal";
-         String FORCE_UPDATE = "Force";
-         String NORMAL_PAID_UPDATE = "Normal_Paid";
-         String FORCE_PAID_UPDATE = "Force_Paid";
-     }
+    interface AppUpdateTypes {
+        String NORMAL_UPDATE = "Normal";
+        String FORCE_UPDATE = "Force";
+        String NORMAL_PAID_UPDATE = "Normal_Paid";
+        String FORCE_PAID_UPDATE = "Force_Paid";
+    }
 
     interface MoneyFlow {
         String IN = "in";   // Debit

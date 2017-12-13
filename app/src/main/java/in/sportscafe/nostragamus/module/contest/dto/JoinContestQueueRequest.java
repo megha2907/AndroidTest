@@ -21,6 +21,9 @@ public class JoinContestQueueRequest {
     @SerializedName("pseudo_room_id")
     private int pseudoRoomId;
 
+    @SerializedName("flavor")
+    private String appFlavor;
+
     public int getChallengeId() {
         return challengeId;
     }
@@ -51,5 +54,13 @@ public class JoinContestQueueRequest {
 
     public void setPseudoRoomId(int pseudoRoomId) {
         this.pseudoRoomId = pseudoRoomId;
+    }
+
+    public String getAppFlavor() {
+        return appFlavor;
+    }
+
+    public void setAppFlavor(String appFlavor) {
+        this.appFlavor = appFlavor;
     }
 }

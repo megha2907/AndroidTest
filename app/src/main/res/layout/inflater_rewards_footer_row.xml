@@ -4,7 +4,8 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/black">
+    android:background="@color/black"
+    android:paddingBottom="@dimen/dim_10">
 
     <com.jeeva.android.widgets.customfont.CustomTextView
         android:id="@+id/pool_row_tv_disclaimer_txt"
@@ -28,9 +29,8 @@
         android:text="NOSTRAGAMUS RULES"
         android:clickable="true"
         android:layout_gravity="center_horizontal"
-        android:padding="@dimen/dim_10"
-        android:textColor="@color/venice_blue"
+        android:textColor="#008ae1"
         android:textSize="@dimen/sp_12"
-        app:typeface="lato_regular" />
+        app:typeface="lato_bold" />
 
 </LinearLayout>
