@@ -11,6 +11,7 @@ import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.provider.Settings;
+import android.support.annotation.NonNull;
 import android.support.multidex.MultiDex;
 import android.telephony.TelephonyManager;
 
@@ -360,6 +361,19 @@ public class Nostragamus extends Application {
             }
         } catch (Exception e) {}
         return accountStr;
+    }
+
+    @NonNull
+    public String getAppTypeFlavor() {
+        String flavor;
+        if (BuildConfig.IS_ACL_VERSION) {
+            flavor = Constants.AppType.ACL;
+        } else if (BuildConfig.IS_PAID_VERSION){
+            flavor = Constants.AppType.PRO;
+        }else {
+            flavor = Constants.AppType.PLAYSTORE;
+        }
+        return flavor;
     }
 
     /**

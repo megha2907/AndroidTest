@@ -183,12 +183,7 @@ public class LogInModelImpl implements LogInModel {
         userProfile.setPhotos(photo);
         userProfile.setUserReferralCode(NostragamusDataHandler.getInstance().getUserReferralCode());
         userProfile.setCampaignName(NostragamusDataHandler.getInstance().getInstallReferralCampaign());
-
-        if (BuildConfig.IS_PAID_VERSION){
-            userProfile.setAppType(Constants.AppType.PRO);
-        }else {
-            userProfile.setAppType(Constants.AppType.PLAYSTORE);
-        }
+        userProfile.setAppType(Nostragamus.getInstance().getAppTypeFlavor());
 
         if (NostragamusDataHandler.getInstance().getWalletInitialAmount()!= -1) {
             userProfile.setWalletInitialAmount(NostragamusDataHandler.getInstance().getWalletInitialAmount());

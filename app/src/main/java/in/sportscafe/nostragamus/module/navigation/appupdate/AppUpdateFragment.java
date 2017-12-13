@@ -28,6 +28,7 @@ import java.util.List;
 
 import in.sportscafe.nostragamus.BuildConfig;
 import in.sportscafe.nostragamus.Constants;
+import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
@@ -287,11 +288,12 @@ public class AppUpdateFragment extends BaseFragment implements View.OnClickListe
 
     private void getAppUpdateDetailsList() {
 
-        if (BuildConfig.IS_PAID_VERSION) {
-            callAppUpdatesApi("FULL");
-        } else {
-            callAppUpdatesApi(null);
+        String flavor = Nostragamus.getInstance().getAppTypeFlavor();
+        if (flavor.equalsIgnoreCase(Constants.AppType.PLAYSTORE)) {
+            flavor = null;
         }
+
+        callAppUpdatesApi(flavor);
     }
 
     /* Get details of App Update from Api according to App Flavor */
