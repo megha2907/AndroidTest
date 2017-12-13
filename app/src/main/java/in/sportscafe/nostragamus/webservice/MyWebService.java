@@ -346,12 +346,16 @@ public class MyWebService extends AbstractWebService<NostragamusService> {
         return mNostragamusService.getNewHomeChallenges();
     }
 
-    public Call<ContestResponse> getContests(int challengeId) {
+    public Call<ContestResponse> getContests(int challengeId, boolean needPoolContests) {
         String flavor = "PS";
-        if (BuildConfig.IS_PAID_VERSION) {
+        if (BuildConfig.IS_PAID_VERSION && BuildConfig.IS_ACL_VERSION) {
+            flavor = "Acl";
+        }else if (BuildConfig.IS_ACL_VERSION){
+            flavor = "Acl";
+        }else if (BuildConfig.IS_PAID_VERSION){
             flavor = "Pro";
         }
-        return mNostragamusService.getContests(challengeId, flavor);
+        return mNostragamusService.getContests(challengeId, flavor,needPoolContests);
     }
 
     public Call<List<InPlayResponse>> getInPlayChallenges() {
