@@ -189,7 +189,6 @@ public class AppUpdateFragment extends BaseFragment implements View.OnClickListe
             mUpdateAppBtn.setVisibility(View.VISIBLE);
         }
 
-
     }
 
     private void callWhatsNewShownApi() {
