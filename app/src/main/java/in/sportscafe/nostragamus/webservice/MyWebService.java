@@ -351,7 +351,13 @@ public class MyWebService extends AbstractWebService<NostragamusService> {
     }
 
     public Call<List<NewChallengesResponse>> getNewHomeChallenges() {
-        return mNostragamusService.getNewHomeChallenges();
+        String flavor = "PS";
+        if (BuildConfig.IS_ACL_VERSION && BuildConfig.IS_PAID_VERSION){
+            flavor = "ACL";
+        }else if (BuildConfig.IS_PAID_VERSION){
+            flavor = "PRO";
+        }
+        return mNostragamusService.getNewHomeChallenges(flavor);
     }
 
     public Call<ContestResponse> getContests(int challengeId, boolean needPoolContest) {
