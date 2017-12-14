@@ -170,7 +170,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="left"
-                        android:text="In case you have a payment code, please use the button below to redeem your money"
+                        android:text="In case you have a coupon code, click on the button below to redeem it"
                         android:textColor="#cccccc"
                         android:textSize="@dimen/sp_12"
                         app:typeface="lato_regular" />
