@@ -121,7 +121,7 @@
                         android:layout_marginLeft="@dimen/dim_20"
                         android:layout_marginRight="@dimen/dim_20"
                         android:gravity="center"
-                        android:text="Use the slider to select number if members entering this contest and to check the prizes accordingly"
+                        android:text="Use the slider to select number of members entering this contest and to check the prizes accordingly"
                         android:textColor="@color/white_999999"
                         android:textSize="@dimen/sp_11"
                         app:typeface="lato_regular"

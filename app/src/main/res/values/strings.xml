@@ -137,7 +137,7 @@
     <string name="title_activity_add_payment_bank">AddPaymentBankActivity</string>
     <string name="profile_disclaimer"> Nostragamus is built as a Game of Skill, which are legally protected as games involving money in the majority of states of India. To proceed, please check the box to confirm you are above 18 years old and are not playing Nostragamus from Assam or Odisha.</string>
     <string name="download_app_text">Gain access to contests with prizes upto ₹ 10,000 on the full version of Nostragamus!</string>
-    <string name="prize_money_disclaimer">In case two or more people tie for a particular rank, the prize money will be re-calculated and may (or) may not be the same. Please refer to Section 7 in </string>
+    <string name="prize_money_disclaimer">In case there is a tie, the prize money will be recalculated and may not be the same. Please refer to Section 8 in </string>
 
     <item name="timeAgo" type="id" />
     <item name="onePartyMatch" type="id" />
@@ -160,6 +160,6 @@
     <string name="bottom_nav_group">Group</string>
     <string name="bottom_nav_profile">Profile</string>
     <string name="prediction_neither_button_text">NEITHER</string>
-    <string name="pool_prize_estimation_msg">This is prize list for %1s entries. The prizes for pool contests might vary with the participation of the players</string>
+    <string name="pool_prize_estimation_msg">This is the prize list for %1s entries. The prizes for pool contests might vary with the participation of players</string>
 
 </resources>

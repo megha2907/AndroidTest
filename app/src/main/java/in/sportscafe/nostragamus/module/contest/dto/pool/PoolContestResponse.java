@@ -24,6 +24,9 @@ public class PoolContestResponse {
     @SerializedName("step")
     private String roundingLevel;
 
+    @SerializedName("users_joined")
+    private int usersJoined;
+
     @SerializedName("payout_map")
     private List<PoolPayoutMap> poolPayoutMapList;
 
@@ -66,4 +69,13 @@ public class PoolContestResponse {
     public void setPoolPayoutMapList(List<PoolPayoutMap> poolPayoutMapList) {
         this.poolPayoutMapList = poolPayoutMapList;
     }
+
+    public int getUsersJoined() {
+        return usersJoined;
+    }
+
+    public void setUsersJoined(int usersJoined) {
+        this.usersJoined = usersJoined;
+    }
+
 }
