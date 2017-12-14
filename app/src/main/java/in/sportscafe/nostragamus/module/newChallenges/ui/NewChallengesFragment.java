@@ -103,11 +103,17 @@ public class NewChallengesFragment extends NostraBaseFragment implements View.On
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        setWalletBalance();
+        fetchWalletBalFromServer();
         loadData();
     }
 
-    private void setWalletBalance() {
+    @Override
+    public void onResume() {
+        super.onResume();
+        setWalletBalanceAmt();
+    }
+
+    private void fetchWalletBalFromServer() {
         if (Nostragamus.getInstance().hasNetworkConnection()) {
             WalletApiModelImpl.newInstance(new WalletApiModelImpl.WalletApiListener() {
                 @Override
@@ -118,10 +124,16 @@ public class NewChallengesFragment extends NostraBaseFragment implements View.On
 
                 @Override
                 public void onSuccessResponse(UserWalletResponse response) {
-                    int amount = (int) WalletHelper.getTotalBalance();
-                    mTvTBarWalletMoney.setText(String.valueOf(amount));
+                    setWalletBalanceAmt();
                 }
             }).performApiCall();
+        }
+    }
+
+    private void setWalletBalanceAmt() {
+        if (getView() != null && getActivity() != null && !getActivity().isFinishing()) {
+            int amount = (int) WalletHelper.getTotalBalance();
+            mTvTBarWalletMoney.setText(String.valueOf(amount));
         }
     }
 
@@ -132,7 +144,7 @@ public class NewChallengesFragment extends NostraBaseFragment implements View.On
             @Override
             public void onData(int status, @Nullable List<NewChallengesResponse> newChallengesResponseData) {
                 hideLoadingProgressBar();
-                setWalletBalance();
+                fetchWalletBalFromServer();
                 onDataReceived(status, newChallengesResponseData);
             }
 

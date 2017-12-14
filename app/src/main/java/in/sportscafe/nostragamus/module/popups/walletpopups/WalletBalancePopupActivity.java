@@ -8,13 +8,16 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.jeeva.android.BaseActivity;
+import com.jeeva.android.Log;
 
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
+import in.sportscafe.nostragamus.module.navigation.wallet.WalletApiModelImpl;
 import in.sportscafe.nostragamus.module.navigation.wallet.WalletHelper;
 import in.sportscafe.nostragamus.module.navigation.wallet.addMoney.AddWalletMoneyActivity;
+import in.sportscafe.nostragamus.module.navigation.wallet.dto.UserWalletResponse;
 import in.sportscafe.nostragamus.module.popups.PopUpDialogActivity;
 import in.sportscafe.nostragamus.utils.AnimationHelper;
 
@@ -24,6 +27,7 @@ import in.sportscafe.nostragamus.utils.AnimationHelper;
 
 public class WalletBalancePopupActivity extends PopUpDialogActivity implements View.OnClickListener {
 
+    private static final String TAG = WalletBalancePopupActivity.class.getSimpleName();
     private LinearLayout mWalletMoneyInfoLayout;
     private LinearLayout mPromoMoneyInfoLayout;
     private LinearLayout mWinningInfoLayout;
@@ -43,11 +47,6 @@ public class WalletBalancePopupActivity extends PopUpDialogActivity implements V
     }
 
     private void setWalletInfo() {
-        TextView tvBalanceAmount = (TextView) findViewById(R.id.header_textView_wallet_amount);
-        TextView depositTextView = (TextView) findViewById(R.id.wallet_balance_deposit_tv);
-        TextView promoBalanceTextView = (TextView) findViewById(R.id.wallet_balance_promo_tv);
-        TextView winningsTextView = (TextView) findViewById(R.id.wallet_balance_winnings_tv);
-
         mWalletMoneyInfoLayout = (LinearLayout)findViewById(R.id.wallet_deposit_info_layout);
         mPromoMoneyInfoLayout = (LinearLayout)findViewById(R.id.wallet_promo_info_layout);
         mWinningInfoLayout = (LinearLayout) findViewById(R.id.wallet_winning_info_layout);
@@ -58,11 +57,22 @@ public class WalletBalancePopupActivity extends PopUpDialogActivity implements V
         findViewById(R.id.wallet_popup_card_promo_layout).setOnClickListener(this);
         findViewById(R.id.wallet_popup_card_winnings_layout).setOnClickListener(this);
 
-        double walletBalAmount = WalletHelper.getTotalBalance();
-        tvBalanceAmount.setText(WalletHelper.getFormattedStringOfAmount(walletBalAmount));
-        depositTextView.setText(WalletHelper.getFormattedStringOfAmount(WalletHelper.getDepositAmount()));
-        promoBalanceTextView.setText(WalletHelper.getFormattedStringOfAmount(WalletHelper.getPromoAmount()));
-        winningsTextView.setText(WalletHelper.getFormattedStringOfAmount(WalletHelper.getWinningAmount()));
+        populateWalletDetails();
+    }
+
+    private void populateWalletDetails() {
+        if (!isFinishing()) {
+            TextView tvBalanceAmount = (TextView) findViewById(R.id.header_textView_wallet_amount);
+            TextView depositTextView = (TextView) findViewById(R.id.wallet_balance_deposit_tv);
+            TextView promoBalanceTextView = (TextView) findViewById(R.id.wallet_balance_promo_tv);
+            TextView winningsTextView = (TextView) findViewById(R.id.wallet_balance_winnings_tv);
+
+            double walletBalAmount = WalletHelper.getTotalBalance();
+            tvBalanceAmount.setText(WalletHelper.getFormattedStringOfAmount(walletBalAmount));
+            depositTextView.setText(WalletHelper.getFormattedStringOfAmount(WalletHelper.getDepositAmount()));
+            promoBalanceTextView.setText(WalletHelper.getFormattedStringOfAmount(WalletHelper.getPromoAmount()));
+            winningsTextView.setText(WalletHelper.getFormattedStringOfAmount(WalletHelper.getWinningAmount()));
+        }
     }
 
     @Override
@@ -124,4 +134,33 @@ public class WalletBalancePopupActivity extends PopUpDialogActivity implements V
             AnimationHelper.expand(mWalletMoneyInfoLayout);
         }
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        fetchUserWalletFromServer();
+    }
+
+    private void fetchUserWalletFromServer() {
+        if (Nostragamus.getInstance().hasNetworkConnection()) {
+            WalletApiModelImpl.newInstance(new WalletApiModelImpl.WalletApiListener() {
+                @Override
+                public void noInternet() {
+                    Log.d(TAG, Constants.Alerts.NO_NETWORK_CONNECTION);
+                }
+
+                @Override
+                public void onApiFailed() {
+                    Log.d(TAG, Constants.Alerts.API_FAIL);
+                }
+
+                @Override
+                public void onSuccessResponse(UserWalletResponse response) {
+                    populateWalletDetails();
+                }
+            }).performApiCall();
+        }
+    }
+
+
 }

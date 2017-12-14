@@ -50,7 +50,7 @@ node {
     stage 'Building'
     env.ANDROID_HOME="/mnt/disk1/data/android/sdk"
     env.JAVA_HOME="/usr/java/default/jre"
-    sh './gradlew clean :app:assemblestageProRelease :app:assembleNostragamusProRelease :app:assembleNostragamusPSRelease :app:assemblestageRelease :app:assembleNostragamusProAcl :app:assembleStageProAcl --debug'
+    sh './gradlew clean :app:assemblestageProRelease :app:assembleStageProAclRelease :app:assembleNostragamusProRelease :app:assembleNostragamusProAclRelease  --debug'
 
     stage 'Upload to S3'
     build job: 'upload_to_s3', wait: false, parameters: [
@@ -58,9 +58,9 @@ node {
             string(name: 'FILE_NAME', value: "*-${VER}.apk"),
             string(name: 'UPLOAD_PATH', value: UPLOAD_PATH)
     ]
-    def S3_PATH_DEV = "https://cdn-deploy.spcafe.in/${UPLOAD_PATH}/app-dev-release.apk"
-    def S3_PATH_STAGE = "https://cdn-deploy.spcafe.in/${UPLOAD_PATH}/stage-${VER}.apk"
-    def S3_PATH_PROD = "https://cdn-deploy.spcafe.in/${UPLOAD_PATH}/NostragamusPS-${VER}.apk"
+    //def S3_PATH_DEV = "https://cdn-deploy.spcafe.in/${UPLOAD_PATH}/app-dev-release.apk"
+    //def S3_PATH_STAGE = "https://cdn-deploy.spcafe.in/${UPLOAD_PATH}/stage-${VER}.apk"
+    //def S3_PATH_PROD = "https://cdn-deploy.spcafe.in/${UPLOAD_PATH}/NostragamusPS-${VER}.apk"
     def S3_PATH_STAGEPAID = "https://cdn-deploy.spcafe.in/${UPLOAD_PATH}/stagePro-${VER}.apk"
     def S3_PATH_PRODPAID = "https://cdn-deploy.spcafe.in/${UPLOAD_PATH}/NostragamusPro-${VER}.apk"
       def S3_PATH_NOSTRA_PRO_ACL = "https://cdn-deploy.spcafe.in/${UPLOAD_PATH}/NostragamusProAcl-${VER}.apk"
@@ -68,7 +68,7 @@ node {
     
     slackSend channel: "#auto-jenkins",
       color: "good",
-      message: "<${env.BUILD_URL}|#${env.BUILD_NUMBER}> _S3 Deployment:_ *nostragamus | Download ${VER} <${S3_PATH_DEV}|Dev>,<${S3_PATH_STAGE}|Stage>,<${S3_PATH_STAGEPAID}|StagePaid>,<${S3_PATH_PROD}|Prod>,<${S3_PATH_PRODPAID}|PaidProd> <${S3_PATH_NOSTRA_PRO_ACL}|NostraProAcl> <${S3_PATH_STAGE_PRO_ACL}|StageProAcl>*"
+      message: "<${env.BUILD_URL}|#${env.BUILD_NUMBER}> _S3 Deployment:_ *nostragamus | Download ${VER} <${S3_PATH_STAGEPAID}|StagePro>, <${S3_PATH_STAGE_PRO_ACL}|StageProAcl>, <${S3_PATH_PRODPAID}|NostragamusPro>, <${S3_PATH_NOSTRA_PRO_ACL}|NostragamusProAcl> *"
 
     stage 'Upload to Google Play'
     if(BRANCH_NAME == 'master') {
