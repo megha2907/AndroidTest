@@ -67,7 +67,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="left"
-                        android:text="Enter Payment Code"
+                        android:text="Enter Coupon Code"
                         android:textColor="@color/white"
                         android:textSize="@dimen/sp_14"
                         app:typeface="lato_regular" />
@@ -117,7 +117,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="left"
-                        android:text="Enter your payment code in the box to redeem your money"
+                        android:text="Enter your coupon code above to redeem it and add money into your wallet. Please note that the code is case sensitive!"
                         android:textColor="#cccccc"
                         android:textSize="@dimen/sp_12"
                         app:typeface="lato_regular" />
