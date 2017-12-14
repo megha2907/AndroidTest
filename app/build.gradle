@@ -80,7 +80,8 @@ android {
 
     productFlavors {
 
-        stage {
+        stagePs {
+            applicationIdSuffix ".ps"
             manifestPlaceholders = [buildTypeSuffix: "", branchState: "true"]
             resValue "string", "app_name", "Nostra Stage"
             buildConfigField("boolean", "IS_PAID_VERSION", "false")
@@ -127,7 +128,7 @@ android {
             buildConfigField("boolean", "IS_ACL_VERSION", "true")
         }
 
-        local {
+        /*local {
             manifestPlaceholders = [buildTypeSuffix: "", branchState: "false"]
             resValue "string", "app_name", "Nostragamus"
             buildConfigField("boolean", "IS_PAID_VERSION", "false")
@@ -139,7 +140,7 @@ android {
             resValue "string", "app_name", "Nostragamus Dev"
             buildConfigField("boolean", "IS_PAID_VERSION", "false")
             buildConfigField("boolean", "IS_ACL_VERSION", "false")
-        }
+        }*/
     }
 
     applicationVariants.all { variant ->
