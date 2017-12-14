@@ -296,7 +296,11 @@ public class InPlayRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
             viewHolder.contestTitleTextView.setText(contest.getContestName());
             viewHolder.entryFeeTextView.setText(Constants.RUPEE_SYMBOL + String.valueOf(contest.getEntryFee()));
-            viewHolder.prizesTextView.setText(Constants.RUPEE_SYMBOL + String.valueOf(contest.getWinningAmount()));
+
+            double winningAmount = contest.getWinningAmount();
+            int winningAmountValue = (int) winningAmount;
+
+            viewHolder.prizesTextView.setText(Constants.RUPEE_SYMBOL + String.valueOf(winningAmountValue));
 
             if (contest.getRank() > 0) {
                 viewHolder.currentRankTextView.setText(AppSnippet.ordinal(contest.getRank()));

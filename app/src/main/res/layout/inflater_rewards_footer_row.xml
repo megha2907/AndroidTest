@@ -15,7 +15,7 @@
         android:layout_marginLeft="@dimen/dim_30"
         android:layout_marginRight="@dimen/dim_30"
         android:paddingTop="@dimen/dim_10"
-        android:paddingBottom="@dimen/dim_10"
+        android:paddingBottom="@dimen/dim_6"
         android:textColor="@color/grey6"
         android:textSize="@dimen/sp_12"
         app:typeface="lato_regular"

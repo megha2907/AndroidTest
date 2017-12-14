@@ -15,10 +15,13 @@ import java.util.List;
 
 import in.sportscafe.nostragamus.AppSnippet;
 import in.sportscafe.nostragamus.Constants;
+import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.challengeRewards.dto.Rewards;
 import in.sportscafe.nostragamus.module.contest.ui.poolContest.PoolRewardsAdapterListener;
 import in.sportscafe.nostragamus.module.newChallenges.helpers.DateTimeHelper;
+import in.sportscafe.nostragamus.utils.timeutils.TimeAgo;
+import in.sportscafe.nostragamus.utils.timeutils.TimeUnit;
 import in.sportscafe.nostragamus.utils.timeutils.TimeUtils;
 
 /**
@@ -119,17 +122,54 @@ public class PoolRewardsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         if (!TextUtils.isEmpty(mChallengeEndTime)) {
             String msg = "The challenge ends on " + getChallengeEndDateForPrizeOutMsg() + ". Prizes will be handed out a few hours after the challenge completion";
             holder.challengeEndMsg.setText(msg);
+
         }
 
         /* Rules layout */
         holder.disclaimerLayout.setVisibility(View.VISIBLE);
+
+        if (holder.getAdapterPosition() % 2 == 0) {
+            holder.disclaimerLayout.setBackgroundColor(ContextCompat.getColor(holder.itemView.getContext(), R.color.black5));
+        } else {
+            holder.disclaimerLayout.setBackgroundColor(ContextCompat.getColor(holder.itemView.getContext(), R.color.black4));
+        }
+
     }
 
     private void setFooterForEstimation(EstimatePrizeFooterVH holder) {
         if (!TextUtils.isEmpty(mChallengeEndTime)) {
-            String msg = "The challenge will end on " + getChallengeEndDateForPrizeOutMsg() + ". Prizes will be handed out a few hours after the challenge completion";
-            holder.challengeEndMsg.setText(msg);
+
+            if (getChallengeOver(mChallengeEndTime)) {
+               /* Invisible when challenge is over */
+                holder.challengeEndMsg.setVisibility(View.GONE);
+                holder.disclaimerLayout.setVisibility(View.VISIBLE);
+            } else {
+                // Setting end date of the challenge
+                String msg = "The challenge will end on " + getChallengeEndDateForPrizeOutMsg() + ". Prizes will be handed out a few hours after the challenge completion";
+                holder.challengeEndMsg.setText(msg);
+            }
         }
+    }
+
+    private boolean getChallengeOver(String challengeEndTime) {
+
+        boolean isChallengeOver = false;
+
+        if (!TextUtils.isEmpty(challengeEndTime)) {
+            String startTime = challengeEndTime.replace("+00:00", ".000Z");
+            long startTimeMs = TimeUtils.getMillisecondsFromDateString(
+                    startTime,
+                    Constants.DateFormats.FORMAT_DATE_T_TIME_ZONE,
+                    Constants.DateFormats.GMT
+            );
+            TimeAgo timeAgo = TimeUtils.calcTimeAgo(Nostragamus.getInstance().getServerTime(), startTimeMs);
+
+            isChallengeOver = timeAgo.timeDiff <= 0
+                    || timeAgo.timeUnit == TimeUnit.MILLISECOND
+                    || timeAgo.timeUnit == TimeUnit.SECOND;
+        }
+
+        return isChallengeOver;
     }
 
     @NonNull
