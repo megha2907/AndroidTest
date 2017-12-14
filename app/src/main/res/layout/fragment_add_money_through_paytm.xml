@@ -180,7 +180,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="left"
-                        android:text="Use Payment Code"
+                        android:text="Use Coupon Code"
                         android:textColor="#186cc2"
                         android:textSize="@dimen/sp_14"
                         app:typeface="lato_bold"
