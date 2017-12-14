@@ -1,16 +1,22 @@
 package in.sportscafe.nostragamus.module.navigation.wallet.addMoney.addByPaymentCoupon;
 
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.jeeva.android.BaseActivity;
 import com.jeeva.android.BaseFragment;
+import com.jeeva.android.widgets.CustomProgressbar;
 
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
@@ -22,6 +28,7 @@ import in.sportscafe.nostragamus.module.navigation.wallet.addMoney.dto.VerifyPay
  */
 public class AddMoneyThroughPaymentCouponFragment extends BaseFragment implements View.OnClickListener {
 
+    private final int COUPON_CODE_LENGTH = 8;
     private AddMoneyThroughPaymentCouponFragmentListener mFragmentListener;
     private EditText mCouponCodeEditText;
 
@@ -45,6 +52,35 @@ public class AddMoneyThroughPaymentCouponFragment extends BaseFragment implement
     private void initRootView(View rootView) {
         rootView.findViewById(R.id.wallet_add_amount_button).setOnClickListener(this);
         mCouponCodeEditText = (EditText) rootView.findViewById(R.id.wallet_add_payment_coupon_editText);
+
+        mCouponCodeEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (s.length() == COUPON_CODE_LENGTH) {
+                    hideKeyBoard();
+                }
+            }
+        });
+    }
+
+    private void hideKeyBoard() {
+        if (getActivity() != null && getActivity().getCurrentFocus() != null) {
+            InputMethodManager inputMethodManager = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+            if (inputMethodManager != null) {
+                inputMethodManager.hideSoftInputFromWindow(getActivity().getCurrentFocus()
+                        .getApplicationWindowToken(), 0);
+            }
+        }
     }
 
     public AddMoneyThroughPaymentCouponFragmentListener getFragmentListener() {
@@ -71,7 +107,7 @@ public class AddMoneyThroughPaymentCouponFragment extends BaseFragment implement
 
             if (!TextUtils.isEmpty(couponCode)) {
 
-                if (couponCode.length() == 8) {
+                if (couponCode.length() == COUPON_CODE_LENGTH) {
 
                     if (mShouldMakeApiCall) {
 
@@ -91,7 +127,7 @@ public class AddMoneyThroughPaymentCouponFragment extends BaseFragment implement
     }
 
     private void onPaymentCouponAdded(String couponCode) {
-        showProgressbar();
+        CustomProgressbar.getProgressbar(getContext()).show();
         AddMoneyThoughPaymentCouponApiModelImpl.newInstance(getAddMoneyThroughPaymentCouponListener()).
                 callAddMoneyPaymentCouponApi(couponCode);
     }
@@ -102,19 +138,19 @@ public class AddMoneyThroughPaymentCouponFragment extends BaseFragment implement
 
             @Override
             public void noInternet() {
-                dismissProgressbar();
+                CustomProgressbar.getProgressbar(getContext()).dismissProgress();
                 showMessage(Constants.Alerts.NO_INTERNET_CONNECTION);
             }
 
             @Override
             public void onApiFailure() {
-                dismissProgressbar();
+                CustomProgressbar.getProgressbar(getContext()).dismissProgress();
                 showMessage(Constants.Alerts.API_FAIL);
             }
 
             @Override
             public void onSuccessResponse(VerifyPaymentCouponResponse response) {
-                dismissProgressbar();
+                CustomProgressbar.getProgressbar(getContext()).dismissProgress();
                 if (response != null && mFragmentListener != null) {
                     mFragmentListener.onPaymentCouponSuccess(response.getMoneyAdded());
                 } else {
@@ -124,7 +160,7 @@ public class AddMoneyThroughPaymentCouponFragment extends BaseFragment implement
 
             @Override
             public void onServerSentError(String msg) {
-                dismissProgressbar();
+                CustomProgressbar.getProgressbar(getContext()).dismissProgress();
                 setToWaitBeforeNextApiCallIfServerSentAnError();
                 showError(msg);
             }

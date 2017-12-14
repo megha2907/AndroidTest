@@ -49,8 +49,11 @@ public class AddWalletMoneyActivity extends NostragamusActivity implements AddWa
 
     @Override
     public void onSuccess() {
-        Intent intent = new Intent(this, WalletHomeActivity.class);
+        /*Intent intent = new Intent(this, WalletHomeActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(intent);
+        startActivity(intent);*/
+
+        /* Once money added , remove this activity */
+        super.onBackPressed();
     }
 }
