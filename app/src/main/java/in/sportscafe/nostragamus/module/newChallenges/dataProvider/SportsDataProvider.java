@@ -126,8 +126,8 @@ public class SportsDataProvider {
         SportsTab ACL = new SportsTab();
         ACL.setSportsId(15);
         ACL.setSportsName("ACL 2017-18");
-        ACL.setSportIconDrawable(R.drawable.acl_icon);
-        ACL.setSportIconUnSelectedDrawable(R.drawable.acl_icon);
+        ACL.setSportIconDrawable(R.drawable.acl_sports_icn);
+        ACL.setSportIconUnSelectedDrawable(R.drawable.acl_sports_greyed_icn);
 
         /* This is priority order, to show tabs */
         sportsList.add(all);

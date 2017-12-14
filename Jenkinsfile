@@ -50,7 +50,7 @@ node {
     stage 'Building'
     env.ANDROID_HOME="/mnt/disk1/data/android/sdk"
     env.JAVA_HOME="/usr/java/default/jre"
-    sh './gradlew clean :app:assemblestageProRelease :app:assembleNostragamusProRelease :app:assembleNostragamusPSRelease :app:assemblestageRelease --debug'
+    sh './gradlew clean :app:assemblestageProRelease :app:assembleNostragamusProRelease :app:assembleNostragamusPSRelease :app:assemblestageRelease :app:assembleNostragamusProAcl :app:assembleStageProAcl --debug'
 
     stage 'Upload to S3'
     build job: 'upload_to_s3', wait: false, parameters: [
@@ -63,10 +63,12 @@ node {
     def S3_PATH_PROD = "https://cdn-deploy.spcafe.in/${UPLOAD_PATH}/NostragamusPS-${VER}.apk"
     def S3_PATH_STAGEPAID = "https://cdn-deploy.spcafe.in/${UPLOAD_PATH}/stagePro-${VER}.apk"
     def S3_PATH_PRODPAID = "https://cdn-deploy.spcafe.in/${UPLOAD_PATH}/NostragamusPro-${VER}.apk"
+      def S3_PATH_NOSTRA_PRO_ACL = "https://cdn-deploy.spcafe.in/${UPLOAD_PATH}/NostragamusProAcl-${VER}.apk"
+      def S3_PATH_STAGE_PRO_ACL = "https://cdn-deploy.spcafe.in/${UPLOAD_PATH}/StageProAcl-${VER}.apk"
     
     slackSend channel: "#auto-jenkins",
       color: "good",
-      message: "<${env.BUILD_URL}|#${env.BUILD_NUMBER}> _S3 Deployment:_ *nostragamus | Download ${VER} <${S3_PATH_DEV}|Dev>,<${S3_PATH_STAGE}|Stage>,<${S3_PATH_STAGEPAID}|StagePaid>,<${S3_PATH_PROD}|Prod>,<${S3_PATH_PRODPAID}|PaidProd>*"
+      message: "<${env.BUILD_URL}|#${env.BUILD_NUMBER}> _S3 Deployment:_ *nostragamus | Download ${VER} <${S3_PATH_DEV}|Dev>,<${S3_PATH_STAGE}|Stage>,<${S3_PATH_STAGEPAID}|StagePaid>,<${S3_PATH_PROD}|Prod>,<${S3_PATH_PRODPAID}|PaidProd> <${S3_PATH_NOSTRA_PRO_ACL}|NostraProAcl> <${S3_PATH_STAGE_PRO_ACL}|StageProAcl>*"
 
     stage 'Upload to Google Play'
     if(BRANCH_NAME == 'master') {

@@ -21,6 +21,7 @@ import java.util.List;
 
 import in.sportscafe.nostragamus.BuildConfig;
 import in.sportscafe.nostragamus.Constants;
+import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.navigation.referfriends.ReferFriendFragment;
 import in.sportscafe.nostragamus.module.navigation.wallet.WalletHelper;
@@ -95,12 +96,6 @@ public class ReferralCreditFragment extends BaseFragment implements View.OnClick
 
     private void fetchReferralCreditsInfoFromServer() {
 
-        String appFlavor;
-        if (BuildConfig.IS_PAID_VERSION) {
-            appFlavor = "PRO";
-        } else {
-            appFlavor = "PS";
-        }
         showProgressbar();
         ReferralCreditApiModelImpl.newInstance(new ReferralCreditApiModelImpl.ReferralCreditApiListener() {
             @Override
@@ -120,7 +115,7 @@ public class ReferralCreditFragment extends BaseFragment implements View.OnClick
                 dismissProgressbar();
                 onReferralHistoryListFetchedSuccessful(referralHistoryList);
             }
-        }).performApiCall(appFlavor);
+        }).performApiCall(Nostragamus.getInstance().getAppTypeFlavor());
     }
 
     private void initRootView(View rootView) {
