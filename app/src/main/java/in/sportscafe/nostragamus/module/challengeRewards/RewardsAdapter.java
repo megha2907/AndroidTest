@@ -1,12 +1,9 @@
 package in.sportscafe.nostragamus.module.challengeRewards;
 
 import android.content.Context;
-import android.content.Intent;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
-import android.text.Html;
 import android.text.TextUtils;
-import android.text.method.LinkMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,10 +16,6 @@ import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.challengeRewards.dto.Rewards;
-import in.sportscafe.nostragamus.module.common.NostraTextViewLinkClickMovementMethod;
-import in.sportscafe.nostragamus.module.common.NostragamusActivity;
-import in.sportscafe.nostragamus.module.common.NostragamusWebView;
-import in.sportscafe.nostragamus.module.resultspeek.FeedWebView;
 import in.sportscafe.nostragamus.utils.timeutils.TimeAgo;
 import in.sportscafe.nostragamus.utils.timeutils.TimeUnit;
 import in.sportscafe.nostragamus.utils.timeutils.TimeUtils;
@@ -33,18 +26,20 @@ import in.sportscafe.nostragamus.utils.timeutils.TimeUtils;
 
 public class RewardsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
+    private RewardsAdapterListener mAdapterListener;
     private String mChallengeEndTime;
-
     private List<Rewards> mRewardsList;
 
     private static final int TYPE_HEADER = 0;
     private static final int TYPE_ITEM = 1;
     private static final int TYPE_FOOTER = 2;
 
-    public RewardsAdapter(Context context, List<Rewards> rewardsList, String ChallengeEndTime) {
+    public RewardsAdapter(Context context, List<Rewards> rewardsList,
+                          String ChallengeEndTime, RewardsAdapterListener listener) {
 
         mChallengeEndTime = ChallengeEndTime;
         mRewardsList = rewardsList;
+        mAdapterListener = listener;
     }
 
 
@@ -89,10 +84,7 @@ public class RewardsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     @Override
     public void onBindViewHolder(final RecyclerView.ViewHolder holder, int position) {
-
         if (holder != null) {
-
-
             //alternate row color
             if (position % 2 == 0) {
                 holder.itemView.setBackgroundColor(ContextCompat.getColor(holder.itemView.getContext(), R.color.black4));
@@ -104,40 +96,54 @@ public class RewardsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 holder.itemView.setBackgroundColor(ContextCompat.getColor(holder.itemView.getContext(), R.color.black5));
             }
 
-            if (holder instanceof RewardsVH) {
-                setRewardsItem(holder, position - 1);
-            } else if (holder instanceof RewardsFooterVH) {
-                ((RewardsFooterVH) holder).mTvDisclaimer.setText(Html.fromHtml(((RewardsFooterVH) holder).mTvDisclaimer.getResources().getString(R.string.prize_money_disclaimer)));
-                ((RewardsFooterVH) holder).mTvDisclaimer.setMovementMethod(new NostraTextViewLinkClickMovementMethod() {
-                    @Override
-                    public void onLinkClick(String url) {
-                        OpenWebView(((RewardsFooterVH) holder).mTvDisclaimer,url);
-                    }
-                });
-            }else if (holder instanceof RewardsHeaderVH){
+            switch (holder.getItemViewType()) {
+                case TYPE_HEADER:
+                    bindHeader((RewardsHeaderVH) holder);
+                    break;
 
-                String endTime = mChallengeEndTime;
-                long endTimeMs = TimeUtils.getMillisecondsFromDateString(
-                        endTime,
-                        Constants.DateFormats.FORMAT_DATE_T_TIME_ZONE,
-                        Constants.DateFormats.GMT
-                );
+                case TYPE_ITEM:
+                    setRewardsItem(holder, position - 1);
+                    break;
 
-                int dayOfMonthinEndTime = Integer.parseInt(TimeUtils.getDateStringFromMs(endTimeMs, "d"));
-
-                String prizesHandOutDate = dayOfMonthinEndTime + AppSnippet.ordinalOnly(dayOfMonthinEndTime) + " of " +
-                        TimeUtils.getDateStringFromMs(endTimeMs, "MMM");
-
-                if (getChallengeOver(mChallengeEndTime)) {
-                    /* set when challenge is over */
-                    ((RewardsHeaderVH) holder).mTvChallengeEndTime.setText("Prizes were handed out on "+prizesHandOutDate+".");
-                }else {
-                    // Setting end date of the challenge
-                    ((RewardsHeaderVH) holder).mTvChallengeEndTime.setText("The challenge will end on " + prizesHandOutDate + ". Prizes will be handed out within a few hours of challenge completion.");
-                }
+                case TYPE_FOOTER:
+                    bindFooter((RewardsFooterVH) holder);
+                    break;
             }
         }
+    }
 
+    private void bindHeader(RewardsHeaderVH holder) {
+        String endTime = mChallengeEndTime;
+        long endTimeMs = TimeUtils.getMillisecondsFromDateString(
+                endTime,
+                Constants.DateFormats.FORMAT_DATE_T_TIME_ZONE,
+                Constants.DateFormats.GMT
+        );
+
+        int dayOfMonthinEndTime = Integer.parseInt(TimeUtils.getDateStringFromMs(endTimeMs, "d"));
+
+        String prizesHandOutDate = dayOfMonthinEndTime + AppSnippet.ordinalOnly(dayOfMonthinEndTime) + " of " +
+                TimeUtils.getDateStringFromMs(endTimeMs, "MMM");
+
+        if (getChallengeOver(mChallengeEndTime)) {
+            /* set when challenge is over */
+            holder.mTvChallengeEndTime.setText("Prizes were handed out on "+prizesHandOutDate+".");
+        }else {
+            // Setting end date of the challenge
+            holder.mTvChallengeEndTime.setText("The challenge will end on " + prizesHandOutDate + ". Prizes will be handed out within a few hours of challenge completion.");
+        }
+    }
+
+    private void bindFooter(RewardsFooterVH holder) {
+        RewardsFooterVH rewardsFooterVH = holder;
+        rewardsFooterVH.nostraRulesButtonTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mAdapterListener != null) {
+                    mAdapterListener.onNostraRulesClicked();
+                }
+            }
+        });
     }
 
     private boolean getChallengeOver(String challengeEndTime) {
@@ -160,16 +166,6 @@ public class RewardsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
         return isChallengeOver;
     }
-
-    /**
-     * On on click of link open NostragamusWebView Activity for handling links
-     */
-    private void OpenWebView(View view,String url) {
-        if (url != null) {
-            view.getContext().startActivity(new Intent(view.getContext(), FeedWebView.class).putExtra("url", url));
-        }
-    }
-
 
     private void setRewardsItem(RecyclerView.ViewHolder holder, int position) {
 
@@ -252,10 +248,12 @@ public class RewardsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     private class RewardsFooterVH extends RecyclerView.ViewHolder {
 
         TextView mTvDisclaimer;
+        TextView nostraRulesButtonTextView;
 
         public RewardsFooterVH(View itemView) {
             super(itemView);
             mTvDisclaimer = (TextView) itemView.findViewById(R.id.pool_row_tv_disclaimer_txt);
+            nostraRulesButtonTextView = (TextView) itemView.findViewById(R.id.rewards_footer_button_textView);
         }
 
     }

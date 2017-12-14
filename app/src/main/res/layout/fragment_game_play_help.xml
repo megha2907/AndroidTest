@@ -19,7 +19,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:textColor="@color/white"
-            android:textSize="@dimen/sp_14"
+            android:textSize="@dimen/sp_16"
             app:typeface="lato_regular"
             android:text="How to Play"
             />
@@ -31,7 +31,7 @@
             android:textColor="@color/white_999999"
             android:textSize="@dimen/sp_13"
             app:typeface="lato_regular"
-            android:text="Play sample game to know more about the gameplay"
+            android:text="Play the sample game to understand the gameplay"
             android:layout_marginTop="@dimen/dim_4"/>
 
         <!-- Transfer to newChallengesResponse button -->
@@ -41,7 +41,7 @@
             android:layout_height="@dimen/dim_40"
             android:layout_gravity="center_horizontal"
             android:background="@drawable/blue_button_selector"
-            android:text="Play Game"
+            android:text="Sample Game"
             android:textColor="@drawable/white_text_selector"
             android:textAllCaps="false"
             android:layout_marginTop="@dimen/dim_10"
@@ -60,6 +60,25 @@
         android:orientation="vertical"
         android:layout_marginTop="@dimen/dim_20"
         android:layout_marginLeft="@dimen/dim_20">
+        
+        <com.jeeva.android.widgets.customfont.CustomTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp_16"
+            app:typeface="lato_regular"
+            android:text="Powerups"
+            />
+        <com.jeeva.android.widgets.customfont.CustomTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:textColor="@color/white_999999"
+            android:textSize="@dimen/sp_13"
+            app:typeface="lato_regular"
+            android:text="Your powerups will be displayed at the bottom of your screen as can be seen now - they are of the following three types:"
+            android:layout_marginTop="@dimen/dim_4"/>
 
         <!-- Doubler -->
         <LinearLayout
@@ -114,7 +133,7 @@
                     android:textColor="@color/white_dim"
                     android:textSize="@dimen/sp_13"
                     app:typeface="lato_regular"
-                    android:text="Correct ( +20 points), incorrect ( -8 points)"/>
+                    android:text="+20 points if correct / -8 points if incorrect"/>
 
             </LinearLayout>
 
@@ -174,7 +193,7 @@
                     android:textColor="@color/white_dim"
                     android:textSize="@dimen/sp_13"
                     app:typeface="lato_regular"
-                    android:text="Correct ( +10 points), incorrect ( -0 points)"/>
+                    android:text="+10 points if correct / 0 points if incorrect"/>
 
             </LinearLayout>
 

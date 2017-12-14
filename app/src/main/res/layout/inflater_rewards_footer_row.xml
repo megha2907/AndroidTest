@@ -4,7 +4,8 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/black">
+    android:background="@color/black"
+    android:paddingBottom="@dimen/dim_10">
 
     <com.jeeva.android.widgets.customfont.CustomTextView
         android:id="@+id/pool_row_tv_disclaimer_txt"
@@ -14,9 +15,22 @@
         android:layout_marginLeft="@dimen/dim_30"
         android:layout_marginRight="@dimen/dim_30"
         android:paddingTop="@dimen/dim_10"
-        android:paddingBottom="@dimen/dim_10"
+        android:paddingBottom="@dimen/dim_6"
         android:textColor="@color/grey6"
         android:textSize="@dimen/sp_12"
-        app:typeface="lato_regular" />
+        app:typeface="lato_regular"
+        android:text="@string/prize_money_disclaimer"/>
+
+    <com.jeeva.android.widgets.customfont.CustomTextView
+        android:id="@+id/rewards_footer_button_textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="NOSTRAGAMUS RULES"
+        android:clickable="true"
+        android:layout_gravity="center_horizontal"
+        android:textColor="#008ae1"
+        android:textSize="@dimen/sp_12"
+        app:typeface="lato_bold" />
 
 </LinearLayout>

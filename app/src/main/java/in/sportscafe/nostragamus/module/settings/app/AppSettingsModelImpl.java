@@ -3,6 +3,7 @@ package in.sportscafe.nostragamus.module.settings.app;
 import com.jeeva.android.Log;
 
 import in.sportscafe.nostragamus.BuildConfig;
+import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.module.settings.app.dto.AppSettingsResponse;
@@ -34,14 +35,7 @@ public class AppSettingsModelImpl implements AppSettingsModel {
 
     private void callAppSettingsApi() {
 
-        String flavor;
-        if (BuildConfig.IS_PAID_VERSION) {
-            flavor = "FULL";
-        } else {
-            flavor = "PLAYSTORE";
-        }
-
-        MyWebService.getInstance().getAppSettingsRequest("nostragamus_settings", flavor).enqueue(
+        MyWebService.getInstance().getAppSettingsRequest("nostragamus_settings", Nostragamus.getInstance().getAppTypeFlavor()).enqueue(
                 new NostragamusCallBack<AppSettingsResponse>() {
                     @Override
                     public void onResponse(Call<AppSettingsResponse> call, Response<AppSettingsResponse> response) {

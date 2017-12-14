@@ -58,13 +58,17 @@ public class RewardsApiModelImpl {
             public void onResponse(Call<RewardsResponse> call, Response<RewardsResponse> response) {
                 super.onResponse(call, response);
 
-                if (response.isSuccessful() && response.body() != null && response.body() != null) {
+                if (response.isSuccessful() && response.body() != null) {
                     Log.d(TAG, "Server response success");
-                    handleRewardsListResponse(response.body().getRewardsList(),
-                            response.body().getChallengeEndTime(),listener);
+
+                    if (listener != null) {
+                        listener.onData(response.body());
+                    }
                 } else {
                     Log.d(TAG, "Server response null");
-                    listener.onFailedConfigsApi();
+                    if (listener != null) {
+                        listener.onFailedConfigsApi();
+                    }
                 }
             }
 
@@ -72,24 +76,15 @@ public class RewardsApiModelImpl {
             public void onFailure(Call<RewardsResponse> call, Throwable t) {
                 super.onFailure(call, t);
                 Log.d(TAG, "Server response Failed");
-                listener.onFailedConfigsApi();
+                if (listener != null) {
+                    listener.onFailedConfigsApi();
+                }
             }
         });
     }
 
-    private void handleRewardsListResponse(List<Rewards> rewardsList,String challengeEndTime,
-                                           final RewardsApiModelImpl.RewardsDataListener listener) {
-        if (null == rewardsList || rewardsList.isEmpty()) {
-            listener.onEmpty();
-            return;
-        }
-
-        listener.onData(rewardsList,challengeEndTime);
-    }
-
     public interface RewardsDataListener {
-
-        void onData(@Nullable List<Rewards> rewardsList,String challengeEndTime);
+        void onData(RewardsResponse rewardsResponse);
         void onError(int status);
         void onNoInternet();
         void onFailedConfigsApi();

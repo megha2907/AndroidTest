@@ -5,11 +5,17 @@ import java.util.List;
 
 import in.sportscafe.nostragamus.BuildConfig;
 import in.sportscafe.nostragamus.Config;
+import in.sportscafe.nostragamus.Constants;
+import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.module.challengeCompleted.dto.CompletedMatchesResponse;
 import in.sportscafe.nostragamus.module.challengeCompleted.dto.CompletedResponse;
 import in.sportscafe.nostragamus.module.challengeRewards.dto.RewardsResponse;
 import in.sportscafe.nostragamus.module.challengeRules.dto.RulesResponse;
 import in.sportscafe.nostragamus.module.common.ApiResponse;
+import in.sportscafe.nostragamus.module.navigation.wallet.addMoney.dto.AddMoneyPaymentCouponRequest;
+import in.sportscafe.nostragamus.module.navigation.wallet.addMoney.dto.AddMoneyPaymentCouponResponse;
+import in.sportscafe.nostragamus.module.navigation.wallet.addMoney.dto.VerifyPaymentCouponRequest;
+import in.sportscafe.nostragamus.module.navigation.wallet.addMoney.dto.VerifyPaymentCouponResponse;
 import in.sportscafe.nostragamus.module.nostraHome.dto.TimeResponse;
 import in.sportscafe.nostragamus.module.common.dto.MatchesResponse;
 import in.sportscafe.nostragamus.module.contest.dto.ContestEntriesRequest;
@@ -276,6 +282,14 @@ public class MyWebService extends AbstractWebService<NostragamusService> {
         return mNostragamusService.addMoneyToWallet(request);
     }
 
+    public Call<AddMoneyPaymentCouponResponse> addMoneyPaymentCouponRequest(AddMoneyPaymentCouponRequest request) {
+        return mNostragamusService.addMoneyPaymentCouponToWallet(request);
+    }
+
+    public Call<VerifyPaymentCouponResponse> verifyPaymentCouponMoneyAdded(VerifyPaymentCouponRequest request) {
+        return mNostragamusService.verifyPaymentCouponToWallet(request);
+    }
+
     public Call<UserWalletResponse> getUserWallet() {
         return mNostragamusService.getUserWallet();
     }
@@ -337,15 +351,17 @@ public class MyWebService extends AbstractWebService<NostragamusService> {
     }
 
     public Call<List<NewChallengesResponse>> getNewHomeChallenges() {
-        return mNostragamusService.getNewHomeChallenges();
+        String flavor = "PS";
+        if (BuildConfig.IS_ACL_VERSION && BuildConfig.IS_PAID_VERSION){
+            flavor = "ACL";
+        }else if (BuildConfig.IS_PAID_VERSION){
+            flavor = "PRO";
+        }
+        return mNostragamusService.getNewHomeChallenges(flavor);
     }
 
-    public Call<ContestResponse> getContests(int challengeId) {
-        String flavor = "PS";
-        if (BuildConfig.IS_PAID_VERSION) {
-            flavor = "Pro";
-        }
-        return mNostragamusService.getContests(challengeId, flavor);
+    public Call<ContestResponse> getContests(int challengeId, boolean needPoolContest) {
+        return mNostragamusService.getContests(challengeId, Nostragamus.getInstance().getAppTypeFlavor(), needPoolContest);
     }
 
     public Call<List<InPlayResponse>> getInPlayChallenges() {

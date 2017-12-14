@@ -4,6 +4,7 @@ import android.os.Handler;
 import android.text.TextUtils;
 import android.util.Log;
 
+import in.sportscafe.nostragamus.BuildConfig;
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.module.contest.dto.JoinContestQueueRequest;
@@ -38,6 +39,16 @@ public class JoinContestApiImpl {
             request.setChallengeId(challengeId);
             request.setChallengeName(challengeName);
             request.setContestId(contestId);
+
+            String flavor = "PS";
+            if (BuildConfig.IS_PAID_VERSION && BuildConfig.IS_ACL_VERSION) {
+                flavor = "Acl";
+            }else if (BuildConfig.IS_ACL_VERSION){
+                flavor = "Acl";
+            }else if (BuildConfig.IS_PAID_VERSION){
+                flavor = "Pro";
+            }
+            request.setAppFlavor(flavor);
 
             /* Should send pseudoRoomId / roomId ONLY in headless flow OR PseudoGame flow
              * else should pass 0 */

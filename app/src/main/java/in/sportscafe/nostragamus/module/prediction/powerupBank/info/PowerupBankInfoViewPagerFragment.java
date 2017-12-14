@@ -86,10 +86,10 @@ public class PowerupBankInfoViewPagerFragment extends NostragamusFragment {
 
             String msg = "";
             if (maxLimit > 0) {
-                msg = msg + "No more than " + maxLimit + " powerups of each type can be added";
+                msg = msg + "Max " + maxLimit + " powerups of each type can be added";
             }
             if (!TextUtils.isEmpty(challengeName)) {
-                msg = msg + " to " + challengeName;
+                msg = msg + " to this challenge (" + challengeName + ")";
             }
 
             if (!TextUtils.isEmpty(msg)) {

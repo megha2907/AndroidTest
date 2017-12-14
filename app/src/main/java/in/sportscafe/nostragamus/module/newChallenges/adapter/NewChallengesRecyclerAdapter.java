@@ -218,7 +218,7 @@ public class NewChallengesRecyclerAdapter extends RecyclerView.Adapter<RecyclerV
                         ImageView imageView = new ImageView(gameIconLinearLayout.getContext());
                         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams
                                 (LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-                        lp.setMargins(16,0,0,0);
+                        lp.setMargins((int)imageView.getResources().getDimension(R.dimen.dim_6),0,0,0);
                         imageView.setLayoutParams(lp);
                         imageView.getLayoutParams().height = (int) gameIconLinearLayout.getContext().getResources().getDimension(R.dimen.dim_12);
                         imageView.getLayoutParams().width = (int) gameIconLinearLayout.getContext().getResources().getDimension(R.dimen.dim_12);

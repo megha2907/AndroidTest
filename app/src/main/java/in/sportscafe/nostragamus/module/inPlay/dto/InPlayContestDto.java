@@ -31,7 +31,7 @@ public class InPlayContestDto {
     private int totalParticipants;
 
     @SerializedName("winning_amount")
-    private int winningAmount;
+    private double winningAmount;
 
     @SerializedName("entry_fee")
     private int entryFee;
@@ -97,11 +97,11 @@ public class InPlayContestDto {
         this.totalParticipants = totalParticipants;
     }
 
-    public int getWinningAmount() {
+    public double getWinningAmount() {
         return winningAmount;
     }
 
-    public void setWinningAmount(int winningAmount) {
+    public void setWinningAmount(double winningAmount) {
         this.winningAmount = winningAmount;
     }
 

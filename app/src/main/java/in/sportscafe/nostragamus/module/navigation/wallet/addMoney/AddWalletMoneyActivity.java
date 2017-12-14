@@ -2,6 +2,7 @@ package in.sportscafe.nostragamus.module.navigation.wallet.addMoney;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
@@ -32,13 +33,27 @@ public class AddWalletMoneyActivity extends NostragamusActivity implements AddWa
 
     @Override
     public void onBackClicked() {
-        finish();
+        onBackPressed();
+    }
+
+    @Override
+    public void onBackPressed() {
+        Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.fragment_container);
+        if (fragment != null && fragment instanceof AddWalletMoneyFragment) {
+            ((AddWalletMoneyFragment)fragment).onBackPressed();
+        } else {
+            super.onBackPressed();
+        }
+
     }
 
     @Override
     public void onSuccess() {
-        Intent intent = new Intent(this, WalletHomeActivity.class);
+        /*Intent intent = new Intent(this, WalletHomeActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(intent);
+        startActivity(intent);*/
+
+        /* Once money added , remove this activity */
+        super.onBackPressed();
     }
 }

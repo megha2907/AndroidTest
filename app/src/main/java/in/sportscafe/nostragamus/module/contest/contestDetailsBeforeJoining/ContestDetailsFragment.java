@@ -3,8 +3,10 @@ package in.sportscafe.nostragamus.module.contest.contestDetailsBeforeJoining;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,19 +20,25 @@ import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
 import in.sportscafe.nostragamus.module.challengeRewards.RewardsFragment;
+import in.sportscafe.nostragamus.module.challengeRewards.RewardsLaunchedFrom;
+import in.sportscafe.nostragamus.module.challengeRewards.dto.RewardScreenData;
 import in.sportscafe.nostragamus.module.challengeRules.RulesFragment;
 import in.sportscafe.nostragamus.module.common.NostraBaseFragment;
 import in.sportscafe.nostragamus.module.contest.dto.Contest;
 import in.sportscafe.nostragamus.module.contest.dto.ContestEntriesScreenData;
+import in.sportscafe.nostragamus.module.contest.dto.PoolPrizeEstimationScreenData;
+import in.sportscafe.nostragamus.module.contest.ui.poolContest.PoolPrizesEstimationFragment;
 import in.sportscafe.nostragamus.module.contest.ui.DetailScreensLaunchRequest;
 import in.sportscafe.nostragamus.module.contest.ui.ContestEntriesViewPagerFragment;
 import in.sportscafe.nostragamus.module.navigation.wallet.WalletHelper;
+import in.sportscafe.nostragamus.module.newChallenges.helpers.DateTimeHelper;
 
 /**
  * Created by deepanshi on 9/10/17.
  */
 
-public class ContestDetailsFragment extends NostraBaseFragment implements View.OnClickListener {
+public class ContestDetailsFragment extends NostraBaseFragment implements
+        View.OnClickListener {
 
     private static final String TAG = ContestDetailsFragment.class.getSimpleName();
 
@@ -149,8 +157,7 @@ public class ContestDetailsFragment extends NostraBaseFragment implements View.O
             mContestDetailsViewPagerAdapter.addFragment(contestEntriesViewPagerFragment, Constants.ContestDetailsTabs.ENTRIES);
 
             /* Rewards */
-            RewardsFragment rewardsFragment = RewardsFragment.newInstance(-1,contest.getContestId());
-            mContestDetailsViewPagerAdapter.addFragment(rewardsFragment, Constants.ContestDetailsTabs.PRIZES);
+            mContestDetailsViewPagerAdapter.addFragment(getRewardsFragment(contest), Constants.ContestDetailsTabs.PRIZES);
 
             /* Rules */
             RulesFragment rulesFragment = RulesFragment.newInstance(contest.getContestId());
@@ -162,6 +169,41 @@ public class ContestDetailsFragment extends NostraBaseFragment implements View.O
             setTabLayout(mViewPager);
         }
     }
+
+    @NonNull
+    private Fragment getRewardsFragment(Contest contest) {
+        Fragment fragment = null;
+        Bundle args = new Bundle();
+        args.putInt(Constants.BundleKeys.SCREEN_LAUNCHED_FROM_PARENT, RewardsLaunchedFrom.NEW_CHALLENGE_CONTEST_DETAILS);
+
+        /* PoolEstimation fragment for PoolContest AND if challenge-not started */
+        if (contest.getContestMode().equalsIgnoreCase(Constants.ContestType.POOL)) {
+
+            PoolPrizeEstimationScreenData screenData = new PoolPrizeEstimationScreenData();
+            screenData.setRewardScreenLauncherParent(RewardsLaunchedFrom.NEW_CHALLENGE_CONTEST_DETAILS);
+            screenData.setRoomId(-1);
+            screenData.setConfigId(contest.getContestId());
+            screenData.setContestName(contest.getConfigName());
+            args.putParcelable(Constants.BundleKeys.POOL_PRIZE_ESTIMATION_SCREEN_DATA, Parcels.wrap(screenData));
+
+            fragment = new PoolPrizesEstimationFragment();
+            fragment.setArguments(args);
+
+        } else {
+            RewardScreenData rewardScreenData = new RewardScreenData();
+            rewardScreenData.setRoomId(-1);
+            rewardScreenData.setConfigId(contest.getContestId());
+            rewardScreenData.setContestName(contest.getConfigName());
+            rewardScreenData.setPoolContest(false);
+            args.putParcelable(Constants.BundleKeys.REWARDS_SCREEN_DATA, Parcels.wrap(rewardScreenData));
+
+            fragment = new RewardsFragment();
+            fragment.setArguments(args);
+        }
+
+        return fragment;
+    }
+
 
     private void setTabLayout(ViewPager mViewPager) {
         if (getView() != null && mContestDetailsViewPagerAdapter != null) {
@@ -198,4 +240,5 @@ public class ContestDetailsFragment extends NostraBaseFragment implements View.O
 
         }
     }
+
 }

@@ -2,6 +2,7 @@ package in.sportscafe.nostragamus.module.user.login;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.Build;
 import android.text.TextUtils;
 import android.util.Patterns;
 
@@ -12,10 +13,6 @@ import com.jeeva.android.facebook.user.FacebookPermission;
 import com.jeeva.android.facebook.user.FacebookProfile;
 import com.jeeva.android.facebook.user.GetProfileModelImpl;
 import com.jeeva.android.facebook.user.UserModelImpl;
-import com.moe.pushlibrary.MoEHelper;
-
-import java.util.HashMap;
-import java.util.Map;
 
 import in.sportscafe.nostragamus.BuildConfig;
 import in.sportscafe.nostragamus.Constants;
@@ -24,7 +21,10 @@ import in.sportscafe.nostragamus.Constants.AnalyticsLabels;
 import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
+import in.sportscafe.nostragamus.module.permission.PermissionsActivity;
+import in.sportscafe.nostragamus.module.permission.PermissionsChecker;
 import in.sportscafe.nostragamus.module.user.group.JoinGroupApiModelImpl;
+import in.sportscafe.nostragamus.module.user.login.dto.Device;
 import in.sportscafe.nostragamus.module.user.login.dto.LogInRequest;
 import in.sportscafe.nostragamus.module.user.login.dto.LogInResponse;
 import in.sportscafe.nostragamus.module.user.login.dto.UserInfo;
@@ -36,7 +36,6 @@ import in.sportscafe.nostragamus.webservice.NostragamusCallBack;
 import retrofit2.Call;
 import retrofit2.Response;
 
-import static in.sportscafe.nostragamus.Constants.AnalyticsActions.PRO_APP;
 import static in.sportscafe.nostragamus.Constants.AnalyticsActions.STARTED;
 
 public class LogInModelImpl implements LogInModel {
@@ -170,6 +169,7 @@ public class LogInModelImpl implements LogInModel {
         LogInRequest logInRequest = new LogInRequest();
         logInRequest.setAccessToken(accessToken);
         logInRequest.setRefreshToken("");
+        logInRequest.setDevice(getDeviceDetails());
 
         UserProfile userProfile = new UserProfile();
         logInRequest.setUserProfile(userProfile);
@@ -183,12 +183,7 @@ public class LogInModelImpl implements LogInModel {
         userProfile.setPhotos(photo);
         userProfile.setUserReferralCode(NostragamusDataHandler.getInstance().getUserReferralCode());
         userProfile.setCampaignName(NostragamusDataHandler.getInstance().getInstallReferralCampaign());
-
-        if (BuildConfig.IS_PAID_VERSION){
-            userProfile.setAppType(Constants.AppType.PRO);
-        }else {
-            userProfile.setAppType(Constants.AppType.PLAYSTORE);
-        }
+        userProfile.setAppType(Nostragamus.getInstance().getAppTypeFlavor());
 
         if (NostragamusDataHandler.getInstance().getWalletInitialAmount()!= -1) {
             userProfile.setWalletInitialAmount(NostragamusDataHandler.getInstance().getWalletInitialAmount());
@@ -208,6 +203,26 @@ public class LogInModelImpl implements LogInModel {
                         }
                     }
                 });
+    }
+
+    private Device getDeviceDetails() {
+        Device device = new Device();
+
+        //Todo Add Permission to get device id android.permission.READ_PHONE_STATE
+        //device.setImei(Nostragamus.getInstance().getDeviceImeI());
+        device.setAndroidId(Nostragamus.getInstance().getAndroidId());
+        device.setAppVersion(Nostragamus.getInstance().getAppVersionCode());
+        device.setOsApiLevel(Build.VERSION.SDK_INT);
+        device.setMacId(Nostragamus.getInstance().getMacAddress());
+        device.setManufecturer(Build.MANUFACTURER);
+        device.setModel(Build.MODEL);
+        device.setScreenDpi(Nostragamus.getInstance().getScreenDetails(Constants.ScreenDetails.DPI));
+        device.setScreenHeight(Nostragamus.getInstance().getScreenDetails(Constants.ScreenDetails.HEIGHT));
+        device.setScreenWidth(Nostragamus.getInstance().getScreenDetails(Constants.ScreenDetails.WIDTH));
+        device.setRam(Nostragamus.getInstance().getDeviceTotalRam());
+        device.setUserAccounts(Nostragamus.getInstance().getUserAccounts());
+
+        return device;
     }
 
     private void handleLoginResponse(UserLoginInResponse userLoginInResponse) {

@@ -262,6 +262,7 @@ public class ContestFragment extends NostraBaseFragment implements View.OnClickL
             for (Contest contest : contestList) {
                 contest.setChallengeName(mContestScreenData.getChallengeName());
                 contest.setChallengeId(mContestScreenData.getChallengeId());
+                contest.setChallengeStartTime(mContestScreenData.getChallengeStartTime());
             }
         }
     }

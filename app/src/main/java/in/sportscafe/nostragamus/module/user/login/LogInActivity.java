@@ -34,6 +34,8 @@ import in.sportscafe.nostragamus.module.common.NostragamusDialogBox;
 import in.sportscafe.nostragamus.module.common.TermsConditions;
 import in.sportscafe.nostragamus.module.nostraHome.ui.NostraHomeActivity;
 import in.sportscafe.nostragamus.module.onboard.OnBoardingFragment;
+import in.sportscafe.nostragamus.module.permission.PermissionsActivity;
+import in.sportscafe.nostragamus.module.permission.PermissionsChecker;
 import in.sportscafe.nostragamus.module.user.myprofile.edit.EditProfileActivity;
 import in.sportscafe.nostragamus.utils.loadingAnim.LoadingIndicatorView;
 
@@ -72,6 +74,11 @@ public class LogInActivity extends NostragamusActivity implements LogInView, Vie
 
         TextView termstv = (TextView) findViewById(R.id.login_tv_terms);
         termstv.setText(Html.fromHtml(getString(R.string.termspolicy)));
+
+        /*
+        if (new PermissionsChecker(getActivity()).lacksPermissions(Constants.AppPermissions.READ_PHONE_STATE)) {
+            PermissionsActivity.startActivityForResult(getActivity(), Constants.RequestCodes.READ_PHONE_PERMISSION, Constants.AppPermissions.READ_PHONE_STATE);
+        }*/
 
         initGoogle();
 

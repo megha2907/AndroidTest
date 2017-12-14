@@ -9,6 +9,10 @@ import in.sportscafe.nostragamus.module.challengeCompleted.dto.CompletedResponse
 import in.sportscafe.nostragamus.module.challengeRewards.dto.RewardsResponse;
 import in.sportscafe.nostragamus.module.challengeRules.dto.RulesResponse;
 import in.sportscafe.nostragamus.module.common.ApiResponse;
+import in.sportscafe.nostragamus.module.navigation.wallet.addMoney.dto.AddMoneyPaymentCouponRequest;
+import in.sportscafe.nostragamus.module.navigation.wallet.addMoney.dto.AddMoneyPaymentCouponResponse;
+import in.sportscafe.nostragamus.module.navigation.wallet.addMoney.dto.VerifyPaymentCouponRequest;
+import in.sportscafe.nostragamus.module.navigation.wallet.addMoney.dto.VerifyPaymentCouponResponse;
 import in.sportscafe.nostragamus.module.nostraHome.dto.TimeResponse;
 import in.sportscafe.nostragamus.module.common.dto.MatchesResponse;
 import in.sportscafe.nostragamus.module.contest.dto.ContestEntriesRequest;
@@ -257,6 +261,12 @@ public interface NostragamusService {
     @POST("/v1/wallet/addMoneyToWallet")
     Call<GenerateOrderResponse> addMoneyToWallet(@Body AddMoneyToWalletRequest request);
 
+    @POST("/v3/wallet/useCoupon")
+    Call<AddMoneyPaymentCouponResponse> addMoneyPaymentCouponToWallet(@Body AddMoneyPaymentCouponRequest request);
+
+    @POST("/v3/wallet/verifyCoupon")
+    Call<VerifyPaymentCouponResponse> verifyPaymentCouponToWallet(@Body VerifyPaymentCouponRequest request);
+
     @POST("/v1/wallet/getUserWallet")
     Call<UserWalletResponse> getUserWallet();
 
@@ -312,11 +322,11 @@ public interface NostragamusService {
     Call<ApiResponse> updateUserProfile(@Body UpdateUserProfileRequest updateUserProfileRequest);
 
     @GET("/v3/game/challenges/new")
-    Call<List<NewChallengesResponse>> getNewHomeChallenges();
+    Call<List<NewChallengesResponse>> getNewHomeChallenges(@Query("flavor") String flavor);
 
     @GET("v3/game/challenges/getContests")
     Call<ContestResponse> getContests(@Query("challenge_id") int challengeId,
-                                      @Query("flavor") String flavor);
+                                      @Query("flavor") String flavor, @Query("pooled") boolean needPoolContests);
 
     @GET("v3/game/challenges/inPlay")
     Call<List<InPlayResponse>> getInPlayChallenges();

@@ -1,16 +1,23 @@
 package in.sportscafe.nostragamus;
 
 
+import android.accounts.Account;
+import android.accounts.AccountManager;
+import android.app.ActivityManager;
 import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.provider.Settings;
+import android.support.annotation.NonNull;
 import android.support.multidex.MultiDex;
+import android.telephony.TelephonyManager;
 
 import com.crashlytics.android.Crashlytics;
 import com.jeeva.android.ExceptionTracker;
+import com.jeeva.android.Log;
 import com.jeeva.android.facebook.FacebookHandler;
 import com.jeeva.android.facebook.user.FacebookPermission;
 import com.jeeva.android.volley.Volley;
@@ -18,10 +25,11 @@ import com.jeeva.android.widgets.customfont.CustomFont;
 import com.moe.pushlibrary.MoEHelper;
 import com.moe.pushlibrary.utils.MoEHelperConstants;
 import com.moengage.push.PushManager;
-import com.moengage.pushbase.push.PushActionManager;
 
+import java.net.NetworkInterface;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.List;
 
 import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
@@ -245,6 +253,127 @@ public class Nostragamus extends Application {
         Intent intent = new Intent(getApplicationContext(), GetStartActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
+    }
+
+    /**
+     *
+     * @return IMEI of device or empty
+     */
+    public String getDeviceImeI() {
+        String imeiStr = "";
+        TelephonyManager telephonyManager = (TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE);
+        if (telephonyManager != null) {
+            /*
+             * getDeviceId() function Returns the unique device ID.
+             * for example,the IMEI for GSM and the MEID or ESN for CDMA phones.
+             */
+            imeiStr = telephonyManager.getDeviceId();
+
+           /*
+            * getSubscriberId() function Returns the unique subscriber ID,
+            * for example, the IMSI for a GSM phone.
+            *
+            * imsiStr = telephonyManager.getSubscriberId();
+            */
+
+            Log.d("Device-Id", "IMEI : " + imeiStr);
+        }
+        return imeiStr;
+    }
+
+    /**
+     * NOTE: Android Id can be regenerated ove Factory data-reset
+     * @return Android-Id for Device/Os OR empty
+     */
+    public String getAndroidId() {
+        String androidId = "";
+        if (getContentResolver() != null) {
+            androidId = Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
+            Log.d("Device-Id", "Android-Id : " + androidId);
+        }
+        return androidId;
+    }
+
+    public String getMacAddress() {
+        try {
+            List<NetworkInterface> all = Collections.list(NetworkInterface.getNetworkInterfaces());
+            for (NetworkInterface nif : all) {
+                if (!nif.getName().equalsIgnoreCase("wlan0")) continue;
+
+                byte[] macBytes = nif.getHardwareAddress();
+                if (macBytes == null) {
+                    return "";
+                }
+
+                StringBuilder res1 = new StringBuilder();
+                for (byte b : macBytes) {
+                    res1.append(Integer.toHexString(b & 0xFF) + ":");
+                }
+
+                if (res1.length() > 0) {
+                    res1.deleteCharAt(res1.length() - 1);
+                }
+                return res1.toString();
+            }
+        } catch (Exception ex) {
+        }
+        return "";
+    }
+
+    public float getScreenDetails(int screenDetails) {
+        float value = 0;
+        try {
+            switch (screenDetails) {
+                case Constants.ScreenDetails.DPI:
+                    value = getResources().getDisplayMetrics().densityDpi;
+                    break;
+
+                case Constants.ScreenDetails.HEIGHT:
+                    value = getResources().getDisplayMetrics().heightPixels;
+                    break;
+
+                case Constants.ScreenDetails.WIDTH:
+                    value = getResources().getDisplayMetrics().widthPixels;
+                    break;
+            }
+        } catch (Exception e) {}
+        return value;
+    }
+
+    public long getDeviceTotalRam() {
+        long totalRam = 0;
+        try {
+            ActivityManager actManager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
+            ActivityManager.MemoryInfo memInfo = new ActivityManager.MemoryInfo();
+            actManager.getMemoryInfo(memInfo);
+            totalRam = memInfo.totalMem;
+        } catch (Exception e) {}
+        return totalRam;
+    }
+
+    public String getUserAccounts() {
+        String accountStr = "";
+        try {
+            AccountManager manager = (AccountManager)getSystemService(ACCOUNT_SERVICE);
+            Account[] list = manager.getAccounts();
+            for (Account account : list) {
+                accountStr = accountStr + account.name + ", ";
+            }
+        } catch (Exception e) {}
+        return accountStr;
+    }
+
+    @NonNull
+    public String getAppTypeFlavor() {
+        String flavor;
+        if (BuildConfig.IS_ACL_VERSION) {
+            flavor = Constants.AppType.ACL;
+        } else if (BuildConfig.IS_PAID_VERSION){
+            flavor = Constants.AppType.PRO;
+        }else {
+            flavor = Constants.AppType.PLAYSTORE;
+        }
+        return flavor;
     }
 
     /**
