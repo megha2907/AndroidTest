@@ -11,6 +11,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
@@ -30,9 +31,12 @@ import org.parceler.Parcels;
 
 import java.util.List;
 
+import in.sportscafe.nostragamus.AppSnippet;
 import in.sportscafe.nostragamus.Constants;
+import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.challengeRewards.RewardsApiModelImpl;
+import in.sportscafe.nostragamus.module.challengeRewards.RewardsLaunchedFrom;
 import in.sportscafe.nostragamus.module.challengeRewards.dto.Rewards;
 import in.sportscafe.nostragamus.module.challengeRewards.dto.RewardsResponse;
 import in.sportscafe.nostragamus.module.contest.adapter.PoolRewardsAdapter;
@@ -41,6 +45,9 @@ import in.sportscafe.nostragamus.module.contest.dto.pool.PoolPayoutMap;
 import in.sportscafe.nostragamus.module.contest.helper.PoolPrizesEstimationHelper;
 import in.sportscafe.nostragamus.module.newChallenges.helpers.DateTimeHelper;
 import in.sportscafe.nostragamus.module.resultspeek.FeedWebView;
+import in.sportscafe.nostragamus.utils.timeutils.TimeAgo;
+import in.sportscafe.nostragamus.utils.timeutils.TimeUnit;
+import in.sportscafe.nostragamus.utils.timeutils.TimeUtils;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -118,10 +125,12 @@ public class PoolPrizesEstimationFragment extends BaseFragment implements View.O
                     String.valueOf(entries));
             TextView msgTextview = (TextView) getView().findViewById(R.id.estimation_msg_textView);
 
+            int startIndex = msgStr.indexOf(String.valueOf(entries));
+            int endIndex = msgStr.indexOf(String.valueOf(entries)) + String.valueOf(entries).length() + String.valueOf(" entries").length();
             SpannableStringBuilder builder = new SpannableStringBuilder();
-            SpannableString whiteSpannable= new SpannableString(msgStr);
-            whiteSpannable.setSpan(new ForegroundColorSpan(Color.WHITE), 23, 33, 0);
-            whiteSpannable.setSpan(new StyleSpan(Typeface.BOLD), 23, 33, 0);
+            SpannableString whiteSpannable = new SpannableString(msgStr);
+            whiteSpannable.setSpan(new ForegroundColorSpan(Color.WHITE), startIndex, endIndex, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            whiteSpannable.setSpan(new StyleSpan(Typeface.BOLD), startIndex, endIndex, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
             builder.append(whiteSpannable);
             msgTextview.setText(builder, TextView.BufferType.SPANNABLE);
 
@@ -213,18 +222,97 @@ public class PoolPrizesEstimationFragment extends BaseFragment implements View.O
 
                 boolean isChallengeStarted = DateTimeHelper.isChallengeTimeOver(mRewardsApiResponse.getChallengeStartTime());
 
-                /* Prior challenge starts */
-                if (!isChallengeStarted) {
-                    showPrizeEstimationViews(rewardsResponse.getRewardsList());
+                if (mScreenData != null) {
 
-                } else {
-                    showChallengeStartedView();
+                    /* check if Rewards Opened in History Section */
+                    if (mScreenData.getRewardScreenLauncherParent() == RewardsLaunchedFrom.CHALLENGE_HISTORY_CONTEST_DETAILS) {
+                        showChallengeInHistoryView(rewardsResponse.getChallengeEndTime());
+                    }
+                    /* else check if challenge Not Started for New challenges section */
+                    else if (!isChallengeStarted) {
+                        showPrizeEstimationViews(rewardsResponse.getRewardsList());
+                    }
+                    /* else check if challenge Started for inPlay section */
+                    else {
+                        showChallengeStartedView();
+                    }
+
                 }
 
             } else {
                 Log.e(TAG, "Rewards Response in Rewards for poolContest is null!!");
             }
         }
+    }
+
+    private void showChallengeInHistoryView(String challengeEndTime) {
+
+        LinearLayout estimationLayout = (LinearLayout) getView().findViewById(R.id.pool_prize_estimation_layout);
+        estimationLayout.setVisibility(View.GONE);
+
+        LinearLayout challengeStartedInfoLayout = (LinearLayout) getView().findViewById(R.id.pool_prize_challenge_started_layout);
+        challengeStartedInfoLayout.setVisibility(View.VISIBLE);
+
+        TextView msgTextView = (TextView) getView().findViewById(R.id.pool_clng_started_msg_textView);
+
+        String endTime = challengeEndTime;
+        long endTimeMs = TimeUtils.getMillisecondsFromDateString(
+                endTime,
+                Constants.DateFormats.FORMAT_DATE_T_TIME_ZONE,
+                Constants.DateFormats.GMT
+        );
+
+        int dayOfMonthinEndTime = Integer.parseInt(TimeUtils.getDateStringFromMs(endTimeMs, "d"));
+
+        String prizesHandOutDate = dayOfMonthinEndTime + AppSnippet.ordinalOnly(dayOfMonthinEndTime) + " of " +
+                TimeUtils.getDateStringFromMs(endTimeMs, "MMM");
+
+        if (getChallengeOver(challengeEndTime)) {
+            /* set when challenge is over */
+            msgTextView.setText("Prizes were handed out on " + prizesHandOutDate + ".");
+        } else {
+            // Setting end date of the challenge
+            msgTextView.setText("The challenge will end on " + prizesHandOutDate + ". Prizes will be handed out within a few hours of challenge completion.");
+        }
+
+        /* Set reward adapter */
+        if (mRewardsApiResponse != null && mRewardsApiResponse.getRewardsList() != null) {
+            PoolRewardsAdapter adapter = new PoolRewardsAdapter(
+                    mRewardsApiResponse.getRewardsList(),
+                    mRewardsApiResponse.getChallengeEndTime(),
+                    mRewardsApiResponse.getChallengeStartTime(),
+                    new PoolRewardsAdapterListener() {
+                        @Override
+                        public void onNostraRulesClicked() {
+                            openRulesWebView();
+                        }
+                    });
+
+            mRecyclerView.setAdapter(adapter);
+            mRecyclerView.setVisibility(View.VISIBLE);
+
+        }
+    }
+
+    private boolean getChallengeOver(String challengeEndTime) {
+
+        boolean isChallengeOver = false;
+
+        if (!TextUtils.isEmpty(challengeEndTime)) {
+            String startTime = challengeEndTime.replace("+00:00", ".000Z");
+            long startTimeMs = TimeUtils.getMillisecondsFromDateString(
+                    startTime,
+                    Constants.DateFormats.FORMAT_DATE_T_TIME_ZONE,
+                    Constants.DateFormats.GMT
+            );
+            TimeAgo timeAgo = TimeUtils.calcTimeAgo(Nostragamus.getInstance().getServerTime(), startTimeMs);
+
+            isChallengeOver = timeAgo.timeDiff <= 0
+                    || timeAgo.timeUnit == TimeUnit.MILLISECOND
+                    || timeAgo.timeUnit == TimeUnit.SECOND;
+        }
+
+        return isChallengeOver;
     }
 
 
@@ -236,7 +324,7 @@ public class PoolPrizesEstimationFragment extends BaseFragment implements View.O
             TextView allEntriesFilledTextView = (TextView) getView().findViewById(R.id.pool_clng_started_all_entries_filled_textView);
             TextView msgTextView = (TextView) getView().findViewById(R.id.pool_clng_started_msg_textView);
 
-            int participants = 11;  // TODO: replace with joined
+            int participants = getUsersJoined();
             if (isAllEntriesFilled()) {
 
                 String str = "All " + participants + " entries filled!";
@@ -248,8 +336,18 @@ public class PoolPrizesEstimationFragment extends BaseFragment implements View.O
 
             } else {
 
-                String msg = "Prize  money has been recalculated as only " + participants + " joined the contest out of a possible " + getMaxParticipants();
-                msgTextView.setText(msg);
+                String msg = "Prize money has been re-calculated as only " + participants + " members joined the contest out of a possible " + getMaxParticipants();
+
+                int startIndex = msg.indexOf(String.valueOf(participants));
+                int endIndex = msg.indexOf(String.valueOf(participants)) + String.valueOf(participants).length() + String.valueOf(" members").length();
+                SpannableStringBuilder builder = new SpannableStringBuilder();
+                SpannableString whiteSpannable = new SpannableString(msg);
+                whiteSpannable.setSpan(new ForegroundColorSpan(Color.WHITE), startIndex, endIndex, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                whiteSpannable.setSpan(new StyleSpan(Typeface.BOLD), startIndex, endIndex, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                //whiteSpannable.setSpan(new ForegroundColorSpan(Color.WHITE), 43, 55, 0);
+                //whiteSpannable.setSpan(new StyleSpan(Typeface.BOLD), 43, 55, 0);
+                builder.append(whiteSpannable);
+                msgTextView.setText(builder, TextView.BufferType.SPANNABLE);
             }
 
             /* Set reward adapter */
@@ -259,11 +357,11 @@ public class PoolPrizesEstimationFragment extends BaseFragment implements View.O
                         mRewardsApiResponse.getChallengeEndTime(),
                         mRewardsApiResponse.getChallengeStartTime(),
                         new PoolRewardsAdapterListener() {
-                    @Override
-                    public void onNostraRulesClicked() {
-                        openRulesWebView();
-                    }
-                });
+                            @Override
+                            public void onNostraRulesClicked() {
+                                openRulesWebView();
+                            }
+                        });
 
                 mRecyclerView.setAdapter(adapter);
                 mRecyclerView.setVisibility(View.VISIBLE);
@@ -283,7 +381,6 @@ public class PoolPrizesEstimationFragment extends BaseFragment implements View.O
             estimationLayout.setVisibility(View.VISIBLE);
 
             populateSeekbarValues();
-            onSeekBarTrackingCompleted(0);
 
             if (rewardsList != null && !rewardsList.isEmpty()) {
                 PoolRewardsAdapter adapter = new PoolRewardsAdapter(
@@ -308,7 +405,9 @@ public class PoolPrizesEstimationFragment extends BaseFragment implements View.O
             maxEntryTextView.setText(String.valueOf(max));
 
             /* Seekbar values */
-            mSeekBar.setMax(max-min);   // As min can not be set into Seekbar, add min while considering progress
+            mSeekBar.setMax(max - min);   // As min can not be set into Seekbar, add min while considering progress
+            mSeekBar.setProgress(max);
+            onSeekBarTrackingCompleted(mSeekBar.getProgress());
         }
     }
 
@@ -359,6 +458,14 @@ public class PoolPrizesEstimationFragment extends BaseFragment implements View.O
             list = mRewardsApiResponse.getPoolContestResponse().getPoolPayoutMapList();
         }
         return list;
+    }
+
+    private int getUsersJoined() {
+        int usersJoined = 0;
+        if (mRewardsApiResponse != null && mRewardsApiResponse.getPoolContestResponse() != null) {
+            usersJoined = mRewardsApiResponse.getPoolContestResponse().getUsersJoined();
+        }
+        return usersJoined;
     }
 
     private void showLoadingProgressBar() {
