@@ -348,8 +348,8 @@ public class NewChallengesMatchesFragment extends BaseFragment implements View.O
             } else if (responses.getHeadLessJoined() > 0) {
                 mJoinContestButton.setText("Join Another Contest");
                 imgView.setImageResource(R.drawable.play_contest_card);
-                infoHeadingTextView.setText("You started a game earlier...");
-                infoMsgTextView.setText("Continue playing it from the 'In Play' section. Or, you can join another contest and start afresh.");
+                infoHeadingTextView.setText("You started a game earlier");
+                infoMsgTextView.setText("Continue playing these contests from the 'In Play' section. Or, join another contest and give yourself more chances to win.");
 
             }
         }

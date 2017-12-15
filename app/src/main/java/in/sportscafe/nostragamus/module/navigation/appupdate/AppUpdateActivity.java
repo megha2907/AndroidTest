@@ -14,6 +14,7 @@ import in.sportscafe.nostragamus.module.common.NostragamusActivity;
 import in.sportscafe.nostragamus.module.common.OnDismissListener;
 import in.sportscafe.nostragamus.module.getstart.GetStartActivity;
 import in.sportscafe.nostragamus.module.nostraHome.ui.NostraHomeActivity;
+import in.sportscafe.nostragamus.module.user.login.LogInActivity;
 import in.sportscafe.nostragamus.utils.FragmentHelper;
 
 /**
@@ -29,7 +30,7 @@ public class AppUpdateActivity extends NostragamusActivity implements OnDismissL
 
     @Override
     public String getScreenName() {
-        return Constants.Notifications.SCREEN_APP_UPDATE;
+        return null;
     }
 
     @Override
@@ -73,9 +74,14 @@ public class AppUpdateActivity extends NostragamusActivity implements OnDismissL
                 break;
 
             case NAVIGATE_TO_HOME:
-                navigateToHome();
+                if (NostragamusDataHandler.getInstance().isLoggedInUser()) {
+                    navigateToHome();
+                }else {
+                    navigateToLogin();
+                }
                 break;
         }
+
     }
 
     private AppUpdateFragment.AppUpdateActionListener getAppUpdateActionListener() {
@@ -157,5 +163,9 @@ public class AppUpdateActivity extends NostragamusActivity implements OnDismissL
         finish();
     }
 
+    private void navigateToLogin() {
+        startActivity(new Intent(this, LogInActivity.class));
+        finish();
+    }
 
 }

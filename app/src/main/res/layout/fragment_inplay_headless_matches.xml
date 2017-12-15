@@ -171,7 +171,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="@color/bluecolor1"
-                        android:text="JOIN AND START PLAYING"
+                        android:text="YOU STARTED A GAME EARLIER"
                         android:textAllCaps="true"
                         android:textSize="@dimen/sp_12"
                         app:typeface="lato_bold" />
@@ -181,7 +181,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="@color/grey6"
-                        android:text="You can play the first game and then join a contest with those answers, or directly join a contest before the first match starts."
+                        android:text="Continue playing these contests from the 'In Play' section. Or, join another contest and give yourself more chances to win."
                         android:layout_marginTop="@dimen/dim_6"
                         android:textSize="@dimen/sp_11"
                         app:typeface="lato_regular" />
