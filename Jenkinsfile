@@ -50,7 +50,7 @@ node {
     stage 'Building'
     env.ANDROID_HOME="/mnt/disk1/data/android/sdk"
     env.JAVA_HOME="/usr/java/default/jre"
-    sh './gradlew clean :app:assemblestageProRelease :app:assembleStageProAclRelease :app:assembleNostragamusProRelease :app:assembleNostragamusProAclRelease  --debug'
+    sh './gradlew clean :app:assemblestageProRelease :app:assembleStageProAclRelease :app:assembleNostragamusProRelease :app:assembleNostragamusProAclRelease'
 
     stage 'Upload to S3'
     build job: 'upload_to_s3', wait: false, parameters: [

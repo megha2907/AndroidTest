@@ -18,6 +18,7 @@ public class SportsDataProvider {
     public static final int FILTER_ALL_SPORTS_ID = -11;
     public static final int FILTER_DAILY_SPORTS_ID = -12;
     public static final int FILTER_MIXED_SPORTS_ID = 9; // Sent from server
+    public static final int FILTER_ACL_SPORTS_ID = 15;
 
     public List<SportsTab> getSportsList() {
         List<SportsTab> sportsList = new ArrayList<>();
@@ -124,7 +125,7 @@ public class SportsDataProvider {
         motoGP.setSportIconUnSelectedDrawable(R.drawable.sport_racing_grey);
 
         SportsTab ACL = new SportsTab();
-        ACL.setSportsId(15);
+        ACL.setSportsId(FILTER_ACL_SPORTS_ID);
         ACL.setSportsName("ACL 2017-18");
         ACL.setSportIconDrawable(R.drawable.acl_sports_icn);
         ACL.setSportIconUnSelectedDrawable(R.drawable.acl_sports_greyed_icn);
