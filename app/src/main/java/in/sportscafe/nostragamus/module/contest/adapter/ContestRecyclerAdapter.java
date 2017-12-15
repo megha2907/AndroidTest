@@ -177,7 +177,9 @@ public class ContestRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                     viewHolder.mTvPrizes.setText("No Prizes");
                 } else {
                     viewHolder.mTvPrizes.setText(Constants.RUPEE_SYMBOL + String.valueOf(contest.getPrizes()));
-                    viewHolder.mTvNumberOfPrizes.setText("(" + contest.getSubtitle() + ")");
+                    if (!TextUtils.isEmpty(contest.getSubtitle())) {
+                        viewHolder.mTvNumberOfPrizes.setText("(" + contest.getSubtitle() + ")");
+                    }
                 }
 
                 viewHolder.mTvFilledContests.setText(String.valueOf(contest.getFilledRooms()));
