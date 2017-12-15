@@ -32,6 +32,7 @@ import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.NostraBaseFragment;
 import in.sportscafe.nostragamus.module.contest.contestDetailsAfterJoining.InplayContestDetailsActivity;
+import in.sportscafe.nostragamus.module.contest.dto.JoinContestData;
 import in.sportscafe.nostragamus.module.inPlay.adapter.InPlayAdapterItemType;
 import in.sportscafe.nostragamus.module.inPlay.dataProvider.InPlayDataProvider;
 import in.sportscafe.nostragamus.module.inPlay.dto.InPlayContestDto;
@@ -254,11 +255,54 @@ public class InPlayFragment extends NostraBaseFragment implements View.OnClickLi
                     }
                 }
 
+                showAppropriateTabForAclVersionAfterJoiningChallenge(isServerResponse, inPlayResponseList, inPlayViewPager);
                 handleFurtherFlow(isServerResponse, inPlayResponseList);
 
             } else {
                 showEmptyScreen(inPlayViewPager, inPlayTabLayout, sportsTabList);
             }
+        }
+    }
+
+    private void showAppropriateTabForAclVersionAfterJoiningChallenge(boolean isServerResponse,
+                                                                      List<InPlayResponse> inPlayResponseList,
+                                                                      ViewPager viewPager) {
+        if (BuildConfig.IS_ACL_VERSION &&
+                isServerResponse && inPlayResponseList != null &&
+                getArguments() != null &&
+                getArguments().containsKey(Constants.BundleKeys.JOIN_CONTEST_DATA)) {
+
+            JoinContestData joinContestData = Parcels.unwrap(getArguments().getParcelable(Constants.BundleKeys.JOIN_CONTEST_DATA));
+            if (joinContestData != null && joinContestData.isShouldScrollContestsInPlay()) {
+
+                joinContestData.setShouldScrollContestsInPlay(false); //
+
+                for (InPlayResponse challengeResponse : inPlayResponseList) {
+                    if (challengeResponse.getChallengeId() == joinContestData.getChallengeId()) {
+                        int counter = 0;
+                        if (challengeResponse.getSportsIdArray() != null) {
+                            for (int sportId : challengeResponse.getSportsIdArray()) {
+                                if (sportId == SportsDataProvider.FILTER_ACL_SPORTS_ID) {
+                                    break;
+                                }
+                                counter++;
+                            }
+                        }
+
+                        if (counter == challengeResponse.getSportsIdArray().length) {
+                            // This challenge has no ACL sport, so select Other tab
+                            // Tab-1 : ACL ; Tab-2 : Others
+                            viewPager.setCurrentItem(viewPager.getCurrentItem() + 1);
+                        }
+
+                        break;
+                    }
+                }
+
+
+
+            }
+
         }
     }
 
