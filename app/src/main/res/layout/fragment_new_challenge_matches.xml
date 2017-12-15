@@ -172,7 +172,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="@color/bluecolor1"
-                        android:text="JOIN AND START PLAYING"
+                        android:text="JOIN CONTESTS &amp; START PLAYING"
                         android:textAllCaps="true"
                         android:textSize="@dimen/sp_12"
                         app:typeface="lato_bold" />
