@@ -70,15 +70,6 @@ node {
       color: "good",
       message: "<${env.BUILD_URL}|#${env.BUILD_NUMBER}> _S3 Deployment:_ *nostragamus | Download ${VER} <${S3_PATH_STAGEPAID}|StagePro>, <${S3_PATH_STAGE_PRO_ACL}|StageProAcl>, <${S3_PATH_PRODPAID}|NostragamusPro>, <${S3_PATH_NOSTRA_PRO_ACL}|NostragamusProAcl> *"
 
-    stage 'Upload to Google Play'
-    if(BRANCH_NAME == 'master') {
-        build job: 'upload_to_playstore', wait: false, parameters: [
-                string(name: 'APK_PATH', value: (SOURCE_FILE_PROD))
-        ]
-    } else {
-        echo "Not a master branch release hence not uploading to Play Store."
-    }
-
   } catch (err) {
       currentBuild.result = "FAILURE"
       slackSend channel: "#auto-jenkins",
