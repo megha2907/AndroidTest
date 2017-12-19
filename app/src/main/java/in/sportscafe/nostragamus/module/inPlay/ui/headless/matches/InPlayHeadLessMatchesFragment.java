@@ -382,13 +382,17 @@ public class InPlayHeadLessMatchesFragment extends BaseFragment implements View.
     private void setChallengeInfoAsPerUserPerspective(InPlayMatchesResponse responses) {
         if (responses != null && responses.getData() != null && getView() != null && !getActivity().isFinishing()) {
             TextView infoMsgTextView = (TextView) getView().findViewById(R.id.games_info_msg_textView);
+            ImageView imgView = (ImageView) getView().findViewById(R.id.games_info_icon_imgView);
+            TextView infoHeadingTextView = (TextView) getView().findViewById(R.id.games_info_heading_textView);
 
             /* For any match , if status is answer or continue ; means some answers were given previously, so change string */
             for (InPlayMatch match : responses.getData().getInPlayMatchList()) {
                 if (match.getMatchStatus().equalsIgnoreCase(Constants.MatchStatusStrings.ANSWER) ||
                         match.getMatchStatus().equalsIgnoreCase(Constants.MatchStatusStrings.CONTINUE)) {
 
-                    String msg = "To continue playing with these answers, you will need to join a contest before the first match begins.";
+                    imgView.setImageResource(R.drawable.win_more);
+                    infoHeadingTextView.setText("Join a contest & continue playing");
+                    String msg = "You will compete for prizes only if you join a contest. Continue & finish the game before or after joining!";
                     infoMsgTextView.setText(msg);
                     break;
                 }

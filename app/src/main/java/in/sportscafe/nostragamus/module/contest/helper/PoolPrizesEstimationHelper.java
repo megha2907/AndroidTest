@@ -5,6 +5,8 @@ import android.text.TextUtils;
 import com.jeeva.android.Log;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 import in.sportscafe.nostragamus.AppSnippet;
@@ -68,12 +70,12 @@ public class PoolPrizesEstimationHelper {
                                                  String rounding,
                                                  double totalPrize) {
         List<Rewards> rewardsList = null;
+        List<Integer> prizeCalculated = new ArrayList<>();
 
         if (payoutMapArrayList != null && !payoutMapArrayList.isEmpty() &&
                 participants > 0 && totalPrize > 0) {
 
             rewardsList = new ArrayList<>();
-            int rank = 0;
 
             /* For every payout-level (iteration) */
             for (PoolPayoutMap poolPayoutMap : payoutMapArrayList) {
@@ -104,24 +106,39 @@ public class PoolPrizesEstimationHelper {
 
                         /* For every countable-user */
                         for (int count = 1; count <= usersCount; count++) {
-                            rank++;
-
-                            Rewards rewards = new Rewards();
-                            rewards.setRank(AppSnippet.ordinal(rank));
-                            rewards.setAmount(prizeAmount);
-
-                            rewardsList.add(rewards);
+                            prizeCalculated.add(prizeAmount);
                         }
                     }
 
-                    Log.d(TAG, "\n ----------- \n Total-participants : " + participants +
+                    Log.d(TAG, "\n ----------- \n" +
+                            "\n Total-participants : " + participants +
+                            "\n Total-prize (calculated) : " + totalPrize +
+                            "\n ------------- " +
                             "\n %-of-user(percent) : " + participantsRation + "("+poolPayoutMap.getPercent()+")" +
                             "\n countable-user (based on %) :" + usersCount +
                             "\n step/rounding : " + rounding +
-                            "\n Total-prize (calculated) : " + totalPrize +
-                            "\n %-of-prize : " + winningMoney +
-                            "\n prizeAmount : " + prizeAmount);
+                            "\n %-of-prize (share) : " + winningMoney + "("+poolPayoutMap.getShare()+")" +
+                            "\n prizeAmountPerUser : " + prizeAmount);
                 }
+            }
+
+            if (prizeCalculated.size() > 0) {
+
+                /* Sort the list so that higher amount gets by higher ranks */
+                Collections.sort(prizeCalculated);
+
+                int rank = 1;
+                for (int temp = prizeCalculated.size()-1; temp >= 0; temp--) {
+
+                    Rewards rewards = new Rewards();
+                    rewards.setRank(AppSnippet.ordinal(rank++));
+                    rewards.setAmount(prizeCalculated.get(temp));
+
+                    rewardsList.add(rewards);
+                }
+
+            } else {
+                Log.d(TAG, "No prize list could be derived!");
             }
         }
 

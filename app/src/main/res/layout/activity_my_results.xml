@@ -196,7 +196,7 @@
                                 android:id="@+id/games_info_icon_imgView"
                                 android:layout_width="@dimen/dim_36"
                                 android:layout_height="@dimen/dim_36"
-                                android:src="@drawable/play_contest_card"/>
+                                android:src="@drawable/win_more"/>
 
                         </LinearLayout>
 
@@ -211,7 +211,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:textColor="@color/bluecolor1"
-                                android:text="NOW JOIN A CONTEST"
+                                android:text="NOW JOIN A CONTEST TO WIN PRIZES"
                                 android:textAllCaps="true"
                                 android:textSize="@dimen/sp_12"
                                 app:typeface="lato_bold" />
@@ -221,7 +221,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:textColor="@color/grey6"
-                                android:text="Your predictions were saved, but to continue playing with these predictions, you need to join a contest before the games begin."
+                                android:text="Your predictions were saved. To continue playing with them, join a contest before the first game begins."
                                 android:layout_marginTop="@dimen/dim_6"
                                 android:textSize="@dimen/sp_11"
                                 app:typeface="lato_regular" />
