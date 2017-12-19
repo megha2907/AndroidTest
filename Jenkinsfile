@@ -48,7 +48,7 @@ node {
     echo "SOURCE_FILE: ${SOURCE_FILE_PROD} and UPLOAD_PATH: ${UPLOAD_PATH}"
 
     stage 'Building'
-    //env.ANDROID_HOME="/mnt/disk1/data/android/sdk"
+    env.ANDROID_HOME="/opt/sdk"
     //env.JAVA_HOME="/usr/java/default/jre"
     sh './gradlew clean :app:assemblestageProRelease :app:assembleStageProAclRelease :app:assembleNostragamusProRelease :app:assembleNostragamusProAclRelease'
 
