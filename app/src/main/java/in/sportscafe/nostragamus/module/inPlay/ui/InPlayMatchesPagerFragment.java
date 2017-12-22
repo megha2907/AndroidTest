@@ -110,6 +110,7 @@ public class InPlayMatchesPagerFragment extends NostraBaseFragment {
                             switch (status) {
                                 case Constants.DataStatus.FROM_SERVER_API_SUCCESS:
                                     onDataResponse(responses);
+
                                     break;
 
                                 default:
@@ -145,13 +146,13 @@ public class InPlayMatchesPagerFragment extends NostraBaseFragment {
                 responses.getData() != null && responses.getData().getInPlayMatchList() != null
                 && getView() != null) {
 
+
             /* Set Games Left */
             String gamesLeftStr = getGamesLeftCount(responses.getData().getInPlayMatchList()) + "/" + responses.getData().getInPlayMatchList().size();
             TextView gamesLeftTextView = (TextView) getView().findViewById(R.id.inplay_match_timeline_games_left_textview);
             TextView gamesLeftTextViewText = (TextView) getView().findViewById(R.id.inplay_match_timeline_games_left);
             gamesLeftTextView.setText(gamesLeftStr);
             gamesLeftTextViewText.setText("GAMES LEFT  ");
-
 
             /* Set Powerups */
             showOrHidePowerUps(responses.getData().getPowerUp());
@@ -164,9 +165,45 @@ public class InPlayMatchesPagerFragment extends NostraBaseFragment {
             parent.removeAllViews();
             titleParent.removeAllViews();
 
-            if (mInPlayContestDto.getMatches() != null){
+            List<InPlayContestMatchDto> inPlayContestMatchDtoList = responses.getData().getInPlayContestMatchDtoList();
 
-             /* Timeline */
+            if (inPlayContestMatchDtoList != null && !inPlayContestMatchDtoList.isEmpty()) {
+
+                 /* Create Timeline with List From InPlay Match Api Response */
+                int totalMatches = inPlayContestMatchDtoList.size();
+                for (int temp = 0; temp < totalMatches; temp++) {
+                    InPlayContestMatchDto match = inPlayContestMatchDtoList.get(temp);
+
+                    boolean isNodeLineRequired = true;
+                    if (temp == 0) {
+                        isNodeLineRequired = false;
+                    }
+
+                    int matchAttemptedStatus = match.isPlayed();
+                    boolean isPlayed;
+                    if (Constants.GameAttemptedStatus.COMPLETELY == matchAttemptedStatus) {
+                        isPlayed = true;
+                    } else if (Constants.GameAttemptedStatus.PARTIALLY == matchAttemptedStatus) {
+                        isPlayed = false;
+                    } else {
+                        isPlayed = false;
+                    }
+
+                    /* Content */
+                    TimelineHelper.addNode(parent, match.getStatus(), matchAttemptedStatus, isPlayed,
+                            isNodeLineRequired, TimelineHelper.MatchTimelineTypeEnum.IN_PLAY_MATCHES_SCREEN,
+                            mInPlayContestDto.getMatches().size());
+
+                    /* Title */
+                    TimelineHelper.addTextNode(titleParent, "Game " + (temp + 1), mInPlayContestDto.getMatches().size(),
+                            match.getStatus(), TimelineHelper.MatchTimelineTypeEnum.IN_PLAY_MATCHES_SCREEN, isPlayed, matchAttemptedStatus);
+
+                }
+
+
+            } else if (mInPlayContestDto.getMatches() != null) {
+
+                /* Create Timeline with List From Bundle */
                 int totalMatches = mInPlayContestDto.getMatches().size();
                 for (int temp = 0; temp < totalMatches; temp++) {
                     InPlayContestMatchDto match = mInPlayContestDto.getMatches().get(temp);
@@ -196,7 +233,7 @@ public class InPlayMatchesPagerFragment extends NostraBaseFragment {
                             match.getStatus(), TimelineHelper.MatchTimelineTypeEnum.IN_PLAY_MATCHES_SCREEN, isPlayed, matchAttemptedStatus);
 
                 }
-            }else {
+            } else {
                 matchTimelineLayout.setVisibility(View.GONE);
             }
         }

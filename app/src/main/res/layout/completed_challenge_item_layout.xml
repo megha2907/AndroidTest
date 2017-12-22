@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="center_vertical"
-        android:layout_marginTop="@dimen/dim_8"
+        android:layout_marginTop="@dimen/dim_14"
         android:layout_marginLeft="@dimen/dim_12"
         android:layout_marginRight="@dimen/dim_12">
 

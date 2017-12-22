@@ -31,7 +31,7 @@ public class EditProfileModelImpl implements EditProfileModel {
 
     private String mReferralCode;
 
-    private boolean referralCodeExists=false;
+    private boolean referralCodeExists = false;
 
     private EditProfileModelImpl(OnEditProfileListener listener) {
         this.mEditProfileListener = listener;
@@ -43,7 +43,7 @@ public class EditProfileModelImpl implements EditProfileModel {
     }
 
     @Override
-    public void updateProfile(String nickname,String referralCode, Boolean disclaimerAccepted) {
+    public void updateProfile(String nickname, String referralCode, Boolean disclaimerAccepted) {
 
         mDisclaimerAccepted = disclaimerAccepted;
         mReferralCode = referralCode;
@@ -95,11 +95,12 @@ public class EditProfileModelImpl implements EditProfileModel {
                         super.onResponse(call, response);
 
                         if (response.isSuccessful()) {
-                            mUserInfo.setPhoto(response.body().getResult());
-                            Nostragamus.getInstance().getServerDataManager().setUserInfo(mUserInfo);
-                            //callUpdateUserApi(NostragamusDataHandler.getInstance().getUserInfo().getUserNickName());
 
-                            mEditProfileListener.onPhotoUpdate();
+                            if (response.body() != null) {
+                                mUserInfo.setPhoto(response.body().getResult());
+                                Nostragamus.getInstance().getServerDataManager().setUserInfo(mUserInfo);
+                                mEditProfileListener.onPhotoUpdate();
+                            }
 
                         } else {
                             mEditProfileListener.onEditFailed(response.message());
@@ -111,16 +112,16 @@ public class EditProfileModelImpl implements EditProfileModel {
 
     private void callUpdateUserApi(final String nickname) {
         UpdateUserRequest updateUserRequest = new UpdateUserRequest();
-        if (mUserInfo!=null) {
+        if (mUserInfo != null) {
             updateUserRequest.setUserPhoto(mUserInfo.getPhoto());
         }
         updateUserRequest.setUserNickName(nickname);
         updateUserRequest.setDisclaimerAccepted(mDisclaimerAccepted);
 
-        if (!TextUtils.isEmpty(mReferralCode)){
+        if (!TextUtils.isEmpty(mReferralCode)) {
             referralCodeExists = true;
             updateUserRequest.setReferralCode(mReferralCode);
-        }else {
+        } else {
             updateUserRequest.setReferralCode(null);
         }
 
@@ -167,18 +168,18 @@ public class EditProfileModelImpl implements EditProfileModel {
                             if (response != null && response.isSuccessful() && response.body() != null) {
                                 VerifyUserInfo verifyUserInfo = response.body().getVerifyUserInfo();
 
-                                if (TextUtils.isEmpty(NostragamusDataHandler.getInstance().getUserReferralName())){
+                                if (TextUtils.isEmpty(NostragamusDataHandler.getInstance().getUserReferralName())) {
                                     NostragamusDataHandler.getInstance().setUserReferralName(verifyUserInfo.getUserName());
                                 }
 
-                                if (NostragamusDataHandler.getInstance().getWalletInitialAmount()== -1 ||
-                                        NostragamusDataHandler.getInstance().getWalletInitialAmount()== 0 ){
+                                if (NostragamusDataHandler.getInstance().getWalletInitialAmount() == -1 ||
+                                        NostragamusDataHandler.getInstance().getWalletInitialAmount() == 0) {
                                     NostragamusDataHandler.getInstance().setWalletInitialAmount(verifyUserInfo.getWalletInitialAmount());
                                 }
 
                                 mEditProfileListener.onReferralCodeVerified();
 
-                            }else {
+                            } else {
                                 mEditProfileListener.onReferralCodeFailed(response.message());
                             }
                         } else {

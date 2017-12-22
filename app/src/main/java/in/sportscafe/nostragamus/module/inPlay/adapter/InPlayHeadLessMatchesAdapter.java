@@ -1,5 +1,6 @@
 package in.sportscafe.nostragamus.module.inPlay.adapter;
 
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.annotation.NonNull;
@@ -10,10 +11,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.jeeva.android.widgets.HmImageView;
+import com.jeeva.android.widgets.customfont.Typefaces;
 
 import org.parceler.Parcels;
 
@@ -82,15 +86,8 @@ public class InPlayHeadLessMatchesAdapter extends RecyclerView.Adapter<RecyclerV
         if (mInPlayMatchList != null && mInPlayMatchList.size() > position) {
             InPlayMatch match = mInPlayMatchList.get(position);
 
-            if (shouldDisableMatchClickAction(match)) {
-                viewHolder.matchParentLayout.setEnabled(false);
-                viewHolder.actionButton.setVisibility(View.GONE);
-                viewHolder.vsBtn.setVisibility(View.VISIBLE);
-            } else {
-                viewHolder.matchParentLayout.setEnabled(true);
-                viewHolder.actionButton.setVisibility(View.VISIBLE);
-                viewHolder.vsBtn.setVisibility(View.GONE);
-            }
+            Typeface latoBold = Typefaces.get(viewHolder.actionButton.getContext(), "fonts/lato/Lato-Bold.ttf");
+            Typeface latoRegular = Typefaces.get(viewHolder.actionButton.getContext(), "fonts/lato/Lato-Regular.ttf");
 
             /* Timer - match start */
             String matchStartTime = match.getMatchStartTime();
@@ -105,76 +102,129 @@ public class InPlayHeadLessMatchesAdapter extends RecyclerView.Adapter<RecyclerV
             viewHolder.venueTextView.setText(match.getMatchStage()+", "+match.getMatchVenue());
 
             /* Action Button */
+            /* Match status */
             String matchStatus = match.getMatchStatus();
             if (!TextUtils.isEmpty(matchStatus)) {
 
-                if (matchStatus.equalsIgnoreCase(Constants.MatchStatusStrings.POINTS)) {
+                if (matchStatus.equalsIgnoreCase(Constants.MatchStatusStrings.PLAY)) {
                     viewHolder.actionButton.setClickable(true);
-                    matchStatus = match.getMatchPoints() + " " + matchStatus;
-                    viewHolder.actionButton.setTextColor(ContextCompat.getColor(viewHolder.actionButton.getContext(), R.color.black));
-                    viewHolder.actionButton.setBackground(ContextCompat.getDrawable(viewHolder.actionButton.getContext(), R.drawable.btn_points_bg));
-                    viewHolder.actionButton.setLayoutParams(new LinearLayout.LayoutParams
-                            (viewHolder.actionButton.getResources().getDimensionPixelSize(R.dimen.dim_90)
-                                    , viewHolder.actionButton.getResources().getDimensionPixelSize(R.dimen.dim_32)));
-
-                } else if (matchStatus.equalsIgnoreCase(Constants.MatchStatusStrings.PLAY)) {
-                    viewHolder.actionButton.setClickable(true);
-                    viewHolder.actionButton.setTextColor(ContextCompat.getColor(viewHolder.actionButton.getContext(), R.color.white));
+                    viewHolder.actionButtonTextView.setTextColor(ContextCompat.getColor(viewHolder.actionButton.getContext(), R.color.white));
+                    viewHolder.actionButtonTextView.setTypeface(latoBold);
                     viewHolder.actionButton.setBackground(ContextCompat.getDrawable(viewHolder.actionButton.getContext(), R.drawable.btn_play_bg));
                     viewHolder.actionButton.setLayoutParams(new LinearLayout.LayoutParams
-                            (viewHolder.actionButton.getResources().getDimensionPixelSize(R.dimen.dim_90)
+                            (viewHolder.actionButton.getResources().getDimensionPixelSize(R.dimen.dim_84)
                                     , viewHolder.actionButton.getResources().getDimensionPixelSize(R.dimen.dim_32)));
 
-                } else if (matchStatus.equalsIgnoreCase(Constants.MatchStatusStrings.DID_NOT_PLAY)) {
-                    viewHolder.actionButton.setClickable(true);
-                    viewHolder.actionButton.setTextColor(ContextCompat.getColor(viewHolder.actionButton.getContext(), R.color.black));
-                    viewHolder.actionButton.setBackground(ContextCompat.getDrawable(viewHolder.actionButton.getContext(), R.drawable.btn_did_not_play_bg));
-                    viewHolder.actionButton.setLayoutParams(new LinearLayout.LayoutParams
-                            (viewHolder.actionButton.getResources().getDimensionPixelSize(R.dimen.dim_100)
-                                    , viewHolder.actionButton.getResources().getDimensionPixelSize(R.dimen.dim_32)));
+                    viewHolder.actionButtonImageView.setBackgroundResource(R.drawable.right_arrow_play_btn);
+                    viewHolder.actionButtonImageView.setVisibility(View.VISIBLE);
 
                 } else if (matchStatus.equalsIgnoreCase(Constants.MatchStatusStrings.COMING_UP)) {
                     viewHolder.actionButton.setClickable(false);
-                    viewHolder.actionButton.setTextColor(ContextCompat.getColor(viewHolder.actionButton.getContext(), R.color.grey_a1a1a1));
+                    viewHolder.actionButtonTextView.setTextColor(ContextCompat.getColor(viewHolder.actionButton.getContext(), R.color.grey_a1a1a1));
+                    viewHolder.actionButtonTextView.setTypeface(latoRegular);
                     viewHolder.actionButton.setBackground(ContextCompat.getDrawable(viewHolder.actionButton.getContext(), R.drawable.btn_coming_up_bg));
                     viewHolder.actionButton.setLayoutParams(new LinearLayout.LayoutParams
                             (viewHolder.actionButton.getResources().getDimensionPixelSize(R.dimen.dim_90)
                                     , viewHolder.actionButton.getResources().getDimensionPixelSize(R.dimen.dim_32)));
 
-                }else if (matchStatus.equalsIgnoreCase(Constants.MatchStatusStrings.ANSWER)) {
+                } else if (matchStatus.equalsIgnoreCase(Constants.MatchStatusStrings.ANSWER)) {
                     viewHolder.actionButton.setClickable(true);
-                    viewHolder.actionButton.setTextColor(ContextCompat.getColor(viewHolder.actionButton.getContext(), R.color.white));
-                    viewHolder.actionButton.setBackground(ContextCompat.getDrawable(viewHolder.actionButton.getContext(), R.drawable.btn_play_bg));
+                    viewHolder.actionButtonTextView.setTextColor(ContextCompat.getColor(viewHolder.actionButton.getContext(), R.color.white));
+                    viewHolder.actionButtonTextView.setTypeface(latoBold);
+                    viewHolder.actionButton.setBackground(ContextCompat.getDrawable(viewHolder.actionButton.getContext(), R.drawable.btn_answer_bg));
                     viewHolder.actionButton.setLayoutParams(new LinearLayout.LayoutParams
-                            (viewHolder.actionButton.getResources().getDimensionPixelSize(R.dimen.dim_90)
+                            (viewHolder.actionButton.getResources().getDimensionPixelSize(R.dimen.dim_84)
                                     , viewHolder.actionButton.getResources().getDimensionPixelSize(R.dimen.dim_32)));
 
-                }else if (matchStatus.equalsIgnoreCase(Constants.MatchStatusStrings.CONTINUE)) {
+                } else if (matchStatus.equalsIgnoreCase(Constants.MatchStatusStrings.CONTINUE)) {
                     viewHolder.actionButton.setClickable(true);
-                    viewHolder.actionButton.setTextColor(ContextCompat.getColor(viewHolder.actionButton.getContext(), R.color.white));
-                    viewHolder.actionButton.setBackground(ContextCompat.getDrawable(viewHolder.actionButton.getContext(), R.drawable.btn_play_bg));
+                    viewHolder.actionButtonTextView.setTextColor(ContextCompat.getColor(viewHolder.actionButton.getContext(), R.color.white));
+                    viewHolder.actionButtonTextView.setTypeface(latoBold);
+                    viewHolder.actionButton.setBackground(ContextCompat.getDrawable(viewHolder.actionButton.getContext(), R.drawable.btn_continue_bg));
                     viewHolder.actionButton.setLayoutParams(new LinearLayout.LayoutParams
-                            (viewHolder.actionButton.getResources().getDimensionPixelSize(R.dimen.dim_90)
+                            (viewHolder.actionButton.getResources().getDimensionPixelSize(R.dimen.dim_84)
                                     , viewHolder.actionButton.getResources().getDimensionPixelSize(R.dimen.dim_32)));
 
-                }else if (matchStatus.equalsIgnoreCase(Constants.MatchStatusStrings.CANCELLED)) {
+                } else if (matchStatus.equalsIgnoreCase(Constants.MatchStatusStrings.CANCELLED)) {
                     viewHolder.actionButton.setClickable(false);
-                    viewHolder.actionButton.setTextColor(ContextCompat.getColor(viewHolder.actionButton.getContext(), R.color.black));
+                    viewHolder.actionButtonTextView.setTextColor(ContextCompat.getColor(viewHolder.actionButton.getContext(), R.color.black));
+                    viewHolder.actionButtonTextView.setTypeface(latoRegular);
                     viewHolder.actionButton.setBackground(ContextCompat.getDrawable(viewHolder.actionButton.getContext(), R.drawable.btn_did_not_play_bg));
                     viewHolder.actionButton.setLayoutParams(new LinearLayout.LayoutParams
                             (viewHolder.actionButton.getResources().getDimensionPixelSize(R.dimen.dim_100)
                                     , viewHolder.actionButton.getResources().getDimensionPixelSize(R.dimen.dim_32)));
 
-                }else {
+                } else {
                     viewHolder.actionButton.setClickable(true);
-                    viewHolder.actionButton.setTextColor(ContextCompat.getColor(viewHolder.actionButton.getContext(), R.color.white));
+                    viewHolder.actionButtonTextView.setTextColor(ContextCompat.getColor(viewHolder.actionButton.getContext(), R.color.white));
+                    viewHolder.actionButtonTextView.setTypeface(latoRegular);
                     viewHolder.actionButton.setBackground(ContextCompat.getDrawable(viewHolder.actionButton.getContext(), R.drawable.btn_play_bg));
                     viewHolder.actionButton.setLayoutParams(new LinearLayout.LayoutParams
                             (viewHolder.actionButton.getResources().getDimensionPixelSize(R.dimen.dim_90)
                                     , viewHolder.actionButton.getResources().getDimensionPixelSize(R.dimen.dim_32)));
                 }
 
-                viewHolder.actionButton.setText(matchStatus);
+                if (matchStatus.equalsIgnoreCase(Constants.MatchStatusStrings.CONTINUE)){
+                    viewHolder.actionButtonTextView.setText(matchStatus+"...");
+                }else {
+                    viewHolder.actionButtonTextView.setText(matchStatus);
+                }
+
+            }
+
+            if (shouldDisableMatchClickAction(match)) {
+
+                if (match.getQuestionCount() <= 0) {
+                    viewHolder.actionButton.setClickable(false);
+                    viewHolder.actionButtonTextView.setText("Coming Up");
+                    viewHolder.actionButtonTextView.setTypeface(latoRegular);
+                    viewHolder.actionButtonImageView.setVisibility(View.GONE);
+                    viewHolder.actionButtonTextView.setTextColor(ContextCompat.getColor(viewHolder.actionButton.getContext(), R.color.grey_a1a1a1));
+                    viewHolder.actionButton.setBackground(ContextCompat.getDrawable(viewHolder.actionButton.getContext(), R.drawable.btn_coming_up_bg));
+                    viewHolder.actionButton.setLayoutParams(new LinearLayout.LayoutParams
+                            (viewHolder.actionButton.getResources().getDimensionPixelSize(R.dimen.dim_100)
+                                    , viewHolder.actionButton.getResources().getDimensionPixelSize(R.dimen.dim_34)));
+
+                    viewHolder.actionButtonImageView.setBackgroundResource(R.drawable.play_lock_icon);
+                    viewHolder.actionButtonImageView.getLayoutParams().height =
+                            viewHolder.actionButton.getResources().getDimensionPixelSize(R.dimen.dim_12);
+                    viewHolder.actionButtonImageView.getLayoutParams().width =
+                            viewHolder.actionButton.getResources().getDimensionPixelSize(R.dimen.dim_12);
+                    viewHolder.actionButtonImageView.setVisibility(View.VISIBLE);
+
+                    RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(viewHolder.actionButtonImageView.getLayoutParams());
+                    lp.setMargins(viewHolder.actionButton.getResources().getDimensionPixelSize(R.dimen.dim_7),
+                            viewHolder.actionButton.getResources().getDimensionPixelSize(R.dimen.dim_6_5), 0, 0);
+                    lp.addRule(RelativeLayout.RIGHT_OF, R.id.newChallenge_match_action_button_tv);
+                    viewHolder.actionButtonImageView.setLayoutParams(lp);
+
+                } else {
+                    viewHolder.actionButton.setClickable(false);
+                    viewHolder.actionButtonTextView.setText("Play");
+                    viewHolder.actionButtonTextView.setTypeface(latoRegular);
+                    viewHolder.actionButtonTextView.setTextColor(ContextCompat.getColor(viewHolder.actionButton.getContext(), R.color.grey_a1a1a1));
+                    viewHolder.actionButton.setBackground(ContextCompat.getDrawable(viewHolder.actionButton.getContext(), R.drawable.btn_play_locked_bg));
+                    viewHolder.actionButton.setLayoutParams(new LinearLayout.LayoutParams
+                            (viewHolder.actionButton.getResources().getDimensionPixelSize(R.dimen.dim_84)
+                                    , viewHolder.actionButton.getResources().getDimensionPixelSize(R.dimen.dim_34)));
+                    viewHolder.actionButton.setPadding(
+                            viewHolder.actionButton.getResources().getDimensionPixelSize(R.dimen.dim_2),
+                            0, 0, viewHolder.actionButton.getResources().getDimensionPixelSize(R.dimen.dim_2));
+
+                    viewHolder.actionButtonImageView.setBackgroundResource(R.drawable.play_lock_icon);
+                    viewHolder.actionButtonImageView.getLayoutParams().height =
+                            viewHolder.actionButton.getResources().getDimensionPixelSize(R.dimen.dim_12);
+                    viewHolder.actionButtonImageView.getLayoutParams().width =
+                            viewHolder.actionButton.getResources().getDimensionPixelSize(R.dimen.dim_12);
+                    viewHolder.actionButtonImageView.setVisibility(View.VISIBLE);
+
+                    RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(viewHolder.actionButtonImageView.getLayoutParams());
+                    lp.setMargins(viewHolder.actionButton.getResources().getDimensionPixelSize(R.dimen.dim_7),
+                            viewHolder.actionButton.getResources().getDimensionPixelSize(R.dimen.dim_6_5), 0, 0);
+                    lp.addRule(RelativeLayout.RIGHT_OF, R.id.newChallenge_match_action_button_tv);
+                    viewHolder.actionButtonImageView.setLayoutParams(lp);
+                }
+
             }
 
             /*  Parties */
@@ -290,7 +340,9 @@ public class InPlayHeadLessMatchesAdapter extends RecyclerView.Adapter<RecyclerV
         HmImageView party2ImageView;
         TextView party2NameTextView;
         TextView venueTextView;
-        Button actionButton;
+        RelativeLayout actionButton;
+        TextView actionButtonTextView;
+        ImageView actionButtonImageView;
         Button vsBtn;
 
         public TwoPartyMatchItemViewHolder(View itemView) {
@@ -302,7 +354,9 @@ public class InPlayHeadLessMatchesAdapter extends RecyclerView.Adapter<RecyclerV
             party2ImageView = (HmImageView) itemView.findViewById(R.id.match_party_2_imgView);
             party2NameTextView = (TextView) itemView.findViewById(R.id.match_party_2_textView);
             venueTextView = (TextView) itemView.findViewById(R.id.newChallenge_match_venue_textView);
-            actionButton = (Button) itemView.findViewById(R.id.newChallenge_match_action_button);
+            actionButton = (RelativeLayout) itemView.findViewById(R.id.newChallenge_match_action_button);
+            actionButtonTextView = (TextView) itemView.findViewById(R.id.newChallenge_match_action_button_tv);
+            actionButtonImageView = (ImageView) itemView.findViewById(R.id.newChallenge_match_action_button_iv);
             vsBtn = (Button) itemView.findViewById(R.id.newChallenge_match_vs_btn);
 
             matchParentLayout.setOnClickListener(this);

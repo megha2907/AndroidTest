@@ -60,17 +60,19 @@ public class DGPlayModelImpl implements DGPlayModel, SwipeFlingAdapterView.OnSwi
 
     @Override
     public void initAdapter(Context context, Question question, String questionType) {
-        mPredictionAdapter = new DGPlayAdapter(context, new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                removeAppliedPowerUp(view);
-                changePowerupInstructionBasedUponRemoval();
+        if (context != null) {
+            mPredictionAdapter = new DGPlayAdapter(context, new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    removeAppliedPowerUp(view);
+                    changePowerupInstructionBasedUponRemoval();
 
-            }
-        }, questionType);
+                }
+            }, questionType);
 
-        mPredictionAdapter.add(question);
-        mModelListener.onAdapterCreated(mPredictionAdapter, this);
+            mPredictionAdapter.add(question);
+            mModelListener.onAdapterCreated(mPredictionAdapter, this);
+        }
     }
 
     private void changePowerupInstructionBasedUponRemoval() {

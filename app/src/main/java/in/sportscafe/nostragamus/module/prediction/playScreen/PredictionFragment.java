@@ -941,8 +941,10 @@ public class PredictionFragment extends NostraBaseFragment implements View.OnCli
     }
 
     private void hideProgress() {
-        if (mProgressDialog != null && mProgressDialog.isShowing()) {
-            mProgressDialog.dismiss();
+        if (getActivity() != null){
+            if (!getActivity().isFinishing() && mProgressDialog != null && mProgressDialog.isShowing()) {
+                mProgressDialog.dismiss();
+            }
         }
     }
 

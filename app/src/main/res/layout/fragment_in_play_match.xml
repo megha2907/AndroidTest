@@ -152,7 +152,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="left"
                     android:layout_marginLeft="@dimen/dim_15"
-                    android:layout_marginTop="@dimen/dim_4"
+                    android:layout_marginTop="@dimen/dim_2"
                     android:gravity="center_vertical"
                     android:orientation="horizontal"
                     android:scrollbars="horizontal" />
@@ -161,7 +161,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/dim_10"
-                    android:layout_marginTop="@dimen/dim_14"
+                    android:layout_marginTop="@dimen/dim_12"
                     android:gravity="center"
                     android:orientation="horizontal">
 

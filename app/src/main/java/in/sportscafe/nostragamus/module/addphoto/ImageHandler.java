@@ -141,7 +141,7 @@ public class ImageHandler {
     }
 
     public Bitmap rotateBitmap(Bitmap bitmap, int rotateAngle) throws IOException {
-        if (rotateAngle > -1) {
+        if (rotateAngle > -1 && bitmap!=null) {
             Matrix mat = new Matrix();
             mat.setRotate(rotateAngle, (float) bitmap.getWidth() / 2, (float) bitmap.getHeight() / 2);
             return Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), mat, true);

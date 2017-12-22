@@ -3,6 +3,7 @@ package in.sportscafe.nostragamus.module.navigation.help.dummygame;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -97,7 +98,7 @@ public class DGTextFragment extends NostragamusFragment implements View.OnClickL
 
     public void applyInstruction(DGInstruction instruction) {
         String name = instruction.getName();
-        if (null != instruction.getScoredPoints()) {
+        if (null != instruction.getScoredPoints() && !TextUtils.isEmpty(name)) {
             name = String.format(name, instruction.getScoredPoints());
         }
 

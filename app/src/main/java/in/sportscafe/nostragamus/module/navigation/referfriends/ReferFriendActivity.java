@@ -107,12 +107,21 @@ public class ReferFriendActivity extends NostragamusActivity implements ReferFri
 
         UserInfo userInfo = Nostragamus.getInstance().getServerDataManager().getUserInfo();
 
-        BranchUniversalObject buo = new BranchUniversalObject()
-                .setContentIndexingMode(BranchUniversalObject.CONTENT_INDEX_MODE.PUBLIC)
-                .addContentMetadata(Constants.BundleKeys.WALLET_INITIAL_AMOUNT, walletInit)
-                .addContentMetadata(Constants.BundleKeys.USER_REFERRAL_CODE, referralCode)
-                .addContentMetadata(Constants.BundleKeys.USER_REFERRAL_PHOTO, userInfo.getPhoto())
-                .addContentMetadata(Constants.BundleKeys.USER_REFERRAL_NAME, userInfo.getUserName());
+        BranchUniversalObject buo = null;
+
+        if (userInfo != null) {
+            buo = new BranchUniversalObject()
+                    .setContentIndexingMode(BranchUniversalObject.CONTENT_INDEX_MODE.PUBLIC)
+                    .addContentMetadata(Constants.BundleKeys.WALLET_INITIAL_AMOUNT, walletInit)
+                    .addContentMetadata(Constants.BundleKeys.USER_REFERRAL_CODE, referralCode)
+                    .addContentMetadata(Constants.BundleKeys.USER_REFERRAL_PHOTO, userInfo.getPhoto())
+                    .addContentMetadata(Constants.BundleKeys.USER_REFERRAL_NAME, userInfo.getUserName());
+        } else {
+            buo = new BranchUniversalObject()
+                    .setContentIndexingMode(BranchUniversalObject.CONTENT_INDEX_MODE.PUBLIC)
+                    .addContentMetadata(Constants.BundleKeys.WALLET_INITIAL_AMOUNT, walletInit)
+                    .addContentMetadata(Constants.BundleKeys.USER_REFERRAL_CODE, referralCode);
+        }
 
 
         LinkProperties linkProperties = new LinkProperties();
@@ -124,7 +133,7 @@ public class ReferFriendActivity extends NostragamusActivity implements ReferFri
                     .setCampaign("App Invite")
                     .addControlParameter("$android_deeplink_path", "app/invite/")
                     .addControlParameter("$android_url", downloadLink);
-        }else {
+        } else {
             linkProperties
                     .addTag("inviteApp")
                     .setFeature("inviteApp")
