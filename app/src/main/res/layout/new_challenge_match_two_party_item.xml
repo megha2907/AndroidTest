@@ -81,18 +81,49 @@
                 android:gravity="center"
                 android:orientation="horizontal">
 
-                <com.jeeva.android.widgets.customfont.CustomButton
+                <!--<com.jeeva.android.widgets.customfont.CustomButton-->
+                    <!--android:id="@+id/newChallenge_match_action_button"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="@dimen/dim_32"-->
+                    <!--android:background="@color/transparent"-->
+                    <!--android:gravity="center"-->
+                    <!--android:minWidth="0dp"-->
+                    <!--android:textAllCaps="false"-->
+                    <!--android:paddingBottom="@dimen/dim_5"-->
+                    <!--android:textColor="@color/white"-->
+                    <!--android:textSize="@dimen/sp_12"-->
+                    <!--app:typeface="lato_bold" />-->
+
+                <RelativeLayout
                     android:id="@+id/newChallenge_match_action_button"
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/dim_32"
                     android:background="@color/transparent"
-                    android:gravity="center"
                     android:minWidth="0dp"
-                    android:textAllCaps="false"
-                    android:paddingBottom="@dimen/dim_5"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/sp_12"
-                    app:typeface="lato_bold" />
+                    android:gravity="center">
+
+                    <com.jeeva.android.widgets.customfont.CustomTextView
+                        android:id="@+id/newChallenge_match_action_button_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="@dimen/dim_2"
+                        android:paddingTop="@dimen/dim_2"
+                        android:paddingBottom="@dimen/dim_6"
+                        android:textAllCaps="false"
+                        android:textSize="@dimen/sp_13"
+                        app:typeface="lato_bold"
+                        android:textColor="@color/white"/>
+
+                    <ImageView
+                        android:id="@+id/newChallenge_match_action_button_iv"
+                        android:layout_width="@dimen/dim_8"
+                        android:layout_height="@dimen/dim_8"
+                        android:layout_marginLeft="@dimen/dim_7"
+                        android:layout_marginTop="@dimen/dim_8.5"
+                        android:layout_toRightOf="@+id/newChallenge_match_action_button_tv"
+                        android:visibility="gone" />
+
+                </RelativeLayout>
 
                 <com.jeeva.android.widgets.customfont.CustomButton
                     android:id="@+id/newChallenge_match_vs_button"

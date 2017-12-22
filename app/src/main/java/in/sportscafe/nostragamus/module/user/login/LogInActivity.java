@@ -61,7 +61,7 @@ public class LogInActivity extends NostragamusActivity implements LogInView, Vie
     private String persongender;
     private String profileUrl;
     private String personPhoto;
-    private String oAuthServerId="";
+    private String oAuthServerId = "";
 
 
     @Override
@@ -161,7 +161,7 @@ public class LogInActivity extends NostragamusActivity implements LogInView, Vie
 
             if (null != result) {
                 GoogleSignInAccount acct = result.getSignInAccount();
-                if(acct != null) {
+                if (acct != null) {
                     personName = acct.getDisplayName();
                     personEmail = acct.getEmail();
                     personId = acct.getId();
@@ -327,14 +327,14 @@ public class LogInActivity extends NostragamusActivity implements LogInView, Vie
     }
 
     public void startProgressAnim() {
-        if (getActivity()!=null) {
+        if (getActivity() != null) {
             LoadingIndicatorView loadingIndicatorView = (LoadingIndicatorView) findViewById(R.id.login_loading_anim);
             loadingIndicatorView.show();
         }
     }
 
     public void stopProgressAnim() {
-        if (getActivity()!=null) {
+        if (getActivity() != null) {
             LoadingIndicatorView loadingIndicatorView = (LoadingIndicatorView) findViewById(R.id.login_loading_anim);
             loadingIndicatorView.hide();
         }
@@ -345,24 +345,26 @@ public class LogInActivity extends NostragamusActivity implements LogInView, Vie
 
     @Override
     public void showEmailDialog() {
-        mAlertDialog = new NostragamusDialogBox(this)
-                .title(R.string.need_email_title)
-                .message(R.string.need_email_message)
-                .positiveButton(R.string.proceed, new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        mLogInPresenter.onGetEmail(mAlertDialog.getInputBoxText());
-                    }
-                })
-                .negativeButton(R.string.cancel, new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        mAlertDialog.dismiss();
-                    }
-                })
-                .inputBox(R.string.email_address_hint);
+        if (getActivity() != null && !getActivity().isFinishing()) {
+            mAlertDialog = new NostragamusDialogBox(this)
+                    .title(R.string.need_email_title)
+                    .message(R.string.need_email_message)
+                    .positiveButton(R.string.proceed, new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            mLogInPresenter.onGetEmail(mAlertDialog.getInputBoxText());
+                        }
+                    })
+                    .negativeButton(R.string.cancel, new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            mAlertDialog.dismiss();
+                        }
+                    })
+                    .inputBox(R.string.email_address_hint);
 
-        mAlertDialog.show();
+            mAlertDialog.show();
+        }
     }
 
     @Override
@@ -382,8 +384,7 @@ public class LogInActivity extends NostragamusActivity implements LogInView, Vie
         return null;
     }
 
-    public boolean hasNavBar (Resources resources)
-    {
+    public boolean hasNavBar(Resources resources) {
         int id = resources.getIdentifier("config_showNavigationBar", "bool", "android");
         return id > 0 && resources.getBoolean(id);
     }

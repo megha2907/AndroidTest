@@ -295,8 +295,8 @@
                 android:scrollbars="horizontal"
                 android:layout_gravity="left"
                 android:layout_marginLeft="@dimen/dim_15"
-                android:layout_marginTop="@dimen/dim_4"
-                android:layout_marginBottom="@dimen/dim_4"/>
+                android:layout_marginTop="@dimen/dim_2"
+                android:layout_marginBottom="@dimen/dim_2"/>
 
             <LinearLayout
                 android:id="@+id/inplay_headless_card_timeline_footer_parent"

@@ -563,33 +563,6 @@ public class NostragamusAnalytics {
     }
 
     /**
-     * Tracks revenue
-     * Once paytm payment is successful - Only for paid app
-     *
-     * @param price
-     */
-    public void trackRevenue(double price, int challengeId, String challengeName) {
-        if (BuildConfig.IS_PAID_VERSION && mAmplitude != null) {
-            JSONObject eventPropertiesJson = new JSONObject();
-            try {
-                eventPropertiesJson.put("challengeId", challengeId);
-                eventPropertiesJson.put("challengeName", challengeName);
-            } catch (JSONException jEx) {
-                jEx.printStackTrace();
-            }
-
-            Revenue revenue = new Revenue();
-            revenue.setQuantity(1);     // Aways one
-            revenue.setPrice(price);
-            revenue.setEventProperties(eventPropertiesJson);
-
-            mAmplitude.logRevenueV2(revenue);
-        } else {
-            Log.d("App", "Can't log revenue, Amplitude null!");
-        }
-    }
-
-    /**
      * @param isAddMoney - if true, tracks as ADD-MONEY else WITHDRAW-MONEY
      * @param amount     - amount of transaction
      */
@@ -773,6 +746,35 @@ public class NostragamusAnalytics {
             Log.d("App", "Can't log revenue, Amplitude null!");
         }
     }
+
+    /**
+     * Tracks revenue
+     * Once User Joins a contest
+     *
+     * @param price
+     */
+    public void trackRevenue(double price, int contestId, String contestName,String contestType) {
+        if (BuildConfig.IS_PAID_VERSION && mAmplitude != null) {
+            JSONObject eventPropertiesJson = new JSONObject();
+            try {
+                eventPropertiesJson.put("contestId", contestId);
+                eventPropertiesJson.put("contestName", contestName);
+                eventPropertiesJson.put("contestType", contestType);
+            } catch (JSONException jEx) {
+                jEx.printStackTrace();
+            }
+
+            Revenue revenue = new Revenue();
+            revenue.setQuantity(1);     // Aways one
+            revenue.setPrice(price);
+            revenue.setEventProperties(eventPropertiesJson);
+
+            mAmplitude.logRevenueV2(revenue);
+        } else {
+            Log.d("App", "Can't log revenue, Amplitude null!");
+        }
+    }
+
 
 
 

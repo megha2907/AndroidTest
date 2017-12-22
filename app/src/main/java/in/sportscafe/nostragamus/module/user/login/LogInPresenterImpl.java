@@ -40,7 +40,7 @@ public class LogInPresenterImpl implements LogInPresenter, LogInModelImpl.LogInM
 
     @Override
     public void onSuccessGoogleToken(String token, String personId, String personName, String persongender, String profileUrl, String personEmail, String personPhoto) {
-        mLogInModel.onLoggedInGoogle(token,personId,personName,persongender,profileUrl,personEmail,personPhoto);
+        mLogInModel.onLoggedInGoogle(token, personId, personName, persongender, profileUrl, personEmail, personPhoto);
     }
 
     @Override

@@ -125,7 +125,8 @@ public class InPlayRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                 viewHolder.challengeDurationTextView.setText(DateTimeHelper.getChallengeDuration(challengeItem.getChallengeStartTime(),
                         challengeItem.getChallengeEndTime()));
                 viewHolder.challengeButtonParent.setVisibility(View.GONE);
-
+            } else if (challengeItem.isOnlyHeadlessStateExist()) {
+                viewHolder.challengeButtonParent.setVisibility(View.GONE);
             } else {
                 viewHolder.challengeButtonParent.setVisibility(View.VISIBLE);
                 viewHolder.challengeButtonTextView.setText("JOIN ANOTHER CONTEST");
@@ -176,8 +177,8 @@ public class InPlayRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                 lpText.setMargins(0, 0, 8, 0);
                 tournamentName.setLayoutParams(lpText);
 
-                tournamentName.setTextSize(TypedValue.COMPLEX_UNIT_PX,mContext.getResources().getDimension(R.dimen.sp_9_5));
-                tournamentName.setTextColor(ContextCompat.getColor(mContext,R.color.grey6));
+                tournamentName.setTextSize(TypedValue.COMPLEX_UNIT_PX, mContext.getResources().getDimension(R.dimen.sp_9_5));
+                tournamentName.setTextColor(ContextCompat.getColor(mContext, R.color.grey6));
                 tournamentName.setTypeface(face);
 
                 tournamentName.setText(tournamentList.get(temp));
@@ -243,9 +244,9 @@ public class InPlayRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         if (contest != null && contest.getMatches() != null) {
             InPlayHeadLessItemViewHolder viewHolder = (InPlayHeadLessItemViewHolder) holder;
 
-            viewHolder.contestTitleTextView.setText("No Contest Joined Yet");
+            viewHolder.contestTitleTextView.setText("Join a contest and continue playing");
             viewHolder.contestModeImageView.setBackgroundResource(R.drawable.exclamation_mark);
-            viewHolder.joinContestTextView.setText("Join a contest and continue playing");
+            viewHolder.joinContestTextView.setText("You can only win prizes once you join a contest");
 
             viewHolder.timelineHeaderParent.removeAllViews();
             viewHolder.timelineContentParent.removeAllViews();
@@ -273,7 +274,7 @@ public class InPlayRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                 }
 
                     /* Content */
-                TimelineHelper.addNode(viewHolder.timelineContentParent, match.getStatus(),matchAttemptedStatus, isPlayed,
+                TimelineHelper.addNode(viewHolder.timelineContentParent, match.getStatus(), matchAttemptedStatus, isPlayed,
                         isNodeLineRequired, TimelineHelper.MatchTimelineTypeEnum.IN_PLAY_HEADLESS, contest.getMatches().size());
 
                     /* Title */
@@ -285,7 +286,7 @@ public class InPlayRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                         DateTimeHelper.getInPlayMatchTime(match.getStartTime()),
                         contest.getMatches().size(), match.getStatus(),
                         TimelineHelper.MatchTimelineTypeEnum.IN_PLAY_HEADLESS,
-                        isPlayed, match.getStartTime(),matchAttemptedStatus);
+                        isPlayed, match.getStartTime(), matchAttemptedStatus);
             }
         }
     }
@@ -304,7 +305,7 @@ public class InPlayRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
             if (contest.getRank() > 0) {
                 viewHolder.currentRankTextView.setText(AppSnippet.ordinal(contest.getRank()));
-            }else {
+            } else {
                 viewHolder.currentRankTextView.setText("NA");
             }
 
@@ -353,7 +354,7 @@ public class InPlayRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
                     /* Title */
                 TimelineHelper.addTextNode(viewHolder.timelineHeaderParent, "Game " + (temp + 1), contest.getMatches().size(),
-                        match.getStatus(), TimelineHelper.MatchTimelineTypeEnum.IN_PLAY_JOINED, isPlayed,matchAttemptedStatus);
+                        match.getStatus(), TimelineHelper.MatchTimelineTypeEnum.IN_PLAY_JOINED, isPlayed, matchAttemptedStatus);
 
                 /* Footer */
                 String footerStr = DateTimeHelper.getInPlayMatchTime(match.getStartTime());

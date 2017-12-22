@@ -19,6 +19,9 @@ public class InPlayMatchesResponseData {
     @SerializedName("powerups")
     private PowerUp powerUp;
 
+    @SerializedName("timeline")
+    private List<InPlayContestMatchDto> inPlayContestMatchDtoList;
+
     public List<InPlayMatch> getInPlayMatchList() {
         return inPlayMatchList;
     }
@@ -34,4 +37,13 @@ public class InPlayMatchesResponseData {
     public void setPowerUp(PowerUp powerUp) {
         this.powerUp = powerUp;
     }
+
+    public List<InPlayContestMatchDto> getInPlayContestMatchDtoList() {
+        return inPlayContestMatchDtoList;
+    }
+
+    public void setInPlayContestMatchDtoList(List<InPlayContestMatchDto> inPlayContestMatchDtoList) {
+        this.inPlayContestMatchDtoList = inPlayContestMatchDtoList;
+    }
+
 }

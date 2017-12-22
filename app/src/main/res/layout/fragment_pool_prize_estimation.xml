@@ -97,6 +97,7 @@
                             android:layout_weight="1"
                             android:paddingBottom="@dimen/dim_10"
                             android:paddingTop="@dimen/dim_10"
+                            android:thumb="@drawable/seekbar_thumb"
                             android:progressDrawable="@drawable/seek_bar_progress_drawable"
                             android:theme="@style/SeekBarTheme"/>
 

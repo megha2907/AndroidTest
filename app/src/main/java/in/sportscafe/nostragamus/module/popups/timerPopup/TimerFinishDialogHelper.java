@@ -87,7 +87,7 @@ public class TimerFinishDialogHelper {
                 }
         );
 
-        dialogFragment.show(activityContext.getSupportFragmentManager(), dialogFragment.getClass().getSimpleName());
+        dialogFragment.showDialogAllowingStateLoss(activityContext.getSupportFragmentManager(),dialogFragment, dialogFragment.getClass().getSimpleName());
     }
 
     public static void showCanNotPlayGameTimerOutDialog(FragmentManager fragmentManager) {
@@ -99,11 +99,12 @@ public class TimerFinishDialogHelper {
                 }
         );
 
-        dialogFragment.show(fragmentManager, dialogFragment.getClass().getSimpleName());
+        dialogFragment.showDialogAllowingStateLoss(fragmentManager,dialogFragment, dialogFragment.getClass().getSimpleName());
     }
 
     public static void showChallengeStartedTimerOutDialog(FragmentManager fragmentManager, String subMessage,
                                                           final View.OnClickListener onClickListener) {
+
         TimerFinishedDialogFragment dialogFragment = TimerFinishedDialogFragment.newInstance(getChallengeStartedScreenData(subMessage),
                 new TimerFinishedDialogFragment.TimerFinishedFragmentListener() {
                     @Override
@@ -115,7 +116,7 @@ public class TimerFinishDialogHelper {
                 }
         );
 
-        dialogFragment.show(fragmentManager, dialogFragment.getClass().getSimpleName());
+        dialogFragment.showDialogAllowingStateLoss(fragmentManager, dialogFragment, dialogFragment.getClass().getSimpleName());
     }
 
 

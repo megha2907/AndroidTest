@@ -106,7 +106,7 @@ public class JoinContestHelper {
                 mListener.hideProgressBar();
             }
 
-            dialogFragment.show(appCompatActivity.getSupportFragmentManager(), CompletePaymentDialogFragment.class.getSimpleName());
+            dialogFragment.showDialogAllowingStateLoss(appCompatActivity.getSupportFragmentManager(),dialogFragment, CompletePaymentDialogFragment.class.getSimpleName());
         }
     }
 

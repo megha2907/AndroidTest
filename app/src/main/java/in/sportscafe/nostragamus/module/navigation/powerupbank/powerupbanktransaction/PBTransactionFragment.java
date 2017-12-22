@@ -219,18 +219,20 @@ public class PBTransactionFragment extends BaseFragment implements View.OnClickL
             mPBTransactionHistoryAdapter.addPBTransactionHistoryIntoList(pbTransactionHistory);
         }
 
-        RelativeLayout recyclerViewLayout = (RelativeLayout) getView().findViewById(R.id.pb_transaction_friends_act_rl);
-
         /* Empty list view */
         if (getActivity() != null && getView() != null && mPBTransactionHistoryAdapter != null) {
+
+            RelativeLayout recyclerViewLayout = (RelativeLayout) getView().findViewById(R.id.pb_transaction_friends_act_rl);
+            RecyclerView rvTransactionHistory = (RecyclerView) getView().findViewById(R.id.pbTransactionRecyclerView);
+
             if (mPBTransactionHistoryAdapter.getPBTransactionHistoryList() == null || mPBTransactionHistoryAdapter.getPBTransactionHistoryList().isEmpty()) {
-                mPBTransactionHistoryRecyclerView.setVisibility(View.GONE);
+                rvTransactionHistory.setVisibility(View.GONE);
                 recyclerViewLayout.setVisibility(View.GONE);
                 LinearLayout noHistoryLayout = (LinearLayout) getView().findViewById(R.id.pb_transaction_no_history_layout);
                 noHistoryLayout.setVisibility(View.VISIBLE);
             } else {
                 recyclerViewLayout.setVisibility(View.VISIBLE);
-                mPBTransactionHistoryRecyclerView.setVisibility(View.VISIBLE);
+                rvTransactionHistory.setVisibility(View.VISIBLE);
             }
         }
 
