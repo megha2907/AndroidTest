@@ -100,7 +100,7 @@ public class ContestDataProvider {
                 if (contest.getContestType() != null && !TextUtils.isEmpty(contest.getContestType().getCategoryName()) ) {
                     String categoryName = contest.getContestType().getCategoryName();
                     if (!categoryName.contains("Contest")) {
-                        categoryName = categoryName + " Contest";
+                        categoryName = categoryName + " Contests";
                         contest.getContestType().setCategoryName(categoryName);
                     }
                 }

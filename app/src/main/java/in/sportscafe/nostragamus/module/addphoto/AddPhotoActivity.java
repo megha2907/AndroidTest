@@ -24,7 +24,7 @@ import in.sportscafe.nostragamus.module.common.NostragamusActivity;
 import in.sportscafe.nostragamus.module.popups.GetScreenNameListener;
 
 /**
- * Created by hmspl on 4/2/16.
+ * Created by Deepanshi on 4/2/16.
  */
 public class AddPhotoActivity extends Activity implements AddPhotoView, View.OnClickListener,GetScreenNameListener {
 
@@ -66,9 +66,19 @@ public class AddPhotoActivity extends Activity implements AddPhotoView, View.OnC
 
     @Override
     public void navigateToGallery(int requestCode) {
-        Intent galleryIntent = new Intent(Intent.ACTION_PICK,
-                MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        Intent galleryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         startActivityForResult(galleryIntent, requestCode);
+
+      /*  Intent getIntent = new Intent(Intent.ACTION_GET_CONTENT);
+        getIntent.setType("image/*");
+
+        Intent pickIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        pickIntent.setType("image/*");
+
+        Intent chooserIntent = Intent.createChooser(getIntent, "Select Image");
+        chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, new Intent[] {pickIntent});
+
+        startActivityForResult(chooserIntent, requestCode); */
     }
 
     @Override

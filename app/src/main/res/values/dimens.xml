@@ -122,6 +122,7 @@
     <dimen name="dim_6.5">6.5dp</dimen>
     <dimen name="dim_7">7dp</dimen>
     <dimen name="dim_8">8dp</dimen>
+    <dimen name="dim_8.5">8.5dp</dimen>
     <dimen name="dim_9">9dp</dimen>
     <dimen name="dim_10">10dp</dimen>
     <dimen name="dim_11">11dp</dimen>
@@ -223,5 +224,8 @@
     <dimen name="dim_44">44dp</dimen>
     <dimen name="dim_34">34dp</dimen>
     <dimen name="dim_76">76dp</dimen>
+    <dimen name="dim_273">273dp</dimen>
+    <dimen name="dim_84">84dp</dimen>
+    <dimen name="dim_86">86dp</dimen>
 
 </resources>

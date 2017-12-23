@@ -38,11 +38,13 @@ import in.sportscafe.nostragamus.module.inPlay.dto.InPlayContestDto;
 import in.sportscafe.nostragamus.module.inPlay.dto.InPlayContestMatchDto;
 import in.sportscafe.nostragamus.module.inPlay.dto.InPlayListChallengeItem;
 import in.sportscafe.nostragamus.module.inPlay.dto.InPlayListItem;
+import in.sportscafe.nostragamus.module.inPlay.dto.InPlayMatch;
 import in.sportscafe.nostragamus.module.inPlay.dto.InPlayResponse;
 import in.sportscafe.nostragamus.module.inPlay.ui.headless.dto.HeadLessMatchScreenData;
 import in.sportscafe.nostragamus.module.inPlay.ui.headless.matches.InPlayHeadLessMatchActivity;
 import in.sportscafe.nostragamus.module.newChallenges.dataProvider.SportsDataProvider;
 import in.sportscafe.nostragamus.module.newChallenges.dto.SportsTab;
+import in.sportscafe.nostragamus.module.newChallenges.helpers.DateTimeHelper;
 import in.sportscafe.nostragamus.module.popups.challengepopups.ContestDetailsPopupActivity;
 
 /**
@@ -56,7 +58,8 @@ public class InPlayViewPagerFragment extends BaseFragment {
     private SportsTab mSportsTab;
     private List<InPlayResponse> mFilteredContests;
 
-    public InPlayViewPagerFragment() {}
+    public InPlayViewPagerFragment() {
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -125,7 +128,8 @@ public class InPlayViewPagerFragment extends BaseFragment {
                                 @Override
                                 public void run() {
                                     RecyclerView.SmoothScroller smoothScroller = new LinearSmoothScroller(mRecyclerView.getContext()) {
-                                        @Override protected int getVerticalSnapPreference() {
+                                        @Override
+                                        protected int getVerticalSnapPreference() {
                                             return LinearSmoothScroller.SNAP_TO_START;
                                         }
                                     };
@@ -183,9 +187,9 @@ public class InPlayViewPagerFragment extends BaseFragment {
                                 listItem.setInPlayAdapterItemType(InPlayAdapterItemType.HEADLESS_CONTEST);
                             } */
 
-                            if (contestDto.isHeadlessState()){
+                            if (contestDto.isHeadlessState()) {
                                 listItem.setInPlayAdapterItemType(InPlayAdapterItemType.HEADLESS_CONTEST);
-                            }else {
+                            } else {
                                 listItem.setInPlayAdapterItemType(InPlayAdapterItemType.JOINED_CONTEST);
                             }
 
@@ -212,8 +216,31 @@ public class InPlayViewPagerFragment extends BaseFragment {
             challengeItem.setStatus(response.getStatus());
             challengeItem.setSportsIdArray(response.getSportsIdArray());
             challengeItem.setContestCount((response.getContestList() != null) ? response.getContestList().size() : 0);
+            challengeItem.setOnlyHeadlessStateExist(checkForOnlyHeadlessState(response.getContestList()));
         }
         return challengeItem;
+    }
+
+    private boolean checkForOnlyHeadlessState(List<InPlayContestDto> contestList) {
+
+        boolean onlyHeadlessStateExist = false;
+
+        boolean isHeadlessState = false;
+        if (contestList != null && contestList.size() > 0) {
+
+            for (InPlayContestDto contestDto : contestList) {
+                if (contestDto.isHeadlessState()) {
+                    isHeadlessState = true;
+                }
+            }
+
+            if (isHeadlessState && contestList.size() == 1) {
+                onlyHeadlessStateExist = true;
+            }
+
+        }
+
+        return onlyHeadlessStateExist;
     }
 
     @NonNull

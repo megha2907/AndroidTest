@@ -74,39 +74,39 @@ public class TimelineHelper {
                 if (matchStatus.equalsIgnoreCase(Constants.InPlayMatchStatus.COMPLETED)) {
 
                     if (Constants.GameAttemptedStatus.COMPLETELY == matchAttemptedStatus) {
-                        view.setBackgroundResource(R.drawable.timeline_grey_tick_dot);
+                        view.setBackgroundResource(R.drawable.headless_tick_icon);
                     } else if (Constants.GameAttemptedStatus.PARTIALLY == matchAttemptedStatus) {
-                        view.setBackgroundResource(R.drawable.timeline_brown_dot);
+                        view.setBackgroundResource(R.drawable.headless_locked_icon);
                     } else {
-                        view.setBackgroundResource(R.drawable.timeline_lock_grey);
+                        view.setBackgroundResource(R.drawable.headless_locked_icon);
                     }
 
                 } else if (matchStatus.equalsIgnoreCase(Constants.InPlayMatchStatus.ONGOING)) {
 
                     if (Constants.GameAttemptedStatus.COMPLETELY == matchAttemptedStatus) {
-                        view.setBackgroundResource(R.drawable.timeline_grey_tick_dot);
+                        view.setBackgroundResource(R.drawable.headless_tick_icon);
                     } else if (Constants.GameAttemptedStatus.PARTIALLY == matchAttemptedStatus) {
-                        view.setBackgroundResource(R.drawable.timeline_brown_dot);
+                        view.setBackgroundResource(R.drawable.headless_cont_icon);
                     } else {
-                        view.setBackgroundResource(R.drawable.timeline_brown_dot);
+                        view.setBackgroundResource(R.drawable.headless_play_icon);
                     }
 
                 } else if (matchStatus.equalsIgnoreCase(Constants.InPlayMatchStatus.LIVE)) {
 
                     if (Constants.GameAttemptedStatus.COMPLETELY == matchAttemptedStatus) {
-                        view.setBackgroundResource(R.drawable.timeline_grey_tick_dot);
+                        view.setBackgroundResource(R.drawable.headless_tick_icon);
                     } else if (Constants.GameAttemptedStatus.PARTIALLY == matchAttemptedStatus) {
-                        view.setBackgroundResource(R.drawable.timeline_brown_dot);
+                        view.setBackgroundResource(R.drawable.headless_cont_icon);
                     } else {
-                        view.setBackgroundResource(R.drawable.timeline_lock_grey);
+                        view.setBackgroundResource(R.drawable.headless_locked_icon);
                     }
 
                 } else if (matchStatus.equalsIgnoreCase(Constants.InPlayMatchStatus.UPCOMING)) {
 
-                    view.setBackgroundResource(R.drawable.timeline_lock_grey);
+                    view.setBackgroundResource(R.drawable.headless_locked_icon);
 
                 } else {
-                    view.setBackgroundResource(R.drawable.timeline_lock_grey);
+                    view.setBackgroundResource(R.drawable.headless_locked_icon);
                 }
 
                 break;
@@ -124,10 +124,13 @@ public class TimelineHelper {
                     }
 
                 } else if (matchStatus.equalsIgnoreCase(Constants.InPlayMatchStatus.ONGOING)) {
-                    if (played) {
+
+                    if (Constants.GameAttemptedStatus.COMPLETELY == matchAttemptedStatus) {
                         view.setBackgroundResource(R.drawable.timeline_blue_tick);
+                    } else if (Constants.GameAttemptedStatus.PARTIALLY == matchAttemptedStatus) {
+                        view.setBackgroundResource(R.drawable.timeline_continue_icon);
                     } else {
-                        view.setBackgroundResource(R.drawable.timeline_blue_dot);
+                        view.setBackgroundResource(R.drawable.timeline_play_icon);
                     }
 
                 } else if (matchStatus.equalsIgnoreCase(Constants.InPlayMatchStatus.LIVE)) {
@@ -172,10 +175,12 @@ public class TimelineHelper {
 
                 } else if (matchStatus.equalsIgnoreCase(Constants.InPlayMatchStatus.ONGOING)) {
 
-                    if (played) {
+                    if (Constants.GameAttemptedStatus.COMPLETELY == matchAttemptedStatus) {
                         view.setBackgroundResource(R.drawable.timeline_blue_tick);
+                    } else if (Constants.GameAttemptedStatus.PARTIALLY == matchAttemptedStatus) {
+                        view.setBackgroundResource(R.drawable.timeline_continue_icon);
                     } else {
-                        view.setBackgroundResource(R.drawable.timeline_blue_dot);
+                        view.setBackgroundResource(R.drawable.timeline_play_icon);
                     }
 
                 } else if (matchStatus.equalsIgnoreCase(Constants.InPlayMatchStatus.UPCOMING)) {
@@ -200,6 +205,7 @@ public class TimelineHelper {
         if (parent != null) {
             Context context = parent.getContext();
             int nodeWidthHeight = (int) context.getResources().getDimension(R.dimen.dim_12);
+            int nodeNewWidthHeight = (int) context.getResources().getDimension(R.dimen.dim_16);
 
             int maxLineWidth;
             int matchSizeNew;
@@ -222,18 +228,27 @@ public class TimelineHelper {
             }
 
             int lineWidth = maxLineWidth / matchSizeNew;
+            int newLineWidth = lineWidth + (int) context.getResources().getDimension(R.dimen.dim_2);
             int lineHeight = (int) context.getResources().getDimension(R.dimen.dim_4);
 
 
             if (isNodeWithLine) {
                 View view = getLineView(context, matchStatus, isPlayed, typeEnum);
                 if (view != null) {
-                    parent.addView(view, parent.getChildCount(), new ViewGroup.LayoutParams(lineWidth, lineHeight));
+                    if (!isPlayed && matchStatus.equalsIgnoreCase(Constants.InPlayMatchStatus.ONGOING)) {
+                        parent.addView(view, parent.getChildCount(), new ViewGroup.LayoutParams(lineWidth, lineHeight));
+                    }else {
+                        parent.addView(view, parent.getChildCount(), new ViewGroup.LayoutParams(newLineWidth, lineHeight));
+                    }
                 }
             }
 
             View view = getNodeView(parent.getContext(), matchStatus, matchAttemptedStatus, isPlayed, typeEnum);
-            parent.addView(view, parent.getChildCount(), new ViewGroup.LayoutParams(nodeWidthHeight, nodeWidthHeight));
+            if (!isPlayed && matchStatus.equalsIgnoreCase(Constants.InPlayMatchStatus.ONGOING)) {
+                parent.addView(view, parent.getChildCount(), new ViewGroup.LayoutParams(nodeNewWidthHeight, nodeNewWidthHeight));
+            }else {
+                parent.addView(view, parent.getChildCount(), new ViewGroup.LayoutParams(nodeWidthHeight, nodeNewWidthHeight));
+            }
 
         }
     }
@@ -265,7 +280,7 @@ public class TimelineHelper {
             }
 
             int width = maxLineWidth / matchSizeNew;
-            //int width = (int)context.getResources().getDimension(R.dimen.dim_80);
+            int newWidth = width + (int)context.getResources().getDimension(R.dimen.dim_2);
 
             TextView titleView = (TextView) View.inflate(context, R.layout.games_status_timeline_title, null);
             if (title != null) {
@@ -314,7 +329,7 @@ public class TimelineHelper {
                         break;
                 }
 
-                parent.addView(titleView, parent.getChildCount(), new ViewGroup.LayoutParams(width, ViewGroup.LayoutParams.WRAP_CONTENT));
+                parent.addView(titleView, parent.getChildCount(), new ViewGroup.LayoutParams(newWidth, ViewGroup.LayoutParams.WRAP_CONTENT));
             }
 
         }
@@ -347,7 +362,7 @@ public class TimelineHelper {
             }
 
             int width = maxLineWidth / matchSizeNew;
-            //int width = (int)context.getResources().getDimension(R.dimen.dim_80);
+            int newWidth = width + (int)context.getResources().getDimension(R.dimen.dim_2);
 
             final TextView titleView = (TextView) View.inflate(context, R.layout.games_status_timeline_title, null);
             if (title != null) {
@@ -407,7 +422,7 @@ public class TimelineHelper {
                     }
                 }
 
-                parent.addView(titleView, parent.getChildCount(), new ViewGroup.LayoutParams(width, ViewGroup.LayoutParams.WRAP_CONTENT));
+                parent.addView(titleView, parent.getChildCount(), new ViewGroup.LayoutParams(newWidth, ViewGroup.LayoutParams.WRAP_CONTENT));
             }
 
         }
