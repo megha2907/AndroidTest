@@ -6,13 +6,13 @@
         <layer-list>
             <item> <!-- Shadow -->
                 <shape>
-                    <solid android:color="#5b5b0f" />
+                    <solid android:color="#655714" />
                     <corners android:radius="@dimen/dim_2" />
                 </shape>
             </item>
             <item android:bottom="@dimen/dim_2">
                 <shape>
-                    <solid android:color="#919107" />
+                    <solid android:color="#837506" />
                     <corners android:radius="@dimen/dim_2" />
                 </shape>
             </item>
@@ -25,14 +25,14 @@
             <!-- SHADOW -->
             <item>
                 <shape>
-                    <solid android:color="#5b5b0f" />
+                    <solid android:color="#655714" />
                     <corners android:radius="@dimen/dim_2" />
                 </shape>
             </item>
             <!-- BUTTON -->
             <item android:bottom="@dimen/dim_2">
                 <shape android:shape="rectangle">
-                    <solid android:color="#a1a108" />
+                    <solid android:color="#a49207" />
                     <corners android:radius="@dimen/dim_2" />
                 </shape>
             </item>

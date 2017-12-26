@@ -184,10 +184,10 @@ public class AddMoneyWalletHelper {
                 PaytmTransactionSuccessDialogFragment successDialogFragment =
                         PaytmTransactionSuccessDialogFragment.newInstance(1200, amount, getPaytmSuccessActionListener(fragment));
 
-                if (fragment != null) {
+                if (fragment != null && fragment.getActivity()!=null && !fragment.getActivity().isFinishing()) {
                     FragmentManager fragmentManager = fragment.getChildFragmentManager();
                     if (fragmentManager != null) {
-                        successDialogFragment.show(fragmentManager, "SUCCESS_DIALOG");
+                        successDialogFragment.showDialogAllowingStateLoss(fragmentManager,successDialogFragment,"SUCCESS_DIALOG");
                     }
                 }
             }
@@ -201,11 +201,11 @@ public class AddMoneyWalletHelper {
                 PaytmTransactionFailureDialogFragment failureDialogFragment =
                         PaytmTransactionFailureDialogFragment.newInstance(1199, getPaytmFailureActionListener(fragment, amount));
 
-                if (fragment != null) {
+                if (fragment != null && fragment.getActivity()!=null && !fragment.getActivity().isFinishing()) {
                     FragmentManager fragmentManager = fragment.getChildFragmentManager();
                     if (fragmentManager != null) {
                         try {
-                            failureDialogFragment.show(fragmentManager, "FAILURE_DIALOG");
+                            failureDialogFragment.showDialogAllowingStateLoss(fragmentManager,failureDialogFragment, "FAILURE_DIALOG");
                         } catch (Exception ex) {
                             ex.printStackTrace();
                         }

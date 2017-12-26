@@ -419,6 +419,9 @@ public class ContestViewPagerFragment extends NostraBaseFragment {
 
     private void sendContestJoinedDataToAmplitude(Contest contest) {
 
+        NostragamusAnalytics.getInstance().trackRevenue(contest.getEntryFee(),contest.getContestId(),
+                contest.getConfigName(),contest.getContestType().getCategoryName());
+
         Bundle activityBundle = null;
         if (getActivity() != null) {
             if (getActivity().getIntent() != null && getActivity().getIntent().getExtras() != null) {

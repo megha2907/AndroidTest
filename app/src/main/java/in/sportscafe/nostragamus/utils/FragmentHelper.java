@@ -1,6 +1,7 @@
 package in.sportscafe.nostragamus.utils;
 
 import android.support.annotation.NonNull;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -111,5 +112,6 @@ public class FragmentHelper {
         ft.commit();
         manager.popBackStackImmediate();
     }
+
 
 }

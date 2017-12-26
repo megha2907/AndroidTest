@@ -19,6 +19,7 @@ public class InPlayListChallengeItem {
     private int contestCount = 0;
     private String challengeStartTime;
     private String challengeEndTime;
+    private boolean onlyHeadlessStateExist;
 
     private List<String> challengeTournaments = new ArrayList<>();
 
@@ -92,6 +93,14 @@ public class InPlayListChallengeItem {
 
     public void setChallengeEndTime(String challengeEndTime) {
         this.challengeEndTime = challengeEndTime;
+    }
+
+    public boolean isOnlyHeadlessStateExist() {
+        return onlyHeadlessStateExist;
+    }
+
+    public void setOnlyHeadlessStateExist(boolean onlyHeadlessStateExist) {
+        this.onlyHeadlessStateExist = onlyHeadlessStateExist;
     }
 
 }

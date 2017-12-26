@@ -1,6 +1,9 @@
 package in.sportscafe.nostragamus.module.common;
 
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.ViewGroup;
 import android.view.Window;
 
@@ -39,6 +42,19 @@ public class PopUpDialogFragment extends BaseDialogFragment {
         super.onStop();
         NostragamusAnalytics.getInstance().stopFragmentTrack(getActivity(),
                 AppSnippet.getClassName(getClass()));
+    }
+
+    public static void showDialogAllowingStateLoss(FragmentManager fragmentManager, DialogFragment dialogFragment, String tag) {
+
+        if (fragmentManager != null && dialogFragment != null) {
+            try {
+                FragmentTransaction ft = fragmentManager.beginTransaction();
+                ft.add(dialogFragment, tag);
+                ft.commitAllowingStateLoss();
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        }
     }
 }
 
