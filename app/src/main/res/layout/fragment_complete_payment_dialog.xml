@@ -37,10 +37,13 @@
                     android:id="@+id/join_challenge_dialog_header_textView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/dim_8"
+                    android:layout_marginLeft="@dimen/dim_20"
+                    android:layout_marginRight="@dimen/dim_20"
                     android:text="Complete Payment"
                     android:textColor="@color/white"
                     android:textSize="@dimen/sp_14"
+                    android:gravity="center"
+                    android:layout_gravity="center"
                     app:typeface="lato_bold" />
 
             </LinearLayout>

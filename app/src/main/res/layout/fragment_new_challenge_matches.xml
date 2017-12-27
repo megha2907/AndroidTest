@@ -139,7 +139,10 @@
             android:paddingTop="@dimen/dim_12"
             android:paddingLeft="@dimen/dim_12"
             android:paddingRight="@dimen/dim_12"
-            android:layout_margin="@dimen/dim_12">
+            android:layout_marginLeft="@dimen/dim_12"
+            android:layout_marginTop="@dimen/dim_12"
+            android:layout_marginRight="@dimen/dim_12"
+            android:layout_marginBottom="@dimen/dim_9">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -207,12 +210,46 @@
 
         </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="center"
+        android:paddingBottom="@dimen/dim_11">
+
+        <com.jeeva.android.widgets.customfont.CustomTextView
+            android:id="@+id/games_tip_text_textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white_999999"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:textSize="@dimen/sp_12"
+            app:typeface="lato_regular" />
+
+        <com.jeeva.android.widgets.customfont.CustomTextView
+            android:id="@+id/games_tip_textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/grey6"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:textSize="@dimen/sp_12"
+            app:typeface="lato_bold" />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dim_0.5"
+            android:background="@color/line_separator"/>
+
+
         <!-- Matches Layout -->
         <android.support.v7.widget.RecyclerView
             android:id="@+id/match_timeline_rv"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@id/challenge_timeline_tv_match_left"/>
+            android:layout_height="match_parent" />
 
     </LinearLayout>
 

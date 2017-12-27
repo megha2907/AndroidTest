@@ -86,7 +86,7 @@
                 android:id="@+id/contest_rule_one_rl"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dim_6">
+                android:layout_marginTop="@dimen/dim_10">
 
                 <!-- Contest Rule One-->
                 <com.jeeva.android.widgets.customfont.CustomTextView
@@ -104,7 +104,7 @@
                     android:id="@+id/contest_rule_one_bullet"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dim_9"
+                    android:layout_marginTop="@dimen/dim_8"
                     android:src="@drawable/dash" />
 
             </RelativeLayout>
@@ -114,7 +114,7 @@
                 android:id="@+id/contest_rule_two_rl"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dim_6">
+                android:layout_marginTop="@dimen/dim_10">
 
                 <!-- Contest Rule Two-->
                 <com.jeeva.android.widgets.customfont.CustomTextView
@@ -132,7 +132,7 @@
                     android:id="@+id/contest_rule_two_bullet"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dim_9"
+                    android:layout_marginTop="@dimen/dim_8"
                     android:src="@drawable/dash" />
 
             </RelativeLayout>
@@ -240,7 +240,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/dim_6"
-                    android:layout_marginTop="@dimen/dim_6"
+                    android:layout_marginTop="@dimen/dim_10"
                     android:lineSpacingExtra="@dimen/dim_4"
                     android:layout_toRightOf="@+id/powerup_rule_one_bullet"
                     android:textColor="@color/grey6"
@@ -250,7 +250,7 @@
                     android:id="@+id/powerup_rule_one_bullet"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dim_15"
+                    android:layout_marginTop="@dimen/dim_18"
                     android:src="@drawable/dash" />
 
             </RelativeLayout>
@@ -268,7 +268,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/dim_6"
-                    android:layout_marginTop="@dimen/dim_6"
+                    android:layout_marginTop="@dimen/dim_10"
                     android:lineSpacingExtra="@dimen/dim_4"
                     android:layout_toRightOf="@+id/powerup_rule_two_bullet"
                     android:textColor="@color/grey6"
@@ -279,7 +279,7 @@
                     android:id="@+id/powerup_rule_two_bullet"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dim_15"
+                    android:layout_marginTop="@dimen/dim_18"
                     android:src="@drawable/dash" />
 
             </RelativeLayout>
@@ -318,7 +318,7 @@
                     app:typeface="lato_regular"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dim_6"
+                    android:layout_marginTop="@dimen/dim_10"
                     android:textColor="@color/grey6"
                     android:textSize="@dimen/sp_12" />
 
@@ -338,7 +338,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/dim_6"
-                    android:layout_marginTop="@dimen/dim_6"
+                    android:layout_marginTop="@dimen/dim_10"
                     android:layout_toRightOf="@+id/cancelled_rule_one_bullet"
                     android:textColor="@color/grey6"
                     android:lineSpacingExtra="@dimen/dim_3"
@@ -348,7 +348,7 @@
                     android:id="@+id/cancelled_rule_one_bullet"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dim_15"
+                    android:layout_marginTop="@dimen/dim_18"
                     android:src="@drawable/dash" />
 
             </RelativeLayout>
@@ -366,7 +366,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/dim_6"
-                    android:layout_marginTop="@dimen/dim_6"
+                    android:layout_marginTop="@dimen/dim_10"
                     android:layout_toRightOf="@+id/cancelled_rule_two_bullet"
                     android:textColor="@color/grey6"
                     android:lineSpacingExtra="@dimen/dim_4"
@@ -376,7 +376,7 @@
                     android:id="@+id/cancelled_rule_two_bullet"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dim_15"
+                    android:layout_marginTop="@dimen/dim_18"
                     android:src="@drawable/dash" />
 
             </RelativeLayout>
@@ -394,7 +394,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/dim_6"
-                    android:layout_marginTop="@dimen/dim_6"
+                    android:layout_marginTop="@dimen/dim_10"
                     android:layout_toRightOf="@+id/cancelled_rule_three_bullet"
                     android:textColor="@color/grey6"
                     android:lineSpacingExtra="@dimen/dim_4"
@@ -404,7 +404,7 @@
                     android:id="@+id/cancelled_rule_three_bullet"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dim_15"
+                    android:layout_marginTop="@dimen/dim_18"
                     android:src="@drawable/dash" />
 
             </RelativeLayout>
