@@ -228,7 +228,8 @@ public class TimelineHelper {
             }
 
             int lineWidth = maxLineWidth / matchSizeNew;
-            int newLineWidth = lineWidth + (int) context.getResources().getDimension(R.dimen.dim_2);
+            int playLineWidth = lineWidth - (int) context.getResources().getDimension(R.dimen.dim_2);
+            int otherLineWidth = lineWidth + (int) context.getResources().getDimension(R.dimen.dim_2);
             int lineHeight = (int) context.getResources().getDimension(R.dimen.dim_4);
 
 
@@ -236,9 +237,9 @@ public class TimelineHelper {
                 View view = getLineView(context, matchStatus, isPlayed, typeEnum);
                 if (view != null) {
                     if (!isPlayed && matchStatus.equalsIgnoreCase(Constants.InPlayMatchStatus.ONGOING)) {
-                        parent.addView(view, parent.getChildCount(), new ViewGroup.LayoutParams(lineWidth, lineHeight));
+                        parent.addView(view, parent.getChildCount(), new ViewGroup.LayoutParams(playLineWidth, lineHeight));
                     }else {
-                        parent.addView(view, parent.getChildCount(), new ViewGroup.LayoutParams(newLineWidth, lineHeight));
+                        parent.addView(view, parent.getChildCount(), new ViewGroup.LayoutParams(otherLineWidth, lineHeight));
                     }
                 }
             }
@@ -273,7 +274,7 @@ public class TimelineHelper {
                 maxLineWidth = (int) context.getResources().getDimension(R.dimen.dim_270);
             } else if (matchSize == 5) {
                 matchSizeNew = matchSize - 1;
-                maxLineWidth = (int) context.getResources().getDimension(R.dimen.dim_265);
+                maxLineWidth = (int) context.getResources().getDimension(R.dimen.dim_267);
             } else {
                 matchSizeNew = matchSize;
                 maxLineWidth = (int) context.getResources().getDimension(R.dimen.dim_270);
@@ -352,10 +353,10 @@ public class TimelineHelper {
                 maxLineWidth = (int) context.getResources().getDimension(R.dimen.dim_265);
             } else if (matchSize == 4) {
                 matchSizeNew = matchSize - 1;
-                maxLineWidth = (int) context.getResources().getDimension(R.dimen.dim_267);
+                maxLineWidth = (int) context.getResources().getDimension(R.dimen.dim_265);
             } else if (matchSize == 5) {
                 matchSizeNew = matchSize - 1;
-                maxLineWidth = (int) context.getResources().getDimension(R.dimen.dim_265);
+                maxLineWidth = (int) context.getResources().getDimension(R.dimen.dim_260);
             } else {
                 matchSizeNew = matchSize;
                 maxLineWidth = (int) context.getResources().getDimension(R.dimen.dim_270);

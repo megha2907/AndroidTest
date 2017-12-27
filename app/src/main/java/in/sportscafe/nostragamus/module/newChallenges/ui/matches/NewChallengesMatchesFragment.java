@@ -64,6 +64,8 @@ public class NewChallengesMatchesFragment extends BaseFragment implements View.O
     private TextView mContestTimerTextView;
     private TextView mMatchesLeftTextView;
     private Button mJoinContestButton;
+    private TextView mPlayContestTip;
+    private TextView mTip;
 
     public NewChallengesMatchesFragment() {
     }
@@ -93,7 +95,8 @@ public class NewChallengesMatchesFragment extends BaseFragment implements View.O
             mMatchesLeftTextView = (TextView) rootView.findViewById(R.id.matches_timeline_matches_left);
             mContestTimerTextView = (TextView) rootView.findViewById(R.id.matches_timeline_match_expires_in);
             ImageView backButtonImgView = (ImageView) rootView.findViewById(R.id.back_button);
-
+            mPlayContestTip = (TextView) rootView.findViewById(R.id.games_tip_textView);
+            mTip = (TextView) rootView.findViewById(R.id.games_tip_text_textView);
             mMatchesRecyclerView = (RecyclerView) rootView.findViewById(R.id.match_timeline_rv);
             mMatchesRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
             mMatchesRecyclerView.setHasFixedSize(true);
@@ -278,6 +281,8 @@ public class NewChallengesMatchesFragment extends BaseFragment implements View.O
     private void setMatchesLeftValue(List<InPlayMatch> matches){
         if (matches!=null && !matches.isEmpty()) {
             mMatchesLeftTextView.setText(String.valueOf(matches.size()));
+            mTip.setText("TIP : ");
+            mPlayContestTip.setText("Play all the "+String.valueOf(matches.size())+" games in this contest to win prizes");
         }
     }
 

@@ -72,7 +72,7 @@
                     android:ellipsize="end"
                     android:maxLines="2"
                     android:textAllCaps="false"
-                    android:textColor="@color/white_80"
+                    android:textColor="@color/white"
                     android:textSize="@dimen/sp_12"
                     app:typeface="lato_regular"
                     android:layout_marginLeft="@dimen/dim_10"/>
@@ -116,7 +116,7 @@
                     android:maxLines="2"
                     android:gravity="right"
                     android:textAllCaps="false"
-                    android:textColor="@color/white_80"
+                    android:textColor="@color/white"
                     android:textSize="@dimen/sp_12"
                     app:typeface="lato_regular"
                     android:layout_marginRight="@dimen/dim_10"/>
