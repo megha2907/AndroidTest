@@ -70,6 +70,7 @@
             app:typeface="lato_regular"
             android:text="Powerups"
             />
+
         <com.jeeva.android.widgets.customfont.CustomTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -78,14 +79,15 @@
             android:textSize="@dimen/sp_13"
             app:typeface="lato_regular"
             android:text="Your powerups will be displayed at the bottom of your screen as can be seen now - they are of the following three types:"
-            android:layout_marginTop="@dimen/dim_4"/>
+            android:layout_margin="@dimen/dim_4"/>
 
         <!-- Doubler -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:minHeight="@dimen/dp_64">
+            android:minHeight="@dimen/dp_64"
+            android:layout_marginTop="@dimen/dim_5">
 
             <!-- 2x view -->
             <FrameLayout
@@ -159,7 +161,7 @@
                     android:layout_height="@dimen/dp_46"
                     android:onClick="onClick"
                     android:padding="@dimen/dp_10"
-                    android:src="@drawable/powerup_2x_white"
+                    android:src="@drawable/powerup_nonegs_white"
                     android:background="@drawable/powerup_no_neg_round_bg"/>
 
             </FrameLayout>
@@ -218,7 +220,7 @@
                     android:layout_height="@dimen/dp_46"
                     android:onClick="onClick"
                     android:padding="@dimen/dp_10"
-                    android:src="@drawable/powerup_2x_white"
+                    android:src="@drawable/powerup_audience_poll_white"
                     android:background="@drawable/powerup_audiance_poll_round_bg"/>
 
             </FrameLayout>
