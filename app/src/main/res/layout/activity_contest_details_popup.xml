@@ -200,7 +200,7 @@
                             android:layout_centerVertical="true"
                             android:layout_gravity="center_vertical"
                             android:layout_marginTop="@dimen/dim_2"
-                            android:text="The contest prize money will scale with the number of entries."
+                            android:text="Prize money varies with number of players - more the players , bigger the prize!"
                             android:textColor="@color/white_60"
                             android:textSize="@dimen/sp_11"
                             app:typeface="lato_regular" />
