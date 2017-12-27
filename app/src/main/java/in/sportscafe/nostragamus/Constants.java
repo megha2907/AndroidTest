@@ -495,6 +495,7 @@ public interface Constants {
         String HISTORY_GAMES = "History Games";
         String RESULTS = "Results";
         String WALLET_POPUP = "Wallet Popup";
+        String REVENUE = "Revenue";
     }
 
     interface AnalyticsClickLabels {
@@ -596,6 +597,7 @@ public interface Constants {
         String OPEN_POWERUP_BANK = "Open Powerup Bank";
         String VIEW_OTHERS_ANSWERS = "View Other's Answers";
         String OTHERS_RESULTS_WAITING = "Other's Results Waiting";
+        String CONTEST_JOINED = "Contest Joined";
     }
 
     interface AnalyticsLabels {

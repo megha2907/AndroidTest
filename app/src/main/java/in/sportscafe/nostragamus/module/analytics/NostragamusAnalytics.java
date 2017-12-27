@@ -629,23 +629,6 @@ public class NostragamusAnalytics {
     }
 
     /**
-     * Logs Facebook revenue event
-     *
-     * @param amount
-     * @param args
-     */
-    public void logFbRevenue(double amount, @NonNull Bundle args) {
-        if (sFaceBookAppEventLogger != null) {
-            try {
-                BigDecimal values = BigDecimal.valueOf(amount);
-                sFaceBookAppEventLogger.logPurchase(values, Currency.getInstance(Constants.INDIAN_CURRENCY_CODE), args);
-            } catch (NumberFormatException ex) {
-                ex.printStackTrace();
-            }
-        }
-    }
-
-    /**
      * Logs Facebook Play completed event
      *
      * @param args
@@ -773,9 +756,37 @@ public class NostragamusAnalytics {
         } else {
             Log.d("App", "Can't log revenue, Amplitude null!");
         }
+
+         /* Send Revenue Data to Google Analytics */
+        double priceValue = price;
+        long priceValue1 = (long) priceValue;
+        track(AnalyticsCategory.REVENUE, AnalyticsActions.CONTEST_JOINED, contestName, priceValue1);
+
+        /* Send Revenue Data to Fb Analytics */
+        Bundle contestBundle = new Bundle();
+        contestBundle.putInt("contestId", contestId);
+        contestBundle.putString("contestName", contestName);
+        contestBundle.putString("contestType", contestType);
+        NostragamusAnalytics.getInstance().logFbRevenue(price, contestBundle);
+
     }
 
-
+    /**
+     * Logs Facebook revenue event
+     *
+     * @param amount
+     * @param args
+     */
+    public void logFbRevenue(double amount, @NonNull Bundle args) {
+        if (sFaceBookAppEventLogger != null) {
+            try {
+                BigDecimal values = BigDecimal.valueOf(amount);
+                sFaceBookAppEventLogger.logPurchase(values, Currency.getInstance(Constants.INDIAN_CURRENCY_CODE), args);
+            } catch (NumberFormatException ex) {
+                ex.printStackTrace();
+            }
+        }
+    }
 
 
 }
