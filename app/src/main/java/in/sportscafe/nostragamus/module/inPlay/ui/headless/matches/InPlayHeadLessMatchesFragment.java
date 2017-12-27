@@ -90,7 +90,7 @@ public class InPlayHeadLessMatchesFragment extends BaseFragment implements View.
         backButtonImgView.setOnClickListener(this);
         rootView.findViewById(R.id.toolbar_wallet_rl).setOnClickListener(this);
 
-        mMatchesRecyclerView = (RecyclerView)rootView.findViewById(R.id.match_timeline_rv);
+        mMatchesRecyclerView = (RecyclerView) rootView.findViewById(R.id.match_timeline_rv);
         mMatchesRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         mMatchesRecyclerView.setHasFixedSize(true);
 
@@ -298,12 +298,12 @@ public class InPlayHeadLessMatchesFragment extends BaseFragment implements View.
             TextView walletAmtTextView = (TextView) rootView.findViewById(R.id.toolbar_wallet_money);
 
             titleTextView.setText(mHeadLessMatchScreenData.getChallengeName());
-            walletAmtTextView.setText(String.valueOf((int)WalletHelper.getTotalBalance()));
+            walletAmtTextView.setText(String.valueOf((int) WalletHelper.getTotalBalance()));
         }
     }
 
-    private void setMatchesLeftValue(List<InPlayMatch> matches){
-        if (matches!=null && !matches.isEmpty()) {
+    private void setMatchesLeftValue(List<InPlayMatch> matches) {
+        if (matches != null && !matches.isEmpty()) {
             mMatchesLeftTextView.setText(String.valueOf(matches.size()));
         }
     }
@@ -387,12 +387,16 @@ public class InPlayHeadLessMatchesFragment extends BaseFragment implements View.
 
             /* For any match , if status is answer or continue ; means some answers were given previously, so change string */
             for (InPlayMatch match : responses.getData().getInPlayMatchList()) {
-                if (match.getMatchStatus().equalsIgnoreCase(Constants.MatchStatusStrings.ANSWER) ||
-                        match.getMatchStatus().equalsIgnoreCase(Constants.MatchStatusStrings.CONTINUE)) {
-
+                if (match.getMatchStatus().equalsIgnoreCase(Constants.MatchStatusStrings.CONTINUE)) {
                     imgView.setImageResource(R.drawable.win_more);
                     infoHeadingTextView.setText("Join a contest & continue playing");
                     String msg = "You will compete for prizes only if you join a contest. Continue & finish the game before or after joining!";
+                    infoMsgTextView.setText(msg);
+                    break;
+                } else if (match.getMatchStatus().equalsIgnoreCase(Constants.MatchStatusStrings.ANSWER)) {
+                    imgView.setImageResource(R.drawable.win_more);
+                    infoHeadingTextView.setText("NOW JOIN A CONTEST TO WIN PRIZES");
+                    String msg = "Your predictions were saved. To continue playing with them, join a contest before the first game begins.";
                     infoMsgTextView.setText(msg);
                     break;
                 }

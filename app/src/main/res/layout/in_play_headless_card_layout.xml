@@ -262,7 +262,7 @@
         android:layout_height="@dimen/dim_68"
         android:orientation="vertical"
         android:gravity="center_vertical"
-        android:paddingLeft="@dimen/dim_10"
+        android:paddingLeft="@dimen/dim_8"
         android:paddingRight="@dimen/dim_5"
         android:paddingTop="@dimen/dim_10"
         android:paddingBottom="@dimen/dim_10"
