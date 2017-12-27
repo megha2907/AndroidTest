@@ -104,7 +104,7 @@
                     android:id="@+id/contest_rule_one_bullet"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dim_9"
+                    android:layout_marginTop="@dimen/dim_8"
                     android:src="@drawable/dash" />
 
             </RelativeLayout>
@@ -132,7 +132,7 @@
                     android:id="@+id/contest_rule_two_bullet"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dim_9"
+                    android:layout_marginTop="@dimen/dim_8"
                     android:src="@drawable/dash" />
 
             </RelativeLayout>
@@ -250,7 +250,7 @@
                     android:id="@+id/powerup_rule_one_bullet"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dim_15"
+                    android:layout_marginTop="@dimen/dim_18"
                     android:src="@drawable/dash" />
 
             </RelativeLayout>
@@ -279,7 +279,7 @@
                     android:id="@+id/powerup_rule_two_bullet"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dim_15"
+                    android:layout_marginTop="@dimen/dim_18"
                     android:src="@drawable/dash" />
 
             </RelativeLayout>
@@ -348,7 +348,7 @@
                     android:id="@+id/cancelled_rule_one_bullet"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dim_15"
+                    android:layout_marginTop="@dimen/dim_18"
                     android:src="@drawable/dash" />
 
             </RelativeLayout>
@@ -376,7 +376,7 @@
                     android:id="@+id/cancelled_rule_two_bullet"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dim_15"
+                    android:layout_marginTop="@dimen/dim_18"
                     android:src="@drawable/dash" />
 
             </RelativeLayout>
@@ -404,7 +404,7 @@
                     android:id="@+id/cancelled_rule_three_bullet"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dim_15"
+                    android:layout_marginTop="@dimen/dim_18"
                     android:src="@drawable/dash" />
 
             </RelativeLayout>
