@@ -282,7 +282,7 @@ public class NewChallengesMatchesFragment extends BaseFragment implements View.O
         if (matches!=null && !matches.isEmpty()) {
             mMatchesLeftTextView.setText(String.valueOf(matches.size()));
             mTip.setText("TIP : ");
-            mPlayContestTip.setText("Play all the "+String.valueOf(matches.size())+" games in this contest to win prizes");
+            mPlayContestTip.setText("You must play all "+String.valueOf(matches.size())+" games in this contest to win prizes");
         }
     }
 
