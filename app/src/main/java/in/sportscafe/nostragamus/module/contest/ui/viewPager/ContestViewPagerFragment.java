@@ -169,12 +169,12 @@ public class ContestViewPagerFragment extends NostraBaseFragment {
                             return 1;
                         } else {
 //                            if (contest2.isJoinable()) {   // Join
-                                if (contest1.getPriority() < contest2.getPriority()) {
-                                    return 1;
-                                } else if (contest1.getPriority() > contest2.getPriority()) {
-                                    return -1;
-                                }
-                                return 0;
+                            if (contest1.getPriority() < contest2.getPriority()) {
+                                return 1;
+                            } else if (contest1.getPriority() > contest2.getPriority()) {
+                                return -1;
+                            }
+                            return 0;
                             /*} else {                        // closed
                                 return -1;
                             }*/
@@ -419,9 +419,11 @@ public class ContestViewPagerFragment extends NostraBaseFragment {
 
     private void sendContestJoinedDataToAmplitude(Contest contest) {
 
-        NostragamusAnalytics.getInstance().trackRevenue(contest.getEntryFee(),contest.getContestId(),
-                contest.getConfigName(),contest.getContestType().getCategoryName());
+        /* Joining a contest = Revenue */
+        NostragamusAnalytics.getInstance().trackRevenue(contest.getEntryFee(), contest.getContestId(),
+                contest.getConfigName(), contest.getContestType().getCategoryName());
 
+        /* Send Contest Joined Details to Amplitude */
         Bundle activityBundle = null;
         if (getActivity() != null) {
             if (getActivity().getIntent() != null && getActivity().getIntent().getExtras() != null) {
@@ -475,16 +477,16 @@ public class ContestViewPagerFragment extends NostraBaseFragment {
         }
     }
 
-    void startAnim(){
-        if (getActivity()!=null && getView()!=null) {
+    void startAnim() {
+        if (getActivity() != null && getView() != null) {
             LoadingIndicatorView loadingIndicatorView = (LoadingIndicatorView) getView().findViewById(R.id.loading_anim);
             getView().findViewById(R.id.contestJoinProgressBarLayout).setVisibility(View.VISIBLE);
             loadingIndicatorView.smoothToShow();
         }
     }
 
-    void stopAnim(){
-        if (getActivity()!=null && getView()!=null) {
+    void stopAnim() {
+        if (getActivity() != null && getView() != null) {
             LoadingIndicatorView loadingIndicatorView = (LoadingIndicatorView) getView().findViewById(R.id.loading_anim);
             getView().findViewById(R.id.contestJoinProgressBarLayout).setVisibility(View.GONE);
             loadingIndicatorView.smoothToHide();

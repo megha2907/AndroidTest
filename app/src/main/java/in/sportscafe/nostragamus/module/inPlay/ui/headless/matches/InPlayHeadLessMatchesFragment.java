@@ -227,7 +227,9 @@ public class InPlayHeadLessMatchesFragment extends BaseFragment implements View.
             if (!TextUtils.isEmpty(mHeadLessMatchScreenData.getChallengeName())) {
                 subTitle = mHeadLessMatchScreenData.getChallengeName();
             }
-            if (!TextUtils.isEmpty(mHeadLessMatchScreenData.getContestName())) {
+            if (!TextUtils.isEmpty(mHeadLessMatchScreenData.getContestName()) &&
+                    !TextUtils.isEmpty(mHeadLessMatchScreenData.getChallengeName()) &&
+                    !subTitle.equalsIgnoreCase(mHeadLessMatchScreenData.getChallengeName())) {
                 subTitle = subTitle + " - " + mHeadLessMatchScreenData.getContestName();
             }
             dataDto.setSubTitle(subTitle);

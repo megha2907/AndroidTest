@@ -13,9 +13,9 @@
         android:layout_marginLeft="@dimen/dim_20"
         android:layout_marginRight="@dimen/dim_20"
         android:layout_marginTop="@dimen/dim_20"
-        android:text="Max 2 powerups each can be transfered to this challenge"
+        android:text="No extra powerups can be transferred to this challenge"
         android:textColor="@color/white_dim"
-        android:textSize="@dimen/sp_15"
+        android:textSize="@dimen/sp_14"
         app:typeface="lato_regular" />
 
     <com.jeeva.android.widgets.customfont.CustomTextView
