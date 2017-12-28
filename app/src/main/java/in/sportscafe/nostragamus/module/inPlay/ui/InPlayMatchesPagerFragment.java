@@ -158,7 +158,7 @@ public class InPlayMatchesPagerFragment extends NostraBaseFragment {
             TextView tipTextView = (TextView) getView().findViewById(R.id.games_tip_textView);
             TextView tipTextViewText = (TextView) getView().findViewById(R.id.games_tip_text_textView);
             tipTextViewText.setText("TIP : ");
-            tipTextView.setText("Play all the "+String.valueOf(responses.getData().getInPlayMatchList().size())+" games in this contest to win prizes");
+            tipTextView.setText("You must play all "+String.valueOf(responses.getData().getInPlayMatchList().size())+" games in this contest to win prizes");
 
             /* Set Powerups */
             showOrHidePowerUps(responses.getData().getPowerUp());
