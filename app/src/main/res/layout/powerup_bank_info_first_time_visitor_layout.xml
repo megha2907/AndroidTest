@@ -23,7 +23,7 @@
         android:layout_marginLeft="@dimen/dp_26"
         android:layout_marginRight="@dimen/dp_26"
         android:layout_marginTop="@dimen/dim_10"
-        android:text="Running out of powerups? Transfer powerups from the Powerup Bank to your newChallengesResponse!"
+        android:text="Running out of powerups? Transfer powerups from the Powerup Bank to your challenge"
         android:textColor="@color/white_dim"
         android:textSize="@dimen/sp_14"
         app:typeface="lato_regular" />

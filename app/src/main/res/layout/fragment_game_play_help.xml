@@ -45,7 +45,8 @@
             android:textColor="@drawable/white_text_selector"
             android:textAllCaps="false"
             android:layout_marginTop="@dimen/dim_10"
-            android:paddingBottom="@dimen/dim_3"/>
+            android:paddingBottom="@dimen/dim_3"
+            app:typeface="lato_bold"/>
 
     </LinearLayout>
 
@@ -60,8 +61,8 @@
         android:orientation="vertical"
         android:layout_marginTop="@dimen/dim_20"
         android:layout_marginLeft="@dimen/dim_20">
-        
-        <com.jeeva.android.widgets.customfont.CustomTextView
+
+        <!--<com.jeeva.android.widgets.customfont.CustomTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
@@ -70,6 +71,7 @@
             app:typeface="lato_regular"
             android:text="Powerups"
             />
+
         <com.jeeva.android.widgets.customfont.CustomTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -78,7 +80,7 @@
             android:textSize="@dimen/sp_13"
             app:typeface="lato_regular"
             android:text="Your powerups will be displayed at the bottom of your screen as can be seen now - they are of the following three types:"
-            android:layout_marginTop="@dimen/dim_4"/>
+            android:layout_margin="@dimen/dim_4"/>-->
 
         <!-- Doubler -->
         <LinearLayout
@@ -159,7 +161,7 @@
                     android:layout_height="@dimen/dp_46"
                     android:onClick="onClick"
                     android:padding="@dimen/dp_10"
-                    android:src="@drawable/powerup_2x_white"
+                    android:src="@drawable/powerup_nonegs_white"
                     android:background="@drawable/powerup_no_neg_round_bg"/>
 
             </FrameLayout>
@@ -218,7 +220,7 @@
                     android:layout_height="@dimen/dp_46"
                     android:onClick="onClick"
                     android:padding="@dimen/dp_10"
-                    android:src="@drawable/powerup_2x_white"
+                    android:src="@drawable/powerup_audience_poll_white"
                     android:background="@drawable/powerup_audiance_poll_round_bg"/>
 
             </FrameLayout>
