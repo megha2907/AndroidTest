@@ -353,7 +353,7 @@ public class TimelineHelper {
                 maxLineWidth = (int) context.getResources().getDimension(R.dimen.dim_265);
             } else if (matchSize == 4) {
                 matchSizeNew = matchSize - 1;
-                maxLineWidth = (int) context.getResources().getDimension(R.dimen.dim_265);
+                maxLineWidth = (int) context.getResources().getDimension(R.dimen.dim_263);
             } else if (matchSize == 5) {
                 matchSizeNew = matchSize - 1;
                 maxLineWidth = (int) context.getResources().getDimension(R.dimen.dim_260);
