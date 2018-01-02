@@ -5,7 +5,6 @@ import java.util.List;
 
 import in.sportscafe.nostragamus.BuildConfig;
 import in.sportscafe.nostragamus.Config;
-import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.module.challengeCompleted.dto.CompletedMatchesResponse;
 import in.sportscafe.nostragamus.module.challengeCompleted.dto.CompletedResponse;
@@ -18,7 +17,6 @@ import in.sportscafe.nostragamus.module.navigation.wallet.addMoney.dto.VerifyPay
 import in.sportscafe.nostragamus.module.navigation.wallet.addMoney.dto.VerifyPaymentCouponResponse;
 import in.sportscafe.nostragamus.module.nostraHome.dto.TimeResponse;
 import in.sportscafe.nostragamus.module.common.dto.MatchesResponse;
-import in.sportscafe.nostragamus.module.contest.dto.ContestEntriesRequest;
 import in.sportscafe.nostragamus.module.contest.dto.ContestEntriesResponse;
 import in.sportscafe.nostragamus.module.contest.dto.ContestResponse;
 import in.sportscafe.nostragamus.module.contest.dto.JoinContestQueueRequest;
@@ -49,6 +47,9 @@ import in.sportscafe.nostragamus.module.newChallenges.dto.NewChallengesResponse;
 import in.sportscafe.nostragamus.module.othersanswers.MatchAnswerStatsResponse;
 import in.sportscafe.nostragamus.module.play.myresults.MyResultsResponse;
 import in.sportscafe.nostragamus.module.play.myresults.dto.ReplayPowerupResponse;
+import in.sportscafe.nostragamus.module.prediction.editAnswer.dto.QuestionForEditAnswerResponse;
+import in.sportscafe.nostragamus.module.prediction.editAnswer.dto.SaveEditAnswerRequest;
+import in.sportscafe.nostragamus.module.prediction.editAnswer.dto.SaveEditAnswerResponse;
 import in.sportscafe.nostragamus.module.prediction.playScreen.dto.AnswerRequest;
 import in.sportscafe.nostragamus.module.prediction.playScreen.dto.AnswerResponse;
 import in.sportscafe.nostragamus.module.prediction.playScreen.dto.PlayerPollResponse;
@@ -270,8 +271,13 @@ public class MyWebService extends AbstractWebService<NostragamusService> {
         return mNostragamusService.getServerTime();
     }
 
-    public Call<ApiResponse> getChangeAnswerRequest(ChangeAnswer changeAnswer) {
-        return mNostragamusService.changeAnswer(changeAnswer);
+    public Call<SaveEditAnswerResponse> saveEditAnswer(boolean isMinorityOption,
+                                                       SaveEditAnswerRequest saveEditAnswerRequest) {
+        return mNostragamusService.saveEditAnswer(false, isMinorityOption, saveEditAnswerRequest);
+    }
+
+    public Call<QuestionForEditAnswerResponse> questionForEditAnswer(int roomId, int matchId, int questionId) {
+        return mNostragamusService.questionForEditAnswer(roomId, matchId, questionId);
     }
 
     public Call<AppUpdateResponse> getAppUpdatesRequest(String flavor) {

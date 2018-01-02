@@ -3,7 +3,6 @@ package in.sportscafe.nostragamus.webservice;
 
 import java.util.List;
 
-import in.sportscafe.nostragamus.BuildConfig;
 import in.sportscafe.nostragamus.module.challengeCompleted.dto.CompletedMatchesResponse;
 import in.sportscafe.nostragamus.module.challengeCompleted.dto.CompletedResponse;
 import in.sportscafe.nostragamus.module.challengeRewards.dto.RewardsResponse;
@@ -15,7 +14,6 @@ import in.sportscafe.nostragamus.module.navigation.wallet.addMoney.dto.VerifyPay
 import in.sportscafe.nostragamus.module.navigation.wallet.addMoney.dto.VerifyPaymentCouponResponse;
 import in.sportscafe.nostragamus.module.nostraHome.dto.TimeResponse;
 import in.sportscafe.nostragamus.module.common.dto.MatchesResponse;
-import in.sportscafe.nostragamus.module.contest.dto.ContestEntriesRequest;
 import in.sportscafe.nostragamus.module.contest.dto.ContestEntriesResponse;
 import in.sportscafe.nostragamus.module.contest.dto.ContestResponse;
 import in.sportscafe.nostragamus.module.contest.dto.JoinContestQueueRequest;
@@ -46,6 +44,9 @@ import in.sportscafe.nostragamus.module.newChallenges.dto.NewChallengesResponse;
 import in.sportscafe.nostragamus.module.othersanswers.MatchAnswerStatsResponse;
 import in.sportscafe.nostragamus.module.play.myresults.MyResultsResponse;
 import in.sportscafe.nostragamus.module.play.myresults.dto.ReplayPowerupResponse;
+import in.sportscafe.nostragamus.module.prediction.editAnswer.dto.QuestionForEditAnswerResponse;
+import in.sportscafe.nostragamus.module.prediction.editAnswer.dto.SaveEditAnswerRequest;
+import in.sportscafe.nostragamus.module.prediction.editAnswer.dto.SaveEditAnswerResponse;
 import in.sportscafe.nostragamus.module.prediction.playScreen.dto.AnswerRequest;
 import in.sportscafe.nostragamus.module.prediction.playScreen.dto.AnswerResponse;
 import in.sportscafe.nostragamus.module.prediction.playScreen.dto.PlayerPollResponse;
@@ -252,8 +253,15 @@ public interface NostragamusService {
                                                                @Query("skip") int skip,
                                                                @Query("limit") int limit);*/
 
-    @POST("v3/game/users/editAnswer")
-    Call<ApiResponse> changeAnswer(@Body ChangeAnswer changeAnswer);
+    @POST("v3/game/users/editAddAnswer")
+    Call<SaveEditAnswerResponse> saveEditAnswer(@Query("is_match_complete") boolean isMatchComplete,
+                                                @Query("is_minority_option") boolean isMinorityOption,
+                                                @Body SaveEditAnswerRequest saveEditAnswerRequest);
+
+    @GET("v3/game/users/question")
+    Call<QuestionForEditAnswerResponse> questionForEditAnswer(@Query("room_id") int roomId,
+                                                              @Query("match_id") int matchId,
+                                                              @Query("question_id") int qustionId);
 
     @GET("v2/game/appUpdate")
     Call<AppUpdateResponse> getAppUpdates(@Query("app_type") String flavor);

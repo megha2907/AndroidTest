@@ -31,11 +31,8 @@ import in.sportscafe.nostragamus.Constants.RequestCodes;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
 import in.sportscafe.nostragamus.module.common.NostragamusActivity;
-import in.sportscafe.nostragamus.module.contest.contestDetailsAfterJoining.InplayContestDetailsActivity;
 import in.sportscafe.nostragamus.module.contest.dto.ContestScreenData;
 import in.sportscafe.nostragamus.module.contest.ui.ContestsActivity;
-import in.sportscafe.nostragamus.module.contest.ui.DetailScreensLaunchRequest;
-import in.sportscafe.nostragamus.module.inPlay.dto.InPlayContestDto;
 import in.sportscafe.nostragamus.module.inPlay.ui.ResultsScreenDataDto;
 import in.sportscafe.nostragamus.module.nostraHome.ui.NostraHomeActivity;
 import in.sportscafe.nostragamus.module.permission.PermissionsActivity;
@@ -52,6 +49,7 @@ import in.sportscafe.nostragamus.utils.timeutils.TimeUtils;
 public class MyResultsActivity extends NostragamusActivity implements MyResultsView, View.OnClickListener {
 
     private static final String TAG = MyResultsActivity.class.getSimpleName();
+    public static final int EDIT_ANSWER_ACTIVITY_REQUEST_CODE = 1212;
 
     private RecyclerView mRvMyResults;
     private MyResultsPresenter mResultsPresenter;
@@ -102,6 +100,11 @@ public class MyResultsActivity extends NostragamusActivity implements MyResultsV
         mRvMyResults.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         mRvMyResults.setHasFixedSize(true);
 
+        setLayoutsAsPerNeed();
+
+    }
+
+    private void setLayoutsAsPerNeed() {
         mResultsPresenter = MyResultPresenterImpl.newInstance(this);
         mResultsPresenter.onCreateMyResults(getIntent().getExtras());
 
@@ -119,7 +122,6 @@ public class MyResultsActivity extends NostragamusActivity implements MyResultsV
             NostragamusAnalytics.getInstance().trackScreenShown(Constants.AnalyticsCategory.RESULTS, Constants.AnalyticsClickLabels.PSEUDO_GAME_FLOW);
 
         }
-
     }
 
     private void initMembers() {
@@ -282,6 +284,20 @@ public class MyResultsActivity extends NostragamusActivity implements MyResultsV
         super.onActivityResult(requestCode, resultCode, data);
         if (RequestCodes.STORAGE_PERMISSION == requestCode && PermissionsActivity.PERMISSIONS_GRANTED == resultCode) {
             mResultsPresenter.onClickShare();
+        }
+
+        if (requestCode == EDIT_ANSWER_ACTIVITY_REQUEST_CODE) {
+            switch (resultCode) {
+                case RESULT_OK:
+                    // Answer Edited, re create screen as edited answers need to be updated
+                    setLayoutsAsPerNeed();
+                    showMessage("Your new predictions were saved!");
+                    break;
+
+                case RESULT_CANCELED:
+                    showMessage("No changes were made! Swipe and select prediction in order to save your answers!");
+                    break;
+            }
         }
     }
 

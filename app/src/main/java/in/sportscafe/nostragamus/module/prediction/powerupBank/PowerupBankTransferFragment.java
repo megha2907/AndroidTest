@@ -26,11 +26,11 @@ import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
-import in.sportscafe.nostragamus.module.prediction.playScreen.dto.PlayScreenDataDto;
 import in.sportscafe.nostragamus.module.prediction.playScreen.dto.PowerUp;
 import in.sportscafe.nostragamus.module.prediction.powerupBank.dataProvider.PowerupBankStatusApiModelImpl;
 import in.sportscafe.nostragamus.module.prediction.powerupBank.dataProvider.TransferPowerUpFromBankApiImpl;
 import in.sportscafe.nostragamus.module.prediction.powerupBank.dto.PowerUpBankStatusResponse;
+import in.sportscafe.nostragamus.module.prediction.powerupBank.dto.PowerupBankTransferScreenData;
 import in.sportscafe.nostragamus.module.prediction.powerupBank.dto.TransferPowerUpFromBankResponse;
 import in.sportscafe.nostragamus.module.store.StoreLaunchMode;
 
@@ -41,7 +41,7 @@ public class PowerupBankTransferFragment extends BaseFragment implements View.On
 
     private PowerUpBankTransferFragmentListener mFragmentListener;
 
-    private PlayScreenDataDto mPlayScreenData;
+    private PowerupBankTransferScreenData mScreenData;
     private PowerUpBankStatusResponse mApiResponse;
     private PowerUpBankStatusResponse mApiResponseForReset;
     private PowerUp mUserDemandPowerup;
@@ -80,16 +80,16 @@ public class PowerupBankTransferFragment extends BaseFragment implements View.On
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        initChallengeDetails();
+        initScreenDetails();
         fetchPowerupBankStatusFromServer();
     }
 
     private void fetchPowerupBankStatusFromServer() {
-        if (mPlayScreenData != null) {
+        if (mScreenData != null) {
             if (Nostragamus.getInstance().hasNetworkConnection()) {
                 showProgressbar();
                 PowerupBankStatusApiModelImpl apiModel = PowerupBankStatusApiModelImpl.newInstance(getApiListener());
-                apiModel.performApiCall(mPlayScreenData.getChallengeId(), mPlayScreenData.getRoomId());
+                apiModel.performApiCall(mScreenData.getChallengeId(), mScreenData.getRoomId());
             } else {
                 showMessage(Constants.Alerts.NO_NETWORK_CONNECTION);
             }
@@ -115,9 +115,9 @@ public class PowerupBankTransferFragment extends BaseFragment implements View.On
                 dismissProgressbar();
                 onApiSuccess(response);
 
-                if (mFragmentListener != null && mPlayScreenData != null && response != null) {
+                if (mFragmentListener != null && mScreenData != null && response != null) {
                     Bundle args = new Bundle();
-                    args.putString(Constants.BundleKeys.CHALLENGE_NAME, mPlayScreenData.getSubTitle());
+                    args.putString(Constants.BundleKeys.CHALLENGE_NAME, mScreenData.getSubTitle());
                     args.putInt(Constants.BundleKeys.MAX_TRANSFER_COUNT, response.getMaxTransferLimit());
                     mFragmentListener.updatePowerUpInfoDetails(args);
                 }
@@ -349,10 +349,10 @@ public class PowerupBankTransferFragment extends BaseFragment implements View.On
         }
     }
 
-    private void initChallengeDetails() {
+    private void initScreenDetails() {
         Bundle args = getArguments();
-        if (args != null && args.containsKey(Constants.BundleKeys.PLAY_SCREEN_DATA)) {
-            mPlayScreenData = Parcels.unwrap(args.getParcelable(Constants.BundleKeys.PLAY_SCREEN_DATA));
+        if (args != null && args.containsKey(Constants.BundleKeys.POWERUP_BANK_TRANSFER_SCREEN_DATA)) {
+            mScreenData = Parcels.unwrap(args.getParcelable(Constants.BundleKeys.POWERUP_BANK_TRANSFER_SCREEN_DATA));
         }
     }
 
@@ -444,13 +444,13 @@ public class PowerupBankTransferFragment extends BaseFragment implements View.On
     }
 
     private void performTransferPowerupApiCall() {
-        if (isPowerupDemanded() && mUserDemandPowerup != null && mPlayScreenData != null) {
+        if (isPowerupDemanded() && mUserDemandPowerup != null && mScreenData != null) {
 
             showProgressbar();
             TransferPowerUpFromBankApiImpl.newInstance(getTransferToChallengeListener()).
                     transferToChallenge(mUserDemandPowerup,
-                            mPlayScreenData.getChallengeId(),
-                            mPlayScreenData.getRoomId());
+                            mScreenData.getChallengeId(),
+                            mScreenData.getRoomId());
 
         } else {
             showMessage("Please add any Powerup to transfer to NewChallengesResponse");

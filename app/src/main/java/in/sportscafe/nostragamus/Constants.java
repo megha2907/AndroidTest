@@ -45,6 +45,7 @@ public interface Constants {
         String SCREEN_STORE = "Store";  /* Store - Buy Powerups */
         String SCREEN_APP_UPDATE = "appUpdate"; /* Update the App screen & What's New Screen */
         String SCREEN_WEB_VIEW = "webView";
+        String SCREEN_EDIT_ANSWER = "editAnswer";
     }
 
     interface SharedKeys {
@@ -124,6 +125,8 @@ public interface Constants {
         String WALLET_INITIAL_AMOUNT = "walletInitialAmount";
         String MARKETING_CAMPAIGN = "marketingCampaign";
         String WHATS_NEW_SHOWN = "whatsNewShown";
+        String EDITING_ANSWER_FIRST_TIME = "editingAnswerFirstTime";
+        String EDITING_POWERUP_IN_EDIT_ANSWER_FIRST_TIME = "editingPowerupInEditAnswerForstTime";
     }
 
     interface Alerts {
@@ -344,6 +347,7 @@ public interface Constants {
         String TIMER_FINISHED_SCREEN_DATA = "timerFinishedScreenData";
         String POOL_PRIZE_ESTIMATION_SCREEN_DATA = "poolPrizeEstimationScreenData";
         String REWARDS_SCREEN_DATA = "rewardsScreenData";
+        String EDIT_ANSWER_SCREEN_DATA = "editAnswerScreenData";
 
         /* Wallet */
         String WALLET_WITHDRAWAL_AMT = "walletWithdrawAmt";
@@ -381,6 +385,7 @@ public interface Constants {
         String REPORT_THANKYOU_TEXT = "reportThankyouText";
         String REPORT_ID = "reportID";
         String REPORT_TYPE = "reportType";
+        String POWERUP_BANK_TRANSFER_SCREEN_DATA = "powerupBankTransferScreenData";
     }
 
     interface DateFormats {
