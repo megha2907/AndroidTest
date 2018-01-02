@@ -434,4 +434,12 @@ public class NostragamusDataHandler extends AbstractDataHandler implements Const
         setSharedLongData(SharedKeys.EDIT_PROFILE_SHOWN_TIME, editProfileShownTime);
     }
 
+    public boolean isEditingAnswerFirstTime() {
+        return getSharedBooleanData(SharedKeys.EDITING_ANSWER_FIRST_TIME, true);
+    }
+
+    public void setEditingAnswerFirstTime() {
+        setSharedBooleanData(SharedKeys.EDITING_ANSWER_FIRST_TIME, false);
+    }
+
 }

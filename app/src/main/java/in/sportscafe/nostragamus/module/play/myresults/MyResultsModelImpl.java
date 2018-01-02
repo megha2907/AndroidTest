@@ -26,7 +26,7 @@ import in.sportscafe.nostragamus.module.resultspeek.dto.Match;
 import in.sportscafe.nostragamus.module.resultspeek.dto.Question;
 import in.sportscafe.nostragamus.module.user.login.UserInfoModelImpl;
 import in.sportscafe.nostragamus.module.user.login.dto.UserInfo;
-import in.sportscafe.nostragamus.webservice.ChangeAnswer;
+import in.sportscafe.nostragamus.module.prediction.editAnswer.dto.SaveEditAnswerRequest;
 import in.sportscafe.nostragamus.webservice.MyWebService;
 import in.sportscafe.nostragamus.webservice.NostragamusCallBack;
 import io.branch.indexing.BranchUniversalObject;
@@ -308,11 +308,11 @@ public class MyResultsModelImpl implements MyResultsModel, MyResultsAdapter.OnMy
 
     }
 
-    private void callChangeAnswerApi(Integer matchId,Integer questionId, Integer answerId, int roomId) {
+    /*private void callChangeAnswerApi(Integer matchId,Integer questionId, Integer answerId, int roomId) {
 
-        ChangeAnswer changeAnswer = new ChangeAnswer(matchId,questionId, answerId, roomId);
+        SaveEditAnswerRequest saveEditAnswerRequest = new SaveEditAnswerRequest(matchId,questionId, answerId, roomId);
         mResultsModelListener.StartProgressbar();
-        MyWebService.getInstance().getChangeAnswerRequest(changeAnswer).enqueue(new NostragamusCallBack<ApiResponse>() {
+        MyWebService.getInstance().saveEditAnswer(saveEditAnswerRequest).enqueue(new NostragamusCallBack<ApiResponse>() {
             @Override
             public void onResponse(Call<ApiResponse> call, Response<ApiResponse> response) {
                 super.onResponse(call, response);
@@ -342,7 +342,7 @@ public class MyResultsModelImpl implements MyResultsModel, MyResultsAdapter.OnMy
             }
         });
 
-    }
+    }*/
 
     @Override
     public void onClickLeaderBoard(int position) {
@@ -356,7 +356,7 @@ public class MyResultsModelImpl implements MyResultsModel, MyResultsAdapter.OnMy
 
     @Override
     public void saveUpdatedAnswer(int matchId,int QuestionId, int AnswerId, int roomId) {
-        callChangeAnswerApi(matchId,QuestionId, AnswerId, roomId);
+//        callChangeAnswerApi(matchId,QuestionId, AnswerId, roomId);
     }
 
 

@@ -344,8 +344,12 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.PopupTheme" />
         <activity
-            android:name=".module.contest.poolContest.PoolPrizesEstimationActivity"
+            android:name=".module.prediction.editAnswer.EditAnswerActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".module.prediction.editAnswer.EditAnswerPowerUpModifiedPopupActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.PopupTheme"/>
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
