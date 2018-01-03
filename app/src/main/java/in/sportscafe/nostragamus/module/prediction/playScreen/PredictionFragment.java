@@ -8,6 +8,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
@@ -19,6 +20,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.view.animation.LinearInterpolator;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -310,7 +312,53 @@ public class PredictionFragment extends NostraBaseFragment implements View.OnCli
             final RelativeLayout topLayout = (RelativeLayout) getView().findViewById(R.id.prediction_top_layout);
             final LinearLayout bottomLayout = (LinearLayout) getView().findViewById(R.id.prediction_bottom_layout);
 
-            topLayout.clearAnimation();
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    Animation animation = AnimationUtils.loadAnimation(topLayout.getContext(), R.anim.prediction_top_view_anim);
+                    animation.setAnimationListener(new Animation.AnimationListener() {
+                        @Override
+                        public void onAnimationStart(Animation animation) {
+
+                        }
+
+                        @Override
+                        public void onAnimationEnd(Animation animation) {
+                            topLayout.setVisibility(View.VISIBLE);
+
+                            Animation anim = AnimationUtils.loadAnimation(getContext(), R.anim.prediction_bottom_view_anim);
+                            anim.setAnimationListener(new Animation.AnimationListener() {
+                                @Override
+                                public void onAnimationStart(Animation animation) {
+
+                                }
+
+                                @Override
+                                public void onAnimationEnd(Animation animation) {
+                                    bottomLayout.setVisibility(View.VISIBLE);
+
+                                    loadQuestions();
+                                }
+
+                                @Override
+                                public void onAnimationRepeat(Animation animation) {
+
+                                }
+                            });
+
+                            bottomLayout.startAnimation(anim);
+                        }
+
+                        @Override
+                        public void onAnimationRepeat(Animation animation) {
+
+                        }
+                    });
+                    topLayout.startAnimation(animation);
+                }
+            }, 100);
+
+            /*topLayout.clearAnimation();
             topLayout.animate().translationYBy(topLayout.getHeight()).setDuration(1000).
                     setInterpolator(new LinearInterpolator()).
                     setListener(new Animator.AnimatorListener() {
@@ -360,7 +408,7 @@ public class PredictionFragment extends NostraBaseFragment implements View.OnCli
                         public void onAnimationRepeat(Animator animation) {
 
                         }
-                    }).start();
+                    }).start();*/
 
             /*new Handler().postDelayed(new Runnable() {
                 @Override

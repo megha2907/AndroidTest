@@ -12,6 +12,8 @@ import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -43,7 +45,7 @@ public class EditAnswerPredictionCardAdapter extends ArrayAdapter<EditAnswerQues
     public EditAnswerPredictionCardAdapter(@NonNull Context context,
                                            @NonNull List<EditAnswerQuestion> questionList,
                                            @NonNull EditAnswerPredictionAdapterListener listener) {
-        super(context, R.layout.prediction_card_layout, questionList);
+        super(context, R.layout.edit_answer_prediction_card_layout, questionList);
         mAdapterListener = listener;
         mImageCache = new BitmapMemoryLruCache();
     }
@@ -80,10 +82,30 @@ public class EditAnswerPredictionCardAdapter extends ArrayAdapter<EditAnswerQues
             /* If Player-poll already applied */
             preFillIfPlayerPollAlreadyApplied(position, playerPollOption1TextView, playerPollOption2TextView, question);
 
+            setSelectedAnswer(question, option1ImgView, option2ImgView, contentView);
         } else {
             contentView = new View(parent.getContext());    // Just to handle null warning, not much important as contentView can not be null anytime
         }
         return contentView;
+    }
+
+    private void setSelectedAnswer(EditAnswerQuestion question,
+                                   HmImageView leftImgOptionLayout, HmImageView rightImgOptionLayout,
+                                   View contentView) {
+        if (question != null) {
+            if (question.getChosenAnswerId() == Constants.AnswerIds.LEFT) {
+                leftImgOptionLayout.setBackgroundResource(R.drawable.edit_answer_chosen_option_bg);
+                leftImgOptionLayout.setPadding(3,3,3,3);
+                ImageView imgView = (ImageView) contentView.findViewById(R.id.edit_answer_chosen_option_left_imgView);
+                imgView.setVisibility(View.VISIBLE);
+
+            } else if (question.getChosenAnswerId() == Constants.AnswerIds.RIGHT) {
+                rightImgOptionLayout.setBackgroundResource(R.drawable.edit_answer_chosen_option_bg);
+                rightImgOptionLayout.setPadding(3,3,3,3);
+                ImageView imgView = (ImageView) contentView.findViewById(R.id.edit_answer_chosen_option_right_imgView);
+                imgView.setVisibility(View.VISIBLE);
+            }
+        }
     }
 
     /**

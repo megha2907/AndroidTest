@@ -62,10 +62,9 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/dim_8"
+                        android:layout_marginTop="@dimen/dim_16"
                         android:gravity="center"
                         android:orientation="vertical">
-
                         <ImageView
                             android:layout_width="@dimen/dim_100"
                             android:layout_height="@dimen/dim_100"
@@ -92,8 +91,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_horizontal"
-                            android:layout_marginLeft="@dimen/dim_30"
-                            android:layout_marginRight="@dimen/dim_30"
+                            android:layout_marginLeft="@dimen/dim_16"
+                            android:layout_marginRight="@dimen/dim_16"
                             android:layout_marginTop="@dimen/dim_12"
                             android:text="You seem to have edited powerups. Now swipe your choice to save prediction, or cancel your changes"
                             android:gravity="center"
@@ -116,9 +115,8 @@
 
                     <com.jeeva.android.widgets.customfont.CustomButton
                         android:id="@+id/cancel_btn"
-                        android:layout_width="0dp"
+                        android:layout_width="@dimen/dim_130"
                         android:layout_height="@dimen/dim_40"
-                        android:layout_weight="1"
                         android:layout_marginTop="@dimen/dim_1"
                         android:layout_marginLeft="@dimen/dim_20"
                         android:layout_marginRight="@dimen/dim_20"
@@ -134,9 +132,8 @@
 
                     <com.jeeva.android.widgets.customfont.CustomButton
                         android:id="@+id/ok_btn"
-                        android:layout_width="0dp"
+                        android:layout_width="@dimen/dim_130"
                         android:layout_height="@dimen/dim_40"
-                        android:layout_weight="1"
                         android:layout_marginTop="@dimen/dim_1"
                         android:layout_marginLeft="@dimen/dim_20"
                         android:layout_marginRight="@dimen/dim_20"
