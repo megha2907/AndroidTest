@@ -52,6 +52,9 @@ public class EditAnswerQuestion {
     @SerializedName("question_answer")
     private String questionAnswer;
 
+    @SerializedName("answer_id")
+    private int chosenAnswerId;
+
     @SerializedName("poll")
     private List<PlayersPoll> playersPollList;
 
@@ -216,4 +219,11 @@ public class EditAnswerQuestion {
         isAnsweredSuccessfully = answeredSuccessfully;
     }
 
+    public int getChosenAnswerId() {
+        return chosenAnswerId;
+    }
+
+    public void setChosenAnswerId(int chosenAnswerId) {
+        this.chosenAnswerId = chosenAnswerId;
+    }
 }

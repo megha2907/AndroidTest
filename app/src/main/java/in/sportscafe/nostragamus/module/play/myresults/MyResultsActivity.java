@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -13,6 +14,7 @@ import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
 import android.text.style.ForegroundColorSpan;
+import android.text.style.ImageSpan;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -291,14 +293,24 @@ public class MyResultsActivity extends NostragamusActivity implements MyResultsV
                 case RESULT_OK:
                     // Answer Edited, re create screen as edited answers need to be updated
                     setLayoutsAsPerNeed();
-                    showMessage("Your new predictions were saved!");
+                    showSnackbarMessage(R.drawable.edit_answer_success_snackbar_icn, "Your new predictions were saved!");
                     break;
 
                 case RESULT_CANCELED:
-                    showMessage("No changes were made! Swipe and select prediction in order to save your answers!");
+                    showSnackbarMessage(R.drawable.edit_answer_failed_snackbar_icn ,"No changes were made! Swipe and select prediction in order to save your answers!");
                     break;
             }
         }
+    }
+
+    private void showSnackbarMessage(int imgResource,String msg) {
+//        Snackbar.make(findViewById(R.id.myresult_root_layout), msg, Snackbar.LENGTH_LONG).show();
+        Snackbar snackbar = Snackbar.make(findViewById(R.id.myresult_root_layout), msg, Snackbar.LENGTH_LONG);
+        View snackbarLayout = snackbar.getView();
+        TextView textView = (TextView)snackbarLayout.findViewById(android.support.design.R.id.snackbar_text);
+        textView.setCompoundDrawablesRelativeWithIntrinsicBounds(imgResource, 0, 0, 0);
+        textView.setCompoundDrawablePadding(getResources().getDimensionPixelOffset(R.dimen.dim_5));
+        snackbar.show();
     }
 
     @Override

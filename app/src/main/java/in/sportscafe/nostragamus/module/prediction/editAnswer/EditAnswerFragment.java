@@ -20,7 +20,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.view.animation.LinearInterpolator;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -86,7 +88,7 @@ public class EditAnswerFragment extends NostraBaseFragment implements View.OnCli
     private CustomProgressbar mProgressDialog;
     private ImageView mPowerUpImageView;
     private ImageView mGamePlayImageView;
-    private Button mThirdOptionButton;
+    private LinearLayout mThirdOptionButton;
     private TextView mMessageTextView;
     private boolean mIsFirstTimeEditing = false;
 
@@ -119,7 +121,7 @@ public class EditAnswerFragment extends NostraBaseFragment implements View.OnCli
         RelativeLayout noNegPowerup = (RelativeLayout) rootView.findViewById(R.id.edit_answer_noNeg_Layout);
         RelativeLayout playerPollPowerup = (RelativeLayout) rootView.findViewById(R.id.edit_answer_player_poll_Layout);
         mThirdOptionLayout = (LinearLayout) rootView.findViewById(R.id.edit_answer_third_option_layout);
-        mThirdOptionButton = (Button) rootView.findViewById(R.id.edit_answer_third_option_button);
+        mThirdOptionButton = (LinearLayout) rootView.findViewById(R.id.edit_answer_third_option_button);
         mMessageTextView = (TextView) rootView.findViewById(R.id.edit_answer_msg_textView);
 
         mPowerUpImageView.setOnClickListener(this);
@@ -133,7 +135,7 @@ public class EditAnswerFragment extends NostraBaseFragment implements View.OnCli
 
         /* Card stack */
         mCardStack = (CardStack) rootView.findViewById(R.id.edit_answer_cardStack);
-        mCardStack.setContentResource(R.layout.prediction_card_layout);
+        mCardStack.setContentResource(R.layout.edit_answer_prediction_card_layout);
         mCardStack.setCanSwipe(true);
         mCardStack.setListener(getCardSwipeEventsListener());
     }
@@ -298,73 +300,10 @@ public class EditAnswerFragment extends NostraBaseFragment implements View.OnCli
             final RelativeLayout topLayout = (RelativeLayout) getView().findViewById(R.id.edit_answer_top_layout);
             final LinearLayout bottomLayout = (LinearLayout) getView().findViewById(R.id.edit_answer_bottom_layout);
 
-            topLayout.clearAnimation();
-            topLayout.animate().translationYBy(topLayout.getHeight()).setDuration(1000).
-                    setInterpolator(new LinearInterpolator()).
-                    setListener(new Animator.AnimatorListener() {
-                        @Override
-                        public void onAnimationStart(Animator animation) {
-
-                        }
-
-                        @Override
-                        public void onAnimationEnd(Animator animation) {
-                            topLayout.setVisibility(View.VISIBLE);
-
-                            bottomLayout.clearAnimation();
-                            bottomLayout.animate().translationYBy(bottomLayout.getHeight()).setDuration(1000).
-                                    setInterpolator(new LinearInterpolator()).
-                                    setListener(new Animator.AnimatorListener() {
-                                        @Override
-                                        public void onAnimationStart(Animator animation) {
-
-                                        }
-
-                                        @Override
-                                        public void onAnimationEnd(Animator animation) {
-                                            bottomLayout.setVisibility(View.VISIBLE);
-
-                                            /* Wait for 3 seconds before first time loading */
-                                            if (mIsFirstTimeEditing) {
-                                                new Handler().postDelayed(new Runnable() {
-                                                    @Override
-                                                    public void run() {
-                                                        loadQuestions();
-                                                    }
-                                                }, 3000);
-                                            } else {
-                                                loadQuestions();
-                                            }
-                                        }
-
-                                        @Override
-                                        public void onAnimationCancel(Animator animation) {
-
-                                        }
-
-                                        @Override
-                                        public void onAnimationRepeat(Animator animation) {
-
-                                        }
-                                    }).start();
-
-                        }
-
-                        @Override
-                        public void onAnimationCancel(Animator animation) {
-
-                        }
-
-                        @Override
-                        public void onAnimationRepeat(Animator animation) {
-
-                        }
-                    }).start();
-
-            /*new Handler().postDelayed(new Runnable() {
+            new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    Animation animation = AnimationUtils.loadAnimation(topLayout.getContext(), R.anim.edit_answer_top_view_anim);
+                    Animation animation = AnimationUtils.loadAnimation(topLayout.getContext(), R.anim.prediction_top_view_anim);
                     animation.setAnimationListener(new Animation.AnimationListener() {
                         @Override
                         public void onAnimationStart(Animation animation) {
@@ -374,9 +313,38 @@ public class EditAnswerFragment extends NostraBaseFragment implements View.OnCli
                         @Override
                         public void onAnimationEnd(Animation animation) {
                             topLayout.setVisibility(View.VISIBLE);
-                            bottomLayout.clearAnimation();
-                            bottomLayout.startAnimation(AnimationUtils.loadAnimation(bottomLayout.getContext(), R.anim.edit_answer_bottom_view_anim));
-                            bottomLayout.setVisibility(View.VISIBLE);
+
+                            Animation anim = AnimationUtils.loadAnimation(getContext(), R.anim.prediction_bottom_view_anim);
+                            anim.setAnimationListener(new Animation.AnimationListener() {
+                                @Override
+                                public void onAnimationStart(Animation animation) {
+
+                                }
+
+                                @Override
+                                public void onAnimationEnd(Animation animation) {
+                                    bottomLayout.setVisibility(View.VISIBLE);
+
+                                    /* Wait for 3 seconds before first time loading */
+                                    if (mIsFirstTimeEditing) {
+                                        new Handler().postDelayed(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                loadQuestions();
+                                            }
+                                        }, 2000);
+                                    } else {
+                                        loadQuestions();
+                                    }
+                                }
+
+                                @Override
+                                public void onAnimationRepeat(Animation animation) {
+
+                                }
+                            });
+
+                            bottomLayout.startAnimation(anim);
                         }
 
                         @Override
@@ -384,10 +352,9 @@ public class EditAnswerFragment extends NostraBaseFragment implements View.OnCli
 
                         }
                     });
-                    topLayout.clearAnimation();
                     topLayout.startAnimation(animation);
                 }
-            }, 100);*/
+            }, 100);
         }
     }
 
@@ -397,9 +364,9 @@ public class EditAnswerFragment extends NostraBaseFragment implements View.OnCli
             EditAnswerQuestion question = mQuestionsCardAdapter.getItem(pos);
 
             if (question != null && !TextUtils.isEmpty(question.getQuestionOption3())) {
-                makeThirdOptionVisible(true, question.getQuestionOption3());
+                makeThirdOptionVisible(true, question.getQuestionOption3(), question.getChosenAnswerId());
             } else {
-                makeThirdOptionVisible(false, getString(R.string.prediction_neither_button_text));
+                makeThirdOptionVisible(false, getString(R.string.prediction_neither_button_text), question.getChosenAnswerId());
             }
         }
     }
@@ -523,11 +490,18 @@ public class EditAnswerFragment extends NostraBaseFragment implements View.OnCli
         return pos;
     }
 
-    private void makeThirdOptionVisible(boolean shouldVisible, String buttonText) {
+    private void makeThirdOptionVisible(boolean shouldVisible, String buttonText, int chosenAnswerId) {
         if (getView() != null && getActivity() != null) {
 
-            mThirdOptionButton.setText(buttonText);
+            TextView thirdOptionTextView = (TextView) getView().findViewById(R.id.edit_answer_third_option_textView);
+            thirdOptionTextView.setText(buttonText);
             if (shouldVisible) {
+                if (chosenAnswerId == Constants.AnswerIds.NEITHER) {
+                    mThirdOptionButton.setBackgroundResource(R.drawable.edit_answer_third_option_chosen_bg);
+                    ImageView imgView = (ImageView) getView().findViewById(R.id.edit_answer_third_option_imgView);
+                    imgView.setVisibility(View.VISIBLE);
+                }
+
                 mThirdOptionLayout.setVisibility(View.VISIBLE);
             } else {
                 mThirdOptionLayout.setVisibility(View.GONE);
@@ -788,7 +762,16 @@ public class EditAnswerFragment extends NostraBaseFragment implements View.OnCli
      */
     private void onPowerUpModified() {
         if (isPowerupModified()) {
-            mMessageTextView.setText("You seem to have edited powerups. Now, swipe your choice to save the prediction!");
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+
+                    Animation alpha = new AlphaAnimation(0f, 1f);
+                    alpha.setDuration(200);
+                    mMessageTextView.setText("You seem to have edited powerups. Now, swipe your choice to save the prediction!");
+                    mMessageTextView.startAnimation(alpha);
+                }
+            }, 500 /* Once powerup anim over, show this text */);
         }
     }
 
