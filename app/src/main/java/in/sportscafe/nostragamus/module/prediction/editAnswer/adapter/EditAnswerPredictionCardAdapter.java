@@ -93,15 +93,16 @@ public class EditAnswerPredictionCardAdapter extends ArrayAdapter<EditAnswerQues
                                    HmImageView leftImgOptionLayout, HmImageView rightImgOptionLayout,
                                    View contentView) {
         if (question != null) {
+            int padding = getContext().getResources().getDimensionPixelOffset(R.dimen.dim_3);
             if (question.getChosenAnswerId() == Constants.AnswerIds.LEFT) {
                 leftImgOptionLayout.setBackgroundResource(R.drawable.edit_answer_chosen_option_bg);
-                leftImgOptionLayout.setPadding(3,3,3,3);
+                leftImgOptionLayout.setPadding(padding, padding, padding, padding);
                 ImageView imgView = (ImageView) contentView.findViewById(R.id.edit_answer_chosen_option_left_imgView);
                 imgView.setVisibility(View.VISIBLE);
 
             } else if (question.getChosenAnswerId() == Constants.AnswerIds.RIGHT) {
                 rightImgOptionLayout.setBackgroundResource(R.drawable.edit_answer_chosen_option_bg);
-                rightImgOptionLayout.setPadding(3,3,3,3);
+                rightImgOptionLayout.setPadding(padding, padding, padding, padding);
                 ImageView imgView = (ImageView) contentView.findViewById(R.id.edit_answer_chosen_option_right_imgView);
                 imgView.setVisibility(View.VISIBLE);
             }

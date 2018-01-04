@@ -325,14 +325,14 @@ public class EditAnswerFragment extends NostraBaseFragment implements View.OnCli
                                 public void onAnimationEnd(Animation animation) {
                                     bottomLayout.setVisibility(View.VISIBLE);
 
-                                    /* Wait for 3 seconds before first time loading */
+                                    /* Wait for 1 seconds before first time loading */
                                     if (mIsFirstTimeEditing) {
                                         new Handler().postDelayed(new Runnable() {
                                             @Override
                                             public void run() {
                                                 loadQuestions();
                                             }
-                                        }, 2000);
+                                        }, 1000);
                                     } else {
                                         loadQuestions();
                                     }
@@ -513,9 +513,7 @@ public class EditAnswerFragment extends NostraBaseFragment implements View.OnCli
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.edit_answer_back_btn:
-                if (mFragmentListener != null) {
-                    mFragmentListener.onBackClicked();
-                }
+                onBackPressed();
                 break;
 
             case R.id.edit_answer_doubler_Layout:

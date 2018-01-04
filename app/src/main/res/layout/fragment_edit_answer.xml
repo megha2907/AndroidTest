@@ -109,6 +109,7 @@
                     android:layout_width="@dimen/dim_14"
                     android:layout_height="@dimen/dim_14"
                     android:src="@drawable/edit_ans_chosen_top_arrow"
+                    android:layout_marginRight="@dimen/dim_10"
                     android:visibility="gone"/>
 
                 <com.jeeva.android.widgets.customfont.CustomTextView
@@ -118,8 +119,7 @@
                     android:textColor="@color/white"
                     android:textSize="@dimen/sp_12"
                     android:text="@string/prediction_neither_button_text"
-                    app:typeface="lato_bold"
-                    android:layout_marginLeft="@dimen/dim_10"/>
+                    app:typeface="lato_bold"/>
 
             </LinearLayout>
 
