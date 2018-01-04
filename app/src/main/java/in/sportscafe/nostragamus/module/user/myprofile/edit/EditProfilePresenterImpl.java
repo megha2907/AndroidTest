@@ -122,8 +122,10 @@ public class EditProfilePresenterImpl implements EditProfilePresenter, EditProfi
     @Override
     public void onPhotoUpdate() {
         UserInfo userInfo = mEditProfileModel.getUserInfo();
-        mEditProfileView.setProfileImage(userInfo.getPhoto());
-        mEditProfileView.stopProgressAnim();
+        if (userInfo!=null) {
+            mEditProfileView.setProfileImage(userInfo.getPhoto());
+            mEditProfileView.stopProgressAnim();
+        }
     }
 
     @Override

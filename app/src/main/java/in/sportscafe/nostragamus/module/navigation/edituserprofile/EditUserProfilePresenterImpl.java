@@ -32,9 +32,11 @@ public class EditUserProfilePresenterImpl implements EditUserProfilePresenter, E
     @Override
     public void onCreateEditProfile() {
         UserInfo userInfo = mEditProfileModel.getUserInfo();
-        mEditProfileView.setProfileImage(userInfo.getPhoto());
-        if (userInfo.getUserNickName() != null) {
-            mEditProfileView.setNickName(userInfo.getUserNickName());
+        if (userInfo!=null) {
+            mEditProfileView.setProfileImage(userInfo.getPhoto());
+            if (userInfo.getUserNickName() != null) {
+                mEditProfileView.setNickName(userInfo.getUserNickName());
+            }
         }
     }
 
@@ -77,7 +79,9 @@ public class EditUserProfilePresenterImpl implements EditUserProfilePresenter, E
     @Override
     public void onPhotoUpdate() {
         UserInfo userInfo = mEditProfileModel.getUserInfo();
-        mEditProfileView.setProfileImage(userInfo.getPhoto());
+        if (userInfo!=null) {
+            mEditProfileView.setProfileImage(userInfo.getPhoto());
+        }
         mEditProfileView.dismissProgressbar();
     }
 

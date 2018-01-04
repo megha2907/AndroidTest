@@ -234,7 +234,7 @@ public class ContestViewPagerFragment extends NostraBaseFragment {
     private void performJoinContest(Bundle args) {
         if (args != null) {
             JoinContestData joinContestData = new JoinContestData();
-            ;
+
 
             /* Received contest when join button clicked on contest card */
             if (args.containsKey(Constants.BundleKeys.CONTEST)) {
@@ -245,9 +245,10 @@ public class ContestViewPagerFragment extends NostraBaseFragment {
                     joinContestData.setChallengeName(contest.getChallengeName());
                     joinContestData.setEntryFee(contest.getEntryFee());
                     joinContestData.setJoiContestDialogLaunchMode(CompletePaymentDialogFragment.DialogLaunchMode.JOINING_CHALLENGE_LAUNCH);
+                    joinContestData.setContestName(contest.getConfigName());
 
                     if (contest.getContestType() != null) {
-                        sendContestJoinedDataToAmplitude(contest);
+                        joinContestData.setContestType(contest.getContestType().getCategoryName());
                     }
 
                 }
@@ -289,10 +290,16 @@ public class ContestViewPagerFragment extends NostraBaseFragment {
 
                                 @Override
                                 public void joinContestSuccess(JoinContestData contestJoinedSuccessfully) {
+
                                     CustomProgressbar.getProgressbar(getContext()).dismissProgress();
                                     onContestJoinedSuccessfully(contestJoinedSuccessfully);
+
                                     NostragamusAnalytics.getInstance().trackClickEvent(Constants.AnalyticsCategory.CONTEST_JOINED,
                                             String.valueOf(contestJoinedSuccessfully.getContestId()));
+
+                                    if (contestJoinedSuccessfully != null) {
+                                        sendContestJoinedDataToAmplitude(contestJoinedSuccessfully);
+                                    }
                                 }
 
                                 @Override
@@ -417,11 +424,11 @@ public class ContestViewPagerFragment extends NostraBaseFragment {
         mContestScreenData = contestScreenData;
     }
 
-    private void sendContestJoinedDataToAmplitude(Contest contest) {
+    private void sendContestJoinedDataToAmplitude(JoinContestData contest) {
 
         /* Joining a contest = Revenue */
         NostragamusAnalytics.getInstance().trackRevenue(contest.getEntryFee(), contest.getContestId(),
-                contest.getConfigName(), contest.getContestType().getCategoryName());
+                contest.getContestName(), contest.getContestType());
 
         /* Send Contest Joined Details to Amplitude */
         Bundle activityBundle = null;
@@ -462,18 +469,18 @@ public class ContestViewPagerFragment extends NostraBaseFragment {
                     }
 
                     NostragamusAnalytics.getInstance().trackContestJoined(contest.getContestId(),
-                            contest.getConfigName(), contest.getContestType().getCategoryName(),
-                            contest.getEntryFee(), contest.getChallengeId(), screenName);
+                            contest.getContestName(), contest.getContestType(),
+                            (int)contest.getEntryFee(), contest.getChallengeId(), screenName);
                 } else {
                     NostragamusAnalytics.getInstance().trackContestJoined(contest.getContestId(),
-                            contest.getConfigName(), contest.getContestType().getCategoryName(),
-                            contest.getEntryFee(), contest.getChallengeId(), "contest");
+                            contest.getContestName(), contest.getContestType(),
+                            (int)contest.getEntryFee(), contest.getChallengeId(), "contest");
                 }
             }
         } else {
             NostragamusAnalytics.getInstance().trackContestJoined(contest.getContestId(),
-                    contest.getConfigName(), contest.getContestType().getCategoryName(),
-                    contest.getEntryFee(), contest.getChallengeId(), "contest");
+                    contest.getContestName(), contest.getContestType(),
+                    (int)contest.getEntryFee(), contest.getChallengeId(), "contest");
         }
     }
 

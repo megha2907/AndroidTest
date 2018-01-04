@@ -9,6 +9,7 @@ import org.parceler.Parcels;
 
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Nostragamus;
+import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
 import in.sportscafe.nostragamus.module.contest.contestDetailsBeforeJoining.CompletePaymentDialogFragment;
 import in.sportscafe.nostragamus.module.contest.dataProvider.JoinContestApiImpl;
 import in.sportscafe.nostragamus.module.contest.dto.JoinContestData;
@@ -80,6 +81,9 @@ public class JoinContestHelper {
             Log.d(TAG, "Entry fee : " + String.valueOf(joinContestData.getEntryFee()));
             if (WalletHelper.isSufficientBalAvailableInWallet(joinContestData.getEntryFee())) {
                 showJoinDialog(joinContestData, appCompatActivity);
+
+                NostragamusAnalytics.getInstance().trackScreenShown(Constants.AnalyticsCategory.CONTEST,
+                        Constants.AnalyticsClickLabels.JOIN_CONTEST + "-" + Constants.AnalyticsClickLabels.CONTEST_JOIN_POPUP);
 
             } else {
                 Log.d(TAG, "Insufficient balance to join contest");
