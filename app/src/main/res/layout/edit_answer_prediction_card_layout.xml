@@ -1,0 +1,327 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="@dimen/dim_340"
+    android:layout_height="@dimen/dim_380"
+    app:cardCornerRadius="@dimen/dim_2"
+    app:cardElevation="15dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <!-- Top Questions & points -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dim_170"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <!-- Points -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center">
+
+                        <!-- positive points -->
+                        <LinearLayout
+                            android:id="@+id/prediction_card_positive_layout"
+                            android:layout_width="@dimen/dim_78"
+                            android:layout_height="@dimen/dim_24"
+                            android:orientation="horizontal"
+                            android:background="@drawable/prediction_points_bg"
+                            android:gravity="center">
+
+                            <ImageView
+                                android:layout_width="@dimen/dim_8"
+                                android:layout_height="@dimen/dim_8"
+                                android:layout_margin="@dimen/dim_8"
+                                android:src="@drawable/prediction_positive_icn"/>
+
+                            <com.jeeva.android.widgets.customfont.CustomTextView
+                                android:id="@+id/prediction_card_positive_textView"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:textColor="@color/black"
+                                app:typeface="lato_bold"
+                                android:text="+ PTS"
+                                android:textSize="@dimen/sp_10"
+                                android:layout_marginRight="@dimen/dim_8"/>
+
+                        </LinearLayout>
+
+                        <!-- Negative points -->
+                        <LinearLayout
+                            android:id="@+id/prediction_card_negative_layout"
+                            android:layout_width="@dimen/dim_78"
+                            android:layout_height="@dimen/dim_24"
+                            android:orientation="horizontal"
+                            android:background="@drawable/prediction_points_bg"
+                            android:gravity="center">
+
+                            <ImageView
+                                android:layout_width="@dimen/dim_8"
+                                android:layout_height="@dimen/dim_8"
+                                android:layout_margin="@dimen/dim_8"
+                                android:src="@drawable/prediction_negative_icn"/>
+
+                            <com.jeeva.android.widgets.customfont.CustomTextView
+                                android:id="@+id/prediction_card_negative_textView"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:textColor="@color/black"
+                                app:typeface="lato_bold"
+                                android:text="- PTS"
+                                android:textSize="@dimen/sp_10"
+                                android:layout_marginRight="@dimen/dim_8"/>
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <!-- Question layout -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:paddingLeft="@dimen/dim_12"
+                        android:paddingRight="@dimen/dim_12"
+                        android:paddingTop="@dimen/dim_8">
+
+                        <com.jeeva.android.widgets.customfont.CustomTextView
+                            android:id="@+id/question_title_textView"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:maxLines="2"
+                            android:ellipsize="end"
+                            android:textColor="#707070"
+                            app:typeface="lato_bold"
+                            android:textSize="@dimen/sp_15"/>
+
+                        <com.jeeva.android.widgets.customfont.CustomTextView
+                            android:id="@+id/question_description_textView"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:textColor="#090909"
+                            app:typeface="lato_regular"
+                            android:textSize="@dimen/sp_13"
+                            android:layout_marginTop="@dimen/dim_10"/>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <!-- Question options image layout -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dim_170"
+                    android:layout_weight="1"
+                    android:orientation="horizontal">
+
+                    <!-- Image option 1 -->
+                    <FrameLayout
+                        android:id="@+id/edit_answer_option_left_frame"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="match_parent">
+
+                        <com.jeeva.android.widgets.HmImageView
+                            android:id="@+id/prediction_question_option_1_imgView"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:scaleType="fitXY"
+                            android:src="@drawable/prediction_left_empty_img"/>
+
+                        <com.jeeva.android.widgets.customfont.CustomTextView
+                            android:id="@+id/prediction_card_player_poll_1_textView"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/round_black_button_with_shadow"
+                            android:gravity="center"
+                            android:text="%"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/sp_25"
+                            android:visibility="gone" />
+
+                    </FrameLayout>
+
+                    <!-- Image option 2 -->
+                    <FrameLayout
+                        android:id="@+id/edit_answer_option_right_frame"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="match_parent">
+
+                        <com.jeeva.android.widgets.HmImageView
+                            android:id="@+id/prediction_question_option_2_imgView"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:scaleType="fitXY"
+                            android:src="@drawable/prediction_right_empty_img"/>
+
+                        <com.jeeva.android.widgets.customfont.CustomTextView
+                            android:id="@+id/prediction_card_player_poll_2_textView"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/round_black_button_with_shadow"
+                            android:gravity="center"
+                            android:text="%"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/sp_25"
+                            android:visibility="gone" />
+
+                    </FrameLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <!-- PowerUp container parent -->
+            <RelativeLayout
+                android:id="@+id/prediction_card_powerup_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"/>
+
+        </FrameLayout>
+
+        <!-- Options layout -->
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dim_40"
+            android:orientation="horizontal"
+            android:background="@drawable/prediction_card_bottom_bg">
+
+            <LinearLayout
+                android:id="@+id/prediction_options_parent"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <!-- option 1 -->
+                <LinearLayout
+                    android:id="@+id/option_1_button_layout"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="horizontal"
+                    android:gravity="left|center_vertical">
+
+                    <ImageView
+                        android:id="@+id/swipe_card_iv_left_arrow"
+                        android:layout_width="@dimen/dp_13"
+                        android:layout_height="@dimen/dp_13"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="@dimen/dp_12"
+                        android:src="@drawable/play_arrow_left"
+                        />
+
+                    <com.jeeva.android.widgets.customfont.CustomTextView
+                        android:id="@+id/option_1_textView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:maxLines="1"
+                        android:ellipsize="end"
+                        android:textColor="@color/white"
+                        app:typeface="lato_regular"
+                        android:textSize="@dimen/sp_14"
+                        android:layout_marginLeft="@dimen/dim_6"
+                        android:layout_marginRight="@dimen/dim_10"/>
+
+                    <ImageView
+                        android:id="@+id/edit_answer_chosen_option_left_imgView"
+                        android:layout_width="@dimen/dp_14"
+                        android:layout_height="@dimen/dp_14"
+                        android:layout_gravity="center_vertical"
+                        android:src="@drawable/edit_ans_chosen_left_arrow"
+                        android:visibility="invisible"/>
+
+                </LinearLayout>
+
+                <!-- option 2 -->
+                <LinearLayout
+                    android:id="@+id/option_2_button_layout"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="horizontal"
+                    android:gravity="right|center_vertical">
+
+                    <ImageView
+                        android:id="@+id/edit_answer_chosen_option_right_imgView"
+                        android:layout_width="@dimen/dp_14"
+                        android:layout_height="@dimen/dp_14"
+                        android:layout_gravity="center_vertical"
+                        android:src="@drawable/edit_ans_chosen_right_arrow"
+                        android:visibility="gone"/>
+
+                    <com.jeeva.android.widgets.customfont.CustomTextView
+                        android:id="@+id/option_2_textView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:maxLines="1"
+                        android:ellipsize="end"
+                        android:textColor="@color/white"
+                        app:typeface="lato_regular"
+                        android:textSize="@dimen/sp_14"
+                        android:layout_marginRight="@dimen/dim_6"
+                        android:layout_marginLeft="@dimen/dim_10"/>
+
+                    <ImageView
+                        android:id="@+id/swipe_card_iv_right_arrow"
+                        android:layout_width="@dimen/dp_13"
+                        android:layout_height="@dimen/dp_13"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginRight="@dimen/dp_12"
+                        android:src="@drawable/play_arrow_right"
+                        />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <!-- Drag Choice  -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:gravity="center">
+
+                <com.jeeva.android.widgets.customfont.CustomTextView
+                    android:id="@+id/prediction_drag_choice_textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:maxLines="1"
+                    android:ellipsize="end"
+                    android:textColor="@color/white"
+                    app:typeface="lato_regular"
+                    android:textSize="@dimen/sp_14"/>
+
+            </LinearLayout>
+
+        </FrameLayout>
+
+    </LinearLayout>
+
+</android.support.v7.widget.CardView>

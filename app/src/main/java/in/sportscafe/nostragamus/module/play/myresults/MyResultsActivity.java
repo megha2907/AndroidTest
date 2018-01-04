@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -13,6 +14,7 @@ import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
 import android.text.style.ForegroundColorSpan;
+import android.text.style.ImageSpan;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -31,11 +33,8 @@ import in.sportscafe.nostragamus.Constants.RequestCodes;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
 import in.sportscafe.nostragamus.module.common.NostragamusActivity;
-import in.sportscafe.nostragamus.module.contest.contestDetailsAfterJoining.InplayContestDetailsActivity;
 import in.sportscafe.nostragamus.module.contest.dto.ContestScreenData;
 import in.sportscafe.nostragamus.module.contest.ui.ContestsActivity;
-import in.sportscafe.nostragamus.module.contest.ui.DetailScreensLaunchRequest;
-import in.sportscafe.nostragamus.module.inPlay.dto.InPlayContestDto;
 import in.sportscafe.nostragamus.module.inPlay.ui.ResultsScreenDataDto;
 import in.sportscafe.nostragamus.module.nostraHome.ui.NostraHomeActivity;
 import in.sportscafe.nostragamus.module.permission.PermissionsActivity;
@@ -52,6 +51,7 @@ import in.sportscafe.nostragamus.utils.timeutils.TimeUtils;
 public class MyResultsActivity extends NostragamusActivity implements MyResultsView, View.OnClickListener {
 
     private static final String TAG = MyResultsActivity.class.getSimpleName();
+    public static final int EDIT_ANSWER_ACTIVITY_REQUEST_CODE = 1212;
 
     private RecyclerView mRvMyResults;
     private MyResultsPresenter mResultsPresenter;
@@ -102,6 +102,11 @@ public class MyResultsActivity extends NostragamusActivity implements MyResultsV
         mRvMyResults.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         mRvMyResults.setHasFixedSize(true);
 
+        setLayoutsAsPerNeed();
+
+    }
+
+    private void setLayoutsAsPerNeed() {
         mResultsPresenter = MyResultPresenterImpl.newInstance(this);
         mResultsPresenter.onCreateMyResults(getIntent().getExtras());
 
@@ -119,7 +124,6 @@ public class MyResultsActivity extends NostragamusActivity implements MyResultsV
             NostragamusAnalytics.getInstance().trackScreenShown(Constants.AnalyticsCategory.RESULTS, Constants.AnalyticsClickLabels.PSEUDO_GAME_FLOW);
 
         }
-
     }
 
     private void initMembers() {
@@ -283,6 +287,30 @@ public class MyResultsActivity extends NostragamusActivity implements MyResultsV
         if (RequestCodes.STORAGE_PERMISSION == requestCode && PermissionsActivity.PERMISSIONS_GRANTED == resultCode) {
             mResultsPresenter.onClickShare();
         }
+
+        if (requestCode == EDIT_ANSWER_ACTIVITY_REQUEST_CODE) {
+            switch (resultCode) {
+                case RESULT_OK:
+                    // Answer Edited, re create screen as edited answers need to be updated
+                    setLayoutsAsPerNeed();
+                    showSnackbarMessage(R.drawable.edit_answer_success_snackbar_icn, "Your new predictions were saved!");
+                    break;
+
+                case RESULT_CANCELED:
+                    showSnackbarMessage(R.drawable.edit_answer_failed_snackbar_icn ,"No changes were made! Swipe and select prediction in order to save your answers!");
+                    break;
+            }
+        }
+    }
+
+    private void showSnackbarMessage(int imgResource,String msg) {
+//        Snackbar.make(findViewById(R.id.myresult_root_layout), msg, Snackbar.LENGTH_LONG).show();
+        Snackbar snackbar = Snackbar.make(findViewById(R.id.myresult_root_layout), msg, Snackbar.LENGTH_LONG);
+        View snackbarLayout = snackbar.getView();
+        TextView textView = (TextView)snackbarLayout.findViewById(android.support.design.R.id.snackbar_text);
+        textView.setCompoundDrawablesRelativeWithIntrinsicBounds(imgResource, 0, 0, 0);
+        textView.setCompoundDrawablePadding(getResources().getDimensionPixelOffset(R.dimen.dim_5));
+        snackbar.show();
     }
 
     @Override

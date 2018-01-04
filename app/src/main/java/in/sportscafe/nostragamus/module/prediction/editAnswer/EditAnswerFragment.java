@@ -1,7 +1,8 @@
-package in.sportscafe.nostragamus.module.prediction.playScreen;
+package in.sportscafe.nostragamus.module.prediction.editAnswer;
 
 
 import android.animation.Animator;
+import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -19,6 +20,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LinearInterpolator;
@@ -28,34 +30,34 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.google.ads.conversiontracking.AdWordsConversionReporter;
 import com.jeeva.android.widgets.CustomProgressbar;
 import com.sportscafe.nostracardstack.cardstack.CardDirection;
 import com.sportscafe.nostracardstack.cardstack.CardStack;
 
 import org.parceler.Parcels;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import in.sportscafe.nostragamus.Constants;
+import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.NostraBaseFragment;
-import in.sportscafe.nostragamus.module.inPlay.ui.ResultsScreenDataDto;
-import in.sportscafe.nostragamus.module.nostraHome.ui.NostraHomeActivity;
+import in.sportscafe.nostragamus.module.prediction.editAnswer.adapter.EditAnswerPredictionAdapterListener;
+import in.sportscafe.nostragamus.module.prediction.editAnswer.adapter.EditAnswerPredictionCardAdapter;
+import in.sportscafe.nostragamus.module.prediction.editAnswer.dataProvider.GetQuestionForEditAnswerApiModelImpl;
+import in.sportscafe.nostragamus.module.prediction.editAnswer.dataProvider.SaveEditAnswerApiModelImpl;
+import in.sportscafe.nostragamus.module.prediction.editAnswer.dto.EditAnswerQuestion;
+import in.sportscafe.nostragamus.module.prediction.editAnswer.dto.EditAnswerScreenData;
+import in.sportscafe.nostragamus.module.prediction.editAnswer.dto.QuestionForEditAnswerResponse;
+import in.sportscafe.nostragamus.module.prediction.editAnswer.dto.SaveEditAnswerResponse;
 import in.sportscafe.nostragamus.module.prediction.gamePlayHelp.GamePlayHelpActivity;
-import in.sportscafe.nostragamus.module.prediction.playScreen.adapter.PredictionQuestionAdapterListener;
-import in.sportscafe.nostragamus.module.prediction.playScreen.adapter.PredictionQuestionsCardAdapter;
 import in.sportscafe.nostragamus.module.prediction.playScreen.dataProvider.PredictionPlayersPollDataProvider;
-import in.sportscafe.nostragamus.module.prediction.playScreen.dataProvider.PredictionQuestionsDataProvider;
-import in.sportscafe.nostragamus.module.prediction.playScreen.dataProvider.SavePredictionAnswerProvider;
-import in.sportscafe.nostragamus.module.prediction.playScreen.dto.AnswerResponse;
-import in.sportscafe.nostragamus.module.prediction.playScreen.dto.PlayScreenDataDto;
+import in.sportscafe.nostragamus.module.prediction.playScreen.dto.AnswerPowerUpDto;
 import in.sportscafe.nostragamus.module.prediction.playScreen.dto.PlayerPollResponse;
 import in.sportscafe.nostragamus.module.prediction.playScreen.dto.PlayersPoll;
 import in.sportscafe.nostragamus.module.prediction.playScreen.dto.PowerUp;
 import in.sportscafe.nostragamus.module.prediction.playScreen.dto.PowerUpEnum;
-import in.sportscafe.nostragamus.module.prediction.playScreen.dto.PredictionAllQuestionResponse;
-import in.sportscafe.nostragamus.module.prediction.playScreen.dto.PredictionQuestion;
 import in.sportscafe.nostragamus.module.prediction.playScreen.helper.PlayerPollHelper;
 import in.sportscafe.nostragamus.module.prediction.playScreen.helper.PredictionUiHelper;
 import in.sportscafe.nostragamus.module.prediction.powerupBank.PowerupBankTransferToPlayActivity;
@@ -67,36 +69,35 @@ import in.sportscafe.nostragamus.utils.timeutils.TimeUtils;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class PredictionFragment extends NostraBaseFragment implements View.OnClickListener {
+public class EditAnswerFragment extends NostraBaseFragment implements View.OnClickListener {
 
-    private static final String TAG = PredictionFragment.class.getSimpleName();
+    private static final String TAG = EditAnswerFragment.class.getSimpleName();
     private static final int CARD_SWIPE_DISTANCE_TO_END_SWIPE = 300;
     private final static int POWER_UP_BANK_ACTIVITY_REQUEST_CODE = 99;
     private final static int GAME_PLAY_HELP_ACTIVITY = 98;
+    private final static int POWERUP_EDITED_ALERT_POPUP_REQUEST_CODE = 351;
 
-    private PredictionFragmentListener mFragmentListener;
+    private EditAnswerFragmentListener mFragmentListener;
     private CardStack mCardStack;
-    private PredictionQuestionsCardAdapter mQuestionsCardAdapter;
-    private SavePredictionAnswerProvider mSavePredictionAnswerProvider;
+    private EditAnswerPredictionCardAdapter mQuestionsCardAdapter;
     private LinearLayout mThirdOptionLayout;
     private PredictionUiHelper mUiHelper;
     private PowerUp mCurrentPowerUp;
-    private PlayScreenDataDto mPlayScreenData;
+    private AnswerPowerUpDto mAppliedPowerUp;
+    private EditAnswerScreenData mEditAnswerScreenData;
     private CustomProgressbar mProgressDialog;
-    private TextView mCounterTextView;
-    private LinearLayout mNextTextView;
     private ImageView mPowerUpImageView;
     private ImageView mGamePlayImageView;
-    private Button mThirdOptionButton;
-    private int mTotalQuestions = 0;
-    private int mCurrentQuestionPos = 1;
+    private LinearLayout mThirdOptionButton;
+    private TextView mMessageTextView;
+    private boolean mIsFirstTimeEditing = false;
 
-    public PredictionFragment() {}
+    public EditAnswerFragment() {}
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_prediction, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_edit_answer, container, false);
         initView(rootView);
         return rootView;
     }
@@ -104,46 +105,44 @@ public class PredictionFragment extends NostraBaseFragment implements View.OnCli
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof PredictionFragmentListener) {
-            mFragmentListener = (PredictionFragmentListener) context;
+        if (context instanceof EditAnswerFragmentListener) {
+            mFragmentListener = (EditAnswerFragmentListener) context;
         } else {
-            throw new RuntimeException(PredictionActivity.class.getSimpleName() + " must implement "
-                    + PredictionFragmentListener.class.getSimpleName());
+            throw new RuntimeException(EditAnswerFragment.class.getSimpleName() + " must implement "
+                    + EditAnswerFragmentListener.class.getSimpleName());
         }
     }
 
     private void initView(View rootView) {
-        ImageView backButton = (ImageView) rootView.findViewById(R.id.prediction_back_btn);
-        mPowerUpImageView = (ImageView) rootView.findViewById(R.id.prediction_powerup_bank_imgView);
-        mGamePlayImageView = (ImageView) rootView.findViewById(R.id.prediction_help_play_imgView);
-        RelativeLayout doublerPowerup = (RelativeLayout) rootView.findViewById(R.id.prediction_doubler_Layout);
-        RelativeLayout noNegPowerup = (RelativeLayout) rootView.findViewById(R.id.prediction_noNeg_Layout);
-        RelativeLayout playerPollPowerup = (RelativeLayout) rootView.findViewById(R.id.prediction_player_poll_Layout);
-        Button thirdOptionButton = (Button) rootView.findViewById(R.id.prediction_third_option_button);
-        mThirdOptionLayout = (LinearLayout) rootView.findViewById(R.id.prediction_third_option_layout);
-        mCounterTextView = (TextView) rootView.findViewById(R.id.prediction_question_counter_textView);
-        mNextTextView = (LinearLayout) rootView.findViewById(R.id.prediction_next_layout);
-        mThirdOptionButton = (Button) rootView.findViewById(R.id.prediction_third_option_button);
+        ImageView backButton = (ImageView) rootView.findViewById(R.id.edit_answer_back_btn);
+        mPowerUpImageView = (ImageView) rootView.findViewById(R.id.edit_answer_powerup_bank_imgView);
+        mGamePlayImageView = (ImageView) rootView.findViewById(R.id.edit_answer_help_play_imgView);
+        RelativeLayout doublerPowerup = (RelativeLayout) rootView.findViewById(R.id.edit_answer_doubler_Layout);
+        RelativeLayout noNegPowerup = (RelativeLayout) rootView.findViewById(R.id.edit_answer_noNeg_Layout);
+        RelativeLayout playerPollPowerup = (RelativeLayout) rootView.findViewById(R.id.edit_answer_player_poll_Layout);
+        mThirdOptionLayout = (LinearLayout) rootView.findViewById(R.id.edit_answer_third_option_layout);
+        mThirdOptionButton = (LinearLayout) rootView.findViewById(R.id.edit_answer_third_option_button);
+        mMessageTextView = (TextView) rootView.findViewById(R.id.edit_answer_msg_textView);
 
-        mNextTextView.setOnClickListener(this);
         mPowerUpImageView.setOnClickListener(this);
         mGamePlayImageView.setOnClickListener(this);
+        mThirdOptionButton.setOnClickListener(this);
         doublerPowerup.setOnClickListener(this);
         noNegPowerup.setOnClickListener(this);
         playerPollPowerup.setOnClickListener(this);
         backButton.setOnClickListener(this);
-        thirdOptionButton.setOnClickListener(this);
+
 
         /* Card stack */
-        mCardStack = (CardStack) rootView.findViewById(R.id.prediction_cardStack);
-        mCardStack.setContentResource(R.layout.prediction_card_layout);
+        mCardStack = (CardStack) rootView.findViewById(R.id.edit_answer_cardStack);
+        mCardStack.setContentResource(R.layout.edit_answer_prediction_card_layout);
         mCardStack.setCanSwipe(true);
         mCardStack.setListener(getCardSwipeEventsListener());
     }
 
     @NonNull
-    private PredictionQuestionAdapterListener getQuestionsCardAdapterListener() {
-        return new PredictionQuestionAdapterListener() {
+    private EditAnswerPredictionAdapterListener getQuestionsCardAdapterListener() {
+        return new EditAnswerPredictionAdapterListener() {
             @Override
             public void onLeftOptionClicked(int pos) {
                 if (mCardStack != null) {
@@ -179,13 +178,12 @@ public class PredictionFragment extends NostraBaseFragment implements View.OnCli
 
         Bundle args = getArguments();
         if (args != null) {
-            if (args.containsKey(Constants.BundleKeys.PLAY_SCREEN_DATA)) {
-                mPlayScreenData = Parcels.unwrap(args.getParcelable(Constants.BundleKeys.PLAY_SCREEN_DATA));
+            if (args.containsKey(Constants.BundleKeys.EDIT_ANSWER_SCREEN_DATA)) {
+                mEditAnswerScreenData = Parcels.unwrap(args.getParcelable(Constants.BundleKeys.EDIT_ANSWER_SCREEN_DATA));
             }
 
-            if (mPlayScreenData != null) {
+            if (mEditAnswerScreenData != null) {
                 mUiHelper = new PredictionUiHelper();
-                mSavePredictionAnswerProvider = new SavePredictionAnswerProvider();
             } else {
                 handleErrorAndFinishActivity();
             }
@@ -207,58 +205,72 @@ public class PredictionFragment extends NostraBaseFragment implements View.OnCli
     }
 
     private void loadQuestions() {
-        if (mPlayScreenData != null && getActivity() != null) {
+        if (mEditAnswerScreenData != null && getActivity() != null) {
             showProgress();
-            PredictionQuestionsDataProvider dataProvider = new PredictionQuestionsDataProvider();
-            dataProvider.getAllQuestions(mPlayScreenData.getMatchId(), mPlayScreenData.getRoomId(), getAllQuestionsApiListener());
+            GetQuestionForEditAnswerApiModelImpl question = new GetQuestionForEditAnswerApiModelImpl();
+
+            question.fetchQuestionDetailsToEditAnswers(mEditAnswerScreenData.getMatchId(),
+                    mEditAnswerScreenData.getQuestionId(),
+                    mEditAnswerScreenData.getRoomId(),
+                    getQuestionApiListener());
         } else {
             handleErrorAndFinishActivity();
         }
     }
 
-    @NonNull
-    private PredictionQuestionsDataProvider.QuestionDataProviderListener getAllQuestionsApiListener() {
-        return new PredictionQuestionsDataProvider.QuestionDataProviderListener() {
+    private GetQuestionForEditAnswerApiModelImpl.GetQuestionForEditAnswerApiListener getQuestionApiListener() {
+        return new GetQuestionForEditAnswerApiModelImpl.GetQuestionForEditAnswerApiListener() {
             @Override
-            public void onData(int status, @Nullable PredictionAllQuestionResponse questionsResponse) {
+            public void noInternet() {
                 hideProgress();
-                onAllQuestionApiSuccessResponse(questionsResponse);
+                handleError("", Constants.DataStatus.NO_INTERNET);
             }
 
             @Override
-            public void onError(int status) {
+            public void onEditAnswerSuccessful(QuestionForEditAnswerResponse response) {
                 hideProgress();
-                handleError(null, status);
+                onGetQuestionSuccessResponse(response);
+            }
+
+            @Override
+            public void onApiFailure() {
+                hideProgress();
+                handleError("", Constants.DataStatus.FROM_SERVER_API_FAILED);
+            }
+
+            @Override
+            public void onServerSentApi(String errorMsg) {
+                hideProgress();
+                if (TextUtils.isEmpty(errorMsg)) {
+                    errorMsg = Constants.Alerts.SOMETHING_WRONG;
+                }
+                handleError(errorMsg, -1);
             }
         };
     }
 
-    private void onAllQuestionApiSuccessResponse(PredictionAllQuestionResponse questionsResponse) {
+    private void onGetQuestionSuccessResponse(QuestionForEditAnswerResponse questionsResponse) {
         if (getView() != null && getActivity() != null && !getActivity().isFinishing() &&
                 mCardStack != null && questionsResponse != null) {
 
-            if (questionsResponse.getQuestions() != null && !questionsResponse.getQuestions().isEmpty()) {
-                /* PowerUps */
+            if (questionsResponse.getQuestion() != null) {
+                 /*PowerUps*/
                 if (questionsResponse.getPowerUp() != null) {
+                    mAppliedPowerUp = questionsResponse.getAppliedPowerUps();
                     mCurrentPowerUp = questionsResponse.getPowerUp();
                     updatePowerUpDetails(mCurrentPowerUp);
                 }
 
-                /* Questions */
-                mQuestionsCardAdapter = new PredictionQuestionsCardAdapter(getContext(),
-                        questionsResponse.getQuestions(),
+                 /*Questions*/
+                mQuestionsCardAdapter = new EditAnswerPredictionCardAdapter(getContext(),
+                        getQuestionList(questionsResponse.getQuestion()),
                         getQuestionsCardAdapterListener());
 
                 mCardStack.setAdapter(mQuestionsCardAdapter);
 
-                /* update ui */
-                mTotalQuestions = questionsResponse.getQuestions().size();
-                showQuestionsCounter();
+                /* update ui*/
                 showNeitherIfRequired();
-                showPowerUpsIfApplied();
-                if (mTotalQuestions == 1) {
-                    hideNextButton();
-                }
+                showPowerUpsIfAppliedWhenQuestionLoaded();
 
             } else {
                 Log.d(TAG, "Questions list null/empty");
@@ -267,50 +279,26 @@ public class PredictionFragment extends NostraBaseFragment implements View.OnCli
         }
     }
 
-    private void showQuestionsCounter() {
-        if (getView() != null && mQuestionsCardAdapter != null) {
-//            int currentPos = mQuestionsCardAdapter.getPosition(mQuestionsCardAdapter.getItem(getTopVisibleCardPosition())) + 1; // default pos is 0 based, so add 1
-
-            if (mCurrentQuestionPos < 0 || mCurrentQuestionPos > mTotalQuestions) {
-                mCurrentQuestionPos = 1;
-            }
-
-            if (mCurrentQuestionPos > 0) {
-                String questionNumCounter = String.valueOf(mCurrentQuestionPos) +"/" + String.valueOf(mTotalQuestions);
-                mCounterTextView.setText(questionNumCounter);
-
-                RelativeLayout relativeLayout = (RelativeLayout) getView().findViewById(R.id.prediction_questions_info_parent);
-                relativeLayout.setVisibility(View.VISIBLE);
-            }
-        }
+    private List<EditAnswerQuestion> getQuestionList(EditAnswerQuestion question) {
+        List<EditAnswerQuestion> list = new ArrayList<>();
+        list.add(question);
+        return list;
     }
 
     private void initHeading() {
         if (getView() != null && getActivity() != null) {
-            TextView headingParty1TextView = (TextView) getView().findViewById(R.id.prediction_heading_party1_textView);
-            TextView headingParty2TextView = (TextView) getView().findViewById(R.id.prediction_heading_party2_textView);
-            TextView subHeadingTextView = (TextView) getView().findViewById(R.id.prediction_sub_heading_textView);
-
-            if (mPlayScreenData != null) {
-                String party1 = mPlayScreenData.getMatchPartyTitle1();
-                String party2 = mPlayScreenData.getMatchPartyTitle2();
-
-                if (!TextUtils.isEmpty(party1) && !TextUtils.isEmpty(party2)) {
-                    headingParty1TextView.setText(party1);
-                    headingParty2TextView.setText(party2);
-                }
-
-                if (!TextUtils.isEmpty(mPlayScreenData.getSubTitle())) {
-                    subHeadingTextView.setText(mPlayScreenData.getSubTitle());
-                }
+            mIsFirstTimeEditing = NostragamusDataHandler.getInstance().isEditingAnswerFirstTime();
+            if (mIsFirstTimeEditing) {
+                mMessageTextView.setText("Add/Remove powerups to your answer. Then swipe & select your option to save new predictions!");
+                NostragamusDataHandler.getInstance().setEditingAnswerFirstTime();
             }
         }
     }
 
     private void animateTopBottomLayouts() {
         if (getView() != null && getActivity() != null) {
-            final RelativeLayout topLayout = (RelativeLayout) getView().findViewById(R.id.prediction_top_layout);
-            final LinearLayout bottomLayout = (LinearLayout) getView().findViewById(R.id.prediction_bottom_layout);
+            final RelativeLayout topLayout = (RelativeLayout) getView().findViewById(R.id.edit_answer_top_layout);
+            final LinearLayout bottomLayout = (LinearLayout) getView().findViewById(R.id.edit_answer_bottom_layout);
 
             new Handler().postDelayed(new Runnable() {
                 @Override
@@ -337,7 +325,17 @@ public class PredictionFragment extends NostraBaseFragment implements View.OnCli
                                 public void onAnimationEnd(Animation animation) {
                                     bottomLayout.setVisibility(View.VISIBLE);
 
-                                    loadQuestions();
+                                    /* Wait for 3 seconds before first time loading */
+                                    if (mIsFirstTimeEditing) {
+                                        new Handler().postDelayed(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                loadQuestions();
+                                            }
+                                        }, 2000);
+                                    } else {
+                                        loadQuestions();
+                                    }
                                 }
 
                                 @Override
@@ -357,98 +355,18 @@ public class PredictionFragment extends NostraBaseFragment implements View.OnCli
                     topLayout.startAnimation(animation);
                 }
             }, 100);
-
-            /*topLayout.clearAnimation();
-            topLayout.animate().translationYBy(topLayout.getHeight()).setDuration(1000).
-                    setInterpolator(new LinearInterpolator()).
-                    setListener(new Animator.AnimatorListener() {
-                        @Override
-                        public void onAnimationStart(Animator animation) {
-
-                        }
-
-                        @Override
-                        public void onAnimationEnd(Animator animation) {
-                            topLayout.setVisibility(View.VISIBLE);
-
-                            bottomLayout.clearAnimation();
-                            bottomLayout.animate().translationYBy(bottomLayout.getHeight()).setDuration(1000).
-                                    setInterpolator(new LinearInterpolator()).
-                                    setListener(new Animator.AnimatorListener() {
-                                        @Override
-                                        public void onAnimationStart(Animator animation) {
-
-                                        }
-
-                                        @Override
-                                        public void onAnimationEnd(Animator animation) {
-                                            bottomLayout.setVisibility(View.VISIBLE);
-                                            loadQuestions();
-                                        }
-
-                                        @Override
-                                        public void onAnimationCancel(Animator animation) {
-
-                                        }
-
-                                        @Override
-                                        public void onAnimationRepeat(Animator animation) {
-
-                                        }
-                                    }).start();
-
-                        }
-
-                        @Override
-                        public void onAnimationCancel(Animator animation) {
-
-                        }
-
-                        @Override
-                        public void onAnimationRepeat(Animator animation) {
-
-                        }
-                    }).start();*/
-
-            /*new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    Animation animation = AnimationUtils.loadAnimation(topLayout.getContext(), R.anim.prediction_top_view_anim);
-                    animation.setAnimationListener(new Animation.AnimationListener() {
-                        @Override
-                        public void onAnimationStart(Animation animation) {
-
-                        }
-
-                        @Override
-                        public void onAnimationEnd(Animation animation) {
-                            topLayout.setVisibility(View.VISIBLE);
-                            bottomLayout.clearAnimation();
-                            bottomLayout.startAnimation(AnimationUtils.loadAnimation(bottomLayout.getContext(), R.anim.prediction_bottom_view_anim));
-                            bottomLayout.setVisibility(View.VISIBLE);
-                        }
-
-                        @Override
-                        public void onAnimationRepeat(Animation animation) {
-
-                        }
-                    });
-                    topLayout.clearAnimation();
-                    topLayout.startAnimation(animation);
-                }
-            }, 100);*/
         }
     }
 
     private void showNeitherIfRequired() {
         int pos = getTopVisibleCardPosition();
         if (mQuestionsCardAdapter != null && pos < mQuestionsCardAdapter.getCount()) {
-            PredictionQuestion question = mQuestionsCardAdapter.getItem(pos);
+            EditAnswerQuestion question = mQuestionsCardAdapter.getItem(pos);
 
             if (question != null && !TextUtils.isEmpty(question.getQuestionOption3())) {
-                makeThirdOptionVisible(true, question.getQuestionOption3());
+                makeThirdOptionVisible(true, question.getQuestionOption3(), question.getChosenAnswerId());
             } else {
-                makeThirdOptionVisible(false, getString(R.string.prediction_neither_button_text));
+                makeThirdOptionVisible(false, getString(R.string.prediction_neither_button_text), question.getChosenAnswerId());
             }
         }
     }
@@ -456,7 +374,7 @@ public class PredictionFragment extends NostraBaseFragment implements View.OnCli
     private void showPowerUpsIfApplied() {
         int nextCardPos = getTopVisibleCardPosition();
         if (nextCardPos < mQuestionsCardAdapter.getCount()) {
-            PredictionQuestion question = mQuestionsCardAdapter.getItem(nextCardPos);
+            EditAnswerQuestion question = mQuestionsCardAdapter.getItem(nextCardPos);
 
             if (question != null && question.getPowerUp() != null && mCardStack != null && mCardStack.getTopView() != null) {
                 View topView = mCardStack.getTopView();
@@ -465,6 +383,10 @@ public class PredictionFragment extends NostraBaseFragment implements View.OnCli
 
                     /* Doubler */
                     if (question.getPowerUp().getDoubler() == 1 && canAddPowerUpCheckUiLayout(powerUpParent, PowerUpEnum.DOUBLER)) {
+
+                        mQuestionsCardAdapter.applyOrRemovePowerUp(PowerUpEnum.DOUBLER, getTopVisibleCardPosition(), true);
+                        usePowerUp(true, PowerUpEnum.DOUBLER);
+
                         View powerUpView = mUiHelper.getPowerUpView(getContext(), PowerUpEnum.DOUBLER);
                         if (powerUpView != null) {
                             setPowerUpRemoveListener(powerUpParent, powerUpView);
@@ -476,6 +398,67 @@ public class PredictionFragment extends NostraBaseFragment implements View.OnCli
 
                     /* No Negative */
                     if (question.getPowerUp().getNoNegative() == 1 && canAddPowerUpCheckUiLayout(powerUpParent, PowerUpEnum.NO_NEGATIVE)) {
+
+                        mQuestionsCardAdapter.applyOrRemovePowerUp(PowerUpEnum.NO_NEGATIVE, getTopVisibleCardPosition(), true);
+                        usePowerUp(true, PowerUpEnum.NO_NEGATIVE);
+
+                        View powerUpView = mUiHelper.getPowerUpView(getContext(), PowerUpEnum.NO_NEGATIVE);
+                        if (powerUpView != null) {
+                            setPowerUpRemoveListener(powerUpParent, powerUpView);
+                            powerUpParent.addView(powerUpView, powerUpParent.getChildCount(),
+                                    new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+
+                        }
+                    }
+
+                    if (powerUpParent.getChildCount() == 2) {
+                        float moveUpto = getContext().getResources().getDimension(R.dimen.dp_30);
+                        View view = powerUpParent.getChildAt(0);
+                        view.setTranslationX(-moveUpto);
+
+                        view = powerUpParent.getChildAt(1);
+                        view.setTranslationX(moveUpto);
+                    }
+                }
+            }
+        }
+
+    }
+
+    /**
+     * When question loaded, show saved details (as per api) like powerups applied (in previous session), etc...
+     */
+    private void showPowerUpsIfAppliedWhenQuestionLoaded() {
+        int nextCardPos = getTopVisibleCardPosition();
+        if (nextCardPos < mQuestionsCardAdapter.getCount()) {
+            EditAnswerQuestion question = mQuestionsCardAdapter.getItem(nextCardPos);
+
+            if (question != null && question.getPowerUp() != null && mCardStack != null && mCardStack.getTopView() != null) {
+                View topView = mCardStack.getTopView();
+                final RelativeLayout powerUpParent = (RelativeLayout) topView.findViewById(R.id.prediction_card_powerup_layout);
+                if (powerUpParent != null && mAppliedPowerUp != null) {
+
+                    /* Doubler */
+                    if (mAppliedPowerUp.isDoubler() && canAddPowerUpCheckUiLayout(powerUpParent, PowerUpEnum.DOUBLER)) {
+
+                        mQuestionsCardAdapter.applyOrRemovePowerUp(PowerUpEnum.DOUBLER, getTopVisibleCardPosition(), true);
+                        updatePowerUpDetails(mCurrentPowerUp);
+
+                        View powerUpView = mUiHelper.getPowerUpView(getContext(), PowerUpEnum.DOUBLER);
+                        if (powerUpView != null) {
+                            setPowerUpRemoveListener(powerUpParent, powerUpView);
+                            powerUpParent.addView(powerUpView, powerUpParent.getChildCount(),
+                                    new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+
+                        }
+                    }
+
+                    /* No Negative */
+                    if (mAppliedPowerUp.isNoNegative() && canAddPowerUpCheckUiLayout(powerUpParent, PowerUpEnum.NO_NEGATIVE)) {
+
+                        mQuestionsCardAdapter.applyOrRemovePowerUp(PowerUpEnum.NO_NEGATIVE, getTopVisibleCardPosition(), true);
+                        updatePowerUpDetails(mCurrentPowerUp);
+
                         View powerUpView = mUiHelper.getPowerUpView(getContext(), PowerUpEnum.NO_NEGATIVE);
                         if (powerUpView != null) {
                             setPowerUpRemoveListener(powerUpParent, powerUpView);
@@ -507,11 +490,18 @@ public class PredictionFragment extends NostraBaseFragment implements View.OnCli
         return pos;
     }
 
-    private void makeThirdOptionVisible(boolean shouldVisible, String buttonText) {
+    private void makeThirdOptionVisible(boolean shouldVisible, String buttonText, int chosenAnswerId) {
         if (getView() != null && getActivity() != null) {
 
-            mThirdOptionButton.setText(buttonText);
+            TextView thirdOptionTextView = (TextView) getView().findViewById(R.id.edit_answer_third_option_textView);
+            thirdOptionTextView.setText(buttonText);
             if (shouldVisible) {
+                if (chosenAnswerId == Constants.AnswerIds.NEITHER) {
+                    mThirdOptionButton.setBackgroundResource(R.drawable.edit_answer_third_option_chosen_bg);
+                    ImageView imgView = (ImageView) getView().findViewById(R.id.edit_answer_third_option_imgView);
+                    imgView.setVisibility(View.VISIBLE);
+                }
+
                 mThirdOptionLayout.setVisibility(View.VISIBLE);
             } else {
                 mThirdOptionLayout.setVisibility(View.GONE);
@@ -522,37 +512,33 @@ public class PredictionFragment extends NostraBaseFragment implements View.OnCli
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.prediction_back_btn:
+            case R.id.edit_answer_back_btn:
                 if (mFragmentListener != null) {
                     mFragmentListener.onBackClicked();
                 }
                 break;
 
-            case R.id.prediction_doubler_Layout:
+            case R.id.edit_answer_doubler_Layout:
                 onDoublerPowerUpClicked();
                 break;
 
-            case R.id.prediction_noNeg_Layout:
+            case R.id.edit_answer_noNeg_Layout:
                 onNoNegativeClicked();
                 break;
 
-            case R.id.prediction_player_poll_Layout:
+            case R.id.edit_answer_player_poll_Layout:
                 onPlayerPollClicked();
                 break;
 
-            case R.id.prediction_third_option_button:
+            case R.id.edit_answer_third_option_button:
                 onThirdOptionClicked();
                 break;
 
-            case R.id.prediction_next_layout:
-                onNextClicked();
-                break;
-
-            case R.id.prediction_powerup_bank_imgView:
+            case R.id.edit_answer_powerup_bank_imgView:
                 onPowerUpBankClicked();
                 break;
 
-            case R.id.prediction_help_play_imgView:
+            case R.id.edit_answer_help_play_imgView:
                 onHelpPlayClicked();
                 break;
         }
@@ -562,9 +548,9 @@ public class PredictionFragment extends NostraBaseFragment implements View.OnCli
         mUiHelper.hidePowerUpBankAndHelpButtons(mPowerUpImageView, mGamePlayImageView);
 
         PowerupBankTransferScreenData bankScreenData = new PowerupBankTransferScreenData();
-        bankScreenData.setRoomId(mPlayScreenData.getRoomId());
-        bankScreenData.setChallengeId(mPlayScreenData.getChallengeId());
-        bankScreenData.setSubTitle(mPlayScreenData.getSubTitle());
+        bankScreenData.setRoomId(mEditAnswerScreenData.getRoomId());
+        bankScreenData.setChallengeId(mEditAnswerScreenData.getChallengeId());
+        bankScreenData.setSubTitle(mEditAnswerScreenData.getSubTitle());
 
         Bundle args = new Bundle();
         args.putParcelable(Constants.BundleKeys.POWERUP_BANK_TRANSFER_SCREEN_DATA, Parcels.wrap(bankScreenData));
@@ -580,12 +566,6 @@ public class PredictionFragment extends NostraBaseFragment implements View.OnCli
         startActivityForResult(intent, GAME_PLAY_HELP_ACTIVITY);
     }
 
-    private void onNextClicked() {
-        if (mCardStack != null) {
-            mCardStack.discardTopOnButtonClick(CardDirection.DOWN);
-        }
-    }
-
     private void onThirdOptionClicked() {
         if (mCardStack != null) {
             mCardStack.discardTopOnButtonClick(CardDirection.UP);
@@ -597,11 +577,11 @@ public class PredictionFragment extends NostraBaseFragment implements View.OnCli
             if (canAddPlayerPollPowerUpCheckUiLayout()) {
 
                 int questionId = getTopVisibleCardQuestionId();
-                if (mPlayScreenData != null && questionId >= 0) {
+                if (mEditAnswerScreenData != null && questionId >= 0) {
 
                     showProgress();
                     PredictionPlayersPollDataProvider playersPollDataProvider = new PredictionPlayersPollDataProvider();
-                    playersPollDataProvider.getPlayersPoll(questionId, mPlayScreenData.getRoomId(),
+                    playersPollDataProvider.getPlayersPoll(questionId, mEditAnswerScreenData.getRoomId(),
                             new PredictionPlayersPollDataProvider.PlayersPollDataProviderListener() {
                                 @Override
                                 public void onData(int status, @Nullable PlayerPollResponse playersPolls) {
@@ -668,7 +648,7 @@ public class PredictionFragment extends NostraBaseFragment implements View.OnCli
         int questionId = -1;
         int cardPos = getTopVisibleCardPosition();
         if (cardPos >= 0  && mQuestionsCardAdapter != null && cardPos < mQuestionsCardAdapter.getCount()) {
-            PredictionQuestion question = mQuestionsCardAdapter.getItem(cardPos);
+            EditAnswerQuestion question = mQuestionsCardAdapter.getItem(cardPos);
             if (question != null) {
                 questionId = question.getQuestionId();
             }
@@ -691,7 +671,7 @@ public class PredictionFragment extends NostraBaseFragment implements View.OnCli
 
             /* Add response to question so that it can be shown next time if card is shuffled */
             if (mQuestionsCardAdapter != null) {
-                PredictionQuestion question = mQuestionsCardAdapter.getItem(getTopVisibleCardPosition());
+                EditAnswerQuestion question = mQuestionsCardAdapter.getItem(getTopVisibleCardPosition());
                 if (question != null) {
                     question.setPlayersPollList(playersPollList);
                 }
@@ -717,9 +697,9 @@ public class PredictionFragment extends NostraBaseFragment implements View.OnCli
                     /* Set Minority Answer */
                 int pos = getTopVisibleCardPosition();
                 if (mQuestionsCardAdapter != null && pos < mQuestionsCardAdapter.getCount()) {
-                    PredictionQuestion question = mQuestionsCardAdapter.getItem(pos);
+                    EditAnswerQuestion question = mQuestionsCardAdapter.getItem(pos);
                     if (question != null) {
-                        PlayerPollHelper.setMinorityAnswerId(question, leftPollAnswer, rightPollAnswer);
+                        PlayerPollHelper.setMinorityAnswerIdForEditAnswer(question, leftPollAnswer, rightPollAnswer);
                     }
                 }
             }
@@ -772,6 +752,26 @@ public class PredictionFragment extends NostraBaseFragment implements View.OnCli
 
             mQuestionsCardAdapter.applyOrRemovePowerUp(powerUpEnum, getTopVisibleCardPosition(), true);
             usePowerUp(true, powerUpEnum);
+
+            onPowerUpModified();
+        }
+    }
+
+    /**
+     * Handle action if powerup edited...
+     */
+    private void onPowerUpModified() {
+        if (isPowerupModified()) {
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+
+                    Animation alpha = new AlphaAnimation(0f, 1f);
+                    alpha.setDuration(200);
+                    mMessageTextView.setText("You seem to have edited powerups. Now, swipe your choice to save the prediction!");
+                    mMessageTextView.startAnimation(alpha);
+                }
+            }, 500 /* Once powerup anim over, show this text */);
         }
     }
 
@@ -806,6 +806,8 @@ public class PredictionFragment extends NostraBaseFragment implements View.OnCli
                                     // PLAYER Poll can NEVER be removed once applied
                                     break;
                             }
+
+                            onPowerUpModified();
                         }
                     }
 
@@ -897,7 +899,7 @@ public class PredictionFragment extends NostraBaseFragment implements View.OnCli
             public boolean swipeContinue(int direction, float v, float v1) {
                 if (mCardStack != null && mQuestionsCardAdapter != null) {
                     View view = mCardStack.getTopView();
-                    PredictionQuestion question = mQuestionsCardAdapter.getItem(getTopVisibleCardPosition());
+                    EditAnswerQuestion question = mQuestionsCardAdapter.getItem(getTopVisibleCardPosition());
 
                     if (view != null && question != null) {
                         TextView dragChoiceTextView = (TextView) view.findViewById(R.id.prediction_drag_choice_textView);
@@ -945,7 +947,6 @@ public class PredictionFragment extends NostraBaseFragment implements View.OnCli
                             saveAnswer(index, Constants.AnswerIds.NEITHER, isMatchCompleted);
                         } else {
                             mCardStack.undo();
-                            showQuestionsCounter();
                             showNeitherIfRequired();
                             showPowerUpsIfApplied();
                         }
@@ -953,10 +954,8 @@ public class PredictionFragment extends NostraBaseFragment implements View.OnCli
 
                     case CardDirection.DOWN:
                         if (mQuestionsCardAdapter != null && mCardStack != null) {
-                            PredictionQuestion question = mQuestionsCardAdapter.getItem(index);
+                            EditAnswerQuestion question = mQuestionsCardAdapter.getItem(index);
                             mCardStack.shuffle(question);
-                            mCurrentQuestionPos++;
-                            showQuestionsCounter();
                             showNeitherIfRequired();
                             showPowerUpsIfApplied();
                         }
@@ -964,7 +963,7 @@ public class PredictionFragment extends NostraBaseFragment implements View.OnCli
                 }
 
                 if ((index + 1) == (mCardStack.getAdapter().getCount() - 1)) {
-                    hideNextButton();
+                    // Hide next button , not applicable here
                 }
             }
 
@@ -978,16 +977,12 @@ public class PredictionFragment extends NostraBaseFragment implements View.OnCli
     private boolean shouldAllowThirdOption(int index) {
         boolean isThirdOption = false;
         if (mQuestionsCardAdapter != null && mCardStack != null) {
-            PredictionQuestion question = mQuestionsCardAdapter.getItem(index);
+            EditAnswerQuestion question = mQuestionsCardAdapter.getItem(index);
             if (question != null && !TextUtils.isEmpty(question.getQuestionOption3())) {
                 isThirdOption = true;
             }
         }
         return isThirdOption;
-    }
-
-    private void hideNextButton() {
-        mNextTextView.setVisibility(View.INVISIBLE);
     }
 
     private void showProgress() {
@@ -1004,89 +999,58 @@ public class PredictionFragment extends NostraBaseFragment implements View.OnCli
         }
     }
 
-    /**
-     * On success full completion of choice for all the answers
-     */
-    private void onMatchCompleted() {
-        /* AdWords conversion Report, on match completed */
-        AdWordsConversionReporter.reportWithConversionId(getContext().getApplicationContext(),
-                "934797470", "tIBCCIK8pHEQnsHfvQM", "1.00", true);
-
-        Log.d(TAG, "Match Completed");
-
-        ResultsScreenDataDto data = new ResultsScreenDataDto();
-        if (mPlayScreenData != null) {
-            data.setRoomId(mPlayScreenData.getRoomId());
-            data.setChallengeId(mPlayScreenData.getChallengeId());
-            data.setMatchId(mPlayScreenData.getMatchId());
-            data.setMatchStatus(mPlayScreenData.getMatchStatus());
-            data.setChallengeName(mPlayScreenData.getChallengeName());
-            data.setPlayingPseudoGame(mPlayScreenData.isPlayingPseudoGame());
-            data.setChallengeStartTime(mPlayScreenData.getChallengeStartTime());
-            if (mPlayScreenData.getInPlayContestDto() != null) {
-                data.setInPlayContestDto(mPlayScreenData.getInPlayContestDto());
-                data.setSubTitle(mPlayScreenData.getInPlayContestDto().getContestName());
-            }
-        }
-
-        Bundle args = getArguments();
-        if (args == null) {
-            args = new Bundle();
-        }
-        args.putParcelable(Constants.BundleKeys.RESULTS_SCREEN_DATA, Parcels.wrap(data));
-        args.putInt(Constants.BundleKeys.SCREEN_LAUNCH_REQUEST, NostraHomeActivity.LaunchedFrom.SHOW_IN_PLAY);
-
-        if (mFragmentListener != null) {
-            mFragmentListener.onMatchCompleted(args);
-        }
-    }
-
     private void saveAnswer(int cardIndexPos, final int answerId, final boolean isMatchCompleted) {
-        if (mSavePredictionAnswerProvider == null) {
-            mSavePredictionAnswerProvider = new SavePredictionAnswerProvider();
-        }
-
-        if (mQuestionsCardAdapter != null && cardIndexPos < mQuestionsCardAdapter.getCount() && mPlayScreenData != null) {
-            final PredictionQuestion question = mQuestionsCardAdapter.getItem(cardIndexPos);
+        if (mQuestionsCardAdapter != null && cardIndexPos < mQuestionsCardAdapter.getCount() && mEditAnswerScreenData != null) {
+            final EditAnswerQuestion question = mQuestionsCardAdapter.getItem(cardIndexPos);
             if (question != null) {
                 showProgress();
 
-                mSavePredictionAnswerProvider.savePredictionAnswer(question.getPowerUp(),
-                        mPlayScreenData.getRoomId(),
+                SaveEditAnswerApiModelImpl saveEditAnswerApiModel = new SaveEditAnswerApiModelImpl();
+                saveEditAnswerApiModel.callChangeAnswerApi(
                         question.getMatchId(),
                         question.getQuestionId(),
                         answerId,
+                        mEditAnswerScreenData.getRoomId(),
+                        question.getPowerUp(),
                         TimeUtils.getCurrentTime(Constants.DateFormats.FORMAT_DATE_T_TIME_ZONE, Constants.DateFormats.GMT),
-                        isMatchCompleted,
                         question.isMinorityAnswer(answerId),
-                        new SavePredictionAnswerProvider.SavePredictionAnswerListener() {
+                        new SaveEditAnswerApiModelImpl.EditAnswerApiListener() {
                             @Override
-                            public void onData(int status, @Nullable AnswerResponse answerResponse) {
+                            public void noInternet() {
                                 hideProgress();
-                                onAnswerSavedSuccessfully(isMatchCompleted, question, answerResponse);
+                                handleError("", Constants.DataStatus.NO_INTERNET);
                             }
 
                             @Override
-                            public void onError(int status) {
+                            public void onEditAnswerSuccessful(SaveEditAnswerResponse response) {
                                 hideProgress();
+                                onAnswerSavedSuccessfully(response);
+                            }
+
+                            @Override
+                            public void onApiFailure() {
+                                hideProgress();
+
                                 /* Undo card */
                                 if (mCardStack != null) {
                                     mCardStack.undo();
                                 }
+                                showPowerUpsIfApplied();
                                 handleError("Could not save your prediction, try again!", -1);
                             }
 
                             @Override
-                            public void onServerSentError(String error) {
+                            public void onServerSentApi(String errorMsg) {
                                 hideProgress();
+
                                 /* Undo card */
                                 if (mCardStack != null) {
                                     mCardStack.undo();
                                 }
+                                showPowerUpsIfApplied();
 
-                                String errorMsg = "Could not save your prediction, try again!";
-                                if (!TextUtils.isEmpty(error)) {
-                                    errorMsg = error;
+                                if (TextUtils.isEmpty(errorMsg)) {
+                                    errorMsg = "Could not save your prediction, try again!";
                                 }
                                 handleError(errorMsg, -1);
                             }
@@ -1098,27 +1062,13 @@ public class PredictionFragment extends NostraBaseFragment implements View.OnCli
         }
     }
 
-    private void onAnswerSavedSuccessfully(boolean isMatchCompleted, PredictionQuestion question, AnswerResponse answerResponse) {
-        if (answerResponse != null && answerResponse.getAnswerResponseData() != null && mQuestionsCardAdapter != null) {
-            if (isMatchCompleted) {
-                /* On success response for the last question only allows to consider match as completed */
-                onMatchCompleted();
+    private void onAnswerSavedSuccessfully(SaveEditAnswerResponse answerResponse) {
+        if (answerResponse != null && answerResponse.getEditAnswerDataResponse() != null
+                && answerResponse.getEditAnswerDataResponse().getPowerUp() != null) {
+            Log.d(TAG, "Answer Edited successfully");
 
-            } else {
-//                mCurrentQuestionPos++;
-                mTotalQuestions--;
-                showQuestionsCounter();
-                showNeitherIfRequired();
-                showPowerUpsIfApplied();
-                question.setAnsweredSuccessfully(true);
-
-                if (answerResponse.getAnswerResponseData().getPowerUp() != null) {
-                    /* NOTE: Do not update powerup current status as per server response,
-                      * As powerups could have applied locally to other questions & have shuffled (Those powerups remain with those questions) */
-
-                    /*mCurrentPowerUp = answerResponse.getAnswerResponseData().getPowerUp();
-                    updatePowerUpDetails(mCurrentPowerUp, true);*/
-                }
+            if (mFragmentListener != null) {
+                mFragmentListener.onAnswerEditSuccessful();
             }
         }
     }
@@ -1196,9 +1146,9 @@ public class PredictionFragment extends NostraBaseFragment implements View.OnCli
 
         if (getView() != null && getActivity() != null && !getActivity().isFinishing() && powerUp != null) {
             View view = getView();
-            TextView doublerTextView = (TextView) view.findViewById(R.id.prediction_doubler_counter_textView);
-            TextView noNegTextView = (TextView) view.findViewById(R.id.prediction_noNeg_counter_textView);
-            TextView playerPollTextView = (TextView) view.findViewById(R.id.prediction_player_poll_counter_textView);
+            TextView doublerTextView = (TextView) view.findViewById(R.id.edit_answer_doubler_counter_textView);
+            TextView noNegTextView = (TextView) view.findViewById(R.id.edit_answer_noNeg_counter_textView);
+            TextView playerPollTextView = (TextView) view.findViewById(R.id.edit_answer_player_poll_counter_textView);
 
             if (powerUp.getDoubler() < 0) {
                 powerUp.setDoubler(0);
@@ -1250,7 +1200,7 @@ public class PredictionFragment extends NostraBaseFragment implements View.OnCli
         if (getView() != null && getActivity() != null && !getActivity().isFinishing() &&
                 mQuestionsCardAdapter != null && mCardStack != null) {
 
-            PredictionQuestion question = mQuestionsCardAdapter.getItem(getTopVisibleCardPosition());
+            EditAnswerQuestion question = mQuestionsCardAdapter.getItem(getTopVisibleCardPosition());
             if (question != null) {
                 View view = mCardStack.getTopView();
                 TextView positiveTextView = (TextView) view.findViewById(R.id.prediction_card_positive_textView);
@@ -1271,6 +1221,19 @@ public class PredictionFragment extends NostraBaseFragment implements View.OnCli
                 case POWER_UP_BANK_ACTIVITY_REQUEST_CODE:
                 case GAME_PLAY_HELP_ACTIVITY:
                     mUiHelper.showPowerUpBankAndHelpButtons(mPowerUpImageView, mGamePlayImageView);
+                    break;
+
+                case POWERUP_EDITED_ALERT_POPUP_REQUEST_CODE:
+                    if (resultCode == Activity.RESULT_OK) {
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                if (mFragmentListener != null) {
+                                    mFragmentListener.onBackClicked();
+                                }
+                            }
+                        }, 500);
+                    }
                     break;
             }
         }
@@ -1326,5 +1289,56 @@ public class PredictionFragment extends NostraBaseFragment implements View.OnCli
             com.jeeva.android.Log.d(TAG, "Url empty");
         }
     }
+
+    /**
+     * Checks that powerup is modified or not
+     * @return
+     */
+    private boolean isPowerupModified() {
+        boolean isModified = false;
+
+        EditAnswerQuestion question = mQuestionsCardAdapter.getItem(0); // as only one card always
+        if (question != null) {
+            if ((mAppliedPowerUp.isDoubler() && question.getPowerUp().getDoubler() < 1) ||
+                    (!mAppliedPowerUp.isDoubler() && question.getPowerUp().getDoubler() > 0) ||
+                    (mAppliedPowerUp.isNoNegative() && question.getPowerUp().getNoNegative() < 1) ||
+                    (!mAppliedPowerUp.isNoNegative() && question.getPowerUp().getNoNegative() > 0)) {
+
+                isModified = true;
+
+            }
+        }
+        return isModified;
+    }
+
+    /**
+     * check whether powerup is edited, if so, show dialog
+     */
+    public void onBackPressed() {
+        if (mAppliedPowerUp != null && mQuestionsCardAdapter != null) {
+            if (isPowerupModified()) {
+                // show dialog
+                showPowerupEditedDialogBeforeCancel();
+
+            } else {
+                if (mFragmentListener != null) {
+                    mFragmentListener.onBackClicked();
+                }
+            }
+        } else {
+            if (mFragmentListener != null) {
+                mFragmentListener.onBackClicked();
+            }
+        }
+
+    }
+
+    private void showPowerupEditedDialogBeforeCancel() {
+//        AlertsHelper.showAlert(getContext(), "Msg", "Powrup edited", null);
+
+        Intent intent = new Intent(getContext(), EditAnswerPowerUpModifiedPopupActivity.class);
+        startActivityForResult(intent, POWERUP_EDITED_ALERT_POPUP_REQUEST_CODE);
+    }
+
 
 }

@@ -10,6 +10,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.text.TextUtils;
@@ -45,11 +46,14 @@ import in.sportscafe.nostragamus.module.common.Adapter;
 import in.sportscafe.nostragamus.module.common.NostraTextViewLinkClickMovementMethod;
 import in.sportscafe.nostragamus.module.contest.contestDetailsAfterJoining.InplayContestDetailsActivity;
 import in.sportscafe.nostragamus.module.contest.contestDetailsCompletedChallenges.ChallengeHistoryContestDetailsActivity;
+import in.sportscafe.nostragamus.module.contest.dto.Contest;
 import in.sportscafe.nostragamus.module.contest.ui.DetailScreensLaunchRequest;
 import in.sportscafe.nostragamus.module.inPlay.dto.InPlayContestDto;
 import in.sportscafe.nostragamus.module.inPlay.ui.ResultsScreenDataDto;
 import in.sportscafe.nostragamus.module.othersanswers.OthersAnswersActivity;
 import in.sportscafe.nostragamus.module.popups.submitReport.SubmitReportPopupActivity;
+import in.sportscafe.nostragamus.module.prediction.editAnswer.EditAnswerActivity;
+import in.sportscafe.nostragamus.module.prediction.editAnswer.dto.EditAnswerScreenData;
 import in.sportscafe.nostragamus.module.resultspeek.FeedWebView;
 import in.sportscafe.nostragamus.module.resultspeek.ResultsPeekActivity;
 import in.sportscafe.nostragamus.module.resultspeek.dto.Match;
@@ -60,6 +64,8 @@ import in.sportscafe.nostragamus.utils.timeutils.TimeUtils;
  * Created by Jeeva on 15/6/16.
  */
 public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder> implements View.OnClickListener {
+
+    private final String TAG = MyResultsAdapter.class.getSimpleName();
 
     public static final String SAVE_ANSWER_STR = "Save Answer";
     private OnMyResultsActionListener mResultsActionListener;
@@ -83,12 +89,14 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
     private boolean mIsMatchStarted = false;
     private long mMatchStartTimeMs = 0;
     private ResultsScreenDataDto mResultScreenData;
+    private Context mContext;
 
     public MyResultsAdapter(Context context, boolean isMyResults,
                             ResultsScreenDataDto resultsScreenData,
                             InPlayContestDto inPlayContestDto,
                             CompletedContestDto completedContestDto) {
         super(context);
+        mContext = context;
         this.mIsMyResults = isMyResults;
         mResultScreenData = resultsScreenData;
         mInPlayContestDto = inPlayContestDto;
@@ -812,10 +820,12 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
                 initMatchStarted(mMatchStartTimeMs);
                 if (!mIsMatchStarted) {
 
-                /* check if btn is save Answer , call save Answer Api , hide radio buttons , show Answers View. */
+                    launchEditAnswerActivity(question, roomId);
+
+                /* check if btn is save Answer , call save Answer Api , hide radio buttons , show Answers View. *//*
                     if (mSaveAnswer) {
 
-                    /* check if other Question edit Answer btn is clicked, if yes don't do anything else save Answer */
+                    *//* check if other Question edit Answer btn is clicked, if yes don't do anything else save Answer *//*
                         if (question.getEditAnswerQuestionId() == question.getQuestionId()) {
                             int selectedId = mRadioGroup.getCheckedRadioButtonId();
                             View radioButton = mRadioGroup.findViewById(selectedId);
@@ -834,20 +844,22 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
                             onClickSaveAnswer(question, selectedAnswerId, tvOption1, tvOption2, tvOption3);
 
 
-                        /* call save Answer Api */
+                        *//* call save Answer Api *//*
                             mResultsActionListener.saveUpdatedAnswer(question.getMatchId(), question.getQuestionId(), selectedAnswerId, roomId);
 
-                        /* change save Answer btn back to edit Answer */
+                        *//* change save Answer btn back to edit Answer *//*
                             editAnswersBtn.setText("Edit Answer");
                             mIvEditAnswers.setBackground(ContextCompat.getDrawable(mIvEditAnswers.getContext(), R.drawable.edit_answers_icon));
 
-                            showEditQuestionButtons(parent);
+
+
+//                            showEditQuestionButtons(parent);
 
                         } else {
 
                         }
-                    } else { /* Show radio buttons , hide Answers View and change edit Answer btn to Save Answer */
-                        tvOption1.setVisibility(View.GONE);
+                    } else { *//* Show radio buttons , hide Answers View and change edit Answer btn to Save Answer *//*
+                        *//*tvOption1.setVisibility(View.GONE);
                         tvOption2.setVisibility(View.GONE);
                         tvOption3.setVisibility(View.GONE);
                         mIvEditAnswers.setBackground(ContextCompat.getDrawable(mIvEditAnswers.getContext(), R.drawable.edit_answers_tick));
@@ -855,8 +867,8 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
                         question.setEditAnswerQuestionId(question.getQuestionId());
                         onClickEditAnswer(convertView, question);
 
-                        hideEditQuestionButtons(parent);
-                    }
+                        hideEditQuestionButtons(parent);*//*
+                    }*/
 
                 } else {
                     Toast.makeText(parent.getContext(), "Oops! Match already started.", Toast.LENGTH_SHORT).show();
@@ -864,6 +876,26 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
                 }
             }
         });
+    }
+
+    private void launchEditAnswerActivity(Question question, int roomId) {
+        EditAnswerScreenData editAnswerScreenData = new EditAnswerScreenData();
+        editAnswerScreenData.setQuestionId(question.getQuestionId());
+        editAnswerScreenData.setRoomId(roomId);
+        editAnswerScreenData.setMatchId(question.getMatchId());
+        editAnswerScreenData.setChallengeId(mResultScreenData.getChallengeId());
+        editAnswerScreenData.setSubTitle(mResultScreenData.getSubTitle());
+
+        Bundle args = new Bundle();
+        args.putParcelable(BundleKeys.EDIT_ANSWER_SCREEN_DATA, Parcels.wrap(editAnswerScreenData));
+
+        Intent editAnswerIntent = new Intent(mContext, EditAnswerActivity.class);
+        editAnswerIntent.putExtras(args);
+        if (mContext != null) {
+            ((AppCompatActivity)mContext).startActivityForResult(editAnswerIntent, MyResultsActivity.EDIT_ANSWER_ACTIVITY_REQUEST_CODE);
+        } else {
+            Log.d(TAG, "can not launch edit answer activity!");
+        }
     }
 
     private void hideEditQuestionButtons(ViewGroup parentView) {
