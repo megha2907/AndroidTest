@@ -155,11 +155,7 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
             holder.mLlMultiParty.setVisibility(View.GONE);
             holder.mLlOneParty.setVisibility(View.VISIBLE);
             holder.mTvOnePartyDate.setText(holder.mTvDate.getText().toString());
-
-            RelativeLayout.LayoutParams paramsFour = (RelativeLayout.LayoutParams) holder.mLeaderBoardLayout.getLayoutParams();
-            paramsFour.addRule(RelativeLayout.BELOW, R.id.schedule_row_one_party_ll);
-            paramsFour.setMargins(20, 30, 20, 20);
-            holder.mLeaderBoardLayout.setLayoutParams(paramsFour);
+            holder.mTvOnePartyMatchStage.setText(match.getStage());
 
         } else {
             holder.mTvPartyAName.setText(match.getParties().get(0).getPartyName());
@@ -228,12 +224,9 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
                 holder.mBtnMatchPoints.setVisibility(View.GONE);
                 holder.mLlMatchScores.setVisibility(View.GONE);
                 holder.mTvMatchResult.setVisibility(View.GONE);
-                holder.mTvOnePartyMatchResultWait.setVisibility(View.GONE);
 
                 if (match.getParties() == null) {
-                    holder.mTvOnePartyMatchResultWait.setVisibility(View.VISIBLE);
-                    holder.mTvOnePartyMatchResultWait.setText("Awaiting Results");
-                    holder.mTvOnePartyMatchResultWait.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+                    holder.mTvOnePartyMatchResult.setText("Awaiting Results");
                 } else {
                     holder.mTvResultWait.setVisibility(View.VISIBLE);
                     holder.mTvResultWait.setText(match.getStage() + " - " + "Awaiting Results");
@@ -350,7 +343,7 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
         HmImageView mIvOnePartyImage;
         TextView mTvOnePartyName;
         TextView mTvOnePartyDate;
-        TextView mTvOnePartyMatchResultWait;
+        TextView mTvOnePartyMatchStage;
         TextView mTvOnePartyMatchResult;
 
         TextView mTvLeaderBoardRank;
@@ -385,19 +378,18 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
             mRlAvgMatchPoints = (RelativeLayout) V.findViewById(R.id.schedule_row_rl_average_score);
             mRlHighestMatchPoints = (RelativeLayout) V.findViewById(R.id.schedule_row_rl_highest_score);
             mLlMatchScores = (ShadowLayout) V.findViewById(R.id.schedule_row_scores_sl);
-
-            mLlMultiParty = (LinearLayout) V.findViewById(R.id.schedule_row_ll);
-
-            mLlOneParty = (LinearLayout) V.findViewById(R.id.schedule_row_one_party_ll);
-            mIvOnePartyImage = (HmImageView) V.findViewById(R.id.swipe_card_one_party_iv_left);
-            mTvOnePartyName = (TextView) V.findViewById(R.id.schedule_row_tv_one_party_a_name);
-            mTvOnePartyDate = (TextView) V.findViewById(R.id.schedule_row_tv_one_party_date);
-            mTvOnePartyMatchResultWait = (TextView) V.findViewById(R.id.schedule_row_one_party_tv_match_result_wait);
-            mTvOnePartyMatchResult = (TextView) V.findViewById(R.id.schedule_row_one_party_tv_match_result);
-
             mLeaderBoardLayout = (LinearLayout) V.findViewById(R.id.schedule_row_rl_points_summary);
             mTvLeaderBoardTotalPlayers = (TextView) V.findViewById(R.id.schedule_row_tv_leaderboard_total_players);
             leaderBoardMatchInfoLayout = (LinearLayout) V.findViewById(R.id.match_details_with_leaderboard_layout);
+            mLlMultiParty = (LinearLayout) V.findViewById(R.id.schedule_row_ll);
+
+            /* One Party Layout */
+            mLlOneParty = (LinearLayout) V.findViewById(R.id.schedule_row_one_party_ll);
+            mIvOnePartyImage = (HmImageView) V.findViewById(R.id.match_one_party_1_imgView);
+            mTvOnePartyName = (TextView) V.findViewById(R.id.match_one_party_1_textView);
+            mTvOnePartyDate = (TextView) V.findViewById(R.id.result_one_party_match_date_time_textView);
+            mTvOnePartyMatchStage= (TextView) V.findViewById(R.id.result_one_party_match_stage_textView);
+            mTvOnePartyMatchResult = (TextView) V.findViewById(R.id.result_one_party_match_result_textView);
 
             mRlLeaderBoard.setOnClickListener(this);
             mRlAvgMatchPoints.setOnClickListener(this);

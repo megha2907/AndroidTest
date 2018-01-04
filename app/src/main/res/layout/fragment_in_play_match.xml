@@ -225,6 +225,11 @@
 
         </LinearLayout>
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dim_0.5"
+            android:background="@color/line_separator"/>
+
         <!-- List -->
         <android.support.v7.widget.RecyclerView
             android:id="@+id/inPlay_matches_recyclerView"

@@ -59,6 +59,7 @@ public class PredictionActivity extends NostraBaseActivity implements Prediction
         startActivity(intent);
     }
 
+
     @Override
     public void onBackPressed() {
         /* If playing pseudoGame, launch inplay-headless state Matched screen */
