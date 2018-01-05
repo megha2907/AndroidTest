@@ -6,14 +6,18 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.LocalBroadcastManager;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.jeeva.android.Log;
+
+import java.util.List;
 
 import in.sportscafe.nostragamus.BuildConfig;
 import in.sportscafe.nostragamus.Constants;
@@ -22,6 +26,9 @@ import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
 import in.sportscafe.nostragamus.module.challengeCompleted.ui.CompletedChallengeHistoryFragment;
 import in.sportscafe.nostragamus.module.common.NostraBaseActivity;
+import in.sportscafe.nostragamus.module.inPlay.dataProvider.InPlayDataProvider;
+import in.sportscafe.nostragamus.module.inPlay.dataProvider.InPlayMatchesListProvider;
+import in.sportscafe.nostragamus.module.inPlay.dto.InPlayResponse;
 import in.sportscafe.nostragamus.module.inPlay.ui.InPlayFragment;
 import in.sportscafe.nostragamus.module.navigation.NavigationFragment;
 import in.sportscafe.nostragamus.module.navigation.appupdate.AppUpdateActivity;
@@ -148,13 +155,13 @@ public class NostraHomeActivity extends NostraBaseActivity implements View.OnCli
                 } else if (screenName.equalsIgnoreCase(Constants.Notifications.SCREEN_NEW_CHALLENGE_SPORT)) {
                     onNewChallengesClicked(notificationHelper.getBundleAddedNotificationDetailsIntoArgs(getIntent(), notification));
 
-                }  else if (screenName.equalsIgnoreCase(Constants.Notifications.SCREEN_NEW_CHALLENGES_GAMES)) {
+                } else if (screenName.equalsIgnoreCase(Constants.Notifications.SCREEN_NEW_CHALLENGES_GAMES)) {
                     startActivity(notificationHelper.getNewChallengeMatchesScreenIntent(this, notification));
 
-                }  else if (screenName.equalsIgnoreCase(Constants.Notifications.SCREEN_IN_PLAY_MATCHES)) {
+                } else if (screenName.equalsIgnoreCase(Constants.Notifications.SCREEN_IN_PLAY_MATCHES)) {
                     onInPlayClicked(notificationHelper.getBundleAddedNotificationDetailsIntoArgs(getIntent(), notification));
 
-                }  else if (screenName.equalsIgnoreCase(Constants.Notifications.SCREEN_RESULTS)) {
+                } else if (screenName.equalsIgnoreCase(Constants.Notifications.SCREEN_RESULTS)) {
                     startActivity(notificationHelper.getResultsScreenIntent(this, notification));
 
                 } else if (screenName.equalsIgnoreCase(Constants.Notifications.SCREEN_CHALLENGE_HISTORY_WINNINGS)) {
@@ -509,5 +516,30 @@ public class NostraHomeActivity extends NostraBaseActivity implements View.OnCli
             args = getIntent().getExtras();
         }
         onNewChallengesClicked(args);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        loadInPlayData();
+    }
+
+    private void loadInPlayData() {
+        InPlayMatchesListProvider dataProvider = new InPlayMatchesListProvider();
+        dataProvider.getInPlayChallenges(getApplicationContext(), new InPlayMatchesListProvider.InPlayMatchesListProviderListener() {
+            @Override
+            public void onData(int status, @Nullable int unPlayedMatchCount) {
+                updateUnPlayedMatchCount(unPlayedMatchCount);
+            }
+            @Override
+            public void onError(int status) {
+
+            }
+        });
+    }
+
+    private void updateUnPlayedMatchCount(int unPlayedMatchCount) {
+        TextView unPlayedMatchesTv = (TextView)findViewById(R.id.home_inPlay_matches_count);
+        unPlayedMatchesTv.setText(String.valueOf(unPlayedMatchCount));
     }
 }
