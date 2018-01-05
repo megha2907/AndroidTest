@@ -158,7 +158,7 @@ public class InPlayMatchesPagerFragment extends NostraBaseFragment {
             TextView tipTextView = (TextView) getView().findViewById(R.id.games_tip_textView);
             TextView tipTextViewText = (TextView) getView().findViewById(R.id.games_tip_text_textView);
             tipTextViewText.setText("TIP : ");
-            tipTextView.setText("You must play all "+String.valueOf(responses.getData().getInPlayMatchList().size())+" games in this contest to win prizes");
+            tipTextView.setText("You must play all " + String.valueOf(responses.getData().getInPlayMatchList().size()) + " games in this contest to win prizes");
 
             /* Set Powerups */
             showOrHidePowerUps(responses.getData().getPowerUp());
@@ -262,24 +262,21 @@ public class InPlayMatchesPagerFragment extends NostraBaseFragment {
             int powerUpNonNegsCount = powerUp.getNoNegative();
             int powerUpPlayerPollCount = powerUp.getPlayerPoll();
 
-            if (powerUp2xCount == 0 && powerUpNonNegsCount == 0 && powerUpPlayerPollCount == 0) {
-                powerUpLayout.setVisibility(View.GONE);
-            } else {
-                powerUpLayout.setVisibility(View.VISIBLE);
+            powerUpLayout.setVisibility(View.VISIBLE);
 
-                powerUp2xImageView.setBackgroundResource(R.drawable.double_powerup_small);
-                powerUp2xImageView.setVisibility(View.VISIBLE);
-                powerUp2xTextView.setText(String.valueOf(powerUp2xCount));
+            powerUp2xImageView.setBackgroundResource(R.drawable.double_powerup_small);
+            powerUp2xImageView.setVisibility(View.VISIBLE);
+            powerUp2xTextView.setText(String.valueOf(powerUp2xCount));
 
-                powerUpNoNegativeImageView.setBackgroundResource(R.drawable.no_negative_powerup_small);
-                powerUpNoNegativeImageView.setVisibility(View.VISIBLE);
-                powerUpNoNegativeTextView.setText(String.valueOf(powerUpNonNegsCount));
+            powerUpNoNegativeImageView.setBackgroundResource(R.drawable.no_negative_powerup_small);
+            powerUpNoNegativeImageView.setVisibility(View.VISIBLE);
+            powerUpNoNegativeTextView.setText(String.valueOf(powerUpNonNegsCount));
 
-                powerUpAudienceImageView.setBackgroundResource(R.drawable.audience_poll_powerup_small);
-                powerUpAudienceImageView.setVisibility(View.VISIBLE);
-                powerUpAudienceTextView.setText(String.valueOf(powerUpPlayerPollCount));
+            powerUpAudienceImageView.setBackgroundResource(R.drawable.audience_poll_powerup_small);
+            powerUpAudienceImageView.setVisibility(View.VISIBLE);
+            powerUpAudienceTextView.setText(String.valueOf(powerUpPlayerPollCount));
 
-            }
+
         }
     }
 
