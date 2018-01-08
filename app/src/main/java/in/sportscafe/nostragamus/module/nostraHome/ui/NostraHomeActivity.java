@@ -29,6 +29,7 @@ import in.sportscafe.nostragamus.module.newChallenges.ui.NewChallengesFragment;
 import in.sportscafe.nostragamus.module.nostraHome.dataProviders.NostraHomeApiImpl;
 import in.sportscafe.nostragamus.module.notifications.NostraNotification;
 import in.sportscafe.nostragamus.module.notifications.NotificationHelper;
+import in.sportscafe.nostragamus.module.notifications.inApp.InAppNotificationHelper;
 import in.sportscafe.nostragamus.module.user.group.allgroups.AllGroupsFragment;
 import in.sportscafe.nostragamus.module.user.login.LogInActivity;
 import in.sportscafe.nostragamus.module.user.login.UserInfoModelImpl;
@@ -73,10 +74,17 @@ public class NostraHomeActivity extends NostraBaseActivity implements View.OnCli
         getServerTime();
         onNewChallengesClicked(getIntent().getExtras());
         handleNotifications();
+
+    }
+
+    private void setAlarmForInAppNotification() {
+        InAppNotificationHelper inAppNotificationHelper = new InAppNotificationHelper();
+        inAppNotificationHelper.setAlarmForInAppNotifications(getApplicationContext());
     }
 
     private void getServerTime() {
-        new NostraHomeApiImpl().fetchServerTimeFromServer(new NostraHomeApiImpl.NostraHomeApiListener() {
+        new NostraHomeApiImpl().fetchServerTimeFromServer(getApplicationContext(),
+                new NostraHomeApiImpl.NostraHomeApiListener() {
             @Override
             public void noInternet() {
                 Log.d(TAG, "No internet for fetching ServerTime");
@@ -90,6 +98,7 @@ public class NostraHomeActivity extends NostraBaseActivity implements View.OnCli
             @Override
             public void onTimerSuccess() {
                 Log.d(TAG, "ServerTimer Response success");
+                setAlarmForInAppNotification();
             }
         });
     }

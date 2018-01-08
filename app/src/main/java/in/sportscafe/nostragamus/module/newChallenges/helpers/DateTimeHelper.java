@@ -142,4 +142,21 @@ public class DateTimeHelper {
         return isStarted;
     }
 
+    /**
+     * Used for : In-app notification
+     * @param startTime - match start time server string
+     * @param approxServerTime - saved serverTime which is calculated as current approximate server time
+     *                         NOTE: Do not use Nostragamus.getInstance().getServerTime() - as this is updated only in case of app instance live...
+     * @return - minutes remaining before starting match
+     */
+    public synchronized static long getMatchStartRemainingTimeInMinutesForInAppNoti(String startTime, long approxServerTime) {
+        long minutesDifference = 0;
+        if (!TextUtils.isEmpty(startTime)) {
+            long millis = TimeUtils.getMillisecondsFromDateString(startTime);
+            if (millis > 0) {
+                minutesDifference = TimeUtils.getMinutesDifference(millis - approxServerTime);
+            }
+        }
+        return minutesDifference;
+    }
 }

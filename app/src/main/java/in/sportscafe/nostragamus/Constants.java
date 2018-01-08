@@ -897,6 +897,7 @@ public interface Constants {
         int FROM_DATABASE_ERROR = 5;
         int NO_INTERNET = 6;
         int NO_MORE_DATA_WHILE_LOAD_MORE = 7;
+        int FROM_DATABASE_CACHED_DATA = 8;
     }
 
     interface MatchStatusStrings {
