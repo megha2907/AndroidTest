@@ -1,9 +1,19 @@
 package in.sportscafe.nostragamus.module.navigation.help.dummygame;
 
+import android.animation.ObjectAnimator;
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.text.Html;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
+import android.text.style.ForegroundColorSpan;
+import android.text.style.StyleSpan;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +21,9 @@ import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.widget.Button;
 import android.widget.TextView;
+
+import com.jeeva.android.Log;
+import com.jeeva.android.widgets.customfont.Typefaces;
 
 import org.parceler.Parcels;
 
@@ -132,11 +145,108 @@ public class DGTextFragment extends NostragamusFragment implements View.OnClickL
 
         if (null != textView) {
             if (null != name) {
-                textView.setText(name);
+                checkForColorAndSetText(textView, name);
             }
             textView.setVisibility(View.VISIBLE);
+            textView.setLineSpacing(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 5.0f,  getResources().getDisplayMetrics()), 1.0f);
 
             animateView(textView, instruction.getAnimation());
+        }
+    }
+
+    private void checkForColorAndSetText(TextView textView, String name) {
+
+        Typeface faceBold = Typefaces.get(getContext(), "fonts/lato/Lato-Bold.ttf");
+
+        if (name.equalsIgnoreCase("Once results are out for games, points are awarded. Correct predictions get +10 points%, wrong ones get  -4 points&. Make a prediction to see how you score!")) {
+
+            int startIndex = name.indexOf("+");
+            int endIndex = name.indexOf("%");
+            int startIndexSecond = name.indexOf("-") - 2;
+            int endIndexSecond = name.indexOf("&");
+            name = name.replace("%", "");
+            name = name.replace("&", "");
+            SpannableStringBuilder builder = new SpannableStringBuilder();
+            SpannableString whiteSpannable = new SpannableString(name);
+            whiteSpannable.setSpan(new ForegroundColorSpan(Color.parseColor("#22b573")), startIndex, endIndex, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            whiteSpannable.setSpan(new ForegroundColorSpan(Color.parseColor("#fe3555")), startIndexSecond, endIndexSecond, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            builder.append(whiteSpannable);
+            textView.setText(builder, TextView.BufferType.SPANNABLE);
+
+        } else if (name.equalsIgnoreCase("You scored #10 points$ for that prediction!")) {
+
+            name = "You scored #+10 points$ for that prediction!";
+            int startIndex = name.indexOf("#");
+            int endIndex = name.indexOf("$");
+            name = name.replace("#", "");
+            name = name.replace("$", "");
+            SpannableStringBuilder builder = new SpannableStringBuilder();
+            SpannableString whiteSpannable = new SpannableString(name);
+            whiteSpannable.setSpan(new ForegroundColorSpan(Color.parseColor("#22b573")), startIndex, endIndex, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            builder.append(whiteSpannable);
+            textView.setText(builder, TextView.BufferType.SPANNABLE);
+
+            textView.setTypeface(faceBold);
+
+        } else if (name.equalsIgnoreCase("You scored #-4 points$ for that prediction!")) {
+            int startIndex = name.indexOf("#");
+            int endIndex = name.indexOf("$");
+            name = name.replace("#", "");
+            name = name.replace("$", "");
+            SpannableStringBuilder builder = new SpannableStringBuilder();
+            SpannableString whiteSpannable = new SpannableString(name);
+            whiteSpannable.setSpan(new ForegroundColorSpan(Color.parseColor("#fe3555")), startIndex, endIndex, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            builder.append(whiteSpannable);
+            textView.setText(builder, TextView.BufferType.SPANNABLE);
+
+            textView.setTypeface(faceBold);
+
+        } else if (name.equalsIgnoreCase("You scored #-8 points$ for that prediction!")) {
+            int startIndex = name.indexOf("#");
+            int endIndex = name.indexOf("$");
+            name = name.replace("#", "");
+            name = name.replace("$", "");
+            SpannableStringBuilder builder = new SpannableStringBuilder();
+            SpannableString whiteSpannable = new SpannableString(name);
+            whiteSpannable.setSpan(new ForegroundColorSpan(Color.parseColor("#fe3555")), startIndex, endIndex, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            builder.append(whiteSpannable);
+            textView.setText(builder, TextView.BufferType.SPANNABLE);
+
+            textView.setTypeface(faceBold);
+
+        } else if (name.equalsIgnoreCase("You scored #20 points$ for that prediction!")) {
+
+            name = "You scored #+20 points$ for that prediction!";
+            int startIndex = name.indexOf("#");
+            int endIndex = name.indexOf("$");
+            name = name.replace("#", "");
+            name = name.replace("$", "");
+            SpannableStringBuilder builder = new SpannableStringBuilder();
+            SpannableString whiteSpannable = new SpannableString(name);
+            whiteSpannable.setSpan(new ForegroundColorSpan(Color.parseColor("#22b573")), startIndex, endIndex, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            builder.append(whiteSpannable);
+            textView.setText(builder, TextView.BufferType.SPANNABLE);
+
+            textView.setTypeface(faceBold);
+
+        } else if (name.equalsIgnoreCase("You scored #0 points$ for that prediction!")) {
+            int startIndex = name.indexOf("#");
+            int endIndex = name.indexOf("$");
+            name = name.replace("#", "");
+            name = name.replace("$", "");
+            SpannableStringBuilder builder = new SpannableStringBuilder();
+            SpannableString whiteSpannable = new SpannableString(name);
+            whiteSpannable.setSpan(new ForegroundColorSpan(Color.WHITE), startIndex, endIndex, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            builder.append(whiteSpannable);
+            textView.setText(builder, TextView.BufferType.SPANNABLE);
+
+            textView.setTypeface(faceBold);
+
+        } else if (name.equalsIgnoreCase("Before playing your first game, take a moment to understand how to make predictions in Nostragamus")) {
+            textView.setTypeface(faceBold);
+            textView.setText(name);
+        } else {
+            textView.setText(name);
         }
     }
 
@@ -159,7 +269,7 @@ public class DGTextFragment extends NostragamusFragment implements View.OnClickL
         mTvBottomText.animate().alpha(0).setDuration(1000);
     }
 
-    private void animateView(TextView textView, DGAnimation animation) {
+    private void animateView(final TextView textView, DGAnimation animation) {
         Animation viewAnimation = null;
 
         switch (animation.getType()) {
@@ -173,6 +283,7 @@ public class DGTextFragment extends NostragamusFragment implements View.OnClickL
         if (null != viewAnimation) {
             textView.startAnimation(viewAnimation);
         }
+
     }
 
     public interface OnDGTextActionListener {
