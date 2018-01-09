@@ -11,6 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.jeeva.android.Log;
+import com.jeeva.android.widgets.customfont.Typefaces;
 
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
@@ -286,8 +287,9 @@ public class TimelineHelper {
             TextView titleView = (TextView) View.inflate(context, R.layout.games_status_timeline_title, null);
             if (title != null) {
                 titleView.setText(title);
-                Typeface faceBold = Typeface.createFromAsset(context.getAssets(), "fonts/lato/Lato-Bold.ttf");
-                Typeface faceRegular = Typeface.createFromAsset(context.getAssets(), "fonts/lato/Lato-Regular.ttf");
+
+                Typeface faceBold = Typefaces.get(context, "fonts/lato/Lato-Bold.ttf");
+                Typeface faceRegular = Typefaces.get(context, "fonts/lato/Lato-Regular.ttf");
 
                 switch (typeEnum) {
                     case IN_PLAY_HEADLESS:

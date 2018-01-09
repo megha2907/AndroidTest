@@ -128,7 +128,14 @@ public class ContestRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                 if (!TextUtils.isEmpty(contest.getSubtitle())) {
                     viewHolder.mTvNumberOfPrizes.setText("(" + contest.getSubtitle() + ")");
                 }
-                viewHolder.mTvFilledContests.setText(String.valueOf(contest.getFilledRooms()));
+                if (contest.getFilledRooms() > 0) {
+                    viewHolder.mTvFilledContestsText.setVisibility(View.VISIBLE);
+                    viewHolder.mTvFilledContests.setVisibility(View.VISIBLE);
+                    viewHolder.mTvFilledContests.setText(String.valueOf(contest.getFilledRooms()));
+                } else {
+                    viewHolder.mTvFilledContestsText.setVisibility(View.GONE);
+                    viewHolder.mTvFilledContests.setVisibility(View.GONE);
+                }
 
                 String contestMode = contest.getContestMode();
                 if (!TextUtils.isEmpty(contestMode)) {
@@ -182,7 +189,15 @@ public class ContestRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                     }
                 }
 
-                viewHolder.mTvFilledContests.setText(String.valueOf(contest.getFilledRooms()));
+                if (contest.getFilledRooms() > 0) {
+                    viewHolder.mTvFilledContestsText.setVisibility(View.VISIBLE);
+                    viewHolder.mTvFilledContests.setVisibility(View.VISIBLE);
+                    viewHolder.mTvFilledContests.setText(String.valueOf(contest.getFilledRooms()));
+                } else {
+                    viewHolder.mTvFilledContestsText.setVisibility(View.GONE);
+                    viewHolder.mTvFilledContests.setVisibility(View.GONE);
+                }
+
                 if (contest.isLastFillingRoom()) {
                     SpannableStringBuilder builder = new SpannableStringBuilder();
                     SpannableString spannableString = new SpannableString("LAST ");
@@ -312,6 +327,7 @@ public class ContestRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         public TextView mTvPrizeLable;
         public TextView mTvNumberOfPrizes;
         public TextView mTvFilledContests;
+        public TextView mTvFilledContestsText;
         public TextView mFillingStrTextView;
         public TextView mTvContestsAvailable;
         public RelativeLayout mRlContestLayout;
@@ -334,6 +350,7 @@ public class ContestRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             mTvPrizeLable = (TextView) itemView.findViewById(R.id.pool_row_tv_label_rewards);
             mTvNumberOfPrizes = (TextView) itemView.findViewById(R.id.pool_row_tv_number_of_prizes);
             mTvFilledContests = (TextView) itemView.findViewById(R.id.pool_row_tv_rooms_filled);
+            mTvFilledContestsText = (TextView) itemView.findViewById(R.id.pool_row_tv_rooms_filled_txt);
             mTvContestsAvailable = (TextView) itemView.findViewById(R.id.pool_row_tv_rooms_available);
             mRlContestLayout = (RelativeLayout) itemView.findViewById(R.id.pool_rl_layout);
             mIvContestsType = (ImageView) itemView.findViewById(R.id.pool_row_iv_contest_type);
@@ -463,6 +480,7 @@ public class ContestRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         public TextView mTvPrizeLable;
         public TextView mTvNumberOfPrizes;
         public TextView mTvFilledContests;
+        public TextView mTvFilledContestsText;
         public RelativeLayout mRlContestLayout;
         public ImageView mIvContestsType;
         LinearLayout mRewardsPrizesLayout;
@@ -479,6 +497,7 @@ public class ContestRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             mTvPrizes = (TextView) itemView.findViewById(R.id.pool_row_tv_reward);
             mTvNumberOfPrizes = (TextView) itemView.findViewById(R.id.pool_row_tv_number_of_prizes);
             mTvFilledContests = (TextView) itemView.findViewById(R.id.pool_row_tv_rooms_filled);
+            mTvFilledContestsText = (TextView) itemView.findViewById(R.id.pool_row_tv_rooms_filled_txt);
             mRlContestLayout = (RelativeLayout) itemView.findViewById(R.id.pool_rl_layout);
             mIvContestsType = (ImageView) itemView.findViewById(R.id.pool_row_iv_contest_type);
             mRewardsPrizesLayout = (LinearLayout) itemView.findViewById(R.id.pool_row_ll_reward_layout);
