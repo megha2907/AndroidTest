@@ -1,21 +1,27 @@
 package in.sportscafe.nostragamus.module.notifications.inApp;
 
 import android.app.AlarmManager;
-import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.os.SystemClock;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
+import android.widget.RemoteViews;
 
-import java.util.ArrayList;
+import org.parceler.Parcels;
+
 import java.util.Random;
 
+import in.sportscafe.nostragamus.Constants;
+import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.R;
+import in.sportscafe.nostragamus.module.inPlay.dto.InPlayContestDto;
 import in.sportscafe.nostragamus.module.nostraHome.ui.NostraHomeActivity;
-import in.sportscafe.nostragamus.receiver.NotificationAlarmReceiver;
+import in.sportscafe.nostragamus.module.notifications.NostraNotification;
+import in.sportscafe.nostragamus.module.notifications.NostraNotificationData;
 import in.sportscafe.nostragamus.service.InAppNotificationService;
 
 /**
@@ -54,31 +60,44 @@ public class InAppNotificationHelper {
      * @param title
      * @param msg
      */
-    public synchronized void sendNotification(Context appContext, String title, String msg, ArrayList<String> msgList) {
-        Intent targetIntent = new Intent(appContext, NostraHomeActivity.class);
+    public synchronized void sendNotification(final Context appContext, final String title,
+                                              final String msg, String timeRemainingSubText,
+                                              final InPlayContestDto inPlayContestDto) {
+        int requestCode = new Random().nextInt();
 
-        PendingIntent pendingIntent = PendingIntent.getActivity(appContext, 0,
-                targetIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        Intent notificationIntent = new Intent(appContext, NostraHomeActivity.class);
+        notificationIntent.putExtras(getNotificationArgs(inPlayContestDto));
 
-        NotificationCompat.InboxStyle inboxStyle = new NotificationCompat.InboxStyle();
-        inboxStyle.setBigContentTitle(title);
-        for (String msgStr : msgList) {
-            inboxStyle.addLine(msgStr);
-        }
-        if (msgList.size() > 6) {
-            inboxStyle.setSummaryText((msgList.size() - 6) + " More...");
-        }
+        PendingIntent pendingIntent = PendingIntent.getActivity(appContext, requestCode /* For every notification, create a separate instance */,
+                notificationIntent, PendingIntent.FLAG_ONE_SHOT);
 
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(appContext)
                 .setContentTitle(title)
                 .setContentText(msg)
+                .setSubText(timeRemainingSubText)
                 .setSmallIcon(R.drawable.white_notification_icon)
                 .setContentIntent(pendingIntent)
-                .setStyle(inboxStyle)
                 .setAutoCancel(true)
-                .setNumber(msgList.size());
+                .setWhen(0);
 
         NotificationManager notificationManager = (NotificationManager) appContext.getSystemService(Context.NOTIFICATION_SERVICE);
-        notificationManager.notify(551, notificationBuilder.build());
+        notificationManager.notify(requestCode, notificationBuilder.build());
+
+    }
+
+    private Bundle getNotificationArgs(InPlayContestDto inPlayContestDto) {
+        NostraNotificationData nostraNotificationData = new NostraNotificationData();
+        nostraNotificationData.setInPlayContestDto(inPlayContestDto);
+
+        NostraNotification notificationDetails = new NostraNotification();
+        notificationDetails.setScreenName(Constants.Notifications.SCREEN_IN_PLAY_MATCHES);
+        notificationDetails.setData(nostraNotificationData);
+
+        Bundle args = new Bundle();
+        args.putBoolean(Constants.Notifications.IS_LAUNCHED_FROM_NOTIFICATION, true);
+        args.putBoolean(Constants.Notifications.IS_IN_APP_NOTIFICATION, true);
+        args.putParcelable(Constants.BundleKeys.IN_APP_NOSTRA_NOTIFICATION_DETAILS, Parcels.wrap(notificationDetails));
+
+        return args;
     }
 }

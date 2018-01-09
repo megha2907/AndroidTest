@@ -17,6 +17,7 @@ public interface Constants {
 
     interface Notifications {
         String IS_LAUNCHED_FROM_NOTIFICATION = "isLaunchedFromNotification";
+        String IS_IN_APP_NOTIFICATION = "isInAppNotification";
         String NOSTRA_NOTIFICATION = "nostraNotification";
         String SCREEN_NEW_CHALLENGE = "newChallenge";
         String SCREEN_NEW_CHALLENGE_SPORT = "newChallengeSport";
@@ -386,6 +387,7 @@ public interface Constants {
         String REPORT_ID = "reportID";
         String REPORT_TYPE = "reportType";
         String POWERUP_BANK_TRANSFER_SCREEN_DATA = "powerupBankTransferScreenData";
+        String IN_APP_NOSTRA_NOTIFICATION_DETAILS = "inAppNostraNotification";
     }
 
     interface DateFormats {

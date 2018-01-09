@@ -17,7 +17,6 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.jeeva.android.Log;
 import com.jeeva.android.widgets.HmImageView;
 
 import org.parceler.Parcels;
@@ -29,14 +28,13 @@ import java.util.List;
 
 import in.sportscafe.nostragamus.BuildConfig;
 import in.sportscafe.nostragamus.Constants;
+import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.NostraBaseFragment;
 import in.sportscafe.nostragamus.module.contest.contestDetailsAfterJoining.InplayContestDetailsActivity;
 import in.sportscafe.nostragamus.module.contest.dto.JoinContestData;
-import in.sportscafe.nostragamus.module.inPlay.adapter.InPlayAdapterItemType;
 import in.sportscafe.nostragamus.module.inPlay.dataProvider.InPlayDataProvider;
 import in.sportscafe.nostragamus.module.inPlay.dto.InPlayContestDto;
-import in.sportscafe.nostragamus.module.inPlay.dto.InPlayListItem;
 import in.sportscafe.nostragamus.module.inPlay.dto.InPlayResponse;
 import in.sportscafe.nostragamus.module.inPlay.helper.InPlayFilterHelper;
 import in.sportscafe.nostragamus.module.inPlay.ui.headless.dto.HeadLessMatchScreenData;
@@ -46,6 +44,7 @@ import in.sportscafe.nostragamus.module.inPlay.ui.viewPager.InPlayViewPagerFragm
 import in.sportscafe.nostragamus.module.newChallenges.dataProvider.SportsDataProvider;
 import in.sportscafe.nostragamus.module.newChallenges.dto.SportsTab;
 import in.sportscafe.nostragamus.module.nostraHome.ui.NostraHomeActivityListener;
+import in.sportscafe.nostragamus.module.notifications.NostraNotification;
 import in.sportscafe.nostragamus.module.prediction.playScreen.dto.PlayScreenDataDto;
 
 /**
@@ -257,6 +256,7 @@ public class InPlayFragment extends NostraBaseFragment implements View.OnClickLi
 
                 showAppropriateTabForAclVersionAfterJoiningChallenge(isServerResponse, inPlayResponseList, inPlayViewPager);
                 handleFurtherFlow(isServerResponse, inPlayResponseList);
+                handleInAppNotification();
 
             } else {
                 showEmptyScreen(inPlayViewPager, inPlayTabLayout, sportsTabList);
@@ -385,6 +385,55 @@ public class InPlayFragment extends NostraBaseFragment implements View.OnClickLi
                     }
                 }
             }
+        }
+    }
+
+    /**
+     * This launches Inplay Games screen, headless or joined contest
+     * In case , In-App notification clicked at Notification tray, this screens should be launched
+     */
+    private void handleInAppNotification() {
+        if (Nostragamus.getInstance().hasNetworkConnection()) {
+
+            Bundle args = getArguments();
+            if (getActivity() != null && args != null && args.containsKey(Constants.Notifications.IS_IN_APP_NOTIFICATION)) {
+                boolean isInAppNotification = args.getBoolean(Constants.Notifications.IS_IN_APP_NOTIFICATION, false);
+
+                if (isInAppNotification && args.containsKey(Constants.BundleKeys.IN_APP_NOSTRA_NOTIFICATION_DETAILS)) {
+                    NostraNotification nostraNotification = Parcels.unwrap(args.getParcelable(Constants.BundleKeys.IN_APP_NOSTRA_NOTIFICATION_DETAILS));
+
+                    if (nostraNotification != null && nostraNotification.getData().getInPlayContestDto() != null) {
+                        InPlayContestDto inPlayContestDto = nostraNotification.getData().getInPlayContestDto();
+
+                        if (inPlayContestDto.isHeadlessState()) {       /* HeadLess Games screen */
+
+                            HeadLessMatchScreenData data = new HeadLessMatchScreenData();
+                            data.setChallengeName(inPlayContestDto.getChallengeName());
+                            data.setChallengeId(inPlayContestDto.getChallengeId());
+                            data.setPowerUp(inPlayContestDto.getPowerUp());
+                            data.setContestName(inPlayContestDto.getContestName());
+                            data.setRoomId(inPlayContestDto.getRoomId());
+                            data.setPlayingPseudoGame(false);
+                            data.setInPlayContestDto(inPlayContestDto);
+                            data.setStartTime(inPlayContestDto.getChallengeStartTime());
+
+                            Bundle bundle = new Bundle();
+                            bundle.putParcelable(Constants.BundleKeys.HEADLESS_MATCH_SCREEN_DATA, Parcels.wrap(data));
+
+                            Intent intent = new Intent(getActivity(), InPlayHeadLessMatchActivity.class);
+                            intent.putExtras(bundle);
+                            getActivity().startActivity(intent);
+
+                        } else {    /* Joined Games screen */
+
+                            launchInplayContestDetailsScreen(inPlayContestDto);
+                        }
+                    }
+                }
+            }
+        } else {
+            /* Do not enter game screens if no internet */
+            handleError(Constants.DataStatus.FROM_DATABASE_AS_NO_INTERNET);
         }
     }
 

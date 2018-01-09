@@ -5,6 +5,7 @@ import android.text.TextUtils;
 import com.jeeva.android.Log;
 
 import java.util.Calendar;
+import java.util.Timer;
 
 import in.sportscafe.nostragamus.AppSnippet;
 import in.sportscafe.nostragamus.Constants;
@@ -158,5 +159,28 @@ public class DateTimeHelper {
             }
         }
         return minutesDifference;
+    }
+
+    /**
+     *
+     * @param startTime
+     * @return Returns time string for match start to show in InApp notifications
+     */
+    public synchronized static String getInAppMatchStartTime(String startTime) {
+        String str = "";
+
+        long millis = 0;
+        if (!TextUtils.isEmpty(startTime)) {
+            try {
+                millis = TimeUtils.getMillisecondsFromDateString(startTime,
+                        Constants.DateFormats.FORMAT_DATE_T_TIME_ZONE, Constants.DateFormats.GMT);
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        }
+
+        str = TimeUtils.getDateStringFromMs(millis, Constants.DateFormats.HH_MM_AA);
+
+        return str;
     }
 }
