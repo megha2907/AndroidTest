@@ -13,6 +13,8 @@ import android.widget.RemoteViews;
 
 import org.parceler.Parcels;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Random;
 
 import in.sportscafe.nostragamus.Constants;
@@ -29,6 +31,7 @@ import in.sportscafe.nostragamus.service.InAppNotificationService;
  */
 
 public class InAppNotificationHelper {
+
     private final String TAG = InAppNotificationHelper.class.getSimpleName();
     private final int ALARM_REQUEST_ID = 1999;
 
@@ -48,8 +51,9 @@ public class InAppNotificationHelper {
         } else {
             alarmMgr.setRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP,
                     SystemClock.elapsedRealtime(),
-                    /*TODO AlarmManager.INTERVAL_HOUR*/60000,
+                    AlarmManager.INTERVAL_HOUR,
                     pendingIntent);
+
             Log.d(TAG, "Set alarm for In-app notifications at : " + SystemClock.elapsedRealtime());
         }
     }
@@ -85,6 +89,14 @@ public class InAppNotificationHelper {
 
     }
 
+    /**
+     * InApp notifications also, will work as normal notifications which do pass data for notification actions
+     *
+     * These need to be handled same as GCM/FCM (Moengage) notifications flows
+     *
+     * @param inPlayContestDto
+     * @return
+     */
     private Bundle getNotificationArgs(InPlayContestDto inPlayContestDto) {
         NostraNotificationData nostraNotificationData = new NostraNotificationData();
         nostraNotificationData.setInPlayContestDto(inPlayContestDto);

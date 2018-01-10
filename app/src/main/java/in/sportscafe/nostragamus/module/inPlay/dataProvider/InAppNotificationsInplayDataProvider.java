@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.AsyncTask;
 
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.google.gson.Gson;
 import com.jeeva.android.Log;
 
 import java.util.List;
@@ -42,8 +43,7 @@ public class InAppNotificationsInplayDataProvider {
                     if (dbResponseList != null && dbResponseList.size() > 0 && dbResponseList.get(0) != null) {
                         String apiContentStr = dbResponseList.get(0).getApiContent();
 
-                        return MyWebService.getInstance().getObjectFromJson
-                                (apiContentStr, new TypeReference<List<InPlayResponse>>() {});
+                        return new Gson().fromJson(apiContentStr, new TypeReference<List<InPlayResponse>>() {}.getType());
                     }
 
                 } catch (Exception ex) {}

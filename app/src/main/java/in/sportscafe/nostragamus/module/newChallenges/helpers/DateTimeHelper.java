@@ -183,4 +183,25 @@ public class DateTimeHelper {
 
         return str;
     }
+
+    /**
+     *
+     * @param millis - must be nonZero
+     * @return
+     */
+    public synchronized  static boolean isDayTime(long millis) {
+        boolean isDay = true;
+
+        if (millis > 0) {
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTimeInMillis(millis);
+            int hoursOfDay = calendar.get(Calendar.HOUR_OF_DAY);
+            if (hoursOfDay <= 7) { /* 12AM to 7AM - Night time */
+                isDay = false;
+            }
+        }
+
+        return isDay;
+    }
+
 }
