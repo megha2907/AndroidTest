@@ -89,8 +89,10 @@ public class EditUserProfileModelImpl  implements EditUserProfileModel {
                         super.onResponse(call, response);
 
                         if (response.isSuccessful()) {
-                            mUserInfo.setPhoto(response.body().getResult());
-                            Nostragamus.getInstance().getServerDataManager().setUserInfo(mUserInfo);
+                            if (mUserInfo!=null) {
+                                mUserInfo.setPhoto(response.body().getResult());
+                                Nostragamus.getInstance().getServerDataManager().setUserInfo(mUserInfo);
+                            }
                             //callUpdateUserApi(NostragamusDataHandler.getInstance().getUserInfo().getUserNickName());
 
                             mEditProfileListener.onPhotoUpdate();
@@ -105,7 +107,9 @@ public class EditUserProfileModelImpl  implements EditUserProfileModel {
 
     private void callUpdateUserApi(final String nickname) {
         UpdateUserProfileRequest updateUserProfileRequest = new UpdateUserProfileRequest();
-        updateUserProfileRequest.setUserPhoto(mUserInfo.getPhoto());
+        if (mUserInfo!=null) {
+            updateUserProfileRequest.setUserPhoto(mUserInfo.getPhoto());
+        }
         updateUserProfileRequest.setUserNickName(nickname);
 
         MyWebService.getInstance().getUpdateUserProfileRequest(updateUserProfileRequest).enqueue(
@@ -118,8 +122,10 @@ public class EditUserProfileModelImpl  implements EditUserProfileModel {
                             if (response.body().getMessage().equals("user_nick conflict")) {
                                 mEditProfileListener.onUserNameConflict();
                             } else {
-                                mUserInfo.setUserNickName(nickname);
-                                Nostragamus.getInstance().getServerDataManager().setUserInfo(mUserInfo);
+                                if (mUserInfo!=null) {
+                                    mUserInfo.setUserNickName(nickname);
+                                    Nostragamus.getInstance().getServerDataManager().setUserInfo(mUserInfo);
+                                }
 
                                 mEditProfileListener.onEditSuccess();
                             }

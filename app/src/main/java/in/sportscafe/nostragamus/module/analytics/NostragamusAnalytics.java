@@ -92,7 +92,7 @@ public class NostragamusAnalytics {
                     .enableForegroundTracking((Application) context);
 
             // Tracking flavor
-            trackFlavor();
+            //trackFlavor();
 
             // Facebook Analytics
             FacebookSdk.sdkInitialize(context);

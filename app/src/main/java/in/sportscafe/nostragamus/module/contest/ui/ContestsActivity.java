@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
+import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
 import in.sportscafe.nostragamus.module.common.NostraBaseActivity;
 import in.sportscafe.nostragamus.module.newChallenges.ui.matches.NewChallengeMatchFragmentListener;
 import in.sportscafe.nostragamus.module.popups.challengepopups.ContestDetailsPopupActivity;
@@ -37,6 +38,7 @@ public class ContestsActivity extends NostraBaseActivity implements ContestsFrag
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contests);
         loadFragment();
+        NostragamusAnalytics.getInstance().trackScreenShown(Constants.AnalyticsCategory.CONTEST,"Contest Screen");
     }
 
     private void loadFragment() {

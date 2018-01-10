@@ -282,7 +282,7 @@ public class NewChallengesMatchesFragment extends BaseFragment implements View.O
         if (matches!=null && !matches.isEmpty()) {
             mMatchesLeftTextView.setText(String.valueOf(matches.size()));
             mTip.setText("TIP : ");
-            mPlayContestTip.setText("You must play all "+String.valueOf(matches.size())+" games in this contest to win prizes");
+            mPlayContestTip.setText("Play all "+String.valueOf(matches.size())+" games to have the best chance of winning prizes.");
         }
     }
 
@@ -402,8 +402,7 @@ public class NewChallengesMatchesFragment extends BaseFragment implements View.O
             args.putParcelable(Constants.BundleKeys.CONTEST_SCREEN_DATA, Parcels.wrap(screenData));
             args.putInt(Constants.BundleKeys.SCREEN_LAUNCHED_FROM_PARENT, ContestsActivity.LaunchedFrom.NEW_CHALLENGE_MATCHES);
             mNewChallengeMatchFragmentListener.launchContestActivity(ContestsActivity.LaunchedFrom.NEW_CHALLENGE_MATCHES, args);
-
-            NostragamusAnalytics.getInstance().trackClickEvent(Constants.AnalyticsCategory.NEW_CHALLENGES_GAMES,Constants.AnalyticsClickLabels.JOIN_CONTEST);
+            NostragamusAnalytics.getInstance().trackClickEvent(Constants.AnalyticsCategory.NEW_CHALLENGES_GAMES, Constants.AnalyticsClickLabels.JOIN_CONTEST);
         }
     }
 

@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -56,7 +57,8 @@ public class InPlayContestDetailsFragment extends NostraBaseFragment implements 
             mContestDetailsAJFragmentListener = (ContestDetailsAJFragmentListener) context;
         } else {
             throw new RuntimeException("Activity must implement " + TAG);
-        }  }
+        }
+    }
 
 
     @Override
@@ -154,8 +156,11 @@ public class InPlayContestDetailsFragment extends NostraBaseFragment implements 
             setTabLayout(mViewPager);
 
             mViewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-                public void onPageScrollStateChanged(int state) {}
-                public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {}
+                public void onPageScrollStateChanged(int state) {
+                }
+
+                public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                }
 
                 public void onPageSelected(int position) {
                     switch (position) {
@@ -192,7 +197,8 @@ public class InPlayContestDetailsFragment extends NostraBaseFragment implements 
         args.putInt(Constants.BundleKeys.SCREEN_LAUNCHED_FROM_PARENT, RewardsLaunchedFrom.IN_PLAY_CONTEST_DETAILS);
 
         /* PoolEstimation fragment for PoolContest */
-        if (contestDto.getContestMode().equalsIgnoreCase(Constants.ContestType.POOL)) {
+        if (contestDto != null && !TextUtils.isEmpty(contestDto.getContestMode())
+                && contestDto.getContestMode().equalsIgnoreCase(Constants.ContestType.POOL)) {
 
             PoolPrizeEstimationScreenData screenData = new PoolPrizeEstimationScreenData();
             screenData.setRewardScreenLauncherParent(RewardsLaunchedFrom.IN_PLAY_CONTEST_DETAILS);

@@ -480,6 +480,7 @@ public interface Constants {
         String WALLET_ADD_MONEY = "Add Money into Wallet";
         String WALLET_WITHDRAW_MONEY = "Withdraw from Wallet";
         String ONBOARDING_TIME = "OnBoarding Time";
+        String ONBOARDING = "OnBoarding";
         String NAVIGATION_SCREEN = "Navigation Screen";
         String STORE_SCREEN = "Store Screen";
         String WALLET = "Wallet";
