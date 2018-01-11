@@ -51,7 +51,7 @@ public class InAppNotificationService extends IntentService {
      * e.g. send notification before 1hr (or less than 1 hr) - then 60 minutes
      *      send notification before 3hrs (within 3 hours time period) - then 180 minutes
      */
-    public static final int DAY_TIME_PRIOR_MATCH_STARTS_MINUTES = 60;     /* Minutes */
+    public static final int DAY_TIME_PRIOR_MATCH_STARTS_MINUTES = 120;     /* Minutes */
 
     /**
      * Time prior to match start time to send notification while NIGHT..
@@ -171,7 +171,8 @@ public class InAppNotificationService extends IntentService {
                                     long matchStartRemainingMinutes = DateTimeHelper.getMatchStartRemainingTimeInMinutesForInAppNoti(startTime, approxServerTime);
 
                                     if (Constants.GameAttemptedStatus.NOT == matchDto.isPlayed() /* Match NOT played */
-                                            && (matchStartRemainingMinutes > 0 && matchStartRemainingMinutes <= minutesPriorMatchStart) /* Match will start within 1 hour, also Match NOT started */) {
+                                            && (matchStartRemainingMinutes >= 60 && /* More than an hour before start ; 60 min */
+                                            matchStartRemainingMinutes <= minutesPriorMatchStart) /* Less than prior time before start */) {
 
                                         /* Required to launch screens & then fetch server data */
                                         inPlayContestDto.setChallengeId(inPlayResponse.getChallengeId());
