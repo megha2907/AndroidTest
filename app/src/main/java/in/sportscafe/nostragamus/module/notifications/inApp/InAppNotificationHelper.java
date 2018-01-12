@@ -82,7 +82,7 @@ public class InAppNotificationHelper {
                 .setSmallIcon(R.drawable.white_notification_icon)
                 .setContentIntent(pendingIntent)
                 .setAutoCancel(true)
-                .setWhen(0);
+                /*.setWhen(0)*/;
 
         NotificationManager notificationManager = (NotificationManager) appContext.getSystemService(Context.NOTIFICATION_SERVICE);
         notificationManager.notify(requestCode, notificationBuilder.build());
