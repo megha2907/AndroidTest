@@ -55,9 +55,6 @@ public class PredictionActivity extends NostraBaseActivity implements Prediction
 
     @Override
     public void onMatchCompleted(Bundle args) {
-        /* Fetch Inplay data and save into DB */
-        new CacheManagementHelper().fetchInplayDataAndSaveIntoDb(getApplicationContext());
-
         /* Start My result activity */
         Intent intent = new Intent(this, MyResultsActivity.class);
         intent.putExtras(args);

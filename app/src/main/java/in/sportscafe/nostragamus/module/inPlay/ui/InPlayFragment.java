@@ -146,6 +146,10 @@ public class InPlayFragment extends NostraBaseFragment implements View.OnClickLi
     }
 
     private void onDataReceived(int status, List<InPlayResponse> inPlayResponseData) {
+        if (mFragmentListener != null) {
+            mFragmentListener.updateInplayCounter();
+        }
+
         switch (status) {
             case Constants.DataStatus.FROM_SERVER_API_SUCCESS:
                 showDataOnUi(inPlayResponseData, true);

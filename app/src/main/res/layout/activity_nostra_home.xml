@@ -64,12 +64,37 @@
                 android:orientation="vertical"
                 android:gravity="center">
 
-                <ImageView
-                    android:id="@+id/home_inPlay_imgView"
-                    android:layout_width="@dimen/dim_16"
-                    android:layout_height="@dimen/dim_16"
-                    android:layout_marginTop="@dimen/dp_8"
-                    android:src="@drawable/menu_inplay_btn_selector" />
+                <FrameLayout
+                    android:id="@+id/viewLayout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+
+                    <ImageView
+                        android:id="@+id/home_inPlay_imgView"
+                        android:layout_width="@dimen/dim_16"
+                        android:layout_height="@dimen/dim_16"
+                        android:layout_marginTop="@dimen/dp_8"
+                        android:src="@drawable/menu_inplay_btn_selector" />
+
+                    <com.jeeva.android.widgets.customfont.CustomTextView
+                        android:id="@+id/home_inPlay_matches_count"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/red_circle"
+                        android:padding="@dimen/dim_1"
+                        android:gravity="center"
+                        android:layout_marginTop="@dimen/dim_4"
+                        android:layout_marginLeft="@dimen/dim_10"
+                        android:layout_marginRight="@dimen/dim_4"
+                        android:textColor="@color/white"
+                        android:textSize="6.5sp"
+                        app:typeface="lato_bold"
+                        android:text="1"
+                        android:layout_gravity="top|right"
+                        android:visibility="invisible"/>
+
+                </FrameLayout>
 
                 <com.jeeva.android.widgets.customfont.CustomTextView
                     android:id="@+id/home_inPlay_tab_textView"

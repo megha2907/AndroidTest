@@ -6,27 +6,37 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.LocalBroadcastManager;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.ScaleAnimation;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.jeeva.android.Log;
+
+import java.util.List;
 
 import in.sportscafe.nostragamus.BuildConfig;
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.R;
+import in.sportscafe.nostragamus.cache.CacheManagementHelper;
 import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
 import in.sportscafe.nostragamus.module.challengeCompleted.ui.CompletedChallengeHistoryFragment;
 import in.sportscafe.nostragamus.module.common.NostraBaseActivity;
+import in.sportscafe.nostragamus.module.inPlay.dataProvider.InPlayDataProvider;
+import in.sportscafe.nostragamus.module.inPlay.dto.InPlayResponse;
 import in.sportscafe.nostragamus.module.inPlay.ui.InPlayFragment;
 import in.sportscafe.nostragamus.module.navigation.NavigationFragment;
 import in.sportscafe.nostragamus.module.navigation.appupdate.AppUpdateActivity;
 import in.sportscafe.nostragamus.module.newChallenges.ui.NewChallengesFragment;
 import in.sportscafe.nostragamus.module.nostraHome.dataProviders.NostraHomeApiImpl;
+import in.sportscafe.nostragamus.module.nostraHome.helper.BottomBarCountHelper;
 import in.sportscafe.nostragamus.module.notifications.NostraNotification;
 import in.sportscafe.nostragamus.module.notifications.NotificationHelper;
 import in.sportscafe.nostragamus.module.notifications.inApp.InAppNotificationHelper;
@@ -56,8 +66,10 @@ public class NostraHomeActivity extends NostraBaseActivity implements View.OnCli
     private LinearLayout mCompletedChallengeBottomButton;
     private LinearLayout mGroupBottomButton;
     private LinearLayout mProfileBottomButton;
+    private TextView mUnPlayedMatchCounterTextView;
 
     private boolean mIsFirstBackPressed = false;
+    private int mUnPlayedMatchCount = 0;
 
     @Override
     public String getScreenName() {
@@ -75,6 +87,61 @@ public class NostraHomeActivity extends NostraBaseActivity implements View.OnCli
         onNewChallengesClicked(getIntent().getExtras());
         handleNotifications();
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        updateUnPlayedMatchCount();
+    }
+
+    private void updateUnPlayedMatchCount() {
+        new BottomBarCountHelper().getInplayCounter(getApplicationContext(),
+                new BottomBarCountHelper.BottomBarCountHelperListener() {
+                    @Override
+                    public void onData(int status, int unPlayedMatchCount) {
+                        if (unPlayedMatchCount > 0) {
+                            if (mUnPlayedMatchCounterTextView.getVisibility() != View.VISIBLE) {
+                                Animation anim = new ScaleAnimation(0f, 1f, 0f, 1f,
+                                        Animation.RELATIVE_TO_SELF, 1f, Animation.RELATIVE_TO_SELF, 1f);
+                                anim.setFillAfter(true);
+                                anim.setDuration(500);
+                                mUnPlayedMatchCounterTextView.startAnimation(anim);
+                                mUnPlayedMatchCounterTextView.setVisibility(View.VISIBLE);
+                            } else {
+                                if (mUnPlayedMatchCount != unPlayedMatchCount) {
+                                    Animation anim = new ScaleAnimation(1f, 1.5f, 1f, 1.5f,
+                                            Animation.RELATIVE_TO_SELF, 0, Animation.RELATIVE_TO_SELF, 0);
+                                    anim.setFillAfter(false);
+                                    anim.setRepeatMode(Animation.REVERSE);
+                                    anim.setRepeatCount(1);
+                                    anim.setDuration(500);
+                                    mUnPlayedMatchCounterTextView.startAnimation(anim);
+                                }
+                            }
+
+                            mUnPlayedMatchCount = unPlayedMatchCount;
+                            mUnPlayedMatchCounterTextView.setText(String.valueOf(unPlayedMatchCount));
+
+                        } else {
+                            android.util.Log.d(TAG, "Bottom bar counter is 0");
+                            if (mUnPlayedMatchCounterTextView.getVisibility() == View.VISIBLE) {
+                                Animation anim = new ScaleAnimation(1f, 0f, 1f, 0f,
+                                        Animation.RELATIVE_TO_SELF, 1f, Animation.RELATIVE_TO_SELF, 1f);
+                                anim.setDuration(500);
+                                mUnPlayedMatchCounterTextView.startAnimation(anim);
+                            }
+
+                            mUnPlayedMatchCounterTextView.setVisibility(View.INVISIBLE);
+                        }
+                    }
+
+                    @Override
+                    public void onError(int status) {
+                        android.util.Log.d(TAG, "Error in updating bottombar counter");
+                    }
+                });
     }
 
     private void setAlarmForInAppNotification() {
@@ -214,6 +281,7 @@ public class NostraHomeActivity extends NostraBaseActivity implements View.OnCli
         mCompletedChallengeBottomButton = (LinearLayout) findViewById(R.id.home_completed_tab_layout);
         mGroupBottomButton = (LinearLayout) findViewById(R.id.home_group_tab_layout);
         mProfileBottomButton = (LinearLayout) findViewById(R.id.home_profile_tab_layout);
+        mUnPlayedMatchCounterTextView = (TextView)findViewById(R.id.home_inPlay_matches_count);
 
         mNewChallengesBottomButton.setOnClickListener(this);
         mInPlayBottomButton.setOnClickListener(this);
@@ -331,7 +399,6 @@ public class NostraHomeActivity extends NostraBaseActivity implements View.OnCli
             inPlayFragment.setArguments(args);
         }
         FragmentHelper.replaceFragment(this, R.id.fragment_container, inPlayFragment);
-
     }
 
     private void loadNewChallengeFragment(Bundle args) {
@@ -518,5 +585,10 @@ public class NostraHomeActivity extends NostraBaseActivity implements View.OnCli
             args = getIntent().getExtras();
         }
         onNewChallengesClicked(args);
+    }
+
+    @Override
+    public void updateInplayCounter() {
+        updateUnPlayedMatchCount();
     }
 }

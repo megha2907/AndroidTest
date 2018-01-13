@@ -39,6 +39,7 @@ import java.util.List;
 
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
+import in.sportscafe.nostragamus.cache.CacheManagementHelper;
 import in.sportscafe.nostragamus.module.common.NostraBaseFragment;
 import in.sportscafe.nostragamus.module.inPlay.ui.ResultsScreenDataDto;
 import in.sportscafe.nostragamus.module.nostraHome.ui.NostraHomeActivity;
@@ -1017,6 +1018,9 @@ public class PredictionFragment extends NostraBaseFragment implements View.OnCli
                 "934797470", "tIBCCIK8pHEQnsHfvQM", "1.00", true);
 
         Log.d(TAG, "Match Completed");
+
+        /* Fetch Inplay data and save into DB */
+        new CacheManagementHelper().fetchInplayDataAndSaveIntoDb(getContext().getApplicationContext());
 
         ResultsScreenDataDto data = new ResultsScreenDataDto();
         if (mPlayScreenData != null) {
