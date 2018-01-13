@@ -104,7 +104,7 @@ public class NostraHomeActivity extends NostraBaseActivity implements View.OnCli
                         if (unPlayedMatchCount > 0) {
                             if (mUnPlayedMatchCounterTextView.getVisibility() != View.VISIBLE) {
                                 Animation anim = new ScaleAnimation(0f, 1f, 0f, 1f,
-                                        Animation.RELATIVE_TO_SELF, 1f, Animation.RELATIVE_TO_SELF, 1f);
+                                        Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
                                 anim.setFillAfter(true);
                                 anim.setDuration(500);
                                 mUnPlayedMatchCounterTextView.startAnimation(anim);
@@ -112,7 +112,7 @@ public class NostraHomeActivity extends NostraBaseActivity implements View.OnCli
                             } else {
                                 if (mUnPlayedMatchCount != unPlayedMatchCount) {
                                     Animation anim = new ScaleAnimation(1f, 1.5f, 1f, 1.5f,
-                                            Animation.RELATIVE_TO_SELF, 0, Animation.RELATIVE_TO_SELF, 0);
+                                            Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
                                     anim.setFillAfter(false);
                                     anim.setRepeatMode(Animation.REVERSE);
                                     anim.setRepeatCount(1);
@@ -128,7 +128,7 @@ public class NostraHomeActivity extends NostraBaseActivity implements View.OnCli
                             android.util.Log.d(TAG, "Bottom bar counter is 0");
                             if (mUnPlayedMatchCounterTextView.getVisibility() == View.VISIBLE) {
                                 Animation anim = new ScaleAnimation(1f, 0f, 1f, 0f,
-                                        Animation.RELATIVE_TO_SELF, 1f, Animation.RELATIVE_TO_SELF, 1f);
+                                        Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
                                 anim.setDuration(500);
                                 mUnPlayedMatchCounterTextView.startAnimation(anim);
                             }
