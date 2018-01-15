@@ -100,13 +100,13 @@ public class NostraHomeActivity extends NostraBaseActivity implements View.OnCli
         new BottomBarCountHelper().getInplayCounter(getApplicationContext(),
                 new BottomBarCountHelper.BottomBarCountHelperListener() {
                     @Override
-                    public void onData(int status, int unPlayedMatchCount) {
+                    public void onData(int status, final int unPlayedMatchCount) {
                         if (unPlayedMatchCount > 0) {
                             if (mUnPlayedMatchCounterTextView.getVisibility() != View.VISIBLE) {
                                 Animation anim = new ScaleAnimation(0f, 1f, 0f, 1f,
                                         Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
                                 anim.setFillAfter(true);
-                                anim.setDuration(500);
+                                anim.setDuration(250);
                                 mUnPlayedMatchCounterTextView.startAnimation(anim);
                                 mUnPlayedMatchCounterTextView.setVisibility(View.VISIBLE);
                             } else {
@@ -116,20 +116,31 @@ public class NostraHomeActivity extends NostraBaseActivity implements View.OnCli
                                     anim.setFillAfter(false);
                                     anim.setRepeatMode(Animation.REVERSE);
                                     anim.setRepeatCount(1);
-                                    anim.setDuration(500);
+                                    anim.setDuration(250);
                                     mUnPlayedMatchCounterTextView.startAnimation(anim);
                                 }
                             }
 
                             mUnPlayedMatchCount = unPlayedMatchCount;
-                            mUnPlayedMatchCounterTextView.setText(String.valueOf(unPlayedMatchCount));
+                            new Handler().postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    if (unPlayedMatchCount > 9) {
+                                        mUnPlayedMatchCounterTextView.setPadding(getResources().getDimensionPixelOffset(R.dimen.dim_3),
+                                                getResources().getDimensionPixelOffset(R.dimen.dim_1),
+                                                getResources().getDimensionPixelOffset(R.dimen.dim_4),
+                                                getResources().getDimensionPixelOffset(R.dimen.dim_2));
+                                    }
+                                    mUnPlayedMatchCounterTextView.setText(String.valueOf(unPlayedMatchCount));
+                                }
+                            },250);
 
                         } else {
                             android.util.Log.d(TAG, "Bottom bar counter is 0");
                             if (mUnPlayedMatchCounterTextView.getVisibility() == View.VISIBLE) {
                                 Animation anim = new ScaleAnimation(1f, 0f, 1f, 0f,
                                         Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
-                                anim.setDuration(500);
+                                anim.setDuration(250);
                                 mUnPlayedMatchCounterTextView.startAnimation(anim);
                             }
 

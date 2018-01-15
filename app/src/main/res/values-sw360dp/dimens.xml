@@ -44,6 +44,7 @@
     <dimen name="dim_0.9">0.9dp</dimen>
     <dimen name="dim_1">1dp</dimen>
     <dimen name="dim_1.2">1.2dp</dimen>
+    <dimen name="dim_1.5">1.5dp</dimen>
     <dimen name="dim_2">2dp</dimen>
     <dimen name="dim_2.5">2.5dp</dimen>
     <dimen name="dim_3">3dp</dimen>
