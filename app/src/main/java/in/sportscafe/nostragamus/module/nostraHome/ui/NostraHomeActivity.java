@@ -52,6 +52,7 @@ public class NostraHomeActivity extends NostraBaseActivity implements View.OnCli
 
     private static final String TAG = NostraHomeActivity.class.getSimpleName();
     public static final int DOUBLE_BACK_PRESSED_DELAY_ALLOWED = 3000;
+    private static final int NAV_BAR_COUNTER_BADGE_ANIM_TIME = 250;
 
     public interface LaunchedFrom {
         int SHOW_NEW_CHALLENGES = -111;
@@ -102,22 +103,31 @@ public class NostraHomeActivity extends NostraBaseActivity implements View.OnCli
                     @Override
                     public void onData(int status, final int unPlayedMatchCount) {
                         if (unPlayedMatchCount > 0) {
+                            int setTextDelayTime = 0;
                             if (mUnPlayedMatchCounterTextView.getVisibility() != View.VISIBLE) {
                                 Animation anim = new ScaleAnimation(0f, 1f, 0f, 1f,
                                         Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
                                 anim.setFillAfter(true);
-                                anim.setDuration(250);
+                                anim.setDuration(NAV_BAR_COUNTER_BADGE_ANIM_TIME);
                                 mUnPlayedMatchCounterTextView.startAnimation(anim);
                                 mUnPlayedMatchCounterTextView.setVisibility(View.VISIBLE);
+                                setTextDelayTime = 0;
+
                             } else {
                                 if (mUnPlayedMatchCount != unPlayedMatchCount) {
-                                    Animation anim = new ScaleAnimation(1f, 1.5f, 1f, 1.5f,
-                                            Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
-                                    anim.setFillAfter(false);
-                                    anim.setRepeatMode(Animation.REVERSE);
-                                    anim.setRepeatCount(1);
-                                    anim.setDuration(250);
-                                    mUnPlayedMatchCounterTextView.startAnimation(anim);
+                                    setTextDelayTime = 1000;
+                                    new Handler().postDelayed(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            Animation anim = new ScaleAnimation(1f, 1.5f, 1f, 1.5f,
+                                                    Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+                                            anim.setFillAfter(false);
+                                            anim.setRepeatMode(Animation.REVERSE);
+                                            anim.setRepeatCount(1);
+                                            anim.setDuration(NAV_BAR_COUNTER_BADGE_ANIM_TIME);
+                                            mUnPlayedMatchCounterTextView.startAnimation(anim);
+                                        }
+                                    }, setTextDelayTime);
                                 }
                             }
 
@@ -133,14 +143,14 @@ public class NostraHomeActivity extends NostraBaseActivity implements View.OnCli
                                     }
                                     mUnPlayedMatchCounterTextView.setText(String.valueOf(unPlayedMatchCount));
                                 }
-                            },250);
+                            }, setTextDelayTime + NAV_BAR_COUNTER_BADGE_ANIM_TIME);
 
                         } else {
                             android.util.Log.d(TAG, "Bottom bar counter is 0");
                             if (mUnPlayedMatchCounterTextView.getVisibility() == View.VISIBLE) {
                                 Animation anim = new ScaleAnimation(1f, 0f, 1f, 0f,
                                         Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
-                                anim.setDuration(250);
+                                anim.setDuration(NAV_BAR_COUNTER_BADGE_ANIM_TIME);
                                 mUnPlayedMatchCounterTextView.startAnimation(anim);
                             }
 
