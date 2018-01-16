@@ -16,6 +16,10 @@
     <string name="st2_no_notification">Come back again &amp; check \n for notifications</string>
     <string name="accuracy_streak">More than 80% accuracy in your last 5 matchList</string>
     <string name="table_topper">Top 5 in this leaderboard</string>
+    <string name="firebase_app_id">1:576361348926:android:3c3bd6e49df59227</string>
+    <string name="firebase_api_key">AIzaSyDlx9THo_Luvb9ldGDznisfFX3rTks85HQ</string>
+    <string name="firebase_gcm_sender_id">576361348926</string>
+    <string name="firebase_url">https://sportscafe-scgame-prod.firebaseio.com</string>
 
     <!-- Start App update -->
     <string name="new_version_title">New Version Available!</string>

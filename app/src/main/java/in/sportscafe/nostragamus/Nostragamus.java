@@ -16,6 +16,8 @@ import android.support.multidex.MultiDex;
 import android.telephony.TelephonyManager;
 
 import com.crashlytics.android.Crashlytics;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.FirebaseOptions;
 import com.jeeva.android.ExceptionTracker;
 import com.jeeva.android.Log;
 import com.jeeva.android.facebook.FacebookHandler;
@@ -65,7 +67,7 @@ public class Nostragamus extends Application {
 
     /**
      * Used for app-session data tracking (Fetched from server)
-     *
+     * <p>
      * Maintains references to all freshly/recently fetched server data.
      *
      * @return
@@ -115,6 +117,14 @@ public class Nostragamus extends Application {
         // Initializing the Branch
         Branch.getAutoInstance(this);
 
+        // Initializing FireBase
+        FirebaseOptions options = new FirebaseOptions.Builder()
+                .setApplicationId(getString(R.string.firebase_app_id)) // Required for Analytics.
+                .setApiKey(getString(R.string.firebase_api_key)) // Required for Auth.
+                .setGcmSenderId(getString(R.string.gcm_sender_id))
+                .setDatabaseUrl(getString(R.string.firebase_url)) // Required for RTDB.
+                .build();
+        FirebaseApp.initializeApp(this, options, "in.sportscafe.nostragamus${buildTypeSuffix}");
 
     }
 
@@ -256,12 +266,11 @@ public class Nostragamus extends Application {
     }
 
     /**
-     *
      * @return IMEI of device or empty
      */
     public String getDeviceImeI() {
         String imeiStr = "";
-        TelephonyManager telephonyManager = (TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE);
+        TelephonyManager telephonyManager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
         if (telephonyManager != null) {
             /*
              * getDeviceId() function Returns the unique device ID.
@@ -283,6 +292,7 @@ public class Nostragamus extends Application {
 
     /**
      * NOTE: Android Id can be regenerated ove Factory data-reset
+     *
      * @return Android-Id for Device/Os OR empty
      */
     public String getAndroidId() {
@@ -336,7 +346,8 @@ public class Nostragamus extends Application {
                     value = getResources().getDisplayMetrics().widthPixels;
                     break;
             }
-        } catch (Exception e) {}
+        } catch (Exception e) {
+        }
         return value;
     }
 
@@ -347,19 +358,21 @@ public class Nostragamus extends Application {
             ActivityManager.MemoryInfo memInfo = new ActivityManager.MemoryInfo();
             actManager.getMemoryInfo(memInfo);
             totalRam = memInfo.totalMem;
-        } catch (Exception e) {}
+        } catch (Exception e) {
+        }
         return totalRam;
     }
 
     public String getUserAccounts() {
         String accountStr = "";
         try {
-            AccountManager manager = (AccountManager)getSystemService(ACCOUNT_SERVICE);
+            AccountManager manager = (AccountManager) getSystemService(ACCOUNT_SERVICE);
             Account[] list = manager.getAccounts();
             for (Account account : list) {
                 accountStr = accountStr + account.name + ", ";
             }
-        } catch (Exception e) {}
+        } catch (Exception e) {
+        }
         return accountStr;
     }
 
@@ -368,9 +381,9 @@ public class Nostragamus extends Application {
         String flavor;
         if (BuildConfig.IS_ACL_VERSION) {
             flavor = Constants.AppType.ACL;
-        } else if (BuildConfig.IS_PAID_VERSION){
+        } else if (BuildConfig.IS_PAID_VERSION) {
             flavor = Constants.AppType.PRO;
-        }else {
+        } else {
             flavor = Constants.AppType.PLAYSTORE;
         }
         return flavor;
@@ -378,6 +391,7 @@ public class Nostragamus extends Application {
 
     /**
      * Keeps reference for serverTime & localTime when system received it.
+     *
      * @param serverTime
      */
     public synchronized void setServerTime(long serverTime) {
