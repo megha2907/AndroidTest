@@ -16,8 +16,11 @@ import android.support.multidex.MultiDex;
 import android.telephony.TelephonyManager;
 
 import com.crashlytics.android.Crashlytics;
+import com.freshchat.consumer.sdk.Freshchat;
+import com.freshchat.consumer.sdk.FreshchatConfig;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.jeeva.android.ExceptionTracker;
 import com.jeeva.android.Log;
 import com.jeeva.android.facebook.FacebookHandler;
@@ -81,6 +84,10 @@ public class Nostragamus extends Application {
 
     private static final long ONE_HOUR_IN_MILLIS = 60 * 60 * 1000;
 
+    private String FRESHCHAT_APP_KEY = "982a3e04-e097-41f3-a86d-6298c6d00dc2";
+    private String FRESHCHAT_APP_ID = "bace0b4a-ceca-4a37-989d-e5e1155ffc6e";
+
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -125,6 +132,12 @@ public class Nostragamus extends Application {
                 .setDatabaseUrl(getString(R.string.firebase_url)) // Required for RTDB.
                 .build();
         FirebaseApp.initializeApp(this, options, "in.sportscafe.nostragamus${buildTypeSuffix}");
+
+        // Initializing the FreshChat
+        FreshchatConfig freshchatConfig=new FreshchatConfig(FRESHCHAT_APP_ID,FRESHCHAT_APP_KEY);
+        freshchatConfig.setCameraCaptureEnabled(true);
+        freshchatConfig.setGallerySelectionEnabled(true);
+        Freshchat.getInstance(getApplicationContext()).init(freshchatConfig);
 
     }
 

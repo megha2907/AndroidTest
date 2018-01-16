@@ -207,6 +207,7 @@ public class NostraHomeActivity extends NostraBaseActivity implements View.OnCli
     private void initMembers() {
         UserInfoModelImpl.newInstance(getUserInfoCallBackListener()).getUserInfo();
         NostragamusAnalytics.getInstance().setMoEngageUserProperties();
+        NostragamusAnalytics.getInstance().setFreshChatUserProperties(getApplicationContext());
     }
 
     private void initViews() {

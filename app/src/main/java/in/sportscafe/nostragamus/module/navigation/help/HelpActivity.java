@@ -6,6 +6,9 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.TextView;
 
+import com.freshchat.consumer.sdk.FaqOptions;
+import com.freshchat.consumer.sdk.Freshchat;
+
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.NostragamusActivity;
@@ -68,7 +71,13 @@ public class HelpActivity extends NostragamusActivity implements HelpFragmentLis
 
     @Override
     public void onFaqClicked() {
-        navigateToWebView(Constants.WebPageUrls.FAQ, "FAQ");
+        //navigateToWebView(Constants.WebPageUrls.FAQ, "FAQ");
+        FaqOptions faqOptions = new FaqOptions()
+                .showFaqCategoriesAsGrid(false)
+                .showContactUsOnAppBar(false)
+                .showContactUsOnFaqScreens(true)
+                .showContactUsOnFaqNotHelpful(false);
+        Freshchat.showFAQs(getApplicationContext(),faqOptions);
     }
 
     @Override

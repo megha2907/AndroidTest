@@ -194,7 +194,7 @@ public class OnBoardingFragment extends NostragamusFragment {
 //        NostragamusDataHandler.getInstance().setUserReferralCode("DEE1135");
 //        NostragamusDataHandler.getInstance().setUserReferralName("Deepanshi Bajaj");
 //        NostragamusDataHandler.getInstance().setWalletInitialAmount(20);
-//        NostragamusDataHandler.getInstance().setUserReferralPhoto("https://scontent.xx.fbcdn.net/v/t1.0-1/p480x480/17523409_1443962065645034_1348270082615908797_n.jpg?oh=894d6be15bb712660f8cd11f98e47f22&oe=59CF4AA9");
+//        NostragamusDataHandler.getInstance().setUserReferralPhoto("https://graph.facebook.com/1273708409337068/picture?height=350&width=350");
 
         OnBoardingDto onBoardingDto = new OnBoardingDto();
         if (!TextUtils.isEmpty(NostragamusDataHandler.getInstance().getUserReferralCode())) {
