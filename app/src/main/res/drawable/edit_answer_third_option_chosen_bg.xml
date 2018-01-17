@@ -8,6 +8,6 @@
         android:startColor="#0071bc"
         android:type="linear" />
     <stroke
-        android:color="#6cd5ff"
-        android:width="@dimen/dim_2"/>
+        android:color="@color/edit_answer_chosen_option_border"
+        android:width="@dimen/dim_4"/>
 </shape>

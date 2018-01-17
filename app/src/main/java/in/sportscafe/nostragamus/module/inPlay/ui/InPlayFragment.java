@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
@@ -33,6 +32,7 @@ import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.NostraBaseFragment;
 import in.sportscafe.nostragamus.module.contest.contestDetailsAfterJoining.InplayContestDetailsActivity;
 import in.sportscafe.nostragamus.module.contest.dto.JoinContestData;
+import in.sportscafe.nostragamus.module.customViews.CustomSnackBar;
 import in.sportscafe.nostragamus.module.inPlay.dataProvider.InPlayDataProvider;
 import in.sportscafe.nostragamus.module.inPlay.dto.InPlayContestDto;
 import in.sportscafe.nostragamus.module.inPlay.dto.InPlayResponse;
@@ -53,7 +53,7 @@ import in.sportscafe.nostragamus.module.prediction.playScreen.dto.PlayScreenData
 public class InPlayFragment extends NostraBaseFragment implements View.OnClickListener {
 
     private static final String TAG = InPlayFragment.class.getSimpleName();
-    private Snackbar mSnackBar;
+    private CustomSnackBar mSnackBar;
     private NostraHomeActivityListener mFragmentListener;
 
     public InPlayFragment() {}
@@ -89,9 +89,9 @@ public class InPlayFragment extends NostraBaseFragment implements View.OnClickLi
 
     public void onInternetConnected() {
         loadData();
-        if (mSnackBar != null && mSnackBar.isShown()) {
+        /*if (mSnackBar != null && mSnackBar.isShown()) {
             mSnackBar.dismiss();
-        }
+        }*/
     }
 
     @Override
@@ -123,15 +123,15 @@ public class InPlayFragment extends NostraBaseFragment implements View.OnClickLi
         if (getView() != null && getActivity() != null && !getActivity().isFinishing()) {
             switch (status) {
                 case Constants.DataStatus.FROM_DATABASE_AS_NO_INTERNET:
-                    mSnackBar = Snackbar.make(getView(), Constants.Alerts.NO_INTERNET_CONNECTION, Snackbar.LENGTH_INDEFINITE);
+                    mSnackBar = CustomSnackBar.make(getView(), Constants.Alerts.NO_INTERNET_CONNECTION, CustomSnackBar.DURATION_LONG);
                     break;
 
                 case Constants.DataStatus.FROM_DATABASE_AS_SERVER_FAILED:
-                    mSnackBar = Snackbar.make(getView(), Constants.Alerts.COULD_NOT_FETCH_DATA_FROM_SERVER, Snackbar.LENGTH_LONG);
+                    mSnackBar = CustomSnackBar.make(getView(), Constants.Alerts.COULD_NOT_FETCH_DATA_FROM_SERVER, CustomSnackBar.DURATION_LONG);
                     break;
 
                 default:
-                    mSnackBar = Snackbar.make(getView(), Constants.Alerts.SOMETHING_WRONG, Snackbar.LENGTH_LONG);
+                    mSnackBar = CustomSnackBar.make(getView(), Constants.Alerts.SOMETHING_WRONG, CustomSnackBar.DURATION_LONG);
                     break;
             }
 

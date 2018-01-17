@@ -22,6 +22,7 @@ import in.sportscafe.nostragamus.module.contest.dto.ContestScreenData;
 import in.sportscafe.nostragamus.module.contest.dto.JoinContestData;
 import in.sportscafe.nostragamus.module.contest.helper.JoinContestHelper;
 import in.sportscafe.nostragamus.module.contest.ui.ContestsActivity;
+import in.sportscafe.nostragamus.module.customViews.CustomSnackBar;
 import in.sportscafe.nostragamus.module.navigation.wallet.addMoney.lowBalance.AddMoneyOnLowBalanceActivity;
 import in.sportscafe.nostragamus.module.nostraHome.ui.NostraHomeActivity;
 import in.sportscafe.nostragamus.module.popups.timerPopup.TimerFinishDialogHelper;
@@ -258,9 +259,9 @@ public class ContestDetailsActivity extends NostraBaseActivity implements Contes
             View view = findViewById(R.id.contest_details_before_join_activity_parent);
 
             if (!TextUtils.isEmpty(msg)) {
-                Snackbar.make(view, msg, Snackbar.LENGTH_LONG).show();
+                CustomSnackBar.make(view, msg, CustomSnackBar.DURATION_LONG).show();
             } else {
-                Snackbar.make(view, Constants.Alerts.SOMETHING_WRONG, Snackbar.LENGTH_LONG).show();
+                CustomSnackBar.make(view, Constants.Alerts.SOMETHING_WRONG, CustomSnackBar.DURATION_LONG).show();
             }
         }
     }

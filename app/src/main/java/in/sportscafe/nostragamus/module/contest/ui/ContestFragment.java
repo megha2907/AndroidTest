@@ -33,6 +33,7 @@ import in.sportscafe.nostragamus.module.contest.dto.ContestType;
 import in.sportscafe.nostragamus.module.contest.helper.ContestFilterHelper;
 import in.sportscafe.nostragamus.module.contest.ui.viewPager.ContestViewPagerAdapter;
 import in.sportscafe.nostragamus.module.contest.ui.viewPager.ContestViewPagerFragment;
+import in.sportscafe.nostragamus.module.customViews.CustomSnackBar;
 import in.sportscafe.nostragamus.module.navigation.referfriends.ReferFriendActivity;
 import in.sportscafe.nostragamus.module.navigation.referfriends.ReferFriendFragmentListener;
 import in.sportscafe.nostragamus.module.navigation.wallet.WalletHelper;
@@ -143,11 +144,11 @@ public class ContestFragment extends NostraBaseFragment implements View.OnClickL
         if (getView() != null && getActivity() != null && !getActivity().isFinishing()) {
             switch (status) {
                 case Constants.DataStatus.NO_INTERNET:
-                    Snackbar.make(getView(), Constants.Alerts.NO_NETWORK_CONNECTION, Snackbar.LENGTH_LONG).show();
+                    CustomSnackBar.make(getView(), Constants.Alerts.NO_NETWORK_CONNECTION, CustomSnackBar.DURATION_LONG).show();
                     break;
 
                 default:
-                    Snackbar.make(getView(), Constants.Alerts.SOMETHING_WRONG, Snackbar.LENGTH_LONG).show();
+                    CustomSnackBar.make(getView(), Constants.Alerts.SOMETHING_WRONG, CustomSnackBar.DURATION_LONG).show();
                     break;
             }
         }

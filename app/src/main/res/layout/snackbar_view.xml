@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    android:id="@+id/snackbar_root_layout"
+    android:background="@color/custom_snackbar_bg_color">
+
+    <com.jeeva.android.widgets.customfont.CustomTextView
+        android:id="@+id/snackbar_text"
+        android:minWidth="@dimen/dim_220"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:layout_gravity="center_vertical"
+        android:gravity="center_vertical"
+        android:ellipsize="end"
+        android:textSize="@dimen/sp_12"
+        android:textColor="@color/white"
+        app:typeface="lato_regular"
+        android:lineSpacingExtra="2dp"
+        android:layout_marginTop="@dimen/dim_12"
+        android:layout_marginBottom="@dimen/dim_13"
+        android:layout_marginLeft="@dimen/dim_20"
+        android:layout_marginStart="@dimen/dim_20"/>
+
+    <com.jeeva.android.widgets.customfont.CustomTextView
+        android:id="@+id/snackbar_action_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/dim_20"
+        android:visibility="gone"
+        android:textColor="#008ae1"
+        android:textSize="@dimen/sp_12"
+        app:typeface="lato_bold"/>
+
+</LinearLayout>

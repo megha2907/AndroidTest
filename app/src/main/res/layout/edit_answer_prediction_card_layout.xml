@@ -121,6 +121,7 @@
                             android:gravity="center"
                             android:textColor="#090909"
                             app:typeface="lato_regular"
+                            android:lineSpacingExtra="2dp"
                             android:textSize="@dimen/sp_13"
                             android:layout_marginTop="@dimen/dim_10"/>
 

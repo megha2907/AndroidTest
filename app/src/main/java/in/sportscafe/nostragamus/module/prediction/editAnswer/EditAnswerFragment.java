@@ -43,6 +43,7 @@ import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.NostraBaseFragment;
+import in.sportscafe.nostragamus.module.customViews.CustomSnackBar;
 import in.sportscafe.nostragamus.module.prediction.editAnswer.adapter.EditAnswerPredictionAdapterListener;
 import in.sportscafe.nostragamus.module.prediction.editAnswer.adapter.EditAnswerPredictionCardAdapter;
 import in.sportscafe.nostragamus.module.prediction.editAnswer.dataProvider.GetQuestionForEditAnswerApiModelImpl;
@@ -1080,16 +1081,16 @@ public class EditAnswerFragment extends NostraBaseFragment implements View.OnCli
     private void handleError(String msg, int status) {
         if (getView() != null && getActivity() != null && !getActivity().isFinishing()) {
             if (!TextUtils.isEmpty(msg)) {
-                Snackbar.make(getView(), msg, Snackbar.LENGTH_LONG).show();
+                CustomSnackBar.make(getView(), msg, CustomSnackBar.DURATION_LONG).show();
 
             } else {
                 switch (status) {
                     case Constants.DataStatus.NO_INTERNET:
-                        Snackbar.make(getView(), Constants.Alerts.NO_INTERNET_CONNECTION, Snackbar.LENGTH_LONG).show();
+                        CustomSnackBar.make(getView(), Constants.Alerts.NO_INTERNET_CONNECTION, CustomSnackBar.DURATION_LONG).show();
                         break;
 
                     default:
-                        Snackbar.make(getView(), Constants.Alerts.SOMETHING_WRONG, Snackbar.LENGTH_LONG).show();
+                        CustomSnackBar.make(getView(), Constants.Alerts.SOMETHING_WRONG, CustomSnackBar.DURATION_LONG).show();
                         break;
                 }
             }

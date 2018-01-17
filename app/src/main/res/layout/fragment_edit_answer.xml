@@ -43,7 +43,7 @@
                 <ImageView
                     android:layout_width="@dimen/dim_12"
                     android:layout_height="@dimen/dim_12"
-                    android:src="@drawable/edit_answers_icon"
+                    android:src="@drawable/edit_answers_heading_icon"
                     android:layout_marginTop="@dimen/dim_1"/>
 
                 <com.jeeva.android.widgets.customfont.CustomTextView
