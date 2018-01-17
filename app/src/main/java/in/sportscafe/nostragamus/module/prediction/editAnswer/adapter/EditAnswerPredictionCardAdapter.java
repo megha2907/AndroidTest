@@ -97,14 +97,14 @@ public class EditAnswerPredictionCardAdapter extends ArrayAdapter<EditAnswerQues
             if (question.getChosenAnswerId() == Constants.AnswerIds.LEFT) {
                 leftImgOptionLayout.setBackgroundResource(R.drawable.edit_answer_chosen_option_bg);
                 leftImgOptionLayout.setPadding(padding, padding, padding, padding);
-                ImageView imgView = (ImageView) contentView.findViewById(R.id.edit_answer_chosen_option_left_imgView);
-                imgView.setVisibility(View.VISIBLE);
+                ImageView imgView = (ImageView) contentView.findViewById(R.id.swipe_card_iv_left_arrow);
+                imgView.setImageResource(R.drawable.edit_ans_chosen_left_arrow);
 
             } else if (question.getChosenAnswerId() == Constants.AnswerIds.RIGHT) {
                 rightImgOptionLayout.setBackgroundResource(R.drawable.edit_answer_chosen_option_bg);
                 rightImgOptionLayout.setPadding(padding, padding, padding, padding);
-                ImageView imgView = (ImageView) contentView.findViewById(R.id.edit_answer_chosen_option_right_imgView);
-                imgView.setVisibility(View.VISIBLE);
+                ImageView imgView = (ImageView) contentView.findViewById(R.id.swipe_card_iv_right_arrow);
+                imgView.setImageResource(R.drawable.edit_ans_chosen_right_arrow);
             }
         }
     }

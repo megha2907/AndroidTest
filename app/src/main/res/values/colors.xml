@@ -177,6 +177,6 @@
     <color name="edit_answer_chosen_option_border">#83cce5</color>
     <color name="new_challenge_tab_bg">#102c4e</color>
     <color name="loading_animation_color">#186aa2</color>
-    <color name="custom_snackbar_bg_color">#282f3d</color>
+    <color name="custom_snackbar_bg_color">#192535</color>
     <color name="snackbar_action_button_text_color">#008ae1</color>
 </resources>
