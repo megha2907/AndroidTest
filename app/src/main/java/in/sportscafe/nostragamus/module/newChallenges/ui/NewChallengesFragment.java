@@ -44,6 +44,7 @@ import in.sportscafe.nostragamus.module.newChallenges.ui.viewPager.NewChallenges
 import in.sportscafe.nostragamus.module.nostraHome.ui.NostraHomeActivityListener;
 import in.sportscafe.nostragamus.module.notifications.NostraNotification;
 import in.sportscafe.nostragamus.module.popups.walletpopups.WalletBalancePopupActivity;
+import in.sportscafe.nostragamus.utils.CodeSnippet;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -133,7 +134,7 @@ public class NewChallengesFragment extends NostraBaseFragment implements View.On
     private void setWalletBalanceAmt() {
         if (getView() != null && getActivity() != null && !getActivity().isFinishing()) {
             int amount = (int) WalletHelper.getTotalBalance();
-            mTvTBarWalletMoney.setText(String.valueOf(amount));
+            mTvTBarWalletMoney.setText(CodeSnippet.getFormattedAmount(amount));
         }
     }
 

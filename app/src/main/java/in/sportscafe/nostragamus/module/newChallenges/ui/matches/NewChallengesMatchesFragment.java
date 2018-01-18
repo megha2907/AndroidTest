@@ -48,6 +48,7 @@ import in.sportscafe.nostragamus.module.popups.timerPopup.TimerFinishDialogHelpe
 import in.sportscafe.nostragamus.module.prediction.playScreen.PredictionActivity;
 import in.sportscafe.nostragamus.module.prediction.playScreen.dto.PlayScreenDataDto;
 import in.sportscafe.nostragamus.utils.AlertsHelper;
+import in.sportscafe.nostragamus.utils.CodeSnippet;
 
 /**
  * Created by deepanshi on 9/1/17.
@@ -267,15 +268,12 @@ public class NewChallengesMatchesFragment extends BaseFragment implements View.O
     private void setValues() {
         View view = getView();
         if (mScreenData != null && view != null) {
-
             TextView titleTextView = (TextView) view.findViewById(R.id.toolbar_heading_one);
             TextView walletAmtTextView = (TextView) view.findViewById(R.id.toolbar_wallet_money);
 
             titleTextView.setText(mScreenData.getChallengeName());
-            walletAmtTextView.setText(String.valueOf((int)WalletHelper.getTotalBalance()));
-
+            walletAmtTextView.setText(CodeSnippet.getFormattedAmount((int)WalletHelper.getTotalBalance()));
         }
-
     }
 
     private void setMatchesLeftValue(List<InPlayMatch> matches){

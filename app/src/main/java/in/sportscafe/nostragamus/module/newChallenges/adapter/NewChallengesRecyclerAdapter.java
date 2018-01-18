@@ -33,6 +33,7 @@ import in.sportscafe.nostragamus.module.newChallenges.dto.NewChallengesResponse;
 import in.sportscafe.nostragamus.module.newChallenges.dto.SportsTab;
 import in.sportscafe.nostragamus.module.newChallenges.helpers.DateTimeHelper;
 import in.sportscafe.nostragamus.module.nostraHome.helper.TimerHelper;
+import in.sportscafe.nostragamus.utils.CodeSnippet;
 
 /**
  * Created by sandip on 23/08/17.
@@ -105,7 +106,7 @@ public class NewChallengesRecyclerAdapter extends RecyclerView.Adapter<RecyclerV
                 newChallengesItemViewHolder.challengeNameTextView.setText(newChallengesResponse.getChallengeName());
                 newChallengesItemViewHolder.challengeDateTextView.setText(DateTimeHelper.getChallengeDuration(newChallengesResponse.getChallengeStartTime(), newChallengesResponse.getChallengeEndTime()));
                 newChallengesItemViewHolder.gameLeftTextView.setText(String.valueOf(newChallengesResponse.getTotalMatches()));
-                newChallengesItemViewHolder.prizeTextView.setText(Constants.RUPEE_SYMBOL+String.valueOf(newChallengesResponse.getPrizes()));
+                newChallengesItemViewHolder.prizeTextView.setText(Constants.RUPEE_SYMBOL + CodeSnippet.getFormattedAmount(newChallengesResponse.getPrizes()));
 
                 String startTimeStr = newChallengesResponse.getChallengeStartTime();
                 if (!TextUtils.isEmpty(startTimeStr)) {
