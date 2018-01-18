@@ -885,7 +885,7 @@ public interface Constants {
     }
 
     String AMOUNT_INDIAN_FORMAT_PATTERN = "##,##,###";
-    String AMOUNT_DECIMAL_PATTERN = "##,##,###.00";
+    String AMOUNT_DECIMAL_PATTERN = "##,##,##0.00";
     String RUPEE_SYMBOL = "₹ ";
     String INDIAN_CURRENCY_CODE = "INR";
 
