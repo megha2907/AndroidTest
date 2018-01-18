@@ -115,7 +115,7 @@ public class NostraHomeActivity extends NostraBaseActivity implements View.OnCli
 
                             } else {
                                 if (mUnPlayedMatchCount != unPlayedMatchCount) {
-                                    setTextDelayTime = 1000;
+                                    setTextDelayTime = 500;
                                     new Handler().postDelayed(new Runnable() {
                                         @Override
                                         public void run() {

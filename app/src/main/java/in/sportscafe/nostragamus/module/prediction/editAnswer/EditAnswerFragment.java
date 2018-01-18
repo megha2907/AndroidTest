@@ -761,16 +761,20 @@ public class EditAnswerFragment extends NostraBaseFragment implements View.OnCli
      */
     private void onPowerUpModified() {
         if (isPowerupModified()) {
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
+            final String msg = "You seem to have edited powerups. Now, swipe your choice to save the prediction!";
 
-                    Animation alpha = new AlphaAnimation(0f, 1f);
-                    alpha.setDuration(200);
-                    mMessageTextView.setText("You seem to have edited powerups. Now, swipe your choice to save the prediction!");
-                    mMessageTextView.startAnimation(alpha);
-                }
-            }, 500 /* Once powerup anim over, show this text */);
+            if (!mMessageTextView.getText().toString().equalsIgnoreCase(msg)) {
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+
+                        Animation alpha = new AlphaAnimation(0f, 1f);
+                        alpha.setDuration(200);
+                        mMessageTextView.setText(msg);
+                        mMessageTextView.startAnimation(alpha);
+                    }
+                }, 500 /* Once powerup anim over, show this text */);
+            }
         }
     }
 

@@ -9,5 +9,5 @@
         android:type="linear" />
     <stroke
         android:color="@color/edit_answer_chosen_option_border"
-        android:width="@dimen/dim_4"/>
+        android:width="@dimen/dim_3"/>
 </shape>

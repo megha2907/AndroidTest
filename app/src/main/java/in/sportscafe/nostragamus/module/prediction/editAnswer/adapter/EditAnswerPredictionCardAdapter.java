@@ -93,7 +93,7 @@ public class EditAnswerPredictionCardAdapter extends ArrayAdapter<EditAnswerQues
                                    HmImageView leftImgOptionLayout, HmImageView rightImgOptionLayout,
                                    View contentView) {
         if (question != null) {
-            int padding = getContext().getResources().getDimensionPixelOffset(R.dimen.dim_4);
+            int padding = getContext().getResources().getDimensionPixelOffset(R.dimen.dim_3);
             if (question.getChosenAnswerId() == Constants.AnswerIds.LEFT) {
                 leftImgOptionLayout.setBackgroundResource(R.drawable.edit_answer_chosen_option_bg);
                 leftImgOptionLayout.setPadding(padding, padding, padding, padding);
