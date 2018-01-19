@@ -25,6 +25,9 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.freshchat.consumer.sdk.ConversationOptions;
+import com.freshchat.consumer.sdk.Freshchat;
+import com.freshchat.consumer.sdk.FreshchatUser;
 import com.jeeva.android.Log;
 import com.jeeva.android.widgets.HmImageView;
 import com.jeeva.android.widgets.ShadowLayout;
@@ -32,7 +35,9 @@ import com.jeeva.android.widgets.ShadowLayout;
 import org.parceler.Parcels;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import in.sportscafe.nostragamus.AppSnippet;
 import in.sportscafe.nostragamus.BuildConfig;
@@ -58,6 +63,7 @@ import in.sportscafe.nostragamus.module.resultspeek.FeedWebView;
 import in.sportscafe.nostragamus.module.resultspeek.ResultsPeekActivity;
 import in.sportscafe.nostragamus.module.resultspeek.dto.Match;
 import in.sportscafe.nostragamus.module.resultspeek.dto.Question;
+import in.sportscafe.nostragamus.module.user.login.dto.UserInfo;
 import in.sportscafe.nostragamus.utils.timeutils.TimeUtils;
 
 /**
@@ -1076,9 +1082,42 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
                 navigateToLeaderboards(view.getContext(), null);
                 break;
             case R.id.schedule_row_rl_report_btn:
-                openSubmitReportPopup(view.getContext());
+                //openSubmitReportPopup(view.getContext());
+                openResultsChatBox(view.getContext());
                 break;
         }
+    }
+
+    private void openResultsChatBox(Context context) {
+
+        UserInfo userInfo = Nostragamus.getInstance().getServerDataManager().getUserInfo();
+        FreshchatUser user = Freshchat.getInstance(context).getUser();
+        if (userInfo!=null && user!=null) {
+            user.setFirstName(userInfo.getUserName())
+                    .setEmail(userInfo.getEmail());
+            Freshchat.getInstance(context).setUser(user);
+
+            /* Set any custom metadata to give agents more context,
+            and for segmentation for marketing or pro-active messaging */
+            Map<String, String> userMeta = new HashMap<String, String>();
+            userMeta.put("UserId", String.valueOf(userInfo.getId()));
+            userMeta.put("Challenge Id", String.valueOf(getItem(0).getChallengeId()));
+            userMeta.put("MatchId", String.valueOf(getItem(0).getId()));
+            userMeta.put("RoomId", String.valueOf(getItem(0).getRoomId()));
+            userMeta.put("Transaction Type", "");
+            userMeta.put("Transaction Order Id", "");
+
+            //Call setUserProperties to sync the user properties with Freshchat's servers
+            Freshchat.getInstance(context).setUserProperties(userMeta);
+
+        }
+
+         /* Open Answer Related Queries Chat Channel */
+        List<String> tags = new ArrayList<>();
+        tags.add("answers");
+        ConversationOptions convOptions = new ConversationOptions()
+                .filterByTags(tags, "answers");
+        Freshchat.showConversations(context, convOptions);
     }
 
     private void openSubmitReportPopup(Context context) {
@@ -1097,6 +1136,7 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
         intent.putExtra(BundleKeys.REPORT_THANKYOU_TEXT,"You can let us know about issues with the answers or points awarded for this game, by reporting it." +
                 " We will review it and make any necessary corrections!");
         context.startActivity(intent);
+
     }
 
     private void navigateToOthersAnswers(Context context) {

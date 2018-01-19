@@ -367,7 +367,7 @@ public class MyWebService extends AbstractWebService<NostragamusService> {
     }
 
     public Call<ContestResponse> getContests(int challengeId, boolean needPoolContest) {
-        return mNostragamusService.getContests(challengeId, Nostragamus.getInstance().getAppTypeFlavor(), needPoolContest);
+        return mNostragamusService.getContests(challengeId, Nostragamus.getInstance().getAppTypeFlavor(), needPoolContest,true);
     }
 
     public Call<List<InPlayResponse>> getInPlayChallenges() {

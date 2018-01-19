@@ -1,22 +1,22 @@
 [
   {
-		"title": "Daily Fantasy Sports Prediction",
-		"desc": "Make Predictions. Win cash prizes!",
+		"title": "Daily fantasy sports prediction",
+		"desc": "Make predictions, and win cash prizes!",
 		"imageUrl": "https://cdn-images.spcafe.in/img/es3/Game/Login_screen/onboard_dailysports_2.png"
 	},
 	{
-		"title": "Simpler than ever before.",
-		"desc": "Predict with just a swipe!",
+		"title": "Simpler than ever before!",
+		"desc": "Predict easily, just by swiping question cards",
 		"imageUrl": "https://cdn-images.spcafe.in/img/es3/Game/Login_screen/onboard_swipe_2.png"
 	},
 	{
-		"title": "Challenges across various sports",
-		"desc": "Play for cash or play for fun!",
+		"title": "Challenges across multiple sports",
+		"desc": "Join contests & play challenges for cash, or fun",
 		"imageUrl": "https://cdn-images.spcafe.in/img/es3/Game/Login_screen/onboard_challenges_3.png"
 	},
 	{
-		"title": "Compete With Friends",
-		"desc": "Prove you know more about sports!",
-		"imageUrl": "https://cdn-images.spcafe.in/img/es3/Game/Login_screen/onboard_friends_2.png"
+		"title": "Play all games and score max points!",
+		"desc": "Top scorers win, once challenges end",
+		"imageUrl": "https://cdn-images.spcafe.in/img/es3/Game/Login_screen/onboarding_games.png"
 	}
 ]

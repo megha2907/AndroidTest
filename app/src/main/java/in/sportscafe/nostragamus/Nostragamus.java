@@ -46,6 +46,7 @@ import in.sportscafe.nostragamus.module.user.login.RefreshTokenModelImpl;
 import in.sportscafe.nostragamus.webservice.MyWebService;
 import io.branch.referral.Branch;
 import io.fabric.sdk.android.Fabric;
+import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 
 /**
  * Created by Jeeva on 14/3/16.
@@ -173,6 +174,11 @@ public class Nostragamus extends Application {
                 "fonts/lato/Lato-Light.ttf", "fonts/lato/Lato-Regular.ttf",
                 "fonts/lato/Lato-Black.ttf"
         );
+
+        CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
+                .setDefaultFontPath("fonts/lato/Lato-Regular.ttf")
+                .setFontAttrId(R.attr.fontPath)
+                .build());
     }
 
     private void doInstallOrUpdateChanges() {
@@ -270,6 +276,7 @@ public class Nostragamus extends Application {
         navigateToLogIn();
         NostragamusAnalytics.getInstance().trackLogOut();
         MoEHelper.getInstance(getApplicationContext()).logoutUser();
+        Freshchat.resetUser(getApplicationContext());
     }
 
     private void navigateToLogIn() {

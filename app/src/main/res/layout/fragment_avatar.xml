@@ -48,7 +48,7 @@
         android:text="Description"
         android:textColor="@color/white"
         android:textSize="@dimen/dp_14"
-        app:typeface="lato_light" />
+        app:typeface="lato_regular" />
 
     <com.jeeva.android.widgets.customfont.CustomTextView
         android:id="@+id/onboard_tv_title"

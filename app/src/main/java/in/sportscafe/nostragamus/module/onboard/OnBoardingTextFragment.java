@@ -65,6 +65,7 @@ public class OnBoardingTextFragment extends NostragamusFragment {
         TextView onBoardingDesc = (TextView) findViewById(R.id.onboard_tv_desc);
         onBoardingDesc.setText(onBoardingDto.getDesc());
 
+        TextView onBoardingReferralCodeText = (TextView) findViewById(R.id.onboard_referral_code_text);
 
         mIvOnBoardIn = (HmImageView) findViewById(R.id.onboard_iv_image_in);
         mIvOnBoardOut = (HmImageView) findViewById(R.id.onboard_iv_image_out);
@@ -84,14 +85,20 @@ public class OnBoardingTextFragment extends NostragamusFragment {
                 populateUserReferralCode(onBoardingDto.getReferralCode());
             }
             referralCode.setVisibility(View.VISIBLE);
-            onBoardingTitle.setTextSize(TypedValue.COMPLEX_UNIT_PX, getResources().getDimensionPixelSize(R.dimen.dim_16));
+            onBoardingTitle.setVisibility(View.GONE);
+            onBoardingReferralCodeText.setVisibility(View.VISIBLE);
 
             RelativeLayout.LayoutParams paramsFour = (RelativeLayout.LayoutParams) mOnBoardImageLayout.getLayoutParams();
             paramsFour.topMargin = getResources().getDimensionPixelSize(R.dimen.onboarding_referral_image_gap);
             mOnBoardImageLayout.setLayoutParams(paramsFour);
 
+            RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) onBoardingDesc.getLayoutParams();
+            params.topMargin = getResources().getDimensionPixelSize(R.dimen.dim_20);
+            onBoardingDesc.setLayoutParams(params);
+
         } else {
             referralCode.setVisibility(View.GONE);
+            onBoardingReferralCodeText.setVisibility(View.GONE);
         }
 
         mIvOnBoardIn.setImageUrl(onBoardingDto.getImageUrl());

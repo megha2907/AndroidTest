@@ -153,7 +153,7 @@
     <dimen name="onboarding_referral_width">84dp</dimen>
     <dimen name="onboarding_height">190dp</dimen>
     <dimen name="onboarding_width">190dp</dimen>
-    <dimen name="onboarding_referral_image_gap">57dp</dimen>
+    <dimen name="onboarding_referral_image_gap">47dp</dimen>
     <dimen name="onboarding_title_text_size">20dp</dimen>
     <dimen name="onboarding_desc_text_size">14dp</dimen>
     <dimen name="onboarding_referral_text_size">18dp</dimen>

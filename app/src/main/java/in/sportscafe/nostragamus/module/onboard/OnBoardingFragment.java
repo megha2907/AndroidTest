@@ -191,7 +191,7 @@ public class OnBoardingFragment extends NostragamusFragment {
             ex.printStackTrace();
         }
 
-//        NostragamusDataHandler.getInstance().setUserReferralCode("DEE1135");
+//        NostragamusDataHandler.getInstance().setUserReferralCode("DEE1440");
 //        NostragamusDataHandler.getInstance().setUserReferralName("Deepanshi Bajaj");
 //        NostragamusDataHandler.getInstance().setWalletInitialAmount(20);
 //        NostragamusDataHandler.getInstance().setUserReferralPhoto("https://graph.facebook.com/1273708409337068/picture?height=350&width=350");
@@ -204,10 +204,8 @@ public class OnBoardingFragment extends NostragamusFragment {
             }
 
             if (NostragamusDataHandler.getInstance().getWalletInitialAmount() != null) {
-                onBoardingDto.setDesc("Join " + NostragamusDataHandler.getInstance().getUserReferralName()
-                        + " in predicting live sports matches! \n Your first " +
-                        "₹" + NostragamusDataHandler.getInstance().getWalletInitialAmount()
-                        + " is on us!");
+                onBoardingDto.setDesc(NostragamusDataHandler.getInstance().getUserReferralName()
+                        + " sent you a gift! Log in to claim and join your friend in predicting live games!");
             }
             onBoardingDto.setImageUrl(NostragamusDataHandler.getInstance().getUserReferralPhoto());
             onBoardingDto.setReferralCode(NostragamusDataHandler.getInstance().getUserReferralCode());

@@ -9,7 +9,7 @@
         android:layout_width="@dimen/dp_190"
         android:layout_height="@dimen/dp_190"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="@dimen/dp_40"
+        android:layout_marginTop="@dimen/dim_40"
         android:layout_centerHorizontal="true">
 
         <com.jeeva.android.widgets.HmImageView
@@ -26,19 +26,34 @@
             android:alpha="0" />
     </RelativeLayout>
 
+    <com.jeeva.android.widgets.customfont.CustomTextView
+        android:id="@+id/onboard_referral_code_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/onboarding_image_rl"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/dim_28"
+        android:gravity="center"
+        android:text="REFERRAL CODE"
+        android:textColor="#a0acb2"
+        android:visibility="gone"
+        android:textSize="@dimen/dim_10"
+        app:typeface="lato_regular" />
+
     <LinearLayout
         android:id="@+id/onboard_text_et_referral_code"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dp_28"
-        android:layout_marginLeft="@dimen/dp_14"
-        android:layout_marginRight="@dimen/dp_14"
+        android:layout_marginTop="@dimen/dim_4"
+        android:layout_marginLeft="@dimen/dim_14"
+        android:layout_marginRight="@dimen/dim_14"
+        android:layout_centerHorizontal="true"
         android:visibility="visible"
-        android:layout_below="@+id/onboarding_image_rl">
+        android:layout_below="@+id/onboard_referral_code_text">
 
         <com.jeeva.android.widgets.customfont.CustomTextView
             android:id="@+id/onboard_text_et_referral_code_char_one"
-            style="@style/InviteCodeLoginStyle"
+            style="@style/InviteCodeLoginStyleFirstLetter"
             app:typeface="lato_light"/>
 
         <com.jeeva.android.widgets.customfont.CustomTextView
@@ -68,7 +83,7 @@
 
         <com.jeeva.android.widgets.customfont.CustomTextView
             android:id="@+id/onboard_text_et_referral_code_char_seven"
-            style="@style/InviteCodeLoginStyle"
+            style="@style/InviteCodeLoginStyleLastLetter"
             app:typeface="lato_light"/>
 
     </LinearLayout>
@@ -99,8 +114,9 @@
         android:layout_marginRight="@dimen/dp_20"
         android:gravity="center"
         android:text="desc"
+        android:lineSpacingExtra="@dimen/dim_4"
         android:textColor="@color/white"
-        android:textSize="@dimen/onboarding_desc_text_size"
-        app:typeface="lato_light" />
+        android:textSize="@dimen/dim_13"
+        app:typeface="lato_regular" />
 
 </RelativeLayout>
