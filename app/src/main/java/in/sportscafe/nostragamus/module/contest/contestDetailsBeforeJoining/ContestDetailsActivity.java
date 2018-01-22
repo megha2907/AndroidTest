@@ -15,11 +15,14 @@ import org.parceler.Parcels;
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.R;
+import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
 import in.sportscafe.nostragamus.module.common.NostraBaseActivity;
 import in.sportscafe.nostragamus.module.contest.dto.Contest;
 import in.sportscafe.nostragamus.module.contest.dto.ContestScreenData;
 import in.sportscafe.nostragamus.module.contest.dto.JoinContestData;
 import in.sportscafe.nostragamus.module.contest.helper.JoinContestHelper;
+import in.sportscafe.nostragamus.module.contest.ui.ContestsActivity;
+import in.sportscafe.nostragamus.module.customViews.CustomSnackBar;
 import in.sportscafe.nostragamus.module.navigation.wallet.addMoney.lowBalance.AddMoneyOnLowBalanceActivity;
 import in.sportscafe.nostragamus.module.nostraHome.ui.NostraHomeActivity;
 import in.sportscafe.nostragamus.module.popups.timerPopup.TimerFinishDialogHelper;
@@ -113,6 +116,11 @@ public class ContestDetailsActivity extends NostraBaseActivity implements Contes
                     joinContestData.setChallengeName(contest.getChallengeName());
                     joinContestData.setEntryFee(contest.getEntryFee());
                     joinContestData.setJoiContestDialogLaunchMode(CompletePaymentDialogFragment.DialogLaunchMode.JOINING_CHALLENGE_LAUNCH);
+                    joinContestData.setContestName(contest.getConfigName());
+
+                    if (contest.getContestType() != null) {
+                        joinContestData.setContestType(contest.getContestType().getCategoryName());
+                    }
                 }
             }
 
@@ -148,12 +156,21 @@ public class ContestDetailsActivity extends NostraBaseActivity implements Contes
                                     public void lowWalletBalance(JoinContestData joinContestData) {
                                         CustomProgressbar.getProgressbar(ContestDetailsActivity.this).dismissProgress();
                                         launchLowBalanceActivity(joinContestData);
+                                        NostragamusAnalytics.getInstance().trackClickEvent(Constants.AnalyticsCategory.CONTEST,
+                                                Constants.AnalyticsClickLabels.JOIN_CONTEST + "-" + Constants.AnalyticsClickLabels.CONTEST_LOW_MONEY);
                                     }
 
                                     @Override
                                     public void joinContestSuccess(JoinContestData contestJoinedSuccessfully) {
                                         CustomProgressbar.getProgressbar(ContestDetailsActivity.this).dismissProgress();
                                         onContestJoinedSuccessfully(contestJoinedSuccessfully);
+
+                                        NostragamusAnalytics.getInstance().trackClickEvent(Constants.AnalyticsCategory.CONTEST_JOINED,
+                                                String.valueOf(contestJoinedSuccessfully.getContestId()));
+
+                                        if (contestJoinedSuccessfully != null) {
+                                            sendContestJoinedDataToAmplitude(contestJoinedSuccessfully);
+                                        }
                                     }
 
                                     @Override
@@ -242,11 +259,24 @@ public class ContestDetailsActivity extends NostraBaseActivity implements Contes
             View view = findViewById(R.id.contest_details_before_join_activity_parent);
 
             if (!TextUtils.isEmpty(msg)) {
-                Snackbar.make(view, msg, Snackbar.LENGTH_LONG).show();
+                CustomSnackBar.make(view, msg, CustomSnackBar.DURATION_LONG).show();
             } else {
-                Snackbar.make(view, Constants.Alerts.SOMETHING_WRONG, Snackbar.LENGTH_LONG).show();
+                CustomSnackBar.make(view, Constants.Alerts.SOMETHING_WRONG, CustomSnackBar.DURATION_LONG).show();
             }
         }
+    }
+
+    private void sendContestJoinedDataToAmplitude(JoinContestData contest) {
+
+        /* Joining a contest = Revenue */
+        NostragamusAnalytics.getInstance().trackRevenue(contest.getEntryFee(), contest.getContestId(),
+                contest.getContestName(), contest.getContestType());
+
+        /* Send Contest Joined Details to Amplitude */
+        NostragamusAnalytics.getInstance().trackContestJoined(contest.getContestId(),
+                contest.getContestName(), contest.getContestType(),
+                (int) contest.getEntryFee(), contest.getChallengeId(), "Contest Details - Join Contest");
+
     }
 
     void startAnim() {

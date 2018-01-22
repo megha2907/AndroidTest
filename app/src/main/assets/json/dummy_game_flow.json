@@ -1,6 +1,6 @@
 [
   {
-    "name": "Before you play your first game, take a moment to understand how to play Nostragamus",
+    "name": "Before playing your first game, take a moment to understand how to make predictions in Nostragamus",
     "textType": "centerBottomText",
     "animation": {
       "start": 0,
@@ -42,14 +42,14 @@
     "textType": "centerBottomText",
     "animation": {
       "start": 1,
-      "end": 0.6,
+      "end": 0.8,
       "duration": 1000,
       "type": "alpha"
     },
     "type": "text"
   },
   {
-    "name": "Each card poses a question along with background information and stats. Read through and swipe left or right on the card to make a choice.",
+    "name": "This is a prediction card. It contains a question, with relevant stats. Read the stats and select one of the options by swiping left/right to make a prediction.",
     "textType": "topText",
     "animation": {
       "start": 0,
@@ -80,14 +80,14 @@
     "textType": "topText",
     "animation": {
       "start": 1,
-      "end": 0.6,
+      "end": 0.8,
       "duration": 1000,
       "type": "alpha"
     },
     "type": "text"
   },
   {
-    "name": "Great! Sometimes, a question will have a 3rd option shown in a button below the card. Tap the button or swipe up to go for the 3rd option.",
+    "name": "Great! Sometimes questions may have a 3rd option in a button below the card. Tap the button or swipe up on the card to select that prediction.",
     "textType": "topText",
     "animation": {
       "start": 0,
@@ -119,14 +119,14 @@
     "textType": "topText",
     "animation": {
       "start": 1,
-      "end": 0.6,
+      "end": 0.8,
       "duration": 1000,
       "type": "alpha"
     },
     "type": "text"
   },
   {
-    "name": "A correct prediction gets you +10 points, while a wrong one fetches you -4 points. Swipe again to see what you score!",
+    "name": "Once results are out for games, points are awarded. Correct predictions get +10 points%, wrong ones get  -4 points&. Make a prediction to see how you score!",
     "textType": "topText",
     "animation": {
       "start": 0,
@@ -160,14 +160,14 @@
     "textType": "topText",
     "animation": {
       "start": 1,
-      "end": 0.6,
+      "end": 0.8,
       "duration": 1000,
       "type": "alpha"
     },
     "type": "text"
   },
   {
-    "name": "That answer got you (%1d) points!",
+    "name": "You scored #%1d points$ for that prediction!",
     "textType": "topText",
     "animation": {
       "start": 0,
@@ -218,7 +218,7 @@
     "textType": "topText",
     "animation": {
       "start": 1,
-      "end": 0.6,
+      "end": 0.8,
       "duration": 1000,
       "type": "alpha"
     },
@@ -241,7 +241,7 @@
     "type": "animatePowerup"
   },
   {
-    "name": "You scored (%1d) points for that answer.",
+    "name": "You scored #%1d points$ for that prediction!",
     "textType": "centerTopText",
     "animation": {
       "start": 0,
@@ -254,7 +254,7 @@
     "type": "text"
   },
   {
-    "name": "Thats it! Go back and play around with using the other powerups. Remember, you can use more than one powerup per question!\n\nOnce you've got the hang of it, its time to start playing!",
+    "name": "You can use multiple powerups for each prediction, so make sure to try out different combos!\n\nScore maximum points by making all predicitions in a game, and playing all games in a challenge!",
     "textType": "centerBottomText",
     "animation": {
       "start": 0,
@@ -266,7 +266,7 @@
     "type": "text"
   },
   {
-    "name": "Try Another Powerup",
+    "name": "Try more Powerups",
     "textType": "action1",
     "actionType": "powerups",
     "animation": {

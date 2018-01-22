@@ -43,6 +43,7 @@ import in.sportscafe.nostragamus.module.contest.adapter.PoolRewardsAdapter;
 import in.sportscafe.nostragamus.module.contest.dto.PoolPrizeEstimationScreenData;
 import in.sportscafe.nostragamus.module.contest.dto.pool.PoolPayoutMap;
 import in.sportscafe.nostragamus.module.contest.helper.PoolPrizesEstimationHelper;
+import in.sportscafe.nostragamus.module.customViews.CustomSnackBar;
 import in.sportscafe.nostragamus.module.newChallenges.helpers.DateTimeHelper;
 import in.sportscafe.nostragamus.module.resultspeek.FeedWebView;
 import in.sportscafe.nostragamus.utils.timeutils.TimeAgo;
@@ -485,15 +486,15 @@ public class PoolPrizesEstimationFragment extends BaseFragment implements View.O
     private void handleError(String msg, int status) {
         if (getView() != null && getActivity() != null && !getActivity().isFinishing()) {
             if (!TextUtils.isEmpty(msg)) {
-                Snackbar.make(getView(), msg, Snackbar.LENGTH_LONG).show();
+                CustomSnackBar.make(getView(), msg, CustomSnackBar.DURATION_LONG).show();
             } else {
                 switch (status) {
                     case Constants.DataStatus.NO_INTERNET:
-                        Snackbar.make(getView(), Constants.Alerts.NO_INTERNET_CONNECTION, Snackbar.LENGTH_LONG).show();
+                        CustomSnackBar.make(getView(), Constants.Alerts.NO_INTERNET_CONNECTION, CustomSnackBar.DURATION_LONG).show();
                         break;
 
                     default:
-                        Snackbar.make(getView(), Constants.Alerts.SOMETHING_WRONG, Snackbar.LENGTH_LONG).show();
+                        CustomSnackBar.make(getView(), Constants.Alerts.SOMETHING_WRONG, CustomSnackBar.DURATION_LONG).show();
                         break;
                 }
             }

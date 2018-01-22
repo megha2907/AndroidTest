@@ -8,4 +8,5 @@ import android.os.Bundle;
 
 public interface NostraHomeActivityListener {
     void showNewChallenges(Bundle args);
+    void updateInplayCounter();
 }

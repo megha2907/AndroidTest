@@ -21,6 +21,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.jeeva.android.Log;
 import com.jeeva.android.widgets.HmImageView;
 
 import org.json.JSONArray;
@@ -34,8 +35,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import in.sportscafe.nostragamus.BuildConfig;
+import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.R;
+import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
 import in.sportscafe.nostragamus.module.common.NostragamusFragment;
 import in.sportscafe.nostragamus.module.common.ViewPagerAdapter;
 import in.sportscafe.nostragamus.utils.ViewUtils;
@@ -100,7 +103,14 @@ public class OnBoardingFragment extends NostragamusFragment {
 
             @Override
             public void onPageSelected(int position) {
-               // onPositionChanged(position);
+                // onPositionChanged(position);
+                String newPos;
+                if (mOnBoardingList.get(0).getReferralCode() != null) {
+                    newPos = String.valueOf(position);
+                }else {
+                    newPos = String.valueOf(position+1);
+                }
+                NostragamusAnalytics.getInstance().trackScreenShown(Constants.AnalyticsCategory.ONBOARDING,"Slide "+newPos);
             }
 
             @Override
@@ -145,12 +155,12 @@ public class OnBoardingFragment extends NostragamusFragment {
         mIvOnBoardIn.setAlpha(0.1f);
         mIvOnBoardIn.animate().alpha(1).setDuration(1000);
 
-        if (mOnBoardingList.get(position).getReferralCode()!=null) {
+        if (mOnBoardingList.get(position).getReferralCode() != null) {
             RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) mOnBoardImageLayout.getLayoutParams();
             params.height = 190;
             params.width = 190;
             mOnBoardImageLayout.setLayoutParams(params);
-        }else {
+        } else {
             RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) mOnBoardImageLayout.getLayoutParams();
             params.height = 320;
             params.width = 320;

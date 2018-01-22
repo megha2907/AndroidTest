@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -29,6 +28,7 @@ import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
 import in.sportscafe.nostragamus.module.common.NostraBaseFragment;
+import in.sportscafe.nostragamus.module.customViews.CustomSnackBar;
 import in.sportscafe.nostragamus.module.customViews.TimelineHelper;
 import in.sportscafe.nostragamus.module.inPlay.adapter.MatchesAdapterAction;
 import in.sportscafe.nostragamus.module.inPlay.adapter.InPlayMatchAdapterListener;
@@ -158,7 +158,7 @@ public class InPlayMatchesPagerFragment extends NostraBaseFragment {
             TextView tipTextView = (TextView) getView().findViewById(R.id.games_tip_textView);
             TextView tipTextViewText = (TextView) getView().findViewById(R.id.games_tip_text_textView);
             tipTextViewText.setText("TIP : ");
-            tipTextView.setText("You must play all "+String.valueOf(responses.getData().getInPlayMatchList().size())+" games in this contest to win prizes");
+            tipTextView.setText("Play all " + String.valueOf(responses.getData().getInPlayMatchList().size()) + " games to have the best chance of winning prizes.");
 
             /* Set Powerups */
             showOrHidePowerUps(responses.getData().getPowerUp());
@@ -262,24 +262,21 @@ public class InPlayMatchesPagerFragment extends NostraBaseFragment {
             int powerUpNonNegsCount = powerUp.getNoNegative();
             int powerUpPlayerPollCount = powerUp.getPlayerPoll();
 
-            if (powerUp2xCount == 0 && powerUpNonNegsCount == 0 && powerUpPlayerPollCount == 0) {
-                powerUpLayout.setVisibility(View.GONE);
-            } else {
-                powerUpLayout.setVisibility(View.VISIBLE);
+            powerUpLayout.setVisibility(View.VISIBLE);
 
-                powerUp2xImageView.setBackgroundResource(R.drawable.double_powerup_small);
-                powerUp2xImageView.setVisibility(View.VISIBLE);
-                powerUp2xTextView.setText(String.valueOf(powerUp2xCount));
+            powerUp2xImageView.setBackgroundResource(R.drawable.double_powerup_small);
+            powerUp2xImageView.setVisibility(View.VISIBLE);
+            powerUp2xTextView.setText(String.valueOf(powerUp2xCount));
 
-                powerUpNoNegativeImageView.setBackgroundResource(R.drawable.no_negative_powerup_small);
-                powerUpNoNegativeImageView.setVisibility(View.VISIBLE);
-                powerUpNoNegativeTextView.setText(String.valueOf(powerUpNonNegsCount));
+            powerUpNoNegativeImageView.setBackgroundResource(R.drawable.no_negative_powerup_small);
+            powerUpNoNegativeImageView.setVisibility(View.VISIBLE);
+            powerUpNoNegativeTextView.setText(String.valueOf(powerUpNonNegsCount));
 
-                powerUpAudienceImageView.setBackgroundResource(R.drawable.audience_poll_powerup_small);
-                powerUpAudienceImageView.setVisibility(View.VISIBLE);
-                powerUpAudienceTextView.setText(String.valueOf(powerUpPlayerPollCount));
+            powerUpAudienceImageView.setBackgroundResource(R.drawable.audience_poll_powerup_small);
+            powerUpAudienceImageView.setVisibility(View.VISIBLE);
+            powerUpAudienceTextView.setText(String.valueOf(powerUpPlayerPollCount));
 
-            }
+
         }
     }
 
@@ -497,11 +494,11 @@ public class InPlayMatchesPagerFragment extends NostraBaseFragment {
         if (getView() != null && getActivity() != null && !getActivity().isFinishing()) {
             switch (status) {
                 case Constants.DataStatus.NO_INTERNET:
-                    Snackbar.make(getView(), Constants.Alerts.NO_INTERNET_CONNECTION, Snackbar.LENGTH_LONG).show();
+                    CustomSnackBar.make(getView(), Constants.Alerts.NO_INTERNET_CONNECTION, CustomSnackBar.DURATION_LONG).show();
                     break;
 
                 default:
-                    Snackbar.make(getView(), Constants.Alerts.SOMETHING_WRONG, Snackbar.LENGTH_LONG).show();
+                    CustomSnackBar.make(getView(), Constants.Alerts.SOMETHING_WRONG, CustomSnackBar.DURATION_LONG).show();
                     break;
             }
         }

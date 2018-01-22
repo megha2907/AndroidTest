@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Pressed state -->
+    <item android:state_pressed="true">
+        <layer-list>
+            <item> <!-- Shadow -->
+                <shape>
+                    <solid android:color="#404040" />
+                    <corners android:radius="@dimen/dim_2" />
+                </shape>
+            </item>
+            <item android:bottom="@dimen/dim_3">
+                <shape>
+                    <solid android:color="#505050" />
+                    <corners android:radius="@dimen/dim_2" />
+                </shape>
+            </item>
+        </layer-list>
+    </item>
+
+    <item>
+        <layer-list>
+            <!-- SHADOW -->
+            <item>
+                <shape>
+                    <solid android:color="#404040" />
+                    <corners android:radius="@dimen/dim_2" />
+                </shape>
+            </item>
+            <!-- BUTTON -->
+            <item android:bottom="@dimen/dim_3">
+                <shape android:shape="rectangle">
+                    <solid android:color="#656565" />
+                    <corners android:radius="@dimen/dim_2" />
+                </shape>
+            </item>
+        </layer-list>
+    </item>
+</selector>

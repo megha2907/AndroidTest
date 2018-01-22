@@ -56,7 +56,8 @@ public class EditAnswerActivity extends NostraBaseActivity implements EditAnswer
         Fragment editAnswerFragment = getSupportFragmentManager().findFragmentById(R.id.fragment_container);
         if (editAnswerFragment != null && editAnswerFragment instanceof  EditAnswerFragment) {
             ((EditAnswerFragment) editAnswerFragment).onBackPressed();
+        } else {
+            onBackClicked();
         }
-
     }
 }

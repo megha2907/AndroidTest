@@ -29,6 +29,7 @@ import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
 import in.sportscafe.nostragamus.module.challengeCompleted.dto.CompletedContestDto;
 import in.sportscafe.nostragamus.module.challengeCompleted.dto.CompletedContestMatchDto;
 import in.sportscafe.nostragamus.module.common.NostraBaseFragment;
+import in.sportscafe.nostragamus.module.customViews.CustomSnackBar;
 import in.sportscafe.nostragamus.module.customViews.TimelineHelper;
 import in.sportscafe.nostragamus.module.inPlay.adapter.InPlayMatchAdapterListener;
 import in.sportscafe.nostragamus.module.inPlay.adapter.InPlayMatchesRecyclerAdapter;
@@ -142,7 +143,7 @@ public class CompletedMatchTimelineViewPagerFragment extends NostraBaseFragment 
             TextView tipTextView = (TextView) getView().findViewById(R.id.games_tip_textView);
             TextView tipTextViewText = (TextView) getView().findViewById(R.id.games_tip_text_textView);
             tipTextViewText.setText("TIP : ");
-            tipTextView.setText("You must play all "+String.valueOf(responses.getData().getInPlayMatchList().size())+" games in this contest to win prizes");
+            tipTextView.setText("Play all "+String.valueOf(responses.getData().getInPlayMatchList().size())+" games to have the best chance of winning prizes.");
 
              /* Set Powerups */
             showOrHidePowerUps(responses.getData().getPowerUp());
@@ -334,11 +335,11 @@ public class CompletedMatchTimelineViewPagerFragment extends NostraBaseFragment 
         if (getView() != null && !getActivity().isFinishing()) {
             switch (status) {
                 case Constants.DataStatus.NO_INTERNET:
-                    Snackbar.make(getView(), Constants.Alerts.NO_INTERNET_CONNECTION, Snackbar.LENGTH_LONG).show();
+                    CustomSnackBar.make(getView(), Constants.Alerts.NO_INTERNET_CONNECTION, CustomSnackBar.DURATION_LONG).show();
                     break;
 
                 default:
-                    Snackbar.make(getView(), Constants.Alerts.SOMETHING_WRONG, Snackbar.LENGTH_LONG).show();
+                    CustomSnackBar.make(getView(), Constants.Alerts.SOMETHING_WRONG, CustomSnackBar.DURATION_LONG).show();
                     break;
             }
         }

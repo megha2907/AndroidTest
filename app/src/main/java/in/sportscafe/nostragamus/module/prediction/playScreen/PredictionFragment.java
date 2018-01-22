@@ -39,7 +39,9 @@ import java.util.List;
 
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
+import in.sportscafe.nostragamus.cache.CacheManagementHelper;
 import in.sportscafe.nostragamus.module.common.NostraBaseFragment;
+import in.sportscafe.nostragamus.module.customViews.CustomSnackBar;
 import in.sportscafe.nostragamus.module.inPlay.ui.ResultsScreenDataDto;
 import in.sportscafe.nostragamus.module.nostraHome.ui.NostraHomeActivity;
 import in.sportscafe.nostragamus.module.prediction.gamePlayHelp.GamePlayHelpActivity;
@@ -91,7 +93,8 @@ public class PredictionFragment extends NostraBaseFragment implements View.OnCli
     private int mTotalQuestions = 0;
     private int mCurrentQuestionPos = 1;
 
-    public PredictionFragment() {}
+    public PredictionFragment() {
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -276,7 +279,7 @@ public class PredictionFragment extends NostraBaseFragment implements View.OnCli
             }
 
             if (mCurrentQuestionPos > 0) {
-                String questionNumCounter = String.valueOf(mCurrentQuestionPos) +"/" + String.valueOf(mTotalQuestions);
+                String questionNumCounter = String.valueOf(mCurrentQuestionPos) + "/" + String.valueOf(mTotalQuestions);
                 mCounterTextView.setText(questionNumCounter);
 
                 RelativeLayout relativeLayout = (RelativeLayout) getView().findViewById(R.id.prediction_questions_info_parent);
@@ -667,7 +670,7 @@ public class PredictionFragment extends NostraBaseFragment implements View.OnCli
     private int getTopVisibleCardQuestionId() {
         int questionId = -1;
         int cardPos = getTopVisibleCardPosition();
-        if (cardPos >= 0  && mQuestionsCardAdapter != null && cardPos < mQuestionsCardAdapter.getCount()) {
+        if (cardPos >= 0 && mQuestionsCardAdapter != null && cardPos < mQuestionsCardAdapter.getCount()) {
             PredictionQuestion question = mQuestionsCardAdapter.getItem(cardPos);
             if (question != null) {
                 questionId = question.getQuestionId();
@@ -679,6 +682,7 @@ public class PredictionFragment extends NostraBaseFragment implements View.OnCli
 
     /**
      * Players Poll can NOT be removed once applied
+     *
      * @param playersPolls
      */
     private void onPlayerPollSuccess(PlayerPollResponse playersPolls) {
@@ -723,7 +727,7 @@ public class PredictionFragment extends NostraBaseFragment implements View.OnCli
                     }
                 }
             }
-        }  else {
+        } else {
             handleError("Not enough responses for Audience Poll", -1);
         }
     }
@@ -820,6 +824,7 @@ public class PredictionFragment extends NostraBaseFragment implements View.OnCli
     /**
      * Check that powerup already applied & UI is created for the same question/card
      * so that multi-tap can be prevented
+     *
      * @param powerUpParent
      * @param powerUpEnum
      * @return
@@ -854,6 +859,7 @@ public class PredictionFragment extends NostraBaseFragment implements View.OnCli
 
     /**
      * Performs action when card is swiped out
+     *
      * @return
      */
     @NonNull
@@ -997,7 +1003,7 @@ public class PredictionFragment extends NostraBaseFragment implements View.OnCli
     }
 
     private void hideProgress() {
-        if (getActivity() != null){
+        if (getActivity() != null) {
             if (!getActivity().isFinishing() && mProgressDialog != null && mProgressDialog.isShowing()) {
                 mProgressDialog.dismiss();
             }
@@ -1013,6 +1019,9 @@ public class PredictionFragment extends NostraBaseFragment implements View.OnCli
                 "934797470", "tIBCCIK8pHEQnsHfvQM", "1.00", true);
 
         Log.d(TAG, "Match Completed");
+
+        /* Fetch Inplay data and save into DB */
+        new CacheManagementHelper().fetchInplayDataAndSaveIntoDb(getContext().getApplicationContext());
 
         ResultsScreenDataDto data = new ResultsScreenDataDto();
         if (mPlayScreenData != null) {
@@ -1036,8 +1045,12 @@ public class PredictionFragment extends NostraBaseFragment implements View.OnCli
         args.putParcelable(Constants.BundleKeys.RESULTS_SCREEN_DATA, Parcels.wrap(data));
         args.putInt(Constants.BundleKeys.SCREEN_LAUNCH_REQUEST, NostraHomeActivity.LaunchedFrom.SHOW_IN_PLAY);
 
-        if (mFragmentListener != null) {
-            mFragmentListener.onMatchCompleted(args);
+        if (mFragmentListener != null && mPlayScreenData != null) {
+            if (mPlayScreenData.isPlayingPseudoGame()) {
+                mFragmentListener.onMatchCompleted(args);
+            } else {
+                mFragmentListener.onBackClicked();
+            }
         }
     }
 
@@ -1126,22 +1139,23 @@ public class PredictionFragment extends NostraBaseFragment implements View.OnCli
     /**
      * If msg is passed then msg will be shown ;
      * else status should be passed
+     *
      * @param msg
      * @param status
      */
     private void handleError(String msg, int status) {
         if (getView() != null && getActivity() != null && !getActivity().isFinishing()) {
             if (!TextUtils.isEmpty(msg)) {
-                Snackbar.make(getView(), msg, Snackbar.LENGTH_LONG).show();
+                CustomSnackBar.make(getView(), msg, CustomSnackBar.DURATION_LONG).show();
 
             } else {
                 switch (status) {
                     case Constants.DataStatus.NO_INTERNET:
-                        Snackbar.make(getView(), Constants.Alerts.NO_INTERNET_CONNECTION, Snackbar.LENGTH_LONG).show();
+                        CustomSnackBar.make(getView(), Constants.Alerts.NO_INTERNET_CONNECTION, CustomSnackBar.DURATION_LONG).show();
                         break;
 
                     default:
-                        Snackbar.make(getView(), Constants.Alerts.SOMETHING_WRONG, Snackbar.LENGTH_LONG).show();
+                        CustomSnackBar.make(getView(), Constants.Alerts.SOMETHING_WRONG, CustomSnackBar.DURATION_LONG).show();
                         break;
                 }
             }
@@ -1150,8 +1164,9 @@ public class PredictionFragment extends NostraBaseFragment implements View.OnCli
 
     /**
      * Handles Power-up related counters & ui
+     *
      * @param isPowerUpApplied - true means applied (reduce), false means removed (increase)
-     * @param powerUpEnum - which power-up used
+     * @param powerUpEnum      - which power-up used
      */
     private void usePowerUp(boolean isPowerUpApplied, PowerUpEnum powerUpEnum) {
         if (mCurrentPowerUp != null) {
@@ -1190,6 +1205,7 @@ public class PredictionFragment extends NostraBaseFragment implements View.OnCli
 
     /**
      * Updates powerUp counter on UI
+     *
      * @param powerUp - powerup to update
      */
     private void updatePowerUpDetails(PowerUp powerUp) {

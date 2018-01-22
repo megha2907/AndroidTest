@@ -22,6 +22,9 @@ public class InPlayContestMatchDto {
     @SerializedName("status")
     private String status;
 
+    @SerializedName("parties")
+    private String parties;
+
     public int isPlayed() {
         return isPlayed;
     }
@@ -52,5 +55,13 @@ public class InPlayContestMatchDto {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getParties() {
+        return parties;
+    }
+
+    public void setParties(String parties) {
+        this.parties = parties;
     }
 }
