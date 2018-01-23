@@ -25,12 +25,11 @@
                 android:id="@+id/pool_layout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/dark_grey_gradient_bg"
-                android:paddingBottom="@dimen/dim_8"
-                android:paddingLeft="@dimen/dim_15"
-                android:paddingRight="@dimen/dim_15"
-                android:paddingTop="@dimen/dim_12"
-                >
+                android:background="@color/grey_303030"
+                android:paddingBottom="@dimen/dim_14"
+                android:paddingLeft="@dimen/dim_12"
+                android:paddingRight="@dimen/dim_12"
+                android:paddingTop="@dimen/dim_16">
 
                 <RelativeLayout
                     android:id="@+id/pool_row_rl_detail_layout"
@@ -63,11 +62,12 @@
 
                     <ImageView
                         android:id="@+id/pool_row_iv_contest_type"
-                        android:layout_width="@dimen/dim_15"
-                        android:layout_height="@dimen/dim_15"
-                        android:layout_marginTop="@dimen/dim_3"
-                        android:layout_marginRight="@dimen/dim_1"
-                        android:layout_alignParentRight="true" />
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:paddingLeft="@dimen/dim_10"
+                        android:paddingBottom="@dimen/dim_5"
+                        android:layout_marginTop="@dimen/dim_3"/>
 
                     <LinearLayout
                         android:id="@+id/pool_row_ll_member_layout"
@@ -75,8 +75,8 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@id/pool_row_tv_name"
                         android:minHeight="@dimen/dim_30"
-                        android:layout_marginRight="@dimen/dim_20"
-                        android:layout_marginTop="@dimen/dim_16"
+                        android:layout_marginRight="@dimen/dim_22"
+                        android:layout_marginTop="@dimen/dim_20"
                         android:minWidth="@dimen/dim_52"
                         android:layout_toRightOf="@+id/pool_row_ll_reward_layout"
                         android:clickable="true"
@@ -96,7 +96,8 @@
                         <RelativeLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/dim_5">
+                            android:layout_marginTop="@dimen/dim_6"
+                            android:layout_gravity="center">
 
                             <com.jeeva.android.widgets.customfont.CustomTextView
                                 android:id="@+id/pool_row_tv_member_count"
@@ -119,7 +120,7 @@
                         android:layout_height="wrap_content"
                         android:minHeight="@dimen/dim_30"
                         android:layout_alignTop="@id/pool_row_ll_member_layout"
-                        android:layout_marginRight="@dimen/dim_20"
+                        android:layout_marginRight="@dimen/dim_22"
                         android:minWidth="@dimen/dim_52"
                         android:clickable="true"
                         android:orientation="vertical"
@@ -139,7 +140,7 @@
                         <RelativeLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/dim_5">
+                            android:layout_marginTop="@dimen/dim_6">
 
                             <com.jeeva.android.widgets.customfont.CustomTextView
                                 android:id="@+id/pool_row_tv_reward"
@@ -181,6 +182,7 @@
                             android:text="ENTRY FEE"
                             android:textAllCaps="true"
                             android:includeFontPadding="false"
+                            android:layout_gravity="right"
                             android:textColor="@color/white_999999"
                             android:textSize="@dimen/sp_9"
                             app:typeface="lato_regular" />
@@ -188,7 +190,8 @@
                         <RelativeLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/dim_5">
+                            android:layout_marginTop="@dimen/dim_6"
+                            android:layout_gravity="right">
 
                             <com.jeeva.android.widgets.customfont.CustomTextView
                                 android:id="@+id/pool_row_tv_entry_fee"

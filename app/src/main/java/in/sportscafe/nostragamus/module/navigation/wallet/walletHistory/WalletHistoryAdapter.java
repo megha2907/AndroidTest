@@ -294,12 +294,11 @@ public abstract class WalletHistoryAdapter extends RecyclerView.Adapter<WalletHi
         }
 
         holder.txnIdTextView.setText("ID - " + String.valueOf(transaction.getOrderId()));
-        holder.historyReportBtn.setVisibility(View.VISIBLE);
-//        if (transaction.isShowReportButton()) {
-//            holder.historyReportBtn.setVisibility(View.VISIBLE);
-//        } else {
-//            holder.historyReportBtn.setVisibility(View.GONE);
-//        }
+        if (transaction.isShowReportButton()) {
+            holder.historyReportBtn.setVisibility(View.VISIBLE);
+        } else {
+            holder.historyReportBtn.setVisibility(View.GONE);
+        }
     }
 
     private void changeItemBackground(WalletHistoryViewHolder holder, int position) {

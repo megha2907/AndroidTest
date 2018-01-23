@@ -204,8 +204,9 @@ public class OnBoardingFragment extends NostragamusFragment {
             }
 
             if (NostragamusDataHandler.getInstance().getWalletInitialAmount() != null) {
-                onBoardingDto.setDesc(NostragamusDataHandler.getInstance().getUserReferralName()
-                        + " sent you a gift! Log in to claim and join your friend in predicting live games!");
+                onBoardingDto.setDesc("Join "+ NostragamusDataHandler.getInstance().getUserReferralName()
+                        + " in predicting live sports games. Your first " +
+                         String.valueOf(NostragamusDataHandler.getInstance().getWalletInitialAmount()) + " is on us, Log in to claim it!");
             }
             onBoardingDto.setImageUrl(NostragamusDataHandler.getInstance().getUserReferralPhoto());
             onBoardingDto.setReferralCode(NostragamusDataHandler.getInstance().getUserReferralCode());

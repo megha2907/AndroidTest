@@ -32,7 +32,7 @@
         android:lineSpacingExtra="@dimen/dim_2"
         android:textColor="@color/silver_chalice"
         android:textColorLink="#29abe2"
-        android:text="See something incorrect about an answer? Report it to us by clicking on the button below - "
+        android:text="See something wrong with these answers? Chat and report these issues to us by clicking on the button below -"
         android:textSize="@dimen/sp_11"
         app:typeface="lato_regular" />
 

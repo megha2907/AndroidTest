@@ -148,8 +148,7 @@
 
     <string name="feedback_string">
      <![CDATA[
-        For more information on prizes, or reporting a faulty result, or any suggestion or bugfixes in the app, (or even, just to say "Hello") feel free to mail us on <b>feedback@sportscafe.in</b>.
-        You could also call/sms/whatsapp - <b>+91-9901129509</b>
+       If you have any other queries, please feel free to mail us on <font color="#008ae1"><b>helpdesk@sportscafe.in</b></font>
     ]]>
     </string>
     <string name="app_downloading">Your app is being downloaded in the background, click on Install after the download is over!</string>

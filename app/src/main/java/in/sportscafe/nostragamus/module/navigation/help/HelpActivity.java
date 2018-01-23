@@ -3,6 +3,7 @@ package in.sportscafe.nostragamus.module.navigation.help;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
 
@@ -80,14 +81,14 @@ public class HelpActivity extends NostragamusActivity implements HelpFragmentLis
 
     @Override
     public void onFaqClicked() {
-        //navigateToWebView(Constants.WebPageUrls.FAQ, "FAQ");
+        navigateToWebView(Constants.WebPageUrls.FAQ, "FAQ");
 
-              FaqOptions faqOptions = new FaqOptions()
-                .showFaqCategoriesAsGrid(false)
-                .showContactUsOnAppBar(false)
-                .showContactUsOnFaqScreens(true)
-                .showContactUsOnFaqNotHelpful(false);
-        Freshchat.showFAQs(getApplicationContext(),faqOptions);
+//        FaqOptions faqOptions = new FaqOptions()
+//                .showFaqCategoriesAsGrid(false)
+//                .showContactUsOnAppBar(false)
+//                .showContactUsOnFaqScreens(true)
+//                .showContactUsOnFaqNotHelpful(false);
+//        Freshchat.showFAQs(getApplicationContext(), faqOptions);
 
     }
 
@@ -107,15 +108,28 @@ public class HelpActivity extends NostragamusActivity implements HelpFragmentLis
 
         UserInfo userInfo = Nostragamus.getInstance().getServerDataManager().getUserInfo();
         FreshchatUser user = Freshchat.getInstance(getApplicationContext()).getUser();
-        if (userInfo!=null && user!=null) {
-            user.setFirstName(userInfo.getUserName())
-                    .setEmail(userInfo.getEmail());
+        if (userInfo != null && user != null) {
+
+            if (!TextUtils.isEmpty(userInfo.getOtpMobileNumber())) {
+                user.setFirstName(userInfo.getUserName())
+                        .setEmail(userInfo.getEmail())
+                        .setPhone("+91 ", userInfo.getOtpMobileNumber());
+            } else {
+                user.setFirstName(userInfo.getUserName())
+                        .setEmail(userInfo.getEmail());
+            }
+
             Freshchat.getInstance(getApplicationContext()).setUser(user);
 
             /* Set any custom metadata to give agents more context,
             and for segmentation for marketing or pro-active messaging */
             Map<String, String> userMeta = new HashMap<String, String>();
             userMeta.put("UserId", String.valueOf(userInfo.getId()));
+            userMeta.put("Transaction Type", "");
+            userMeta.put("Transaction Order Id", "");
+            userMeta.put("Challenge Id", "");
+            userMeta.put("MatchId", "");
+            userMeta.put("RoomId", "");
 
             //Call setUserProperties to sync the user properties with Freshchat's servers
             Freshchat.getInstance(getApplicationContext()).setUserProperties(userMeta);
@@ -123,7 +137,12 @@ public class HelpActivity extends NostragamusActivity implements HelpFragmentLis
         }
 
          /* Open a Generic Chat Channel */
-        Freshchat.showConversations(this);
+        List<String> tags = new ArrayList<>();
+        tags.add("generic");
+        ConversationOptions convOptions = new ConversationOptions()
+                .filterByTags(tags, "generic");
+        Freshchat.showConversations(getApplicationContext(), convOptions);
+
     }
 
 }

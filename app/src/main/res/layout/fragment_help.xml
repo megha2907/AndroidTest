@@ -173,7 +173,7 @@
                 <ImageView
                     android:layout_width="@dimen/dp_16"
                     android:layout_height="@dimen/dp_16"
-                    android:src="@drawable/navigation_faq_icn"/>
+                    android:src="@drawable/navigation_chat_support"/>
 
                 <com.jeeva.android.widgets.customfont.CustomTextView
                     android:layout_width="wrap_content"
@@ -202,8 +202,7 @@
                 android:minHeight="@dimen/dp_60"
                 android:orientation="horizontal"
                 android:layout_marginLeft="@dimen/dp_24"
-                android:layout_marginRight="@dimen/dp_24"
-                android:layout_marginTop="@dimen/dp_10">
+                android:layout_marginRight="@dimen/dp_24">
 
                 <!--<ImageView
                     android:layout_width="@dimen/dp_16"
@@ -213,8 +212,9 @@
                     android:id="@+id/feedback_textView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/sp_12"
+                    android:textColor="@color/grey_999999"
+                    android:textSize="@dimen/sp_11"
+                    android:lineSpacingExtra="@dimen/dim_2"
                     app:typeface="lato_regular"/>
 
             </LinearLayout>

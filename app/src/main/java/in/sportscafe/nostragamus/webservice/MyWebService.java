@@ -363,7 +363,10 @@ public class MyWebService extends AbstractWebService<NostragamusService> {
         }else if (BuildConfig.IS_PAID_VERSION){
             flavor = "PRO";
         }
-        return mNostragamusService.getNewHomeChallenges(flavor);
+
+        boolean showOnePartyChallenge = true;
+
+        return mNostragamusService.getNewHomeChallenges(flavor,showOnePartyChallenge);
     }
 
     public Call<ContestResponse> getContests(int challengeId, boolean needPoolContest) {

@@ -9,7 +9,7 @@
 
     <!-- Heading layout -->
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/toolbar_bg"
@@ -22,6 +22,7 @@
             android:layout_gravity="center"
             android:layout_marginLeft="@dimen/dim_6"
             android:padding="@dimen/dim_10"
+            android:layout_centerVertical="true"
             android:src="@drawable/back_icon_grey"
             android:background="?attr/selectableItemBackgroundBorderless"/>
 
@@ -29,13 +30,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/contest_details_back_btn"
+            android:layout_toLeftOf="@+id/toolbar_wallet_rl"
             android:layout_marginLeft="@dimen/dim_6">
 
             <com.jeeva.android.widgets.customfont.CustomTextView
                 android:id="@+id/toolbar_heading_one"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Contest Available"
                 android:textColor="@color/white"
                 android:textSize="@dimen/sp_14"
                 app:typeface="lato_regular" />
@@ -47,11 +50,15 @@
                 android:layout_below="@+id/toolbar_heading_one"
                 android:textColor="@color/white_60"
                 android:textSize="@dimen/sp_12"
+                android:singleLine="true"
+                android:ellipsize="end"
                 app:typeface="lato_regular" />
+
+        </RelativeLayout>
 
         <RelativeLayout
             android:id="@+id/toolbar_wallet_rl"
-            android:layout_width="@dimen/dim_120"
+            android:layout_width="@dimen/dim_110"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
@@ -78,11 +85,9 @@
                 android:layout_toLeftOf="@+id/toolbar_wallet_money"
                 android:src="@drawable/toolbar_wallet_icon" />
 
-            </RelativeLayout>
-
         </RelativeLayout>
 
-    </LinearLayout>
+    </RelativeLayout>
 
 
     <in.sportscafe.nostragamus.module.common.CustomTabLayout

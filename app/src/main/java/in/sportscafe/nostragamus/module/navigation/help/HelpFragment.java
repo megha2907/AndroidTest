@@ -108,18 +108,7 @@ public class HelpFragment extends BaseFragment implements View.OnClickListener {
         View view = getView();
         if (view != null) {
             TextView feedbackTextView = (TextView) view.findViewById(R.id.feedback_textView);
-
-            String feedbackText;
-            if (BuildConfig.IS_PAID_VERSION) {
-                feedbackText = NostragamusDataHandler.getInstance().getProFeedBack();
-            }else {
-                feedbackText = NostragamusDataHandler.getInstance().getFeedBack();
-            }
-            if (TextUtils.isEmpty(feedbackText)) {
-                feedbackTextView.setText(Html.fromHtml(getString(R.string.feedback_string)));
-            }else {
-                feedbackTextView.setText(feedbackText);
-            }
+            feedbackTextView.setText(Html.fromHtml(getString(R.string.feedback_string)));
         }
     }
 }

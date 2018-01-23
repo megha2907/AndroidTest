@@ -126,7 +126,7 @@ public class ContestRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                 }
 
                 if (!TextUtils.isEmpty(contest.getSubtitle())) {
-                    viewHolder.mTvNumberOfPrizes.setText("(" + contest.getSubtitle() + ")");
+                    viewHolder.mTvNumberOfPrizes.setText("[" + contest.getSubtitle() + "]");
                 }
                 if (contest.getFilledRooms() > 0) {
                     viewHolder.mTvFilledContestsText.setVisibility(View.VISIBLE);
@@ -185,7 +185,7 @@ public class ContestRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                 } else {
                     viewHolder.mTvPrizes.setText(Constants.RUPEE_SYMBOL + String.valueOf(contest.getPrizes()));
                     if (!TextUtils.isEmpty(contest.getSubtitle())) {
-                        viewHolder.mTvNumberOfPrizes.setText("(" + contest.getSubtitle() + ")");
+                        viewHolder.mTvNumberOfPrizes.setText("[" + contest.getSubtitle() + "]");
                     }
                 }
 
@@ -265,7 +265,7 @@ public class ContestRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                 }
 
                 if (!TextUtils.isEmpty(contest.getSubtitle())) {
-                    viewHolder.mTvNumberOfPrizes.setText("(" + contest.getSubtitle() + ")");
+                    viewHolder.mTvNumberOfPrizes.setText("[" + contest.getSubtitle() + "]");
                 }
 
                 String contestMode = contest.getContestMode();
