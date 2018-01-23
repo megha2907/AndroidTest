@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
@@ -17,7 +16,6 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.jeeva.android.Log;
 import com.jeeva.android.widgets.HmImageView;
 
 import org.parceler.Parcels;
@@ -29,14 +27,14 @@ import java.util.List;
 
 import in.sportscafe.nostragamus.BuildConfig;
 import in.sportscafe.nostragamus.Constants;
+import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.NostraBaseFragment;
 import in.sportscafe.nostragamus.module.contest.contestDetailsAfterJoining.InplayContestDetailsActivity;
 import in.sportscafe.nostragamus.module.contest.dto.JoinContestData;
-import in.sportscafe.nostragamus.module.inPlay.adapter.InPlayAdapterItemType;
+import in.sportscafe.nostragamus.module.customViews.CustomSnackBar;
 import in.sportscafe.nostragamus.module.inPlay.dataProvider.InPlayDataProvider;
 import in.sportscafe.nostragamus.module.inPlay.dto.InPlayContestDto;
-import in.sportscafe.nostragamus.module.inPlay.dto.InPlayListItem;
 import in.sportscafe.nostragamus.module.inPlay.dto.InPlayResponse;
 import in.sportscafe.nostragamus.module.inPlay.helper.InPlayFilterHelper;
 import in.sportscafe.nostragamus.module.inPlay.ui.headless.dto.HeadLessMatchScreenData;
@@ -46,6 +44,7 @@ import in.sportscafe.nostragamus.module.inPlay.ui.viewPager.InPlayViewPagerFragm
 import in.sportscafe.nostragamus.module.newChallenges.dataProvider.SportsDataProvider;
 import in.sportscafe.nostragamus.module.newChallenges.dto.SportsTab;
 import in.sportscafe.nostragamus.module.nostraHome.ui.NostraHomeActivityListener;
+import in.sportscafe.nostragamus.module.notifications.NostraNotification;
 import in.sportscafe.nostragamus.module.prediction.playScreen.dto.PlayScreenDataDto;
 
 /**
@@ -54,7 +53,7 @@ import in.sportscafe.nostragamus.module.prediction.playScreen.dto.PlayScreenData
 public class InPlayFragment extends NostraBaseFragment implements View.OnClickListener {
 
     private static final String TAG = InPlayFragment.class.getSimpleName();
-    private Snackbar mSnackBar;
+    private CustomSnackBar mSnackBar;
     private NostraHomeActivityListener mFragmentListener;
 
     public InPlayFragment() {}
@@ -90,9 +89,9 @@ public class InPlayFragment extends NostraBaseFragment implements View.OnClickLi
 
     public void onInternetConnected() {
         loadData();
-        if (mSnackBar != null && mSnackBar.isShown()) {
+        /*if (mSnackBar != null && mSnackBar.isShown()) {
             mSnackBar.dismiss();
-        }
+        }*/
     }
 
     @Override
@@ -124,15 +123,15 @@ public class InPlayFragment extends NostraBaseFragment implements View.OnClickLi
         if (getView() != null && getActivity() != null && !getActivity().isFinishing()) {
             switch (status) {
                 case Constants.DataStatus.FROM_DATABASE_AS_NO_INTERNET:
-                    mSnackBar = Snackbar.make(getView(), Constants.Alerts.NO_INTERNET_CONNECTION, Snackbar.LENGTH_INDEFINITE);
+                    mSnackBar = CustomSnackBar.make(getView(), Constants.Alerts.NO_INTERNET_CONNECTION, CustomSnackBar.DURATION_LONG);
                     break;
 
                 case Constants.DataStatus.FROM_DATABASE_AS_SERVER_FAILED:
-                    mSnackBar = Snackbar.make(getView(), Constants.Alerts.COULD_NOT_FETCH_DATA_FROM_SERVER, Snackbar.LENGTH_LONG);
+                    mSnackBar = CustomSnackBar.make(getView(), Constants.Alerts.COULD_NOT_FETCH_DATA_FROM_SERVER, CustomSnackBar.DURATION_LONG);
                     break;
 
                 default:
-                    mSnackBar = Snackbar.make(getView(), Constants.Alerts.SOMETHING_WRONG, Snackbar.LENGTH_LONG);
+                    mSnackBar = CustomSnackBar.make(getView(), Constants.Alerts.SOMETHING_WRONG, CustomSnackBar.DURATION_LONG);
                     break;
             }
 
@@ -147,6 +146,10 @@ public class InPlayFragment extends NostraBaseFragment implements View.OnClickLi
     }
 
     private void onDataReceived(int status, List<InPlayResponse> inPlayResponseData) {
+        if (mFragmentListener != null) {
+            mFragmentListener.updateInplayCounter();
+        }
+
         switch (status) {
             case Constants.DataStatus.FROM_SERVER_API_SUCCESS:
                 showDataOnUi(inPlayResponseData, true);
@@ -257,6 +260,7 @@ public class InPlayFragment extends NostraBaseFragment implements View.OnClickLi
 
                 showAppropriateTabForAclVersionAfterJoiningChallenge(isServerResponse, inPlayResponseList, inPlayViewPager);
                 handleFurtherFlow(isServerResponse, inPlayResponseList);
+                handleInAppNotification();
 
             } else {
                 showEmptyScreen(inPlayViewPager, inPlayTabLayout, sportsTabList);
@@ -385,6 +389,55 @@ public class InPlayFragment extends NostraBaseFragment implements View.OnClickLi
                     }
                 }
             }
+        }
+    }
+
+    /**
+     * This launches Inplay Games screen, headless or joined contest
+     * In case , In-App notification clicked at Notification tray, this screens should be launched
+     */
+    private void handleInAppNotification() {
+        if (Nostragamus.getInstance().hasNetworkConnection()) {
+
+            Bundle args = getArguments();
+            if (getActivity() != null && args != null && args.containsKey(Constants.Notifications.IS_IN_APP_NOTIFICATION)) {
+                boolean isInAppNotification = args.getBoolean(Constants.Notifications.IS_IN_APP_NOTIFICATION, false);
+
+                if (isInAppNotification && args.containsKey(Constants.BundleKeys.IN_APP_NOSTRA_NOTIFICATION_DETAILS)) {
+                    NostraNotification nostraNotification = Parcels.unwrap(args.getParcelable(Constants.BundleKeys.IN_APP_NOSTRA_NOTIFICATION_DETAILS));
+
+                    if (nostraNotification != null && nostraNotification.getData().getInPlayContestDto() != null) {
+                        InPlayContestDto inPlayContestDto = nostraNotification.getData().getInPlayContestDto();
+
+                        if (inPlayContestDto.isHeadlessState()) {       /* HeadLess Games screen */
+
+                            HeadLessMatchScreenData data = new HeadLessMatchScreenData();
+                            data.setChallengeName(inPlayContestDto.getChallengeName());
+                            data.setChallengeId(inPlayContestDto.getChallengeId());
+                            data.setPowerUp(inPlayContestDto.getPowerUp());
+                            data.setContestName(inPlayContestDto.getContestName());
+                            data.setRoomId(inPlayContestDto.getRoomId());
+                            data.setPlayingPseudoGame(false);
+                            data.setInPlayContestDto(inPlayContestDto);
+                            data.setStartTime(inPlayContestDto.getChallengeStartTime());
+
+                            Bundle bundle = new Bundle();
+                            bundle.putParcelable(Constants.BundleKeys.HEADLESS_MATCH_SCREEN_DATA, Parcels.wrap(data));
+
+                            Intent intent = new Intent(getActivity(), InPlayHeadLessMatchActivity.class);
+                            intent.putExtras(bundle);
+                            getActivity().startActivity(intent);
+
+                        } else {    /* Joined Games screen */
+
+                            launchInplayContestDetailsScreen(inPlayContestDto);
+                        }
+                    }
+                }
+            }
+        } else {
+            /* Do not enter game screens if no internet */
+            handleError(Constants.DataStatus.FROM_DATABASE_AS_NO_INTERNET);
         }
     }
 

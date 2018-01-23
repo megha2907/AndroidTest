@@ -1,8 +1,7 @@
-package in.sportscafe.nostragamus.module.inPlay.dataProvider;
+package in.sportscafe.nostragamus.cache;
 
 import android.content.Context;
 import android.os.AsyncTask;
-import android.support.annotation.Nullable;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.google.gson.Gson;
@@ -11,13 +10,12 @@ import com.jeeva.android.Log;
 import java.util.List;
 
 import in.sportscafe.nostragamus.Constants;
-import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.db.ApiCacheType;
 import in.sportscafe.nostragamus.db.DbConstants;
 import in.sportscafe.nostragamus.db.NostragamusDatabase;
 import in.sportscafe.nostragamus.db.tableDto.ApiCacheDbDto;
 import in.sportscafe.nostragamus.db.tables.ApiCacheDbTable;
-import in.sportscafe.nostragamus.module.inPlay.dto.InPlayRequest;
+import in.sportscafe.nostragamus.module.inPlay.dataProvider.InPlayDataProvider;
 import in.sportscafe.nostragamus.module.inPlay.dto.InPlayResponse;
 import in.sportscafe.nostragamus.webservice.ApiCallBack;
 import in.sportscafe.nostragamus.webservice.MyWebService;
@@ -25,26 +23,26 @@ import retrofit2.Call;
 import retrofit2.Response;
 
 /**
- * Created by deepanshi on 9/6/17.
+ * Created by sc on 10/1/18.
+ *
+ * Used for cache mgt
  */
 
-public class InPlayDataProvider {
+public class CacheManagementHelper {
 
-    private static final String TAG = InPlayDataProvider.class.getSimpleName();
+    private static final String TAG = CacheManagementHelper.class.getSimpleName();
 
-    public InPlayDataProvider() {
-    }
-
-    public void getInPlayChallenges(Context appContext, InPlayDataProvider.InPlayDataProviderListener listener) {
-        if (Nostragamus.getInstance().hasNetworkConnection()) {
-            loadInPlayDataFromServer(appContext, listener);
-        } else {
-            Log.d(TAG, "No Network connection");
-            loadInPlayFromDatabase(Constants.DataStatus.FROM_DATABASE_AS_NO_INTERNET, appContext, listener);
-        }
-    }
-
-    private void loadInPlayDataFromServer(final Context appContext, final InPlayDataProvider.InPlayDataProviderListener listener) {
+    /**
+     * Fetch Inplay data from server ONCE, Game played ; and store into DB so that data accuracy mostly remains same
+     *
+     * The DB cached/saved data is used for:
+     * 1. InApp Notifications
+     * 2. Counter displayed at bottom-navigation-bar (Inplay tab)
+     *
+     * @param appContext
+     */
+    public void fetchInplayDataAndSaveIntoDb(final Context appContext) {
+        Log.d(TAG, "Fetching InPlay data");
 
         MyWebService.getInstance().getInPlayChallenges().enqueue(new ApiCallBack<List<InPlayResponse>>() {
             @Override
@@ -52,29 +50,24 @@ public class InPlayDataProvider {
                 super.onResponse(call, response);
 
                 if (response.isSuccessful() && response.body() != null && response.body() != null) {
-                    Log.d(TAG, "Server response success");
-                    insertInPlayResponseIntoDatabase(appContext, response.body(), listener);
-                    if (listener != null) {
-                        listener.onData(Constants.DataStatus.FROM_SERVER_API_SUCCESS, response.body());
-                    }
+                    Log.d(TAG, "Inplay - Server response success");
+                    insertInPlayResponseIntoDatabase(appContext, response.body());
+
                 } else {
-                    Log.d(TAG, "Server response null");
-                    loadInPlayFromDatabase(Constants.DataStatus.FROM_DATABASE_AS_SERVER_FAILED, appContext, listener);
+                    Log.d(TAG, "Inplay - Server response null");
                 }
             }
 
             @Override
             public void onFailure(Call<List<InPlayResponse>> call, Throwable t) {
                 super.onFailure(call, t);
-                Log.d(TAG, "Server response Failed");
-                loadInPlayFromDatabase(Constants.DataStatus.FROM_DATABASE_AS_SERVER_FAILED, appContext, listener);
+                Log.d(TAG, "Inplay - Server response Failed");
             }
         });
     }
 
     private void insertInPlayResponseIntoDatabase(final Context appContext,
-                                              final List<InPlayResponse> inPlayResponses,
-                                              final InPlayDataProvider.InPlayDataProviderListener listener) {
+                                                  final List<InPlayResponse> inPlayResponses) {
 
         final ApiCacheDbDto dbDto = new ApiCacheDbDto();
         dbDto.setApiCacheType(ApiCacheType.IN_PLAY_API);
@@ -97,7 +90,13 @@ public class InPlayDataProvider {
         }.execute();
     }
 
-    private void loadInPlayFromDatabase(final int status, final Context appContext, final InPlayDataProvider.InPlayDataProviderListener listener) {
+    /**
+     *
+     * @param appContext
+     * @param listener
+     * Returns Inplay cached/saved Data
+     */
+    public void loadInPlayFromDatabase(final Context appContext, final InPlayDataProvider.InPlayDataProviderListener listener) {
         int apiType = ApiCacheType.IN_PLAY_API;
 
         final String whereClause = ApiCacheDbTable.TableFields.API_TYPE + "=?";
@@ -128,17 +127,12 @@ public class InPlayDataProvider {
 
                 if (listener != null) {
                     if (inPlayResponses != null) {
-                        listener.onData(status, inPlayResponses);
+                        listener.onData(Constants.DataStatus.FROM_DATABASE_CACHED_DATA, inPlayResponses);
                     } else {
                         listener.onData(Constants.DataStatus.FROM_DATABASE_ERROR, null);
                     }
                 }
             }
         }.execute();
-    }
-
-    public interface InPlayDataProviderListener {
-        void onData(int status, @Nullable List<InPlayResponse> inPlayResponseList);
-        void onError(int status);
     }
 }

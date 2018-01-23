@@ -93,17 +93,18 @@ public class EditAnswerPredictionCardAdapter extends ArrayAdapter<EditAnswerQues
                                    HmImageView leftImgOptionLayout, HmImageView rightImgOptionLayout,
                                    View contentView) {
         if (question != null) {
+            int padding = getContext().getResources().getDimensionPixelOffset(R.dimen.dim_3);
             if (question.getChosenAnswerId() == Constants.AnswerIds.LEFT) {
                 leftImgOptionLayout.setBackgroundResource(R.drawable.edit_answer_chosen_option_bg);
-                leftImgOptionLayout.setPadding(3,3,3,3);
-                ImageView imgView = (ImageView) contentView.findViewById(R.id.edit_answer_chosen_option_left_imgView);
-                imgView.setVisibility(View.VISIBLE);
+                leftImgOptionLayout.setPadding(padding, padding, padding, padding);
+                ImageView imgView = (ImageView) contentView.findViewById(R.id.swipe_card_iv_left_arrow);
+                imgView.setImageResource(R.drawable.edit_ans_chosen_left_arrow);
 
             } else if (question.getChosenAnswerId() == Constants.AnswerIds.RIGHT) {
                 rightImgOptionLayout.setBackgroundResource(R.drawable.edit_answer_chosen_option_bg);
-                rightImgOptionLayout.setPadding(3,3,3,3);
-                ImageView imgView = (ImageView) contentView.findViewById(R.id.edit_answer_chosen_option_right_imgView);
-                imgView.setVisibility(View.VISIBLE);
+                rightImgOptionLayout.setPadding(padding, padding, padding, padding);
+                ImageView imgView = (ImageView) contentView.findViewById(R.id.swipe_card_iv_right_arrow);
+                imgView.setImageResource(R.drawable.edit_ans_chosen_right_arrow);
             }
         }
     }

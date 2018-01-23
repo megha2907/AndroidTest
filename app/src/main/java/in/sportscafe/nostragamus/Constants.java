@@ -17,6 +17,7 @@ public interface Constants {
 
     interface Notifications {
         String IS_LAUNCHED_FROM_NOTIFICATION = "isLaunchedFromNotification";
+        String IS_IN_APP_NOTIFICATION = "isInAppNotification";
         String NOSTRA_NOTIFICATION = "nostraNotification";
         String SCREEN_NEW_CHALLENGE = "newChallenge";
         String SCREEN_NEW_CHALLENGE_SPORT = "newChallengeSport";
@@ -386,6 +387,7 @@ public interface Constants {
         String REPORT_ID = "reportID";
         String REPORT_TYPE = "reportType";
         String POWERUP_BANK_TRANSFER_SCREEN_DATA = "powerupBankTransferScreenData";
+        String IN_APP_NOSTRA_NOTIFICATION_DETAILS = "inAppNostraNotification";
     }
 
     interface DateFormats {
@@ -882,7 +884,8 @@ public interface Constants {
         int POWER_UP_AUDIENCE_POLL = 3;
     }
 
-    String AMOUNT_DECIMAL_PATTERN = "#0.00";
+    String AMOUNT_INDIAN_FORMAT_PATTERN = "##,##,###";
+    String AMOUNT_DECIMAL_PATTERN = "##,##,##0.00";
     String RUPEE_SYMBOL = "₹ ";
     String INDIAN_CURRENCY_CODE = "INR";
 
@@ -898,6 +901,7 @@ public interface Constants {
         int FROM_DATABASE_ERROR = 5;
         int NO_INTERNET = 6;
         int NO_MORE_DATA_WHILE_LOAD_MORE = 7;
+        int FROM_DATABASE_CACHED_DATA = 8;
     }
 
     interface MatchStatusStrings {

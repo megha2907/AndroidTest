@@ -12,7 +12,6 @@ import org.parceler.Parcels;
 
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.module.challengeCompleted.dto.CompletedContestDto;
-import in.sportscafe.nostragamus.module.common.NostragamusActivity;
 import in.sportscafe.nostragamus.module.common.WebViewActivity;
 import in.sportscafe.nostragamus.module.contest.contestDetailsCompletedChallenges.ChallengeHistoryContestDetailsActivity;
 import in.sportscafe.nostragamus.module.contest.ui.DetailScreensLaunchRequest;
@@ -55,6 +54,14 @@ public class NotificationHelper {
                             ex.printStackTrace();
                         }
                     }
+                }
+            }
+
+            /* Notifications sent from App Only */
+            if (args.containsKey(Constants.Notifications.IS_IN_APP_NOTIFICATION)) {
+                boolean isInAppNotification = args.getBoolean(Constants.Notifications.IS_IN_APP_NOTIFICATION);
+                if (isInAppNotification) {
+                    nostraNotification = Parcels.unwrap(args.getParcelable(Constants.BundleKeys.IN_APP_NOSTRA_NOTIFICATION_DETAILS));
                 }
             }
         }

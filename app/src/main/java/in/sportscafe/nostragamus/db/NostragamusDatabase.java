@@ -10,6 +10,7 @@ import java.sql.SQLException;
 
 import in.sportscafe.nostragamus.db.tables.ApiCacheDbTable;
 import in.sportscafe.nostragamus.db.tables.BaseTable;
+import in.sportscafe.nostragamus.db.tables.ServerTimeTable;
 
 /**
  * Created by sandip on 23/08/17.
@@ -246,6 +247,10 @@ public class NostragamusDatabase extends SQLiteOpenHelper {
                 table = new ApiCacheDbTable();
                 break;
 
+            case DbConstants.TableIds.SERVER_TIME_TABLE:
+                table = new ServerTimeTable();
+                break;
+
             default:
                 break;
         }
@@ -262,6 +267,7 @@ public class NostragamusDatabase extends SQLiteOpenHelper {
 
         try {
             getTable(DbConstants.TableIds.API_CACHE_TABLE).create(db);
+            getTable(DbConstants.TableIds.SERVER_TIME_TABLE).create(db);
         } catch (SQLException ex) {
             Log.i(TAG, "Exception while creating Db-Tables.");
             ex.printStackTrace();
@@ -296,7 +302,9 @@ public class NostragamusDatabase extends SQLiteOpenHelper {
      * @throws SQLException
      */
     private void upgradeDbForLatestVersion(SQLiteDatabase db, int oldVersion) throws SQLException {
-
+        if (oldVersion < 2) {
+            getTable(DbConstants.TableIds.SERVER_TIME_TABLE).create(db);
+        }
     }
 
 }

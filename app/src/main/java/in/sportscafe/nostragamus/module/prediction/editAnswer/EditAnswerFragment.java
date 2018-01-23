@@ -43,6 +43,7 @@ import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.NostraBaseFragment;
+import in.sportscafe.nostragamus.module.customViews.CustomSnackBar;
 import in.sportscafe.nostragamus.module.prediction.editAnswer.adapter.EditAnswerPredictionAdapterListener;
 import in.sportscafe.nostragamus.module.prediction.editAnswer.adapter.EditAnswerPredictionCardAdapter;
 import in.sportscafe.nostragamus.module.prediction.editAnswer.dataProvider.GetQuestionForEditAnswerApiModelImpl;
@@ -325,14 +326,14 @@ public class EditAnswerFragment extends NostraBaseFragment implements View.OnCli
                                 public void onAnimationEnd(Animation animation) {
                                     bottomLayout.setVisibility(View.VISIBLE);
 
-                                    /* Wait for 3 seconds before first time loading */
+                                    /* Wait for 1 seconds before first time loading */
                                     if (mIsFirstTimeEditing) {
                                         new Handler().postDelayed(new Runnable() {
                                             @Override
                                             public void run() {
                                                 loadQuestions();
                                             }
-                                        }, 2000);
+                                        }, 1000);
                                     } else {
                                         loadQuestions();
                                     }
@@ -513,9 +514,7 @@ public class EditAnswerFragment extends NostraBaseFragment implements View.OnCli
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.edit_answer_back_btn:
-                if (mFragmentListener != null) {
-                    mFragmentListener.onBackClicked();
-                }
+                onBackPressed();
                 break;
 
             case R.id.edit_answer_doubler_Layout:
@@ -762,16 +761,20 @@ public class EditAnswerFragment extends NostraBaseFragment implements View.OnCli
      */
     private void onPowerUpModified() {
         if (isPowerupModified()) {
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
+            final String msg = "You seem to have edited powerups. Now, swipe your choice to save the prediction!";
 
-                    Animation alpha = new AlphaAnimation(0f, 1f);
-                    alpha.setDuration(200);
-                    mMessageTextView.setText("You seem to have edited powerups. Now, swipe your choice to save the prediction!");
-                    mMessageTextView.startAnimation(alpha);
-                }
-            }, 500 /* Once powerup anim over, show this text */);
+            if (!mMessageTextView.getText().toString().equalsIgnoreCase(msg)) {
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+
+                        Animation alpha = new AlphaAnimation(0f, 1f);
+                        alpha.setDuration(200);
+                        mMessageTextView.setText(msg);
+                        mMessageTextView.startAnimation(alpha);
+                    }
+                }, 500 /* Once powerup anim over, show this text */);
+            }
         }
     }
 
@@ -1082,16 +1085,16 @@ public class EditAnswerFragment extends NostraBaseFragment implements View.OnCli
     private void handleError(String msg, int status) {
         if (getView() != null && getActivity() != null && !getActivity().isFinishing()) {
             if (!TextUtils.isEmpty(msg)) {
-                Snackbar.make(getView(), msg, Snackbar.LENGTH_LONG).show();
+                CustomSnackBar.make(getView(), msg, CustomSnackBar.DURATION_LONG).show();
 
             } else {
                 switch (status) {
                     case Constants.DataStatus.NO_INTERNET:
-                        Snackbar.make(getView(), Constants.Alerts.NO_INTERNET_CONNECTION, Snackbar.LENGTH_LONG).show();
+                        CustomSnackBar.make(getView(), Constants.Alerts.NO_INTERNET_CONNECTION, CustomSnackBar.DURATION_LONG).show();
                         break;
 
                     default:
-                        Snackbar.make(getView(), Constants.Alerts.SOMETHING_WRONG, Snackbar.LENGTH_LONG).show();
+                        CustomSnackBar.make(getView(), Constants.Alerts.SOMETHING_WRONG, CustomSnackBar.DURATION_LONG).show();
                         break;
                 }
             }

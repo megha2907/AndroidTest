@@ -314,7 +314,8 @@
             android:theme="@style/AppTheme.PopupTheme" />
         <activity
             android:name=".module.nostraHome.ui.NostraHomeActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:launchMode="singleTask"/>
         <activity
             android:name=".module.newChallenges.ui.matches.NewChallengesMatchActivity"
             android:screenOrientation="portrait" />
@@ -402,6 +403,7 @@
         <service
             android:name="com.moengage.pushbase.push.MoEPushWorker"
             android:exported="false" />
+        <service android:enabled="true" android:name=".service.InAppNotificationService" />
 
         <receiver
             android:name="com.moengage.core.MoEAlarmReceiver"

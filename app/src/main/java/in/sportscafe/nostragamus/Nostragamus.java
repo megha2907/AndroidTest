@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.SystemClock;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.multidex.MultiDex;
@@ -37,6 +38,7 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.List;
 
+import in.sportscafe.nostragamus.db.tableDto.ServerTimeDbDto;
 import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
 import in.sportscafe.nostragamus.module.crash.NostragamusUncaughtExceptionHandler;
 import in.sportscafe.nostragamus.module.getstart.GetStartActivity;
@@ -431,4 +433,20 @@ public class Nostragamus extends Application {
         return serverTimeMillis;
     }
 
+    /**
+     * Server time is CACHED, SAVED in DB. It's used for InApp-Notification ;
+     * to send notification offline, to identify approx server time
+     * @param serverTimeDbDto
+     * @return
+     */
+    public synchronized long getApproxTimeBasedOnSavedServerTime(ServerTimeDbDto serverTimeDbDto) {
+        long approxServerTime = 0;
+
+        if (serverTimeDbDto != null) {
+            long timeGone = SystemClock.elapsedRealtime() - serverTimeDbDto.getSystemElapsedRealTime();
+            approxServerTime = serverTimeDbDto.getServerTime() + timeGone;
+        }
+
+        return approxServerTime;
+    }
 }

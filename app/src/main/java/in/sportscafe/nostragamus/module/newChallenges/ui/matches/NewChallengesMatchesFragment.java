@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -31,6 +30,7 @@ import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
 import in.sportscafe.nostragamus.module.contest.dto.ContestScreenData;
 import in.sportscafe.nostragamus.module.contest.ui.ContestsActivity;
+import in.sportscafe.nostragamus.module.customViews.CustomSnackBar;
 import in.sportscafe.nostragamus.module.inPlay.adapter.MatchesAdapterAction;
 import in.sportscafe.nostragamus.module.inPlay.dto.InPlayMatch;
 import in.sportscafe.nostragamus.module.navigation.help.dummygame.DummyGameActivity;
@@ -48,6 +48,7 @@ import in.sportscafe.nostragamus.module.popups.timerPopup.TimerFinishDialogHelpe
 import in.sportscafe.nostragamus.module.prediction.playScreen.PredictionActivity;
 import in.sportscafe.nostragamus.module.prediction.playScreen.dto.PlayScreenDataDto;
 import in.sportscafe.nostragamus.utils.AlertsHelper;
+import in.sportscafe.nostragamus.utils.CodeSnippet;
 
 /**
  * Created by deepanshi on 9/1/17.
@@ -179,11 +180,11 @@ public class NewChallengesMatchesFragment extends BaseFragment implements View.O
         if (getView() != null && getActivity() != null && !getActivity().isFinishing()) {
             switch (status) {
                 case Constants.DataStatus.NO_INTERNET:
-                    Snackbar.make(getView(), Constants.Alerts.NO_INTERNET_CONNECTION, Snackbar.LENGTH_LONG).show();
+                    CustomSnackBar.make(getView(), Constants.Alerts.NO_INTERNET_CONNECTION, CustomSnackBar.DURATION_LONG).show();
                     break;
 
                 default:
-                    Snackbar.make(getView(), Constants.Alerts.SOMETHING_WRONG, Snackbar.LENGTH_LONG).show();
+                    CustomSnackBar.make(getView(), Constants.Alerts.SOMETHING_WRONG, CustomSnackBar.DURATION_LONG).show();
                     break;
             }
         }
@@ -267,15 +268,12 @@ public class NewChallengesMatchesFragment extends BaseFragment implements View.O
     private void setValues() {
         View view = getView();
         if (mScreenData != null && view != null) {
-
             TextView titleTextView = (TextView) view.findViewById(R.id.toolbar_heading_one);
             TextView walletAmtTextView = (TextView) view.findViewById(R.id.toolbar_wallet_money);
 
             titleTextView.setText(mScreenData.getChallengeName());
-            walletAmtTextView.setText(String.valueOf((int)WalletHelper.getTotalBalance()));
-
+            walletAmtTextView.setText(CodeSnippet.getFormattedAmount((int)WalletHelper.getTotalBalance()));
         }
-
     }
 
     private void setMatchesLeftValue(List<InPlayMatch> matches){

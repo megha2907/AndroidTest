@@ -4,6 +4,8 @@ import com.google.gson.annotations.SerializedName;
 
 import org.parceler.Parcel;
 
+import in.sportscafe.nostragamus.module.inPlay.dto.InPlay;
+import in.sportscafe.nostragamus.module.inPlay.dto.InPlayContestDto;
 import in.sportscafe.nostragamus.webservice.UserReferralInfo;
 
 /**
@@ -47,6 +49,10 @@ public class NostraNotificationData {
 
     @SerializedName("webview_heading")
     private String webViewHeading;
+
+    /* This is used for InApp Notification , where notification redirect to appropriate game screen */
+    @SerializedName("inPlayContestDto")
+    private InPlayContestDto inPlayContestDto;
 
     public int getChallengeId() {
         return challengeId;
@@ -142,5 +148,13 @@ public class NostraNotificationData {
 
     public void setWebViewHeading(String webViewHeading) {
         this.webViewHeading = webViewHeading;
+    }
+
+    public InPlayContestDto getInPlayContestDto() {
+        return inPlayContestDto;
+    }
+
+    public void setInPlayContestDto(InPlayContestDto inPlayContestDto) {
+        this.inPlayContestDto = inPlayContestDto;
     }
 }
