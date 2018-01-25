@@ -12,8 +12,8 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:gravity="center_vertical"
-        android:layout_marginLeft="@dimen/dp_20"
-        android:layout_marginRight="@dimen/dp_20">
+        android:layout_marginLeft="@dimen/dp_12"
+        android:layout_marginRight="@dimen/dp_12">
 
         <com.jeeva.android.widgets.customfont.CustomTextView
             android:id="@+id/payout_wallet_info_textView"
@@ -21,19 +21,66 @@
             android:layout_height="wrap_content"
             android:text="We strongly recommend using Paytm for faster, hassle-free transactions."
             android:gravity="left"
-            android:textColor="@color/white"
-            android:textSize="@dimen/sp_13"
+            android:textColor="@color/grey6"
+            android:textSize="@dimen/sp_12"
             app:typeface="lato_regular"
-            android:lineSpacingExtra="@dimen/dp_10"
-            android:layout_marginTop="@dimen/dp_10"
-            android:layout_marginBottom="@dimen/dp_12"/>
+            android:lineSpacingExtra="@dimen/dim_4"
+            android:layout_marginTop="@dimen/dim_10"
+            android:layout_marginBottom="@dimen/dim_12"/>
 
     </LinearLayout>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/payout_recyclerView"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"/>
+        android:layout_height="wrap_content"/>
+
+    <!-- Freshchat Layout for withdrawal queries -->
+    <LinearLayout
+        android:id="@+id/payout_freshchat_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginLeft="@dimen/dp_12"
+        android:layout_marginRight="@dimen/dp_12"
+        android:layout_marginTop="@dimen/dp_4">
+
+        <com.jeeva.android.widgets.customfont.CustomTextView
+            android:id="@+id/payout_freshchat_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:gravity="left"
+            android:lineSpacingExtra="@dimen/dim_4"
+            android:text="If you have any issues while updating your withdrawal details, please chat with our customer support to resolve it."
+            android:textColor="@color/white_999999"
+            android:textColorLink="#29abe2"
+            android:textSize="@dimen/sp_12"
+            app:typeface="lato_regular" />
+
+        <RelativeLayout
+            android:id="@+id/payout_freshchat_btn_rl"
+            android:layout_width="@dimen/dim_90"
+            android:layout_height="@dimen/dim_24"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginTop="@dimen/dim_12"
+            android:background="@drawable/red_border_box">
+
+            <com.jeeva.android.widgets.customfont.CustomTextView
+                android:id="@+id/payout_freshchat_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:paddingBottom="@dimen/dim_3"
+                android:text="CHAT WITH US"
+                android:textColor="@drawable/report_tv_selector"
+                android:textSize="@dimen/sp_10"
+                app:typeface="lato_regular" />
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
 
 </LinearLayout>

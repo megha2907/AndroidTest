@@ -30,6 +30,7 @@ public class RulesFragment extends NostraBaseFragment implements RulesApiModelIm
 
     private TextView TvContestRuleOne;
     private TextView TvContestRuleTwo;
+    private TextView TvContestRuleThree;
     private TextView TvContestTypeHeading;
     private TextView TvContestTypeMsg;
     private TextView TvPowerUpsRuleOne;
@@ -102,6 +103,7 @@ public class RulesFragment extends NostraBaseFragment implements RulesApiModelIm
     private void initViews(View rootView) {
         TvContestRuleOne = (TextView) rootView.findViewById(R.id.contest_rule_one);
         TvContestRuleTwo = (TextView) rootView.findViewById(R.id.contest_rule_two);
+        TvContestRuleThree = (TextView) rootView.findViewById(R.id.contest_rule_three);
         TvContestTypeHeading = (TextView) rootView.findViewById(R.id.contest_type_heading);
         TvContestTypeMsg = (TextView) rootView.findViewById(R.id.contest_type_msg_textView);
         IvContestRuleThree = (ImageView) rootView.findViewById(R.id.contest_rule_three_iv);
@@ -119,6 +121,7 @@ public class RulesFragment extends NostraBaseFragment implements RulesApiModelIm
 
         showContestRuleOne(rules);
         showContestRuleTwo(rules);
+        showContestRuleThree(rules);
 
         showPowerUpsRuleOne(rules);
         showPowerUpsRuleTwo(rules);
@@ -128,7 +131,6 @@ public class RulesFragment extends NostraBaseFragment implements RulesApiModelIm
         showCancelledRuleTwo();
         showCancelledRuleThree();
     }
-
 
     private void showContestRuleOne(Rules rules) {
 
@@ -152,9 +154,15 @@ public class RulesFragment extends NostraBaseFragment implements RulesApiModelIm
     }
 
     private void showContestRuleTwo(Rules rules) {
-        TvContestRuleTwo.setText("Games have timers counting down to the start of the live match. Make your predictions" +
+        TvContestRuleTwo.setText("Play all " + String.valueOf(rules.getTotalMatches()) + " games in this contest, to score maximum points" +
+                " and have the best chance of winning prizes.");
+    }
+
+    private void showContestRuleThree(Rules rules) {
+        TvContestRuleThree.setText("Games have timers counting down to the start of the live match. Make your predictions" +
                 " before the timer runs out as predictions are frozen once the live match starts!");
     }
+
 
     private void showContestTypeHeading(Rules rules) {
         if (rules.getContestModeInfo() != null) {

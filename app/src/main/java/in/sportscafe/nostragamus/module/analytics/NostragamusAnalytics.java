@@ -15,6 +15,8 @@ import com.facebook.FacebookSdk;
 import com.facebook.LoggingBehavior;
 import com.facebook.appevents.AppEventsConstants;
 import com.facebook.appevents.AppEventsLogger;
+import com.freshchat.consumer.sdk.Freshchat;
+import com.freshchat.consumer.sdk.FreshchatUser;
 import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
@@ -69,6 +71,10 @@ public class NostragamusAnalytics {
 
     private AmplitudeClient mAmplitude;
 
+    private FreshchatUser mFreshChatUser;
+
+    private Freshchat mFreshChat;
+
     private static AppEventsLogger sFaceBookAppEventLogger;
 
     private boolean mAppOpeningTracked = false;
@@ -90,6 +96,11 @@ public class NostragamusAnalytics {
             // Initializing the Amplitude
             this.mAmplitude = Amplitude.getInstance().initialize(context, context.getString(R.string.amplitude_api_key))
                     .enableForegroundTracking((Application) context);
+
+
+            // Initializing the FreshChat
+            mFreshChat = Freshchat.getInstance(context);
+            mFreshChatUser = Freshchat.getInstance(context).getUser();
 
             // Tracking flavor
             //trackFlavor();
@@ -785,6 +796,39 @@ public class NostragamusAnalytics {
             } catch (NumberFormatException ex) {
                 ex.printStackTrace();
             }
+        }
+    }
+
+    public void setFreshChatUserProperties(Context context) {
+
+        /* Set UserInfo  */
+        UserInfo userInfo = Nostragamus.getInstance().getServerDataManager().getUserInfo();
+        if (userInfo != null) {
+            FreshchatUser freshUser = Freshchat.getInstance(context).getUser();
+            freshUser.setFirstName(userInfo.getUserName());
+            String email = userInfo.getEmail();
+            if (!TextUtils.isEmpty(email)) {
+                freshUser.setEmail(userInfo.getEmail());
+            }
+
+            //Call setUser so that the user information is synced with Freshchat's servers
+            Freshchat.getInstance(context).setUser(freshUser);
+
+             /* To set external id : This should be an unique identifier for the user
+                   This cannot be changed once set for the user */
+            Freshchat.getInstance(context).identifyUser(String.valueOf(userInfo.getId()), null);
+
+                /*  For Later Use
+                /* Set any custom metadata to give agents more context, and for segmentation for marketing or pro-active messaging
+                Map<String, String> userMeta = new HashMap<String, String>();
+                userMeta.put("userLoginType", "Facebook");
+                userMeta.put("city", "SpringField"); */
+
+//                //Call setUser so that the user information is synced with Freshchat's servers
+//                mFreshChat.setUser(freshUser);
+
+
+
         }
     }
 

@@ -52,11 +52,11 @@ public class InPlayMatchesRecyclerAdapter extends RecyclerView.Adapter<RecyclerV
     public int getItemViewType(int position) {
         int viewType = MatchesAdapterItemType.TWO_PARTY_MATCH;
 
-        /*if (mInPlayMatchList != null && mInPlayMatchList.size() > position && mInPlayMatchList.get(position) != null) {
-            if (mInPlayMatchList.get(position).getMatchType().equalsIgnoreCase("parties")) {
+        if (mInPlayMatchList != null && mInPlayMatchList.size() > position && mInPlayMatchList.get(position) != null) {
+            if (mInPlayMatchList.get(position).getMatchType().equalsIgnoreCase("topic")) {
                 viewType = MatchesAdapterItemType.SINGLE_PARTY_MATCH;
             }
-        }*/
+        }
 
         return viewType;
     }
@@ -71,6 +71,11 @@ public class InPlayMatchesRecyclerAdapter extends RecyclerView.Adapter<RecyclerV
                 View v1 = inflater.inflate(R.layout.inplay_match_list_double_party_item, parent, false);
                 viewHolder = new InPlayTwoPartyMatchItemViewHolder(v1);
                 break;
+
+            case MatchesAdapterItemType.SINGLE_PARTY_MATCH:
+                View v2 = inflater.inflate(R.layout.inplay_match_list_one_party_item, parent, false);
+                viewHolder = new InPlayOnePartyMatchItemViewHolder(v2);
+                break;
         }
 
         return viewHolder;
@@ -83,10 +88,15 @@ public class InPlayMatchesRecyclerAdapter extends RecyclerView.Adapter<RecyclerV
                 case MatchesAdapterItemType.TWO_PARTY_MATCH:
                     bindDoublePartyMatchData(holder, position);
                     break;
+
+                case MatchesAdapterItemType.SINGLE_PARTY_MATCH:
+                    bindSinglePartyMatchData(holder, position);
+                    break;
             }
         }
     }
 
+    /* Multi Party Matches */
     private void bindDoublePartyMatchData(RecyclerView.ViewHolder holder, int position) {
         InPlayTwoPartyMatchItemViewHolder viewHolder = (InPlayTwoPartyMatchItemViewHolder) holder;
 
@@ -99,7 +109,7 @@ public class InPlayMatchesRecyclerAdapter extends RecyclerView.Adapter<RecyclerV
                 viewHolder.actionButton.setEnabled(false);
             }
 
-            viewHolder.venueTextView.setText(match.getMatchStage()+", "+match.getMatchVenue());
+            viewHolder.venueTextView.setText(match.getMatchStage() + ", " + match.getMatchVenue());
 
                /* Set timer */
             String matchStartTime = match.getMatchStartTime();
@@ -122,7 +132,7 @@ public class InPlayMatchesRecyclerAdapter extends RecyclerView.Adapter<RecyclerV
                     viewHolder.actionButton.setClickable(true);
                     viewHolder.dateTimeTextView.setText("Completed");
                     viewHolder.actionButtonTextView.setTypeface(latoBold);
-                    viewHolder.venueTextView.setText(match.getMatchStage()+" - "+match.getMatchResult());
+                    viewHolder.venueTextView.setText(match.getMatchStage() + " - " + match.getMatchResult());
                     matchStatus = match.getMatchPoints() + " " + matchStatus;
                     viewHolder.actionButtonTextView.setTextColor(ContextCompat.getColor(viewHolder.actionButton.getContext(), R.color.black));
                     viewHolder.actionButton.setBackground(ContextCompat.getDrawable(viewHolder.actionButton.getContext(), R.drawable.btn_points_bg));
@@ -153,8 +163,8 @@ public class InPlayMatchesRecyclerAdapter extends RecyclerView.Adapter<RecyclerV
 
                     if (match.getMatchResult() != null && !match.getMatchResult().isEmpty()) {
                         viewHolder.dateTimeTextView.setText("Completed");
-                        viewHolder.venueTextView.setText(match.getMatchStage()+"-"+match.getMatchResult());
-                    }else {
+                        viewHolder.venueTextView.setText(match.getMatchStage() + "-" + match.getMatchResult());
+                    } else {
                         viewHolder.dateTimeTextView.setText("In Progress");
                     }
 
@@ -204,11 +214,11 @@ public class InPlayMatchesRecyclerAdapter extends RecyclerView.Adapter<RecyclerV
                                     , viewHolder.actionButton.getResources().getDimensionPixelSize(R.dimen.dim_32)));
                 }
 
-                if (matchStatus.equalsIgnoreCase(Constants.MatchStatusStrings.CONTINUE)){
-                    viewHolder.actionButtonTextView.setText(matchStatus+"...");
-                }else if (matchStatus.equalsIgnoreCase(Constants.MatchStatusStrings.DID_NOT_PLAY)){
+                if (matchStatus.equalsIgnoreCase(Constants.MatchStatusStrings.CONTINUE)) {
+                    viewHolder.actionButtonTextView.setText(matchStatus + "...");
+                } else if (matchStatus.equalsIgnoreCase(Constants.MatchStatusStrings.DID_NOT_PLAY)) {
                     viewHolder.actionButtonTextView.setText("DNP");
-                }else  {
+                } else {
                     viewHolder.actionButtonTextView.setText(matchStatus);
                 }
 
@@ -245,6 +255,172 @@ public class InPlayMatchesRecyclerAdapter extends RecyclerView.Adapter<RecyclerV
         };
         countDownTimer.start();
     }
+
+    /* Single Party Matches */
+    private void bindSinglePartyMatchData(RecyclerView.ViewHolder holder, int position) {
+
+        InPlayOnePartyMatchItemViewHolder onePartyViewHolder = (InPlayOnePartyMatchItemViewHolder) holder;
+
+
+        if (mInPlayMatchList != null && mInPlayMatchList.size() > position) {
+            InPlayMatch match = mInPlayMatchList.get(position);
+
+            /* Enable / disable buttons */
+            if (shouldDisableMatchClickAction(match)) {
+                onePartyViewHolder.matchParentOPLayout.setEnabled(false);
+                onePartyViewHolder.actionButtonOP.setEnabled(false);
+            }
+
+            onePartyViewHolder.venueOPTextView.setText(match.getMatchStage());
+
+               /* Set timer */
+            String matchStartTime = match.getMatchStartTime();
+            if (!TextUtils.isEmpty(matchStartTime)) {
+                if (DateTimeHelper.isTimerRequired(matchStartTime)) {
+                    setOnePartyTimer(onePartyViewHolder, matchStartTime);
+                } else {
+                    onePartyViewHolder.dateTimeOPTextView.setText(getDateTimeValue(matchStartTime));
+                }
+            }
+
+            Typeface latoBold = Typefaces.get(onePartyViewHolder.actionButtonOP.getContext(), "fonts/lato/Lato-Bold.ttf");
+            Typeface latoRegular = Typefaces.get(onePartyViewHolder.actionButtonOP.getContext(), "fonts/lato/Lato-Regular.ttf");
+
+            onePartyViewHolder.resultOPTextView.setTypeface(latoBold);
+
+            /* Match status */
+            String matchStatus = match.getMatchStatus();
+            if (!TextUtils.isEmpty(matchStatus)) {
+
+                if (matchStatus.equalsIgnoreCase(Constants.MatchStatusStrings.POINTS)) {
+                    onePartyViewHolder.actionButtonOP.setClickable(true);
+                    onePartyViewHolder.dateTimeOPTextView.setText("Completed");
+                    onePartyViewHolder.actionButtonOPTextView.setTypeface(latoBold);
+                    onePartyViewHolder.resultOPTextView.setText(match.getMatchResult());
+                    matchStatus = match.getMatchPoints() + " " + matchStatus;
+                    onePartyViewHolder.actionButtonOPTextView.setTextColor(ContextCompat.getColor(onePartyViewHolder.actionButtonOP.getContext(), R.color.black));
+                    onePartyViewHolder.actionButtonOP.setBackground(ContextCompat.getDrawable(onePartyViewHolder.actionButtonOP.getContext(), R.drawable.btn_points_bg));
+                    onePartyViewHolder.actionButtonOP.setLayoutParams(new LinearLayout.LayoutParams
+                            (onePartyViewHolder.actionButtonOP.getResources().getDimensionPixelSize(R.dimen.dim_86)
+                                    , onePartyViewHolder.actionButtonOP.getResources().getDimensionPixelSize(R.dimen.dim_32)));
+
+                } else if (matchStatus.equalsIgnoreCase(Constants.MatchStatusStrings.PLAY)) {
+                    onePartyViewHolder.actionButtonOP.setClickable(true);
+                    onePartyViewHolder.actionButtonOPTextView.setTextColor(ContextCompat.getColor(onePartyViewHolder.actionButtonOP.getContext(), R.color.white));
+                    onePartyViewHolder.actionButtonOPTextView.setTypeface(latoBold);
+                    onePartyViewHolder.resultOPTextView.setText(match.getMatchVenue());
+                    onePartyViewHolder.actionButtonOP.setBackground(ContextCompat.getDrawable(onePartyViewHolder.actionButtonOP.getContext(), R.drawable.btn_play_bg));
+                    onePartyViewHolder.actionButtonOP.setLayoutParams(new LinearLayout.LayoutParams
+                            (onePartyViewHolder.actionButtonOP.getResources().getDimensionPixelSize(R.dimen.dim_84)
+                                    , onePartyViewHolder.actionButtonOP.getResources().getDimensionPixelSize(R.dimen.dim_32)));
+
+                    onePartyViewHolder.actionButtonOPImageView.setBackgroundResource(R.drawable.right_arrow_play_btn);
+                    onePartyViewHolder.actionButtonOPImageView.setVisibility(View.VISIBLE);
+
+                } else if (matchStatus.equalsIgnoreCase(Constants.MatchStatusStrings.DID_NOT_PLAY)) {
+                    onePartyViewHolder.actionButtonOP.setClickable(true);
+                    onePartyViewHolder.actionButtonOPTextView.setTextColor(ContextCompat.getColor(onePartyViewHolder.actionButtonOP.getContext(), R.color.black));
+                    onePartyViewHolder.actionButtonOPTextView.setTypeface(latoBold);
+                    onePartyViewHolder.actionButtonOP.setBackground(ContextCompat.getDrawable(onePartyViewHolder.actionButtonOP.getContext(), R.drawable.btn_did_not_play_bg));
+                    onePartyViewHolder.actionButtonOP.setLayoutParams(new LinearLayout.LayoutParams
+                            (onePartyViewHolder.actionButtonOP.getResources().getDimensionPixelSize(R.dimen.dim_80)
+                                    , onePartyViewHolder.actionButtonOP.getResources().getDimensionPixelSize(R.dimen.dim_32)));
+
+                    if (match.getMatchResult() != null && !match.getMatchResult().isEmpty()) {
+                        onePartyViewHolder.dateTimeOPTextView.setText("Completed");
+                        onePartyViewHolder.resultOPTextView.setText(match.getMatchResult());
+                    } else {
+                        onePartyViewHolder.dateTimeOPTextView.setText("In Progress");
+                        onePartyViewHolder.resultOPTextView.setText(match.getMatchVenue());
+                    }
+
+                } else if (matchStatus.equalsIgnoreCase(Constants.MatchStatusStrings.COMING_UP)) {
+                    onePartyViewHolder.actionButtonOP.setClickable(false);
+                    onePartyViewHolder.actionButtonOPTextView.setTextColor(ContextCompat.getColor(onePartyViewHolder.actionButtonOP.getContext(), R.color.grey_a1a1a1));
+                    onePartyViewHolder.actionButtonOPTextView.setTypeface(latoRegular);
+                    onePartyViewHolder.resultOPTextView.setText(match.getMatchVenue());
+                    onePartyViewHolder.actionButtonOP.setBackground(ContextCompat.getDrawable(onePartyViewHolder.actionButtonOP.getContext(), R.drawable.btn_coming_up_bg));
+                    onePartyViewHolder.actionButtonOP.setLayoutParams(new LinearLayout.LayoutParams
+                            (onePartyViewHolder.actionButtonOP.getResources().getDimensionPixelSize(R.dimen.dim_90)
+                                    , onePartyViewHolder.actionButtonOP.getResources().getDimensionPixelSize(R.dimen.dim_34)));
+
+                } else if (matchStatus.equalsIgnoreCase(Constants.MatchStatusStrings.ANSWER)) {
+                    onePartyViewHolder.actionButtonOP.setClickable(true);
+                    onePartyViewHolder.actionButtonOPTextView.setTextColor(ContextCompat.getColor(onePartyViewHolder.actionButtonOP.getContext(), R.color.white));
+                    onePartyViewHolder.actionButtonOPTextView.setTypeface(latoBold);
+                    onePartyViewHolder.resultOPTextView.setText(match.getMatchVenue());
+                    onePartyViewHolder.actionButtonOP.setBackground(ContextCompat.getDrawable(onePartyViewHolder.actionButtonOP.getContext(), R.drawable.btn_answer_bg));
+                    onePartyViewHolder.actionButtonOP.setLayoutParams(new LinearLayout.LayoutParams
+                            (onePartyViewHolder.actionButtonOP.getResources().getDimensionPixelSize(R.dimen.dim_84)
+                                    , onePartyViewHolder.actionButtonOP.getResources().getDimensionPixelSize(R.dimen.dim_32)));
+
+                } else if (matchStatus.equalsIgnoreCase(Constants.MatchStatusStrings.CONTINUE)) {
+                    onePartyViewHolder.actionButtonOP.setClickable(true);
+                    onePartyViewHolder.actionButtonOPTextView.setTextColor(ContextCompat.getColor(onePartyViewHolder.actionButtonOP.getContext(), R.color.white));
+                    onePartyViewHolder.actionButtonOPTextView.setTypeface(latoBold);
+                    onePartyViewHolder.resultOPTextView.setText(match.getMatchVenue());
+                    onePartyViewHolder.actionButtonOP.setBackground(ContextCompat.getDrawable(onePartyViewHolder.actionButtonOP.getContext(), R.drawable.btn_continue_bg));
+                    onePartyViewHolder.actionButtonOP.setLayoutParams(new LinearLayout.LayoutParams
+                            (onePartyViewHolder.actionButtonOP.getResources().getDimensionPixelSize(R.dimen.dim_84)
+                                    , onePartyViewHolder.actionButtonOP.getResources().getDimensionPixelSize(R.dimen.dim_32)));
+
+                } else if (matchStatus.equalsIgnoreCase(Constants.MatchStatusStrings.CANCELLED)) {
+                    onePartyViewHolder.actionButtonOP.setClickable(false);
+                    onePartyViewHolder.actionButtonOPTextView.setTextColor(ContextCompat.getColor(onePartyViewHolder.actionButtonOP.getContext(), R.color.black));
+                    onePartyViewHolder.actionButtonOPTextView.setTypeface(latoRegular);
+                    onePartyViewHolder.resultOPTextView.setText(match.getMatchVenue());
+                    onePartyViewHolder.actionButtonOP.setBackground(ContextCompat.getDrawable(onePartyViewHolder.actionButtonOP.getContext(), R.drawable.btn_did_not_play_bg));
+                    onePartyViewHolder.actionButtonOP.setLayoutParams(new LinearLayout.LayoutParams
+                            (onePartyViewHolder.actionButtonOP.getResources().getDimensionPixelSize(R.dimen.dim_100)
+                                    , onePartyViewHolder.actionButtonOP.getResources().getDimensionPixelSize(R.dimen.dim_32)));
+
+                } else {
+                    onePartyViewHolder.actionButtonOP.setClickable(true);
+                    onePartyViewHolder.actionButtonOPTextView.setTextColor(ContextCompat.getColor(onePartyViewHolder.actionButtonOP.getContext(), R.color.white));
+                    onePartyViewHolder.actionButtonOPTextView.setTypeface(latoRegular);
+                    onePartyViewHolder.resultOPTextView.setText(match.getMatchVenue());
+                    onePartyViewHolder.actionButtonOP.setBackground(ContextCompat.getDrawable(onePartyViewHolder.actionButtonOP.getContext(), R.drawable.btn_play_bg));
+                    onePartyViewHolder.actionButtonOP.setLayoutParams(new LinearLayout.LayoutParams
+                            (onePartyViewHolder.actionButtonOP.getResources().getDimensionPixelSize(R.dimen.dim_90)
+                                    , onePartyViewHolder.actionButtonOP.getResources().getDimensionPixelSize(R.dimen.dim_32)));
+                }
+
+                if (matchStatus.equalsIgnoreCase(Constants.MatchStatusStrings.CONTINUE)) {
+                    onePartyViewHolder.actionButtonOPTextView.setText(matchStatus + "...");
+                } else if (matchStatus.equalsIgnoreCase(Constants.MatchStatusStrings.DID_NOT_PLAY)) {
+                    onePartyViewHolder.actionButtonOPTextView.setText("DNP");
+                } else {
+                    onePartyViewHolder.actionButtonOPTextView.setText(matchStatus);
+                }
+
+            }
+
+           /* one Party Match */
+            if (match.getTopics() != null) {
+                onePartyViewHolder.party1OPImageView.setImageUrl(match.getTopics().getTopicUrl());
+                onePartyViewHolder.party1NameOPTextView.setText(match.getTopics().getTopicName());
+            }
+
+        }
+
+    }
+
+
+    private void setOnePartyTimer(final InPlayOnePartyMatchItemViewHolder viewHolder, final String matchStartTime) {
+        CountDownTimer countDownTimer = new CountDownTimer(TimerHelper.getCountDownFutureTime(matchStartTime), 1000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                viewHolder.dateTimeOPTextView.setText(TimerHelper.getTimerFormatFromMillis(millisUntilFinished));
+            }
+
+            @Override
+            public void onFinish() {
+                viewHolder.dateTimeOPTextView.setText("In Progress");
+            }
+        };
+        countDownTimer.start();
+    }
+
 
     private boolean shouldDisableMatchClickAction(InPlayMatch match) {
         boolean shouldDisable = false;
@@ -353,6 +529,49 @@ public class InPlayMatchesRecyclerAdapter extends RecyclerView.Adapter<RecyclerV
                 /* Since taking same action on both the clicks */
                 case R.id.inplay_match_item_parent:
                 case R.id.inplay_match_action_button:
+                    onActionButtonClicked(getAdapterPosition());
+                    break;
+            }
+        }
+    }
+
+    public class InPlayOnePartyMatchItemViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+
+        LinearLayout matchParentOPLayout;
+        TextView dateTimeOPTextView;
+        HmImageView party1OPImageView;
+        TextView party1NameOPTextView;
+        TextView venueOPTextView;
+        RelativeLayout actionButtonOP;
+        TextView actionButtonOPTextView;
+        ImageView actionButtonOPImageView;
+        TextView resultOPTextView;
+        LinearLayout resultOPLayout;
+
+        public InPlayOnePartyMatchItemViewHolder(View itemView) {
+            super(itemView);
+            matchParentOPLayout = (LinearLayout) itemView.findViewById(R.id.inplay_one_party_match_item_parent);
+            dateTimeOPTextView = (TextView) itemView.findViewById(R.id.inplay_one_party_match_date_time_textView);
+            party1OPImageView = (HmImageView) itemView.findViewById(R.id.match_one_party_1_imgView);
+            party1NameOPTextView = (TextView) itemView.findViewById(R.id.match_one_party_1_textView);
+            venueOPTextView = (TextView) itemView.findViewById(R.id.inplay_one_party_match_venue_textView);
+            actionButtonOP = (RelativeLayout) itemView.findViewById(R.id.inplay_one_party_match_action_button);
+            actionButtonOPTextView = (TextView) itemView.findViewById(R.id.inplay_one_party_match_action_button_tv);
+            actionButtonOPImageView = (ImageView) itemView.findViewById(R.id.inplay_one_party_match_action_button_iv);
+            resultOPTextView = (TextView) itemView.findViewById(R.id.inplay_one_party_match_result_textView);
+            resultOPLayout = (LinearLayout) itemView.findViewById(R.id.inplay_one_party_match_result_layout);
+
+            matchParentOPLayout.setOnClickListener(this);
+            actionButtonOP.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View view) {
+            switch (view.getId()) {
+
+                /* Since taking same action on both the clicks */
+                case R.id.inplay_one_party_match_item_parent:
+                case R.id.inplay_one_party_match_action_button:
                     onActionButtonClicked(getAdapterPosition());
                     break;
             }
