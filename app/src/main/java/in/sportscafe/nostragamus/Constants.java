@@ -388,6 +388,7 @@ public interface Constants {
         String REPORT_TYPE = "reportType";
         String POWERUP_BANK_TRANSFER_SCREEN_DATA = "powerupBankTransferScreenData";
         String IN_APP_NOSTRA_NOTIFICATION_DETAILS = "inAppNostraNotification";
+        String COPY_ANSWER_SCREEN_DATA = "copyAnswerScreenData";
     }
 
     interface DateFormats {

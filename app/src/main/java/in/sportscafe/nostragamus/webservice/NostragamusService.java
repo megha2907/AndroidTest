@@ -44,6 +44,9 @@ import in.sportscafe.nostragamus.module.newChallenges.dto.NewChallengesResponse;
 import in.sportscafe.nostragamus.module.othersanswers.MatchAnswerStatsResponse;
 import in.sportscafe.nostragamus.module.play.myresults.MyResultsResponse;
 import in.sportscafe.nostragamus.module.play.myresults.dto.ReplayPowerupResponse;
+import in.sportscafe.nostragamus.module.prediction.copyAnswer.dto.CopyAnswerContestsResponse;
+import in.sportscafe.nostragamus.module.prediction.copyAnswer.dto.CopyAnswerRequest;
+import in.sportscafe.nostragamus.module.prediction.copyAnswer.dto.CopyAnswerResponse;
 import in.sportscafe.nostragamus.module.prediction.editAnswer.dto.QuestionForEditAnswerResponse;
 import in.sportscafe.nostragamus.module.prediction.editAnswer.dto.SaveEditAnswerRequest;
 import in.sportscafe.nostragamus.module.prediction.editAnswer.dto.SaveEditAnswerResponse;
@@ -387,4 +390,10 @@ public interface NostragamusService {
 
     @POST("v3/game/users/ticket")
     Call<ApiResponse> sendErrorReport(@Body SubmitReportRequest request);
+
+    @GET("v3/game/users/getMatchContests")
+    Call<CopyAnswerContestsResponse> getCopyAnswerContests(@Query("match_id") int matchId);
+
+    @POST("v3/game/users/copyMatchAnswers")
+    Call<CopyAnswerResponse> copyAnswer(@Body CopyAnswerRequest copyAnswerRequest);
 }

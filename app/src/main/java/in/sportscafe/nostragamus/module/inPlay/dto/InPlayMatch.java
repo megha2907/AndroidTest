@@ -62,6 +62,9 @@ public class InPlayMatch {
     @SerializedName("is_played")
     private boolean isPlayed;
 
+    @SerializedName("count_other_contests")
+    private int copyAnswerOtherContestCount;
+
     public int getChallengeId() {
         return challengeId;
     }
@@ -188,5 +191,13 @@ public class InPlayMatch {
 
     public void setAnswerCount(int answerCount) {
         this.answerCount = answerCount;
+    }
+
+    public int getCopyAnswerPlayedContests() {
+        return copyAnswerOtherContestCount;
+    }
+
+    public void setCopyAnswerOtherContestCount(int copyAnswerOtherContestCount) {
+        this.copyAnswerOtherContestCount = copyAnswerOtherContestCount;
     }
 }
