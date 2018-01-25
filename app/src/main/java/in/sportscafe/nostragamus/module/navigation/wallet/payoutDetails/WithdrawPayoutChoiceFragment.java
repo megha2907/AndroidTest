@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.jeeva.android.BaseFragment;
 
+
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.R;
@@ -24,8 +25,10 @@ import in.sportscafe.nostragamus.module.navigation.wallet.WalletHelper;
 import in.sportscafe.nostragamus.module.navigation.wallet.dto.UserWalletResponse;
 import in.sportscafe.nostragamus.module.navigation.wallet.withdrawMoney.WithdrawFromWalletApiModelImpl;
 import in.sportscafe.nostragamus.module.navigation.wallet.withdrawMoney.dto.WithdrawFromWalletResponse;
+import in.sportscafe.nostragamus.module.user.login.dto.UserInfo;
 import in.sportscafe.nostragamus.module.user.login.dto.UserPaymentInfoBankDto;
 import in.sportscafe.nostragamus.module.user.login.dto.UserPaymentInfoPaytmDto;
+
 
 /**
  * A simple {@link Fragment} subclass.

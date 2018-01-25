@@ -25,7 +25,7 @@
                 android:id="@+id/pool_layout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@color/grey_303030"
+                android:background="@drawable/dark_grey_contest_gradient_bg"
                 android:paddingBottom="@dimen/dim_14"
                 android:paddingLeft="@dimen/dim_12"
                 android:paddingRight="@dimen/dim_12"
@@ -106,7 +106,7 @@
                                 android:includeFontPadding="false"
                                 android:maxLines="1"
                                 android:textColor="@color/white"
-                                android:textSize="@dimen/sp_10"
+                                android:textSize="@dimen/sp_12"
                                 app:typeface="lato_bold" />
 
 
@@ -149,7 +149,7 @@
                                 android:includeFontPadding="false"
                                 android:maxLines="1"
                                 android:textColor="#22b573"
-                                android:textSize="@dimen/sp_10"
+                                android:textSize="@dimen/sp_12"
                                 app:typeface="lato_bold" />
 
                             <!--<ImageView
@@ -200,7 +200,7 @@
                                 android:includeFontPadding="false"
                                 android:maxLines="1"
                                 android:textColor="@color/white"
-                                android:textSize="@dimen/sp_10"
+                                android:textSize="@dimen/sp_12"
                                 app:typeface="lato_bold" />
 
                         </RelativeLayout>

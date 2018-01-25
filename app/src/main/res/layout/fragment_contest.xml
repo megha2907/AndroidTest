@@ -74,11 +74,10 @@
 
                 <ImageView
                     android:id="@+id/toolbar_icon"
-                    android:layout_width="@dimen/dim_24"
-                    android:layout_height="@dimen/dim_14"
+                    android:layout_width="@dimen/dim_32"
+                    android:layout_height="@dimen/dim_32"
                     android:layout_centerVertical="true"
-                    android:layout_marginRight="@dimen/dim_10"
-                    android:paddingRight="@dimen/dim_10"
+                    android:padding="@dimen/dim_8"
                     android:layout_toLeftOf="@+id/toolbar_wallet_rl"
                     android:src="@drawable/contest_question_mark" />
 
@@ -92,9 +91,9 @@
 
                     <ImageView
                         android:id="@+id/toolbar_wallet_icon"
-                        android:layout_width="@dimen/dim_14"
-                        android:layout_height="@dimen/dim_14"
-                        android:layout_marginRight="@dimen/dim_6"
+                        android:layout_width="@dimen/dim_32"
+                        android:layout_height="@dimen/dim_32"
+                        android:padding="@dimen/dim_8"
                         android:layout_toLeftOf="@+id/toolbar_wallet_money"
                         android:src="@drawable/toolbar_wallet_icon"
                         android:layout_gravity="center"/>
