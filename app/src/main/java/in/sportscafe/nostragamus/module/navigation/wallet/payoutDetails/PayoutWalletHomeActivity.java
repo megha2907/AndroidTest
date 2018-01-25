@@ -139,6 +139,7 @@ public class PayoutWalletHomeActivity extends NostragamusActivity implements Pay
             userMeta.put("UserId", String.valueOf(userInfo.getId()));
             userMeta.put("Transaction Type", ""); //setting it empty to refresh freshChat user properties in chat
             userMeta.put("Transaction Order Id", "");
+            userMeta.put("Transaction Time", "");
             userMeta.put("Challenge Id", "");
             userMeta.put("MatchId", "");
             userMeta.put("RoomId", "");

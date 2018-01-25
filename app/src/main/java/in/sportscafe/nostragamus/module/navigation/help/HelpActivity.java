@@ -127,6 +127,7 @@ public class HelpActivity extends NostragamusActivity implements HelpFragmentLis
             userMeta.put("UserId", String.valueOf(userInfo.getId()));
             userMeta.put("Transaction Type", "");
             userMeta.put("Transaction Order Id", "");
+            userMeta.put("Transaction Time", "");
             userMeta.put("Challenge Id", "");
             userMeta.put("MatchId", "");
             userMeta.put("RoomId", "");
