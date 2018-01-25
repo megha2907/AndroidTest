@@ -423,6 +423,7 @@ public abstract class WalletHistoryAdapter extends RecyclerView.Adapter<WalletHi
                 userMeta.put("UserId", String.valueOf(userInfo.getId()));
                 userMeta.put("Transaction Type", walletHistoryTransaction.getTransactionType());
                 userMeta.put("Transaction Order Id", walletHistoryTransaction.getOrderId());
+                userMeta.put("Transaction Time", walletHistoryTransaction.getCreatedAt());
                 userMeta.put("Challenge Id", "");
                 userMeta.put("MatchId", "");
                 userMeta.put("RoomId", "");

@@ -1105,6 +1105,7 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
             userMeta.put("RoomId", String.valueOf(getItem(0).getRoomId()));
             userMeta.put("Transaction Type", "");
             userMeta.put("Transaction Order Id", "");
+            userMeta.put("Transaction Time", "");
 
             //Call setUserProperties to sync the user properties with Freshchat's servers
             Freshchat.getInstance(context).setUserProperties(userMeta);
