@@ -79,7 +79,8 @@
                     android:layout_centerVertical="true"
                     android:padding="@dimen/dim_8"
                     android:layout_toLeftOf="@+id/toolbar_wallet_rl"
-                    android:src="@drawable/contest_question_mark" />
+                    android:src="@drawable/contest_question_mark"
+                    android:background="@drawable/ripple_effect_bg"/>
 
                 <LinearLayout
                     android:id="@+id/toolbar_wallet_rl"
@@ -97,7 +98,7 @@
                         android:layout_toLeftOf="@+id/toolbar_wallet_money"
                         android:src="@drawable/toolbar_wallet_icon"
                         android:layout_gravity="center"
-                        android:background="?android:attr/selectableItemBackground"/>
+                        android:background="@drawable/ripple_effect_bg"/>
 
                     <com.jeeva.android.widgets.customfont.CustomTextView
                         android:id="@+id/toolbar_wallet_money"
