@@ -22,7 +22,7 @@
         app:typeface="lato_regular"
         android:lineSpacingExtra="2dp"
         android:layout_marginTop="@dimen/dim_12"
-        android:layout_marginBottom="@dimen/dim_13"
+        android:layout_marginBottom="@dimen/dim_12"
         android:layout_marginLeft="@dimen/dim_20"
         android:layout_marginStart="@dimen/dim_20"/>
 
