@@ -126,6 +126,7 @@ public class CopyAnswerLauncherActivity extends NostraBaseActivity implements Vi
         Intent intent = new Intent(this, CopyAnswerActivity.class);
         intent.putExtras(getIntent().getExtras());
         startActivity(intent);
+        finish();
     }
 }
 

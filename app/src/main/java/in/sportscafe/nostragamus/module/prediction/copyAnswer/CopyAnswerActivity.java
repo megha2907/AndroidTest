@@ -236,6 +236,17 @@ public class CopyAnswerActivity extends NostraBaseActivity implements View.OnCli
     }
 
     private void onMatchAnsweredCopied(CopyAnswerResponse response) {
+        CustomSnackBar.make(findViewById(R.id.copy_answer_launcher_root_view),
+                "Predictions copied successfully", CustomSnackBar.DURATION_INFINITE).
+                setAction("OK", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        finishCopyActivityStack();
+                    }
+                }).show();
+    }
+
+    private void finishCopyActivityStack() {
         Intent clearTaskIntent = new Intent(this, InplayContestDetailsActivity.class);
         clearTaskIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
         startActivity(clearTaskIntent);
