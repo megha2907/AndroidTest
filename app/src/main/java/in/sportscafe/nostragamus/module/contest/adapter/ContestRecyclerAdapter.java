@@ -27,6 +27,7 @@ import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
 import in.sportscafe.nostragamus.module.contest.dto.Contest;
+import in.sportscafe.nostragamus.utils.CodeSnippet;
 
 /**
  * Created by sandip on 01/09/17.
@@ -122,7 +123,7 @@ public class ContestRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                 if (contest.noPrizes()) {
                     viewHolder.mTvPrizes.setText("No Prizes");
                 } else {
-                    viewHolder.mTvPrizes.setText(Constants.RUPEE_SYMBOL + String.valueOf(contest.getPrizes()));
+                    viewHolder.mTvPrizes.setText(Constants.RUPEE_SYMBOL + CodeSnippet.getFormattedAmount(contest.getPrizes()));
                 }
 
                 if (!TextUtils.isEmpty(contest.getSubtitle())) {
@@ -183,7 +184,7 @@ public class ContestRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                 if (contest.noPrizes()) {
                     viewHolder.mTvPrizes.setText("No Prizes");
                 } else {
-                    viewHolder.mTvPrizes.setText(Constants.RUPEE_SYMBOL + String.valueOf(contest.getPrizes()));
+                    viewHolder.mTvPrizes.setText(Constants.RUPEE_SYMBOL + CodeSnippet.getFormattedAmount(contest.getPrizes()));
                     if (!TextUtils.isEmpty(contest.getSubtitle())) {
                         viewHolder.mTvNumberOfPrizes.setText("[" + contest.getSubtitle() + "]");
                     }
@@ -261,7 +262,7 @@ public class ContestRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                 if (contest.noPrizes()) {
                     viewHolder.mTvPrizes.setText("No Prizes");
                 } else {
-                    viewHolder.mTvPrizes.setText(Constants.RUPEE_SYMBOL + String.valueOf(contest.getPrizes()));
+                    viewHolder.mTvPrizes.setText(Constants.RUPEE_SYMBOL + CodeSnippet.getFormattedAmount(contest.getPrizes()));
                 }
 
                 if (!TextUtils.isEmpty(contest.getSubtitle())) {

@@ -20,6 +20,7 @@ import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.challengeRewards.dto.Rewards;
 import in.sportscafe.nostragamus.module.contest.ui.poolContest.PoolRewardsAdapterListener;
 import in.sportscafe.nostragamus.module.newChallenges.helpers.DateTimeHelper;
+import in.sportscafe.nostragamus.utils.CodeSnippet;
 import in.sportscafe.nostragamus.utils.timeutils.TimeAgo;
 import in.sportscafe.nostragamus.utils.timeutils.TimeUnit;
 import in.sportscafe.nostragamus.utils.timeutils.TimeUtils;
@@ -209,7 +210,7 @@ public class PoolRewardsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
                 if (rewards.getAmount() != null) {
                     estimatePrizeViewHolder.mTvAmount.setVisibility(View.VISIBLE);
-                    estimatePrizeViewHolder.mTvAmount.setText(Constants.RUPEE_SYMBOL + String.valueOf(rewards.getAmount()));
+                    estimatePrizeViewHolder.mTvAmount.setText(Constants.RUPEE_SYMBOL + CodeSnippet.getFormattedAmount(rewards.getAmount()));
                 } else {
                     estimatePrizeViewHolder.mTvAmount.setVisibility(View.GONE);
                 }

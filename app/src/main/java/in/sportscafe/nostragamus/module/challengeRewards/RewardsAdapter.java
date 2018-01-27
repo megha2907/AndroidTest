@@ -16,6 +16,7 @@ import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.challengeRewards.dto.Rewards;
+import in.sportscafe.nostragamus.utils.CodeSnippet;
 import in.sportscafe.nostragamus.utils.timeutils.TimeAgo;
 import in.sportscafe.nostragamus.utils.timeutils.TimeUnit;
 import in.sportscafe.nostragamus.utils.timeutils.TimeUtils;
@@ -193,7 +194,7 @@ public class RewardsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
                 if (rewards.getAmount() != null) {
                     rewardsVH.mTvAmount.setVisibility(View.VISIBLE);
-                    rewardsVH.mTvAmount.setText(Constants.RUPEE_SYMBOL + String.valueOf(rewards.getAmount()));
+                    rewardsVH.mTvAmount.setText(Constants.RUPEE_SYMBOL + CodeSnippet.getFormattedAmount(rewards.getAmount()));
                 } else {
                     rewardsVH.mTvAmount.setVisibility(View.GONE);
                 }
