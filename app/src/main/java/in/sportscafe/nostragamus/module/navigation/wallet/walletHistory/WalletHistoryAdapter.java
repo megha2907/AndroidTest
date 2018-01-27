@@ -17,13 +17,21 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.freshchat.consumer.sdk.ConversationOptions;
+import com.freshchat.consumer.sdk.Freshchat;
+import com.freshchat.consumer.sdk.FreshchatUser;
+
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import in.sportscafe.nostragamus.Constants;
+import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.navigation.wallet.WalletHelper;
 import in.sportscafe.nostragamus.module.popups.submitReport.SubmitReportPopupActivity;
+import in.sportscafe.nostragamus.module.user.login.dto.UserInfo;
 import in.sportscafe.nostragamus.utils.AnimationHelper;
 import in.sportscafe.nostragamus.utils.timeutils.TimeUtils;
 
@@ -286,10 +294,9 @@ public abstract class WalletHistoryAdapter extends RecyclerView.Adapter<WalletHi
         }
 
         holder.txnIdTextView.setText("ID - " + String.valueOf(transaction.getOrderId()));
-
-        if (transaction.isShowReportButton()){
+        if (transaction.isShowReportButton()) {
             holder.historyReportBtn.setVisibility(View.VISIBLE);
-        }else {
+        } else {
             holder.historyReportBtn.setVisibility(View.GONE);
         }
     }
@@ -383,19 +390,55 @@ public abstract class WalletHistoryAdapter extends RecyclerView.Adapter<WalletHi
                     if (mContext != null) {
                         WalletHistoryTransaction walletHistoryTransaction = mTransactionList.get(getAdapterPosition());
                         if (walletHistoryTransaction != null) {
-                            Intent intent = new Intent(mContext, SubmitReportPopupActivity.class);
-                            intent.putExtra(Constants.BundleKeys.REPORT_TYPE,"wallet");
+                           /* Intent intent = new Intent(mContext, SubmitReportPopupActivity.class);
+                            intent.putExtra(Constants.BundleKeys.REPORT_TYPE, "wallet");
                             intent.putExtra(Constants.BundleKeys.REPORT_ID, walletHistoryTransaction.getOrderId().toString());
                             intent.putExtra(Constants.BundleKeys.REPORT_HEADING, "Report Transactions");
-                            intent.putExtra(Constants.BundleKeys.REPORT_TITLE,"Transaction Id");
+                            intent.putExtra(Constants.BundleKeys.REPORT_TITLE, "Transaction Id");
                             intent.putExtra(Constants.BundleKeys.REPORT_DESC, walletHistoryTransaction.getOrderId());
                             intent.putExtra(Constants.BundleKeys.REPORT_THANKYOU_TEXT, "You can let us know about any issues with your " +
                                     "transactions. We will review them and make the necessary changes!");
-                            mContext.startActivity(intent);
+                            mContext.startActivity(intent);*/
+
+                            openWalletQueryChatBox(walletHistoryTransaction);
                         }
                     }
                     break;
             }
+        }
+
+        private void openWalletQueryChatBox(WalletHistoryTransaction walletHistoryTransaction) {
+
+            UserInfo userInfo = Nostragamus.getInstance().getServerDataManager().getUserInfo();
+            FreshchatUser user = Freshchat.getInstance(mContext).getUser();
+            if (userInfo != null && user != null) {
+                Freshchat.resetUser(mContext);
+                user.setFirstName(userInfo.getUserName())
+                        .setEmail(userInfo.getEmail());
+                Freshchat.getInstance(mContext).setUser(user);
+
+            /* Set any custom metadata to give agents more context,
+            and for segmentation for marketing or pro-active messaging */
+                Map<String, String> userMeta = new HashMap<String, String>();
+                userMeta.put("UserId", String.valueOf(userInfo.getId()));
+                userMeta.put("Transaction Type", walletHistoryTransaction.getTransactionType());
+                userMeta.put("Transaction Order Id", walletHistoryTransaction.getOrderId());
+                userMeta.put("Transaction Time", walletHistoryTransaction.getCreatedAt());
+                userMeta.put("Challenge Id", "");
+                userMeta.put("MatchId", "");
+                userMeta.put("RoomId", "");
+
+                //Call setUserProperties to sync the user properties with Freshchat's servers
+                Freshchat.getInstance(mContext).setUserProperties(userMeta);
+            }
+
+         /* Open Wallet Related Queries Chat Channel */
+            List<String> tags = new ArrayList<>();
+            tags.add("Wallet");
+            ConversationOptions convOptions = new ConversationOptions()
+                    .filterByTags(tags, "Wallet");
+            Freshchat.showConversations(mContext, convOptions);
+
         }
     }
 }

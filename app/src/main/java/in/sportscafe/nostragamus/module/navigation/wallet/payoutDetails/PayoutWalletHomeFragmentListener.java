@@ -9,4 +9,5 @@ public interface PayoutWalletHomeFragmentListener {
     void onAddBankClicked();
     void onEditPaytmClicked();
     void onEditBankClicked();
+    void onFreshChatOptionChosen();
 }

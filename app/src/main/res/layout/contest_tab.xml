@@ -11,7 +11,7 @@
         android:id="@+id/contest_tab_count_textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/white"
+        android:textColor="@drawable/tab_tv_selector"
         android:layout_gravity="center"
         android:layout_marginTop="@dimen/dim_4"
         android:textSize="@dimen/sp_16"

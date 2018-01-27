@@ -4,17 +4,17 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.View;
 
 import in.sportscafe.nostragamus.Constants;
+import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.NostragamusActivity;
 import in.sportscafe.nostragamus.module.navigation.wallet.WalletHomeActivity;
 import in.sportscafe.nostragamus.module.navigation.wallet.withdrawMoney.WithdrawApiDialogListener;
 import in.sportscafe.nostragamus.module.navigation.wallet.withdrawMoney.WithdrawInitiatedDialogFragment;
-import in.sportscafe.nostragamus.utils.AlertsHelper;
 import in.sportscafe.nostragamus.utils.FragmentHelper;
-
 public class WithdrawPayoutChoiceActivity extends NostragamusActivity implements WithdrawPayoutChoiceFragmentListener {
 
     private static final int ADD_PAYOUT_REQUEST_CODE = 21;
@@ -79,6 +79,7 @@ public class WithdrawPayoutChoiceActivity extends NostragamusActivity implements
     public void onWithdrawFailure(Bundle args) {
         showConfirmationDialog(args);
     }
+
 
     private void showConfirmationDialog(Bundle args) {
         int requestCode = 1390;

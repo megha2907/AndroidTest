@@ -137,6 +137,34 @@
 
             </RelativeLayout>
 
+            <!--Contest Rule Three Layout  -->
+            <RelativeLayout
+                android:id="@+id/contest_rule_three_rl"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dim_10">
+
+                <!-- Contest Rule Two-->
+                <com.jeeva.android.widgets.customfont.CustomTextView
+                    android:id="@+id/contest_rule_three"
+                    app:typeface="lato_regular"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dim_6"
+                    android:layout_toRightOf="@+id/contest_rule_three_bullet"
+                    android:textColor="@color/grey6"
+                    android:textSize="@dimen/sp_12"
+                    android:lineSpacingExtra="@dimen/dim_4"/>
+
+                <ImageView
+                    android:id="@+id/contest_rule_three_bullet"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dim_8"
+                    android:src="@drawable/dash" />
+
+            </RelativeLayout>
+
         </LinearLayout>
 
         <!-- Powerups Rules-->

@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.jeeva.android.BaseFragment;
@@ -27,10 +28,12 @@ import in.sportscafe.nostragamus.module.user.login.dto.UserPaymentInfoPaytmDto;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class PayoutWalletHomeFragment extends BaseFragment {
+public class PayoutWalletHomeFragment extends BaseFragment implements View.OnClickListener {
 
     private static final String TAG = PayoutWalletHomeFragment.class.getSimpleName();
     private PayoutWalletHomeFragmentListener mFragmentListener;
+
+    private RelativeLayout mFreshChatWithdrawalQueriesButton;
 
     public PayoutWalletHomeFragment() {}
 
@@ -64,6 +67,8 @@ public class PayoutWalletHomeFragment extends BaseFragment {
 
     private void updateTextOnUi(View rootView) {
         TextView infoTextView = (TextView) rootView.findViewById(R.id.payout_wallet_info_textView);
+        mFreshChatWithdrawalQueriesButton = (RelativeLayout) rootView.findViewById(R.id.payout_freshchat_btn_rl);
+        mFreshChatWithdrawalQueriesButton.setOnClickListener(this);
 
         boolean isPaytmAdded = WalletHelper.isPaytmPayoutDetailsProvided();
         boolean isBankAdded = WalletHelper.isBankPayoutDetailsProvided();
@@ -189,4 +194,13 @@ public class PayoutWalletHomeFragment extends BaseFragment {
         }
     }
 
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+
+            case R.id.payout_freshchat_btn_rl:
+                mFragmentListener.onFreshChatOptionChosen();
+                break;
+        }
+    }
 }

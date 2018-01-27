@@ -20,7 +20,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/dark_grey_gradient_bg"
+            android:background="@drawable/dark_grey_contest_gradient_bg"
             android:elevation="@dimen/dim_4"
             android:orientation="vertical">
 
@@ -33,11 +33,11 @@
                     android:id="@+id/pool_layout"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/dark_grey_gradient_bg"
-                    android:paddingBottom="@dimen/dim_8"
-                    android:paddingLeft="@dimen/dim_15"
-                    android:paddingRight="@dimen/dim_15"
-                    android:paddingTop="@dimen/dim_12">
+                    android:background="@drawable/dark_grey_contest_gradient_bg"
+                    android:paddingBottom="@dimen/dim_14"
+                    android:paddingLeft="@dimen/dim_12"
+                    android:paddingRight="@dimen/dim_12"
+                    android:paddingTop="@dimen/dim_16">
 
                     <RelativeLayout
                         android:id="@+id/pool_row_rl_detail_layout"
@@ -71,20 +71,20 @@
 
                         <ImageView
                             android:id="@+id/pool_row_iv_contest_type"
-                            android:layout_width="@dimen/dim_25"
-                            android:layout_height="@dimen/dim_20"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:layout_alignParentRight="true"
-                            android:paddingLeft="@dimen/dim_5"
+                            android:paddingLeft="@dimen/dim_10"
                             android:paddingBottom="@dimen/dim_5"
-                            android:layout_marginTop="@dimen/dim_3" />
+                            android:layout_marginTop="@dimen/dim_3"/>
 
                         <LinearLayout
                             android:id="@+id/pool_row_ll_member_layout"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_below="@id/pool_row_tv_name"
-                            android:layout_marginRight="@dimen/dim_20"
-                            android:layout_marginTop="@dimen/dim_16"
+                            android:layout_marginRight="@dimen/dim_22"
+                            android:layout_marginTop="@dimen/dim_20"
                             android:layout_toRightOf="@+id/pool_row_ll_reward_layout"
                             android:clickable="true"
                             android:minHeight="@dimen/dim_30"
@@ -106,7 +106,8 @@
                             <RelativeLayout
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="@dimen/dim_5">
+                                android:layout_marginTop="@dimen/dim_6"
+                                android:layout_gravity="center">
 
                                 <com.jeeva.android.widgets.customfont.CustomTextView
                                     android:id="@+id/pool_row_tv_member_count"
@@ -115,7 +116,7 @@
                                     android:includeFontPadding="false"
                                     android:maxLines="1"
                                     android:textColor="@color/white"
-                                    android:textSize="@dimen/sp_10"
+                                    android:textSize="@dimen/sp_12"
                                     app:typeface="lato_bold" />
 
 
@@ -128,7 +129,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignTop="@id/pool_row_ll_member_layout"
-                            android:layout_marginRight="@dimen/dim_20"
+                            android:layout_marginRight="@dimen/dim_22"
                             android:background="?android:attr/selectableItemBackground"
                             android:clickable="true"
                             android:minHeight="@dimen/dim_30"
@@ -149,7 +150,7 @@
                             <RelativeLayout
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="@dimen/dim_5">
+                                android:layout_marginTop="@dimen/dim_6">
 
                                 <com.jeeva.android.widgets.customfont.CustomTextView
                                     android:id="@+id/pool_row_tv_reward"
@@ -158,7 +159,7 @@
                                     android:includeFontPadding="false"
                                     android:maxLines="1"
                                     android:textColor="#22b573"
-                                    android:textSize="@dimen/sp_10"
+                                    android:textSize="@dimen/sp_12"
                                     app:typeface="lato_bold" />
 
                                 <ImageView
@@ -192,6 +193,7 @@
                                 android:includeFontPadding="false"
                                 android:text="Entry Fee"
                                 android:textAllCaps="true"
+                                android:layout_gravity="right"
                                 android:textColor="@color/white_999999"
                                 android:textSize="@dimen/sp_9"
                                 app:typeface="lato_regular" />
@@ -199,7 +201,8 @@
                             <RelativeLayout
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="@dimen/dim_5">
+                                android:layout_marginTop="@dimen/dim_6"
+                                android:layout_gravity="right">
 
                                 <com.jeeva.android.widgets.customfont.CustomTextView
                                     android:id="@+id/pool_row_tv_entry_fee"
@@ -208,7 +211,7 @@
                                     android:includeFontPadding="false"
                                     android:maxLines="1"
                                     android:textColor="@color/white"
-                                    android:textSize="@dimen/sp_10"
+                                    android:textSize="@dimen/sp_12"
                                     app:typeface="lato_bold" />
 
                             </RelativeLayout>
@@ -260,7 +263,7 @@
                         android:maxLines="1"
                         android:text="0"
                         android:textAllCaps="true"
-                        android:textColor="@color/white"
+                        android:textColor="@color/grey6"
                         android:textSize="@dimen/sp_10"
                         app:typeface="lato_bold" />
 
@@ -275,8 +278,8 @@
                         android:maxLines="1"
                         android:text="Filled"
                         android:textAllCaps="true"
-                        android:textColor="@color/white_60"
-                        android:textSize="@dimen/sp_9"
+                        android:textColor="@color/grey_999999"
+                        android:textSize="@dimen/sp_10"
                         app:typeface="lato_regular" />
 
                     <com.jeeva.android.widgets.customfont.CustomTextView
@@ -289,7 +292,7 @@
                         android:maxLines="1"
                         android:text="Entries Closed"
                         android:textAllCaps="true"
-                        android:textColor="@color/white_60"
+                        android:textColor="@color/grey_999999"
                         android:textSize="@dimen/sp_9"
                         app:typeface="lato_regular" />
 

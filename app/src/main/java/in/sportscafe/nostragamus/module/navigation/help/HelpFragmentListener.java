@@ -10,4 +10,5 @@ public interface HelpFragmentListener {
     void onFaqClicked();
     void onPlaySampleGameClicked();
     void onSendFeedbackClicked();
+    void onChatClicked();
 }
