@@ -74,7 +74,7 @@
                         android:layout_centerVertical="true"
                         android:layout_toLeftOf="@+id/toolbar_wallet_money"
                         android:src="@drawable/toolbar_wallet_icon"
-                        android:background="?android:attr/selectableItemBackground"/>
+                        android:background="@drawable/ripple_effect_bg"/>
 
                 </RelativeLayout>
 
