@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/dim_48"
+    android:background="@color/black4"
+    android:gravity="center_vertical"
+    android:layout_marginLeft="@dimen/dim_20"
+    android:layout_marginRight="@dimen/dim_20"
+    >
+
+    <com.jeeva.android.widgets.customfont.CustomTextView
+        android:id="@+id/copy_answer_item_question_textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/grey_999999"
+        android:maxLines="1"
+        android:ellipsize="end"
+        android:textSize="@dimen/sp_9"
+        app:typeface="lato_regular"
+        android:layout_marginTop="@dimen/dim_8"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="@dimen/dim_4">
+
+        <com.jeeva.android.widgets.customfont.CustomTextView
+            android:id="@+id/copy_answer_item_answer_textView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp_10"
+            app:typeface="lato_bold"
+            android:ellipsize="end"/>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:gravity="end">
+
+            <ImageView
+                android:id="@+id/copy_answer_powerup_2x_right"
+                android:layout_width="@dimen/dp_10"
+                android:layout_height="@dimen/dp_10"
+                android:background="@android:color/transparent"
+                android:src="@drawable/double_powerup"
+                android:visibility="gone"/>
+
+            <ImageView
+                android:id="@+id/copy_answer_powerup_noNeg_right"
+                android:layout_width="@dimen/dp_10"
+                android:layout_height="@dimen/dp_10"
+                android:background="@android:color/transparent"
+                android:src="@drawable/no_negative_powerup"
+                android:layout_marginLeft="@dimen/dp_8"
+                android:visibility="gone"/>
+
+            <ImageView
+                android:id="@+id/copy_answer_powerup_audience_right"
+                android:layout_width="@dimen/dp_10"
+                android:layout_height="@dimen/dp_10"
+                android:background="@android:color/transparent"
+                android:src="@drawable/audience_poll_powerup"
+                android:layout_marginLeft="@dimen/dp_8"
+                android:visibility="gone"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <View
+        android:id="@+id/lineView"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dim_1"
+        android:background="@color/grey_303030"
+        android:layout_marginTop="@dimen/dim_8"/>
+
+</LinearLayout>

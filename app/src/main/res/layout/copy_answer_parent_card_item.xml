@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/black4"
+    android:layout_marginLeft="@dimen/dim_10"
+    android:layout_marginRight="@dimen/dim_10"
+    android:layout_marginTop="@dimen/dim_12">
+
+    <!-- Visible header -->
+    <LinearLayout
+        android:id="@+id/copy_answer_item_header_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_marginLeft="@dimen/dim_12"
+            android:layout_marginRight="@dimen/dim_12">
+
+            <ImageView
+                android:id="@+id/direction_arrow_imgView"
+                android:layout_width="@dimen/dim_20"
+                android:layout_height="@dimen/dim_20"
+                android:src="@drawable/challenge_down_arrow"
+                android:padding="@dimen/dim_6"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_weight="1"
+            android:layout_marginTop="@dimen/dim_6"
+            android:layout_marginBottom="@dimen/dim_6">
+
+            <com.jeeva.android.widgets.customfont.CustomTextView
+                android:id="@+id/copy_answer_item_header_textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/grey6"
+                android:textSize="@dimen/sp_10"
+                app:typeface="lato_regular"
+                android:ellipsize="end"/>
+
+            <com.jeeva.android.widgets.customfont.CustomTextView
+                android:id="@+id/copy_answer_item_challenge_name_textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp_12"
+                app:typeface="lato_bold"
+                android:layout_marginTop="@dimen/dim_3"
+                android:ellipsize="end"
+                android:maxLines="1"/>
+
+            <com.jeeva.android.widgets.customfont.CustomTextView
+                android:id="@+id/copy_answer_answered_time_textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp_10"
+                app:typeface="lato_regular"
+                android:textStyle="italic"
+                android:layout_marginTop="@dimen/dim_3"
+                android:ellipsize="end"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_marginLeft="@dimen/dim_20"
+            android:layout_marginRight="@dimen/dim_20">
+
+            <com.jeeva.android.widgets.customfont.CustomButton
+                android:id="@+id/copy_answer_use_button"
+                android:layout_width="@dimen/dim_44"
+                android:layout_height="@dimen/dim_26"
+                android:background="@drawable/light_blue_button_selector"
+                android:paddingBottom="@dimen/dp_2"
+                android:text="Use"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp_10"
+                app:typeface="lato_bold" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <!-- collapesable  layout -->
+    <LinearLayout
+        android:id="@+id/copy_answer_collapsable_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dim_1"
+            android:background="@color/grey_303030"/>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/copy_answer_nested_recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+
+</LinearLayout>

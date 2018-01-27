@@ -348,6 +348,12 @@
             android:name=".module.prediction.editAnswer.EditAnswerActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".module.prediction.copyAnswer.CopyAnswerLauncherActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".module.prediction.copyAnswer.CopyAnswerActivity"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".module.prediction.editAnswer.EditAnswerPowerUpModifiedPopupActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.PopupTheme"/>
@@ -403,7 +409,9 @@
         <service
             android:name="com.moengage.pushbase.push.MoEPushWorker"
             android:exported="false" />
-        <service android:enabled="true" android:name=".service.InAppNotificationService" />
+        <service
+            android:name=".service.InAppNotificationService"
+            android:enabled="true" />
 
         <receiver
             android:name="com.moengage.core.MoEAlarmReceiver"
