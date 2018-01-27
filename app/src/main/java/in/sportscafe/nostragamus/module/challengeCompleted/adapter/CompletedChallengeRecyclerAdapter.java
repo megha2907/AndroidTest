@@ -31,6 +31,7 @@ import in.sportscafe.nostragamus.module.challengeCompleted.dto.CompletedListItem
 import in.sportscafe.nostragamus.module.contest.ui.DetailScreensLaunchRequest;
 import in.sportscafe.nostragamus.module.customViews.TimelineHelper;
 import in.sportscafe.nostragamus.module.newChallenges.helpers.DateTimeHelper;
+import in.sportscafe.nostragamus.utils.CodeSnippet;
 import in.sportscafe.nostragamus.utils.timeutils.TimeAgo;
 import in.sportscafe.nostragamus.utils.timeutils.TimeUnit;
 import in.sportscafe.nostragamus.utils.timeutils.TimeUtils;
@@ -281,7 +282,7 @@ public class CompletedChallengeRecyclerAdapter extends RecyclerView.Adapter<Recy
 
             viewHolder.contestTitleTextView.setText(contest.getContestName());
             viewHolder.entryFeeTextView.setText(Constants.RUPEE_SYMBOL + String.valueOf(contest.getEntryFee()));
-            viewHolder.prizesTextView.setText(Constants.RUPEE_SYMBOL + String.valueOf(contest.getWinningAmount()));
+            viewHolder.prizesTextView.setText(Constants.RUPEE_SYMBOL + CodeSnippet.getFormattedAmount(contest.getWinningAmount()));
 
             if (contest.getRank() > 0) {
                 viewHolder.currentRankTextView.setText(AppSnippet.ordinal(contest.getRank()));
