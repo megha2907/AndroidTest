@@ -92,109 +92,15 @@
 
         </RelativeLayout>
 
-        <!-- Content scrollable along with recycler view  -->
-        <android.support.design.widget.CoordinatorLayout
+        <ExpandableListView
+            android:id="@+id/copy_answer_expandable_listView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <android.support.design.widget.AppBarLayout
-                android:id="@+id/estimate_parent_appbar"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                >
-
-                <android.support.design.widget.CollapsingToolbarLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:layout_scrollFlags="scroll|exitUntilCollapsed">
-
-                    <!-- Info layout -->
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@color/black5">
-
-                        <LinearLayout
-                            android:id="@+id/title_container"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            android:gravity="center_horizontal"
-                            android:layout_marginTop="@dimen/dim_24">
-
-                            <com.jeeva.android.widgets.customfont.CustomTextView
-                                android:id="@+id/copy_answer_title_textView"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:gravity="center"
-                                android:textColor="@color/white"
-                                android:textSize="@dimen/sp_16"
-                                app:typeface="lato_bold"
-                                android:text="Choose a contest to import answers"
-                                />
-
-                            <com.jeeva.android.widgets.customfont.CustomTextView
-                                android:id="@+id/copy_answer_title_counter_textView"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:gravity="center"
-                                android:textColor="@color/white_999999"
-                                android:textSize="@dimen/sp_14"
-                                app:typeface="lato_bold"
-                                android:text="(1)"
-                                android:layout_marginLeft="@dimen/dim_3"/>
-
-                        </LinearLayout>
-
-                        <com.jeeva.android.widgets.customfont.CustomTextView
-                            android:id="@+id/copy_answer_desc_textView"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerHorizontal="true"
-                            android:gravity="center"
-                            android:textColor="@color/white_999999"
-                            android:textSize="@dimen/sp_10"
-                            app:typeface="lato_regular"
-                            android:layout_marginTop="@dimen/dim_8"
-                            android:layout_below="@id/title_container"
-                            android:layout_marginLeft="@dimen/dim_20"
-                            android:layout_marginRight="@dimen/dim_20"
-                            android:text="Powerups will be copied with predictions, as long as there are enough in current contest. Use the button below to copy powerups"/>
-
-                        <com.jeeva.android.widgets.customfont.CustomCheckbox
-                            android:id="@+id/copy_answer_use_powerup_checkbox"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:buttonTint="#0098a6"
-                            android:paddingLeft="-0.5mm"
-                            android:layout_below="@id/copy_answer_desc_textView"
-                            android:layout_centerHorizontal="true"
-                            android:layout_marginTop="@dimen/dim_12"
-                            android:layout_marginBottom="@dimen/dim_2"
-                            android:text="Copy Powerups"
-                            android:textColor="@color/white"
-                            android:textSize="@dimen/sp_12"
-                            app:typeface="lato_bold"
-                            android:checked="true"
-                            android:scaleX="0.8"
-                            android:scaleY="0.8"
-                            />
-
-                    </RelativeLayout>
-
-                </android.support.design.widget.CollapsingToolbarLayout>
-
-            </android.support.design.widget.AppBarLayout>
-
-            <!-- List -->
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/copy_answer_parent_recyclerView"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:clipToPadding="false"
-                app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
-
-        </android.support.design.widget.CoordinatorLayout>
+            android:layout_height="wrap_content"
+            android:background="@color/black5"
+            android:childDivider="@android:color/transparent"
+            android:clipToPadding="false"
+            android:divider="@null"
+            android:groupIndicator="@null" />
 
     </LinearLayout>
 

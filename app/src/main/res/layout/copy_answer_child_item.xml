@@ -3,13 +3,19 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:minHeight="@dimen/dim_48"
-    android:background="@color/black3"
-    android:gravity="center_vertical"
-    android:layout_marginLeft="@dimen/dim_30"
-    android:layout_marginRight="@dimen/dim_30"
-    >
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:minHeight="@dimen/dim_48"
+        android:paddingLeft="@dimen/dim_20"
+        android:paddingRight="@dimen/dim_20"
+        android:background="@color/black3"
+        android:gravity="center_vertical"
+        android:layout_marginLeft="@dimen/dim_10"
+        android:layout_marginRight="@dimen/dim_10">
 
     <com.jeeva.android.widgets.customfont.CustomTextView
         android:id="@+id/copy_answer_item_question_textView"
@@ -80,5 +86,7 @@
         android:layout_height="@dimen/dim_1"
         android:background="@color/grey_303030"
         android:layout_marginTop="@dimen/dim_8"/>
+
+    </LinearLayout>
 
 </LinearLayout>
