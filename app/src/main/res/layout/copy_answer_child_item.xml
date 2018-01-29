@@ -3,11 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/dim_48"
-    android:background="@color/black4"
+    android:layout_height="wrap_content"
+    android:minHeight="@dimen/dim_48"
+    android:background="@color/black3"
     android:gravity="center_vertical"
-    android:layout_marginLeft="@dimen/dim_20"
-    android:layout_marginRight="@dimen/dim_20"
+    android:layout_marginLeft="@dimen/dim_30"
+    android:layout_marginRight="@dimen/dim_30"
     >
 
     <com.jeeva.android.widgets.customfont.CustomTextView
@@ -15,7 +16,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="@color/grey_999999"
-        android:maxLines="1"
         android:ellipsize="end"
         android:textSize="@dimen/sp_9"
         app:typeface="lato_regular"
@@ -31,7 +31,7 @@
             android:id="@+id/copy_answer_item_answer_textView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="3"
+            android:layout_weight="2.5"
             android:textColor="@color/white"
             android:textSize="@dimen/sp_10"
             app:typeface="lato_bold"
@@ -40,7 +40,7 @@
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_weight="1.5"
             android:orientation="horizontal"
             android:gravity="end">
 

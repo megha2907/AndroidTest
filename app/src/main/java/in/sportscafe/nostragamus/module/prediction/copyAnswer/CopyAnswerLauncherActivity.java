@@ -33,6 +33,7 @@ public class CopyAnswerLauncherActivity extends NostraBaseActivity implements Vi
         setShouldAnimateActivity(true);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_copy_answer_launcher);
+        setImmersiveFullScreenMode();
 
         initViews();
         initMembers();

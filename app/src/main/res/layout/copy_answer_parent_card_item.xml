@@ -4,7 +4,8 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/black4"
+    android:minHeight="@dimen/dim_60"
+    android:background="@color/black3"
     android:layout_marginLeft="@dimen/dim_10"
     android:layout_marginRight="@dimen/dim_10"
     android:layout_marginTop="@dimen/dim_12">

@@ -19,9 +19,9 @@ import org.parceler.Parcels;
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.NostraBaseActivity;
-import in.sportscafe.nostragamus.module.contest.contestDetailsAfterJoining.InplayContestDetailsActivity;
 import in.sportscafe.nostragamus.module.customViews.CustomSnackBar;
-import in.sportscafe.nostragamus.module.nostraHome.ui.NostraHomeActivity;
+import in.sportscafe.nostragamus.module.inPlay.ui.ResultsScreenDataDto;
+import in.sportscafe.nostragamus.module.play.myresults.MyResultsActivity;
 import in.sportscafe.nostragamus.module.prediction.copyAnswer.adapter.CopyAnswerParentAdapterListener;
 import in.sportscafe.nostragamus.module.prediction.copyAnswer.adapter.CopyAnswerRecyclerParentAdapter;
 import in.sportscafe.nostragamus.module.prediction.copyAnswer.dataProvider.AnsweredContestsApiModelImpl;
@@ -30,6 +30,7 @@ import in.sportscafe.nostragamus.module.prediction.copyAnswer.dto.CopyAnswerCont
 import in.sportscafe.nostragamus.module.prediction.copyAnswer.dto.CopyAnswerContestsResponse;
 import in.sportscafe.nostragamus.module.prediction.copyAnswer.dto.CopyAnswerResponse;
 import in.sportscafe.nostragamus.module.prediction.copyAnswer.dto.CopyAnswerScreenData;
+import in.sportscafe.nostragamus.module.prediction.playScreen.dto.PlayScreenDataDto;
 
 public class CopyAnswerActivity extends NostraBaseActivity implements View.OnClickListener {
 
@@ -47,6 +48,7 @@ public class CopyAnswerActivity extends NostraBaseActivity implements View.OnCli
         setShouldAnimateActivity(true);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_copy_answer);
+        setImmersiveFullScreenMode();
 
         initViews();
         initMembers();
@@ -60,7 +62,7 @@ public class CopyAnswerActivity extends NostraBaseActivity implements View.OnCli
         mCopyPowerUpsCheckBox = (CheckBox) findViewById(R.id.copy_answer_use_powerup_checkbox);
         mRecyclerView = (RecyclerView) findViewById(R.id.copy_answer_parent_recyclerView);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        mRecyclerView.setHasFixedSize(true);
+        mRecyclerView.setHasFixedSize(false);
     }
 
     private void initMembers() {
@@ -236,20 +238,35 @@ public class CopyAnswerActivity extends NostraBaseActivity implements View.OnCli
     }
 
     private void onMatchAnsweredCopied(CopyAnswerResponse response) {
-        CustomSnackBar.make(findViewById(R.id.copy_answer_launcher_root_view),
-                "Predictions copied successfully", CustomSnackBar.DURATION_INFINITE).
-                setAction("OK", new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        finishCopyActivityStack();
-                    }
-                }).show();
-    }
+        if (response != null && response.getData() != null && mCopyAnswerScreenData != null) {
+            ResultsScreenDataDto data = new ResultsScreenDataDto();
+            PlayScreenDataDto playScreenData = mCopyAnswerScreenData.getPlayScreenDataDto();
 
-    private void finishCopyActivityStack() {
-        Intent clearTaskIntent = new Intent(this, InplayContestDetailsActivity.class);
-        clearTaskIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-        startActivity(clearTaskIntent);
+            if (playScreenData != null) {
+                data.setRoomId(playScreenData.getRoomId());
+                data.setChallengeId(playScreenData.getChallengeId());
+                data.setMatchId(playScreenData.getMatchId());
+                data.setMatchStatus(playScreenData.getMatchStatus());
+                data.setChallengeName(playScreenData.getChallengeName());
+                data.setPlayingPseudoGame(playScreenData.isPlayingPseudoGame());
+                data.setChallengeStartTime(playScreenData.getChallengeStartTime());
+                if (playScreenData.getInPlayContestDto() != null) {
+                    data.setInPlayContestDto(playScreenData.getInPlayContestDto());
+                    data.setSubTitle(playScreenData.getInPlayContestDto().getContestName());
+                }
+            }
+
+            Bundle args = new Bundle();
+            args.putParcelable(Constants.BundleKeys.RESULTS_SCREEN_DATA, Parcels.wrap(data));
+
+            Intent intent = new Intent(this, MyResultsActivity.class);
+            intent.putExtras(args);
+            intent.putExtra(Constants.BundleKeys.SCREEN_LAUNCHED_FROM_PARENT, MyResultsActivity.LaunchedFrom.COPY_ANSWER_SUCCESS);
+            intent.putExtra(Constants.BundleKeys.COPY_ANSWER_POWERUP_COPIED, response.getData().isPowerupsCopied());
+
+            startActivity(intent);
+            finish();
+        }
     }
 
     private void handleError(String msg, int status) {

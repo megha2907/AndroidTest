@@ -1,6 +1,5 @@
 package in.sportscafe.nostragamus.module.prediction.copyAnswer.adapter;
 
-import android.os.Handler;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -17,6 +16,8 @@ import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.prediction.copyAnswer.dto.CopyAnswerContest;
 import in.sportscafe.nostragamus.utils.AnimationHelper;
 
+import static in.sportscafe.nostragamus.R.string.position;
+
 /**
  * Created by sc on 24/1/18.
  */
@@ -25,11 +26,19 @@ public class CopyAnswerRecyclerParentAdapter extends RecyclerView.Adapter<Recycl
 
     private List<CopyAnswerContest> mContestList;
     private CopyAnswerParentAdapterListener mParentAdapterListener;
+    private int mExpandedPosition = -1;
+    private CopyAnswerParentViewHolder mExpandedHolder = null;
 
     public CopyAnswerRecyclerParentAdapter(List<CopyAnswerContest> copyAnswerContestList,
                                            CopyAnswerParentAdapterListener parentAdapterListener) {
         mContestList = copyAnswerContestList;
         mParentAdapterListener = parentAdapterListener;
+    }
+
+    @Override
+    public void onViewAttachedToWindow(final RecyclerView.ViewHolder holder) {
+        holder.setIsRecyclable(false);
+        super.onViewAttachedToWindow(holder);
     }
 
     @Override
@@ -100,7 +109,7 @@ public class CopyAnswerRecyclerParentAdapter extends RecyclerView.Adapter<Recycl
             nestedRecyclerView.setHasFixedSize(true);
 
             useButton.setOnClickListener(this);
-            arrowImgView.setOnClickListener(this);
+            topVisibleLayout.setOnClickListener(this);
         }
 
         @Override
@@ -110,7 +119,7 @@ public class CopyAnswerRecyclerParentAdapter extends RecyclerView.Adapter<Recycl
                     onUseButtonClicked(getAdapterPosition());
                     break;
 
-                case R.id.direction_arrow_imgView:
+                case R.id.copy_answer_item_header_layout:
                     onDetailsClicked(getAdapterPosition(), this);
                     break;
             }
@@ -123,17 +132,28 @@ public class CopyAnswerRecyclerParentAdapter extends RecyclerView.Adapter<Recycl
         }
     }
 
-    private void onDetailsClicked(int adapterPosition, final CopyAnswerParentViewHolder holder) {
+    private void onDetailsClicked(final int adapterPosition, final CopyAnswerParentViewHolder holder) {
         if (holder.contentInvisibleLayout.getVisibility() == View.VISIBLE) {
             AnimationHelper.collapse(holder.contentInvisibleLayout);
             holder.arrowImgView.setImageResource(R.drawable.challenge_down_arrow);
         } else {
             AnimationHelper.expand(holder.contentInvisibleLayout);
             holder.arrowImgView.setImageResource(R.drawable.challenge_up_arrow);
-
-            if (mParentAdapterListener != null) {
-                mParentAdapterListener.scrollToItem(adapterPosition);
-            }
         }
+
+        /*final boolean isExpanded = holder.contentInvisibleLayout.getVisibility() == View.VISIBLE; //adapterPosition == mExpandedPosition;
+        holder.contentInvisibleLayout.setVisibility(isExpanded ? View.GONE : View.VISIBLE);
+        holder.topVisibleLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                *//*if (mExpandedHolder != null) {
+                    mExpandedHolder.contentInvisibleLayout.setVisibility(View.VISIBLE);
+                    notifyItemChanged(mExpandedPosition);
+                }*//*
+                mExpandedPosition = isExpanded ? -1 : holder.getAdapterPosition();
+//                mExpandedHolder = isExpanded ? null : holder;
+                notifyItemChanged(holder.getAdapterPosition());
+            }
+        });*/
     }
 }

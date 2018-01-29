@@ -9,13 +9,13 @@ import com.google.gson.annotations.SerializedName;
 public class CopyAnswerResponse {
 
     @SerializedName("data")
-    private String data;
+    private CopyAnswerResponseData data;
 
-    public String getData() {
+    public CopyAnswerResponseData getData() {
         return data;
     }
 
-    public void setData(String data) {
+    public void setData(CopyAnswerResponseData data) {
         this.data = data;
     }
 }

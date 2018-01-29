@@ -25,6 +25,12 @@ public class CopyAnswerChildAdapter extends RecyclerView.Adapter<CopyAnswerChild
     }
 
     @Override
+    public void onViewAttachedToWindow(final CopyAnswerChildViewHolder holder) {
+        holder.setIsRecyclable(false);
+        super.onViewAttachedToWindow(holder);
+    }
+
+    @Override
     public CopyAnswerChildViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemLayoutView = LayoutInflater.from(parent.getContext()).inflate(R.layout.copy_answer_child_item, parent, false);
         return new CopyAnswerChildViewHolder(itemLayoutView);

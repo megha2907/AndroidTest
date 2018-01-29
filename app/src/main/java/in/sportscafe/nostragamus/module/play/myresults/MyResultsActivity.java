@@ -72,6 +72,7 @@ public class MyResultsActivity extends NostragamusActivity implements MyResultsV
         int IN_PLAY_SCREEN_MATCH_CHECK_POINTS = 116;
         int IN_PLAY_SCREEN_MATCH_AWAITING_RESULTS = 117;
         int CHECK_RESULTS_NOTIFICATION = 118;
+        int COPY_ANSWER_SUCCESS = 119;
     }
 
 
@@ -102,7 +103,23 @@ public class MyResultsActivity extends NostragamusActivity implements MyResultsV
         mRvMyResults.setHasFixedSize(true);
 
         setLayoutsAsPerNeed();
+        showMessageAsRequired();
+    }
 
+    private void showMessageAsRequired() {
+        if (getIntent() != null &&
+                getIntent().getIntExtra(Constants.BundleKeys.SCREEN_LAUNCHED_FROM_PARENT, -1) ==
+                MyResultsActivity.LaunchedFrom.COPY_ANSWER_SUCCESS) {
+
+            boolean isPowerupCopied = getIntent().getBooleanExtra(BundleKeys.COPY_ANSWER_POWERUP_COPIED, false);
+
+            String msg = "Your predictions were imported successfully into this contest";
+            if (isPowerupCopied) {
+                msg = "Your predictions and powerups were imported successfully into this contest";
+            }
+
+            showSnackbarMessage(0, msg);
+        }
     }
 
     private void setLayoutsAsPerNeed() {
@@ -305,7 +322,10 @@ public class MyResultsActivity extends NostragamusActivity implements MyResultsV
 
     private void showSnackbarMessage(int imgResource, String msg) {
         final CustomSnackBar snackBar = CustomSnackBar.make(findViewById(R.id.myresult_root_layout), msg, CustomSnackBar.DURATION_LONG);
-        snackBar.setImageResource(imgResource);
+
+        if (imgResource > 0) {
+            snackBar.setImageResource(imgResource);
+        }
         snackBar.setAction("GOT IT", null);
         snackBar.show();
     }
