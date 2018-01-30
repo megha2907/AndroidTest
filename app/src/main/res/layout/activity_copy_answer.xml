@@ -11,15 +11,16 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:background="@drawable/playscreen_bg">
+        android:background="@color/search_bar"
+        android:paddingBottom="@dimen/dim_12">
 
-        <!-- Top Layout -->
+        <!-- Header bar -->
         <RelativeLayout
             android:id="@+id/copy_answer_top_layout"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dim_55"
             android:orientation="horizontal"
-            android:background="@drawable/playscreen_top_bar_gradient"
+            android:background="@drawable/copy_answer_top_bar_bg"
             >
 
             <ImageView
@@ -91,78 +92,15 @@
 
         </RelativeLayout>
 
-        <!-- Info layout -->
-        <RelativeLayout
+        <ExpandableListView
+            android:id="@+id/copy_answer_expandable_listView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            >
-
-            <LinearLayout
-                android:id="@+id/title_container"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center_horizontal"
-                android:layout_marginTop="@dimen/dim_30">
-
-                <com.jeeva.android.widgets.customfont.CustomTextView
-                    android:id="@+id/copy_answer_title_textView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/sp_16"
-                    app:typeface="lato_bold"
-                    android:text="Choose a contest to import answers"
-                    />
-
-                <com.jeeva.android.widgets.customfont.CustomTextView
-                    android:id="@+id/copy_answer_title_counter_textView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:textColor="@color/white_999999"
-                    android:textSize="@dimen/sp_14"
-                    app:typeface="lato_bold"
-                    android:text="(1)"
-                    android:layout_marginLeft="@dimen/dim_3"/>
-
-            </LinearLayout>
-
-            <com.jeeva.android.widgets.customfont.CustomTextView
-                android:id="@+id/copy_answer_desc_textView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:gravity="center"
-                android:textColor="@color/white_999999"
-                android:textSize="@dimen/sp_10"
-                app:typeface="lato_regular"
-                android:layout_marginTop="@dimen/dim_8"
-                android:layout_below="@id/title_container"
-                android:text="Powerups will be copied with predictions, as long as there are enough in current contest. Use the button below to copy powerups"/>
-
-            <android.support.v7.widget.AppCompatCheckBox
-                android:id="@+id/copy_answer_use_powerup_checkbox"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:buttonTint="#0098a6"
-                android:layout_below="@id/copy_answer_desc_textView"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="@dimen/dim_12"
-                android:layout_marginBottom="@dimen/dim_2"
-                android:text="Copy Powerups"
-                android:textColor="@color/white"
-                android:textSize="@dimen/sp_12"
-                app:typeface="lato_bold"
-                android:checked="true"/>
-
-        </RelativeLayout>
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/copy_answer_parent_recyclerView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:background="@color/black5"
+            android:childDivider="@android:color/transparent"
+            android:clipToPadding="false"
+            android:divider="@null"
+            android:groupIndicator="@null" />
 
     </LinearLayout>
 

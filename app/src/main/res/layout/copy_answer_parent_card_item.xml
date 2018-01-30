@@ -4,25 +4,24 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/black4"
-    android:layout_marginLeft="@dimen/dim_10"
-    android:layout_marginRight="@dimen/dim_10"
-    android:layout_marginTop="@dimen/dim_12">
+    android:minHeight="@dimen/dim_60">
 
-    <!-- Visible header -->
+    <!-- Visible headerHolder -->
     <LinearLayout
         android:id="@+id/copy_answer_item_header_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:layout_marginLeft="@dimen/dim_10"
+        android:layout_marginRight="@dimen/dim_10"
+        android:layout_marginTop="@dimen/dim_12"
+        android:background="@color/black3">
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="@dimen/dim_30"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:gravity="center"
-            android:layout_marginLeft="@dimen/dim_12"
-            android:layout_marginRight="@dimen/dim_12">
+            android:gravity="center">
 
             <ImageView
                 android:id="@+id/direction_arrow_imgView"
@@ -92,29 +91,10 @@
                 android:textAllCaps="false"
                 android:textColor="@color/white"
                 android:textSize="@dimen/sp_10"
-                app:typeface="lato_bold" />
+                app:typeface="lato_bold"
+                android:focusable="false"/>
 
         </LinearLayout>
-
-    </LinearLayout>
-
-    <!-- collapesable  layout -->
-    <LinearLayout
-        android:id="@+id/copy_answer_collapsable_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:visibility="gone">
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dim_1"
-            android:background="@color/grey_303030"/>
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/copy_answer_nested_recyclerView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
 
     </LinearLayout>
 

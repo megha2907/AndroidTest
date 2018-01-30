@@ -2,40 +2,37 @@ package in.sportscafe.nostragamus.module.prediction.copyAnswer;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.NonNull;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.LinearSmoothScroller;
-import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.CheckBox;
+import android.widget.ExpandableListView;
 import android.widget.TextView;
 
 import com.jeeva.android.widgets.CustomProgressbar;
 
 import org.parceler.Parcels;
 
+import java.util.List;
+
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.NostraBaseActivity;
-import in.sportscafe.nostragamus.module.contest.contestDetailsAfterJoining.InplayContestDetailsActivity;
 import in.sportscafe.nostragamus.module.customViews.CustomSnackBar;
-import in.sportscafe.nostragamus.module.nostraHome.ui.NostraHomeActivity;
-import in.sportscafe.nostragamus.module.prediction.copyAnswer.adapter.CopyAnswerParentAdapterListener;
-import in.sportscafe.nostragamus.module.prediction.copyAnswer.adapter.CopyAnswerRecyclerParentAdapter;
+import in.sportscafe.nostragamus.module.inPlay.ui.ResultsScreenDataDto;
+import in.sportscafe.nostragamus.module.play.myresults.MyResultsActivity;
+import in.sportscafe.nostragamus.module.prediction.copyAnswer.adapter.CopyAnswerExpandableAdapter;
+import in.sportscafe.nostragamus.module.prediction.copyAnswer.adapter.CopyAnswerAdapterListener;
 import in.sportscafe.nostragamus.module.prediction.copyAnswer.dataProvider.AnsweredContestsApiModelImpl;
 import in.sportscafe.nostragamus.module.prediction.copyAnswer.dataProvider.CopyPredictionsApiImpl;
 import in.sportscafe.nostragamus.module.prediction.copyAnswer.dto.CopyAnswerContest;
 import in.sportscafe.nostragamus.module.prediction.copyAnswer.dto.CopyAnswerContestsResponse;
 import in.sportscafe.nostragamus.module.prediction.copyAnswer.dto.CopyAnswerResponse;
 import in.sportscafe.nostragamus.module.prediction.copyAnswer.dto.CopyAnswerScreenData;
+import in.sportscafe.nostragamus.module.prediction.playScreen.dto.PlayScreenDataDto;
 
 public class CopyAnswerActivity extends NostraBaseActivity implements View.OnClickListener {
 
     private CopyAnswerScreenData mCopyAnswerScreenData;
-    private RecyclerView mRecyclerView;
-    private CheckBox mCopyPowerUpsCheckBox;
 
     @Override
     public String getScreenName() {
@@ -47,6 +44,7 @@ public class CopyAnswerActivity extends NostraBaseActivity implements View.OnCli
         setShouldAnimateActivity(true);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_copy_answer);
+        setImmersiveFullScreenMode();
 
         initViews();
         initMembers();
@@ -56,11 +54,6 @@ public class CopyAnswerActivity extends NostraBaseActivity implements View.OnCli
 
     private void initViews() {
         findViewById(R.id.back_btn).setOnClickListener(this);
-
-        mCopyPowerUpsCheckBox = (CheckBox) findViewById(R.id.copy_answer_use_powerup_checkbox);
-        mRecyclerView = (RecyclerView) findViewById(R.id.copy_answer_parent_recyclerView);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        mRecyclerView.setHasFixedSize(true);
     }
 
     private void initMembers() {
@@ -75,7 +68,6 @@ public class CopyAnswerActivity extends NostraBaseActivity implements View.OnCli
                 TextView headingParty1TextView = (TextView) findViewById(R.id.copy_answer_heading_party1_textView);
                 TextView headingParty2TextView = (TextView) findViewById(R.id.copy_answer_heading_party2_textView);
                 TextView subHeadingTextView = (TextView) findViewById(R.id.copy_answer_sub_heading_textView);
-                TextView playedContestCounterTextView = (TextView) findViewById(R.id.copy_answer_title_counter_textView);
 
                 if (mCopyAnswerScreenData.getPlayScreenDataDto() != null) {
                     String party1 = mCopyAnswerScreenData.getPlayScreenDataDto().getMatchPartyTitle1();
@@ -88,11 +80,6 @@ public class CopyAnswerActivity extends NostraBaseActivity implements View.OnCli
                     if (!TextUtils.isEmpty(mCopyAnswerScreenData.getPlayScreenDataDto().getSubTitle())) {
                         subHeadingTextView.setText(mCopyAnswerScreenData.getPlayScreenDataDto().getSubTitle());
                     }
-                }
-
-                if (mCopyAnswerScreenData.getInPlayMatch() != null) {
-                    int playedContests = mCopyAnswerScreenData.getInPlayMatch().getCopyAnswerPlayedContests();
-                    playedContestCounterTextView.setText("(" + playedContests + ")");
                 }
             }
         }
@@ -150,41 +137,33 @@ public class CopyAnswerActivity extends NostraBaseActivity implements View.OnCli
 
     private void onDataReceived(CopyAnswerContestsResponse response) {
         if (response != null) {
-            CopyAnswerRecyclerParentAdapter adapter = new CopyAnswerRecyclerParentAdapter(
-                    response.getData(), getParentAdapterListener());
-            mRecyclerView.setAdapter(adapter);
+            ExpandableListView expandableListView = (ExpandableListView) findViewById(R.id.copy_answer_expandable_listView);
+            expandableListView.setAdapter(new CopyAnswerExpandableAdapter(expandableListView.getContext(),
+                    getAnswerList(response), getParentAdapterListener()));
         }
     }
 
+    private List<CopyAnswerContest> getAnswerList(CopyAnswerContestsResponse response) {
+        List<CopyAnswerContest> list = response.getData();
+        if (response.getData() != null && response.getData().size() > 0) {
+            CopyAnswerContest header = new CopyAnswerContest(); // Used as Header View/Layout inside list
+            list.add(0, header);
+        }
+        return list;
+    }
+
     @NonNull
-    private CopyAnswerParentAdapterListener getParentAdapterListener() {
-        return new CopyAnswerParentAdapterListener() {
-            @Override
-            public void onUseClicked(CopyAnswerContest copyAnswerContest) {
-                copyPredictions(copyAnswerContest);
-            }
+    private CopyAnswerAdapterListener getParentAdapterListener() {
+        return new CopyAnswerAdapterListener() {
 
             @Override
-            public void scrollToItem(final int position) {
-                Handler handler = new Handler();
-                handler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        RecyclerView.SmoothScroller smoothScroller = new LinearSmoothScroller(mRecyclerView.getContext()) {
-                            @Override
-                            protected int getVerticalSnapPreference() {
-                                return LinearSmoothScroller.SNAP_TO_START;
-                            }
-                        };
-                        smoothScroller.setTargetPosition(position);
-                        mRecyclerView.getLayoutManager().startSmoothScroll(smoothScroller);
-                    }
-                }, 600);
+            public void onUseClicked(CopyAnswerContest copyAnswerContest, boolean shouldApplyPowerUp) {
+                copyPredictions(copyAnswerContest, shouldApplyPowerUp);
             }
         };
     }
 
-    private void copyPredictions(CopyAnswerContest copyAnswerContest) {
+    private void copyPredictions(CopyAnswerContest copyAnswerContest, boolean shouldApplyPowerUp) {
         if (copyAnswerContest != null && mCopyAnswerScreenData != null && mCopyAnswerScreenData.getInPlayMatch() != null) {
 
             int targetRoomId = 0;
@@ -198,7 +177,7 @@ public class CopyAnswerActivity extends NostraBaseActivity implements View.OnCli
                     mCopyAnswerScreenData.getInPlayMatch().getMatchId(),
                     Integer.parseInt(copyAnswerContest.getRoomId()),
                     targetRoomId,
-                    mCopyPowerUpsCheckBox.isChecked(),
+                    shouldApplyPowerUp,
                     getCopyAnswerApiListener());
         }
     }
@@ -236,20 +215,35 @@ public class CopyAnswerActivity extends NostraBaseActivity implements View.OnCli
     }
 
     private void onMatchAnsweredCopied(CopyAnswerResponse response) {
-        CustomSnackBar.make(findViewById(R.id.copy_answer_launcher_root_view),
-                "Predictions copied successfully", CustomSnackBar.DURATION_INFINITE).
-                setAction("OK", new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        finishCopyActivityStack();
-                    }
-                }).show();
-    }
+        if (response != null && response.getData() != null && mCopyAnswerScreenData != null) {
+            ResultsScreenDataDto data = new ResultsScreenDataDto();
+            PlayScreenDataDto playScreenData = mCopyAnswerScreenData.getPlayScreenDataDto();
 
-    private void finishCopyActivityStack() {
-        Intent clearTaskIntent = new Intent(this, InplayContestDetailsActivity.class);
-        clearTaskIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-        startActivity(clearTaskIntent);
+            if (playScreenData != null) {
+                data.setRoomId(playScreenData.getRoomId());
+                data.setChallengeId(playScreenData.getChallengeId());
+                data.setMatchId(playScreenData.getMatchId());
+                data.setMatchStatus(playScreenData.getMatchStatus());
+                data.setChallengeName(playScreenData.getChallengeName());
+                data.setPlayingPseudoGame(playScreenData.isPlayingPseudoGame());
+                data.setChallengeStartTime(playScreenData.getChallengeStartTime());
+                if (playScreenData.getInPlayContestDto() != null) {
+                    data.setInPlayContestDto(playScreenData.getInPlayContestDto());
+                    data.setSubTitle(playScreenData.getInPlayContestDto().getContestName());
+                }
+            }
+
+            Bundle args = new Bundle();
+            args.putParcelable(Constants.BundleKeys.RESULTS_SCREEN_DATA, Parcels.wrap(data));
+
+            Intent intent = new Intent(this, MyResultsActivity.class);
+            intent.putExtras(args);
+            intent.putExtra(Constants.BundleKeys.SCREEN_LAUNCHED_FROM_PARENT, MyResultsActivity.LaunchedFrom.COPY_ANSWER_SUCCESS);
+            intent.putExtra(Constants.BundleKeys.COPY_ANSWER_POWERUP_COPIED, response.getData().isPowerupsCopied());
+
+            startActivity(intent);
+            finish();
+        }
     }
 
     private void handleError(String msg, int status) {
@@ -257,15 +251,15 @@ public class CopyAnswerActivity extends NostraBaseActivity implements View.OnCli
             View view = findViewById(R.id.copy_answer_launcher_root_view);
 
             if (!TextUtils.isEmpty(msg)) {
-                CustomSnackBar.make(view, msg, CustomSnackBar.DURATION_LONG).show();
+                CustomSnackBar.make(view, msg, CustomSnackBar.DURATION_SECS_5).show();
             } else {
                 switch (status) {
                     case Constants.DataStatus.NO_INTERNET:
-                        CustomSnackBar.make(view, Constants.Alerts.NO_NETWORK_CONNECTION, CustomSnackBar.DURATION_LONG).show();
+                        CustomSnackBar.make(view, Constants.Alerts.NO_NETWORK_CONNECTION, CustomSnackBar.DURATION_SECS_5).show();
                         break;
 
                     default:
-                        CustomSnackBar.make(view, Constants.Alerts.SOMETHING_WRONG, CustomSnackBar.DURATION_LONG).show();
+                        CustomSnackBar.make(view, Constants.Alerts.SOMETHING_WRONG, CustomSnackBar.DURATION_SECS_5).show();
                         break;
                 }
             }

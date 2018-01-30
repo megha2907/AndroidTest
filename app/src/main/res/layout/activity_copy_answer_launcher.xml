@@ -6,13 +6,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="in.sportscafe.nostragamus.module.prediction.copyAnswer.CopyAnswerLauncherActivity"
-    android:background="@color/black">
+    android:background="@color/search_bar">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:background="@drawable/playscreen_bg">
+        android:background="@color/black5">
 
         <!-- Top Layout -->
         <RelativeLayout
@@ -20,7 +20,7 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/dim_55"
             android:orientation="horizontal"
-            android:background="@drawable/playscreen_top_bar_gradient"
+            android:background="@drawable/copy_answer_top_bar_bg"
             android:layout_alignParentTop="true"
             >
 
@@ -102,13 +102,13 @@
 
             <com.jeeva.android.widgets.customfont.CustomTextView
                 android:id="@+id/copy_answer_launcher_title_textView"
-                android:layout_width="wrap_content"
+                android:layout_width="@dimen/dim_250"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:gravity="center"
-                android:textColor="@color/white_60"
-                android:textSize="@dimen/sp_20"
-                app:typeface="lato_regular"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp_16"
+                app:typeface="lato_bold"
                 android:text="You have already played this match into other contests"
                 android:layout_marginTop="@dimen/dim_72"/>
 
@@ -118,7 +118,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:gravity="center"
-                android:textColor="@color/white_60"
+                android:textColor="@color/white_dim"
                 android:textSize="@dimen/sp_12"
                 app:typeface="lato_regular"
                 android:layout_marginTop="@dimen/dim_46"
@@ -130,7 +130,7 @@
             <LinearLayout
                 android:id="@+id/copy_answer_launch_import_contest_button"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dim_50"
+                android:layout_height="@dimen/dim_40"
                 android:layout_marginLeft="@dimen/dim_16"
                 android:layout_marginRight="@dimen/dim_16"
                 android:layout_marginBottom="@dimen/dim_16"
@@ -176,7 +176,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:gravity="center"
-                android:textColor="@color/white_60"
+                android:textColor="@color/white_dim"
                 android:textSize="@dimen/sp_12"
                 app:typeface="lato_regular"
                 android:layout_marginTop="@dimen/dim_34"
@@ -187,7 +187,7 @@
             <LinearLayout
                 android:id="@+id/copy_answer_launch_play_again_button"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dim_50"
+                android:layout_height="@dimen/dim_40"
                 android:layout_marginLeft="@dimen/dim_16"
                 android:layout_marginRight="@dimen/dim_16"
                 android:layout_marginBottom="@dimen/dim_16"

@@ -6,7 +6,6 @@ import in.sportscafe.nostragamus.module.prediction.copyAnswer.dto.CopyAnswerCont
  * Created by sc on 24/1/18.
  */
 
-public interface CopyAnswerParentAdapterListener {
-    void onUseClicked(CopyAnswerContest copyAnswerContest);
-    void scrollToItem(int position);
+public interface CopyAnswerAdapterListener {
+    void onUseClicked(CopyAnswerContest copyAnswerContest, boolean shouldApplyPowerUp);
 }

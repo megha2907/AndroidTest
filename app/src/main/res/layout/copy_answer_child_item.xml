@@ -3,19 +3,34 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/dim_48"
-    android:background="@color/black4"
-    android:gravity="center_vertical"
-    android:layout_marginLeft="@dimen/dim_20"
-    android:layout_marginRight="@dimen/dim_20"
-    >
+    android:layout_height="wrap_content">
+
+    <View
+        android:id="@+id/copy_ans_parent_child_divider"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dim_1"
+        android:background="@color/grey_303030"
+        android:layout_marginLeft="@dimen/dim_10"
+        android:layout_marginRight="@dimen/dim_10"
+        android:visibility="gone"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:minHeight="@dimen/dim_48"
+        android:paddingLeft="@dimen/dim_36"
+        android:paddingRight="@dimen/dim_36"
+        android:background="@color/black3"
+        android:gravity="center_vertical"
+        android:layout_marginLeft="@dimen/dim_10"
+        android:layout_marginRight="@dimen/dim_10">
 
     <com.jeeva.android.widgets.customfont.CustomTextView
         android:id="@+id/copy_answer_item_question_textView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="@color/grey_999999"
-        android:maxLines="1"
         android:ellipsize="end"
         android:textSize="@dimen/sp_9"
         app:typeface="lato_regular"
@@ -31,7 +46,7 @@
             android:id="@+id/copy_answer_item_answer_textView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="3"
+            android:layout_weight="2.5"
             android:textColor="@color/white"
             android:textSize="@dimen/sp_10"
             app:typeface="lato_bold"
@@ -40,7 +55,7 @@
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_weight="1.5"
             android:orientation="horizontal"
             android:gravity="end">
 
@@ -80,5 +95,7 @@
         android:layout_height="@dimen/dim_1"
         android:background="@color/grey_303030"
         android:layout_marginTop="@dimen/dim_8"/>
+
+    </LinearLayout>
 
 </LinearLayout>
