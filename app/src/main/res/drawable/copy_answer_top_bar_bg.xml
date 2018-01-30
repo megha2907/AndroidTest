@@ -6,7 +6,7 @@
             <corners android:radius="2dp" />
         </shape>
     </item>
-    <item android:bottom="@dimen/dim_3">
+    <item android:bottom="@dimen/dim_1">
         <shape>
             <gradient android:angle="90"
                 android:endColor="#171717"

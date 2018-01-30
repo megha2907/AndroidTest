@@ -8,7 +8,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/black5">
+        android:background="@color/search_bar">
 
         <LinearLayout
             android:id="@+id/title_container"
