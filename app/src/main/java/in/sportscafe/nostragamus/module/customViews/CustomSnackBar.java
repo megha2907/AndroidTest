@@ -28,6 +28,7 @@ public class CustomSnackBar extends BaseTransientBottomBar<CustomSnackBar> {
     public static final int DURATION_LONG = BaseTransientBottomBar.LENGTH_LONG;
     public static final int DURATION_SHORT = BaseTransientBottomBar.LENGTH_SHORT;
     public static final int DURATION_INFINITE = BaseTransientBottomBar.LENGTH_INDEFINITE;
+    public static final int DURATION_SECS_5 = 5000;
 
     /**
      * Constructor for the transient bottom bar.

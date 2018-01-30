@@ -114,7 +114,14 @@ public class CopyAnswerExpandableAdapter extends BaseExpandableListAdapter {
 
                 holder.contestTitleTextView.setText(copyAnswerContest.getConfigName());
                 holder.challengeNameTextView.setText(copyAnswerContest.getChallengeName());
-                holder.answeredTimeTextView.setText(copyAnswerContest.getHoursSincePlayed() + " hrs");
+
+                String str = "";
+                if (copyAnswerContest.getHoursSincePlayed() > 0) {
+                    str = "Answered " + copyAnswerContest.getHoursSincePlayed() + " hours ago";
+                } else {
+                    str = "Answered less than an hour ago";
+                }
+                holder.answeredTimeTextView.setText(str);
             }
         }
 
@@ -145,7 +152,12 @@ public class CopyAnswerExpandableAdapter extends BaseExpandableListAdapter {
             holder.doublerImgView = (ImageView) convertView.findViewById(R.id.copy_answer_powerup_2x_right);
             holder.noNegImgView = (ImageView) convertView.findViewById(R.id.copy_answer_powerup_noNeg_right);
             holder.playerPollImgView = (ImageView) convertView.findViewById(R.id.copy_answer_powerup_audience_right);
-            holder.lineView = (View) convertView.findViewById(R.id.lineView);
+            holder.lineView = convertView.findViewById(R.id.lineView);
+            holder.parentChildDividerView = convertView.findViewById(R.id.copy_ans_parent_child_divider);
+
+            if (childPosition == 0) {
+                holder.parentChildDividerView.setVisibility(View.VISIBLE);
+            }
 
             bindChildValues(groupPosition, childPosition, holder);
         }
@@ -219,5 +231,6 @@ public class CopyAnswerExpandableAdapter extends BaseExpandableListAdapter {
         ImageView noNegImgView;
         ImageView playerPollImgView;
         View lineView;
+        View parentChildDividerView;
     }
 }

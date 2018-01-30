@@ -76,7 +76,13 @@ public class CopyAnswerLauncherActivity extends NostraBaseActivity implements Vi
 
             if (mCopyAnswerScreenData.getInPlayMatch() != null) {
                 int playedContests = mCopyAnswerScreenData.getInPlayMatch().getCopyAnswerPlayedContests();
-                titleTextView.setText("You have played this game in " + playedContests + " other contests");
+
+                String titleMsg = "You have played this game in " + playedContests + " other contest";
+                if (playedContests > 1) {
+                    titleMsg = titleMsg.replace("contest", "contests");
+                }
+                titleTextView.setText(titleMsg);
+
                 buttonCountTextView.setText("(" + playedContests + ")");
             }
         }

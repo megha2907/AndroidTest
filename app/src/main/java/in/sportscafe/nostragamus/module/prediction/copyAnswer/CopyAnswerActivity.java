@@ -251,15 +251,15 @@ public class CopyAnswerActivity extends NostraBaseActivity implements View.OnCli
             View view = findViewById(R.id.copy_answer_launcher_root_view);
 
             if (!TextUtils.isEmpty(msg)) {
-                CustomSnackBar.make(view, msg, CustomSnackBar.DURATION_LONG).show();
+                CustomSnackBar.make(view, msg, CustomSnackBar.DURATION_SECS_5).show();
             } else {
                 switch (status) {
                     case Constants.DataStatus.NO_INTERNET:
-                        CustomSnackBar.make(view, Constants.Alerts.NO_NETWORK_CONNECTION, CustomSnackBar.DURATION_LONG).show();
+                        CustomSnackBar.make(view, Constants.Alerts.NO_NETWORK_CONNECTION, CustomSnackBar.DURATION_SECS_5).show();
                         break;
 
                     default:
-                        CustomSnackBar.make(view, Constants.Alerts.SOMETHING_WRONG, CustomSnackBar.DURATION_LONG).show();
+                        CustomSnackBar.make(view, Constants.Alerts.SOMETHING_WRONG, CustomSnackBar.DURATION_SECS_5).show();
                         break;
                 }
             }

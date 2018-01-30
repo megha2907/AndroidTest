@@ -18,12 +18,10 @@
         android:background="@color/black3">
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="@dimen/dim_30"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:gravity="center"
-            android:layout_marginLeft="@dimen/dim_12"
-            android:layout_marginRight="@dimen/dim_12">
+            android:gravity="center">
 
             <ImageView
                 android:id="@+id/direction_arrow_imgView"
@@ -97,26 +95,6 @@
                 android:focusable="false"/>
 
         </LinearLayout>
-
-    </LinearLayout>
-
-    <!-- collapesable  layout -->
-    <LinearLayout
-        android:id="@+id/copy_answer_collapsable_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:visibility="gone">
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dim_1"
-            android:background="@color/grey_303030"/>
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/copy_answer_nested_recyclerView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
 
     </LinearLayout>
 

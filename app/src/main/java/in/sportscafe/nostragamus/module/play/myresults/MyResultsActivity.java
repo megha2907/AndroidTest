@@ -321,7 +321,7 @@ public class MyResultsActivity extends NostragamusActivity implements MyResultsV
     }
 
     private void showSnackbarMessage(int imgResource, String msg) {
-        final CustomSnackBar snackBar = CustomSnackBar.make(findViewById(R.id.myresult_root_layout), msg, CustomSnackBar.DURATION_LONG);
+        final CustomSnackBar snackBar = CustomSnackBar.make(findViewById(R.id.myresult_root_layout), msg, CustomSnackBar.DURATION_SECS_5);
 
         if (imgResource > 0) {
             snackBar.setImageResource(imgResource);
