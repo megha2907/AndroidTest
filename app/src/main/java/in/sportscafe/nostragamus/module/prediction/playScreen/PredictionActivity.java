@@ -7,6 +7,7 @@ import org.parceler.Parcels;
 
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
+import in.sportscafe.nostragamus.cache.CacheManagementHelper;
 import in.sportscafe.nostragamus.module.common.NostraBaseActivity;
 import in.sportscafe.nostragamus.module.nostraHome.ui.NostraHomeActivity;
 import in.sportscafe.nostragamus.module.play.myresults.MyResultsActivity;
@@ -54,10 +55,12 @@ public class PredictionActivity extends NostraBaseActivity implements Prediction
 
     @Override
     public void onMatchCompleted(Bundle args) {
+        /* Start My result activity */
         Intent intent = new Intent(this, MyResultsActivity.class);
         intent.putExtras(args);
         startActivity(intent);
     }
+
 
     @Override
     public void onBackPressed() {

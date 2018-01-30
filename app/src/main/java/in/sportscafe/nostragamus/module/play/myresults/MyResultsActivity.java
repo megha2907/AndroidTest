@@ -31,11 +31,9 @@ import in.sportscafe.nostragamus.Constants.RequestCodes;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
 import in.sportscafe.nostragamus.module.common.NostragamusActivity;
-import in.sportscafe.nostragamus.module.contest.contestDetailsAfterJoining.InplayContestDetailsActivity;
 import in.sportscafe.nostragamus.module.contest.dto.ContestScreenData;
 import in.sportscafe.nostragamus.module.contest.ui.ContestsActivity;
-import in.sportscafe.nostragamus.module.contest.ui.DetailScreensLaunchRequest;
-import in.sportscafe.nostragamus.module.inPlay.dto.InPlayContestDto;
+import in.sportscafe.nostragamus.module.customViews.CustomSnackBar;
 import in.sportscafe.nostragamus.module.inPlay.ui.ResultsScreenDataDto;
 import in.sportscafe.nostragamus.module.nostraHome.ui.NostraHomeActivity;
 import in.sportscafe.nostragamus.module.permission.PermissionsActivity;
@@ -52,6 +50,7 @@ import in.sportscafe.nostragamus.utils.timeutils.TimeUtils;
 public class MyResultsActivity extends NostragamusActivity implements MyResultsView, View.OnClickListener {
 
     private static final String TAG = MyResultsActivity.class.getSimpleName();
+    public static final int EDIT_ANSWER_ACTIVITY_REQUEST_CODE = 1212;
 
     private RecyclerView mRvMyResults;
     private MyResultsPresenter mResultsPresenter;
@@ -73,6 +72,7 @@ public class MyResultsActivity extends NostragamusActivity implements MyResultsV
         int IN_PLAY_SCREEN_MATCH_CHECK_POINTS = 116;
         int IN_PLAY_SCREEN_MATCH_AWAITING_RESULTS = 117;
         int CHECK_RESULTS_NOTIFICATION = 118;
+        int COPY_ANSWER_SUCCESS = 119;
     }
 
 
@@ -102,6 +102,27 @@ public class MyResultsActivity extends NostragamusActivity implements MyResultsV
         mRvMyResults.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         mRvMyResults.setHasFixedSize(true);
 
+        setLayoutsAsPerNeed();
+        showMessageAsRequired();
+    }
+
+    private void showMessageAsRequired() {
+        if (getIntent() != null &&
+                getIntent().getIntExtra(Constants.BundleKeys.SCREEN_LAUNCHED_FROM_PARENT, -1) ==
+                MyResultsActivity.LaunchedFrom.COPY_ANSWER_SUCCESS) {
+
+            boolean isPowerupCopied = getIntent().getBooleanExtra(BundleKeys.COPY_ANSWER_POWERUP_COPIED, false);
+
+            String msg = "Your predictions were imported successfully into this contest";
+            if (isPowerupCopied) {
+                msg = "Your predictions and powerups were imported successfully into this contest";
+            }
+
+            showSnackbarMessage(0, msg);
+        }
+    }
+
+    private void setLayoutsAsPerNeed() {
         mResultsPresenter = MyResultPresenterImpl.newInstance(this);
         mResultsPresenter.onCreateMyResults(getIntent().getExtras());
 
@@ -119,7 +140,6 @@ public class MyResultsActivity extends NostragamusActivity implements MyResultsV
             NostragamusAnalytics.getInstance().trackScreenShown(Constants.AnalyticsCategory.RESULTS, Constants.AnalyticsClickLabels.PSEUDO_GAME_FLOW);
 
         }
-
     }
 
     private void initMembers() {
@@ -283,6 +303,31 @@ public class MyResultsActivity extends NostragamusActivity implements MyResultsV
         if (RequestCodes.STORAGE_PERMISSION == requestCode && PermissionsActivity.PERMISSIONS_GRANTED == resultCode) {
             mResultsPresenter.onClickShare();
         }
+
+        if (requestCode == EDIT_ANSWER_ACTIVITY_REQUEST_CODE) {
+            switch (resultCode) {
+                case RESULT_OK:
+                    // Answer Edited, re create screen as edited answers need to be updated
+                    setLayoutsAsPerNeed();
+                    showSnackbarMessage(R.drawable.edit_answer_success_snackbar_icn, "Your new prediction was saved!");
+                    break;
+
+                case RESULT_CANCELED:
+                    showSnackbarMessage(R.drawable.edit_answer_failed_snackbar_icn,
+                            "No changes were made. Swipe and select an option, to save your prediction!");
+                    break;
+            }
+        }
+    }
+
+    private void showSnackbarMessage(int imgResource, String msg) {
+        final CustomSnackBar snackBar = CustomSnackBar.make(findViewById(R.id.myresult_root_layout), msg, CustomSnackBar.DURATION_SECS_5);
+
+        if (imgResource > 0) {
+            snackBar.setImageResource(imgResource);
+        }
+        snackBar.setAction("GOT IT", null);
+        snackBar.show();
     }
 
     @Override

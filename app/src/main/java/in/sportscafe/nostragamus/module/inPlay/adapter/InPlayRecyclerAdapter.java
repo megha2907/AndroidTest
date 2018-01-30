@@ -32,6 +32,7 @@ import in.sportscafe.nostragamus.module.inPlay.dto.InPlayContestMatchDto;
 import in.sportscafe.nostragamus.module.inPlay.dto.InPlayListChallengeItem;
 import in.sportscafe.nostragamus.module.inPlay.dto.InPlayListItem;
 import in.sportscafe.nostragamus.module.newChallenges.helpers.DateTimeHelper;
+import in.sportscafe.nostragamus.utils.CodeSnippet;
 import in.sportscafe.nostragamus.utils.timeutils.TimeAgo;
 import in.sportscafe.nostragamus.utils.timeutils.TimeUnit;
 import in.sportscafe.nostragamus.utils.timeutils.TimeUtils;
@@ -301,7 +302,7 @@ public class InPlayRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             double winningAmount = contest.getWinningAmount();
             int winningAmountValue = (int) winningAmount;
 
-            viewHolder.prizesTextView.setText(Constants.RUPEE_SYMBOL + String.valueOf(winningAmountValue));
+            viewHolder.prizesTextView.setText(Constants.RUPEE_SYMBOL + CodeSnippet.getFormattedAmount(winningAmountValue));
 
             if (contest.getRank() > 0) {
                 viewHolder.currentRankTextView.setText(AppSnippet.ordinal(contest.getRank()));

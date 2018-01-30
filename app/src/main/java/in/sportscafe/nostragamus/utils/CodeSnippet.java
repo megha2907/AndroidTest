@@ -14,9 +14,12 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.DecimalFormat;
 import java.util.Iterator;
 import java.util.Random;
 import java.util.Set;
+
+import in.sportscafe.nostragamus.Constants;
 
 /**
  * Created by Jeeva on 27/5/15.
@@ -86,6 +89,22 @@ public class CodeSnippet {
             url = url.replaceAll(" ", "%20");
         }
         return url;
+    }
+
+    /**
+     *
+     * @param amount
+     * @return Formatted string into Indian amount
+     */
+    public static String getFormattedAmount(double amount) {
+        String amtStr = String.valueOf(amount);
+        try {
+            DecimalFormat formatter = new DecimalFormat(Constants.AMOUNT_INDIAN_FORMAT_PATTERN);
+            amtStr = formatter.format(amount);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return amtStr;
     }
 
 }

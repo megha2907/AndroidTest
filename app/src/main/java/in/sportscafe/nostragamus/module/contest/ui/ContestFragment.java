@@ -4,11 +4,13 @@ package in.sportscafe.nostragamus.module.contest.ui;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,9 +35,11 @@ import in.sportscafe.nostragamus.module.contest.dto.ContestType;
 import in.sportscafe.nostragamus.module.contest.helper.ContestFilterHelper;
 import in.sportscafe.nostragamus.module.contest.ui.viewPager.ContestViewPagerAdapter;
 import in.sportscafe.nostragamus.module.contest.ui.viewPager.ContestViewPagerFragment;
+import in.sportscafe.nostragamus.module.customViews.CustomSnackBar;
 import in.sportscafe.nostragamus.module.navigation.referfriends.ReferFriendActivity;
 import in.sportscafe.nostragamus.module.navigation.referfriends.ReferFriendFragmentListener;
 import in.sportscafe.nostragamus.module.navigation.wallet.WalletHelper;
+import in.sportscafe.nostragamus.module.nostraHome.helper.TimerHelper;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -143,11 +147,11 @@ public class ContestFragment extends NostraBaseFragment implements View.OnClickL
         if (getView() != null && getActivity() != null && !getActivity().isFinishing()) {
             switch (status) {
                 case Constants.DataStatus.NO_INTERNET:
-                    Snackbar.make(getView(), Constants.Alerts.NO_NETWORK_CONNECTION, Snackbar.LENGTH_LONG).show();
+                    CustomSnackBar.make(getView(), Constants.Alerts.NO_NETWORK_CONNECTION, CustomSnackBar.DURATION_LONG).show();
                     break;
 
                 default:
-                    Snackbar.make(getView(), Constants.Alerts.SOMETHING_WRONG, Snackbar.LENGTH_LONG).show();
+                    CustomSnackBar.make(getView(), Constants.Alerts.SOMETHING_WRONG, CustomSnackBar.DURATION_LONG).show();
                     break;
             }
         }
@@ -236,10 +240,29 @@ public class ContestFragment extends NostraBaseFragment implements View.OnClickL
     private void setValues(List<Contest> contestList) {
         int contestsAvailable = getAvailableContestCount(contestList);
         if (contestsAvailable > 0) {
-            mTvTBarHeading.setText(contestsAvailable + " Contests Available");
+            mTvTBarHeading.setText(contestsAvailable + " Contests"+ " - "+ mContestScreenData.getChallengeName());
         }
-        mTvTBarSubHeading.setText(mContestScreenData.getChallengeName());
+        setTimer();
         mTvTBarWalletMoney.setText(String.valueOf((int) WalletHelper.getTotalBalance()));
+    }
+
+    private void setTimer() {
+        if (mContestScreenData != null && !TextUtils.isEmpty(mContestScreenData.getChallengeStartTime())) {
+            long futureTime = TimerHelper.getCountDownFutureTime(mContestScreenData.getChallengeStartTime());
+
+            CountDownTimer countDownTimer = new CountDownTimer(futureTime, 1000) {
+                @Override
+                public void onTick(long millisUntilFinished) {
+                    mTvTBarSubHeading.setText(TimerHelper.getTimerFormatFromMillis(millisUntilFinished));
+                }
+
+                @Override
+                public void onFinish() {
+
+                }
+            };
+            countDownTimer.start();
+        }
     }
 
     private int getAvailableContestCount(List<Contest> contestList) {

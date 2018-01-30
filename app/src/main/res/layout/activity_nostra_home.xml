@@ -12,14 +12,14 @@
         android:id="@+id/bottom_bar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dim_48"
-        android:orientation="vertical"
+        android:layout_alignParentBottom="true"
         android:background="#141414"
-        android:layout_alignParentBottom="true">
+        android:orientation="vertical">
 
         <View
             android:layout_width="match_parent"
             android:layout_height="@dimen/dim_1"
-            android:background="@color/grey"/>
+            android:background="@color/grey" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -33,8 +33,8 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:orientation="vertical"
-                android:gravity="center">
+                android:gravity="center"
+                android:orientation="vertical">
 
                 <ImageView
                     android:id="@+id/home_challenges_imgView"
@@ -62,20 +62,49 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:orientation="vertical"
-                android:gravity="center">
+                android:gravity="center"
+                android:clipChildren="false">
 
-                <ImageView
-                    android:id="@+id/home_inPlay_imgView"
-                    android:layout_width="@dimen/dim_16"
-                    android:layout_height="@dimen/dim_16"
-                    android:layout_marginTop="@dimen/dp_8"
-                    android:src="@drawable/menu_inplay_btn_selector" />
+                <FrameLayout
+                    android:id="@+id/viewLayout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="0.2dp"
+                    android:clipChildren="false"
+                    android:clipToPadding="false"
+                    >
+
+                    <ImageView
+                        android:id="@+id/home_inPlay_imgView"
+                        android:layout_width="@dimen/dim_16"
+                        android:layout_height="@dimen/dim_16"
+                        android:layout_marginTop="@dimen/dp_8"
+                        android:layout_gravity="center_horizontal"
+                        android:src="@drawable/menu_inplay_btn_selector" />
+
+                    <com.jeeva.android.widgets.customfont.CustomTextView
+                        android:id="@+id/home_inPlay_matches_count"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/red_circle"
+                        android:paddingLeft="@dimen/dim_3"
+                        android:paddingRight="@dimen/dim_3"
+                        android:paddingTop="@dimen/dim_1"
+                        android:paddingBottom="@dimen/dim_2"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:layout_marginTop="2dp"
+                        android:layout_marginLeft="@dimen/dim_12"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/sp_8"
+                        app:typeface="lato_bold"
+                        android:visibility="invisible"/>
+                </FrameLayout>
 
                 <com.jeeva.android.widgets.customfont.CustomTextView
                     android:id="@+id/home_inPlay_tab_textView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dim_2"
+                    android:layout_marginTop="2dp"
                     android:text="In Play"
                     android:textColor="@drawable/menu_tv_selector"
                     android:textSize="@dimen/sp_11"
@@ -89,8 +118,8 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:orientation="vertical"
-                android:gravity="center">
+                android:gravity="center"
+                android:orientation="vertical">
 
                 <ImageView
                     android:id="@+id/home_completed_imgView"
@@ -117,9 +146,9 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:visibility="gone"
+                android:gravity="center"
                 android:orientation="vertical"
-                android:gravity="center">
+                android:visibility="gone">
 
                 <ImageView
                     android:id="@+id/home_group_imgView"
@@ -146,8 +175,8 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:orientation="vertical"
-                android:gravity="center">
+                android:gravity="center"
+                android:orientation="vertical">
 
                 <ImageView
                     android:id="@+id/home_profile_imgView"
@@ -177,7 +206,7 @@
         android:id="@+id/fragment_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_alignParentTop="true"
-        android:layout_above="@id/bottom_bar"/>
+        android:layout_above="@id/bottom_bar"
+        android:layout_alignParentTop="true" />
 
 </RelativeLayout>

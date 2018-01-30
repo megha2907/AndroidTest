@@ -33,6 +33,7 @@ import in.sportscafe.nostragamus.module.challengeCompleted.ui.viewPager.Challeng
 import in.sportscafe.nostragamus.module.challengeCompleted.ui.viewPager.CompleteChallengeViewPagerAdapter;
 import in.sportscafe.nostragamus.module.challengeCompleted.ui.viewPager.ChallengeHistoryViewPagerFragment;
 import in.sportscafe.nostragamus.module.common.NostraBaseFragment;
+import in.sportscafe.nostragamus.module.customViews.CustomSnackBar;
 import in.sportscafe.nostragamus.module.newChallenges.dataProvider.SportsDataProvider;
 import in.sportscafe.nostragamus.module.newChallenges.dto.SportsTab;
 import in.sportscafe.nostragamus.module.nostraHome.ui.NostraHomeActivityListener;
@@ -52,7 +53,7 @@ public class CompletedChallengeHistoryFragment extends NostraBaseFragment implem
 
     private NostraHomeActivityListener mFragmentListener;
     private List<CompletedResponse> mCompletedChallengeHistoryList;
-    private Snackbar mSnackBar;
+    private CustomSnackBar mSnackBar;
     private int mStartIndex = 0;
     private boolean mShouldLoadMore = true;
 
@@ -131,7 +132,7 @@ public class CompletedChallengeHistoryFragment extends NostraBaseFragment implem
         if (getView() != null && getActivity() != null && !getActivity().isFinishing()) {
             switch (status) {
                 case Constants.DataStatus.FROM_DATABASE_AS_NO_INTERNET:
-                    mSnackBar = Snackbar.make(getView(), Constants.Alerts.NO_INTERNET_CONNECTION, Snackbar.LENGTH_INDEFINITE);
+                    mSnackBar = CustomSnackBar.make(getView(), Constants.Alerts.NO_INTERNET_CONNECTION, Snackbar.LENGTH_INDEFINITE);
                     mSnackBar.setAction("Retry", new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
@@ -141,7 +142,7 @@ public class CompletedChallengeHistoryFragment extends NostraBaseFragment implem
                     break;
 
                 case Constants.DataStatus.FROM_DATABASE_AS_SERVER_FAILED:
-                    mSnackBar = Snackbar.make(getView(), Constants.Alerts.COULD_NOT_FETCH_DATA_FROM_SERVER, Snackbar.LENGTH_LONG);
+                    mSnackBar = CustomSnackBar.make(getView(), Constants.Alerts.COULD_NOT_FETCH_DATA_FROM_SERVER, CustomSnackBar.DURATION_LONG);
                     mSnackBar.setAction("Retry", new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
@@ -151,11 +152,11 @@ public class CompletedChallengeHistoryFragment extends NostraBaseFragment implem
                     break;
 
                 case Constants.DataStatus.NO_MORE_DATA_WHILE_LOAD_MORE:
-//                    mSnackBar = Snackbar.make(getView(), Constants.Alerts.NO_MORE_HISTORY, Snackbar.LENGTH_LONG);
+//                    mSnackBar = CustomSnackBar.make(getView(), Constants.Alerts.NO_MORE_HISTORY, CustomSnackBar.DURATION_LONG);
                     break;
 
                 default:
-                    mSnackBar = Snackbar.make(getView(), Constants.Alerts.SOMETHING_WRONG, Snackbar.LENGTH_LONG);
+                    mSnackBar = CustomSnackBar.make(getView(), Constants.Alerts.SOMETHING_WRONG, CustomSnackBar.DURATION_LONG);
                     break;
             }
 

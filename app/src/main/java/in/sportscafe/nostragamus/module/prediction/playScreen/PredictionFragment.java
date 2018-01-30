@@ -8,6 +8,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
@@ -19,6 +20,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.view.animation.LinearInterpolator;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -37,7 +39,9 @@ import java.util.List;
 
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
+import in.sportscafe.nostragamus.cache.CacheManagementHelper;
 import in.sportscafe.nostragamus.module.common.NostraBaseFragment;
+import in.sportscafe.nostragamus.module.customViews.CustomSnackBar;
 import in.sportscafe.nostragamus.module.inPlay.ui.ResultsScreenDataDto;
 import in.sportscafe.nostragamus.module.nostraHome.ui.NostraHomeActivity;
 import in.sportscafe.nostragamus.module.prediction.gamePlayHelp.GamePlayHelpActivity;
@@ -57,6 +61,7 @@ import in.sportscafe.nostragamus.module.prediction.playScreen.dto.PredictionQues
 import in.sportscafe.nostragamus.module.prediction.playScreen.helper.PlayerPollHelper;
 import in.sportscafe.nostragamus.module.prediction.playScreen.helper.PredictionUiHelper;
 import in.sportscafe.nostragamus.module.prediction.powerupBank.PowerupBankTransferToPlayActivity;
+import in.sportscafe.nostragamus.module.prediction.powerupBank.dto.PowerupBankTransferScreenData;
 import in.sportscafe.nostragamus.module.resultspeek.FeedWebView;
 import in.sportscafe.nostragamus.utils.AlertsHelper;
 import in.sportscafe.nostragamus.utils.timeutils.TimeUtils;
@@ -310,7 +315,53 @@ public class PredictionFragment extends NostraBaseFragment implements View.OnCli
             final RelativeLayout topLayout = (RelativeLayout) getView().findViewById(R.id.prediction_top_layout);
             final LinearLayout bottomLayout = (LinearLayout) getView().findViewById(R.id.prediction_bottom_layout);
 
-            topLayout.clearAnimation();
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    Animation animation = AnimationUtils.loadAnimation(topLayout.getContext(), R.anim.prediction_top_view_anim);
+                    animation.setAnimationListener(new Animation.AnimationListener() {
+                        @Override
+                        public void onAnimationStart(Animation animation) {
+
+                        }
+
+                        @Override
+                        public void onAnimationEnd(Animation animation) {
+                            topLayout.setVisibility(View.VISIBLE);
+
+                            Animation anim = AnimationUtils.loadAnimation(getContext(), R.anim.prediction_bottom_view_anim);
+                            anim.setAnimationListener(new Animation.AnimationListener() {
+                                @Override
+                                public void onAnimationStart(Animation animation) {
+
+                                }
+
+                                @Override
+                                public void onAnimationEnd(Animation animation) {
+                                    bottomLayout.setVisibility(View.VISIBLE);
+
+                                    loadQuestions();
+                                }
+
+                                @Override
+                                public void onAnimationRepeat(Animation animation) {
+
+                                }
+                            });
+
+                            bottomLayout.startAnimation(anim);
+                        }
+
+                        @Override
+                        public void onAnimationRepeat(Animation animation) {
+
+                        }
+                    });
+                    topLayout.startAnimation(animation);
+                }
+            }, 100);
+
+            /*topLayout.clearAnimation();
             topLayout.animate().translationYBy(topLayout.getHeight()).setDuration(1000).
                     setInterpolator(new LinearInterpolator()).
                     setListener(new Animator.AnimatorListener() {
@@ -360,7 +411,7 @@ public class PredictionFragment extends NostraBaseFragment implements View.OnCli
                         public void onAnimationRepeat(Animator animation) {
 
                         }
-                    }).start();
+                    }).start();*/
 
             /*new Handler().postDelayed(new Runnable() {
                 @Override
@@ -512,10 +563,17 @@ public class PredictionFragment extends NostraBaseFragment implements View.OnCli
 
     public void onPowerUpBankClicked() {
         mUiHelper.hidePowerUpBankAndHelpButtons(mPowerUpImageView, mGamePlayImageView);
+
+        PowerupBankTransferScreenData bankScreenData = new PowerupBankTransferScreenData();
+        bankScreenData.setRoomId(mPlayScreenData.getRoomId());
+        bankScreenData.setChallengeId(mPlayScreenData.getChallengeId());
+        bankScreenData.setSubTitle(mPlayScreenData.getSubTitle());
+
+        Bundle args = new Bundle();
+        args.putParcelable(Constants.BundleKeys.POWERUP_BANK_TRANSFER_SCREEN_DATA, Parcels.wrap(bankScreenData));
+
         Intent intent = new Intent(getActivity(), PowerupBankTransferToPlayActivity.class);
-        if (getArguments() != null) {
-            intent.putExtras(getArguments());
-        }
+        intent.putExtras(args);
         startActivityForResult(intent, POWER_UP_BANK_ACTIVITY_REQUEST_CODE);
     }
 
@@ -962,6 +1020,9 @@ public class PredictionFragment extends NostraBaseFragment implements View.OnCli
 
         Log.d(TAG, "Match Completed");
 
+        /* Fetch Inplay data and save into DB */
+        new CacheManagementHelper().fetchInplayDataAndSaveIntoDb(getContext().getApplicationContext());
+
         ResultsScreenDataDto data = new ResultsScreenDataDto();
         if (mPlayScreenData != null) {
             data.setRoomId(mPlayScreenData.getRoomId());
@@ -1085,16 +1146,16 @@ public class PredictionFragment extends NostraBaseFragment implements View.OnCli
     private void handleError(String msg, int status) {
         if (getView() != null && getActivity() != null && !getActivity().isFinishing()) {
             if (!TextUtils.isEmpty(msg)) {
-                Snackbar.make(getView(), msg, Snackbar.LENGTH_LONG).show();
+                CustomSnackBar.make(getView(), msg, CustomSnackBar.DURATION_LONG).show();
 
             } else {
                 switch (status) {
                     case Constants.DataStatus.NO_INTERNET:
-                        Snackbar.make(getView(), Constants.Alerts.NO_INTERNET_CONNECTION, Snackbar.LENGTH_LONG).show();
+                        CustomSnackBar.make(getView(), Constants.Alerts.NO_INTERNET_CONNECTION, CustomSnackBar.DURATION_LONG).show();
                         break;
 
                     default:
-                        Snackbar.make(getView(), Constants.Alerts.SOMETHING_WRONG, Snackbar.LENGTH_LONG).show();
+                        CustomSnackBar.make(getView(), Constants.Alerts.SOMETHING_WRONG, CustomSnackBar.DURATION_LONG).show();
                         break;
                 }
             }

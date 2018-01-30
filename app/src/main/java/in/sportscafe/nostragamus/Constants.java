@@ -17,6 +17,7 @@ public interface Constants {
 
     interface Notifications {
         String IS_LAUNCHED_FROM_NOTIFICATION = "isLaunchedFromNotification";
+        String IS_IN_APP_NOTIFICATION = "isInAppNotification";
         String NOSTRA_NOTIFICATION = "nostraNotification";
         String SCREEN_NEW_CHALLENGE = "newChallenge";
         String SCREEN_NEW_CHALLENGE_SPORT = "newChallengeSport";
@@ -45,6 +46,7 @@ public interface Constants {
         String SCREEN_STORE = "Store";  /* Store - Buy Powerups */
         String SCREEN_APP_UPDATE = "appUpdate"; /* Update the App screen & What's New Screen */
         String SCREEN_WEB_VIEW = "webView";
+        String SCREEN_EDIT_ANSWER = "editAnswer";
     }
 
     interface SharedKeys {
@@ -124,6 +126,8 @@ public interface Constants {
         String WALLET_INITIAL_AMOUNT = "walletInitialAmount";
         String MARKETING_CAMPAIGN = "marketingCampaign";
         String WHATS_NEW_SHOWN = "whatsNewShown";
+        String EDITING_ANSWER_FIRST_TIME = "editingAnswerFirstTime";
+        String EDITING_POWERUP_IN_EDIT_ANSWER_FIRST_TIME = "editingPowerupInEditAnswerForstTime";
     }
 
     interface Alerts {
@@ -344,6 +348,8 @@ public interface Constants {
         String TIMER_FINISHED_SCREEN_DATA = "timerFinishedScreenData";
         String POOL_PRIZE_ESTIMATION_SCREEN_DATA = "poolPrizeEstimationScreenData";
         String REWARDS_SCREEN_DATA = "rewardsScreenData";
+        String EDIT_ANSWER_SCREEN_DATA = "editAnswerScreenData";
+        String COPY_ANSWER_POWERUP_COPIED = "copyAnswerPowerupCopied";
 
         /* Wallet */
         String WALLET_WITHDRAWAL_AMT = "walletWithdrawAmt";
@@ -381,6 +387,9 @@ public interface Constants {
         String REPORT_THANKYOU_TEXT = "reportThankyouText";
         String REPORT_ID = "reportID";
         String REPORT_TYPE = "reportType";
+        String POWERUP_BANK_TRANSFER_SCREEN_DATA = "powerupBankTransferScreenData";
+        String IN_APP_NOSTRA_NOTIFICATION_DETAILS = "inAppNostraNotification";
+        String COPY_ANSWER_SCREEN_DATA = "copyAnswerScreenData";
     }
 
     interface DateFormats {
@@ -877,7 +886,8 @@ public interface Constants {
         int POWER_UP_AUDIENCE_POLL = 3;
     }
 
-    String AMOUNT_DECIMAL_PATTERN = "#0.00";
+    String AMOUNT_INDIAN_FORMAT_PATTERN = "##,##,###";
+    String AMOUNT_DECIMAL_PATTERN = "##,##,##0.00";
     String RUPEE_SYMBOL = "₹ ";
     String INDIAN_CURRENCY_CODE = "INR";
 
@@ -893,6 +903,7 @@ public interface Constants {
         int FROM_DATABASE_ERROR = 5;
         int NO_INTERNET = 6;
         int NO_MORE_DATA_WHILE_LOAD_MORE = 7;
+        int FROM_DATABASE_CACHED_DATA = 8;
     }
 
     interface MatchStatusStrings {

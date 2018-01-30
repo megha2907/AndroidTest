@@ -44,6 +44,7 @@ import in.sportscafe.nostragamus.module.contest.dto.JoinContestData;
 import in.sportscafe.nostragamus.module.contest.helper.JoinContestHelper;
 import in.sportscafe.nostragamus.module.contest.ui.ContestsActivity;
 import in.sportscafe.nostragamus.module.contest.ui.DetailScreensLaunchRequest;
+import in.sportscafe.nostragamus.module.customViews.CustomSnackBar;
 import in.sportscafe.nostragamus.module.inPlay.adapter.MatchesAdapterAction;
 import in.sportscafe.nostragamus.module.navigation.referfriends.ReferFriendActivity;
 import in.sportscafe.nostragamus.module.navigation.wallet.addMoney.lowBalance.AddMoneyOnLowBalanceActivity;
@@ -63,9 +64,7 @@ public class ContestViewPagerFragment extends NostraBaseFragment {
     private RecyclerView mRecyclerView;
     private ContestType mContestType;
     private List<Contest> mContestList;
-    private TextView mTvContestName;
     private TextView mTvContestDesc;
-    private TextView mTimerTextView;
     private ContestScreenData mContestScreenData;
 
     public ContestViewPagerFragment() {
@@ -83,23 +82,20 @@ public class ContestViewPagerFragment extends NostraBaseFragment {
         mRecyclerView = (RecyclerView) rootView.findViewById(R.id.contest_recycler);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(mRecyclerView.getContext(), LinearLayoutManager.VERTICAL, false));
         mRecyclerView.setHasFixedSize(true);
+        mRecyclerView.setNestedScrollingEnabled(false);
 
-        mTvContestName = (TextView) rootView.findViewById(R.id.contest_name);
         mTvContestDesc = (TextView) rootView.findViewById(R.id.contest_desc);
-        mTimerTextView = (TextView) rootView.findViewById(R.id.contest_timer_textView);
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         initValues();
-        setTimer();
         populateDataOnUi();
     }
 
     private void initValues() {
         if (mContestType != null) {
-            mTvContestName.setText(mContestType.getCategoryName());
             mTvContestDesc.setText(mContestType.getCategoryDesc());
         }
     }
@@ -122,25 +118,6 @@ public class ContestViewPagerFragment extends NostraBaseFragment {
             TextView emptyTextView = (TextView) getView().findViewById(R.id.empty_list_textView);
             emptyTextView.setText("You haven't joined any contest yet!");   // As contest-tabs are created dynamically, this is possible only in 'Joined-Contest' tab
             emptyTextView.setVisibility(View.VISIBLE);
-        }
-    }
-
-    private void setTimer() {
-        if (mContestScreenData != null && !TextUtils.isEmpty(mContestScreenData.getChallengeStartTime())) {
-            long futureTime = TimerHelper.getCountDownFutureTime(mContestScreenData.getChallengeStartTime());
-
-            CountDownTimer countDownTimer = new CountDownTimer(futureTime, 1000) {
-                @Override
-                public void onTick(long millisUntilFinished) {
-                    mTimerTextView.setText(TimerHelper.getTimerFormatFromMillis(millisUntilFinished));
-                }
-
-                @Override
-                public void onFinish() {
-
-                }
-            };
-            countDownTimer.start();
         }
     }
 
@@ -382,15 +359,15 @@ public class ContestViewPagerFragment extends NostraBaseFragment {
     private void handleError(int status, String msg) {
         if (getView() != null && getActivity() != null && !getActivity().isFinishing()) {
             if (!TextUtils.isEmpty(msg)) {
-                Snackbar.make(getView(), msg, Snackbar.LENGTH_LONG).show();
+                CustomSnackBar.make(getView(), msg, CustomSnackBar.DURATION_LONG).show();
             } else {
                 switch (status) {
                     case Constants.DataStatus.NO_INTERNET:
-                        Snackbar.make(getView(), Constants.Alerts.NO_INTERNET_CONNECTION, Snackbar.LENGTH_LONG).show();
+                        CustomSnackBar.make(getView(), Constants.Alerts.NO_INTERNET_CONNECTION, CustomSnackBar.DURATION_LONG).show();
                         break;
 
                     default:
-                        Snackbar.make(getView(), Constants.Alerts.SOMETHING_WRONG, Snackbar.LENGTH_LONG).show();
+                        CustomSnackBar.make(getView(), Constants.Alerts.SOMETHING_WRONG, CustomSnackBar.DURATION_LONG).show();
                         break;
                 }
             }
@@ -481,22 +458,6 @@ public class ContestViewPagerFragment extends NostraBaseFragment {
             NostragamusAnalytics.getInstance().trackContestJoined(contest.getContestId(),
                     contest.getContestName(), contest.getContestType(),
                     (int)contest.getEntryFee(), contest.getChallengeId(), "contest");
-        }
-    }
-
-    void startAnim() {
-        if (getActivity() != null && getView() != null) {
-            LoadingIndicatorView loadingIndicatorView = (LoadingIndicatorView) getView().findViewById(R.id.loading_anim);
-            getView().findViewById(R.id.contestJoinProgressBarLayout).setVisibility(View.VISIBLE);
-            loadingIndicatorView.smoothToShow();
-        }
-    }
-
-    void stopAnim() {
-        if (getActivity() != null && getView() != null) {
-            LoadingIndicatorView loadingIndicatorView = (LoadingIndicatorView) getView().findViewById(R.id.loading_anim);
-            getView().findViewById(R.id.contestJoinProgressBarLayout).setVisibility(View.GONE);
-            loadingIndicatorView.smoothToHide();
         }
     }
 

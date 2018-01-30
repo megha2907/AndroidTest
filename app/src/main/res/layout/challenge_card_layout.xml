@@ -10,9 +10,9 @@
         android:layout_centerInParent="true"
         android:layout_marginLeft="@dimen/dim_7"
         android:layout_marginRight="@dimen/dim_7"
-        android:layout_marginTop="@dimen/dim_6"
+        android:layout_marginTop="@dimen/dim_7"
         android:clipToPadding="false"
-        android:paddingBottom="@dimen/dim_6"
+        android:paddingBottom="@dimen/dim_7"
         android:paddingLeft="@dimen/dim_5"
         android:paddingRight="@dimen/dim_5">
 
@@ -99,7 +99,7 @@
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:minWidth="@dimen/dim_120"
+                    android:minWidth="@dimen/dim_100"
                     android:orientation="vertical">
 
                     <com.jeeva.android.widgets.customfont.CustomTextView
@@ -117,6 +117,7 @@
                         android:layout_height="wrap_content"
                         android:text=""
                         android:textAllCaps="false"
+                        android:layout_marginTop="@dimen/dim_2"
                         android:textColor="@color/paid_entry_tv_color"
                         android:textSize="@dimen/sp_12"
                         app:typeface="lato_bold" />
@@ -128,6 +129,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:minWidth="@dimen/dim_100"
+                    android:layout_gravity="center"
+                    android:gravity="center"
                     android:orientation="vertical">
 
                     <com.jeeva.android.widgets.customfont.CustomTextView
@@ -145,6 +148,7 @@
                         android:layout_height="wrap_content"
                         android:text="0"
                         android:textAllCaps="false"
+                        android:layout_marginTop="@dimen/dim_2"
                         android:textColor="@color/white"
                         android:textSize="@dimen/sp_12"
                         app:typeface="lato_bold" />
@@ -161,8 +165,8 @@
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="left"
-                        android:gravity="left"
+                        android:layout_gravity="right"
+                        android:gravity="right"
                         android:orientation="vertical">
 
                         <com.jeeva.android.widgets.customfont.CustomTextView
@@ -180,6 +184,7 @@
                             android:layout_height="wrap_content"
                             android:text="0:0:0"
                             android:textAllCaps="false"
+                            android:layout_marginTop="@dimen/dim_2"
                             android:textColor="@color/white"
                             android:textSize="@dimen/sp_12"
                             app:typeface="lato_bold" />

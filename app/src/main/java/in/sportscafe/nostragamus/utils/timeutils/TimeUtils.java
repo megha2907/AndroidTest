@@ -132,6 +132,10 @@ public class TimeUtils {
         return java.util.concurrent.TimeUnit.DAYS.convert(diff, java.util.concurrent.TimeUnit.MILLISECONDS);
     }
 
+    public static long getMinutesDifference(long diff) {
+        return java.util.concurrent.TimeUnit.MINUTES.convert(diff, java.util.concurrent.TimeUnit.MILLISECONDS);
+    }
+
     public static long getMillisecondsFromDateString(String dateString, String currentFormat, String timeZone) {
         Date date = getDateFromDateString(dateString, currentFormat, timeZone);
         return date.getTime();

@@ -20,7 +20,7 @@
             android:orientation="horizontal"
             android:background="@drawable/playscreen_top_bar_gradient"
             android:layout_alignParentTop="true"
-            android:visibility="gone">
+            android:visibility="invisible">
 
             <ImageView
                 android:id="@+id/prediction_back_btn"
@@ -181,7 +181,7 @@
                 android:layout_height="match_parent"
                 android:orientation="horizontal"
                 android:gravity="center"
-                android:visibility="gone">
+                android:visibility="invisible">
 
                 <ImageView
                     android:id="@+id/prediction_powerup_bank_imgView"

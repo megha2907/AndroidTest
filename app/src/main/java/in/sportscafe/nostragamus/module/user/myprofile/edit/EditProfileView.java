@@ -4,7 +4,6 @@ import android.os.Bundle;
 
 import com.jeeva.android.View;
 
-import static com.google.android.gms.analytics.internal.zzy.i;
 
 /**
  * Created by Jeeva on 12/6/16.

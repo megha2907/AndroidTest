@@ -50,13 +50,11 @@
 
                 <RelativeLayout
                     android:id="@+id/toolbar_wallet_rl"
-                    android:layout_width="@dimen/dim_120"
+                    android:layout_width="@dimen/dim_100"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
-                    android:paddingBottom="@dimen/dim_6"
-                    android:paddingRight="@dimen/dim_16"
-                    android:paddingTop="@dimen/dim_6">
+                    android:paddingRight="@dimen/dim_16">
 
                     <com.jeeva.android.widgets.customfont.CustomTextView
                         android:id="@+id/toolbar_wallet_money"
@@ -65,17 +63,18 @@
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
                         android:textColor="@color/white_70"
-                        android:textSize="@dimen/sp_14"
+                        android:textSize="@dimen/sp_13"
                         app:typeface="lato_regular" />
 
                     <ImageView
                         android:id="@+id/toolbar_wallet_icon"
-                        android:layout_width="@dimen/dim_16"
-                        android:layout_height="@dimen/dim_16"
+                        android:layout_width="@dimen/dim_32"
+                        android:layout_height="@dimen/dim_32"
+                        android:padding="@dimen/dim_8"
                         android:layout_centerVertical="true"
-                        android:layout_marginRight="@dimen/dim_6"
                         android:layout_toLeftOf="@+id/toolbar_wallet_money"
-                        android:src="@drawable/toolbar_wallet_icon" />
+                        android:src="@drawable/toolbar_wallet_icon"
+                        android:background="@drawable/ripple_effect_bg"/>
 
                 </RelativeLayout>
 

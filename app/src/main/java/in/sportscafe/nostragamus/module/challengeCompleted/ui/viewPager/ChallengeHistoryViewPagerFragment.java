@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -28,6 +27,7 @@ import in.sportscafe.nostragamus.module.challengeCompleted.dto.CompletedListChal
 import in.sportscafe.nostragamus.module.challengeCompleted.dto.CompletedListItem;
 import in.sportscafe.nostragamus.module.challengeCompleted.dto.CompletedResponse;
 import in.sportscafe.nostragamus.module.contest.contestDetailsCompletedChallenges.ChallengeHistoryContestDetailsActivity;
+import in.sportscafe.nostragamus.module.customViews.CustomSnackBar;
 import in.sportscafe.nostragamus.module.newChallenges.dataProvider.SportsDataProvider;
 import in.sportscafe.nostragamus.module.newChallenges.dto.SportsTab;
 
@@ -220,11 +220,11 @@ public class ChallengeHistoryViewPagerFragment extends BaseFragment {
         if (getView() != null && getActivity() != null && !getActivity().isFinishing()) {
             switch (status) {
                 case Constants.DataStatus.NO_INTERNET:
-                    Snackbar.make(getView(), Constants.Alerts.NO_INTERNET_CONNECTION, Snackbar.LENGTH_LONG).show();
+                    CustomSnackBar.make(getView(), Constants.Alerts.NO_INTERNET_CONNECTION, CustomSnackBar.DURATION_LONG).show();
                     break;
 
                 default:
-                    Snackbar.make(getView(), Constants.Alerts.SOMETHING_WRONG, Snackbar.LENGTH_LONG).show();
+                    CustomSnackBar.make(getView(), Constants.Alerts.SOMETHING_WRONG, CustomSnackBar.DURATION_LONG).show();
                     break;
             }
         }

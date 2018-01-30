@@ -191,10 +191,10 @@ public class OnBoardingFragment extends NostragamusFragment {
             ex.printStackTrace();
         }
 
-//        NostragamusDataHandler.getInstance().setUserReferralCode("DEE1135");
+//        NostragamusDataHandler.getInstance().setUserReferralCode("DEE1440");
 //        NostragamusDataHandler.getInstance().setUserReferralName("Deepanshi Bajaj");
 //        NostragamusDataHandler.getInstance().setWalletInitialAmount(20);
-//        NostragamusDataHandler.getInstance().setUserReferralPhoto("https://scontent.xx.fbcdn.net/v/t1.0-1/p480x480/17523409_1443962065645034_1348270082615908797_n.jpg?oh=894d6be15bb712660f8cd11f98e47f22&oe=59CF4AA9");
+//        NostragamusDataHandler.getInstance().setUserReferralPhoto("https://graph.facebook.com/1273708409337068/picture?height=350&width=350");
 
         OnBoardingDto onBoardingDto = new OnBoardingDto();
         if (!TextUtils.isEmpty(NostragamusDataHandler.getInstance().getUserReferralCode())) {
@@ -204,10 +204,9 @@ public class OnBoardingFragment extends NostragamusFragment {
             }
 
             if (NostragamusDataHandler.getInstance().getWalletInitialAmount() != null) {
-                onBoardingDto.setDesc("Join " + NostragamusDataHandler.getInstance().getUserReferralName()
-                        + " in predicting live sports matches! \n Your first " +
-                        "₹" + NostragamusDataHandler.getInstance().getWalletInitialAmount()
-                        + " is on us!");
+                onBoardingDto.setDesc("Join "+ NostragamusDataHandler.getInstance().getUserReferralName()
+                        + " in predicting live sports games. Your first " +
+                         String.valueOf(NostragamusDataHandler.getInstance().getWalletInitialAmount()) + " is on us, Log in to claim it!");
             }
             onBoardingDto.setImageUrl(NostragamusDataHandler.getInstance().getUserReferralPhoto());
             onBoardingDto.setReferralCode(NostragamusDataHandler.getInstance().getUserReferralCode());

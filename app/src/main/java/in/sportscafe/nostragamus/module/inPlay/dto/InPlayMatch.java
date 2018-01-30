@@ -7,6 +7,7 @@ import org.parceler.Parcel;
 import java.util.List;
 
 import in.sportscafe.nostragamus.module.newChallenges.dto.MatchParty;
+import in.sportscafe.nostragamus.module.resultspeek.dto.Topics;
 
 /**
  * Created by sandip on 09/09/17.
@@ -61,6 +62,13 @@ public class InPlayMatch {
 
     @SerializedName("is_played")
     private boolean isPlayed;
+
+    @SerializedName("match_topic")
+    private Topics topics;
+
+
+    @SerializedName("count_other_contests")
+    private int copyAnswerOtherContestCount;
 
     public int getChallengeId() {
         return challengeId;
@@ -188,5 +196,23 @@ public class InPlayMatch {
 
     public void setAnswerCount(int answerCount) {
         this.answerCount = answerCount;
+    }
+
+
+    public Topics getTopics() {
+        return topics;
+    }
+
+    public void setTopics(Topics topics) {
+        this.topics = topics;
+    }
+
+
+    public int getCopyAnswerPlayedContests() {
+        return copyAnswerOtherContestCount;
+    }
+
+    public void setCopyAnswerOtherContestCount(int copyAnswerOtherContestCount) {
+        this.copyAnswerOtherContestCount = copyAnswerOtherContestCount;
     }
 }

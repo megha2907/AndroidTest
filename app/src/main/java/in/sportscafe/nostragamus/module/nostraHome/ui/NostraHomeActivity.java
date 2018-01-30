@@ -6,29 +6,42 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.LocalBroadcastManager;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.ScaleAnimation;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.FirebaseOptions;
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.jeeva.android.Log;
+
+import java.util.List;
 
 import in.sportscafe.nostragamus.BuildConfig;
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.R;
+import in.sportscafe.nostragamus.cache.CacheManagementHelper;
 import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
 import in.sportscafe.nostragamus.module.challengeCompleted.ui.CompletedChallengeHistoryFragment;
 import in.sportscafe.nostragamus.module.common.NostraBaseActivity;
+import in.sportscafe.nostragamus.module.inPlay.dataProvider.InPlayDataProvider;
 import in.sportscafe.nostragamus.module.inPlay.ui.InPlayFragment;
 import in.sportscafe.nostragamus.module.navigation.NavigationFragment;
 import in.sportscafe.nostragamus.module.navigation.appupdate.AppUpdateActivity;
 import in.sportscafe.nostragamus.module.newChallenges.ui.NewChallengesFragment;
 import in.sportscafe.nostragamus.module.nostraHome.dataProviders.NostraHomeApiImpl;
+import in.sportscafe.nostragamus.module.nostraHome.helper.BottomBarCountHelper;
 import in.sportscafe.nostragamus.module.notifications.NostraNotification;
 import in.sportscafe.nostragamus.module.notifications.NotificationHelper;
+import in.sportscafe.nostragamus.module.notifications.inApp.InAppNotificationHelper;
 import in.sportscafe.nostragamus.module.user.group.allgroups.AllGroupsFragment;
 import in.sportscafe.nostragamus.module.user.login.LogInActivity;
 import in.sportscafe.nostragamus.module.user.login.UserInfoModelImpl;
@@ -41,6 +54,7 @@ public class NostraHomeActivity extends NostraBaseActivity implements View.OnCli
 
     private static final String TAG = NostraHomeActivity.class.getSimpleName();
     public static final int DOUBLE_BACK_PRESSED_DELAY_ALLOWED = 3000;
+    private static final int NAV_BAR_COUNTER_BADGE_ANIM_TIME = 250;
 
     public interface LaunchedFrom {
         int SHOW_NEW_CHALLENGES = -111;
@@ -55,8 +69,10 @@ public class NostraHomeActivity extends NostraBaseActivity implements View.OnCli
     private LinearLayout mCompletedChallengeBottomButton;
     private LinearLayout mGroupBottomButton;
     private LinearLayout mProfileBottomButton;
+    private TextView mUnPlayedMatchCounterTextView;
 
     private boolean mIsFirstBackPressed = false;
+    private int mUnPlayedMatchCount = 0;
 
     @Override
     public String getScreenName() {
@@ -73,10 +89,92 @@ public class NostraHomeActivity extends NostraBaseActivity implements View.OnCli
         getServerTime();
         onNewChallengesClicked(getIntent().getExtras());
         handleNotifications();
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        updateUnPlayedMatchCount();
+    }
+
+    private void updateUnPlayedMatchCount() {
+        new BottomBarCountHelper().getInplayCounter(getApplicationContext(),
+                new BottomBarCountHelper.BottomBarCountHelperListener() {
+                    @Override
+                    public void onData(int status, final int unPlayedMatchCount) {
+                        if (unPlayedMatchCount > 0) {
+                            int setTextDelayTime = 0;
+                            if (mUnPlayedMatchCounterTextView.getVisibility() != View.VISIBLE) {
+                                Animation anim = new ScaleAnimation(0f, 1f, 0f, 1f,
+                                        Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+                                anim.setFillAfter(true);
+                                anim.setDuration(NAV_BAR_COUNTER_BADGE_ANIM_TIME);
+                                mUnPlayedMatchCounterTextView.startAnimation(anim);
+                                mUnPlayedMatchCounterTextView.setVisibility(View.VISIBLE);
+                                setTextDelayTime = 0;
+
+                            } else {
+                                if (mUnPlayedMatchCount != unPlayedMatchCount) {
+                                    setTextDelayTime = 500;
+                                    new Handler().postDelayed(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            Animation anim = new ScaleAnimation(1f, 1.5f, 1f, 1.5f,
+                                                    Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+                                            anim.setFillAfter(false);
+                                            anim.setRepeatMode(Animation.REVERSE);
+                                            anim.setRepeatCount(1);
+                                            anim.setDuration(NAV_BAR_COUNTER_BADGE_ANIM_TIME);
+                                            mUnPlayedMatchCounterTextView.startAnimation(anim);
+                                        }
+                                    }, setTextDelayTime);
+                                }
+                            }
+
+                            mUnPlayedMatchCount = unPlayedMatchCount;
+                            new Handler().postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    if (unPlayedMatchCount > 9) {
+                                        mUnPlayedMatchCounterTextView.setPadding(getResources().getDimensionPixelOffset(R.dimen.dim_3),
+                                                getResources().getDimensionPixelOffset(R.dimen.dim_1),
+                                                getResources().getDimensionPixelOffset(R.dimen.dim_4),
+                                                getResources().getDimensionPixelOffset(R.dimen.dim_2));
+                                    }
+                                    mUnPlayedMatchCounterTextView.setText(String.valueOf(unPlayedMatchCount));
+                                }
+                            }, setTextDelayTime + NAV_BAR_COUNTER_BADGE_ANIM_TIME);
+
+                        } else {
+                            android.util.Log.d(TAG, "Bottom bar counter is 0");
+                            if (mUnPlayedMatchCounterTextView.getVisibility() == View.VISIBLE) {
+                                Animation anim = new ScaleAnimation(1f, 0f, 1f, 0f,
+                                        Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+                                anim.setDuration(NAV_BAR_COUNTER_BADGE_ANIM_TIME);
+                                mUnPlayedMatchCounterTextView.startAnimation(anim);
+                            }
+
+                            mUnPlayedMatchCounterTextView.setVisibility(View.INVISIBLE);
+                        }
+                    }
+
+                    @Override
+                    public void onError(int status) {
+                        android.util.Log.d(TAG, "Error in updating bottombar counter");
+                    }
+                });
+    }
+
+    private void setAlarmForInAppNotification() {
+        InAppNotificationHelper inAppNotificationHelper = new InAppNotificationHelper();
+        inAppNotificationHelper.setAlarmForInAppNotifications(getApplicationContext());
     }
 
     private void getServerTime() {
-        new NostraHomeApiImpl().fetchServerTimeFromServer(new NostraHomeApiImpl.NostraHomeApiListener() {
+        new NostraHomeApiImpl().fetchServerTimeFromServer(getApplicationContext(),
+                new NostraHomeApiImpl.NostraHomeApiListener() {
             @Override
             public void noInternet() {
                 Log.d(TAG, "No internet for fetching ServerTime");
@@ -90,6 +188,7 @@ public class NostraHomeActivity extends NostraBaseActivity implements View.OnCli
             @Override
             public void onTimerSuccess() {
                 Log.d(TAG, "ServerTimer Response success");
+                setAlarmForInAppNotification();
             }
         });
     }
@@ -148,13 +247,13 @@ public class NostraHomeActivity extends NostraBaseActivity implements View.OnCli
                 } else if (screenName.equalsIgnoreCase(Constants.Notifications.SCREEN_NEW_CHALLENGE_SPORT)) {
                     onNewChallengesClicked(notificationHelper.getBundleAddedNotificationDetailsIntoArgs(getIntent(), notification));
 
-                }  else if (screenName.equalsIgnoreCase(Constants.Notifications.SCREEN_NEW_CHALLENGES_GAMES)) {
+                } else if (screenName.equalsIgnoreCase(Constants.Notifications.SCREEN_NEW_CHALLENGES_GAMES)) {
                     startActivity(notificationHelper.getNewChallengeMatchesScreenIntent(this, notification));
 
-                }  else if (screenName.equalsIgnoreCase(Constants.Notifications.SCREEN_IN_PLAY_MATCHES)) {
+                } else if (screenName.equalsIgnoreCase(Constants.Notifications.SCREEN_IN_PLAY_MATCHES)) {
                     onInPlayClicked(notificationHelper.getBundleAddedNotificationDetailsIntoArgs(getIntent(), notification));
 
-                }  else if (screenName.equalsIgnoreCase(Constants.Notifications.SCREEN_RESULTS)) {
+                } else if (screenName.equalsIgnoreCase(Constants.Notifications.SCREEN_RESULTS)) {
                     startActivity(notificationHelper.getResultsScreenIntent(this, notification));
 
                 } else if (screenName.equalsIgnoreCase(Constants.Notifications.SCREEN_CHALLENGE_HISTORY_WINNINGS)) {
@@ -197,6 +296,7 @@ public class NostraHomeActivity extends NostraBaseActivity implements View.OnCli
     private void initMembers() {
         UserInfoModelImpl.newInstance(getUserInfoCallBackListener()).getUserInfo();
         NostragamusAnalytics.getInstance().setMoEngageUserProperties();
+        NostragamusAnalytics.getInstance().setFreshChatUserProperties(getApplicationContext());
     }
 
     private void initViews() {
@@ -205,6 +305,7 @@ public class NostraHomeActivity extends NostraBaseActivity implements View.OnCli
         mCompletedChallengeBottomButton = (LinearLayout) findViewById(R.id.home_completed_tab_layout);
         mGroupBottomButton = (LinearLayout) findViewById(R.id.home_group_tab_layout);
         mProfileBottomButton = (LinearLayout) findViewById(R.id.home_profile_tab_layout);
+        mUnPlayedMatchCounterTextView = (TextView)findViewById(R.id.home_inPlay_matches_count);
 
         mNewChallengesBottomButton.setOnClickListener(this);
         mInPlayBottomButton.setOnClickListener(this);
@@ -322,7 +423,6 @@ public class NostraHomeActivity extends NostraBaseActivity implements View.OnCli
             inPlayFragment.setArguments(args);
         }
         FragmentHelper.replaceFragment(this, R.id.fragment_container, inPlayFragment);
-
     }
 
     private void loadNewChallengeFragment(Bundle args) {
@@ -509,5 +609,10 @@ public class NostraHomeActivity extends NostraBaseActivity implements View.OnCli
             args = getIntent().getExtras();
         }
         onNewChallengesClicked(args);
+    }
+
+
+    public void updateInplayCounter() {
+        updateUnPlayedMatchCount();
     }
 }

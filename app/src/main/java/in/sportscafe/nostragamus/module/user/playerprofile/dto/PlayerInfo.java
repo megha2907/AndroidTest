@@ -50,6 +50,9 @@ public class PlayerInfo extends BasicUserInfo {
     @SerializedName("accuracy")
     private Integer accuracy;
 
+    @SerializedName("otp_number")
+    private String otpMobileNumber;
+
     @SerializedName("mutual_groups")
     private List<AllGroups> mutualGroups = new ArrayList<>();
 
@@ -175,6 +178,16 @@ public class PlayerInfo extends BasicUserInfo {
     @SerializedName("payment_info")
     public void setUserPaymentInfo(UserPaymentInfo userPaymentInfo) {
         this.userPaymentInfo = userPaymentInfo;
+    }
+
+    @SerializedName("otp_number")
+    public String getOtpMobileNumber() {
+        return otpMobileNumber;
+    }
+
+    @SerializedName("otp_number")
+    public void setOtpMobileNumber(String otpMobileNumber) {
+        this.otpMobileNumber = otpMobileNumber;
     }
 
 }

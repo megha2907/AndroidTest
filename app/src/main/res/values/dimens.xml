@@ -64,7 +64,7 @@
     <dimen name="onboarding_referral_width">84dp</dimen>
     <dimen name="onboarding_height">190dp</dimen>
     <dimen name="onboarding_width">190dp</dimen>
-    <dimen name="onboarding_referral_image_gap">57dp</dimen>
+    <dimen name="onboarding_referral_image_gap">47dp</dimen>
     <dimen name="onboarding_title_text_size">20dp</dimen>
     <dimen name="onboarding_desc_text_size">14dp</dimen>
     <dimen name="onboarding_referral_text_size">18dp</dimen>
@@ -113,6 +113,7 @@
     <dimen name="dim_0.9">0.9dp</dimen>
     <dimen name="dim_1">1dp</dimen>
     <dimen name="dim_1.2">1.2dp</dimen>
+    <dimen name="dim_1.5">1.5dp</dimen>
     <dimen name="dim_2">2dp</dimen>
     <dimen name="dim_2.5">2.5dp</dimen>
     <dimen name="dim_3">3dp</dimen>
@@ -229,4 +230,7 @@
     <dimen name="dim_86">86dp</dimen>
     <dimen name="dim_263">263dp</dimen>
 
+    <!-- Ovverriding snackbar support-design value for CustomSnackbar -->
+    <dimen name="design_snackbar_padding_horizontal">0dp</dimen>
+    <!--<dimen name="design_snackbar_padding_vertical_2lines">5dp</dimen>-->
 </resources>

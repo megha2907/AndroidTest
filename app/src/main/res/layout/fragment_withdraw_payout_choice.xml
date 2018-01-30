@@ -1,8 +1,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/black"
     tools:context="in.sportscafe.nostragamus.module.navigation.wallet.payoutDetails.WithdrawPayoutChoiceFragment">
 
@@ -54,29 +54,29 @@
                 android:id="@+id/payout_paytm_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:minHeight="@dimen/wallet_payout_choice_item_height"
-                android:background="@drawable/payout_choice_btn_selector"
-                android:layout_marginTop="@dimen/dp_12"
                 android:layout_marginLeft="@dimen/dp_12"
                 android:layout_marginRight="@dimen/dp_12"
-                android:visibility="gone">
+                android:layout_marginTop="@dimen/dp_12"
+                android:background="@drawable/payout_choice_btn_selector"
+                android:minHeight="@dimen/wallet_payout_choice_item_height"
+                android:visibility="visible">
 
                 <ImageView
                     android:id="@+id/imgView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:src="@drawable/navigation_wallet_icn"
                     android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
                     android:layout_marginLeft="@dimen/dp_18"
-                    android:layout_marginRight="@dimen/dp_18"/>
+                    android:layout_marginRight="@dimen/dp_18"
+                    android:src="@drawable/navigation_wallet_icn" />
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
+                    android:layout_centerVertical="true"
                     android:layout_toRightOf="@id/imgView"
-                    android:layout_centerVertical="true">
+                    android:orientation="vertical">
 
                     <com.jeeva.android.widgets.customfont.CustomTextView
                         android:id="@+id/payout_choice_paytm_textView"
@@ -85,28 +85,28 @@
                         android:text="Paytm Account"
                         android:textColor="@color/white"
                         android:textSize="@dimen/sp_13"
-                        app:typeface="lato_regular"/>
+                        app:typeface="lato_regular" />
 
                     <com.jeeva.android.widgets.customfont.CustomTextView
                         android:id="@+id/payout_choice_paytm_number_textView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dp_5"
                         android:text="XXXXX XXXXX"
                         android:textColor="@color/white_dim"
                         android:textSize="@dimen/sp_11"
-                        app:typeface="lato_regular"
-                        android:layout_marginTop="@dimen/dp_5"/>
+                        app:typeface="lato_regular" />
 
                 </LinearLayout>
 
                 <ImageView
                     android:layout_width="@dimen/dp_12"
                     android:layout_height="@dimen/dp_12"
-                    android:layout_centerVertical="true"
-                    android:src="@drawable/right_arrow_feedicon"
                     android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
                     android:layout_marginLeft="@dimen/dp_16"
-                    android:layout_marginRight="@dimen/dp_16"/>
+                    android:layout_marginRight="@dimen/dp_16"
+                    android:src="@drawable/right_arrow_feedicon" />
 
             </RelativeLayout>
 
@@ -115,29 +115,29 @@
                 android:id="@+id/payout_bank_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:minHeight="@dimen/wallet_payout_choice_item_height"
-                android:background="@drawable/payout_choice_btn_selector"
-                android:layout_marginTop="@dimen/dp_12"
                 android:layout_marginLeft="@dimen/dp_12"
                 android:layout_marginRight="@dimen/dp_12"
-                android:visibility="gone">
+                android:layout_marginTop="@dimen/dp_12"
+                android:background="@drawable/payout_choice_btn_selector"
+                android:minHeight="@dimen/wallet_payout_choice_item_height"
+                android:visibility="visible">
 
                 <ImageView
                     android:id="@+id/imgView1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/bank_popup_white_icon"
-                    android:layout_centerVertical="true"
                     android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
                     android:layout_marginLeft="@dimen/dp_18"
-                    android:layout_marginRight="@dimen/dp_18"/>
+                    android:layout_marginRight="@dimen/dp_18"
+                    android:src="@drawable/bank_popup_white_icon" />
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
                     android:layout_centerVertical="true"
-                    android:layout_toRightOf="@id/imgView1">
+                    android:layout_toRightOf="@id/imgView1"
+                    android:orientation="vertical">
 
                     <com.jeeva.android.widgets.customfont.CustomTextView
                         android:id="@+id/payout_choice_bank_textView"
@@ -146,30 +146,30 @@
                         android:text="Bank Account"
                         android:textColor="@color/white"
                         android:textSize="@dimen/sp_13"
-                        app:typeface="lato_regular"/>
+                        app:typeface="lato_regular" />
 
                     <com.jeeva.android.widgets.customfont.CustomTextView
                         android:id="@+id/payout_choice_bank_number_textView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
                         android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginTop="@dimen/dp_5"
                         android:text="XXX-XXX-XXX-XXX"
                         android:textColor="@color/white_dim"
                         android:textSize="@dimen/sp_11"
-                        app:typeface="lato_regular"
-                        android:layout_marginTop="@dimen/dp_5"/>
+                        app:typeface="lato_regular" />
 
                 </LinearLayout>
 
                 <ImageView
                     android:layout_width="@dimen/dp_12"
                     android:layout_height="@dimen/dp_12"
-                    android:layout_centerVertical="true"
-                    android:src="@drawable/right_arrow_feedicon"
                     android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
                     android:layout_marginLeft="@dimen/dp_16"
-                    android:layout_marginRight="@dimen/dp_16"/>
+                    android:layout_marginRight="@dimen/dp_16"
+                    android:src="@drawable/right_arrow_feedicon" />
 
             </RelativeLayout>
 
@@ -178,28 +178,27 @@
                 android:id="@+id/payout_choice_no_account_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:minHeight="@dimen/wallet_payout_choice_item_height"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:layout_marginTop="@dimen/dp_12"
                 android:layout_marginLeft="@dimen/dp_12"
                 android:layout_marginRight="@dimen/dp_12"
-                android:paddingLeft="@dimen/dp_18"
-                android:paddingRight="@dimen/dp_18"
+                android:layout_marginTop="@dimen/dp_12"
                 android:background="@drawable/payout_choice_add_btn_selector"
-                >
+                android:gravity="center_vertical"
+                android:minHeight="@dimen/wallet_payout_choice_item_height"
+                android:orientation="horizontal"
+                android:paddingLeft="@dimen/dp_18"
+                android:paddingRight="@dimen/dp_18">
 
                 <ImageView
                     android:id="@+id/payout_list_item_icon_imageView"
                     android:layout_width="@dimen/dp_12"
                     android:layout_height="@dimen/dp_12"
-                    android:src="@drawable/plus_icn"/>
+                    android:src="@drawable/plus_icn" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_marginLeft="@dimen/dim_18">
+                    android:layout_marginLeft="@dimen/dim_18"
+                    android:orientation="vertical">
 
                     <com.jeeva.android.widgets.customfont.CustomTextView
                         android:layout_width="wrap_content"
@@ -207,16 +206,16 @@
                         android:text="Add Payout Account"
                         android:textColor="@color/white"
                         android:textSize="@dimen/sp_13"
-                        app:typeface="lato_regular"/>
+                        app:typeface="lato_regular" />
 
                     <com.jeeva.android.widgets.customfont.CustomTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dp_5"
                         android:text="You have not added any payout details"
                         android:textColor="@color/white_dim"
                         android:textSize="@dimen/sp_11"
-                        app:typeface="lato_regular"
-                        android:layout_marginTop="@dimen/dp_5"/>
+                        app:typeface="lato_regular" />
 
                 </LinearLayout>
 

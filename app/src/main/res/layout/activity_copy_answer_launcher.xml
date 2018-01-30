@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="in.sportscafe.nostragamus.module.prediction.copyAnswer.CopyAnswerLauncherActivity"
+    android:background="@color/search_bar">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@color/black5">
+
+        <!-- Top Layout -->
+        <RelativeLayout
+            android:id="@+id/copy_answer_top_layout"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dim_55"
+            android:orientation="horizontal"
+            android:background="@drawable/copy_answer_top_bar_bg"
+            android:layout_alignParentTop="true"
+            >
+
+            <ImageView
+                android:id="@+id/back_btn"
+                android:layout_width="@dimen/dp_32"
+                android:layout_height="@dimen/dp_32"
+                android:layout_gravity="center"
+                android:layout_centerVertical="true"
+                android:padding="@dimen/dim_10"
+                android:layout_marginLeft="@dimen/dim_6"
+                android:src="@drawable/back_icon_grey"
+                android:background="?attr/selectableItemBackgroundBorderless"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:gravity="center">
+
+                <!-- parties name -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center">
+
+                    <com.jeeva.android.widgets.customfont.CustomTextView
+                        android:id="@+id/copy_answer_heading_party1_textView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="right"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/sp_13"
+                        app:typeface="lato_regular"
+                        android:layout_marginLeft="@dimen/dim_40"/>
+
+                    <com.jeeva.android.widgets.customfont.CustomTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/white"
+                        android:text="vs"
+                        android:textSize="@dimen/sp_13"
+                        app:typeface="lato_regular"
+                        android:layout_marginLeft="@dimen/dim_3"
+                        android:layout_marginRight="@dimen/dim_3"/>
+
+                    <com.jeeva.android.widgets.customfont.CustomTextView
+                        android:id="@+id/copy_answer_heading_party2_textView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="left"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/sp_13"
+                        app:typeface="lato_regular"
+                        android:layout_marginRight="@dimen/dim_40"/>
+
+                </LinearLayout>
+
+                <com.jeeva.android.widgets.customfont.CustomTextView
+                    android:id="@+id/copy_answer_sub_heading_textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/grey_999999"
+                    android:textSize="@dimen/sp_10"
+                    app:typeface="lato_regular"
+                    android:layout_marginTop="@dimen/dim_2"/>
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:paddingLeft="@dimen/dim_20"
+            android:paddingRight="@dimen/dim_20">
+
+            <com.jeeva.android.widgets.customfont.CustomTextView
+                android:id="@+id/copy_answer_launcher_title_textView"
+                android:layout_width="@dimen/dim_250"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp_16"
+                app:typeface="lato_bold"
+                android:text="You have already played this match into other contests"
+                android:layout_marginTop="@dimen/dim_72"/>
+
+            <com.jeeva.android.widgets.customfont.CustomTextView
+                android:id="@+id/copy_answer_launcher_import_prediction_desc_textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:gravity="center"
+                android:textColor="@color/white_dim"
+                android:textSize="@dimen/sp_12"
+                app:typeface="lato_regular"
+                android:layout_marginTop="@dimen/dim_46"
+                android:lineSpacingExtra="@dimen/dim_4"
+                android:layout_below="@id/copy_answer_launcher_title_textView"
+                android:text="You can import and use earlier predictions in this contest.\nYou can always edit your predictions later."/>
+
+            <!-- Import button -->
+            <LinearLayout
+                android:id="@+id/copy_answer_launch_import_contest_button"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dim_40"
+                android:layout_marginLeft="@dimen/dim_16"
+                android:layout_marginRight="@dimen/dim_16"
+                android:layout_marginBottom="@dimen/dim_16"
+                android:paddingBottom="@dimen/dim_2"
+                android:background="@drawable/light_blue_button_selector"
+                android:onClick="onClick"
+                android:gravity="center"
+                android:layout_below="@id/copy_answer_launcher_import_prediction_desc_textView"
+                android:layout_marginTop="@dimen/dim_16">
+
+                <ImageView
+                    android:layout_width="@dimen/dim_10"
+                    android:layout_height="@dimen/dim_10"
+                    android:src="@drawable/copy_answer_import"
+                    android:layout_marginRight="@dimen/dim_8"/>
+
+                <com.jeeva.android.widgets.customfont.CustomTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="Choose Contest to import predictions "
+                    app:typeface="lato_bold"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/sp_13"/>
+
+                <com.jeeva.android.widgets.customfont.CustomTextView
+                    android:id="@+id/copy_answer_contest_count_textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text=""
+                    app:typeface="lato_bold"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white_60"
+                    android:textSize="@dimen/sp_13"/>
+
+            </LinearLayout>
+
+            <com.jeeva.android.widgets.customfont.CustomTextView
+                android:id="@+id/copy_answer_launcher_play_again_desc_textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:gravity="center"
+                android:textColor="@color/white_dim"
+                android:textSize="@dimen/sp_12"
+                app:typeface="lato_regular"
+                android:layout_marginTop="@dimen/dim_34"
+                android:layout_below="@id/copy_answer_launch_import_contest_button"
+                android:text="Or play the game again, to make new predictions"/>
+
+            <!-- Play again button -->
+            <LinearLayout
+                android:id="@+id/copy_answer_launch_play_again_button"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dim_40"
+                android:layout_marginLeft="@dimen/dim_16"
+                android:layout_marginRight="@dimen/dim_16"
+                android:layout_marginBottom="@dimen/dim_16"
+                android:paddingBottom="@dimen/dim_2"
+                android:background="@drawable/blue_button_selector"
+                android:onClick="onClick"
+                android:gravity="center"
+                android:layout_below="@id/copy_answer_launcher_play_again_desc_textView"
+                android:layout_marginTop="@dimen/dim_16">
+
+                <ImageView
+                    android:layout_width="@dimen/dim_10"
+                    android:layout_height="@dimen/dim_10"
+                    android:src="@drawable/copy_answer_replay"
+                    android:layout_marginRight="@dimen/dim_8"/>
+
+                <com.jeeva.android.widgets.customfont.CustomTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="Play again"
+                    app:typeface="lato_bold"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/sp_13"/>
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+</android.support.design.widget.CoordinatorLayout>

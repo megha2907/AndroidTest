@@ -10,6 +10,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.text.TextUtils;
@@ -24,6 +25,9 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.freshchat.consumer.sdk.ConversationOptions;
+import com.freshchat.consumer.sdk.Freshchat;
+import com.freshchat.consumer.sdk.FreshchatUser;
 import com.jeeva.android.Log;
 import com.jeeva.android.widgets.HmImageView;
 import com.jeeva.android.widgets.ShadowLayout;
@@ -31,7 +35,9 @@ import com.jeeva.android.widgets.ShadowLayout;
 import org.parceler.Parcels;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import in.sportscafe.nostragamus.AppSnippet;
 import in.sportscafe.nostragamus.BuildConfig;
@@ -50,16 +56,21 @@ import in.sportscafe.nostragamus.module.inPlay.dto.InPlayContestDto;
 import in.sportscafe.nostragamus.module.inPlay.ui.ResultsScreenDataDto;
 import in.sportscafe.nostragamus.module.othersanswers.OthersAnswersActivity;
 import in.sportscafe.nostragamus.module.popups.submitReport.SubmitReportPopupActivity;
+import in.sportscafe.nostragamus.module.prediction.editAnswer.EditAnswerActivity;
+import in.sportscafe.nostragamus.module.prediction.editAnswer.dto.EditAnswerScreenData;
 import in.sportscafe.nostragamus.module.resultspeek.FeedWebView;
 import in.sportscafe.nostragamus.module.resultspeek.ResultsPeekActivity;
 import in.sportscafe.nostragamus.module.resultspeek.dto.Match;
 import in.sportscafe.nostragamus.module.resultspeek.dto.Question;
+import in.sportscafe.nostragamus.module.user.login.dto.UserInfo;
 import in.sportscafe.nostragamus.utils.timeutils.TimeUtils;
 
 /**
  * Created by Jeeva on 15/6/16.
  */
 public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder> implements View.OnClickListener {
+
+    private final String TAG = MyResultsAdapter.class.getSimpleName();
 
     public static final String SAVE_ANSWER_STR = "Save Answer";
     private OnMyResultsActionListener mResultsActionListener;
@@ -83,12 +94,14 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
     private boolean mIsMatchStarted = false;
     private long mMatchStartTimeMs = 0;
     private ResultsScreenDataDto mResultScreenData;
+    private Context mContext;
 
     public MyResultsAdapter(Context context, boolean isMyResults,
                             ResultsScreenDataDto resultsScreenData,
                             InPlayContestDto inPlayContestDto,
                             CompletedContestDto completedContestDto) {
         super(context);
+        mContext = context;
         this.mIsMyResults = isMyResults;
         mResultScreenData = resultsScreenData;
         mInPlayContestDto = inPlayContestDto;
@@ -155,11 +168,7 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
             holder.mLlMultiParty.setVisibility(View.GONE);
             holder.mLlOneParty.setVisibility(View.VISIBLE);
             holder.mTvOnePartyDate.setText(holder.mTvDate.getText().toString());
-
-            RelativeLayout.LayoutParams paramsFour = (RelativeLayout.LayoutParams) holder.mLeaderBoardLayout.getLayoutParams();
-            paramsFour.addRule(RelativeLayout.BELOW, R.id.schedule_row_one_party_ll);
-            paramsFour.setMargins(20, 30, 20, 20);
-            holder.mLeaderBoardLayout.setLayoutParams(paramsFour);
+            holder.mTvOnePartyMatchStage.setText(match.getStage());
 
         } else {
             holder.mTvPartyAName.setText(match.getParties().get(0).getPartyName());
@@ -228,12 +237,9 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
                 holder.mBtnMatchPoints.setVisibility(View.GONE);
                 holder.mLlMatchScores.setVisibility(View.GONE);
                 holder.mTvMatchResult.setVisibility(View.GONE);
-                holder.mTvOnePartyMatchResultWait.setVisibility(View.GONE);
 
                 if (match.getParties() == null) {
-                    holder.mTvOnePartyMatchResultWait.setVisibility(View.VISIBLE);
-                    holder.mTvOnePartyMatchResultWait.setText("Awaiting Results");
-                    holder.mTvOnePartyMatchResultWait.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+                    holder.mTvOnePartyMatchResult.setText("Awaiting Results");
                 } else {
                     holder.mTvResultWait.setVisibility(View.VISIBLE);
                     holder.mTvResultWait.setText(match.getStage() + " - " + "Awaiting Results");
@@ -350,7 +356,7 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
         HmImageView mIvOnePartyImage;
         TextView mTvOnePartyName;
         TextView mTvOnePartyDate;
-        TextView mTvOnePartyMatchResultWait;
+        TextView mTvOnePartyMatchStage;
         TextView mTvOnePartyMatchResult;
 
         TextView mTvLeaderBoardRank;
@@ -385,19 +391,18 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
             mRlAvgMatchPoints = (RelativeLayout) V.findViewById(R.id.schedule_row_rl_average_score);
             mRlHighestMatchPoints = (RelativeLayout) V.findViewById(R.id.schedule_row_rl_highest_score);
             mLlMatchScores = (ShadowLayout) V.findViewById(R.id.schedule_row_scores_sl);
-
-            mLlMultiParty = (LinearLayout) V.findViewById(R.id.schedule_row_ll);
-
-            mLlOneParty = (LinearLayout) V.findViewById(R.id.schedule_row_one_party_ll);
-            mIvOnePartyImage = (HmImageView) V.findViewById(R.id.swipe_card_one_party_iv_left);
-            mTvOnePartyName = (TextView) V.findViewById(R.id.schedule_row_tv_one_party_a_name);
-            mTvOnePartyDate = (TextView) V.findViewById(R.id.schedule_row_tv_one_party_date);
-            mTvOnePartyMatchResultWait = (TextView) V.findViewById(R.id.schedule_row_one_party_tv_match_result_wait);
-            mTvOnePartyMatchResult = (TextView) V.findViewById(R.id.schedule_row_one_party_tv_match_result);
-
             mLeaderBoardLayout = (LinearLayout) V.findViewById(R.id.schedule_row_rl_points_summary);
             mTvLeaderBoardTotalPlayers = (TextView) V.findViewById(R.id.schedule_row_tv_leaderboard_total_players);
             leaderBoardMatchInfoLayout = (LinearLayout) V.findViewById(R.id.match_details_with_leaderboard_layout);
+            mLlMultiParty = (LinearLayout) V.findViewById(R.id.schedule_row_ll);
+
+            /* One Party Layout */
+            mLlOneParty = (LinearLayout) V.findViewById(R.id.schedule_row_one_party_ll);
+            mIvOnePartyImage = (HmImageView) V.findViewById(R.id.match_one_party_1_imgView);
+            mTvOnePartyName = (TextView) V.findViewById(R.id.match_one_party_1_textView);
+            mTvOnePartyDate = (TextView) V.findViewById(R.id.result_one_party_match_date_time_textView);
+            mTvOnePartyMatchStage= (TextView) V.findViewById(R.id.result_one_party_match_stage_textView);
+            mTvOnePartyMatchResult = (TextView) V.findViewById(R.id.result_one_party_match_result_textView);
 
             mRlLeaderBoard.setOnClickListener(this);
             mRlAvgMatchPoints.setOnClickListener(this);
@@ -820,10 +825,12 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
                 initMatchStarted(mMatchStartTimeMs);
                 if (!mIsMatchStarted) {
 
-                /* check if btn is save Answer , call save Answer Api , hide radio buttons , show Answers View. */
+                    launchEditAnswerActivity(question, roomId);
+
+                /* check if btn is save Answer , call save Answer Api , hide radio buttons , show Answers View. *//*
                     if (mSaveAnswer) {
 
-                    /* check if other Question edit Answer btn is clicked, if yes don't do anything else save Answer */
+                    *//* check if other Question edit Answer btn is clicked, if yes don't do anything else save Answer *//*
                         if (question.getEditAnswerQuestionId() == question.getQuestionId()) {
                             int selectedId = mRadioGroup.getCheckedRadioButtonId();
                             View radioButton = mRadioGroup.findViewById(selectedId);
@@ -842,20 +849,22 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
                             onClickSaveAnswer(question, selectedAnswerId, tvOption1, tvOption2, tvOption3);
 
 
-                        /* call save Answer Api */
+                        *//* call save Answer Api *//*
                             mResultsActionListener.saveUpdatedAnswer(question.getMatchId(), question.getQuestionId(), selectedAnswerId, roomId);
 
-                        /* change save Answer btn back to edit Answer */
+                        *//* change save Answer btn back to edit Answer *//*
                             editAnswersBtn.setText("Edit Answer");
-                            mIvEditAnswers.setBackground(ContextCompat.getDrawable(mIvEditAnswers.getContext(), R.drawable.edit_answers_icon));
+                            mIvEditAnswers.setBackground(ContextCompat.getDrawable(mIvEditAnswers.getContext(), R.drawable.edit_answers_heading_icon));
 
-                            showEditQuestionButtons(parent);
+
+
+//                            showEditQuestionButtons(parent);
 
                         } else {
 
                         }
-                    } else { /* Show radio buttons , hide Answers View and change edit Answer btn to Save Answer */
-                        tvOption1.setVisibility(View.GONE);
+                    } else { *//* Show radio buttons , hide Answers View and change edit Answer btn to Save Answer *//*
+                        *//*tvOption1.setVisibility(View.GONE);
                         tvOption2.setVisibility(View.GONE);
                         tvOption3.setVisibility(View.GONE);
                         mIvEditAnswers.setBackground(ContextCompat.getDrawable(mIvEditAnswers.getContext(), R.drawable.edit_answers_tick));
@@ -863,8 +872,8 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
                         question.setEditAnswerQuestionId(question.getQuestionId());
                         onClickEditAnswer(convertView, question);
 
-                        hideEditQuestionButtons(parent);
-                    }
+                        hideEditQuestionButtons(parent);*//*
+                    }*/
 
                 } else {
                     Toast.makeText(parent.getContext(), "Oops! Match already started.", Toast.LENGTH_SHORT).show();
@@ -872,6 +881,26 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
                 }
             }
         });
+    }
+
+    private void launchEditAnswerActivity(Question question, int roomId) {
+        EditAnswerScreenData editAnswerScreenData = new EditAnswerScreenData();
+        editAnswerScreenData.setQuestionId(question.getQuestionId());
+        editAnswerScreenData.setRoomId(roomId);
+        editAnswerScreenData.setMatchId(question.getMatchId());
+        editAnswerScreenData.setChallengeId(mResultScreenData.getChallengeId());
+        editAnswerScreenData.setSubTitle(mResultScreenData.getSubTitle());
+
+        Bundle args = new Bundle();
+        args.putParcelable(BundleKeys.EDIT_ANSWER_SCREEN_DATA, Parcels.wrap(editAnswerScreenData));
+
+        Intent editAnswerIntent = new Intent(mContext, EditAnswerActivity.class);
+        editAnswerIntent.putExtras(args);
+        if (mContext != null) {
+            ((AppCompatActivity)mContext).startActivityForResult(editAnswerIntent, MyResultsActivity.EDIT_ANSWER_ACTIVITY_REQUEST_CODE);
+        } else {
+            Log.d(TAG, "can not launch edit answer activity!");
+        }
     }
 
     private void hideEditQuestionButtons(ViewGroup parentView) {
@@ -1052,9 +1081,43 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
                 navigateToLeaderboards(view.getContext(), null);
                 break;
             case R.id.schedule_row_rl_report_btn:
-                openSubmitReportPopup(view.getContext());
+                //openSubmitReportPopup(view.getContext());
+                openResultsChatBox(view.getContext());
                 break;
         }
+    }
+
+    private void openResultsChatBox(Context context) {
+
+        UserInfo userInfo = Nostragamus.getInstance().getServerDataManager().getUserInfo();
+        FreshchatUser user = Freshchat.getInstance(context).getUser();
+        if (userInfo!=null && user!=null) {
+            user.setFirstName(userInfo.getUserName())
+                    .setEmail(userInfo.getEmail());
+            Freshchat.getInstance(context).setUser(user);
+
+            /* Set any custom metadata to give agents more context,
+            and for segmentation for marketing or pro-active messaging */
+            Map<String, String> userMeta = new HashMap<String, String>();
+            userMeta.put("UserId", String.valueOf(userInfo.getId()));
+            userMeta.put("Challenge Id", String.valueOf(getItem(0).getChallengeId()));
+            userMeta.put("MatchId", String.valueOf(getItem(0).getId()));
+            userMeta.put("RoomId", String.valueOf(getItem(0).getRoomId()));
+            userMeta.put("Transaction Type", "");
+            userMeta.put("Transaction Order Id", "");
+            userMeta.put("Transaction Time", "");
+
+            //Call setUserProperties to sync the user properties with Freshchat's servers
+            Freshchat.getInstance(context).setUserProperties(userMeta);
+
+        }
+
+         /* Open Answer Related Queries Chat Channel */
+        List<String> tags = new ArrayList<>();
+        tags.add("answers");
+        ConversationOptions convOptions = new ConversationOptions()
+                .filterByTags(tags, "answers");
+        Freshchat.showConversations(context, convOptions);
     }
 
     private void openSubmitReportPopup(Context context) {
@@ -1073,6 +1136,7 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
         intent.putExtra(BundleKeys.REPORT_THANKYOU_TEXT,"You can let us know about issues with the answers or points awarded for this game, by reporting it." +
                 " We will review it and make any necessary corrections!");
         context.startActivity(intent);
+
     }
 
     private void navigateToOthersAnswers(Context context) {

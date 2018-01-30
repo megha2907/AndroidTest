@@ -5,6 +5,7 @@ import android.text.TextUtils;
 import java.util.List;
 
 import in.sportscafe.nostragamus.Constants;
+import in.sportscafe.nostragamus.module.prediction.editAnswer.dto.EditAnswerQuestion;
 import in.sportscafe.nostragamus.module.prediction.playScreen.dto.PlayersPoll;
 import in.sportscafe.nostragamus.module.prediction.playScreen.dto.PredictionQuestion;
 
@@ -76,6 +77,27 @@ public class PlayerPollHelper {
     }
 
     public static void setMinorityAnswerId(PredictionQuestion question, String leftPlayerPollAnswerStr, String rightPlayerPollAnswerStr) {
+        if (question != null) {
+
+            float leftPollAnswer = 0, rightPollAnswer = 0;
+            if (!TextUtils.isEmpty(leftPlayerPollAnswerStr) && !TextUtils.isEmpty(rightPlayerPollAnswerStr)) {
+                leftPollAnswer = getPercentageFromAnswerPollStr(leftPlayerPollAnswerStr);
+                rightPollAnswer = getPercentageFromAnswerPollStr(rightPlayerPollAnswerStr);
+            }
+
+            if (leftPollAnswer > rightPollAnswer) {
+                question.setMinorityAnswerId(Constants.AnswerIds.RIGHT);
+            } else if (leftPollAnswer < rightPollAnswer) {
+                question.setMinorityAnswerId(Constants.AnswerIds.LEFT);
+            } else {
+                question.setMinorityAnswerId(-1);
+            }
+        }
+    }
+
+    public static void setMinorityAnswerIdForEditAnswer(EditAnswerQuestion question,
+                                                        String leftPlayerPollAnswerStr,
+                                                        String rightPlayerPollAnswerStr) {
         if (question != null) {
 
             float leftPollAnswer = 0, rightPollAnswer = 0;
