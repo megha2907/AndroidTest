@@ -16,6 +16,7 @@ import java.util.List;
 
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
+import in.sportscafe.nostragamus.cache.CacheManagementHelper;
 import in.sportscafe.nostragamus.module.common.NostraBaseActivity;
 import in.sportscafe.nostragamus.module.customViews.CustomSnackBar;
 import in.sportscafe.nostragamus.module.inPlay.ui.ResultsScreenDataDto;
@@ -215,6 +216,9 @@ public class CopyAnswerActivity extends NostraBaseActivity implements View.OnCli
     }
 
     private void onMatchAnsweredCopied(CopyAnswerResponse response) {
+        /* Fetch Inplay data and save into DB - This is for Bottom-nav bar badge notification counter */
+        new CacheManagementHelper().fetchInplayDataAndSaveIntoDb(getApplicationContext());
+
         if (response != null && response.getData() != null && mCopyAnswerScreenData != null) {
             ResultsScreenDataDto data = new ResultsScreenDataDto();
             PlayScreenDataDto playScreenData = mCopyAnswerScreenData.getPlayScreenDataDto();
