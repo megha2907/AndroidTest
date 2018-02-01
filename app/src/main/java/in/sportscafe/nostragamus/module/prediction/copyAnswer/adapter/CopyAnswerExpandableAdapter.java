@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -27,6 +28,7 @@ public class CopyAnswerExpandableAdapter extends BaseExpandableListAdapter {
     private LayoutInflater mLayoutInflater;
     private CopyAnswerAdapterListener mAdapterListener;
     private HeaderHolder mHeaderHolderViewHolder;
+    private boolean mShouldPowerUpApply = true;
 
     public CopyAnswerExpandableAdapter(Context context,
                                        List<CopyAnswerContest> copyAnswerContestList,
@@ -135,7 +137,14 @@ public class CopyAnswerExpandableAdapter extends BaseExpandableListAdapter {
         mHeaderHolderViewHolder = new HeaderHolder();
         mHeaderHolderViewHolder.contestCounterTextView = (TextView) convertView.findViewById(R.id.copy_answer_title_counter_textView);
         mHeaderHolderViewHolder.usePowerUpCheckBox = (CheckBox) convertView.findViewById(R.id.copy_answer_use_powerup_checkbox);
+        mHeaderHolderViewHolder.usePowerUpCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                mShouldPowerUpApply = isChecked;
+            }
+        });
 
+        mHeaderHolderViewHolder.usePowerUpCheckBox.setChecked(mShouldPowerUpApply);
         mHeaderHolderViewHolder.contestCounterTextView.setText("("+ (mContestList.size() - 1) + ")");
         return convertView;
     }
