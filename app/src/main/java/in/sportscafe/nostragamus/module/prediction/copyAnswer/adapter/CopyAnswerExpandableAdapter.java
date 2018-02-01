@@ -171,7 +171,8 @@ public class CopyAnswerExpandableAdapter extends BaseExpandableListAdapter {
             if (childPosition >= 0 && childPosition < questionList.size()) {
                 CopyAnswerQuestion answerQuestion = questionList.get(childPosition);
 
-                holder.questionTextView.setText(answerQuestion.getQuestionText());
+                String question = answerQuestion.getQuestionText().replace("\n","");
+                holder.questionTextView.setText(question);
                 switch (answerQuestion.getAnswer()) {
                     case 1:
                         holder.answerTextView.setText(answerQuestion.getQuestionOption1());
