@@ -1,6 +1,7 @@
 package in.sportscafe.nostragamus.module.newChallenges.ui.viewPager;
 
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -16,19 +17,29 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.jeeva.android.BaseFragment;
 import com.jeeva.android.Log;
+import com.jeeva.android.widgets.recyclerviewpager.RecyclerViewPager;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.customViews.CustomSnackBar;
+import in.sportscafe.nostragamus.module.newChallenges.adapter.BannerRecyclerAdapter;
 import in.sportscafe.nostragamus.module.newChallenges.adapter.NewChallengeAdapterListener;
 import in.sportscafe.nostragamus.module.newChallenges.adapter.NewChallengesRecyclerAdapter;
+import in.sportscafe.nostragamus.module.newChallenges.dataProvider.BannerDataProvider;
 import in.sportscafe.nostragamus.module.newChallenges.dataProvider.SportsDataProvider;
+import in.sportscafe.nostragamus.module.newChallenges.dto.BannerResponseData;
 import in.sportscafe.nostragamus.module.newChallenges.dto.NewChallengesResponse;
 import in.sportscafe.nostragamus.module.newChallenges.dto.SportsTab;
 import in.sportscafe.nostragamus.module.newChallenges.ui.matches.NewChallengesMatchActivity;
@@ -44,7 +55,11 @@ public class NewChallengesViewPagerFragment extends BaseFragment implements View
     private SportsTab mSportsTab;
     private List<NewChallengesResponse> mFilteredChallenges;
 
-    public NewChallengesViewPagerFragment() {}
+    BannerRecyclerAdapter bannerRecyclerAdapter;
+
+    public NewChallengesViewPagerFragment() {
+    }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -55,37 +70,18 @@ public class NewChallengesViewPagerFragment extends BaseFragment implements View
     }
 
     private void initRootView(View rootView) {
-        //setupAdsWebView(rootView);
-
         mRecyclerView = (RecyclerView) rootView.findViewById(R.id.challenge_recycler);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(mRecyclerView.getContext(), LinearLayoutManager.VERTICAL, false));
         mRecyclerView.setHasFixedSize(true);
+        mRecyclerView.setNestedScrollingEnabled(false);
     }
 
-    private void setupAdsWebView(View rootView) {
-        WebView webView = (WebView) rootView.findViewById(R.id.challenges_ads_webView);
-        webView.setScrollContainer(false);
-        webView.setBackgroundColor(Color.TRANSPARENT);
-        webView.loadUrl("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSk8hJHZFdKq92roKH4oDSiVBe_-nJxCTUjzYbEy06aPRXopmkP");
-        WebSettings settings = webView.getSettings();
-        settings.setUseWideViewPort(true);
-        settings.setLoadWithOverviewMode(true);
-      //  webView.setBackground(ContextCompat.getDrawable(getContext(),R.drawable.toolbar_bg));
-        webView.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                if (event.getAction() == MotionEvent.ACTION_UP){
-                    Log.d(TAG, "Webview Ad Touched");
-                }
-                return false;
-            }
-        });
-    }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         loadData();
+        loadBannerData();
     }
 
     private void loadData() {
@@ -101,6 +97,73 @@ public class NewChallengesViewPagerFragment extends BaseFragment implements View
                     scrollToChallenge();
                     break;
             }
+        }
+    }
+
+
+    private void loadBannerData() {
+        BannerDataProvider dataProvider = new BannerDataProvider();
+        dataProvider.getBanners(getContext().getApplicationContext(), new BannerDataProvider.BannerDataProviderListener() {
+            @Override
+            public void onData(int status, @Nullable List<BannerResponseData> bannerResponseDataList) {
+                onBannerDataReceived(status, bannerResponseDataList);
+            }
+
+            @Override
+            public void onError(int status) {
+                handleBannerError(status);
+            }
+        });
+    }
+
+    private void onBannerDataReceived(int status, List<BannerResponseData> bannerResponseDataList) {
+        switch (status) {
+            case Constants.DataStatus.FROM_SERVER_API_SUCCESS:
+                setBannersOnUi(bannerResponseDataList);
+                break;
+
+            case Constants.DataStatus.FROM_DATABASE_AS_NO_INTERNET:
+            case Constants.DataStatus.FROM_DATABASE_AS_SERVER_FAILED:
+                setBannersOnUi(bannerResponseDataList);
+                handleBannerError(status);
+                break;
+
+            default:
+                handleBannerError(status);
+                break;
+
+        }
+    }
+
+    private void setBannersOnUi(List<BannerResponseData> bannerResponseDataList) {
+
+        if (bannerResponseDataList != null && bannerResponseDataList.size() > 0 && getView() != null) {
+            RecyclerView mRcvHorizontal = (RecyclerView) getView().findViewById(R.id.challenges_rcv_horizontal);
+            mRcvHorizontal.setVisibility(View.VISIBLE);
+            mRcvHorizontal.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+            bannerRecyclerAdapter = new BannerRecyclerAdapter(bannerResponseDataList, getContext());
+            mRcvHorizontal.setAdapter(bannerRecyclerAdapter);
+        } else {
+            hideBanners();
+        }
+
+    }
+
+    private void handleBannerError(int status) {
+        hideBanners();
+    }
+
+    public void showAdSection() {
+        if (getView() != null) {
+            LinearLayout horizontalLayout = (LinearLayout) getView().findViewById(R.id.challenges_ads_layout);
+            horizontalLayout.setVisibility(View.VISIBLE);
+        }
+    }
+
+    private void hideBanners() {
+        if (getView() != null) {
+            LinearLayout horizontalLayout = (LinearLayout) getView().findViewById(R.id.challenges_ads_layout);
+            horizontalLayout.setVisibility(View.GONE);
         }
     }
 
@@ -182,5 +245,6 @@ public class NewChallengesViewPagerFragment extends BaseFragment implements View
             mRecyclerView.getAdapter().notifyDataSetChanged();
         }
     }
+
 
 }

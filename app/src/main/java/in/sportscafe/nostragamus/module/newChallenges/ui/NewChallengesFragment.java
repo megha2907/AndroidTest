@@ -3,18 +3,27 @@ package in.sportscafe.nostragamus.module.newChallenges.ui;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.NestedScrollView;
+import android.view.GestureDetector;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
+import com.jeeva.android.Log;
 import com.jeeva.android.widgets.HmImageView;
 
 import org.parceler.Parcels;
@@ -29,13 +38,17 @@ import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
+import in.sportscafe.nostragamus.module.common.CustomTabLayout;
 import in.sportscafe.nostragamus.module.common.NostraBaseFragment;
+import in.sportscafe.nostragamus.module.common.ViewPagerAdapter;
 import in.sportscafe.nostragamus.module.customViews.CustomSnackBar;
 import in.sportscafe.nostragamus.module.navigation.wallet.WalletApiModelImpl;
 import in.sportscafe.nostragamus.module.navigation.wallet.WalletHelper;
 import in.sportscafe.nostragamus.module.navigation.wallet.dto.UserWalletResponse;
+import in.sportscafe.nostragamus.module.newChallenges.dataProvider.BannerDataProvider;
 import in.sportscafe.nostragamus.module.newChallenges.dataProvider.NewChallengesDataProvider;
 import in.sportscafe.nostragamus.module.newChallenges.dataProvider.SportsDataProvider;
+import in.sportscafe.nostragamus.module.newChallenges.dto.BannerResponseData;
 import in.sportscafe.nostragamus.module.newChallenges.dto.NewChallengesResponse;
 import in.sportscafe.nostragamus.module.newChallenges.dto.SportsTab;
 import in.sportscafe.nostragamus.module.newChallenges.helpers.NewChallengesFilterHelper;
@@ -44,7 +57,10 @@ import in.sportscafe.nostragamus.module.newChallenges.ui.viewPager.NewChallenges
 import in.sportscafe.nostragamus.module.nostraHome.ui.NostraHomeActivityListener;
 import in.sportscafe.nostragamus.module.notifications.NostraNotification;
 import in.sportscafe.nostragamus.module.popups.walletpopups.WalletBalancePopupActivity;
+import in.sportscafe.nostragamus.module.user.myprofile.verify.VerifyPhoneNumberFragment;
 import in.sportscafe.nostragamus.utils.CodeSnippet;
+
+import static com.amplitude.api.PinnedAmplitudeClient.TAG;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -80,6 +96,7 @@ public class NewChallengesFragment extends NostraBaseFragment implements View.On
         mTvTBarNumberOfChallenges = (TextView) rootView.findViewById(R.id.toolbar_heading_two);
         rootView.findViewById(R.id.toolbar_wallet_rl).setOnClickListener(this);
     }
+
 
     /**
      * Delivers intent received while newIntent() of activity re-tasking.
@@ -118,10 +135,12 @@ public class NewChallengesFragment extends NostraBaseFragment implements View.On
         if (Nostragamus.getInstance().hasNetworkConnection()) {
             WalletApiModelImpl.newInstance(new WalletApiModelImpl.WalletApiListener() {
                 @Override
-                public void noInternet() {}
+                public void noInternet() {
+                }
 
                 @Override
-                public void onApiFailed() {}
+                public void onApiFailed() {
+                }
 
                 @Override
                 public void onSuccessResponse(UserWalletResponse response) {
@@ -206,11 +225,11 @@ public class NewChallengesFragment extends NostraBaseFragment implements View.On
         if (getView() != null && getActivity() != null) {
 
             TabLayout challengesTabLayout = (TabLayout) getView().findViewById(R.id.challenge_tabs);
-            ViewPager challengesViewPager = (ViewPager) getView().findViewById(R.id.challenge_viewPager);
+            final ViewPager challengesViewPager = (ViewPager) getView().findViewById(R.id.challenge_viewPager);
 
             if (BuildConfig.IS_ACL_VERSION) {
                 challengesTabLayout.setTabMode(TabLayout.MODE_FIXED);
-            }else {
+            } else {
                 challengesTabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
             }
 
@@ -279,7 +298,7 @@ public class NewChallengesFragment extends NostraBaseFragment implements View.On
                 }
 
                 /* create adapter */
-                NewChallengesViewPagerAdapter viewPagerAdapter = new NewChallengesViewPagerAdapter
+                final NewChallengesViewPagerAdapter viewPagerAdapter = new NewChallengesViewPagerAdapter
                         (getActivity().getSupportFragmentManager(), fragmentList);
                 challengesViewPager.setAdapter(viewPagerAdapter);
 
@@ -294,6 +313,39 @@ public class NewChallengesFragment extends NostraBaseFragment implements View.On
 
                 /* If launched from notification, the handle further flow */
                 handleNotification(challengesViewPager, fragmentList);
+
+
+                final ViewPager.OnPageChangeListener pageChangeListener = new ViewPager.OnPageChangeListener() {
+                    @Override
+                    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+                    }
+
+                    @Override
+                    public void onPageSelected(int position) {
+                        if (position == 0) {
+                            NewChallengesViewPagerFragment sampleFragment = (NewChallengesViewPagerFragment)
+                                    ((NewChallengesViewPagerAdapter) challengesViewPager.getAdapter()).getItem(position);
+                            if (sampleFragment != null) {
+                                sampleFragment.showAdSection();
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onPageScrollStateChanged(int state) {
+
+                    }
+                };
+
+                challengesViewPager.setOnPageChangeListener(pageChangeListener);
+                challengesViewPager.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        pageChangeListener.onPageSelected(0);
+                    }
+                });
+
 
             } else {
                 showEmptyScreen(challengesViewPager, challengesTabLayout, sportsTabList);
@@ -335,7 +387,7 @@ public class NewChallengesFragment extends NostraBaseFragment implements View.On
 
                 for (int pos = 0; pos < viewPagerFragmentList.size(); pos++) {
                     NewChallengesViewPagerFragment fragment = viewPagerFragmentList.get(pos);
-                    if (fragment.getTabDetails() != null && fragment.getTabDetails().getSportsId() == sportId ) {
+                    if (fragment.getTabDetails() != null && fragment.getTabDetails().getSportsId() == sportId) {
                         viewPager.setCurrentItem(pos);
                         break;
                     }
@@ -343,6 +395,7 @@ public class NewChallengesFragment extends NostraBaseFragment implements View.On
             }
         }
     }
+
 
 
     private void showLoadingProgressBar() {

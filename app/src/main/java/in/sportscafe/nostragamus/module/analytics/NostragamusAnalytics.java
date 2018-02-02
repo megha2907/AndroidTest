@@ -3,10 +3,13 @@ package in.sportscafe.nostragamus.module.analytics;
 import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
+import android.widget.TextView;
 
 import com.amplitude.api.Amplitude;
 import com.amplitude.api.AmplitudeClient;
@@ -29,6 +32,7 @@ import org.json.JSONObject;
 
 import java.math.BigDecimal;
 import java.util.Currency;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -295,7 +299,6 @@ public class NostragamusAnalytics {
 
     /**
      * track leaderboards
-     *
      */
     public void trackLeaderboard(String label) {
         track(AnalyticsCategory.LEADERBOARD, AnalyticsActions.LB_DETAIL, label, null);
@@ -528,7 +531,7 @@ public class NostragamusAnalytics {
     }
 
 
-    public void setMoEngageUserProperties() {
+    public void setMoEngageUserProperties(Context context) {
         if (null != mMoEHelper) {
 
             if (BuildConfig.IS_PAID_VERSION) {
@@ -562,6 +565,18 @@ public class NostragamusAnalytics {
                 mMoEHelper.setUserAttribute(UserProperties.LINK_NAME, linkName);
             }
 
+            PackageInfo pInfo = null;
+            try {
+                pInfo = context.getPackageManager().
+                        getPackageInfo(context.getPackageName(), 0);
+            } catch (PackageManager.NameNotFoundException e) {
+                e.printStackTrace();
+            }
+            String versionName = pInfo.versionName;
+            if (!TextUtils.isEmpty(versionName)) {
+                mMoEHelper.setUserAttribute(UserProperties.APP_VERSION, versionName);
+            }
+
             /* setEmail() mandatory to get notification - DO NOT REMOVE  */
             UserInfo userInfo = Nostragamus.getInstance().getServerDataManager().getUserInfo();
             if (userInfo != null) {
@@ -570,6 +585,7 @@ public class NostragamusAnalytics {
                     mMoEHelper.setEmail(email);
                 }
             }
+
         }
     }
 
@@ -652,7 +668,8 @@ public class NostragamusAnalytics {
 
     /**
      * Tracks Challenges Opened
-     *  @param challengeId
+     *
+     * @param challengeId
      * @param sportId
      * @param category
      */
@@ -684,7 +701,7 @@ public class NostragamusAnalytics {
             try {
                 jsonObject.put("challengeId", challengeId);
                 jsonObject.put("challengeName", challengeName);
-                jsonObject.put("sports",sportsJson);
+                jsonObject.put("sports", sportsJson);
             } catch (JSONException ex) {
                 ex.printStackTrace();
             }
@@ -704,6 +721,7 @@ public class NostragamusAnalytics {
 
     /**
      * Tracks Contest Joined
+     *
      * @param contestId
      * @param contestName
      * @param contestType
@@ -719,7 +737,7 @@ public class NostragamusAnalytics {
             try {
                 jsonObject.put("contestId", contestId);
                 jsonObject.put("contestName", contestName);
-                jsonObject.put("contestType",contestType);
+                jsonObject.put("contestType", contestType);
                 jsonObject.put("contestEntryFee", entryFee);
                 jsonObject.put("contestChallengeId", challengeId);
                 jsonObject.put("screenJoinedFrom", screenName);
@@ -747,7 +765,7 @@ public class NostragamusAnalytics {
      *
      * @param price
      */
-    public void trackRevenue(double price, int contestId, String contestName,String contestType) {
+    public void trackRevenue(double price, int contestId, String contestName, String contestType) {
         if (BuildConfig.IS_PAID_VERSION && mAmplitude != null) {
             JSONObject eventPropertiesJson = new JSONObject();
             try {
@@ -826,7 +844,6 @@ public class NostragamusAnalytics {
 
 //                //Call setUser so that the user information is synced with Freshchat's servers
 //                mFreshChat.setUser(freshUser);
-
 
 
         }

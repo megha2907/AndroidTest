@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/wallet_home_card"
+            android:layout_width="@dimen/dim_240"
+            android:layout_height="@dimen/dim_80"
+            android:layout_marginLeft="@dimen/dim_12"
+            app:cardCornerRadius="@dimen/dim_2"
+            app:cardElevation="@dimen/dim_6">
+
+        <com.jeeva.android.widgets.HmImageView
+            android:id="@+id/banner_image"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:background="@drawable/dark_grey_gradient_bg"/>
+
+        </android.support.v7.widget.CardView>
+
+</LinearLayout>

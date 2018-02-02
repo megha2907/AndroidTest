@@ -636,6 +636,7 @@ public interface Constants {
         String WALLET_INIT = "Wallet Initial Amount";
         String LINK_NAME = "Link Name";
         String ACL_APP = "Acl App";
+        String APP_VERSION = "App Version";
     }
 
     interface AppType {

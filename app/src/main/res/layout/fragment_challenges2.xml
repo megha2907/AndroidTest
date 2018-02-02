@@ -75,11 +75,11 @@
                         android:id="@+id/toolbar_wallet_icon"
                         android:layout_width="@dimen/dim_32"
                         android:layout_height="@dimen/dim_32"
-                        android:padding="@dimen/dim_8"
                         android:layout_centerVertical="true"
                         android:layout_toLeftOf="@+id/toolbar_wallet_money"
-                        android:src="@drawable/toolbar_wallet_icon"
-                        android:background="@drawable/ripple_effect_bg"/>
+                        android:background="@drawable/ripple_effect_bg"
+                        android:padding="@dimen/dim_8"
+                        android:src="@drawable/toolbar_wallet_icon" />
 
                 </RelativeLayout>
 
@@ -93,7 +93,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:visibility="gone">
+            android:visibility="visible">
 
             <!-- Tabs Layout -->
             <android.support.design.widget.TabLayout
@@ -113,7 +113,8 @@
             <in.sportscafe.nostragamus.module.common.CustomViewPager
                 android:id="@+id/challenge_viewPager"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
             <!-- Empty msg -->
             <com.jeeva.android.widgets.customfont.CustomTextView
@@ -121,12 +122,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:textColor="@color/grey_999999"
+                android:layout_marginTop="@dimen/dim_20"
                 android:text="There are no challenges available right now!"
+                android:textColor="@color/grey_999999"
                 android:textSize="@dimen/sp_11"
-                app:typeface="lato_regular"
                 android:visibility="gone"
-                android:layout_marginTop="@dimen/dim_20"/>
+                app:typeface="lato_regular" />
 
         </LinearLayout>
 
@@ -146,8 +147,7 @@
             <in.sportscafe.nostragamus.utils.loadingAnim.LoadingIndicatorView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:indicatorColor="@color/loading_animation_color"
-                />
+                app:indicatorColor="@color/loading_animation_color" />
 
         </LinearLayout>
 

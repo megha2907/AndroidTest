@@ -12,6 +12,7 @@ import in.sportscafe.nostragamus.module.navigation.wallet.addMoney.dto.AddMoneyP
 import in.sportscafe.nostragamus.module.navigation.wallet.addMoney.dto.AddMoneyPaymentCouponResponse;
 import in.sportscafe.nostragamus.module.navigation.wallet.addMoney.dto.VerifyPaymentCouponRequest;
 import in.sportscafe.nostragamus.module.navigation.wallet.addMoney.dto.VerifyPaymentCouponResponse;
+import in.sportscafe.nostragamus.module.newChallenges.dto.BannerResponseData;
 import in.sportscafe.nostragamus.module.nostraHome.dto.TimeResponse;
 import in.sportscafe.nostragamus.module.common.dto.MatchesResponse;
 import in.sportscafe.nostragamus.module.contest.dto.ContestEntriesResponse;
@@ -389,4 +390,7 @@ public interface NostragamusService {
 
     @POST("v3/game/users/ticket")
     Call<ApiResponse> sendErrorReport(@Body SubmitReportRequest request);
+
+    @GET("v1/game/users/banners")
+    Call<BannerResponse> getBannerData();
 }
