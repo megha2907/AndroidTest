@@ -174,7 +174,7 @@
     <color name="play_screen_bg_color">#222222</color>
     <color name="err_color">#c43763</color>
 
-    <color name="edit_answer_chosen_option_border">#83cce5</color>
+    <color name="edit_answer_chosen_option_border">#49eaa5</color>
     <color name="new_challenge_tab_bg">#102c4e</color>
     <color name="loading_animation_color">#186aa2</color>
     <color name="custom_snackbar_bg_color">#192535</color>
