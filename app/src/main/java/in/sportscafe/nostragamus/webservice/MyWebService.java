@@ -48,6 +48,9 @@ import in.sportscafe.nostragamus.module.newChallenges.dto.NewChallengesResponse;
 import in.sportscafe.nostragamus.module.othersanswers.MatchAnswerStatsResponse;
 import in.sportscafe.nostragamus.module.play.myresults.MyResultsResponse;
 import in.sportscafe.nostragamus.module.play.myresults.dto.ReplayPowerupResponse;
+import in.sportscafe.nostragamus.module.prediction.copyAnswer.dto.CopyAnswerContestsResponse;
+import in.sportscafe.nostragamus.module.prediction.copyAnswer.dto.CopyAnswerRequest;
+import in.sportscafe.nostragamus.module.prediction.copyAnswer.dto.CopyAnswerResponse;
 import in.sportscafe.nostragamus.module.prediction.editAnswer.dto.QuestionForEditAnswerResponse;
 import in.sportscafe.nostragamus.module.prediction.editAnswer.dto.SaveEditAnswerRequest;
 import in.sportscafe.nostragamus.module.prediction.editAnswer.dto.SaveEditAnswerResponse;
@@ -441,5 +444,13 @@ public class MyWebService extends AbstractWebService<NostragamusService> {
 
     public Call<BannerResponse> getBannerData() {
         return mNostragamusService.getBannerData();
+    }
+
+    public Call<CopyAnswerContestsResponse> getCopyAnswerContestList(int matchId) {
+        return mNostragamusService.getCopyAnswerContests(matchId);
+    }
+
+    public Call<CopyAnswerResponse> copyAnswer(CopyAnswerRequest request) {
+        return mNostragamusService.copyAnswer(request);
     }
 }

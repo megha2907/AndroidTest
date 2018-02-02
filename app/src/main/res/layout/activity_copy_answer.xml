@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/copy_answer_launcher_root_view"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="in.sportscafe.nostragamus.module.prediction.copyAnswer.CopyAnswerActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@color/search_bar"
+        android:paddingBottom="@dimen/dim_12">
+
+        <!-- Header bar -->
+        <RelativeLayout
+            android:id="@+id/copy_answer_top_layout"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dim_55"
+            android:orientation="horizontal"
+            android:background="@drawable/copy_answer_top_bar_bg"
+            >
+
+            <ImageView
+                android:id="@+id/back_btn"
+                android:layout_width="@dimen/dp_32"
+                android:layout_height="@dimen/dp_32"
+                android:layout_gravity="center"
+                android:layout_centerVertical="true"
+                android:padding="@dimen/dim_10"
+                android:layout_marginLeft="@dimen/dim_6"
+                android:src="@drawable/back_icon_grey"
+                android:background="?attr/selectableItemBackgroundBorderless"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:gravity="center">
+
+                <!-- parties name -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center">
+
+                    <com.jeeva.android.widgets.customfont.CustomTextView
+                        android:id="@+id/copy_answer_heading_party1_textView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="right"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/sp_13"
+                        app:typeface="lato_regular"
+                        android:layout_marginLeft="@dimen/dim_40"/>
+
+                    <com.jeeva.android.widgets.customfont.CustomTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/white"
+                        android:text="vs"
+                        android:textSize="@dimen/sp_13"
+                        app:typeface="lato_regular"
+                        android:layout_marginLeft="@dimen/dim_3"
+                        android:layout_marginRight="@dimen/dim_3"/>
+
+                    <com.jeeva.android.widgets.customfont.CustomTextView
+                        android:id="@+id/copy_answer_heading_party2_textView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="left"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/sp_13"
+                        app:typeface="lato_regular"
+                        android:layout_marginRight="@dimen/dim_40"/>
+
+                </LinearLayout>
+
+                <com.jeeva.android.widgets.customfont.CustomTextView
+                    android:id="@+id/copy_answer_sub_heading_textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/grey_999999"
+                    android:textSize="@dimen/sp_10"
+                    app:typeface="lato_regular"
+                    android:layout_marginTop="@dimen/dim_2"/>
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+        <ExpandableListView
+            android:id="@+id/copy_answer_expandable_listView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:childDivider="@android:color/transparent"
+            android:clipToPadding="false"
+            android:divider="@null"
+            android:groupIndicator="@null" />
+
+    </LinearLayout>
+
+</android.support.design.widget.CoordinatorLayout>

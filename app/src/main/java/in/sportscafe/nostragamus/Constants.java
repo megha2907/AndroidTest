@@ -349,6 +349,7 @@ public interface Constants {
         String POOL_PRIZE_ESTIMATION_SCREEN_DATA = "poolPrizeEstimationScreenData";
         String REWARDS_SCREEN_DATA = "rewardsScreenData";
         String EDIT_ANSWER_SCREEN_DATA = "editAnswerScreenData";
+        String COPY_ANSWER_POWERUP_COPIED = "copyAnswerPowerupCopied";
 
         /* Wallet */
         String WALLET_WITHDRAWAL_AMT = "walletWithdrawAmt";
@@ -388,6 +389,7 @@ public interface Constants {
         String REPORT_TYPE = "reportType";
         String POWERUP_BANK_TRANSFER_SCREEN_DATA = "powerupBankTransferScreenData";
         String IN_APP_NOSTRA_NOTIFICATION_DETAILS = "inAppNostraNotification";
+        String COPY_ANSWER_SCREEN_DATA = "copyAnswerScreenData";
     }
 
     interface DateFormats {

@@ -25,7 +25,7 @@
         android:orientation="horizontal"
         android:background="#252525">
 
-        <!-- Contestant details on header -->
+        <!-- Contestant details on headerHolder -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -110,7 +110,7 @@
         android:layout_height="match_parent"
         android:layout_below="@id/prediction_rl_header">
 
-        <!-- margin (dynamic) from header to card / action buttons -->
+        <!-- margin (dynamic) from headerHolder to card / action buttons -->
         <RelativeLayout
             android:id="@+id/action_btn_layout"
             android:layout_width="match_parent"

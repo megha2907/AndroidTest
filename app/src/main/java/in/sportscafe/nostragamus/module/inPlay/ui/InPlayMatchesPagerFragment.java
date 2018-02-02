@@ -30,9 +30,9 @@ import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
 import in.sportscafe.nostragamus.module.common.NostraBaseFragment;
 import in.sportscafe.nostragamus.module.customViews.CustomSnackBar;
 import in.sportscafe.nostragamus.module.customViews.TimelineHelper;
-import in.sportscafe.nostragamus.module.inPlay.adapter.MatchesAdapterAction;
 import in.sportscafe.nostragamus.module.inPlay.adapter.InPlayMatchAdapterListener;
 import in.sportscafe.nostragamus.module.inPlay.adapter.InPlayMatchesRecyclerAdapter;
+import in.sportscafe.nostragamus.module.inPlay.adapter.MatchesAdapterAction;
 import in.sportscafe.nostragamus.module.inPlay.dataProvider.InPlayMatchesDataProvider;
 import in.sportscafe.nostragamus.module.inPlay.dto.InPlayContestDto;
 import in.sportscafe.nostragamus.module.inPlay.dto.InPlayContestMatchDto;
@@ -42,6 +42,8 @@ import in.sportscafe.nostragamus.module.navigation.help.dummygame.DummyGameActiv
 import in.sportscafe.nostragamus.module.newChallenges.helpers.DateTimeHelper;
 import in.sportscafe.nostragamus.module.play.myresults.MyResultsActivity;
 import in.sportscafe.nostragamus.module.popups.timerPopup.TimerFinishDialogHelper;
+import in.sportscafe.nostragamus.module.prediction.copyAnswer.CopyAnswerLauncherActivity;
+import in.sportscafe.nostragamus.module.prediction.copyAnswer.dto.CopyAnswerScreenData;
 import in.sportscafe.nostragamus.module.prediction.playScreen.PredictionActivity;
 import in.sportscafe.nostragamus.module.prediction.playScreen.dto.PlayScreenDataDto;
 import in.sportscafe.nostragamus.module.prediction.playScreen.dto.PowerUp;
@@ -246,37 +248,38 @@ public class InPlayMatchesPagerFragment extends NostraBaseFragment {
     }
 
     private void showOrHidePowerUps(PowerUp powerUp) {
+        if (getView() != null) {
+            LinearLayout powerUpLayout = (LinearLayout) getView().findViewById(R.id.powerup_top_layout);
+            ImageView powerUp2xImageView = (ImageView) getView().findViewById(R.id.in_play_2x_iv);
+            ImageView powerUpNoNegativeImageView = (ImageView) getView().findViewById(R.id.in_play_no_neg_iv);
+            ImageView powerUpAudienceImageView = (ImageView) getView().findViewById(R.id.in_play_player_poll_iv);
 
-        LinearLayout powerUpLayout = (LinearLayout) getView().findViewById(R.id.powerup_top_layout);
-        ImageView powerUp2xImageView = (ImageView) getView().findViewById(R.id.in_play_2x_iv);
-        ImageView powerUpNoNegativeImageView = (ImageView) getView().findViewById(R.id.in_play_no_neg_iv);
-        ImageView powerUpAudienceImageView = (ImageView) getView().findViewById(R.id.in_play_player_poll_iv);
+            TextView powerUp2xTextView = (TextView) getView().findViewById(R.id.in_play_2x_count_tv);
+            TextView powerUpNoNegativeTextView = (TextView) getView().findViewById(R.id.in_play_no_neg_count_tv);
+            TextView powerUpAudienceTextView = (TextView) getView().findViewById(R.id.in_play_player_poll_count_tv);
 
-        TextView powerUp2xTextView = (TextView) getView().findViewById(R.id.in_play_2x_count_tv);
-        TextView powerUpNoNegativeTextView = (TextView) getView().findViewById(R.id.in_play_no_neg_count_tv);
-        TextView powerUpAudienceTextView = (TextView) getView().findViewById(R.id.in_play_player_poll_count_tv);
+            if (powerUp != null) {
 
-        if (powerUp != null) {
+                int powerUp2xCount = powerUp.getDoubler();
+                int powerUpNonNegsCount = powerUp.getNoNegative();
+                int powerUpPlayerPollCount = powerUp.getPlayerPoll();
 
-            int powerUp2xCount = powerUp.getDoubler();
-            int powerUpNonNegsCount = powerUp.getNoNegative();
-            int powerUpPlayerPollCount = powerUp.getPlayerPoll();
+                powerUpLayout.setVisibility(View.VISIBLE);
 
-            powerUpLayout.setVisibility(View.VISIBLE);
+                powerUp2xImageView.setBackgroundResource(R.drawable.double_powerup_small);
+                powerUp2xImageView.setVisibility(View.VISIBLE);
+                powerUp2xTextView.setText(String.valueOf(powerUp2xCount));
 
-            powerUp2xImageView.setBackgroundResource(R.drawable.double_powerup_small);
-            powerUp2xImageView.setVisibility(View.VISIBLE);
-            powerUp2xTextView.setText(String.valueOf(powerUp2xCount));
+                powerUpNoNegativeImageView.setBackgroundResource(R.drawable.no_negative_powerup_small);
+                powerUpNoNegativeImageView.setVisibility(View.VISIBLE);
+                powerUpNoNegativeTextView.setText(String.valueOf(powerUpNonNegsCount));
 
-            powerUpNoNegativeImageView.setBackgroundResource(R.drawable.no_negative_powerup_small);
-            powerUpNoNegativeImageView.setVisibility(View.VISIBLE);
-            powerUpNoNegativeTextView.setText(String.valueOf(powerUpNonNegsCount));
-
-            powerUpAudienceImageView.setBackgroundResource(R.drawable.audience_poll_powerup_small);
-            powerUpAudienceImageView.setVisibility(View.VISIBLE);
-            powerUpAudienceTextView.setText(String.valueOf(powerUpPlayerPollCount));
+                powerUpAudienceImageView.setBackgroundResource(R.drawable.audience_poll_powerup_small);
+                powerUpAudienceImageView.setVisibility(View.VISIBLE);
+                powerUpAudienceTextView.setText(String.valueOf(powerUpPlayerPollCount));
 
 
+            }
         }
     }
 
@@ -333,6 +336,9 @@ public class InPlayMatchesPagerFragment extends NostraBaseFragment {
                         break;
 
                     case MatchesAdapterAction.PLAY:
+                        handleOnPlayClicked(args);
+                        break;
+
                     case MatchesAdapterAction.CONTINUE:
                         launchPlayScreen(args);
                         break;
@@ -348,8 +354,57 @@ public class InPlayMatchesPagerFragment extends NostraBaseFragment {
         };
     }
 
-    private void launchResultsScreen(Bundle matchArgs) {
+    /**
+     * ONLY when PLAY
+     * check that copy-answer is possible for match to play
+     * If so, then launch copy answer screen with all data required for play screen along
+     * else launch play screen; rest all checks remain same as of play functionality
+     * @param matchArgs
+     */
+    private void handleOnPlayClicked(Bundle matchArgs) {
+        Bundle argument = getArguments();
+        Bundle bundle = new Bundle();
+        if (argument != null && argument.containsKey(Constants.BundleKeys.INPLAY_CONTEST) &&
+                matchArgs != null && matchArgs.containsKey(Constants.BundleKeys.INPLAY_MATCH)) {
 
+            InPlayMatch match = Parcels.unwrap(matchArgs.getParcelable(Constants.BundleKeys.INPLAY_MATCH));
+            InPlayContestDto contestDto = Parcels.unwrap(argument.getParcelable(Constants.BundleKeys.INPLAY_CONTEST));
+
+            if (TimerFinishDialogHelper.canPlayGame(match.getMatchStartTime())) {
+
+                /* Contest counter number for match ;
+                if > 0, means copy answer is possible
+                 else continue as play
+                */
+                if (match.getCopyAnswerPlayedContests() > 0) {
+                    CopyAnswerScreenData screenData = new CopyAnswerScreenData();
+                    screenData.setInPlayMatch(match);
+                    screenData.setPlayScreenDataDto(getPlayScreenData(match, contestDto));
+                    bundle.putParcelable(Constants.BundleKeys.COPY_ANSWER_SCREEN_DATA, Parcels.wrap(screenData));
+
+                    launchCopyAnswerLauncherScreen(bundle);
+
+                } else {
+                    launchPlayScreen(matchArgs);
+                }
+            } else {
+                TimerFinishDialogHelper.showCanNotPlayGameTimerOutDialog(getChildFragmentManager());
+            }
+        } else {
+            Log.e(TAG, "No Contest in Bundle to launch Play screen");
+            handleError(-1);
+        }
+    }
+
+    private void launchCopyAnswerLauncherScreen(Bundle args) {
+        if (getActivity() != null && !getActivity().isFinishing()) {
+            Intent intent = new Intent(getActivity(), CopyAnswerLauncherActivity.class);
+            intent.putExtras(args);
+            getActivity().startActivity(intent);
+        }
+    }
+
+    private void launchResultsScreen(Bundle matchArgs) {
         if (getView() != null && getActivity() != null && !getActivity().isFinishing()) {
 
             Bundle argument = getArguments();

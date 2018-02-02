@@ -162,7 +162,7 @@ public class ContestRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                         viewHolder.mTvMaxEntries.setText(String.valueOf(contest.getRoomSize()));
                     }
                 } else {
-                    viewHolder.mTvEntryFee.setText(Constants.RUPEE_SYMBOL + String.valueOf(contest.getEntryFee()));
+                    viewHolder.mTvEntryFee.setText(Constants.RUPEE_SYMBOL + CodeSnippet.getFormattedAmount(contest.getEntryFee()));
                     viewHolder.mTvMaxEntries.setText(String.valueOf(contest.getRoomSize()));
                 }
             }
@@ -244,7 +244,7 @@ public class ContestRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                         viewHolder.mTvMaxEntries.setText(String.valueOf(contest.getRoomSize()));
                     }
                 } else {
-                    viewHolder.mTvEntryFee.setText(Constants.RUPEE_SYMBOL + String.valueOf(contest.getEntryFee()));
+                    viewHolder.mTvEntryFee.setText(Constants.RUPEE_SYMBOL + CodeSnippet.getFormattedAmount(contest.getEntryFee()));
                     viewHolder.mTvMaxEntries.setText(String.valueOf(contest.getRoomSize()));
                 }
             }
@@ -293,7 +293,7 @@ public class ContestRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                         viewHolder.mTvMaxEntries.setText(String.valueOf(contest.getRoomSize()));
                     }
                 } else {
-                    viewHolder.mTvEntryFee.setText(Constants.RUPEE_SYMBOL + String.valueOf(contest.getEntryFee()));
+                    viewHolder.mTvEntryFee.setText(Constants.RUPEE_SYMBOL + CodeSnippet.getFormattedAmount(contest.getEntryFee()));
                     viewHolder.mTvMaxEntries.setText(String.valueOf(contest.getRoomSize()));
                 }
             }
