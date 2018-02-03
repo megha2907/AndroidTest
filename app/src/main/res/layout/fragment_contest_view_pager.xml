@@ -24,7 +24,8 @@
                 android:layout_marginTop="@dimen/dim_10"
                 android:background="@color/black"
                 android:paddingLeft="@dimen/dim_13"
-                android:paddingRight="@dimen/dim_13">
+                android:paddingRight="@dimen/dim_13"
+                android:focusableInTouchMode="true">
 
                 <com.jeeva.android.widgets.customfont.CustomTextView
                     android:id="@+id/contest_desc"
