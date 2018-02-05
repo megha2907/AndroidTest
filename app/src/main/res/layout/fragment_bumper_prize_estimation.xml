@@ -1,0 +1,205 @@
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black"
+    tools:context="in.sportscafe.nostragamus.module.contest.ui.poolContest.PoolPrizesEstimationFragment">
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/estimate_parent_appbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/black"
+        android:fitsSystemWindows="true">
+
+        <android.support.design.widget.CollapsingToolbarLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fitsSystemWindows="true"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed">
+
+            <!-- Prize estimation layout -->
+            <LinearLayout
+                android:id="@+id/bumper_prize_estimation_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:visibility="gone"
+                app:layout_collapseMode="pin">
+
+                <!-- Text section -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/dim_16"
+                    android:layout_marginLeft="@dimen/dim_20"
+                    android:layout_marginRight="@dimen/dim_20"
+                    android:layout_marginTop="@dimen/dim_16"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <com.jeeva.android.widgets.customfont.CustomTextView
+                        android:id="@+id/estimation_msg_textView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:textColor="@color/white_dim"
+                        android:textSize="@dimen/sp_12"
+                        app:typeface="lato_regular"
+                        android:lineSpacingExtra="@dimen/dim_2"/>
+
+                </LinearLayout>
+
+                <!-- Slider layout -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <com.jeeva.android.widgets.customfont.CustomTextView
+                        android:id="@+id/estimation_slider_progress_textView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:gravity="center"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/sp_14"
+                        app:typeface="lato_bold" />
+
+                    <!-- Slider -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dim_36"
+                        android:layout_marginBottom="@dimen/dim_12"
+                        android:layout_marginLeft="@dimen/dim_12"
+                        android:layout_marginRight="@dimen/dim_12"
+                        android:layout_marginTop="@dimen/dim_14"
+                        android:background="@drawable/slider_bg"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <com.jeeva.android.widgets.customfont.CustomTextView
+                            android:id="@+id/estimation_seekbar_min_textView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/dim_16"
+                            android:gravity="center"
+                            android:textColor="@color/white_dim"
+                            android:textSize="@dimen/sp_10"
+                            app:typeface="lato_regular" />
+
+                        <SeekBar
+                            android:id="@+id/estimation_seekbar"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:paddingBottom="@dimen/dim_10"
+                            android:paddingTop="@dimen/dim_10"
+                            android:thumb="@drawable/seekbar_thumb"
+                            android:progressDrawable="@drawable/seek_bar_progress_drawable"
+                            android:theme="@style/SeekBarTheme"/>
+
+                        <com.jeeva.android.widgets.customfont.CustomTextView
+                            android:id="@+id/estimation_seekbar_max_textView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="@dimen/dim_16"
+                            android:gravity="center"
+                            android:textColor="@color/white_dim"
+                            android:textSize="@dimen/sp_10"
+                            app:typeface="lato_regular" />
+
+                    </LinearLayout>
+
+                    <!-- Slider msg -->
+                    <com.jeeva.android.widgets.customfont.CustomTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginBottom="@dimen/dim_14"
+                        android:layout_marginLeft="@dimen/dim_20"
+                        android:layout_marginRight="@dimen/dim_20"
+                        android:gravity="center"
+                        android:text="Use the slider to select number of members entering this contest and to check the prizes accordingly"
+                        android:textColor="@color/white_999999"
+                        android:textSize="@dimen/sp_11"
+                        app:typeface="lato_regular"
+                        android:lineSpacingExtra="@dimen/dim_2"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <!-- challenge started layout -->
+            <LinearLayout
+                android:id="@+id/bumper_prize_challenge_started_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/dim_20"
+                android:layout_marginLeft="@dimen/dim_20"
+                android:layout_marginRight="@dimen/dim_20"
+                android:layout_marginTop="@dimen/dim_12"
+                android:gravity="center"
+                android:orientation="vertical"
+                app:layout_collapseMode="pin">
+
+                <com.jeeva.android.widgets.customfont.CustomTextView
+                    android:id="@+id/bumper_clng_started_all_entries_filled_textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/sp_12"
+                    android:visibility="gone"
+                    app:typeface="lato_bold" />
+
+                <com.jeeva.android.widgets.customfont.CustomTextView
+                    android:id="@+id/bumper_clng_started_msg_textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textColor="@color/white_dim"
+                    android:textSize="@dimen/sp_12"
+                    app:typeface="lato_regular" />
+
+            </LinearLayout>
+
+        </android.support.design.widget.CollapsingToolbarLayout>
+
+    </android.support.design.widget.AppBarLayout>
+
+
+    <!-- estimation list recylerView -->
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/bumper_estimation_recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/estimate_parent_appbar"
+        android:clipToPadding="false"
+        android:paddingBottom="@dimen/dim_90"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+
+    <!-- Loading View -->
+    <LinearLayout
+        android:id="@+id/rewards_progress_bar_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <!--<in.sportscafe.nostragamus.module.common.NostraProgressBar
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"/>-->
+
+        <in.sportscafe.nostragamus.utils.loadingAnim.LoadingIndicatorView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:indicatorColor="@color/loading_animation_color" />
+
+    </LinearLayout>
+
+</android.support.design.widget.CoordinatorLayout>

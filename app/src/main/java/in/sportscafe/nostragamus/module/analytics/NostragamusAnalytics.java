@@ -29,6 +29,8 @@ import org.json.JSONObject;
 
 import java.math.BigDecimal;
 import java.util.Currency;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -570,8 +572,10 @@ public class NostragamusAnalytics {
                     mMoEHelper.setEmail(email);
                 }
             }
+
         }
     }
+
 
     /**
      * @param isAddMoney - if true, tracks as ADD-MONEY else WITHDRAW-MONEY

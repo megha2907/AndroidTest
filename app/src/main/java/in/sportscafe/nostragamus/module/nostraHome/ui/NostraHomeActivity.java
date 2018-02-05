@@ -20,12 +20,22 @@ import android.widget.Toast;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
 import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.jeeva.android.Log;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.lang.reflect.Type;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import in.sportscafe.nostragamus.BuildConfig;
 import in.sportscafe.nostragamus.Constants;
+import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.cache.CacheManagementHelper;
@@ -175,22 +185,22 @@ public class NostraHomeActivity extends NostraBaseActivity implements View.OnCli
     private void getServerTime() {
         new NostraHomeApiImpl().fetchServerTimeFromServer(getApplicationContext(),
                 new NostraHomeApiImpl.NostraHomeApiListener() {
-            @Override
-            public void noInternet() {
-                Log.d(TAG, "No internet for fetching ServerTime");
-            }
+                    @Override
+                    public void noInternet() {
+                        Log.d(TAG, "No internet for fetching ServerTime");
+                    }
 
-            @Override
-            public void onTimerFailure() {
-                Log.d(TAG, "ServerTimer response failed");
-            }
+                    @Override
+                    public void onTimerFailure() {
+                        Log.d(TAG, "ServerTimer response failed");
+                    }
 
-            @Override
-            public void onTimerSuccess() {
-                Log.d(TAG, "ServerTimer Response success");
-                setAlarmForInAppNotification();
-            }
-        });
+                    @Override
+                    public void onTimerSuccess() {
+                        Log.d(TAG, "ServerTimer Response success");
+                        setAlarmForInAppNotification();
+                    }
+                });
     }
 
     @Override
@@ -297,6 +307,7 @@ public class NostraHomeActivity extends NostraBaseActivity implements View.OnCli
         UserInfoModelImpl.newInstance(getUserInfoCallBackListener()).getUserInfo();
         NostragamusAnalytics.getInstance().setMoEngageUserProperties();
         NostragamusAnalytics.getInstance().setFreshChatUserProperties(getApplicationContext());
+
     }
 
     private void initViews() {
@@ -305,7 +316,7 @@ public class NostraHomeActivity extends NostraBaseActivity implements View.OnCli
         mCompletedChallengeBottomButton = (LinearLayout) findViewById(R.id.home_completed_tab_layout);
         mGroupBottomButton = (LinearLayout) findViewById(R.id.home_group_tab_layout);
         mProfileBottomButton = (LinearLayout) findViewById(R.id.home_profile_tab_layout);
-        mUnPlayedMatchCounterTextView = (TextView)findViewById(R.id.home_inPlay_matches_count);
+        mUnPlayedMatchCounterTextView = (TextView) findViewById(R.id.home_inPlay_matches_count);
 
         mNewChallengesBottomButton.setOnClickListener(this);
         mInPlayBottomButton.setOnClickListener(this);
@@ -531,6 +542,18 @@ public class NostraHomeActivity extends NostraBaseActivity implements View.OnCli
 
                     com.jeeva.android.Log.d(TAG, "[onBoard] Paid app..");
                     performOnBoardFlow(userInfo);
+
+                    /* Get Moengage details JsonObject from server and Send Key/Value to Moengage  */
+                    /*  Gson gson = new Gson();
+                    String json = gson.toJson(userInfo.getUserPaymentInfo().getBank());
+
+                    // Convert JSON string back to Map.
+                    Type type = new TypeToken<Map<String, String>>(){}.getType();
+                    Map<String, String> map = gson.fromJson(json, type);
+                    for (String key : map.keySet()) {
+                        System.out.println(key + " = " + map.get(key));
+                    } */
+
                 } else {
                     Log.d(TAG, "[onBoard] User Payment info null");
                     // Do not perform any action

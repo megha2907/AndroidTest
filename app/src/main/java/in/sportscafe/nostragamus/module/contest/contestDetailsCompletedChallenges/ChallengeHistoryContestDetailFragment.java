@@ -25,6 +25,8 @@ import in.sportscafe.nostragamus.module.challengeRewards.dto.RewardScreenData;
 import in.sportscafe.nostragamus.module.challengeRules.RulesFragment;
 import in.sportscafe.nostragamus.module.common.NostraBaseFragment;
 import in.sportscafe.nostragamus.module.contest.dto.PoolPrizeEstimationScreenData;
+import in.sportscafe.nostragamus.module.contest.dto.bumper.BumperPrizesEstimationScreenData;
+import in.sportscafe.nostragamus.module.contest.ui.bumperContest.BumperPrizesEstimationFragment;
 import in.sportscafe.nostragamus.module.contest.ui.poolContest.PoolPrizesEstimationFragment;
 import in.sportscafe.nostragamus.module.contest.ui.DetailScreensLaunchRequest;
 import in.sportscafe.nostragamus.module.user.leaderboard.LeaderBoardFragment;
@@ -172,6 +174,19 @@ public class ChallengeHistoryContestDetailFragment extends NostraBaseFragment im
             args.putParcelable(Constants.BundleKeys.POOL_PRIZE_ESTIMATION_SCREEN_DATA, Parcels.wrap(screenData));
 
             fragment = new PoolPrizesEstimationFragment();
+            fragment.setArguments(args);
+
+        }
+        else if (completedContestDto.getContestMode().equalsIgnoreCase(Constants.ContestType.BUMPER)) {
+
+            BumperPrizesEstimationScreenData screenData = new BumperPrizesEstimationScreenData();
+            screenData.setRewardScreenLauncherParent(RewardsLaunchedFrom.CHALLENGE_HISTORY_CONTEST_DETAILS);
+            screenData.setContestName(completedContestDto.getContestName());
+            screenData.setRoomId(completedContestDto.getRoomId());
+            screenData.setConfigId(-1);
+            args.putParcelable(Constants.BundleKeys.BUMPER_PRIZE_ESTIMATION_SCREEN_DATA, Parcels.wrap(screenData));
+
+            fragment = new BumperPrizesEstimationFragment();
             fragment.setArguments(args);
 
         } else {
