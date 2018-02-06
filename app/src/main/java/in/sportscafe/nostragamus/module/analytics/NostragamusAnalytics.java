@@ -431,7 +431,9 @@ public class NostragamusAnalytics {
         }
 
         JSONObject jsonObject = moeEventBuilder.build();
-        mMoEHelper.trackEvent(category, jsonObject);
+
+          /* Stopped tracking events on MoEngage
+        mMoEHelper.trackEvent(category, jsonObject); */
 
         /*try {
             if (jsonObject.has(ACTION)) {
