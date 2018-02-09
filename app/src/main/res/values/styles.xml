@@ -460,20 +460,4 @@
     </style> -->
 
 
-    <style name="ToolTipLayoutCustomStyle">
-        <item name="ttlm_padding">25dip</item>
-        <item name="ttlm_backgroundColor">#0068A4</item>
-        <item name="ttlm_cornerRadius">1dip</item>
-        <item name="ttlm_overlayStyle">@style/ToolTipOverlayCustomStyle</item>
-        <item name="android:textAppearance">?android:attr/textAppearanceInverse</item>
-        <item name="android:textSize">12sp</item>
-    </style>
-
-    <style name="ToolTipOverlayCustomStyle">
-        <item name="android:color">#66ffffff</item>
-        <item name="ttlm_repeatCount">999</item>
-        <item name="ttlm_duration">800</item>
-    </style>
-
-
 </resources>

@@ -4,50 +4,28 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.graphics.Color;
-import android.graphics.Point;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.LocalBroadcastManager;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
-import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.ScaleAnimation;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.firebase.FirebaseApp;
-import com.google.firebase.FirebaseOptions;
-import com.google.firebase.iid.FirebaseInstanceId;
 import com.jeeva.android.Log;
-import com.jeeva.android.widgets.customfont.Typefaces;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import co.mobiwise.materialintro.shape.Focus;
-import co.mobiwise.materialintro.shape.FocusGravity;
-import co.mobiwise.materialintro.shape.ShapeType;
-import co.mobiwise.materialintro.view.MaterialIntroView;
 import in.sportscafe.nostragamus.BuildConfig;
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.R;
-import in.sportscafe.nostragamus.cache.CacheManagementHelper;
 import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
 import in.sportscafe.nostragamus.module.challengeCompleted.ui.CompletedChallengeHistoryFragment;
-import in.sportscafe.nostragamus.module.common.CustomMaterialIntroView;
 import in.sportscafe.nostragamus.module.common.NostraBaseActivity;
-import in.sportscafe.nostragamus.module.inPlay.dataProvider.InPlayDataProvider;
 import in.sportscafe.nostragamus.module.inPlay.ui.InPlayFragment;
 import in.sportscafe.nostragamus.module.navigation.NavigationFragment;
 import in.sportscafe.nostragamus.module.navigation.appupdate.AppUpdateActivity;
@@ -58,13 +36,11 @@ import in.sportscafe.nostragamus.module.notifications.NostraNotification;
 import in.sportscafe.nostragamus.module.notifications.NotificationHelper;
 import in.sportscafe.nostragamus.module.notifications.inApp.InAppNotificationHelper;
 import in.sportscafe.nostragamus.module.user.group.allgroups.AllGroupsFragment;
-import in.sportscafe.nostragamus.module.user.login.LogInActivity;
 import in.sportscafe.nostragamus.module.user.login.UserInfoModelImpl;
 import in.sportscafe.nostragamus.module.user.login.dto.UserInfo;
 import in.sportscafe.nostragamus.module.user.myprofile.edit.EditProfileActivity;
 import in.sportscafe.nostragamus.module.user.myprofile.verify.VerifyProfileActivity;
 import in.sportscafe.nostragamus.utils.FragmentHelper;
-import it.sephiroth.android.library.tooltip.Tooltip;
 
 public class NostraHomeActivity extends NostraBaseActivity implements View.OnClickListener, NostraHomeActivityListener {
 
@@ -347,7 +323,6 @@ public class NostraHomeActivity extends NostraBaseActivity implements View.OnCli
                 break;
 
             case R.id.home_inPlay_tab_layout:
-                showIntro(mInPlayBottomButton, INTRO_CARD, "Play all games in a challenge, to have the best chance of winning money!");
                 onInPlayClicked(getIntent().getExtras());
                 break;
 
@@ -433,37 +408,6 @@ public class NostraHomeActivity extends NostraBaseActivity implements View.OnCli
         setNewChallengesSelected();
         loadNewChallengeFragment(args);
         NostragamusAnalytics.getInstance().trackScreenShown(Constants.AnalyticsCategory.HOME_SCREEN, Constants.AnalyticsClickLabels.NEW_CHALLENGES);
-    }
-
-    private void showIntro(View view, String usageId, String text){
-        new MaterialIntroView.Builder(this)
-                .enableDotAnimation(false)
-                .enableIcon(false)
-                .setFocusGravity(FocusGravity.CENTER)
-                .setFocusType(Focus.MINIMUM)
-                .setDelayMillis(200)
-                .enableFadeAnimation(true)
-                .performClick(false)
-                .setInfoText(text)
-                .setInfoTextTitle("These are Joined Challenges!")
-                .setTarget(view)
-                .setTargetPadding(15)
-                .setShape(ShapeType.CIRCLE)
-                .setUsageId("17")
-                .show();
-
-//        Typeface latoRegular = Typefaces.get(getApplicationContext(), "fonts/lato/Lato-Regular.ttf");
-//        Tooltip.make(this,
-//                new Tooltip.Builder(101)
-//                        .withStyleId(R.style.ToolTipLayoutCustomStyle)
-//                        .anchor(view, Tooltip.Gravity.BOTTOM)
-//                        .activateDelay(900)
-//                        .showDelay(400)
-//                        .text(text)
-//                        .withArrow(true)
-//                        .typeface(latoRegular)
-//                        .withOverlay(true).build()
-//        ).show();
     }
 
     private void loadNavigationFragment(Bundle args) {
