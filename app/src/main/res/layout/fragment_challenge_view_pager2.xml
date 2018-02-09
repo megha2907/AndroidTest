@@ -7,7 +7,7 @@
     android:orientation="vertical"
     tools:context="in.sportscafe.nostragamus.module.newChallenges.ui.viewPager.NewChallengesViewPagerFragment">
 
-    <android.support.v4.widget.NestedScrollView
+    <in.sportscafe.nostragamus.module.common.NostraNestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fillViewport="false"
@@ -61,6 +61,6 @@
 
         </LinearLayout>
 
-    </android.support.v4.widget.NestedScrollView>
+    </in.sportscafe.nostragamus.module.common.NostraNestedScrollView>
 
 </android.support.design.widget.CoordinatorLayout>

@@ -203,6 +203,7 @@ public class ContestViewPagerFragment extends NostraBaseFragment {
         };
     }
 
+
     private void goToReferAFriendScreen() {
         Intent intent = new Intent(getActivity(), ReferFriendActivity.class);
         getActivity().startActivity(intent);

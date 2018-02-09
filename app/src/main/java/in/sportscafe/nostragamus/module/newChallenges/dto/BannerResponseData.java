@@ -2,12 +2,15 @@ package in.sportscafe.nostragamus.module.newChallenges.dto;
 
 import com.google.gson.annotations.SerializedName;
 
+import org.parceler.Parcel;
+
+import in.sportscafe.nostragamus.module.notifications.NostraNotification;
 import in.sportscafe.nostragamus.module.notifications.NostraNotificationData;
 
 /**
  * Created by deepanshi on 2/1/18.
  */
-
+@Parcel
 public class BannerResponseData {
 
     @SerializedName("id")
@@ -29,13 +32,7 @@ public class BannerResponseData {
     private int priority;
 
     @SerializedName("info")
-    private BannerInfo bannerInfo;
-
-    @SerializedName("screenName")
-    private String screenName;
-
-    @SerializedName("screenData")
-    private NostraNotificationData data;
+    private NostraNotification nostraBannerInfo;
 
     public int getBannerId() {
         return bannerId;
@@ -85,27 +82,12 @@ public class BannerResponseData {
         this.priority = priority;
     }
 
-    public BannerInfo getBannerInfo() {
-        return bannerInfo;
+    public NostraNotification getNostraBannerInfo() {
+        return nostraBannerInfo;
     }
 
-    public void setBannerInfo(BannerInfo bannerInfo) {
-        this.bannerInfo = bannerInfo;
-    }
-
-    public String getScreenName() {
-        return screenName;
-    }
-    public void setScreenName(String screenName) {
-        this.screenName = screenName;
-    }
-
-    public NostraNotificationData getData() {
-        return data;
-    }
-
-    public void setData(NostraNotificationData data) {
-        this.data = data;
+    public void setNostraBannerInfo(NostraNotification nostraBannerInfo) {
+        this.nostraBannerInfo = nostraBannerInfo;
     }
 
 

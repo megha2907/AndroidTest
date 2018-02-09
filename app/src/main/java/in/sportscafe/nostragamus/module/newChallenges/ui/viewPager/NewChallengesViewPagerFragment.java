@@ -11,6 +11,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -26,14 +27,23 @@ import com.jeeva.android.BaseFragment;
 import com.jeeva.android.Log;
 import com.jeeva.android.widgets.recyclerviewpager.RecyclerViewPager;
 
+import org.parceler.Parcels;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Nostragamus;
+import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.R;
+import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
+import in.sportscafe.nostragamus.module.contest.adapter.ContestAdapterListener;
+import in.sportscafe.nostragamus.module.contest.dto.Contest;
+import in.sportscafe.nostragamus.module.contest.dto.JoinContestData;
+import in.sportscafe.nostragamus.module.contest.ui.DetailScreensLaunchRequest;
 import in.sportscafe.nostragamus.module.customViews.CustomSnackBar;
+import in.sportscafe.nostragamus.module.newChallenges.adapter.BannerAdapterListener;
 import in.sportscafe.nostragamus.module.newChallenges.adapter.BannerRecyclerAdapter;
 import in.sportscafe.nostragamus.module.newChallenges.adapter.NewChallengeAdapterListener;
 import in.sportscafe.nostragamus.module.newChallenges.adapter.NewChallengesRecyclerAdapter;
@@ -43,6 +53,10 @@ import in.sportscafe.nostragamus.module.newChallenges.dto.BannerResponseData;
 import in.sportscafe.nostragamus.module.newChallenges.dto.NewChallengesResponse;
 import in.sportscafe.nostragamus.module.newChallenges.dto.SportsTab;
 import in.sportscafe.nostragamus.module.newChallenges.ui.matches.NewChallengesMatchActivity;
+import in.sportscafe.nostragamus.module.nostraHome.ui.NostraHomeActivityListener;
+import in.sportscafe.nostragamus.module.notifications.NostraNotification;
+import in.sportscafe.nostragamus.module.notifications.NotificationHelper;
+import in.sportscafe.nostragamus.webservice.BannerResponse;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -50,6 +64,8 @@ import in.sportscafe.nostragamus.module.newChallenges.ui.matches.NewChallengesMa
 public class NewChallengesViewPagerFragment extends BaseFragment implements View.OnClickListener {
 
     private static final String TAG = NewChallengesViewPagerFragment.class.getSimpleName();
+
+    private NostraHomeActivityListener mFragmentListener;
 
     private RecyclerView mRecyclerView;
     private SportsTab mSportsTab;
@@ -60,6 +76,13 @@ public class NewChallengesViewPagerFragment extends BaseFragment implements View
     public NewChallengesViewPagerFragment() {
     }
 
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof NostraHomeActivityListener) {
+            mFragmentListener = (NostraHomeActivityListener) context;
+        }
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -141,7 +164,8 @@ public class NewChallengesViewPagerFragment extends BaseFragment implements View
             RecyclerView mRcvHorizontal = (RecyclerView) getView().findViewById(R.id.challenges_rcv_horizontal);
             mRcvHorizontal.setVisibility(View.VISIBLE);
             mRcvHorizontal.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
-            bannerRecyclerAdapter = new BannerRecyclerAdapter(bannerResponseDataList, getContext());
+            mRcvHorizontal.setNestedScrollingEnabled(false);
+            bannerRecyclerAdapter = new BannerRecyclerAdapter(bannerResponseDataList, getContext(), getBannerAdapterListener());
             mRcvHorizontal.setAdapter(bannerRecyclerAdapter);
         } else {
             hideBanners();
@@ -164,6 +188,125 @@ public class NewChallengesViewPagerFragment extends BaseFragment implements View
         if (getView() != null) {
             LinearLayout horizontalLayout = (LinearLayout) getView().findViewById(R.id.challenges_ads_layout);
             horizontalLayout.setVisibility(View.GONE);
+        }
+    }
+
+
+    private BannerAdapterListener getBannerAdapterListener() {
+        return new BannerAdapterListener() {
+
+            @Override
+            public void handleBannerOnClick(Bundle args) {
+                goToDifferentScreens(args);
+            }
+        };
+    }
+
+    private void goToDifferentScreens(Bundle args) {
+
+        if (args != null) {
+
+            /* Received BannerData when banner is clicked */
+            if (args.containsKey(Constants.BundleKeys.BANNER)) {
+                final BannerResponseData bannerResponseData = Parcels.unwrap(args.getParcelable(Constants.BundleKeys.BANNER));
+
+                NotificationHelper notificationHelper = new NotificationHelper();
+                NostraNotification notification = bannerResponseData.getNostraBannerInfo();
+
+                if (notification != null && !TextUtils.isEmpty(notification.getScreenName())) {
+                    if (NostragamusDataHandler.getInstance().isLoggedInUser()) {
+                        String screenName = notification.getScreenName();
+                        Log.d("Notification", "ScreenName : " + screenName);
+
+                        if (screenName.equalsIgnoreCase(Constants.Notifications.SCREEN_NEW_CHALLENGE)) {
+                            Bundle bundle = new Bundle();
+                            if (notification != null) {
+                                bundle.putBoolean(Constants.Notifications.IS_LAUNCHED_FROM_NOTIFICATION, true);
+                                bundle.putParcelable(Constants.Notifications.NOSTRA_NOTIFICATION, Parcels.wrap(notification));
+                            }
+                            onNewChallengesClicked(bundle);
+
+                        } else if (screenName.equalsIgnoreCase(Constants.Notifications.SCREEN_NEW_CHALLENGE_SPORT)) {
+                            Bundle bundle = new Bundle();
+                            if (notification != null) {
+                                bundle.putBoolean(Constants.Notifications.IS_LAUNCHED_FROM_NOTIFICATION, true);
+                                bundle.putParcelable(Constants.Notifications.NOSTRA_NOTIFICATION, Parcels.wrap(notification));
+                            }
+                            onNewChallengesClicked(bundle);
+
+                        } else if (screenName.equalsIgnoreCase(Constants.Notifications.SCREEN_NEW_CHALLENGES_GAMES)) {
+                            startActivity(notificationHelper.getNewChallengeMatchesScreenIntent(getContext(), notification));
+
+                        } else if (screenName.equalsIgnoreCase(Constants.Notifications.SCREEN_IN_PLAY_MATCHES)) {
+                            Bundle bundle = new Bundle();
+                            if (notification != null) {
+                                bundle.putBoolean(Constants.Notifications.IS_LAUNCHED_FROM_NOTIFICATION, true);
+                                bundle.putParcelable(Constants.Notifications.NOSTRA_NOTIFICATION, Parcels.wrap(notification));
+                            }
+                            onInPlayClicked(bundle);
+
+                        } else if (screenName.equalsIgnoreCase(Constants.Notifications.SCREEN_RESULTS)) {
+                            startActivity(notificationHelper.getResultsScreenIntent(getContext(), notification));
+
+                        } else if (screenName.equalsIgnoreCase(Constants.Notifications.SCREEN_CHALLENGE_HISTORY_WINNINGS)) {
+                            startActivity(notificationHelper.getChallengeHistoryWinningsScreenIntent(getContext(), notification));
+
+                        } else if (screenName.equalsIgnoreCase(Constants.Notifications.SCREEN_REFER_FRIEND)) {
+                            startActivity(notificationHelper.getReferFriendScreenIntent(getContext(), notification));
+
+                        } else if (screenName.equalsIgnoreCase(Constants.Notifications.SCREEN_REFERRAL_CREDITS)) {
+                            startActivity(notificationHelper.getReferralCreditsScreenIntent(getContext(), notification));
+
+                        } else if (screenName.equalsIgnoreCase(Constants.Notifications.SCREEN_STORE)) {
+                            startActivity(notificationHelper.getStoreScreenIntent(getContext(), notification));
+
+                        } else if (screenName.equalsIgnoreCase(Constants.Notifications.SCREEN_APP_UPDATE)) {
+                            startActivity(notificationHelper.getAppUpdateScreenIntent(getContext(), notification));
+
+                        } else if (screenName.equalsIgnoreCase(Constants.Notifications.SCREEN_WALLET_HISTORY)) {
+                            startActivity(notificationHelper.getWalletHistoryScreenIntent(getContext(), notification));
+
+                        } else if (screenName.equalsIgnoreCase(Constants.Notifications.SCREEN_WALLET_ADD_MONEY)) {
+                            startActivity(notificationHelper.getAddWalletMoneyScreenIntent(getContext(), notification));
+
+                        } else if (screenName.equalsIgnoreCase(Constants.Notifications.SCREEN_CHALLENGE_HISTORY)) {
+                            Bundle bundle = new Bundle();
+                            if (notification != null) {
+                                bundle.putBoolean(Constants.Notifications.IS_LAUNCHED_FROM_NOTIFICATION, true);
+                                bundle.putParcelable(Constants.Notifications.NOSTRA_NOTIFICATION, Parcels.wrap(notification));
+                            }
+                            onHistoryClicked(bundle);
+
+                        } else if (screenName.equalsIgnoreCase(Constants.Notifications.SCREEN_CHALLENGE_HISTORY_GAMES)) {
+                            startActivity(notificationHelper.getChallengeHistoryMatchesScreenIntent(getContext(), notification));
+
+                        } else if (screenName.equalsIgnoreCase(Constants.Notifications.SCREEN_WEB_VIEW)) {
+                            startActivity(notificationHelper.getWebViewScreenIntent(getContext(), notification));
+                        }
+
+                    }
+                }
+            } else {
+                Log.d("Notification", "User Logged out, can not launch Home!");
+            }
+        }
+    }
+
+    private void onNewChallengesClicked(Bundle args) {
+        if (mFragmentListener != null) {
+            mFragmentListener.showNewChallenges(args);
+        }
+    }
+
+    private void onInPlayClicked(Bundle args) {
+        if (mFragmentListener != null) {
+            mFragmentListener.showNewChallenges(args);
+        }
+    }
+
+    private void onHistoryClicked(Bundle args) {
+        if (mFragmentListener != null) {
+            mFragmentListener.showNewChallenges(args);
         }
     }
 

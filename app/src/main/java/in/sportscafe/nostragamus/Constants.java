@@ -350,6 +350,7 @@ public interface Constants {
         String REWARDS_SCREEN_DATA = "rewardsScreenData";
         String EDIT_ANSWER_SCREEN_DATA = "editAnswerScreenData";
         String COPY_ANSWER_POWERUP_COPIED = "copyAnswerPowerupCopied";
+        String BANNER = "banner";
 
         /* Wallet */
         String WALLET_WITHDRAWAL_AMT = "walletWithdrawAmt";
