@@ -232,7 +232,10 @@ public class ContestRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                     } else if (contestMode.equalsIgnoreCase(Constants.ContestType.POOL)) {
                         viewHolder.mIvContestsType.setImageResource(R.drawable.pool_icon);
                         viewHolder.mTvPrizeLable.setText(PRIZES_UPTO_STR);
-                    } else if (contestMode.equalsIgnoreCase(Constants.ContestType.NON_GUARANTEED)) {
+                    }else if (contestMode.equalsIgnoreCase(Constants.ContestType.BUMPER)) {
+                        viewHolder.mIvContestsType.setImageResource(R.drawable.pool_icon);
+                        viewHolder.mTvPrizeLable.setText(PRIZES_UPTO_STR);
+                    }  else if (contestMode.equalsIgnoreCase(Constants.ContestType.NON_GUARANTEED)) {
                         viewHolder.mIvContestsType.setImageResource(R.drawable.no_guarantee_icon);
                     }
                 }
@@ -281,7 +284,10 @@ public class ContestRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                     } else if (contestMode.equalsIgnoreCase(Constants.ContestType.POOL)) {
                         viewHolder.mIvContestsType.setImageResource(R.drawable.pool_icon);
                         viewHolder.mTvPrizeLable.setText(PRIZES_UPTO_STR);
-                    } else if (contestMode.equalsIgnoreCase(Constants.ContestType.NON_GUARANTEED)) {
+                    }else if (contestMode.equalsIgnoreCase(Constants.ContestType.BUMPER)) {
+                        viewHolder.mIvContestsType.setImageResource(R.drawable.pool_icon);
+                        viewHolder.mTvPrizeLable.setText(PRIZES_UPTO_STR);
+                    }  else if (contestMode.equalsIgnoreCase(Constants.ContestType.NON_GUARANTEED)) {
                         viewHolder.mIvContestsType.setImageResource(R.drawable.no_guarantee_icon);
                     }
                 }

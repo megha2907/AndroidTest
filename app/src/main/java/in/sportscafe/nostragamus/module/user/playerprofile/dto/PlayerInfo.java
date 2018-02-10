@@ -142,6 +142,9 @@ public class PlayerInfo extends BasicUserInfo {
 
     @SerializedName("count_predictions")
     public Integer getPredictionCount() {
+        if(null == predictionCount) {
+            predictionCount = 0;
+        }
         return predictionCount;
     }
 
@@ -152,6 +155,9 @@ public class PlayerInfo extends BasicUserInfo {
 
     @SerializedName("accuracy")
     public Integer getAccuracy() {
+        if(null == accuracy) {
+            accuracy = 0;
+        }
         return accuracy;
     }
 

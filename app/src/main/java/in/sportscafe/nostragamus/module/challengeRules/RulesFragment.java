@@ -94,7 +94,7 @@ public class RulesFragment extends NostraBaseFragment implements RulesApiModelIm
 
     @Override
     public void onData(Rules rules) {
-        if (getView()!=null) {
+        if (getView() != null) {
             getView().findViewById(R.id.contest_rules_layout).setVisibility(View.VISIBLE);
             setInfo(rules);
         }
@@ -138,12 +138,12 @@ public class RulesFragment extends NostraBaseFragment implements RulesApiModelIm
 
         if (tournamentsList != null && tournamentsList.size() > 0) {
 
-            if (tournamentsList.size() < 2){
-                TvContestRuleOne.setText("This challenge has "+String.valueOf(rules.getTotalMatches()) +" games in "
-                        + tournamentsList.size()+" tournament - "+ tournamentsList.toString().replaceAll("[\\[\\](){}]", ""));
-            }else {
-                TvContestRuleOne.setText("This challenge has "+String.valueOf(rules.getTotalMatches()) +" games in "
-                        + tournamentsList.size()+" tournaments - "+ tournamentsList.toString().replaceAll("[\\[\\](){}]", ""));
+            if (tournamentsList.size() < 2) {
+                TvContestRuleOne.setText("This challenge has " + String.valueOf(rules.getTotalMatches()) + " games in "
+                        + tournamentsList.size() + " tournament - " + tournamentsList.toString().replaceAll("[\\[\\](){}]", ""));
+            } else {
+                TvContestRuleOne.setText("This challenge has " + String.valueOf(rules.getTotalMatches()) + " games in "
+                        + tournamentsList.size() + " tournaments - " + tournamentsList.toString().replaceAll("[\\[\\](){}]", ""));
             }
 
         } else {
@@ -172,12 +172,19 @@ public class RulesFragment extends NostraBaseFragment implements RulesApiModelIm
                     IvContestRuleThree.setBackgroundResource(R.drawable.guaranteed_icon);
                 } else if (modeName.equalsIgnoreCase(Constants.ContestType.POOL)) {
                     IvContestRuleThree.setBackgroundResource(R.drawable.pool_icon);
+                } else if (modeName.equalsIgnoreCase(Constants.ContestType.BUMPER)) {
+                    IvContestRuleThree.setBackgroundResource(R.drawable.pool_icon);
                 } else if (modeName.equalsIgnoreCase(Constants.ContestType.NON_GUARANTEED)) {
                     IvContestRuleThree.setBackgroundResource(R.drawable.no_guarantee_icon);
                 }
 
                 if (rules.getContestModeInfo().getDescription() != null) {
-                    TvContestTypeHeading.setText(AppSnippet.capitalize(rules.getContestModeInfo().getModeId()));
+                    /* Set Pool as Mode Name for Bumper Contest */
+                    if (modeName.equalsIgnoreCase(Constants.ContestType.BUMPER)) {
+                        TvContestTypeHeading.setText("Pool");
+                    } else {
+                        TvContestTypeHeading.setText(AppSnippet.capitalize(rules.getContestModeInfo().getModeId()));
+                    }
                     TvContestTypeMsg.setText(rules.getContestModeInfo().getDescription());
                 }
             }
@@ -204,14 +211,14 @@ public class RulesFragment extends NostraBaseFragment implements RulesApiModelIm
         powerUpNonNegsCount = powerUpInfo.getPowerUpNoNeg();
         powerUpPlayerPollCount = powerUpInfo.getPowerUpPlayerPoll();
 
-        LinearLayout powerUpLayout = (LinearLayout)rootView.findViewById(R.id.powerup_ll);
-        ImageView powerUp2xImageView = (ImageView)rootView. findViewById(R.id.powerup_2x);
-        ImageView powerUpNoNegativeImageView = (ImageView)rootView. findViewById(R.id.powerup_noNeg);
-        ImageView powerUpAudienceImageView = (ImageView)rootView. findViewById(R.id.powerup_audience);
+        LinearLayout powerUpLayout = (LinearLayout) rootView.findViewById(R.id.powerup_ll);
+        ImageView powerUp2xImageView = (ImageView) rootView.findViewById(R.id.powerup_2x);
+        ImageView powerUpNoNegativeImageView = (ImageView) rootView.findViewById(R.id.powerup_noNeg);
+        ImageView powerUpAudienceImageView = (ImageView) rootView.findViewById(R.id.powerup_audience);
 
-        TextView powerUp2xTextView = (TextView)rootView. findViewById(R.id.powerup_2x_count);
-        TextView powerUpNoNegativeTextView = (TextView)rootView.findViewById(R.id.powerup_noNeg_count);
-        TextView powerUpAudienceTextView = (TextView)rootView. findViewById(R.id.powerup_audience_count);
+        TextView powerUp2xTextView = (TextView) rootView.findViewById(R.id.powerup_2x_count);
+        TextView powerUpNoNegativeTextView = (TextView) rootView.findViewById(R.id.powerup_noNeg_count);
+        TextView powerUpAudienceTextView = (TextView) rootView.findViewById(R.id.powerup_audience_count);
 
 
         if (powerUp2xCount == 0 && powerUpNonNegsCount == 0 && powerUpPlayerPollCount == 0) {
