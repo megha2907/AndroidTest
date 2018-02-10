@@ -3,5 +3,5 @@
     android:shape="rectangle">
     <stroke
         android:color="@color/edit_answer_chosen_option_border"
-        android:width="@dimen/dim_3"/>
+        android:width="@dimen/dim_4"/>
 </shape>
