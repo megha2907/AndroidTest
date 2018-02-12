@@ -414,8 +414,8 @@ public class BumperPrizesEstimationFragment extends BaseFragment implements View
 
     private int getMaxParticipants() {
         int max = 0;
-        if (mRewardsApiResponse != null && mRewardsApiResponse.getBumperContestResponse() != null) {
-            max = mRewardsApiResponse.getBumperContestResponse().getMaxParticipants();
+        if (mRewardsApiResponse != null) {
+            max = mRewardsApiResponse.getMaxParticipants();
         }
         return max;
     }

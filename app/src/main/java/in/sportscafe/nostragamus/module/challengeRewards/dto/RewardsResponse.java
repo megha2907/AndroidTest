@@ -30,6 +30,9 @@ public class RewardsResponse {
     @SerializedName("users_joined")
     private int usersJoined;
 
+    @SerializedName("max_participants")
+    private int maxParticipants;
+
     @SerializedName("rewards")
     private List<Rewards> rewardsList = new ArrayList<>();
 
@@ -93,5 +96,13 @@ public class RewardsResponse {
 
     public void setUsersJoined(int usersJoined) {
         this.usersJoined = usersJoined;
+    }
+
+    public int getMaxParticipants() {
+        return maxParticipants;
+    }
+
+    public void setMaxParticipants(int maxParticipants) {
+        this.maxParticipants = maxParticipants;
     }
 }
