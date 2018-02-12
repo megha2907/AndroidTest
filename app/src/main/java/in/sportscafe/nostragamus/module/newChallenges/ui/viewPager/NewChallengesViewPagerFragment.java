@@ -22,7 +22,7 @@ import android.widget.Toast;
 
 import com.jeeva.android.BaseFragment;
 import com.jeeva.android.Log;
-import com.jeeva.android.widgets.recyclerviewpager.RecyclerViewPager;
+
 
 import org.parceler.Parcels;
 
@@ -58,7 +58,7 @@ import in.sportscafe.nostragamus.webservice.BannerResponse;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class NewChallengesViewPagerFragment extends BaseFragment implements View.OnClickListener {
+public class NewChallengesViewPagerFragment extends BaseFragment {
 
     private static final String TAG = NewChallengesViewPagerFragment.class.getSimpleName();
 
@@ -95,7 +95,6 @@ public class NewChallengesViewPagerFragment extends BaseFragment implements View
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setNestedScrollingEnabled(false);
     }
-
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
@@ -356,17 +355,6 @@ public class NewChallengesViewPagerFragment extends BaseFragment implements View
                     CustomSnackBar.make(getView(), Constants.Alerts.SOMETHING_WRONG, CustomSnackBar.DURATION_LONG).show();
                     break;
             }
-        }
-    }
-
-    @Override
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.challenges_ads_webView:
-                Log.d(TAG, "Webview Ad clicked");
-                break;
-
-
         }
     }
 

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
@@ -39,7 +40,10 @@ import in.sportscafe.nostragamus.module.customViews.CustomSnackBar;
 import in.sportscafe.nostragamus.module.navigation.referfriends.ReferFriendActivity;
 import in.sportscafe.nostragamus.module.navigation.referfriends.ReferFriendFragmentListener;
 import in.sportscafe.nostragamus.module.navigation.wallet.WalletHelper;
+import in.sportscafe.nostragamus.module.newChallenges.helpers.DateTimeHelper;
+import in.sportscafe.nostragamus.module.newChallenges.ui.matches.NewChallengesMatchesFragment;
 import in.sportscafe.nostragamus.module.nostraHome.helper.TimerHelper;
+import in.sportscafe.nostragamus.module.popups.timerPopup.TimerFinishDialogHelper;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -258,10 +262,36 @@ public class ContestFragment extends NostraBaseFragment implements View.OnClickL
 
                 @Override
                 public void onFinish() {
-
+                    onChallengeStarted();
                 }
             };
             countDownTimer.start();
+        }
+    }
+
+    private void onChallengeStarted() {
+        if (mContestScreenData != null && !TextUtils.isEmpty(mContestScreenData.getChallengeStartTime())) {
+            boolean isMatchStarted = DateTimeHelper.isMatchStarted(mContestScreenData.getChallengeStartTime());
+            if (isMatchStarted) {
+
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (ContestFragment.this.isVisible()) {
+                            String msg = String.format(Constants.Alerts.CHALLENGE_STARTED_ALERT_FOR_TIMER, mContestScreenData.getChallengeName());
+
+                            TimerFinishDialogHelper.showChallengeStartedTimerOutDialog(getChildFragmentManager(), msg, new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    if (mContestsFragmentListener != null) {
+                                        mContestsFragmentListener.onBackClicked();
+                                    }
+                                }
+                            });
+                        }
+                    }
+                }, 500);
+            }
         }
     }
 

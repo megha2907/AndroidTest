@@ -7,6 +7,7 @@ import org.parceler.Parcel;
 import java.util.ArrayList;
 import java.util.List;
 
+import in.sportscafe.nostragamus.module.contest.dto.bumper.BumperContestResponse;
 import in.sportscafe.nostragamus.module.contest.dto.pool.PoolContestResponse;
 
 
@@ -26,11 +27,20 @@ public class RewardsResponse {
     @SerializedName("challengeStartTime")
     private String challengeStartTime;
 
+    @SerializedName("users_joined")
+    private int usersJoined;
+
+    @SerializedName("max_participants")
+    private int maxParticipants;
+
     @SerializedName("rewards")
     private List<Rewards> rewardsList = new ArrayList<>();
 
     @SerializedName("pool")
     private PoolContestResponse poolContestResponse;
+
+    @SerializedName("bumper")
+    private BumperContestResponse bumperContestResponse;
 
     public String getChallengeEndTime() {
         return challengeEndTime;
@@ -70,5 +80,29 @@ public class RewardsResponse {
 
     public void setPoolContestResponse(PoolContestResponse poolContestResponse) {
         this.poolContestResponse = poolContestResponse;
+    }
+
+    public BumperContestResponse getBumperContestResponse() {
+        return bumperContestResponse;
+    }
+
+    public void setBumperContestResponse(BumperContestResponse bumperContestResponse) {
+        this.bumperContestResponse = bumperContestResponse;
+    }
+
+    public int getUsersJoined() {
+        return usersJoined;
+    }
+
+    public void setUsersJoined(int usersJoined) {
+        this.usersJoined = usersJoined;
+    }
+
+    public int getMaxParticipants() {
+        return maxParticipants;
+    }
+
+    public void setMaxParticipants(int maxParticipants) {
+        this.maxParticipants = maxParticipants;
     }
 }

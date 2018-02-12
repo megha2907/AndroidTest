@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -33,6 +34,7 @@ import in.sportscafe.nostragamus.module.contest.ui.ContestsActivity;
 import in.sportscafe.nostragamus.module.customViews.CustomSnackBar;
 import in.sportscafe.nostragamus.module.inPlay.adapter.MatchesAdapterAction;
 import in.sportscafe.nostragamus.module.inPlay.dto.InPlayMatch;
+import in.sportscafe.nostragamus.module.inPlay.ui.headless.matches.InPlayHeadLessMatchesFragment;
 import in.sportscafe.nostragamus.module.navigation.help.dummygame.DummyGameActivity;
 import in.sportscafe.nostragamus.module.navigation.wallet.WalletHelper;
 import in.sportscafe.nostragamus.module.newChallenges.adapter.NewChallengeMatchAdapterListener;
@@ -128,15 +130,29 @@ public class NewChallengesMatchesFragment extends BaseFragment implements View.O
     }
 
     private void onMatchStarted() {
-        String msg = String.format(Constants.Alerts.CHALLENGE_STARTED_ALERT_FOR_TIMER, mScreenData.getChallengeName());
-        AlertsHelper.showAlert(getContext(), "Challenge Started!", msg, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                if (mNewChallengeMatchFragmentListener != null) {
-                    mNewChallengeMatchFragmentListener.onBackClicked();
-                }
+        if (mScreenData != null && !TextUtils.isEmpty(mScreenData.getStartTime())) {
+            boolean isMatchStarted = DateTimeHelper.isMatchStarted(mScreenData.getStartTime());
+            if (isMatchStarted) {
+
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (NewChallengesMatchesFragment.this.isVisible()) {
+                            String msg = String.format(Constants.Alerts.CHALLENGE_STARTED_ALERT_FOR_TIMER, mScreenData.getChallengeName());
+
+                            TimerFinishDialogHelper.showChallengeStartedTimerOutDialog(getChildFragmentManager(), msg, new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    if (mNewChallengeMatchFragmentListener != null) {
+                                        mNewChallengeMatchFragmentListener.onBackClicked();
+                                    }
+                                }
+                            });
+                        }
+                    }
+                }, 500);
             }
-        });
+        }
     }
 
     @NonNull

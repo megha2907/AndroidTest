@@ -32,6 +32,7 @@ import org.json.JSONObject;
 
 import java.math.BigDecimal;
 import java.util.Currency;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -432,7 +433,9 @@ public class NostragamusAnalytics {
         }
 
         JSONObject jsonObject = moeEventBuilder.build();
-        mMoEHelper.trackEvent(category, jsonObject);
+
+          /* Stopped tracking events on MoEngage
+        mMoEHelper.trackEvent(category, jsonObject); */
 
         /*try {
             if (jsonObject.has(ACTION)) {
@@ -588,6 +591,7 @@ public class NostragamusAnalytics {
 
         }
     }
+
 
     /**
      * @param isAddMoney - if true, tracks as ADD-MONEY else WITHDRAW-MONEY

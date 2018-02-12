@@ -390,16 +390,6 @@ public abstract class WalletHistoryAdapter extends RecyclerView.Adapter<WalletHi
                     if (mContext != null) {
                         WalletHistoryTransaction walletHistoryTransaction = mTransactionList.get(getAdapterPosition());
                         if (walletHistoryTransaction != null) {
-                           /* Intent intent = new Intent(mContext, SubmitReportPopupActivity.class);
-                            intent.putExtra(Constants.BundleKeys.REPORT_TYPE, "wallet");
-                            intent.putExtra(Constants.BundleKeys.REPORT_ID, walletHistoryTransaction.getOrderId().toString());
-                            intent.putExtra(Constants.BundleKeys.REPORT_HEADING, "Report Transactions");
-                            intent.putExtra(Constants.BundleKeys.REPORT_TITLE, "Transaction Id");
-                            intent.putExtra(Constants.BundleKeys.REPORT_DESC, walletHistoryTransaction.getOrderId());
-                            intent.putExtra(Constants.BundleKeys.REPORT_THANKYOU_TEXT, "You can let us know about any issues with your " +
-                                    "transactions. We will review them and make the necessary changes!");
-                            mContext.startActivity(intent);*/
-
                             openWalletQueryChatBox(walletHistoryTransaction);
                         }
                     }
@@ -412,9 +402,16 @@ public abstract class WalletHistoryAdapter extends RecyclerView.Adapter<WalletHi
             UserInfo userInfo = Nostragamus.getInstance().getServerDataManager().getUserInfo();
             FreshchatUser user = Freshchat.getInstance(mContext).getUser();
             if (userInfo != null && user != null) {
-                Freshchat.resetUser(mContext);
-                user.setFirstName(userInfo.getUserName())
-                        .setEmail(userInfo.getEmail());
+
+                if (!TextUtils.isEmpty(userInfo.getOtpMobileNumber())) {
+                    user.setFirstName(userInfo.getUserName())
+                            .setEmail(userInfo.getEmail())
+                            .setPhone("+91 ", userInfo.getOtpMobileNumber());
+                } else {
+                    user.setFirstName(userInfo.getUserName())
+                            .setEmail(userInfo.getEmail());
+                }
+
                 Freshchat.getInstance(mContext).setUser(user);
 
             /* Set any custom metadata to give agents more context,
@@ -427,6 +424,10 @@ public abstract class WalletHistoryAdapter extends RecyclerView.Adapter<WalletHi
                 userMeta.put("Challenge Id", "");
                 userMeta.put("MatchId", "");
                 userMeta.put("RoomId", "");
+
+                if (userInfo.getUserPaymentInfo() != null && userInfo.getUserPaymentInfo().getPaytm() != null) {
+                    userMeta.put("PayTm Mobile Number", userInfo.getUserPaymentInfo().getPaytm().getMobile());
+                }
 
                 //Call setUserProperties to sync the user properties with Freshchat's servers
                 Freshchat.getInstance(mContext).setUserProperties(userMeta);
