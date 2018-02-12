@@ -14,11 +14,8 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.WebSettings;
-import android.webkit.WebView;
 
 import com.jeeva.android.BaseFragment;
-import com.jeeva.android.Log;
 
 import java.util.List;
 
@@ -36,7 +33,7 @@ import in.sportscafe.nostragamus.module.newChallenges.ui.matches.NewChallengesMa
 /**
  * A simple {@link Fragment} subclass.
  */
-public class NewChallengesViewPagerFragment extends BaseFragment implements View.OnClickListener {
+public class NewChallengesViewPagerFragment extends BaseFragment {
 
     private static final String TAG = NewChallengesViewPagerFragment.class.getSimpleName();
 
@@ -55,31 +52,10 @@ public class NewChallengesViewPagerFragment extends BaseFragment implements View
     }
 
     private void initRootView(View rootView) {
-        //setupAdsWebView(rootView);
 
         mRecyclerView = (RecyclerView) rootView.findViewById(R.id.challenge_recycler);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(mRecyclerView.getContext(), LinearLayoutManager.VERTICAL, false));
         mRecyclerView.setHasFixedSize(true);
-    }
-
-    private void setupAdsWebView(View rootView) {
-        WebView webView = (WebView) rootView.findViewById(R.id.challenges_ads_webView);
-        webView.setScrollContainer(false);
-        webView.setBackgroundColor(Color.TRANSPARENT);
-        webView.loadUrl("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSk8hJHZFdKq92roKH4oDSiVBe_-nJxCTUjzYbEy06aPRXopmkP");
-        WebSettings settings = webView.getSettings();
-        settings.setUseWideViewPort(true);
-        settings.setLoadWithOverviewMode(true);
-      //  webView.setBackground(ContextCompat.getDrawable(getContext(),R.drawable.toolbar_bg));
-        webView.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                if (event.getAction() == MotionEvent.ACTION_UP){
-                    Log.d(TAG, "Webview Ad Touched");
-                }
-                return false;
-            }
-        });
     }
 
     @Override
@@ -153,17 +129,6 @@ public class NewChallengesViewPagerFragment extends BaseFragment implements View
                     CustomSnackBar.make(getView(), Constants.Alerts.SOMETHING_WRONG, CustomSnackBar.DURATION_LONG).show();
                     break;
             }
-        }
-    }
-
-    @Override
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.challenges_ads_webView:
-                Log.d(TAG, "Webview Ad clicked");
-                break;
-
-
         }
     }
 

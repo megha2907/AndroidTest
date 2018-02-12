@@ -12,13 +12,6 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <WebView
-            android:id="@+id/challenges_ads_webView"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dim_60"
-            android:scrollbars="none"
-            android:visibility="gone" />
-
         <android.support.v7.widget.RecyclerView
             android:id="@+id/challenge_recycler"
             android:layout_width="match_parent"

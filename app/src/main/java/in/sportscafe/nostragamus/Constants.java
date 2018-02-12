@@ -347,6 +347,7 @@ public interface Constants {
         String NEW_CHALLENGE_MATCHES_SCREEN_DATA = "newChallengeMatchesScreenData";
         String TIMER_FINISHED_SCREEN_DATA = "timerFinishedScreenData";
         String POOL_PRIZE_ESTIMATION_SCREEN_DATA = "poolPrizeEstimationScreenData";
+        String BUMPER_PRIZE_ESTIMATION_SCREEN_DATA = "bumperPrizeEstimationScreenData";
         String REWARDS_SCREEN_DATA = "rewardsScreenData";
         String EDIT_ANSWER_SCREEN_DATA = "editAnswerScreenData";
         String COPY_ANSWER_POWERUP_COPIED = "copyAnswerPowerupCopied";
@@ -853,6 +854,7 @@ public interface Constants {
         String GUARANTEED = "g";
         String NON_GUARANTEED = "ng";
         String POOL = "p";
+        String BUMPER = "b";
     }
 
     interface WebPageUrls {

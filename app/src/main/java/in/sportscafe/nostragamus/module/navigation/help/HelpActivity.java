@@ -132,6 +132,10 @@ public class HelpActivity extends NostragamusActivity implements HelpFragmentLis
             userMeta.put("MatchId", "");
             userMeta.put("RoomId", "");
 
+            if (userInfo.getUserPaymentInfo() != null && userInfo.getUserPaymentInfo().getPaytm() != null) {
+                userMeta.put("PayTm Mobile Number", userInfo.getUserPaymentInfo().getPaytm().getMobile());
+            }
+
             //Call setUserProperties to sync the user properties with Freshchat's servers
             Freshchat.getInstance(getApplicationContext()).setUserProperties(userMeta);
 
