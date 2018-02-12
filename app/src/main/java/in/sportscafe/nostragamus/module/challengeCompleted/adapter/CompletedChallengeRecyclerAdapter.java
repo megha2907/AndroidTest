@@ -298,7 +298,9 @@ public class CompletedChallengeRecyclerAdapter extends RecyclerView.Adapter<Recy
                 viewHolder.contestModeImageView.setImageResource(R.drawable.guaranteed_icon);
             } else if (contest.getContestMode().equalsIgnoreCase(Constants.ContestType.POOL)) {
                 viewHolder.contestModeImageView.setImageResource(R.drawable.pool_icon);
-            }else if (contest.getContestMode().equalsIgnoreCase(Constants.ContestType.NON_GUARANTEED)) {
+            }else if (contest.getContestMode().equalsIgnoreCase(Constants.ContestType.BUMPER)) {
+                viewHolder.contestModeImageView.setImageResource(R.drawable.pool_icon);
+            } else if (contest.getContestMode().equalsIgnoreCase(Constants.ContestType.NON_GUARANTEED)) {
                 viewHolder.contestModeImageView.setImageResource(R.drawable.no_guarantee_icon);
             }
 

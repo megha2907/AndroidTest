@@ -200,10 +200,10 @@ public class InPlayMatchesPagerFragment extends NostraBaseFragment {
                     /* Content */
                     TimelineHelper.addNode(parent, match.getStatus(), matchAttemptedStatus, isPlayed,
                             isNodeLineRequired, TimelineHelper.MatchTimelineTypeEnum.IN_PLAY_MATCHES_SCREEN,
-                            mInPlayContestDto.getMatches().size());
+                            inPlayContestMatchDtoList.size());
 
                     /* Title */
-                    TimelineHelper.addTextNode(titleParent, "Game " + (temp + 1), mInPlayContestDto.getMatches().size(),
+                    TimelineHelper.addTextNode(titleParent, "Game " + (temp + 1), inPlayContestMatchDtoList.size(),
                             match.getStatus(), TimelineHelper.MatchTimelineTypeEnum.IN_PLAY_MATCHES_SCREEN, isPlayed, matchAttemptedStatus);
 
                 }

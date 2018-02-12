@@ -1081,7 +1081,6 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
                 navigateToLeaderboards(view.getContext(), null);
                 break;
             case R.id.schedule_row_rl_report_btn:
-                //openSubmitReportPopup(view.getContext());
                 openResultsChatBox(view.getContext());
                 break;
         }
@@ -1092,8 +1091,16 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
         UserInfo userInfo = Nostragamus.getInstance().getServerDataManager().getUserInfo();
         FreshchatUser user = Freshchat.getInstance(context).getUser();
         if (userInfo!=null && user!=null) {
-            user.setFirstName(userInfo.getUserName())
-                    .setEmail(userInfo.getEmail());
+
+            if (!TextUtils.isEmpty(userInfo.getOtpMobileNumber())) {
+                user.setFirstName(userInfo.getUserName())
+                        .setEmail(userInfo.getEmail())
+                        .setPhone("+91 ", userInfo.getOtpMobileNumber());
+            } else {
+                user.setFirstName(userInfo.getUserName())
+                        .setEmail(userInfo.getEmail());
+            }
+
             Freshchat.getInstance(context).setUser(user);
 
             /* Set any custom metadata to give agents more context,
@@ -1106,6 +1113,10 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
             userMeta.put("Transaction Type", "");
             userMeta.put("Transaction Order Id", "");
             userMeta.put("Transaction Time", "");
+
+            if (userInfo.getUserPaymentInfo() != null && userInfo.getUserPaymentInfo().getPaytm() != null) {
+                userMeta.put("PayTm Mobile Number", userInfo.getUserPaymentInfo().getPaytm().getMobile());
+            }
 
             //Call setUserProperties to sync the user properties with Freshchat's servers
             Freshchat.getInstance(context).setUserProperties(userMeta);

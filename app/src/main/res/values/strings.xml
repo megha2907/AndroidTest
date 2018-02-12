@@ -164,5 +164,6 @@
     <string name="bottom_nav_profile">Profile</string>
     <string name="prediction_neither_button_text">NEITHER</string>
     <string name="pool_prize_estimation_msg">This is the prize list for %1s entries. The prizes for pool contests might vary with the participation of players</string>
+    <string name="bumper_prize_estimation_msg">This is the prize list for %1s entries. The prizes for pool contests might vary with the participation of players</string>
 
 </resources>
