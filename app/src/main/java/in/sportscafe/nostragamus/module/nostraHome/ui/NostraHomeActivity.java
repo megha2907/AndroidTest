@@ -19,22 +19,6 @@ import android.widget.Toast;
 
 import com.jeeva.android.Log;
 
-import com.google.firebase.FirebaseApp;
-import com.google.firebase.FirebaseOptions;
-import com.google.firebase.iid.FirebaseInstanceId;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-import com.jeeva.android.Log;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.lang.reflect.Type;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-
 import in.sportscafe.nostragamus.BuildConfig;
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Nostragamus;
@@ -83,10 +67,6 @@ public class NostraHomeActivity extends NostraBaseActivity implements View.OnCli
     private boolean mIsFirstBackPressed = false;
     private int mUnPlayedMatchCount = 0;
 
-    private int mScreenHeight;
-    private int mScreenWidth;
-    private static final String INTRO_CARD = "material_intro";
-
 
     @Override
     public String getScreenName() {
@@ -104,8 +84,6 @@ public class NostraHomeActivity extends NostraBaseActivity implements View.OnCli
 
         DisplayMetrics displayMetrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-        mScreenHeight = displayMetrics.heightPixels;
-        mScreenWidth = displayMetrics.widthPixels;
         onNewChallengesClicked(getIntent().getExtras());
         handleNotifications();
 

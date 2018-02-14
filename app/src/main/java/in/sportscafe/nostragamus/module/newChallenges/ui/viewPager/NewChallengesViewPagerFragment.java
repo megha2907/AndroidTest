@@ -212,7 +212,7 @@ public class NewChallengesViewPagerFragment extends BaseFragment {
                 if (notification != null && !TextUtils.isEmpty(notification.getScreenName())) {
                     if (NostragamusDataHandler.getInstance().isLoggedInUser()) {
                         String screenName = notification.getScreenName();
-                        Log.d("Notification", "ScreenName : " + screenName);
+                        Log.d("Banner", "ScreenName : " + screenName);
 
                         if (screenName.equalsIgnoreCase(Constants.Notifications.SCREEN_NEW_CHALLENGE)) {
                             Bundle bundle = new Bundle();
@@ -230,7 +230,8 @@ public class NewChallengesViewPagerFragment extends BaseFragment {
                             }
                             onNewChallengesClicked(bundle);
 
-                        } else if (screenName.equalsIgnoreCase(Constants.Notifications.SCREEN_NEW_CHALLENGES_GAMES)) {
+                        } else if (screenName.equalsIgnoreCase(Constants.Notifications.SCREEN_NEW_CHALLENGES_GAMES)||
+                                screenName.equalsIgnoreCase(Constants.Notifications.SCREEN_NEW_CHALLENGE_GAMES)) {
                             startActivity(notificationHelper.getNewChallengeMatchesScreenIntent(getContext(), notification));
 
                         } else if (screenName.equalsIgnoreCase(Constants.Notifications.SCREEN_IN_PLAY_MATCHES)) {
@@ -296,13 +297,13 @@ public class NewChallengesViewPagerFragment extends BaseFragment {
 
     private void onInPlayClicked(Bundle args) {
         if (mFragmentListener != null) {
-            mFragmentListener.showNewChallenges(args);
+            mFragmentListener.showInPlayChallenges(args);
         }
     }
 
     private void onHistoryClicked(Bundle args) {
         if (mFragmentListener != null) {
-            mFragmentListener.showNewChallenges(args);
+            mFragmentListener.showHistoryChallenges(args);
         }
     }
 

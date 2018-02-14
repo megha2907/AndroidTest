@@ -47,6 +47,7 @@ public interface Constants {
         String SCREEN_APP_UPDATE = "appUpdate"; /* Update the App screen & What's New Screen */
         String SCREEN_WEB_VIEW = "webView";
         String SCREEN_EDIT_ANSWER = "editAnswer";
+        String SCREEN_NEW_CHALLENGE_GAMES = "newChallengeGames"; /* New Challenges Games Screen  */
     }
 
     interface SharedKeys {
