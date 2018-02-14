@@ -73,7 +73,7 @@ public class LeaderBoardFragment extends BaseFragment implements LeaderBoardView
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        if (getView()!=null) {
+        if (getView() != null) {
             getView().findViewById(R.id.sort_by_accuracy_btn).setOnClickListener(this);
             getView().findViewById(R.id.sort_by_total_points_btn).setOnClickListener(this);
             getView().findViewById(R.id.sort_by_powerups_btn).setOnClickListener(this);
@@ -86,6 +86,9 @@ public class LeaderBoardFragment extends BaseFragment implements LeaderBoardView
 
         this.mLeaderBoardPresenter = LeaderBoardPresenterImpl.newInstance(this);
         this.mLeaderBoardPresenter.onCreateLeaderBoard(getArguments());
+
+        /* On the start , sort by Points */
+        sortByPoints();
     }
 
     @Override
@@ -100,7 +103,7 @@ public class LeaderBoardFragment extends BaseFragment implements LeaderBoardView
 
     @Override
     public void setSortSelectedType(int sortType) {
-        if (getView()!=null) {
+        if (getView() != null) {
             setSelected(getView().findViewById(R.id.sort_by_total_points_btn));
         }
     }
@@ -175,33 +178,38 @@ public class LeaderBoardFragment extends BaseFragment implements LeaderBoardView
     public void onClick(View view) {
 
         switch (view.getId()) {
-
             case R.id.sort_by_total_points_btn:
-                LeaderBoardModelImpl.SORT_TYPE = 0;
-                mLeaderBoardPresenter.checkSortType();
-                setSelected(findViewById(R.id.sort_by_total_points_btn));
+                sortByPoints();
                 break;
 
             case R.id.sort_by_accuracy_btn:
-                LeaderBoardModelImpl.SORT_TYPE = 1;
-                mLeaderBoardPresenter.checkSortType();
-                setSelected(findViewById(R.id.sort_by_accuracy_btn));
+                sortByAccuracy();
                 break;
 
             case R.id.sort_by_powerups_btn:
-
-                LeaderBoardModelImpl.SORT_TYPE = 2;
-                mLeaderBoardPresenter.checkSortType();
-                setSelected(findViewById(R.id.sort_by_powerups_btn));
-
-//                    if (ismMatchPoints) {
-//                        LeaderBoardModelImpl.SORT_TYPE = 3;
-//                    } else {
-//                        LeaderBoardModelImpl.SORT_TYPE = 2;
-//                    }
+                sortByPowerUps();
                 break;
         }
     }
+
+    private void sortByPowerUps() {
+        LeaderBoardModelImpl.SORT_TYPE = 2;
+        mLeaderBoardPresenter.checkSortType();
+        setSelected(findViewById(R.id.sort_by_powerups_btn));
+    }
+
+    private void sortByAccuracy() {
+        LeaderBoardModelImpl.SORT_TYPE = 1;
+        mLeaderBoardPresenter.checkSortType();
+        setSelected(findViewById(R.id.sort_by_accuracy_btn));
+    }
+
+    private void sortByPoints() {
+        LeaderBoardModelImpl.SORT_TYPE = 0;
+        mLeaderBoardPresenter.checkSortType();
+        setSelected(findViewById(R.id.sort_by_total_points_btn));
+    }
+
 
     private void setSelected(View selImg) {
         if (null != mSelectedImage) {
