@@ -5,6 +5,9 @@ buildscript {
         maven { url "https://jitpack.io" }
         mavenCentral()
         jcenter()
+        flatDir {
+            dirs 'libs'
+        }
     }
 
     dependencies {
