@@ -1,1 +1,1 @@
-include ':app', ':jeevalibrary', ':NostraCardStack', ':materialintro'
+include ':app', ':jeevalibrary', ':NostraCardStack', ':materialintro', ':cashfreeSDK'

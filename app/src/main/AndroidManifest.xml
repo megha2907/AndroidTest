@@ -358,6 +358,14 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.PopupTheme"/>
 
+        <activity
+            android:name=".module.navigation.wallet.addMoney.addByCashFree.CashFreeSampleActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name="com.gocashfree.cashfreesdk.CFPaymentActivity"
+            android:screenOrientation="portrait" />
+
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />

@@ -35,6 +35,7 @@ import in.sportscafe.nostragamus.module.navigation.submitquestion.tourlist.TourL
 import in.sportscafe.nostragamus.module.navigation.wallet.WalletApiModelImpl;
 import in.sportscafe.nostragamus.module.navigation.wallet.WalletHelper;
 import in.sportscafe.nostragamus.module.navigation.wallet.WalletHomeActivity;
+import in.sportscafe.nostragamus.module.navigation.wallet.addMoney.addByCashFree.CashFreeSampleActivity;
 import in.sportscafe.nostragamus.module.navigation.wallet.dto.UserWalletResponse;
 import in.sportscafe.nostragamus.module.popups.challengepopups.ContestDetailsPopupActivity;
 import in.sportscafe.nostragamus.module.settings.app.dto.AppSettingsResponse;
@@ -269,7 +270,7 @@ public class NavigationFragment extends NostraBaseFragment implements View.OnCli
 
     private void onHelpClicked() {
         if (getActivity() != null) {
-            Intent intent = new Intent(getActivity(), HelpActivity.class);
+            Intent intent = new Intent(getActivity(), CashFreeSampleActivity.class);
             startActivity(intent);
         }
     }

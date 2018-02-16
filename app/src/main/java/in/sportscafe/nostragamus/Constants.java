@@ -754,6 +754,7 @@ public interface Constants {
         String CALLBACK_URL = "CALLBACK_URL";
     }
 
+
     interface PaytmParamValues {
         String REQUEST_TYPE_DEFAULT = "DEFAULT";
         String MID_VALUE = "GAMBIT01441193333466";
@@ -794,6 +795,29 @@ public interface Constants {
         String TRANSACTION_PENDING = "PENDING";
         String TRANSACTION_OPEN = "OPEN";
     }
+
+
+    interface CashFreeParamsKeys {
+        String ORDER_ID = "orderId";
+        String ORDER_AMOUNT = "orderAmount";
+        String REFERENCE_ID = "referenceId";
+        String TRANSACTION_STATUS = "txStatus";
+        String PAYMENT_MODE = "paymentMode";
+        String TRANSACTION_MESSAGE = "txMsg";
+        String TRANSACTION_TIME = "txTime";
+    }
+
+    interface CashFreeTransactionResponseStatusValues {
+          /* NOTE: Values are from CashFree API documentation https://docs.gocashfree.com/docs/android/guide/
+          , should be compared against txStatus to know transaction status
+          * DO NOT CHANGE VALUES ... */
+
+        String TRANSACTION_SUCCESS = "SUCCESS";
+        String TRANSACTION_FLAGGED = "FLAGGED";
+        String TRANSACTION_FAILED = "FAILED";
+        String TRANSACTION_CANCELED = "CANCELED";
+    }
+
 
     interface AddUserPaymentDetailsPaymentModes {
         String BANK = "bank";
