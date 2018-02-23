@@ -17,6 +17,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.crashlytics.android.Crashlytics;
 import com.jeeva.android.Log;
 
 import in.sportscafe.nostragamus.BuildConfig;
@@ -294,7 +295,7 @@ public class NostraHomeActivity extends NostraBaseActivity implements View.OnCli
         UserInfoModelImpl.newInstance(getUserInfoCallBackListener()).getUserInfo();
         NostragamusAnalytics.getInstance().setMoEngageUserProperties(getApplicationContext());
         NostragamusAnalytics.getInstance().setFreshChatUserProperties(getApplicationContext());
-
+        NostragamusAnalytics.getInstance().setCrashlyticsUserProperties(getApplicationContext());
     }
 
     private void initViews() {

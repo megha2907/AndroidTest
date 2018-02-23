@@ -706,6 +706,7 @@ public interface Constants {
         String MATCHES_TIMELINE = "MatchesTimeline";
         String CONTEST_DETAILS = "ContestDetails";
         String POOL_CONTEST_REWARD_CALCULATION = "poolContestRewardCalculation";
+        String HOW_TO_PLAY = "HowToPlay";
     }
 
     interface InAppPopups {

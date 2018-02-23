@@ -98,6 +98,10 @@ public class WithdrawPayoutChoiceFragment extends BaseFragment implements View.O
                 if (mPaytmButton != null) {
                     mPaytmButton.setVisibility(View.VISIBLE);
                 }
+            }else {
+                if (mPaytmButton != null) {
+                    mPaytmButton.setVisibility(View.GONE);
+                }
             }
 
             /* Bank details  */
@@ -109,6 +113,10 @@ public class WithdrawPayoutChoiceFragment extends BaseFragment implements View.O
                 }
                 if (mBankButton != null) {
                     mBankButton.setVisibility(View.VISIBLE);
+                }
+            }else {
+                if (mBankButton != null) {
+                    mBankButton.setVisibility(View.GONE);
                 }
             }
 
