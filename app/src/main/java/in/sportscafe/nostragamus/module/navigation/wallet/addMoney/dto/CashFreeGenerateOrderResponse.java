@@ -13,6 +13,9 @@ public class CashFreeGenerateOrderResponse {
     @SerializedName("CALLBACK_URL")
     private String callbackUrl;
 
+    @SerializedName("CHECKSUM_URL")
+    private String checksumUrl;
+
     @SerializedName("ORDER_ID")
     private String orderId;
 
@@ -85,6 +88,15 @@ public class CashFreeGenerateOrderResponse {
 
     public void setCustomerEmail(String customerEmail) {
         this.customerEmail = customerEmail;
+    }
+
+
+    public String getChecksumUrl() {
+        return checksumUrl;
+    }
+
+    public void setChecksumUrl(String checksumUrl) {
+        this.checksumUrl = checksumUrl;
     }
 
 }

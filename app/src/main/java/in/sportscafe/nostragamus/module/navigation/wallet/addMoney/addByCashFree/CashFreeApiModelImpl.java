@@ -2,6 +2,7 @@ package in.sportscafe.nostragamus.module.navigation.wallet.addMoney.addByCashFre
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.text.TextUtils;
 
 import com.gocashfree.cashfreesdk.CFClientInterface;
 import com.gocashfree.cashfreesdk.CFPaymentService;
@@ -45,31 +46,38 @@ public class CashFreeApiModelImpl implements CFClientInterface {
 
     public void initCashFreeTransaction(CashFreeGenerateOrderResponse cashFreeGenerateOrderResponse) {
 
-        String checksumUrl = "http://yourwebsitename.com/path/to/checksum.php";
-        String appId = "374123e1b8eb30b2ec8838d473";
-        String stage = "TEST";
+        if (cashFreeGenerateOrderResponse != null && !TextUtils.isEmpty(cashFreeGenerateOrderResponse.getChecksumUrl())) {
 
-        Map<String, String> params = new HashMap<>();
-        params.put(PARAM_APP_ID, appId);
-        params.put(PARAM_ORDER_ID, cashFreeGenerateOrderResponse.getOrderId());
-        params.put(PARAM_ORDER_AMOUNT, String.valueOf(cashFreeGenerateOrderResponse.getOrderAmount()));
-        params.put(PARAM_ORDER_NOTE, cashFreeGenerateOrderResponse.getOrderNote());
-        params.put(PARAM_CUSTOMER_NAME, cashFreeGenerateOrderResponse.getCustomerName());
-        params.put(PARAM_CUSTOMER_PHONE, cashFreeGenerateOrderResponse.getCustomerPhone());
-        params.put(PARAM_CUSTOMER_EMAIL, cashFreeGenerateOrderResponse.getCustomerEmail());
-        params.put(PARAM_PAYMENT_MODES, "");
+            String checksumUrl = cashFreeGenerateOrderResponse.getChecksumUrl();
+            String appId = "374123e1b8eb30b2ec8838d473";
+            String stage = "TEST";  // stage identifies whether you want trigger test or production service
 
-        CFPaymentService cfPaymentService = CFPaymentService.getCFPaymentServiceInstance();
+            Map<String, String> params = new HashMap<>();
+            params.put(PARAM_APP_ID, appId);
+            params.put(PARAM_ORDER_ID, cashFreeGenerateOrderResponse.getOrderId());
+            params.put(PARAM_ORDER_AMOUNT, String.valueOf(cashFreeGenerateOrderResponse.getOrderAmount()));
+            params.put(PARAM_ORDER_NOTE, cashFreeGenerateOrderResponse.getOrderNote());
+            params.put(PARAM_CUSTOMER_NAME, cashFreeGenerateOrderResponse.getCustomerName());
+            params.put(PARAM_CUSTOMER_PHONE, cashFreeGenerateOrderResponse.getCustomerPhone());
+            params.put(PARAM_CUSTOMER_EMAIL, cashFreeGenerateOrderResponse.getCustomerEmail());
+            params.put(PARAM_PAYMENT_MODES, "");
 
-        // stage identifies whether you want trigger test or production service
-        cfPaymentService.doPayment(mContext, params, checksumUrl, this, stage);
+            CFPaymentService cfPaymentService = CFPaymentService.getCFPaymentServiceInstance();
+            cfPaymentService.doPayment(mContext, params, checksumUrl, this, stage);
+
+        } else {
+            com.jeeva.android.Log.d(TAG, "Generate Order Null or CheckSum Url Null");
+            if (mListener != null) {
+                mListener.onTransactionPageLoadingError();
+            }
+        }
     }
 
     @Override
     public void onSuccess(Map<String, String> map) {
 
         CashFreeTransactionResponse cashFreeTransactionResponse = getCashFreeTransactionResponse(map);
-        if (cashFreeTransactionResponse != null &&  cashFreeTransactionResponse.getTxStatus().equals(Constants.CashFreeTransactionResponseStatusValues.TRANSACTION_SUCCESS)) {
+        if (cashFreeTransactionResponse != null && cashFreeTransactionResponse.getTxStatus().equals(Constants.CashFreeTransactionResponseStatusValues.TRANSACTION_SUCCESS)) {
             com.jeeva.android.Log.d(TAG, "CashFree Transaction status SUCCESS ...");
             if (mListener != null) {
                 mListener.onTransactionSuccessResponse(cashFreeTransactionResponse);
