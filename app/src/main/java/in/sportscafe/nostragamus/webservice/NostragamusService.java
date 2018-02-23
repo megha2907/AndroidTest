@@ -10,6 +10,8 @@ import in.sportscafe.nostragamus.module.challengeRules.dto.RulesResponse;
 import in.sportscafe.nostragamus.module.common.ApiResponse;
 import in.sportscafe.nostragamus.module.navigation.wallet.addMoney.dto.AddMoneyPaymentCouponRequest;
 import in.sportscafe.nostragamus.module.navigation.wallet.addMoney.dto.AddMoneyPaymentCouponResponse;
+import in.sportscafe.nostragamus.module.navigation.wallet.addMoney.dto.CashFreeGenerateOrderRequest;
+import in.sportscafe.nostragamus.module.navigation.wallet.addMoney.dto.CashFreeGenerateOrderResponse;
 import in.sportscafe.nostragamus.module.navigation.wallet.addMoney.dto.VerifyPaymentCouponRequest;
 import in.sportscafe.nostragamus.module.navigation.wallet.addMoney.dto.VerifyPaymentCouponResponse;
 import in.sportscafe.nostragamus.module.newChallenges.dto.BannerResponseData;
@@ -402,4 +404,7 @@ public interface NostragamusService {
 
     @POST("v3/game/users/copyMatchAnswers")
     Call<CopyAnswerResponse> copyAnswer(@Body CopyAnswerRequest copyAnswerRequest);
+
+    @POST("v1/wallet/addMoneyToWallet")
+    Call<CashFreeGenerateOrderResponse> generateCashFreeOrder(CashFreeGenerateOrderRequest request);
 }

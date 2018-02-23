@@ -706,6 +706,7 @@ public interface Constants {
         String MATCHES_TIMELINE = "MatchesTimeline";
         String CONTEST_DETAILS = "ContestDetails";
         String POOL_CONTEST_REWARD_CALCULATION = "poolContestRewardCalculation";
+        String SELECT_PAYMENT_MODE = "selectPaymentMode";
     }
 
     interface InAppPopups {
@@ -822,6 +823,11 @@ public interface Constants {
     interface AddUserPaymentDetailsPaymentModes {
         String BANK = "bank";
         String PAYTM = "paytm";
+    }
+
+    interface AddMoneyPaymentModes {
+        String PAYTM = "paytm";
+        String CASHFREE = "cashfree";
     }
 
     interface AppUpdateTypes {
