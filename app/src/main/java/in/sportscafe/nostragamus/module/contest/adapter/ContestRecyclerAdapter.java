@@ -40,11 +40,13 @@ public class ContestRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     private Context mContext;
     private List<Contest> mContestList;
     private ContestAdapterListener mContestAdapterListener;
+    private int mMaxPowerUpTransferLimit = -1;
 
-    public ContestRecyclerAdapter(Context cxt, @NonNull List<Contest> list,
+    public ContestRecyclerAdapter(Context cxt, @NonNull List<Contest> list, int maxPowerupTransferLimit,
                                   @NonNull ContestAdapterListener listener) {
         mContext = cxt;
         mContestList = list;
+        mMaxPowerUpTransferLimit = maxPowerupTransferLimit;
         mContestAdapterListener = listener;
     }
 
@@ -168,6 +170,10 @@ public class ContestRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                     viewHolder.mTvEntryFee.setText(Constants.RUPEE_SYMBOL + CodeSnippet.getFormattedAmount(contest.getEntryFee()));
                     viewHolder.mTvMaxEntries.setText(String.valueOf(contest.getRoomSize()));
                 }
+
+                if (mMaxPowerUpTransferLimit == 0) {
+                    viewHolder.mNoExtraPowerUpImageView.setVisibility(View.VISIBLE);
+                }
             }
         }
     }
@@ -253,6 +259,10 @@ public class ContestRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                     viewHolder.mTvEntryFee.setText(Constants.RUPEE_SYMBOL + CodeSnippet.getFormattedAmount(contest.getEntryFee()));
                     viewHolder.mTvMaxEntries.setText(String.valueOf(contest.getRoomSize()));
                 }
+
+                if (mMaxPowerUpTransferLimit == 0) {
+                    viewHolder.mNoExtraPowerUpImageView.setVisibility(View.VISIBLE);
+                }
             }
         }
     }
@@ -305,6 +315,10 @@ public class ContestRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                     viewHolder.mTvEntryFee.setText(Constants.RUPEE_SYMBOL + CodeSnippet.getFormattedAmount(contest.getEntryFee()));
                     viewHolder.mTvMaxEntries.setText(String.valueOf(contest.getRoomSize()));
                 }
+
+                if (mMaxPowerUpTransferLimit == 0) {
+                    viewHolder.mNoExtraPowerUpImageView.setVisibility(View.VISIBLE);
+                }
             }
         }
     }
@@ -342,6 +356,7 @@ public class ContestRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         public TextView mTvContestsAvailable;
         public RelativeLayout mRlContestLayout;
         public ImageView mIvContestsType;
+        ImageView mNoExtraPowerUpImageView;
         LinearLayout mRewardsPrizesLayout;
         LinearLayout mEntriesLayout;
         LinearLayout mEntryFeeLayout;
@@ -368,6 +383,7 @@ public class ContestRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             mEntriesLayout = (LinearLayout) itemView.findViewById(R.id.pool_row_ll_member_layout);
             mEntryFeeLayout = (LinearLayout) itemView.findViewById(R.id.pool_row_ll_entry_fee_layout);
             mFillingStrTextView = (TextView) itemView.findViewById(R.id.pool_row_tv_rooms_available_txt);
+            mNoExtraPowerUpImageView = (ImageView) itemView.findViewById(R.id.contest_no_extra_powerup_imgView);
 
             itemView.setOnClickListener(this);
             mBtnJoin.setOnClickListener(this);
@@ -441,6 +457,7 @@ public class ContestRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         public TextView mTvPrizes;
         public TextView mTvNumberOfPrizes;
         public ImageView mIvContestsType;
+        public ImageView mNoExtraPowerUpImageView;
 
         public JoinedContestViewHolder(View itemView) {
             super(itemView);
@@ -452,6 +469,7 @@ public class ContestRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             mTvPrizes = (TextView) itemView.findViewById(R.id.pool_row_tv_reward);
             mTvNumberOfPrizes = (TextView) itemView.findViewById(R.id.pool_row_tv_number_of_prizes);
             mIvContestsType = (ImageView) itemView.findViewById(R.id.pool_row_iv_contest_type);
+            mNoExtraPowerUpImageView = (ImageView) itemView.findViewById(R.id.contest_no_extra_powerup_imgView);
         }
     }
 
@@ -493,6 +511,7 @@ public class ContestRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         public TextView mTvFilledContestsText;
         public RelativeLayout mRlContestLayout;
         public ImageView mIvContestsType;
+        public ImageView mNoExtraPowerUpImageView;
         LinearLayout mRewardsPrizesLayout;
         LinearLayout mEntriesLayout;
         LinearLayout mEntryFeeLayout;
@@ -513,7 +532,7 @@ public class ContestRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             mRewardsPrizesLayout = (LinearLayout) itemView.findViewById(R.id.pool_row_ll_reward_layout);
             mEntriesLayout = (LinearLayout) itemView.findViewById(R.id.pool_row_ll_member_layout);
             mEntryFeeLayout = (LinearLayout) itemView.findViewById(R.id.pool_row_ll_entry_fee_layout);
-
+            mNoExtraPowerUpImageView = (ImageView) itemView.findViewById(R.id.contest_no_extra_powerup_imgView);
         }
     }
 }

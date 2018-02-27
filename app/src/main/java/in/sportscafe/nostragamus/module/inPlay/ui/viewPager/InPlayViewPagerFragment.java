@@ -170,6 +170,7 @@ public class InPlayViewPagerFragment extends BaseFragment {
                             contestDto.setChallengeId(inplay.getChallengeId());     // To identify every contest that which challenge it belongs
                             contestDto.setChallengeName(inplay.getChallengeName());
                             contestDto.setChallengeStartTime(inplay.getChallengeStartTime());
+                            contestDto.setMaxPowerUpTransferLimit(inplay.getMaxPowerupTransferLimit());
 
                             listItem = new InPlayListItem();
                             listItem.setItemData(contestDto);
@@ -214,6 +215,7 @@ public class InPlayViewPagerFragment extends BaseFragment {
             challengeItem.setSportsIdArray(response.getSportsIdArray());
             challengeItem.setContestCount((response.getContestList() != null) ? response.getContestList().size() : 0);
             challengeItem.setOnlyHeadlessStateExist(checkForOnlyHeadlessState(response.getContestList()));
+            challengeItem.setMaxPowerUpTransferLimit(response.getMaxPowerupTransferLimit());
         }
         return challengeItem;
     }

@@ -70,6 +70,9 @@ public class InPlayMatch {
     @SerializedName("count_other_contests")
     private int copyAnswerOtherContestCount;
 
+    @SerializedName("maxtransferlimit")
+    private int maxTransferLimit;
+
     public int getChallengeId() {
         return challengeId;
     }
@@ -214,5 +217,13 @@ public class InPlayMatch {
 
     public void setCopyAnswerOtherContestCount(int copyAnswerOtherContestCount) {
         this.copyAnswerOtherContestCount = copyAnswerOtherContestCount;
+    }
+
+    public int getMaxTransferLimit() {
+        return maxTransferLimit;
+    }
+
+    public void setMaxTransferLimit(int maxTransferLimit) {
+        this.maxTransferLimit = maxTransferLimit;
     }
 }

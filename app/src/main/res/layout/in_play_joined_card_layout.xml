@@ -26,34 +26,34 @@
             android:layout_weight="4">
 
             <!--<LinearLayout-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:orientation="horizontal">-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:orientation="horizontal">-->
 
-                <!--<com.jeeva.android.widgets.customfont.CustomTextView-->
-                    <!--android:id="@+id/inplay_joined_card_title_textView"-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:maxLines="1"-->
-                    <!--android:ellipsize="end"-->
-                    <!--android:includeFontPadding="false"-->
-                    <!--android:text="Daily Double Up"-->
-                    <!--android:textColor="@color/white"-->
-                    <!--android:textSize="@dimen/sp_13"-->
-                    <!--app:typeface="lato_regular"-->
-                    <!--/>-->
+            <!--<com.jeeva.android.widgets.customfont.CustomTextView-->
+            <!--android:id="@+id/inplay_joined_card_title_textView"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:maxLines="1"-->
+            <!--android:ellipsize="end"-->
+            <!--android:includeFontPadding="false"-->
+            <!--android:text="Daily Double Up"-->
+            <!--android:textColor="@color/white"-->
+            <!--android:textSize="@dimen/sp_13"-->
+            <!--app:typeface="lato_regular"-->
+            <!--/>-->
 
-                <!--<ImageView-->
-                    <!--android:id="@+id/inplay_contest_card_header_mode_imgView"-->
-                    <!--android:layout_width="@dimen/dim_12"-->
-                    <!--android:layout_height="@dimen/dim_12"-->
-                    <!--android:layout_marginLeft="@dimen/dim_5"-->
-                    <!--android:layout_gravity="center"-->
-                    <!--android:visibility="visible"/>-->
+            <!--<ImageView-->
+            <!--android:id="@+id/inplay_contest_card_header_mode_imgView"-->
+            <!--android:layout_width="@dimen/dim_12"-->
+            <!--android:layout_height="@dimen/dim_12"-->
+            <!--android:layout_marginLeft="@dimen/dim_5"-->
+            <!--android:layout_gravity="center"-->
+            <!--android:visibility="visible"/>-->
 
             <!--</LinearLayout>-->
 
-        <!-- Card Header bar -->
+            <!-- Card Header bar -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dim_52"
@@ -87,14 +87,29 @@
                             android:textSize="@dimen/sp_13"
                             app:typeface="lato_regular" />
 
-                        <ImageView
-                            android:id="@+id/inplay_contest_card_header_mode_imgView"
-                            android:layout_width="@dimen/dim_22"
-                            android:layout_height="@dimen/dim_12"
-                            android:layout_gravity="center"
-                            android:paddingRight="@dimen/dim_10"
-                            android:layout_marginLeft="@dimen/dim_5"
-                            android:visibility="visible" />
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:paddingRight="@dimen/dim_10">
+
+                            <ImageView
+                                android:id="@+id/inplay_contest_card_header_mode_imgView"
+                                android:layout_width="@dimen/dim_22"
+                                android:layout_height="@dimen/dim_12"
+                                android:layout_gravity="center"
+                                android:layout_marginLeft="@dimen/dim_5"
+                                android:visibility="visible" />
+
+                            <ImageView
+                                android:id="@+id/no_extra_powerup_imgView"
+                                android:layout_width="@dimen/dim_12"
+                                android:layout_height="@dimen/dim_12"
+                                android:layout_marginLeft="@dimen/dim_4"
+                                android:src="@drawable/powerup_bank_disabled"
+                                android:visibility="gone"/>
+
+                        </LinearLayout>
 
                     </LinearLayout>
 
@@ -216,15 +231,15 @@
                 android:paddingTop="@dimen/dim_10">
 
                 <!--<LinearLayout-->
-                    <!--android:id="@+id/inplay_joined_card_timeline_heading_parent"-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:gravity="center_vertical"-->
-                    <!--android:orientation="horizontal"-->
-                    <!--android:layout_gravity="left"-->
-                    <!--android:scrollbars="horizontal"-->
-                    <!--android:layout_marginLeft="@dimen/dim_5"-->
-                    <!--/>-->
+                <!--android:id="@+id/inplay_joined_card_timeline_heading_parent"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:gravity="center_vertical"-->
+                <!--android:orientation="horizontal"-->
+                <!--android:layout_gravity="left"-->
+                <!--android:scrollbars="horizontal"-->
+                <!--android:layout_marginLeft="@dimen/dim_5"-->
+                <!--/>-->
 
                 <LinearLayout
                     android:layout_width="wrap_content"
