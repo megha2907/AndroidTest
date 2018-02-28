@@ -46,6 +46,9 @@ public class NewChallengesResponse {
     @SerializedName("is_daily")
     private boolean isDaily;
 
+    @SerializedName("maxtransferlimit")
+    private int maxTransferLimit = -1;
+
     public int getChallengeAdapterItemType() {
         return challengeAdapterItemType;
     }
@@ -132,5 +135,13 @@ public class NewChallengesResponse {
 
     public void setDaily(boolean daily) {
         isDaily = daily;
+    }
+
+    public int getMaxTransferLimit() {
+        return maxTransferLimit;
+    }
+
+    public void setMaxTransferLimit(int maxTransferLimit) {
+        this.maxTransferLimit = maxTransferLimit;
     }
 }
