@@ -151,7 +151,12 @@ public class InPlayMatchesPagerFragment extends NostraBaseFragment {
 
             if (inPlayMatches.get(0).getMaxTransferLimit() > 0) {   // as MaxTransferLimit is Challenge level, all matches/contest would have same values
                 powerupBankImgView.setImageResource(R.drawable.powerup_bank_enabled);
-                powerupMsgTextView.setText("Transfer maximum of " + inPlayMatches.get(0).getMaxTransferLimit() + " powerups each from bank");
+
+                String msg = "Transfer maximum of " + inPlayMatches.get(0).getMaxTransferLimit() + " powerups each from bank";
+                if (inPlayMatches.get(0).getMaxTransferLimit() == 1) {
+                    msg = msg.replace("powerups", "powerup");
+                }
+                powerupMsgTextView.setText(msg);
             } else {
                 powerupBankImgView.setImageResource(R.drawable.powerup_bank_disabled);
                 powerupMsgTextView.setText("Powerup bank disabled");

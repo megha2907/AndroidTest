@@ -392,6 +392,7 @@ public class ContestRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             mIvContestsType.setOnClickListener(this);
             mEntriesLayout.setOnClickListener(this);
             mEntryFeeLayout.setOnClickListener(this);
+            mNoExtraPowerUpImageView.setOnClickListener(this);
         }
 
         @Override
@@ -421,6 +422,7 @@ public class ContestRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                     break;
 
                 case R.id.pool_row_iv_contest_type:
+                case R.id.contest_no_extra_powerup_imgView:
                     if (clickListener != null) {
                         Bundle args = getContestBundle(getAdapterPosition());
                         clickListener.onRulesClicked(args);

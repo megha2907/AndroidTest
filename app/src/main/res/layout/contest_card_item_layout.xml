@@ -89,7 +89,6 @@
                                 android:src="@drawable/powerup_bank_disabled"
                                 android:layout_marginTop="@dimen/dim_3"
                                 android:layout_marginLeft="@dimen/dim_12"
-                                android:layout_marginRight="@dimen/dim_16"
                                 android:visibility="gone"/>
 
                         </LinearLayout>

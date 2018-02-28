@@ -289,19 +289,34 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
 
-                <!-- powerup Rule Two-->
-                <com.jeeva.android.widgets.customfont.CustomTextView
-                    android:id="@+id/powerup_rule_two"
-                    app:typeface="lato_regular"
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/dim_6"
+                    android:orientation="horizontal"
                     android:layout_marginTop="@dimen/dim_10"
-                    android:lineSpacingExtra="@dimen/dim_4"
-                    android:layout_toRightOf="@+id/powerup_rule_two_bullet"
-                    android:textColor="@color/grey6"
-                    android:textSize="@dimen/sp_12" />
+                    android:layout_toRightOf="@+id/powerup_rule_two_bullet">
 
+                    <ImageView
+                        android:id="@+id/powerup_rule_two_icon"
+                        android:layout_width="@dimen/dim_12"
+                        android:layout_height="@dimen/dim_12"
+                        android:src="@drawable/powerup_bank_enabled"
+                        android:layout_marginLeft="@dimen/dim_8"
+                        android:layout_marginRight="@dimen/dim_8"
+                        android:layout_gravity="top"
+                        android:layout_marginTop="@dimen/dim_2"/>
+
+                    <!-- powerup Rule Two-->
+                    <com.jeeva.android.widgets.customfont.CustomTextView
+                        android:id="@+id/powerup_rule_two"
+                        app:typeface="lato_regular"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:lineSpacingExtra="@dimen/dim_4"
+                        android:textColor="@color/grey6"
+                        android:textSize="@dimen/sp_12" />
+
+                </LinearLayout>
 
                 <ImageView
                     android:id="@+id/powerup_rule_two_bullet"

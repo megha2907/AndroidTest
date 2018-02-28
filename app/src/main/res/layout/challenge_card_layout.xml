@@ -38,7 +38,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:orientation="horizontal"
-                    android:gravity="center_vertical">
+                    android:gravity="bottom">
 
                     <com.jeeva.android.widgets.customfont.CustomTextView
                         android:id="@+id/challenge_name_textView"
@@ -51,27 +51,29 @@
                         android:textColor="@color/white"
                         android:textSize="@dimen/sp_13.5"
                         app:typeface="lato_regular"
-                        android:paddingRight="@dimen/dim_20"/>
+                        android:paddingRight="@dimen/dim_16"
+                        android:layout_centerVertical="true"/>
 
                     <ImageView
                         android:id="@+id/no_extra_powerup_imgView"
                         android:layout_width="@dimen/dim_12"
                         android:layout_height="@dimen/dim_12"
-                        android:layout_centerVertical="true"
+                        android:layout_marginTop="@dimen/dim_5"
                         android:src="@drawable/powerup_bank_disabled"
-                        android:layout_alignRight="@id/challenge_name_textView"/>
+                        android:layout_alignRight="@id/challenge_name_textView"
+                        android:visibility="gone"/>
 
                 </RelativeLayout>
 
                 <!-- Add sports identification icon -->
                 <LinearLayout
                     android:id="@+id/challenge_sports_icons_container"
-                    android:layout_width="@dimen/dim_72"
+                    android:layout_width="@dimen/dim_56"
                     android:layout_height="match_parent"
                     android:layout_gravity="end"
                     android:gravity="end|bottom"
                     android:orientation="horizontal"
-                    android:paddingBottom="@dimen/dim_4" />
+                    android:paddingBottom="@dimen/dim_2" />
 
             </LinearLayout>
 
