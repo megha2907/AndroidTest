@@ -363,6 +363,10 @@
             android:screenOrientation="portrait" />
 
         <activity
+            android:name=".module.navigation.wallet.addMoney.selectPaymentMode.SelectPaymentModeActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
             android:name="com.gocashfree.cashfreesdk.CFPaymentActivity"
             android:screenOrientation="portrait" />
 

@@ -14,6 +14,7 @@ import in.sportscafe.nostragamus.module.navigation.wallet.addMoney.dto.CashFreeG
 import in.sportscafe.nostragamus.module.navigation.wallet.addMoney.dto.CashFreeGenerateOrderResponse;
 import in.sportscafe.nostragamus.module.navigation.wallet.addMoney.dto.VerifyPaymentCouponRequest;
 import in.sportscafe.nostragamus.module.navigation.wallet.addMoney.dto.VerifyPaymentCouponResponse;
+import in.sportscafe.nostragamus.module.navigation.wallet.addMoney.dto.VerifyPaymentResponse;
 import in.sportscafe.nostragamus.module.newChallenges.dto.BannerResponseData;
 import in.sportscafe.nostragamus.module.nostraHome.dto.TimeResponse;
 import in.sportscafe.nostragamus.module.common.dto.MatchesResponse;
@@ -406,5 +407,8 @@ public interface NostragamusService {
     Call<CopyAnswerResponse> copyAnswer(@Body CopyAnswerRequest copyAnswerRequest);
 
     @POST("v1/wallet/addMoneyToWallet")
-    Call<CashFreeGenerateOrderResponse> generateCashFreeOrder(CashFreeGenerateOrderRequest request);
+    Call<CashFreeGenerateOrderResponse> generateCashFreeOrder(@Body CashFreeGenerateOrderRequest request);
+
+    @GET("v1/wallet/getOrderStatus")
+    Call<VerifyPaymentResponse> verifyPayment(@Query("order_id") String orderId);
 }

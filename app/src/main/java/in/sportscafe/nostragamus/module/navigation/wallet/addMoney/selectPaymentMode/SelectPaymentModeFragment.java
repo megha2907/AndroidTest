@@ -1,5 +1,6 @@
 package in.sportscafe.nostragamus.module.navigation.wallet.addMoney.selectPaymentMode;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -7,22 +8,39 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.jeeva.android.BaseFragment;
+import com.jeeva.android.widgets.CustomProgressbar;
 
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.navigation.NavigationFragment;
 import in.sportscafe.nostragamus.module.navigation.wallet.addMoney.AddMoneyWalletHelper;
+import in.sportscafe.nostragamus.module.navigation.wallet.addMoney.addByCashFree.AddMoneyByCashFreeHelper;
+import in.sportscafe.nostragamus.module.navigation.wallet.addMoney.addByPaymentCoupon.AddMoneyThroughPaymentCouponFragmentListener;
 
 /**
  * Created by deepanshi on 2/23/18.
  */
 
-public class SelectPaymentModeFragment extends BaseFragment implements View.OnClickListener {
+public class SelectPaymentModeFragment extends BaseFragment implements View.OnClickListener,AddMoneyByCashFreeHelper.AddMoneyByCashFreeProcessListener {
 
     private static final String TAG = NavigationFragment.class.getSimpleName();
 
     public SelectPaymentModeFragment() {
     }
+
+    private SelectPaymentModeFragmentListener mSelectPaymentModeFragmentListener;
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+
+        if (context instanceof SelectPaymentModeActivity) {
+            mSelectPaymentModeFragmentListener = (SelectPaymentModeFragmentListener) context;
+        } else {
+            throw new RuntimeException("Activity must implement " + TAG);
+        }
+    }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -50,6 +68,14 @@ public class SelectPaymentModeFragment extends BaseFragment implements View.OnCl
         super.onActivityCreated(savedInstanceState);
     }
 
+    public SelectPaymentModeFragmentListener getFragmentListener() {
+        return mSelectPaymentModeFragmentListener;
+    }
+
+    public void setFragmentListener(SelectPaymentModeFragmentListener mFragmentListener) {
+        this.mSelectPaymentModeFragmentListener = mFragmentListener;
+    }
+
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
@@ -72,6 +98,8 @@ public class SelectPaymentModeFragment extends BaseFragment implements View.OnCl
             case R.id.add_money_wallet_layout:
                 onAddMoneyByOtherWalletsClicked();
                 break;
+
+
         }
     }
 
@@ -89,17 +117,29 @@ public class SelectPaymentModeFragment extends BaseFragment implements View.OnCl
     private void onAddMoneyByOtherWalletsClicked() {
         if (getAmountDetails() > 0) {
             double amount = getAmountDetails();
-            AddMoneyWalletHelper.initTransaction(this, amount);
+            AddMoneyByCashFreeHelper.getOrderDetails(this, amount, Constants.SelectPaymentModes.WALLET,this);
         }
     }
 
     private void onAddMoneyByUPIClicked() {
+        if (getAmountDetails() > 0) {
+            double amount = getAmountDetails();
+            AddMoneyByCashFreeHelper.getOrderDetails(this, amount, Constants.SelectPaymentModes.UPI,this);
+        }
     }
 
     private void onAddMoneyByCreditCardClicked() {
+        if (getAmountDetails() > 0) {
+            double amount = getAmountDetails();
+            AddMoneyByCashFreeHelper.getOrderDetails(this, amount, Constants.SelectPaymentModes.CREDIT_CARD,this);
+        }
     }
 
     private void onAddMoneyByDebitCardClicked() {
+        if (getAmountDetails() > 0) {
+            double amount = getAmountDetails();
+            AddMoneyByCashFreeHelper.getOrderDetails(this, amount, Constants.SelectPaymentModes.DEBIT_CARD,this);
+        }
     }
 
     private void onAddMoneyByPaytmClicked() {
@@ -109,6 +149,22 @@ public class SelectPaymentModeFragment extends BaseFragment implements View.OnCl
         }
     }
 
-    public void onBackPressed() {
+    @Override
+    public void noInternet() {
+
+    }
+
+    @Override
+    public void hideProgressBar() {
+        if (getContext()!=null) {
+            CustomProgressbar.getProgressbar(getContext()).dismissProgress();
+        }
+    }
+
+    @Override
+    public void showProgressBar() {
+        if (getContext()!=null) {
+            CustomProgressbar.getProgressbar(getContext()).show();
+        }
     }
 }

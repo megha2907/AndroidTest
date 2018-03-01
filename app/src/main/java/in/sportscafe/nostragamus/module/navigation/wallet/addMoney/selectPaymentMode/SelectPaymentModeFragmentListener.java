@@ -6,6 +6,5 @@ package in.sportscafe.nostragamus.module.navigation.wallet.addMoney.selectPaymen
 
 public interface SelectPaymentModeFragmentListener {
     void onBackClicked();
-
-    void onSuccess();
+    void onMoneyAddedToWalletSuccess();
 }

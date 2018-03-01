@@ -16,9 +16,11 @@ import in.sportscafe.nostragamus.module.navigation.wallet.addMoney.addByPaymentC
 import in.sportscafe.nostragamus.module.navigation.wallet.addMoney.addByPaymentCoupon.AddMoneyThroughPaymentCouponFragmentListener;
 import in.sportscafe.nostragamus.module.navigation.wallet.addMoney.addByPaytm.AddMoneyThroughPaytmFragment;
 import in.sportscafe.nostragamus.module.navigation.wallet.addMoney.addByPaytm.AddMoneyThroughPaytmFragmentListener;
+import in.sportscafe.nostragamus.module.navigation.wallet.addMoney.selectPaymentMode.SelectPaymentModeFragment;
+import in.sportscafe.nostragamus.module.navigation.wallet.addMoney.selectPaymentMode.SelectPaymentModeFragmentListener;
 import in.sportscafe.nostragamus.module.navigation.wallet.paytmAndBank.PaytmApiModelImpl;
-import in.sportscafe.nostragamus.module.navigation.wallet.paytmAndBank.PaytmTransactionFailureDialogFragment;
-import in.sportscafe.nostragamus.module.navigation.wallet.paytmAndBank.PaytmTransactionSuccessDialogFragment;
+import in.sportscafe.nostragamus.module.navigation.wallet.paytmAndBank.TransactionFailureDialogFragment;
+import in.sportscafe.nostragamus.module.navigation.wallet.paytmAndBank.TransactionSuccessDialogFragment;
 import in.sportscafe.nostragamus.module.navigation.wallet.paytmAndBank.dto.GenerateOrderResponse;
 import in.sportscafe.nostragamus.module.navigation.wallet.paytmAndBank.dto.PaytmTransactionResponse;
 
@@ -181,8 +183,8 @@ public class AddMoneyWalletHelper {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                PaytmTransactionSuccessDialogFragment successDialogFragment =
-                        PaytmTransactionSuccessDialogFragment.newInstance(1200, amount, getPaytmSuccessActionListener(fragment));
+                TransactionSuccessDialogFragment successDialogFragment =
+                        TransactionSuccessDialogFragment.newInstance(1200, amount, getPaytmSuccessActionListener(fragment));
 
                 if (fragment != null && fragment.getActivity()!=null && !fragment.getActivity().isFinishing()) {
                     FragmentManager fragmentManager = fragment.getChildFragmentManager();
@@ -198,8 +200,8 @@ public class AddMoneyWalletHelper {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                PaytmTransactionFailureDialogFragment failureDialogFragment =
-                        PaytmTransactionFailureDialogFragment.newInstance(1199, getPaytmFailureActionListener(fragment, amount));
+                TransactionFailureDialogFragment failureDialogFragment =
+                        TransactionFailureDialogFragment.newInstance(1199, getPaytmFailureActionListener(fragment, amount));
 
                 if (fragment != null && fragment.getActivity()!=null && !fragment.getActivity().isFinishing()) {
                     FragmentManager fragmentManager = fragment.getChildFragmentManager();
@@ -220,12 +222,12 @@ public class AddMoneyWalletHelper {
      *
      * @return
      */
-    private static PaytmTransactionFailureDialogFragment.IPaytmFailureActionListener
+    private static TransactionFailureDialogFragment.IFailureActionListener
     getPaytmFailureActionListener(final BaseFragment fragment, final double amount) {
-        return new PaytmTransactionFailureDialogFragment.IPaytmFailureActionListener() {
+        return new TransactionFailureDialogFragment.IFailureActionListener() {
 
             @Override
-            public void onBackToAddMoney() {
+            public void onBackToSelectPaymentMode() {
                 Log.d(TAG, "On Paytm transaction failed ");
             }
 
@@ -242,9 +244,9 @@ public class AddMoneyWalletHelper {
      *
      * @return
      */
-    private static PaytmTransactionSuccessDialogFragment.IPaytmSuccessActionListener
+    private static TransactionSuccessDialogFragment.ISuccessActionListener
     getPaytmSuccessActionListener(final BaseFragment fragment) {
-        return new PaytmTransactionSuccessDialogFragment.IPaytmSuccessActionListener() {
+        return new TransactionSuccessDialogFragment.ISuccessActionListener() {
             @Override
             public void onBackToHomeClicked() {
                 if (fragment != null) {
@@ -260,6 +262,13 @@ public class AddMoneyWalletHelper {
                             fragmentListener.onPaytmMoneyAddSuccess();
                         }
                     }
+                    if (fragment instanceof SelectPaymentModeFragment) {
+                        SelectPaymentModeFragmentListener fragmentListener = ((SelectPaymentModeFragment) fragment).getFragmentListener();
+                        if (fragmentListener != null) {
+                            fragmentListener.onMoneyAddedToWalletSuccess();
+                        }
+                    }
+
 
                     /*if (fragment instanceof  AddWalletMoneyFragment) {
                         AddWalletMoneyFragmentListener fragmentListener = ((AddWalletMoneyFragment) fragment).getFragmentListener();

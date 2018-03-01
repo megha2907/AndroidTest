@@ -830,6 +830,19 @@ public interface Constants {
         String CASHFREE = "cashfree";
     }
 
+    interface SelectPaymentModes {
+        String DEBIT_CARD = "dc";
+        String CREDIT_CARD = "cc";
+        String UPI = "upi";
+        String WALLET = "wallet";
+    }
+
+    interface VerifyPaymentStatus {
+        String CREATED = "CREATED";
+        String SUCCESS = "SUCCESS";
+        String FAILURE = "FAILURE";
+    }
+
     interface AppUpdateTypes {
         String NORMAL_UPDATE = "Normal";
         String FORCE_UPDATE = "Force";

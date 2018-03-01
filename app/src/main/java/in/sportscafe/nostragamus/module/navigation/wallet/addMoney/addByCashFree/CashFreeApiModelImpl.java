@@ -11,6 +11,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import in.sportscafe.nostragamus.Constants;
+import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.navigation.wallet.addMoney.dto.CashFreeGenerateOrderResponse;
 import in.sportscafe.nostragamus.module.navigation.wallet.addMoney.dto.CashFreeTransactionResponse;
 import in.sportscafe.nostragamus.module.navigation.wallet.paytmAndBank.dto.PaytmTransactionResponse;
@@ -19,6 +20,7 @@ import static com.gocashfree.cashfreesdk.CFPaymentService.PARAM_APP_ID;
 import static com.gocashfree.cashfreesdk.CFPaymentService.PARAM_CUSTOMER_EMAIL;
 import static com.gocashfree.cashfreesdk.CFPaymentService.PARAM_CUSTOMER_NAME;
 import static com.gocashfree.cashfreesdk.CFPaymentService.PARAM_CUSTOMER_PHONE;
+import static com.gocashfree.cashfreesdk.CFPaymentService.PARAM_NOTIFY_URL;
 import static com.gocashfree.cashfreesdk.CFPaymentService.PARAM_ORDER_AMOUNT;
 import static com.gocashfree.cashfreesdk.CFPaymentService.PARAM_ORDER_ID;
 import static com.gocashfree.cashfreesdk.CFPaymentService.PARAM_ORDER_NOTE;
@@ -35,6 +37,9 @@ public class CashFreeApiModelImpl implements CFClientInterface {
     private CashFreeApiModelImpl.OnCashFreeApiModelListener mListener;
     private Context mContext;
 
+    /* stage identifies whether you want trigger test or production service */
+    private String STAGE = "TEST";
+
     private CashFreeApiModelImpl(CashFreeApiModelImpl.OnCashFreeApiModelListener listener, @NonNull Context context) {
         this.mListener = listener;
         this.mContext = context;
@@ -44,13 +49,13 @@ public class CashFreeApiModelImpl implements CFClientInterface {
         return new CashFreeApiModelImpl(listener, context);
     }
 
-    public void initCashFreeTransaction(CashFreeGenerateOrderResponse cashFreeGenerateOrderResponse) {
+    public void initCashFreeTransaction(CashFreeGenerateOrderResponse cashFreeGenerateOrderResponse, String paymentMode) {
 
-        if (cashFreeGenerateOrderResponse != null && !TextUtils.isEmpty(cashFreeGenerateOrderResponse.getChecksumUrl())) {
+        if (cashFreeGenerateOrderResponse != null && !TextUtils.isEmpty(cashFreeGenerateOrderResponse.getChecksumUrl())
+                && mContext != null) {
 
             String checksumUrl = cashFreeGenerateOrderResponse.getChecksumUrl();
-            String appId = "374123e1b8eb30b2ec8838d473";
-            String stage = "TEST";  // stage identifies whether you want trigger test or production service
+            String appId = mContext.getString(R.string.cashfree_app_id);
 
             Map<String, String> params = new HashMap<>();
             params.put(PARAM_APP_ID, appId);
@@ -60,10 +65,11 @@ public class CashFreeApiModelImpl implements CFClientInterface {
             params.put(PARAM_CUSTOMER_NAME, cashFreeGenerateOrderResponse.getCustomerName());
             params.put(PARAM_CUSTOMER_PHONE, cashFreeGenerateOrderResponse.getCustomerPhone());
             params.put(PARAM_CUSTOMER_EMAIL, cashFreeGenerateOrderResponse.getCustomerEmail());
-            params.put(PARAM_PAYMENT_MODES, "");
+            params.put(PARAM_NOTIFY_URL, cashFreeGenerateOrderResponse.getCallbackUrl());
+            params.put(PARAM_PAYMENT_MODES, paymentMode);
 
             CFPaymentService cfPaymentService = CFPaymentService.getCFPaymentServiceInstance();
-            cfPaymentService.doPayment(mContext, params, checksumUrl, this, stage);
+            cfPaymentService.doPayment(mContext, params, checksumUrl, this, STAGE);
 
         } else {
             com.jeeva.android.Log.d(TAG, "Generate Order Null or CheckSum Url Null");
@@ -84,9 +90,6 @@ public class CashFreeApiModelImpl implements CFClientInterface {
             }
         } else {
             com.jeeva.android.Log.d(TAG, "CashFree Transaction status NOT / OTHER than SUCCESS ");
-            if (mListener != null) {
-                mListener.onTransactionFailureResponse(cashFreeTransactionResponse);
-            }
         }
 
     }
@@ -128,22 +131,16 @@ public class CashFreeApiModelImpl implements CFClientInterface {
     @Override
     public void onNavigateBack() {
         if (mListener != null) {
-            mListener.onTransactionCancelled();
+            mListener.onTransactionCancelledByBackPressed();
         }
     }
 
     public interface OnCashFreeApiModelListener {
         void onTransactionUiError();
 
-        void onTransactionNoNetwork();
-
-        void onTransactionClientAuthenticationFailed();
-
         void onTransactionPageLoadingError();
 
         void onTransactionCancelledByBackPressed();
-
-        void onTransactionCancelled();
 
         void onTransactionSuccessResponse(CashFreeTransactionResponse response);
 

@@ -9,4 +9,5 @@ import android.os.Bundle;
 public interface WithdrawWalletMoneyFragmentListener {
     void onBackClicked();
     void onWithdrawButtonClicked(Bundle args);
+    void hideSoftKeyBoard();
 }
