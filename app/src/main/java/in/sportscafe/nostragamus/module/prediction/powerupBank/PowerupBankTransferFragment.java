@@ -675,8 +675,9 @@ public class PowerupBankTransferFragment extends BaseFragment implements View.On
     }
 
     private void showResetButtons() {
-        if (mResetButton != null) {
+        if (mResetButton != null && mResetButton.getVisibility() != View.VISIBLE) {
             Animation animation = AnimationUtils.loadAnimation(mResetButton.getContext(), R.anim.fade_in);
+            animation.setDuration(500);
             animation.setAnimationListener(new Animation.AnimationListener() {
                 @Override
                 public void onAnimationStart(Animation animation) {

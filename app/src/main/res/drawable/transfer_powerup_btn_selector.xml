@@ -23,7 +23,7 @@
         <layer-list>
             <item>  <!-- shadow -->
                 <shape>
-                    <solid android:color="#353535" />
+                    <solid android:color="#505050" />
                     <corners android:radius="@dimen/dp_2" />
                 </shape>
             </item>
