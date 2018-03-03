@@ -1,4 +1,4 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -16,8 +16,42 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
+            <!-- Message layout -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <com.jeeva.android.widgets.customfont.CustomTextView
+                    android:id="@+id/powerup_transfer_heading_textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/sp_12"
+                    android:text="@string/powerup_bank_transfer_from_bank_heading"
+                    android:layout_gravity="center"
+                    app:typeface="lato_regular"
+                    android:layout_marginTop="@dimen/dim_16"/>
+
+                <com.jeeva.android.widgets.customfont.CustomTextView
+                    android:id="@+id/powerup_transfer_subHeading_textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white_dim"
+                    android:textSize="@dimen/sp_11"
+                    android:text="@string/powerup_bank_transfer_from_bank_sub_heading"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:layout_marginLeft="@dimen/dim_20"
+                    android:layout_marginRight="@dimen/dim_20"
+                    android:layout_marginTop="@dimen/dim_8"
+                    app:typeface="lato_regular" />
+
+            </LinearLayout>
+
             <!-- Powerup Layout -->
             <LinearLayout
+                android:id="@+id/powerup_transfer_detail_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
@@ -78,7 +112,7 @@
                         android:id="@+id/powerup_bank_add_double_button"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/dim_32"
-                        android:background="@drawable/grey_button_selector"
+                        android:background="@drawable/transfer_powerup_add_btn_selector"
                         android:text="+ Add"
                         android:textSize="@dimen/sp_12"
                         android:textColor="@drawable/white_text_selector"
@@ -102,14 +136,13 @@
                         android:id="@+id/powerup_bank_doubler_add_err_textView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/err_color"
+                        android:textColor="@color/white_dim"
                         android:textSize="@dimen/sp_12"
-                        android:text="@string/max_added"
+                        android:text="0 Left"
                         android:layout_gravity="center"
                         app:typeface="lato_regular"
                         android:layout_marginTop="@dimen/dim_10"
-                        android:layout_marginBottom="@dimen/dim_10"
-                        android:visibility="invisible"/>
+                        android:layout_marginBottom="@dimen/dim_10"/>
 
                     <LinearLayout
                         android:layout_width="@dimen/dim_32"
@@ -185,7 +218,7 @@
                         android:id="@+id/powerup_bank_add_no_negative_button"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/dim_32"
-                        android:background="@drawable/grey_button_selector"
+                        android:background="@drawable/transfer_powerup_add_btn_selector"
                         android:text="+ Add"
                         android:textSize="@dimen/sp_12"
                         android:textColor="@drawable/white_text_selector"
@@ -208,14 +241,13 @@
                         android:id="@+id/powerup_bank_no_neg_add_err_textView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/err_color"
+                        android:textColor="@color/white_dim"
                         android:textSize="@dimen/sp_12"
-                        android:text="@string/max_added"
+                        android:text="0 Left"
                         android:layout_gravity="center"
                         app:typeface="lato_regular"
                         android:layout_marginTop="@dimen/dim_10"
-                        android:layout_marginBottom="@dimen/dim_10"
-                        android:visibility="invisible"/>
+                        android:layout_marginBottom="@dimen/dim_10"/>
 
                     <LinearLayout
                         android:layout_width="@dimen/dim_32"
@@ -293,7 +325,7 @@
                         android:id="@+id/powerup_bank_add_audience_poll_button"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/dim_32"
-                        android:background="@drawable/grey_button_selector"
+                        android:background="@drawable/transfer_powerup_add_btn_selector"
                         android:text="+ Add"
                         android:textSize="@dimen/sp_12"
                         android:textColor="@drawable/white_text_selector"
@@ -316,14 +348,13 @@
                         android:id="@+id/powerup_bank_audience_add_err_textView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/err_color"
+                        android:textColor="@color/white_dim"
                         android:textSize="@dimen/sp_12"
-                        android:text="@string/max_added"
+                        android:text="0 Left"
                         android:layout_gravity="center"
                         app:typeface="lato_regular"
                         android:layout_marginTop="@dimen/dim_10"
-                        android:layout_marginBottom="@dimen/dim_10"
-                        android:visibility="invisible"/>
+                        android:layout_marginBottom="@dimen/dim_10"/>
 
                     <LinearLayout
                         android:layout_width="@dimen/dim_32"
@@ -354,7 +385,7 @@
                 android:layout_width="@dimen/dp_160"
                 android:layout_height="@dimen/dim_40"
                 android:layout_gravity="center_horizontal"
-                android:background="@drawable/blue_button_selector"
+                android:background="@drawable/transfer_powerup_btn_selector"
                 android:text="Transfer to Challenge"
                 android:textColor="@drawable/white_text_selector"
                 android:textAllCaps="false"
@@ -370,17 +401,29 @@
                 android:layout_height="@dimen/dim_40"
                 android:enabled="false"
                 android:layout_gravity="center_horizontal"
-                android:background="@drawable/grey_button_selector"
-                android:text="Reset All"
+                android:background="@null"
+                android:text="RESET"
+                android:textSize="@dimen/sp_10"
                 android:textColor="@drawable/white_text_selector"
                 android:textAllCaps="false"
-                android:layout_marginTop="@dimen/dim_20"
+                android:layout_marginTop="@dimen/dim_16"
                 app:typeface="lato_bold"
                 android:paddingBottom="@dimen/dim_3"
-                />
+                android:visibility="invisible"/>
+
+            <com.jeeva.android.widgets.customfont.CustomTextView
+                android:id="@+id/powerup_bank_max_limit_textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:textColor="@color/white_999999"
+                android:textSize="@dimen/sp_11"
+                android:text=""
+                app:typeface="lato_regular"
+                android:layout_marginTop="@dimen/dim_80"/>
 
         </LinearLayout>
 
     </ScrollView>
 
-</LinearLayout>
+</android.support.design.widget.CoordinatorLayout>

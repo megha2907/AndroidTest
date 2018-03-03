@@ -442,4 +442,11 @@ public class NostragamusDataHandler extends AbstractDataHandler implements Const
         setSharedBooleanData(SharedKeys.EDITING_ANSWER_FIRST_TIME, false);
     }
 
+    public void setPowerUpTransferFromBankAttempted() {
+        setSharedBooleanData(SharedKeys.POWERUP_TRANSFER_FROM_BANK_ATTEMPTED, true);
+    }
+
+    public boolean isPowerUpTransferFromBankAttempted() {
+        return getSharedBooleanData(SharedKeys.POWERUP_TRANSFER_FROM_BANK_ATTEMPTED, false);
+    }
 }
