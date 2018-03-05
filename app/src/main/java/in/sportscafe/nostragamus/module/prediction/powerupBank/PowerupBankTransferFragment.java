@@ -639,9 +639,11 @@ public class PowerupBankTransferFragment extends BaseFragment implements View.On
 
             if (mApiResponse.getMaxTransferLimit() > 0) {
                 int leftPowerup = mApiResponse.getMaxTransferLimit() - mUserDemandPowerup.getPlayerPoll();
-                if (leftPowerup >= 0) {
+                if (leftPowerup > 0) {
                     msgTextView.setText(leftPowerup + " Left");
                     msgTextView.setTextColor(ContextCompat.getColor(msgTextView.getContext(), R.color.white_dim));
+                } else {
+                    onMaxAudiencePollPowerUpAdded(true);
                 }
             }
         }
@@ -677,7 +679,7 @@ public class PowerupBankTransferFragment extends BaseFragment implements View.On
     private void showResetButtons() {
         if (mResetButton != null && mResetButton.getVisibility() != View.VISIBLE) {
             Animation animation = AnimationUtils.loadAnimation(mResetButton.getContext(), R.anim.fade_in);
-            animation.setDuration(500);
+            animation.setDuration(750);
             animation.setAnimationListener(new Animation.AnimationListener() {
                 @Override
                 public void onAnimationStart(Animation animation) {
@@ -762,9 +764,11 @@ public class PowerupBankTransferFragment extends BaseFragment implements View.On
 
             if (mApiResponse.getMaxTransferLimit() > 0) {
                 int leftPowerup = mApiResponse.getMaxTransferLimit() - mUserDemandPowerup.getNoNegative();
-                if (leftPowerup >= 0) {
+                if (leftPowerup > 0) {
                     msgTextView.setText(leftPowerup + " Left");
                     msgTextView.setTextColor(ContextCompat.getColor(msgTextView.getContext(), R.color.white_dim));
+                } else {
+                    onMaxNoNegativePowerUpAdded(true);
                 }
             }
         }
@@ -866,9 +870,11 @@ public class PowerupBankTransferFragment extends BaseFragment implements View.On
 
             if (mApiResponse.getMaxTransferLimit() > 0) {
                 int leftPowerup = mApiResponse.getMaxTransferLimit() - mUserDemandPowerup.getDoubler();
-                if (leftPowerup >= 0) {
+                if (leftPowerup > 0) {
                     msgTextView.setText(leftPowerup + " Left");
                     msgTextView.setTextColor(ContextCompat.getColor(msgTextView.getContext(), R.color.white_dim));
+                } else {
+                    onMaxDoublerPowerUpAdded(true);
                 }
             }
         }
