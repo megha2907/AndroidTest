@@ -5,14 +5,14 @@
         <layer-list>
             <item> <!-- Shadow -->
                 <shape>
-                    <solid android:color="#026e77" />
+                    <solid android:color="@color/venice_blue" />
                     <corners android:radius="@dimen/dp_2" />
                 </shape>
             </item>
             <!-- BUTTON -->
             <item android:bottom="@dimen/dp_3">
                 <shape>
-                    <solid android:color="#027a85" />
+                    <solid android:color="@color/venice_blue" />
                     <corners android:radius="@dimen/dp_2" />
                 </shape>
             </item>

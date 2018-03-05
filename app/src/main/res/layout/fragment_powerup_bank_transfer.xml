@@ -30,21 +30,22 @@
                     android:layout_marginTop="@dimen/dim_16"
                     android:text="@string/powerup_bank_transfer_from_bank_heading"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/sp_12"
-                    app:typeface="lato_regular" />
+                    android:textSize="@dimen/sp_13"
+                    app:typeface="lato_bold" />
 
                 <com.jeeva.android.widgets.customfont.CustomTextView
                     android:id="@+id/powerup_transfer_subHeading_textView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
+                    android:lineSpacingExtra="@dimen/dim_2"
                     android:layout_marginLeft="@dimen/dim_20"
                     android:layout_marginRight="@dimen/dim_20"
                     android:layout_marginTop="@dimen/dim_8"
                     android:gravity="center"
                     android:text="@string/powerup_bank_transfer_from_bank_sub_heading"
                     android:textColor="@color/white_dim"
-                    android:textSize="@dimen/sp_11"
+                    android:textSize="@dimen/sp_12"
                     app:typeface="lato_regular" />
 
             </LinearLayout>
@@ -399,13 +400,13 @@
                 android:layout_width="@dimen/dim_90"
                 android:layout_height="@dimen/dim_40"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="@dimen/dim_16"
+                android:layout_marginTop="@dimen/dim_8"
                 android:background="@null"
                 android:enabled="false"
                 android:paddingBottom="@dimen/dim_3"
                 android:text="RESET"
                 android:textAllCaps="false"
-                android:textColor="@drawable/white_text_selector"
+                android:textColor="@color/white_dim"
                 android:textSize="@dimen/sp_10"
                 android:visibility="invisible"
                 app:typeface="lato_bold" />
