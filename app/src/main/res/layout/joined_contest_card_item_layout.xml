@@ -60,14 +60,33 @@
                         android:visibility="visible"
                         app:typeface="lato_regular" />
 
-                    <ImageView
-                        android:id="@+id/pool_row_iv_contest_type"
+                    <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:paddingLeft="@dimen/dim_10"
-                        android:paddingBottom="@dimen/dim_5"
-                        android:layout_marginTop="@dimen/dim_3"/>
+                        android:orientation="horizontal"
+                        android:layout_alignParentRight="true">
+
+                        <ImageView
+                            android:id="@+id/pool_row_iv_contest_type"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:paddingLeft="@dimen/dim_10"
+                            android:paddingBottom="@dimen/dim_5"
+                            android:layout_marginTop="@dimen/dim_3"/>
+
+                        <ImageView
+                            android:id="@+id/contest_no_extra_powerup_imgView"
+                            android:layout_width="@dimen/dim_16"
+                            android:layout_height="@dimen/dim_16"
+                            android:paddingBottom="@dimen/dim_5"
+                            android:src="@drawable/powerup_bank_disabled"
+                            android:layout_marginTop="@dimen/dim_3"
+                            android:layout_marginLeft="@dimen/dim_12"
+                            android:layout_marginRight="@dimen/dim_16"
+                            android:visibility="gone"/>
+
+                    </LinearLayout>
 
                     <LinearLayout
                         android:id="@+id/pool_row_ll_member_layout"

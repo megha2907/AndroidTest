@@ -40,6 +40,7 @@ public class RulesFragment extends NostraBaseFragment implements RulesApiModelIm
     private TextView TvCancelledRuleThree;
     private TextView TvCancelledSubHeading;
     private ImageView IvContestRuleThree;
+    private ImageView powerupEnabledImgView;
 
     private int mContestId = 0;
 
@@ -113,6 +114,7 @@ public class RulesFragment extends NostraBaseFragment implements RulesApiModelIm
         TvCancelledRuleTwo = (TextView) rootView.findViewById(R.id.cancelled_rule_two);
         TvCancelledRuleThree = (TextView) rootView.findViewById(R.id.cancelled_rule_three);
         TvCancelledSubHeading = (TextView) rootView.findViewById(R.id.cancelled_subheading);
+        powerupEnabledImgView = (ImageView) rootView.findViewById(R.id.powerup_rule_two_icon);
     }
 
     private void setInfo(Rules rules) {
@@ -268,7 +270,17 @@ public class RulesFragment extends NostraBaseFragment implements RulesApiModelIm
     }
 
     private void showPowerUpsRuleTwo(Rules rules) {
-        TvPowerUpsRuleTwo.setText("You can transfer a maximum of " + String.valueOf(rules.getMaxTransferPowerUps()) + " powerups each from the bank");
+        if (rules.getMaxTransferPowerUps() <= 0) {
+            powerupEnabledImgView.setImageResource(R.drawable.powerup_bank_disabled);
+            TvPowerUpsRuleTwo.setText("You can't transfer powerups from bank");
+        } else {
+            powerupEnabledImgView.setImageResource(R.drawable.powerup_bank_enabled);
+            String msg = "You can transfer a maximum of " + String.valueOf(rules.getMaxTransferPowerUps()) + " powerups each from the bank";
+            if (rules.getMaxTransferPowerUps() == 1) {
+                msg = msg.replace("powerups", "powerup");
+            }
+            TvPowerUpsRuleTwo.setText(msg);
+        }
     }
 
 

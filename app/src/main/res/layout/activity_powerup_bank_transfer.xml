@@ -72,7 +72,7 @@
         </android.support.v7.widget.Toolbar>
 
         <!-- Powerup info container -->
-        <FrameLayout
+        <!--<FrameLayout
             android:id="@+id/powerup_bank_info_fragment_container"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dim_150"/>
@@ -82,7 +82,7 @@
             android:layout_height="@dimen/dp_0.5"
             android:background="@color/dividercolor"
             android:layout_marginLeft="@dimen/dim_15"
-            android:layout_marginRight="@dimen/dim_15"/>
+            android:layout_marginRight="@dimen/dim_15"/>-->
 
         <!-- Add Powerup layout -->
         <FrameLayout

@@ -134,11 +134,33 @@ public class InPlayMatchesPagerFragment extends NostraBaseFragment {
         if (mMatchRecyclerView != null && responses != null && responses.getData() != null &&
                 responses.getData().getInPlayMatchList() != null) {
             setInPlayMatchesTimeLine(responses);
+            setPowerupBankMsg(responses.getData().getInPlayMatchList());
 
             InPlayMatchesRecyclerAdapter adapter = new InPlayMatchesRecyclerAdapter(
                     responses.getData().getInPlayMatchList(), getMatchesAdapterListener());
             mMatchRecyclerView.setAdapter(adapter);
 
+        }
+    }
+
+    private void setPowerupBankMsg(List<InPlayMatch> inPlayMatches) {
+        if (getActivity() != null && !getActivity().isFinishing() && getView() != null &&
+                inPlayMatches != null && inPlayMatches.size() > 0) {
+            ImageView powerupBankImgView = (ImageView) getView().findViewById(R.id.no_extra_powerup_imgView);
+            TextView powerupMsgTextView = (TextView) getView().findViewById(R.id.inplay_match_powerup_bank_msg_textView);
+
+            if (inPlayMatches.get(0).getMaxTransferLimit() > 0) {   // as MaxTransferLimit is Challenge level, all matches/contest would have same values
+                powerupBankImgView.setImageResource(R.drawable.powerup_bank_enabled);
+
+                String msg = "Transfer maximum of " + inPlayMatches.get(0).getMaxTransferLimit() + " powerups each from bank";
+                if (inPlayMatches.get(0).getMaxTransferLimit() == 1) {
+                    msg = msg.replace("powerups", "powerup");
+                }
+                powerupMsgTextView.setText(msg);
+            } else {
+                powerupBankImgView.setImageResource(R.drawable.powerup_bank_disabled);
+                powerupMsgTextView.setText("Powerup bank disabled");
+            }
         }
     }
 
@@ -503,6 +525,7 @@ public class InPlayMatchesPagerFragment extends NostraBaseFragment {
             dataDto.setChallengeName(contestDto.getChallengeName());
             dataDto.setChallengeStartTime(contestDto.getChallengeStartTime());
             dataDto.setInPlayContestDto(contestDto);
+            dataDto.setMaxPowerUpTransferLimit(inPlayMatch.getMaxTransferLimit());
 
             String subTitle = "";
             if (!TextUtils.isEmpty(contestDto.getChallengeName())) {

@@ -164,4 +164,10 @@
     <string name="pool_prize_estimation_msg">This is the prize list for %1s entries. The prizes for pool contests might vary with the participation of players</string>
     <string name="bumper_prize_estimation_msg">This is the prize list for %1s entries. The prizes for pool contests might vary with the participation of players</string>
 
+    <string name="powerup_bank_transfer_from_bank_heading_first_time">The bank is where your extra powerups are stored</string>
+    <string name="powerup_bank_transfer_from_bank_sub_heading_first_time">These are the powerups you buy, or get for referrals. Use the bank to transfer this powerups to contests</string>
+    <string name="powerup_bank_transfering_from_bank_heading_first_time">Transferring powerups to Contest</string>
+    <string name="powerup_bank_transfering_from_bank_sub_heading_first_time">Once added, two buttons appear. Use the buttons to either transfer the selected powerups to contest, or reset them</string>
+    <string name="powerup_bank_transfer_from_bank_heading">Extra powerups you can transfer to Contest</string>
+    <string name="powerup_bank_transfer_from_bank_sub_heading">These are the powerups you buy or get for the referrals. Add and transfer these powerups to contests, using the bank</string>
 </resources>
