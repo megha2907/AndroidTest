@@ -28,7 +28,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:text="How to Play"
             android:textColor="@color/white"
             app:typeface="lato_regular"
             android:textSize="@dimen/sp_14" />
@@ -39,8 +38,6 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:text="Done"
-            android:textAllCaps="true"
             android:paddingTop="@dimen/dp_8"
             android:paddingBottom="@dimen/dp_8"
             android:paddingLeft="@dimen/dp_15"

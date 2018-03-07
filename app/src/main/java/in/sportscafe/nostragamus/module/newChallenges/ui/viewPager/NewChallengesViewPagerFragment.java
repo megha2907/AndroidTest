@@ -87,8 +87,8 @@ public class NewChallengesViewPagerFragment extends BaseFragment {
         mRecyclerView = (RecyclerView) rootView.findViewById(R.id.challenge_recycler);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(mRecyclerView.getContext(), LinearLayoutManager.VERTICAL, false));
         mRecyclerView.setHasFixedSize(true);
-        mRecyclerView.setPadding(0,getResources().getDimensionPixelSize(R.dimen.dim_6),
-                0,getResources().getDimensionPixelSize(R.dimen.dim_6));
+        mRecyclerView.setPadding(0, getResources().getDimensionPixelSize(R.dimen.dim_6),
+                0, getResources().getDimensionPixelSize(R.dimen.dim_6));
     }
 
     @Override
@@ -151,8 +151,7 @@ public class NewChallengesViewPagerFragment extends BaseFragment {
 
     private void setBannersOnUi(List<BannerResponseData> bannerResponseDataList) {
 
-        if (bannerResponseDataList != null && bannerResponseDataList.size() > 0
-                && getView() != null && bannerRecyclerAdapter!=null) {
+        if (bannerResponseDataList != null && bannerResponseDataList.size() > 0 && getView() != null) {
             RecyclerView mRcvHorizontal = (RecyclerView) getView().findViewById(R.id.challenges_rcv_horizontal);
             mRcvHorizontal.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
             mRcvHorizontal.setNestedScrollingEnabled(false);
@@ -178,8 +177,8 @@ public class NewChallengesViewPagerFragment extends BaseFragment {
 
             RecyclerView rvChallenge = (RecyclerView) getView().findViewById(R.id.challenge_recycler);
 
-            if (rvChallenge!=null &&  rvChallenge.getLayoutTransition()!=null) {
-                rvChallenge.setPadding(0,0,0,getResources().getDimensionPixelSize(R.dimen.dim_6));
+            if (rvChallenge != null && rvChallenge.getLayoutTransition() != null) {
+                rvChallenge.setPadding(0, 0, 0, getResources().getDimensionPixelSize(R.dimen.dim_6));
                 rvChallenge.getLayoutTransition().enableTransitionType(LayoutTransition.APPEARING);
             }
 
@@ -236,8 +235,7 @@ public class NewChallengesViewPagerFragment extends BaseFragment {
                             }
                             onNewChallengesClicked(bundle);
 
-                        } else if (screenName.equalsIgnoreCase(Constants.Notifications.SCREEN_NEW_CHALLENGES_GAMES)||
-                                screenName.equalsIgnoreCase(Constants.Notifications.SCREEN_NEW_CHALLENGE_GAMES)) {
+                        } else if (screenName.equalsIgnoreCase(Constants.Notifications.SCREEN_NEW_CHALLENGES_GAMES)) {
                             startActivity(notificationHelper.getNewChallengeMatchesScreenIntent(getContext(), notification));
 
                         } else if (screenName.equalsIgnoreCase(Constants.Notifications.SCREEN_IN_PLAY_MATCHES)) {
@@ -285,6 +283,8 @@ public class NewChallengesViewPagerFragment extends BaseFragment {
 
                         } else if (screenName.equalsIgnoreCase(Constants.Notifications.SCREEN_WEB_VIEW)) {
                             startActivity(notificationHelper.getWebViewScreenIntent(getContext(), notification));
+                        } else if (screenName.equalsIgnoreCase(Constants.Notifications.SCREEN_SLIDES)) {
+                            startActivity(notificationHelper.getSlidesScreenIntent(getContext(), notification));
                         }
 
                     }

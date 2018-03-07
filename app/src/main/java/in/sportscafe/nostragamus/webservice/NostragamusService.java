@@ -396,7 +396,7 @@ public interface NostragamusService {
     @POST("v3/game/users/ticket")
     Call<ApiResponse> sendErrorReport(@Body SubmitReportRequest request);
 
-    @GET("v1/game/users/banners")
+    @GET("v3/game/users/banners")
     Call<BannerResponse> getBannerData();
 
     @GET("v3/game/users/getMatchContests")
@@ -405,6 +405,6 @@ public interface NostragamusService {
     @POST("v3/game/users/copyMatchAnswers")
     Call<CopyAnswerResponse> copyAnswer(@Body CopyAnswerRequest copyAnswerRequest);
 
-    @GET("v3/game/users/howtoplay")
-    Call<HowToPlayResponse> getHowToPlayData();
+    @GET("v3/game/slides")
+    Call<HowToPlayResponse> getHowToPlayData(@Query("slide_id") String slideId);
 }

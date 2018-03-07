@@ -7,6 +7,7 @@ import android.view.WindowManager;
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.NostragamusActivity;
+import in.sportscafe.nostragamus.module.contest.ui.ContestFragment;
 import in.sportscafe.nostragamus.utils.FragmentHelper;
 
 /**
@@ -30,7 +31,17 @@ public class HowToPlayActivity extends NostragamusActivity implements HowToPlayF
     }
 
     private void loadHowToPlayFragment() {
+
+        Bundle args = null;
+        if (getIntent() != null && getIntent().getExtras() != null) {
+            args = getIntent().getExtras();
+        }
+
         HowToPlayFragment fragment = new HowToPlayFragment();
+        if (args != null) {
+            fragment.setArguments(args);
+        }
+
         FragmentHelper.replaceFragment(this, R.id.fragment_container, fragment);
     }
 

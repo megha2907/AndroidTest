@@ -283,6 +283,9 @@ public class NostraHomeActivity extends NostraBaseActivity implements View.OnCli
 
                 } else if (screenName.equalsIgnoreCase(Constants.Notifications.SCREEN_WEB_VIEW)) {
                     startActivity(notificationHelper.getWebViewScreenIntent(this, notification));
+
+                } else if (screenName.equalsIgnoreCase(Constants.Notifications.SCREEN_SLIDES)) {
+                    startActivity(notificationHelper.getSlidesScreenIntent(this, notification));
                 }
 
             } else {

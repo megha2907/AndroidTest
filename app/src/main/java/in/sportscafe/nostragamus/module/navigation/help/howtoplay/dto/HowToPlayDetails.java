@@ -17,6 +17,9 @@ public class HowToPlayDetails {
     @SerializedName("slides")
     private List<HowToPlay> howToPlayList = new ArrayList<>();
 
+    @SerializedName("title")
+    private String title;
+
     public List<HowToPlay> getHowToPlayList() {
         return howToPlayList;
     }
@@ -24,4 +27,13 @@ public class HowToPlayDetails {
     public void setHowToPlayList(List<HowToPlay> howToPlayList) {
         this.howToPlayList = howToPlayList;
     }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
 }

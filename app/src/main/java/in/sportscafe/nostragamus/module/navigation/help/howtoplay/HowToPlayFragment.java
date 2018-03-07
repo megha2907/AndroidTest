@@ -5,6 +5,7 @@ import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
+import android.text.TextUtils;
 import android.view.KeyCharacterMap;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -18,12 +19,15 @@ import android.widget.TextView;
 import com.jeeva.android.BaseFragment;
 import com.jeeva.android.Log;
 
+import org.parceler.Parcels;
+
 import java.util.List;
 
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.ViewPagerAdapter;
 import in.sportscafe.nostragamus.module.crash.NostragamusUncaughtExceptionHandler;
+import in.sportscafe.nostragamus.module.customViews.CustomSnackBar;
 import in.sportscafe.nostragamus.module.navigation.help.howtoplay.dto.HowToPlay;
 import in.sportscafe.nostragamus.module.navigation.help.howtoplay.dto.HowToPlayDetails;
 import me.relex.circleindicator.CircleIndicator;
@@ -43,6 +47,8 @@ public class HowToPlayFragment extends BaseFragment implements View.OnClickListe
 
     private ViewPager mViewPager;
     private TextView nextOption;
+    private String slideId; /* To Send Request for different screens with same slide design */
+    private CustomSnackBar mSnackBar;
 
     @Override
     public void onAttach(Context context) {
@@ -66,7 +72,7 @@ public class HowToPlayFragment extends BaseFragment implements View.OnClickListe
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         initViews();
-        loadHowToPlayData();
+        openBundle();
     }
 
     private void initViews() {
@@ -77,48 +83,72 @@ public class HowToPlayFragment extends BaseFragment implements View.OnClickListe
         nextOption.setOnClickListener(this);
     }
 
-    private void loadHowToPlayData() {
+    private void openBundle() {
+        Bundle args = getArguments();
+        if (args != null && args.containsKey(Constants.BundleKeys.SLIDE_ID)) {
+            slideId = args.getString(Constants.BundleKeys.SLIDE_ID);
+            loadHowToPlayData(slideId);
+        } else {
+            handleHowToPlayError();
+        }
+    }
+
+
+    private void loadHowToPlayData(String slideId) {
         HowToPlayDataProvider dataProvider = new HowToPlayDataProvider();
-        dataProvider.getHowToPlayData(getContext().getApplicationContext(), new HowToPlayDataProvider.HowToPlayDataProviderListener() {
+        dataProvider.getHowToPlayData(getContext().getApplicationContext(), slideId, new HowToPlayDataProvider.HowToPlayDataProviderListener() {
             @Override
             public void onData(int status, @Nullable HowToPlayDetails howToPlayDetails) {
-                onHowToPlayDataReceived(status, howToPlayDetails.getHowToPlayList());
+                onHowToPlayDataReceived(status, howToPlayDetails.getTitle(), howToPlayDetails.getHowToPlayList());
             }
 
             @Override
             public void onError(int status) {
-                handleHowToPlayError(status);
+                handleHowToPlayError();
             }
         });
     }
 
-    private void onHowToPlayDataReceived(int status, List<HowToPlay> howToPlayList) {
+    private void onHowToPlayDataReceived(int status, String title, List<HowToPlay> howToPlayList) {
         switch (status) {
             case Constants.DataStatus.FROM_SERVER_API_SUCCESS:
                 setHowToPlaySlides(howToPlayList);
+                setScreenTitle(title);
                 break;
 
             case Constants.DataStatus.FROM_DATABASE_AS_NO_INTERNET:
             case Constants.DataStatus.FROM_DATABASE_AS_SERVER_FAILED:
-                handleHowToPlayError(status);
+                handleHowToPlayError();
                 break;
 
             default:
-                handleHowToPlayError(status);
+                handleHowToPlayError();
                 break;
 
         }
     }
 
-    private void handleHowToPlayError(int status) {
+    private void setScreenTitle(String title) {
+        TextView screenTitle = (TextView) findViewById(R.id.how_to_play_tv_heading);
+        if (!TextUtils.isEmpty(title)) {
+            screenTitle.setText(title);
+        } else {
+            screenTitle.setText("Nostragamus");
+        }
+    }
 
+    private void handleHowToPlayError() {
+        if (getView() != null) {
+            mSnackBar = CustomSnackBar.make(getView(), Constants.Alerts.COULD_NOT_FETCH_DATA_FROM_SERVER, CustomSnackBar.DURATION_INFINITE);
+            mSnackBar.show();
+        }
     }
 
 
     /* Set How to Play Slides */
     private void setHowToPlaySlides(final List<HowToPlay> howToPlayList) {
 
-        if (mViewPager != null && howToPlayList != null && getView()!=null) {
+        if (mViewPager != null && howToPlayList != null && getView() != null) {
             ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getChildFragmentManager());
             for (HowToPlay howToPlay : howToPlayList) {
                 viewPagerAdapter.addFragment(HowToPlaySlidesFragment.newInstance(howToPlay), "");
@@ -149,10 +179,10 @@ public class HowToPlayFragment extends BaseFragment implements View.OnClickListe
             });
             mViewPager.setAdapter(viewPagerAdapter);
 
-            CircleIndicator cpi = (CircleIndicator)getView().findViewById(R.id.how_to_play_cpi_indicator);
+            CircleIndicator cpi = (CircleIndicator) getView().findViewById(R.id.how_to_play_cpi_indicator);
             cpi.setViewPager(mViewPager);
 
-            final RelativeLayout viewPagerLayout = (RelativeLayout)getView().findViewById(R.id.how_to_play_rl_viewpager);
+            final RelativeLayout viewPagerLayout = (RelativeLayout) getView().findViewById(R.id.how_to_play_rl_viewpager);
             boolean hasBackKey = KeyCharacterMap.deviceHasKey(KeyEvent.KEYCODE_BACK);
             boolean hasHomeKey = KeyCharacterMap.deviceHasKey(KeyEvent.KEYCODE_HOME);
 

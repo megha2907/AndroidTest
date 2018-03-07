@@ -456,7 +456,7 @@ public class MyWebService extends AbstractWebService<NostragamusService> {
         return mNostragamusService.copyAnswer(request);
     }
 
-    public Call<HowToPlayResponse> getHowToPlayData() {
-        return mNostragamusService.getHowToPlayData();
+    public Call<HowToPlayResponse> getHowToPlayData(String slideId) {
+        return mNostragamusService.getHowToPlayData(slideId);
     }
 }

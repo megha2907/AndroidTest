@@ -28,7 +28,6 @@ import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
 import in.sportscafe.nostragamus.module.common.NostraBaseFragment;
 import in.sportscafe.nostragamus.module.navigation.appupdate.AppUpdateActivity;
 import in.sportscafe.nostragamus.module.navigation.help.HelpActivity;
-import in.sportscafe.nostragamus.module.navigation.help.howtoplay.HowToPlayActivity;
 import in.sportscafe.nostragamus.module.navigation.powerupbank.PowerUpBankActivity;
 import in.sportscafe.nostragamus.module.navigation.referfriends.ReferFriendActivity;
 import in.sportscafe.nostragamus.module.navigation.settings.SettingsActivity;
@@ -263,7 +262,7 @@ public class NavigationFragment extends NostraBaseFragment implements View.OnCli
 
     private void onSettingsClicked() {
         if (getActivity() != null) {
-            Intent intent = new Intent(getActivity(), HowToPlayActivity.class);
+            Intent intent = new Intent(getActivity(), SettingsActivity.class);
             startActivity(intent);
         }
     }

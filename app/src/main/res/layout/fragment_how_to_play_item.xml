@@ -22,8 +22,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_marginLeft="@dimen/dim_24"
-        android:layout_marginRight="@dimen/dim_24"
+        android:layout_marginLeft="@dimen/dim_16"
+        android:layout_marginRight="@dimen/dim_16"
         android:layout_marginTop="@dimen/dim_12"
         android:text="Description"
         android:gravity="center"
@@ -31,7 +31,7 @@
         android:layout_below="@+id/how_to_play_tv_title"
         android:textColor="@color/white_60"
         android:textSize="@dimen/sp_12"
-        app:typeface="lato_bold" />
+        app:typeface="lato_regular" />
 
     <RelativeLayout
         android:id="@+id/how_to_play_image_rl"
