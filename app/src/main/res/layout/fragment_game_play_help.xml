@@ -10,7 +10,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/dim_40"
+        android:layout_marginBottom="@dimen/dim_32"
         android:layout_marginLeft="@dimen/dim_16"
         android:layout_marginRight="@dimen/dim_16"
         android:layout_marginTop="@dimen/dim_20"
@@ -121,10 +121,8 @@
                     android:id="@+id/powerups_iv_2x"
                     android:layout_width="@dimen/dp_56"
                     android:layout_height="@dimen/dp_56"
-                    android:background="@drawable/powerup_doubler_round_bg"
                     android:onClick="onClick"
-                    android:padding="@dimen/dp_10"
-                    android:src="@drawable/powerup_2x_white" />
+                    android:src="@drawable/powerup_doubler_with_bg" />
 
             </FrameLayout>
 
@@ -168,7 +166,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dim_32"
+            android:layout_marginTop="@dimen/dim_26"
             android:minHeight="@dimen/dp_64"
             android:orientation="horizontal">
 
@@ -181,10 +179,8 @@
                 <ImageView
                     android:layout_width="@dimen/dp_56"
                     android:layout_height="@dimen/dp_56"
-                    android:background="@drawable/powerup_no_neg_round_bg"
                     android:onClick="onClick"
-                    android:padding="@dimen/dp_10"
-                    android:src="@drawable/powerup_nonegs_white" />
+                    android:src="@drawable/powerup_no_neg_with_bg" />
 
             </FrameLayout>
 
@@ -227,7 +223,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dim_32"
+            android:layout_marginTop="@dimen/dim_26"
             android:minHeight="@dimen/dp_64"
             android:orientation="horizontal">
 
@@ -240,10 +236,8 @@
                 <ImageView
                     android:layout_width="@dimen/dp_56"
                     android:layout_height="@dimen/dp_56"
-                    android:background="@drawable/powerup_audiance_poll_round_bg"
                     android:onClick="onClick"
-                    android:padding="@dimen/dp_10"
-                    android:src="@drawable/powerup_audience_poll_white" />
+                    android:src="@drawable/powerup_audience_poll_with_bg" />
 
             </FrameLayout>
 
