@@ -117,6 +117,10 @@ public class NewChallengesRecyclerAdapter extends RecyclerView.Adapter<RecyclerV
                     }
                 }
 
+                if (newChallengesResponse.getMaxTransferLimit() == 0) {
+                    newChallengesItemViewHolder.noExtraPowerUpImageView.setVisibility(View.VISIBLE);
+                }
+
                 if (newChallengesResponse.getTournaments()!=null && !newChallengesResponse.getTournaments().isEmpty()) {
                     setTournaments(newChallengesItemViewHolder.tournamentsLinearLayout, newChallengesResponse.getTournaments());
                 }
@@ -279,6 +283,7 @@ public class NewChallengesRecyclerAdapter extends RecyclerView.Adapter<RecyclerV
         TextView startTimeTextView;
         TextView gameLeftTextView;
         TextView prizeTextView;
+        ImageView noExtraPowerUpImageView;
         LinearLayout gameIconLinearLayout;
         LinearLayout tournamentsLinearLayout;
 
@@ -293,6 +298,7 @@ public class NewChallengesRecyclerAdapter extends RecyclerView.Adapter<RecyclerV
             startTimeTextView = (TextView) itemView.findViewById(R.id.challenge_start_time_textView);
             gameLeftTextView = (TextView) itemView.findViewById(R.id.challenge_game_left_textView);
             prizeTextView = (TextView) itemView.findViewById(R.id.challenge_prizes_textView);
+            noExtraPowerUpImageView = (ImageView) itemView.findViewById(R.id.no_extra_powerup_imgView);
             gameIconLinearLayout = (LinearLayout) itemView.findViewById(R.id.challenge_sports_icons_container);
         }
 

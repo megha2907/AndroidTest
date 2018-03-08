@@ -2,6 +2,7 @@ package in.sportscafe.nostragamus.module.inPlay.adapter;
 
 import android.content.Context;
 import android.graphics.Typeface;
+import android.media.Image;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
@@ -324,6 +325,10 @@ public class InPlayRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                 viewHolder.contestModeImageView.setImageResource(R.drawable.no_guarantee_icon);
             }
 
+            if (contest.getMaxPowerUpTransferLimit() == 0) { // Only if maxLimit == 0, then powerup-bank disabled
+                viewHolder.noExtraPowerUpImgView.setVisibility(View.VISIBLE);
+            }
+
             viewHolder.timelineHeaderParent.removeAllViews();
             viewHolder.timelineContentParent.removeAllViews();
             viewHolder.timelineFooterParent.removeAllViews();
@@ -465,6 +470,7 @@ public class InPlayRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         LinearLayout prizesLayout;
         TextView contestTitleTextView;
         ImageView contestModeImageView;
+        ImageView noExtraPowerUpImgView;
         TextView entryFeeTextView;
         TextView currentRankTextView;
         TextView totalPlayersTextView;
@@ -484,6 +490,7 @@ public class InPlayRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             currentRankTextView = (TextView) itemView.findViewById(R.id.inplay_contest_card_header_current_rank_textView);
             prizesTextView = (TextView) itemView.findViewById(R.id.inplay_contest_card_header_prizes_textView);
             totalPlayersTextView = (TextView) itemView.findViewById(R.id.inplay_contest_card_header_total_players);
+            noExtraPowerUpImgView = (ImageView) itemView.findViewById(R.id.no_extra_powerup_imgView);
             root.setOnClickListener(this);
             currentRankLayout.setOnClickListener(this);
             prizesLayout.setOnClickListener(this);
@@ -552,6 +559,7 @@ public class InPlayRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         TextView joinContestTextView;
         TextView currentRankTextView;
         TextView prizesTextView;
+        ImageView noExtraPowerUpImgView;
 
         public InPlayHeadLessItemViewHolder(View itemView) {
             super(itemView);
@@ -564,6 +572,7 @@ public class InPlayRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             joinContestTextView = (TextView) itemView.findViewById(R.id.inplay_contest_card_header_join_contest_textView);
             currentRankTextView = (TextView) itemView.findViewById(R.id.inplay_contest_card_header_current_rank_textView);
             prizesTextView = (TextView) itemView.findViewById(R.id.inplay_contest_card_header_prizes_textView);
+            noExtraPowerUpImgView = (ImageView) itemView.findViewById(R.id.no_extra_powerup_imgView);
 
             root.setOnClickListener(this);
         }

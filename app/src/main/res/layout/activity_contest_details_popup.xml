@@ -214,6 +214,59 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
+                    android:minHeight="@dimen/dim_66"
+                    android:paddingLeft="@dimen/dim_20">
+
+
+                    <ImageView
+                        android:id="@+id/popup_pub_disabled_icon"
+                        android:layout_width="@dimen/dim_20"
+                        android:layout_height="@dimen/dim_20"
+                        android:layout_marginTop="@dimen/dim_10"
+                        android:src="@drawable/powerup_bank_disabled" />
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="@dimen/dim_14"
+                        android:layout_marginRight="@dimen/dim_14">
+
+                        <com.jeeva.android.widgets.customfont.CustomTextView
+                            android:id="@+id/popup_pub_disabled_title"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_gravity="center_vertical"
+                            android:text="Powerup Bank Disabled"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/sp_14"
+                            app:typeface="lato_bold" />
+
+
+                        <com.jeeva.android.widgets.customfont.CustomTextView
+                            android:id="@+id/popup_pub_disabled_desc"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginTop="@dimen/dim_2"
+                            android:text="Extra powerups can't be added to this challenge.\nScore the best you can with the ones you have"
+                            android:textColor="@color/white_60"
+                            android:textSize="@dimen/sp_11"
+                            app:typeface="lato_regular" />
+
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
                     android:minHeight="@dimen/dim_56"
                     android:paddingLeft="@dimen/dim_20"
                     android:visibility="gone">

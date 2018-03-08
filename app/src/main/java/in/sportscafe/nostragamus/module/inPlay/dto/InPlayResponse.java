@@ -43,6 +43,8 @@ public class InPlayResponse {
     @SerializedName("challenge_tournaments_short_names")
     private List<String> tournaments = null;
 
+    @SerializedName("maxtransferlimit")
+    private int maxPowerupTransferLimit = -1;
 
     public int getChallengeId() {
         return challengeId;
@@ -122,5 +124,13 @@ public class InPlayResponse {
 
     public void setChallengeEndTime(String challengeEndTime) {
         this.challengeEndTime = challengeEndTime;
+    }
+
+    public int getMaxPowerupTransferLimit() {
+        return maxPowerupTransferLimit;
+    }
+
+    public void setMaxPowerupTransferLimit(int maxPowerupTransferLimit) {
+        this.maxPowerupTransferLimit = maxPowerupTransferLimit;
     }
 }

@@ -19,6 +19,9 @@ public class ContestResponseData {
     @SerializedName("challenge_starttime")
     private String challengeStartTime;
 
+    @SerializedName("maxTransferLimit")
+    private int maxTransferLimit = -1;
+
     @SerializedName("contest_data")
     private List<Contest> contests;
 
@@ -54,4 +57,11 @@ public class ContestResponseData {
         this.contests = contests;
     }
 
+    public int getMaxTransferLimit() {
+        return maxTransferLimit;
+    }
+
+    public void setMaxTransferLimit(int maxTransferLimit) {
+        this.maxTransferLimit = maxTransferLimit;
+    }
 }

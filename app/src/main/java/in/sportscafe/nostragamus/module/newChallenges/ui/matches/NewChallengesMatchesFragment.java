@@ -218,6 +218,7 @@ public class NewChallengesMatchesFragment extends BaseFragment implements View.O
             playData.setPlayingPseudoGame(true);
             playData.setChallengeName(mScreenData.getChallengeName());
             playData.setChallengeStartTime(mScreenData.getStartTime());
+            playData.setMaxPowerUpTransferLimit(match.getMaxTransferLimit());
 
             if (match.getMatchParties() != null && match.getMatchParties().size() == 2) {
                 playData.setMatchPartyTitle1(match.getMatchParties().get(0).getPartyName());
