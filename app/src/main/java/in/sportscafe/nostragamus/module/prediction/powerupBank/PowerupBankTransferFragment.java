@@ -39,7 +39,6 @@ import in.sportscafe.nostragamus.module.prediction.powerupBank.dto.PowerUpBankSt
 import in.sportscafe.nostragamus.module.prediction.powerupBank.dto.PowerupBankTransferScreenData;
 import in.sportscafe.nostragamus.module.prediction.powerupBank.dto.TransferPowerUpFromBankResponse;
 import in.sportscafe.nostragamus.module.store.StoreLaunchMode;
-import in.sportscafe.nostragamus.utils.AnimationHelper;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -89,6 +88,7 @@ public class PowerupBankTransferFragment extends BaseFragment implements View.On
         super.onActivityCreated(savedInstanceState);
         initScreenDetails();
         populateMsg();
+        showPowerupLayoutDelayedIfFirstTimeScreenShown();
         fetchPowerupBankStatusFromServer();
     }
 
@@ -100,34 +100,44 @@ public class PowerupBankTransferFragment extends BaseFragment implements View.On
 
             headingTextView.setText(getString(R.string.powerup_bank_transfer_from_bank_heading_first_time));
             subHeadingTextView.setText(getString(R.string.powerup_bank_transfer_from_bank_sub_heading_first_time));
+        }
+    }
+
+    private void showPowerupLayoutDelayedIfFirstTimeScreenShown() {
+        if (getView() != null) {
+            boolean isScreenPreviouslyShown = NostragamusDataHandler.getInstance().isPowerUpTransferFromBankScreenShown();
+            if (!isScreenPreviouslyShown) {
+
+                NostragamusDataHandler.getInstance().setPowerUpTransferFromBankScreenShown();
 
             /* First time, invisible layouts */
-            final LinearLayout linearLayout = (LinearLayout) getView().findViewById(R.id.powerup_transfer_detail_layout);
-            linearLayout.setVisibility(View.INVISIBLE);
-            mTransferPowerUpButton.setVisibility(View.INVISIBLE);
+                final LinearLayout linearLayout = (LinearLayout) getView().findViewById(R.id.powerup_transfer_detail_layout);
+                linearLayout.setVisibility(View.INVISIBLE);
+                mTransferPowerUpButton.setVisibility(View.INVISIBLE);
 
             /* Animate */
-            Animation animation = AnimationUtils.loadAnimation(getContext(), R.anim.fade_in);
-            animation.setStartOffset(3000);
-            animation.setAnimationListener(new Animation.AnimationListener() {
-                @Override
-                public void onAnimationStart(Animation animation) {
+                Animation animation = AnimationUtils.loadAnimation(getContext(), R.anim.fade_in);
+                animation.setStartOffset(3000);
+                animation.setAnimationListener(new Animation.AnimationListener() {
+                    @Override
+                    public void onAnimationStart(Animation animation) {
 
-                }
+                    }
 
-                @Override
-                public void onAnimationEnd(Animation animation) {
-                    linearLayout.setVisibility(View.VISIBLE);
-                    mTransferPowerUpButton.setVisibility(View.VISIBLE);
-                }
+                    @Override
+                    public void onAnimationEnd(Animation animation) {
+                        linearLayout.setVisibility(View.VISIBLE);
+                        mTransferPowerUpButton.setVisibility(View.VISIBLE);
+                    }
 
-                @Override
-                public void onAnimationRepeat(Animation animation) {
+                    @Override
+                    public void onAnimationRepeat(Animation animation) {
 
-                }
-            });
-            linearLayout.startAnimation(animation);
-            mTransferPowerUpButton.startAnimation(animation);
+                    }
+                });
+                linearLayout.startAnimation(animation);
+                mTransferPowerUpButton.startAnimation(animation);
+            }
         }
     }
 
