@@ -8,7 +8,7 @@
     android:layout_gravity="center_horizontal"
     android:clickable="false"
     android:focusableInTouchMode="true"
-    android:layout_marginTop="@dimen/dim_100">
+    android:layout_marginTop="@dimen/dim_120">
 
     <android.support.v7.widget.CardView
         android:id="@+id/swipe_card_cv_main"

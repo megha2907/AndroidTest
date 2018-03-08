@@ -213,17 +213,17 @@ public class DGPlayModelImpl implements DGPlayModel, SwipeFlingAdapterView.OnSwi
 
     @Override
     public boolean needLeftSwipe() {
-        return !mNeitherOptionAvailable;
+        return true; //!mNeitherOptionAvailable;
     }
 
     @Override
     public boolean needRightSwipe() {
-        return !mNeitherOptionAvailable;
+        return true; //!mNeitherOptionAvailable;
     }
 
     @Override
     public boolean needTopSwipe() {
-        return mNeitherOptionAvailable;
+        return true; // mNeitherOptionAvailable;
     }
 
     @Override
