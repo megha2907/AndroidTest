@@ -57,7 +57,7 @@
                 android:orientation="vertical">
 
                 <ImageView
-                    android:layout_width="wrap_content"
+                    android:layout_width="@dimen/dim_100"
                     android:layout_height="@dimen/dim_100"
                     android:src="@drawable/paytm_trans_failed_img" />
 
@@ -87,7 +87,7 @@
                     android:layout_marginRight="@dimen/dim_30"
                     android:layout_marginTop="@dimen/dim_12"
                     android:gravity="center"
-                    android:text="The provider declined the payment.Please retry or check your credentials."
+                    android:text="The provider has declined the payment. Please retry the transactions."
                     android:textColor="@color/white"
                     android:textSize="@dimen/sp_12"
                     app:typeface="lato_regular" />
@@ -98,8 +98,8 @@
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="@dimen/dim_12"
                     android:gravity="center"
-                    android:text="If money has been debited from your \naccount, it will be refunded shortly."
-                    android:textColor="@color/white"
+                    android:text="In case your money has been deducted, it will be automatically refunded shortly."
+                    android:textColor="@color/white_999999"
                     android:textSize="@dimen/sp_12"
                     app:typeface="lato_regular" />
 

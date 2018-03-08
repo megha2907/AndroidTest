@@ -39,7 +39,6 @@ public class AddMoneyByCashFreeHelper {
     private static AddMoneyByCashFreeProcessListener addMoneyByCashFreeProcessListener;
 
     public interface AddMoneyByCashFreeProcessListener {
-        void noInternet();
         void hideProgressBar();
         void showProgressBar();
     }

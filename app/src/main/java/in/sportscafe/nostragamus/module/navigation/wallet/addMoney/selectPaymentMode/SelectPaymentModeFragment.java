@@ -12,6 +12,7 @@ import com.jeeva.android.widgets.CustomProgressbar;
 
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
+import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
 import in.sportscafe.nostragamus.module.navigation.NavigationFragment;
 import in.sportscafe.nostragamus.module.navigation.wallet.addMoney.AddMoneyWalletHelper;
 import in.sportscafe.nostragamus.module.navigation.wallet.addMoney.addByCashFree.AddMoneyByCashFreeHelper;
@@ -21,7 +22,7 @@ import in.sportscafe.nostragamus.module.navigation.wallet.addMoney.addByPaymentC
  * Created by deepanshi on 2/23/18.
  */
 
-public class SelectPaymentModeFragment extends BaseFragment implements View.OnClickListener,AddMoneyByCashFreeHelper.AddMoneyByCashFreeProcessListener {
+public class SelectPaymentModeFragment extends BaseFragment implements View.OnClickListener, AddMoneyByCashFreeHelper.AddMoneyByCashFreeProcessListener {
 
     private static final String TAG = NavigationFragment.class.getSimpleName();
 
@@ -117,28 +118,32 @@ public class SelectPaymentModeFragment extends BaseFragment implements View.OnCl
     private void onAddMoneyByOtherWalletsClicked() {
         if (getAmountDetails() > 0) {
             double amount = getAmountDetails();
-            AddMoneyByCashFreeHelper.getOrderDetails(this, amount, Constants.SelectPaymentModes.WALLET,this);
+            AddMoneyByCashFreeHelper.getOrderDetails(this, amount, Constants.SelectPaymentModes.WALLET, this);
+            NostragamusAnalytics.getInstance().trackClickEvent(Constants.AnalyticsCategory.PAYMENT_MODE,Constants.SelectPaymentModes.WALLET);
         }
     }
 
     private void onAddMoneyByUPIClicked() {
         if (getAmountDetails() > 0) {
             double amount = getAmountDetails();
-            AddMoneyByCashFreeHelper.getOrderDetails(this, amount, Constants.SelectPaymentModes.UPI,this);
+            AddMoneyByCashFreeHelper.getOrderDetails(this, amount, Constants.SelectPaymentModes.UPI, this);
+            NostragamusAnalytics.getInstance().trackClickEvent(Constants.AnalyticsCategory.PAYMENT_MODE,Constants.SelectPaymentModes.UPI);
         }
     }
 
     private void onAddMoneyByCreditCardClicked() {
         if (getAmountDetails() > 0) {
             double amount = getAmountDetails();
-            AddMoneyByCashFreeHelper.getOrderDetails(this, amount, Constants.SelectPaymentModes.CREDIT_CARD,this);
+            AddMoneyByCashFreeHelper.getOrderDetails(this, amount, Constants.SelectPaymentModes.CREDIT_CARD, this);
+            NostragamusAnalytics.getInstance().trackClickEvent(Constants.AnalyticsCategory.PAYMENT_MODE,Constants.SelectPaymentModes.CREDIT_CARD);
         }
     }
 
     private void onAddMoneyByDebitCardClicked() {
         if (getAmountDetails() > 0) {
             double amount = getAmountDetails();
-            AddMoneyByCashFreeHelper.getOrderDetails(this, amount, Constants.SelectPaymentModes.DEBIT_CARD,this);
+            AddMoneyByCashFreeHelper.getOrderDetails(this, amount, Constants.SelectPaymentModes.DEBIT_CARD, this);
+            NostragamusAnalytics.getInstance().trackClickEvent(Constants.AnalyticsCategory.PAYMENT_MODE,Constants.SelectPaymentModes.DEBIT_CARD);
         }
     }
 
@@ -146,24 +151,20 @@ public class SelectPaymentModeFragment extends BaseFragment implements View.OnCl
         if (getAmountDetails() > 0) {
             double amount = getAmountDetails();
             AddMoneyWalletHelper.initTransaction(this, amount);
+            NostragamusAnalytics.getInstance().trackClickEvent(Constants.AnalyticsCategory.PAYMENT_MODE,Constants.SelectPaymentModes.PAYTM);
         }
     }
 
     @Override
-    public void noInternet() {
-
-    }
-
-    @Override
     public void hideProgressBar() {
-        if (getContext()!=null) {
+        if (getContext() != null) {
             CustomProgressbar.getProgressbar(getContext()).dismissProgress();
         }
     }
 
     @Override
     public void showProgressBar() {
-        if (getContext()!=null) {
+        if (getContext() != null) {
             CustomProgressbar.getProgressbar(getContext()).show();
         }
     }

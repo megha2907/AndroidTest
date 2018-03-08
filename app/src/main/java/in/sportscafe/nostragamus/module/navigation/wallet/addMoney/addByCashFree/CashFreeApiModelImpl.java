@@ -38,7 +38,7 @@ public class CashFreeApiModelImpl implements CFClientInterface {
     private Context mContext;
 
     /* stage identifies whether you want trigger test or production service */
-    private String STAGE = "TEST";
+    private String STAGE = "PROD";
 
     private CashFreeApiModelImpl(CashFreeApiModelImpl.OnCashFreeApiModelListener listener, @NonNull Context context) {
         this.mListener = listener;
@@ -52,13 +52,13 @@ public class CashFreeApiModelImpl implements CFClientInterface {
     public void initCashFreeTransaction(CashFreeGenerateOrderResponse cashFreeGenerateOrderResponse, String paymentMode) {
 
         if (cashFreeGenerateOrderResponse != null && !TextUtils.isEmpty(cashFreeGenerateOrderResponse.getChecksumUrl())
-                && mContext != null) {
+                && mContext != null && !TextUtils.isEmpty(cashFreeGenerateOrderResponse.getCashFreeAppId())) {
 
             String checksumUrl = cashFreeGenerateOrderResponse.getChecksumUrl();
             String appId = mContext.getString(R.string.cashfree_app_id);
 
             Map<String, String> params = new HashMap<>();
-            params.put(PARAM_APP_ID, appId);
+            params.put(PARAM_APP_ID, cashFreeGenerateOrderResponse.getCashFreeAppId());
             params.put(PARAM_ORDER_ID, cashFreeGenerateOrderResponse.getOrderId());
             params.put(PARAM_ORDER_AMOUNT, String.valueOf(cashFreeGenerateOrderResponse.getOrderAmount()));
             params.put(PARAM_ORDER_NOTE, cashFreeGenerateOrderResponse.getOrderNote());

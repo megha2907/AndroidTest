@@ -47,7 +47,7 @@ public class TransactionFailureDialogFragment extends PopUpDialogFragment implem
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_paytm_transaction_failure_dialog, container, false);
+        return inflater.inflate(R.layout.fragment_transaction_failure_dialog, container, false);
     }
 
     @NonNull

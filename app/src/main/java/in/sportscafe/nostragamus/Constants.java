@@ -509,6 +509,7 @@ public interface Constants {
         String RESULTS = "Results";
         String WALLET_POPUP = "Wallet Popup";
         String REVENUE = "Revenue";
+        String PAYMENT_MODE = "Payment Mode";
     }
 
     interface AnalyticsClickLabels {
@@ -835,6 +836,7 @@ public interface Constants {
         String CREDIT_CARD = "cc";
         String UPI = "upi";
         String WALLET = "wallet";
+        String PAYTM = "paytm";
     }
 
     interface VerifyPaymentStatus {

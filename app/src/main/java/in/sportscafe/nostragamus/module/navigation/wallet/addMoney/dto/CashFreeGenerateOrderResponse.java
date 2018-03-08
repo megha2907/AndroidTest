@@ -10,6 +10,9 @@ import org.parceler.Parcel;
 @Parcel
 public class CashFreeGenerateOrderResponse {
 
+    @SerializedName("APP_ID")
+    private String cashFreeAppId;
+
     @SerializedName("CALLBACK_URL")
     private String callbackUrl;
 
@@ -33,6 +36,14 @@ public class CashFreeGenerateOrderResponse {
 
     @SerializedName("CUSTOMER_EMAIL")
     private String customerEmail;
+
+    public String getCashFreeAppId() {
+        return cashFreeAppId;
+    }
+
+    public void setCashFreeAppId(String cashFreeAppId) {
+        this.cashFreeAppId = cashFreeAppId;
+    }
 
     public String getCallbackUrl() {
         return callbackUrl;
