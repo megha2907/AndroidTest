@@ -1,6 +1,5 @@
 package in.sportscafe.nostragamus.module.navigation.help.dummygame;
 
-import android.animation.Animator;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
@@ -9,13 +8,14 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.ScaleAnimation;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import org.parceler.Parcels;
 
-import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Constants.BundleKeys;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.NostragamusFragment;
@@ -265,18 +265,26 @@ public class DGPlayFragment extends NostragamusFragment implements DGPlayView, V
     public void animatePowerUps() {
         if (getView() != null) {
             View rootView = getView();
-            doWiggleAnimation(rootView.findViewById(R.id.powerups_rl_2x), 0, MAX_WIGGLE_ROTATION);
-            doWiggleAnimation(rootView.findViewById(R.id.powerups_rl_nonegs), 0, MAX_WIGGLE_ROTATION);
-            doWiggleAnimation(rootView.findViewById(R.id.powerups_rl_poll), 0, MAX_WIGGLE_ROTATION);
+            doScaleAnimation(rootView.findViewById(R.id.powerups_iv_2x), 0, MAX_WIGGLE_ROTATION);
+            doScaleAnimation(rootView.findViewById(R.id.powerups_iv_nonegs), 0, MAX_WIGGLE_ROTATION);
+            doScaleAnimation(rootView.findViewById(R.id.powerups_iv_poll), 0, MAX_WIGGLE_ROTATION);
         }
     }
 
-    private void doWiggleAnimation(View view, int count, float rotation) {
+    private void doScaleAnimation(View view, int count, float rotation) {
         final View finalView = view;
         final int finalCount = count;
         final float finalRotation = rotation;
 
-        finalView.animate().rotation(rotation).setDuration(250).setListener(
+        Animation anim = new ScaleAnimation(1f, 1.20f, 1f, 1.20f,
+                Animation.RELATIVE_TO_SELF, 0.50f, Animation.RELATIVE_TO_SELF, 0.50f);
+        anim.setFillAfter(false);
+        anim.setRepeatMode(Animation.REVERSE);
+        anim.setRepeatCount(3);
+        anim.setDuration(500);
+        view.startAnimation(anim);
+
+        /*finalView.animate().rotation(rotation).setDuration(250).setListener(
                 new Animator.AnimatorListener() {
                     @Override
                     public void onAnimationStart(Animator animation) {
@@ -292,9 +300,9 @@ public class DGPlayFragment extends NostragamusFragment implements DGPlayView, V
                         }
 
                         if (finalRotation == MAX_WIGGLE_ROTATION) {
-                            doWiggleAnimation(finalView, nextCount, 0);
+                            doScaleAnimation(finalView, nextCount, 0);
                         } else {
-                            doWiggleAnimation(finalView, nextCount, MAX_WIGGLE_ROTATION);
+                            doScaleAnimation(finalView, nextCount, MAX_WIGGLE_ROTATION);
                         }
                     }
 
@@ -306,7 +314,7 @@ public class DGPlayFragment extends NostragamusFragment implements DGPlayView, V
                     public void onAnimationRepeat(Animator animation) {
                     }
                 }
-        );
+        );*/
     }
 
     public interface OnDGPlayActionListener {

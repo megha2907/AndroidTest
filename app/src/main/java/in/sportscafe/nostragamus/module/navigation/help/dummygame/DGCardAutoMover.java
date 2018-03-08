@@ -70,11 +70,11 @@ public class DGCardAutoMover {
         Log.d(TAG, "Before touch started --> " + mCenterX + ", " + mCenterY + ", " + mMinX + ", " + mMaxX);
     }
 
-    public void startLeftRightAnimation() {
+    public void startCardMoveAnimation() {
         startViewTouch(mCenterX, mCenterY);
 
         mTypeCount = MoveType.CENTER_TO_LEFT;
-        checkLeftRightAnimation();
+        performAnimation();
     }
 
     public void startNeitherAnimation() {
@@ -84,7 +84,7 @@ public class DGCardAutoMover {
         checkNeitherAnimation();
     }
 
-    private void checkLeftRightAnimation() {
+    private void performAnimation() {
         if (MoveType.CENTER_TO_LEFT == mTypeCount) {
             startXMoveAnimation(mCenterX, mMinX);
         } else if (MoveType.LEFT_TO_CENTER == mTypeCount) {
@@ -93,6 +93,10 @@ public class DGCardAutoMover {
             startXMoveAnimation(mCenterX, mMaxX);
         } else if (MoveType.RIGHT_TO_CENTER == mTypeCount) {
             startXMoveAnimation(mMaxX, mCenterX);
+        } else if (MoveType.CENTER_TO_TOP == mTypeCount) {
+            startYMoveAnimation(mCenterY, mMinY);
+        } else if (MoveType.TOP_TO_CENTER == mTypeCount) {
+            startYMoveAnimation(mMinY, mCenterY);
         } else {
             endViewTouch(mCenterX, mCenterY);
         }
@@ -174,7 +178,7 @@ public class DGCardAutoMover {
 
             @Override
             public void onAnimationEnd(Animator animation) {
-                checkLeftRightAnimation();
+                performAnimation();
             }
 
             @Override

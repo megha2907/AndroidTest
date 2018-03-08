@@ -1,0 +1,163 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="@color/black"
+    tools:context="in.sportscafe.nostragamus.module.navigation.help.dummygame.DGPowerupTriedFragment">
+
+    <!-- Timeline ui -->
+    <RelativeLayout
+        android:id="@+id/dg_timeline_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dim_20"
+        android:visibility="visible">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_centerHorizontal="true">
+
+            <com.jeeva.android.widgets.customfont.CustomTextView
+                android:id="@+id/dg_timeline_textview_1"
+                android:layout_width="@dimen/dim_16"
+                android:layout_height="@dimen/dim_16"
+                android:background="@drawable/blue_round_tick"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp_8"
+                app:typeface="lato_regular" />
+
+            <View
+                android:layout_width="@dimen/dim_52"
+                android:layout_height="@dimen/dim_2"
+                android:background="@color/blue_008ae1"/>
+
+            <com.jeeva.android.widgets.customfont.CustomTextView
+                android:id="@+id/dg_timeline_textview_2"
+                android:layout_width="@dimen/dim_16"
+                android:layout_height="@dimen/dim_16"
+                android:background="@drawable/blue_round_tick"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp_8"
+                app:typeface="lato_regular" />
+
+            <View
+                android:layout_width="@dimen/dim_52"
+                android:layout_height="@dimen/dim_2"
+                android:background="@color/blue_008ae1"/>
+
+            <com.jeeva.android.widgets.customfont.CustomTextView
+                android:id="@+id/dg_timeline_textview_3"
+                android:layout_width="@dimen/dim_16"
+                android:layout_height="@dimen/dim_16"
+                android:background="@drawable/blue_round_tick"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp_8"
+                app:typeface="lato_regular" />
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+    <com.jeeva.android.widgets.customfont.CustomTextView
+        android:id="@+id/dg_powerup_used_heading_textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/dim_10"
+        android:gravity="center"
+        android:text="You have Scored +20 points for that prediction!"
+        android:textColor="@color/white"
+        android:textSize="@dimen/sp_13"
+        app:typeface="lato_bold"
+        android:visibility="invisible"/>
+
+    <com.jeeva.android.widgets.customfont.CustomTextView
+        android:id="@+id/dg_powerup_used_sub_heading_textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:lineSpacingExtra="@dimen/dim_4"
+        android:layout_marginTop="@dimen/dim_10"
+        android:gravity="center"
+        android:text="Use powerups wisely and make all the predictions in a game, in order to score maximum points"
+        android:textColor="@color/white_dim"
+        android:textSize="@dimen/sp_12"
+        app:typeface="lato_regular"
+        android:layout_marginLeft="@dimen/dim_20"
+        android:layout_marginRight="@dimen/dim_20"
+        android:visibility="invisible"/>
+
+    <LinearLayout
+        android:id="@+id/dg_powerup_mastered_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="invisible">
+
+        <ImageView
+            android:layout_width="@dimen/dim_260"
+            android:layout_height="@dimen/dim_180"
+            android:src="@drawable/dg_master_inplay_img"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/dim_40"/>
+
+        <com.jeeva.android.widgets.customfont.CustomTextView
+            android:id="@+id/dg_powerup_used_bottom_textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/dim_24"
+            android:gravity="center"
+            android:text="You have mastered the basics of making predictions"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp_13"
+            app:typeface="lato_bold" />
+
+        <com.jeeva.android.widgets.customfont.CustomTextView
+            android:id="@+id/dg_powerup_used_sub_bottom_textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/dim_10"
+            android:lineSpacingExtra="@dimen/dim_4"
+            android:gravity="center"
+            android:text="Now go ahead and play your first game! Play all games in a challenge to have the best chance of winning big"
+            android:textColor="@color/white_dim"
+            android:textSize="@dimen/sp_13"
+            app:typeface="lato_regular"
+            android:layout_marginLeft="@dimen/dim_20"
+            android:layout_marginRight="@dimen/dim_20"/>
+
+    </LinearLayout>
+
+    <com.jeeva.android.widgets.customfont.CustomButton
+        android:id="@+id/dg_got_powerup_btn"
+        android:layout_width="@dimen/dim_320"
+        android:layout_height="@dimen/dim_40"
+        android:layout_marginTop="@dimen/dim_24"
+        android:layout_marginLeft="@dimen/dim_20"
+        android:layout_marginRight="@dimen/dim_20"
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/blue_008ae1_button_selector"
+        android:gravity="center"
+        android:minWidth="@dimen/dim_72"
+        android:paddingBottom="@dimen/dim_2"
+        android:paddingLeft="@dimen/dim_15"
+        android:paddingRight="@dimen/dim_15"
+        android:paddingTop="@dimen/dp_0"
+        android:text="Got it!"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:textSize="@dimen/sp_13"
+        app:typeface="lato_bold"
+        android:visibility="invisible"/>
+
+</LinearLayout>

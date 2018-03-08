@@ -91,6 +91,7 @@
     <color name="grey_a1a1a1">#a1a1a1</color>
     <color name="grey_bbbbcc">#bbbbcc</color>
     <color name="brown_ccbbbb">#ccbbbb</color>
+    <color name="grey_777777">#777777</color>
 
     <color name="white_70">#B3FFFFFF</color>
     <color name="white_80">#CCFFFFFF</color>
@@ -159,7 +160,7 @@
 
     <color name="bluecolor1">#0098a6</color>
     <color name="bluecolor2">#1888bb</color>
-
+    <color name="blue_008ae1">#008ae1</color>
 
     <color name="greencolor2">#04af76</color>
     <color name="greencolor3">#057f53</color>

@@ -1,18 +1,16 @@
 package in.sportscafe.nostragamus.module.navigation.help.dummygame;
 
-import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.text.Html;
+import android.support.v4.content.ContextCompat;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
 import android.text.style.ForegroundColorSpan;
-import android.text.style.StyleSpan;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,9 +18,9 @@ import android.view.ViewGroup;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.widget.Button;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.jeeva.android.Log;
 import com.jeeva.android.widgets.customfont.Typefaces;
 
 import org.parceler.Parcels;
@@ -40,15 +38,18 @@ public class DGTextFragment extends NostragamusFragment implements View.OnClickL
 
     interface TextType {
         String TOP_TEXT = "topText";
+        String SUB_TOP_TEXT = "subTopText";
         String BOTTOM_TEXT = "bottomText";
         String CENTER_TOP_TEXT = "centerTopText";
         String CENTER_BOTTOM_TEXT = "centerBottomText";
         String ACTION1 = "action1";
         String ACTION2 = "action2";
         String ACTION3 = "action3";
+        String TIMELINE_LAYOUT = "timelineLayout";
     }
 
     private TextView mTvTopText;
+    private TextView mTvSubTopText;
 
     private TextView mTvCenterTopText;
 
@@ -61,6 +62,7 @@ public class DGTextFragment extends NostragamusFragment implements View.OnClickL
     private Button mBtnAction2;
 
     private Button mBtnAction3;
+    private RelativeLayout mTimelineLayout;
 
     private OnDGTextActionListener mTextActionListener;
 
@@ -92,7 +94,9 @@ public class DGTextFragment extends NostragamusFragment implements View.OnClickL
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
+        mTimelineLayout = (RelativeLayout) findViewById(R.id.dg_timeline_layout);
         mTvTopText = (TextView) findViewById(R.id.dummy_game_tv_top_text);
+        mTvSubTopText = (TextView) findViewById(R.id.dummy_game_tv_sub_top_text);
         mTvCenterTopText = (TextView) findViewById(R.id.dummy_game_tv_center_top_text);
         mTvCenterBottomText = (TextView) findViewById(R.id.dummy_game_tv_center_bottom_text);
         mTvBottomText = (TextView) findViewById(R.id.dummy_game_tv_bottom_text);
@@ -110,47 +114,87 @@ public class DGTextFragment extends NostragamusFragment implements View.OnClickL
     }
 
     public void applyInstruction(DGInstruction instruction) {
-        String name = instruction.getName();
-        if (null != instruction.getScoredPoints() && !TextUtils.isEmpty(name)) {
-            name = String.format(name, instruction.getScoredPoints());
-        }
-
-        TextView textView = null;
-        switch (instruction.getTextType()) {
-            case TextType.TOP_TEXT:
-                textView = mTvTopText;
-                break;
-            case TextType.BOTTOM_TEXT:
-                textView = mTvBottomText;
-                break;
-            case TextType.CENTER_TOP_TEXT:
-                textView = mTvCenterTopText;
-                break;
-            case TextType.CENTER_BOTTOM_TEXT:
-                textView = mTvCenterBottomText;
-                break;
-            case TextType.ACTION1:
-                textView = mBtnAction1;
-                textView.setTag(instruction.getActionType());
-                break;
-            case TextType.ACTION2:
-                textView = mBtnAction2;
-                textView.setTag(instruction.getActionType());
-                break;
-            case TextType.ACTION3:
-                textView = mBtnAction3;
-                textView.setTag(instruction.getActionType());
-                break;
-        }
-
-        if (null != textView) {
-            if (null != name) {
-                checkForColorAndSetText(textView, name);
+        if (getView() != null) {
+            String name = instruction.getName();
+            if (null != instruction.getScoredPoints() && !TextUtils.isEmpty(name)) {
+                name = String.format(name, instruction.getScoredPoints());
             }
-            textView.setVisibility(View.VISIBLE);
-            textView.setLineSpacing(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 5.0f,  getResources().getDisplayMetrics()), 1.0f);
 
-            animateView(textView, instruction.getAnimation());
+            TextView textView = null;
+            switch (instruction.getTextType()) {
+                case TextType.TIMELINE_LAYOUT:
+                    setTimelineLayout(instruction);
+                    break;
+
+                case TextType.TOP_TEXT:
+                    textView = mTvTopText;
+                    if (textView != null && !TextUtils.isEmpty(name)) {
+                        textView.setVisibility(View.VISIBLE);
+                        textView.setLineSpacing(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 5.0f, getResources().getDisplayMetrics()), 1.0f);
+                        textView.setText(name);
+                        animateView(textView, instruction.getAnimation());
+                    }
+                    return;
+
+                case TextType.SUB_TOP_TEXT:
+                    textView = mTvSubTopText;
+                    break;
+                case TextType.BOTTOM_TEXT:
+                    textView = mTvBottomText;
+                    break;
+                case TextType.CENTER_TOP_TEXT:
+                    textView = mTvCenterTopText;
+                    break;
+                case TextType.CENTER_BOTTOM_TEXT:
+                    textView = mTvCenterBottomText;
+                    break;
+                case TextType.ACTION1:
+                    textView = mBtnAction1;
+                    textView.setTag(instruction.getActionType());
+                    break;
+                case TextType.ACTION2:
+                    textView = mBtnAction2;
+                    textView.setTag(instruction.getActionType());
+                    break;
+                case TextType.ACTION3:
+                    textView = mBtnAction3;
+                    textView.setTag(instruction.getActionType());
+                    break;
+            }
+
+            if (null != textView) {
+                if (null != name) {
+                    checkForColorAndSetText(textView, name);
+                }
+                textView.setVisibility(View.VISIBLE);
+                textView.setLineSpacing(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 5.0f, getResources().getDisplayMetrics()), 1.0f);
+
+                animateView(textView, instruction.getAnimation());
+            }
+        }
+    }
+
+    private void setTimelineLayout(DGInstruction instruction) {
+        if (mTimelineLayout.getVisibility() == View.INVISIBLE) {
+            mTimelineLayout.setVisibility(View.VISIBLE);
+            if (instruction.getTimelineState() > 0) {
+                switch (instruction.getTimelineState()) {
+                    case 1:
+                        setTimelineStep1();
+                        break;
+
+                    case 2:
+                        setTimelineStep1Passed();
+                        setTimelineStep2();
+                        break;
+
+                    case 3:
+                        setTimelineStep1Passed();
+                        setTimelineStep2Passed();
+                        setTimelineStep3();
+                        break;
+                }
+            }
         }
     }
 
@@ -158,7 +202,7 @@ public class DGTextFragment extends NostragamusFragment implements View.OnClickL
 
         Typeface faceBold = Typefaces.get(getContext(), "fonts/lato/Lato-Bold.ttf");
 
-        if (name.equalsIgnoreCase("Once results are out for games, points are awarded. Correct predictions get +10 points%, wrong ones get  -4 points&. Make a prediction to see how you score!")) {
+        if (name.equalsIgnoreCase("After the game finishes, correct predictions get +10 points%, wrong ones -4 points&. Prediction now to see how you score!")) {
 
             int startIndex = name.indexOf("+");
             int endIndex = name.indexOf("%");
@@ -242,7 +286,7 @@ public class DGTextFragment extends NostragamusFragment implements View.OnClickL
 
             textView.setTypeface(faceBold);
 
-        } else if (name.equalsIgnoreCase("Before playing your first game, take a moment to understand how to make predictions in Nostragamus")) {
+        } else if (name.equalsIgnoreCase("Looks like you are playing for the first time.\nFollow our walk through to master the basics of making prediction in Nostragamus!")) {
             textView.setTypeface(faceBold);
             textView.setText(name);
         } else {
@@ -288,5 +332,53 @@ public class DGTextFragment extends NostragamusFragment implements View.OnClickL
 
     public interface OnDGTextActionListener {
         void onActionClicked(String actionType);
+    }
+
+    private void setTimelineStep1() {
+        TextView step1TextView = (TextView) findViewById(R.id.dg_timeline_step_1_node);
+        step1TextView.setBackgroundResource(R.drawable.timeline_blue_dot);
+        step1TextView.setTextColor(ContextCompat.getColor(getContext(), R.color.white));
+    }
+
+    private void setTimelineStep1Passed() {
+        TextView step1TextView = (TextView) findViewById(R.id.dg_timeline_step_1_node);
+        step1TextView.setBackgroundResource(R.drawable.blue_round_tick);
+        step1TextView.setText("");
+    }
+
+    private void setTimelineStep2() {
+        TextView step2TextView = (TextView) findViewById(R.id.dg_timeline_step_2_node);
+        step2TextView.setBackgroundResource(R.drawable.timeline_blue_dot);
+        step2TextView.setTextColor(ContextCompat.getColor(getContext(), R.color.white));
+
+        View lineView = (View) findViewById(R.id.dg_timeline_step_2_line);
+        lineView.setBackgroundColor(ContextCompat.getColor(lineView.getContext(), R.color.venice_blue));
+    }
+
+    private void setTimelineStep2Passed() {
+        TextView step2TextView = (TextView) findViewById(R.id.dg_timeline_step_2_node);
+        step2TextView.setBackgroundResource(R.drawable.blue_round_tick);
+        step2TextView.setText("");
+
+        View lineView = (View) findViewById(R.id.dg_timeline_step_2_line);
+        lineView.setBackgroundColor(ContextCompat.getColor(lineView.getContext(), R.color.venice_blue));
+    }
+
+    private void setTimelineStep3() {
+        TextView step3TextView = (TextView) findViewById(R.id.dg_timeline_step_3_node);
+        step3TextView.setBackgroundResource(R.drawable.timeline_blue_dot);
+        step3TextView.setTextColor(ContextCompat.getColor(getContext(), R.color.white));
+
+        View lineView = (View) findViewById(R.id.dg_timeline_step_3_line);
+        lineView.setBackgroundColor(ContextCompat.getColor(lineView.getContext(), R.color.venice_blue));
+    }
+
+    private void setTimelineStep3Passed() {
+        TextView step3TextView = (TextView) findViewById(R.id.dg_timeline_step_3_node);
+        step3TextView.setBackgroundResource(R.drawable.blue_round_tick);
+        step3TextView.setText("");
+
+        View lineView = (View) findViewById(R.id.dg_timeline_step_3_line);
+        lineView.setBackgroundColor(ContextCompat.getColor(lineView.getContext(), R.color.venice_blue));
     }
 }
