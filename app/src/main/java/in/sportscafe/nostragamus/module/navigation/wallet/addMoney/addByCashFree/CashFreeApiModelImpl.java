@@ -55,7 +55,6 @@ public class CashFreeApiModelImpl implements CFClientInterface {
                 && mContext != null && !TextUtils.isEmpty(cashFreeGenerateOrderResponse.getCashFreeAppId())) {
 
             String checksumUrl = cashFreeGenerateOrderResponse.getChecksumUrl();
-            String appId = mContext.getString(R.string.cashfree_app_id);
 
             Map<String, String> params = new HashMap<>();
             params.put(PARAM_APP_ID, cashFreeGenerateOrderResponse.getCashFreeAppId());

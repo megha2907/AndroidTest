@@ -242,7 +242,7 @@ public interface NostragamusService {
     @POST("v2/game/generateOrder")
     Call<GenerateOrderResponse> generateOrder(@Body GenerateOrderRequest request);
 
-    @PUT("v2/game/users/paymentInfo")
+    @POST("v3/game/cashfree/addBankBeneficiary")
     Call<AddUserPaymentDetailsResponse> addUserPaymentBankDetails(@Body AddBankDetailsRequest request);
 
     @PUT("v2/game/users/paymentInfo")

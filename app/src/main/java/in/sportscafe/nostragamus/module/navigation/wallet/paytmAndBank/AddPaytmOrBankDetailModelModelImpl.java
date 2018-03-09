@@ -49,10 +49,11 @@ public class AddPaytmOrBankDetailModelModelImpl implements AddPaytmDetailModel, 
     public void savePaymentBankDetails(String accountHolderName, String accNumber, String ifsCode) {
         if (Nostragamus.getInstance().hasNetworkConnection()) {
             AddBankDetailsRequest bankRequest = new AddBankDetailsRequest();
-            bankRequest.setPaymentMode(Constants.AddUserPaymentDetailsPaymentModes.BANK);
+            //bankRequest.setPaymentMode(Constants.AddUserPaymentDetailsPaymentModes.BANK);
             bankRequest.setAccountNo(accNumber);
-            bankRequest.setName(accountHolderName);
+            //bankRequest.setName(accountHolderName);
             bankRequest.setIfscCode(ifsCode);
+            bankRequest.setAddressLineOne("NOADDRESS");
 
             MyWebService.getInstance().addUserPaymentBankDetails(bankRequest).enqueue(getUserPaymentCallBack());
         } else {
