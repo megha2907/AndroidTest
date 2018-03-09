@@ -109,11 +109,11 @@ public class DGPowerupTriedFragment extends BaseFragment implements View.OnClick
 
             // powerup mastered layouts
             LinearLayout powerupLayout = (LinearLayout) getView().findViewById(R.id.dg_powerup_mastered_layout);
-            animateView(powerupLayout, 1000, 6000);
+            animateView(powerupLayout, 500, 4000);
 
             // Button
             Button button = (Button) getView().findViewById(R.id.dg_got_powerup_btn);
-            animateView(button, 500, 7000);
+            animateView(button, 500, 4000);
         }
     }
 
