@@ -213,17 +213,17 @@ public class DGPlayModelImpl implements DGPlayModel, SwipeFlingAdapterView.OnSwi
 
     @Override
     public boolean needLeftSwipe() {
-        return !mNeitherOptionAvailable;
+        return true; //!mNeitherOptionAvailable;
     }
 
     @Override
     public boolean needRightSwipe() {
-        return !mNeitherOptionAvailable;
+        return true; //!mNeitherOptionAvailable;
     }
 
     @Override
     public boolean needTopSwipe() {
-        return mNeitherOptionAvailable;
+        return true; // mNeitherOptionAvailable;
     }
 
     @Override
@@ -240,13 +240,15 @@ public class DGPlayModelImpl implements DGPlayModel, SwipeFlingAdapterView.OnSwi
         int leftAnswerPercent = Integer.parseInt(audiencePoll.get(0).getAnswerPercentage().replaceAll("%", ""));
         int rightAnswerPercent = Integer.parseInt(audiencePoll.get(1).getAnswerPercentage().replaceAll("%", ""));
 
-        boolean isApplied = mPredictionAdapter.getTopQuestion().applyAudiencePollPowerUp(leftAnswerPercent, rightAnswerPercent);
-        if (isApplied) {
-            mPredictionAdapter.addAudiencePoll();
-            mModelListener.notifyTopQuestion();
+        if (mPredictionAdapter != null && mPredictionAdapter.getTopQuestion() != null) {
+            boolean isApplied = mPredictionAdapter.getTopQuestion().applyAudiencePollPowerUp(leftAnswerPercent, rightAnswerPercent);
+            if (isApplied) {
+                mPredictionAdapter.addAudiencePoll();
+                mModelListener.notifyTopQuestion();
 
-            mPollPowerups--;
-            mModelListener.onAudiencePollApplied(mPollPowerups, false);
+                mPollPowerups--;
+                mModelListener.onAudiencePollApplied(mPollPowerups, false);
+            }
         }
     }
 

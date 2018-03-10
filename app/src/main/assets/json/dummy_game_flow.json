@@ -1,6 +1,7 @@
 [
   {
-    "name": "Before playing your first game, take a moment to understand how to make predictions in Nostragamus",
+    "id":1,
+    "name": "Looks like you are playing for the first time.\nFollow our walk through to master the basics of making prediction in Nostragamus!",
     "textType": "centerBottomText",
     "animation": {
       "start": 0,
@@ -8,12 +9,13 @@
       "duration": 1000,
       "type": "alpha"
     },
-    "waitingTime": 2000,
+    "waitingTime": 1000,
     "freshStart": true,
     "type": "text"
   },
   {
-    "name": "Show Me How",
+    "id":2,
+    "name": "Start Walkthrough",
     "textType": "action1",
     "actionType": "next",
     "animation": {
@@ -22,11 +24,12 @@
       "duration": 1000,
       "type": "alpha"
     },
-    "waitingTime": 1,
+    "waitingTime": 1000,
     "type": "text"
   },
   {
-    "name": "No Thanks",
+    "id":3,
+    "name": "I'll master the app later",
     "textType": "action3",
     "actionType": "exit",
     "animation": {
@@ -39,6 +42,7 @@
     "type": "text"
   },
   {
+    "id":4,
     "textType": "centerBottomText",
     "animation": {
       "start": 1,
@@ -49,45 +53,23 @@
     "type": "text"
   },
   {
-    "name": "This is a prediction card. It contains a question, with relevant stats. Read the stats and select one of the options by swiping left/right to make a prediction.",
-    "textType": "topText",
+    "id":5,
+    "name": "",
+    "textType": "timelineLayout",
+    "timelineState":1,
     "animation": {
       "start": 0,
       "end": 1,
       "duration": 1000,
       "type": "alpha"
-    },
-    "waitingTime": 3500,
-    "freshStart": true,
-    "type": "text"
-  },
-  {
-    "question": {
-      "question_id": 1,
-      "match_id": 1,
-      "question_text": "How many runs will Dhoni score off the last ball of the 2011 World Cup?",
-      "question_context": "He has finished off a successful chase with a six in 12 matches  - nine times in ODIs, three times in T20Is, once in Tests and two times in IPL. Phew!",
-      "question_option_1": "One",
-      "question_image_1": "https://cdn-images.spcafe.in/img/es3-cfit-s300/scGame/dummygame/dhoni_defence.jpg",
-      "question_option_2": "Six",
-      "question_image_2": "https://cdn-images.spcafe.in/img/es3-cfit-s300/scGame/dummygame/dhoni_sixer.jpg"
     },
     "waitingTime": 1,
-    "questionType": "leftright",
-    "type": "question"
-  },
-  {
-    "textType": "topText",
-    "animation": {
-      "start": 1,
-      "end": 0.8,
-      "duration": 1000,
-      "type": "alpha"
-    },
+    "freshStart": true,
     "type": "text"
   },
   {
-    "name": "Great! Sometimes questions may have a 3rd option in a button below the card. Tap the button or swipe up on the card to select that prediction.",
+    "id":6,
+    "name": "Make predictions by swipe or click",
     "textType": "topText",
     "animation": {
       "start": 0,
@@ -95,11 +77,24 @@
       "duration": 1000,
       "type": "alpha"
     },
-    "waitingTime": 4000,
-    "freshStart": true,
+    "waitingTime": 2000,
     "type": "text"
   },
   {
+    "id":7,
+    "name": "Read questions and stats, and then swipe left, right or up to choose an option. You can also click to choose them",
+    "textType": "subTopText",
+    "animation": {
+      "start": 0,
+      "end": 1,
+      "duration": 1000,
+      "type": "alpha"
+    },
+    "waitingTime": 3000,
+    "type": "text"
+  },
+  {
+    "id":8,
     "question": {
       "question_id": 2,
       "match_id": 1,
@@ -112,10 +107,11 @@
       "question_option_3": "Six!"
     },
     "waitingTime": 1,
-    "questionType": "neither",
+    "questionType": "leftRightNeither",
     "type": "question"
   },
   {
+    "id":9,
     "textType": "topText",
     "animation": {
       "start": 1,
@@ -126,7 +122,23 @@
     "type": "text"
   },
   {
-    "name": "Once results are out for games, points are awarded. Correct predictions get +10 points%, wrong ones get  -4 points&. Make a prediction to see how you score!",
+    "id":10,
+    "name": "",
+    "textType": "timelineLayout",
+    "timelineState":2,
+    "animation": {
+      "start": 0,
+      "end": 1,
+      "duration": 1000,
+      "type": "alpha"
+    },
+    "waitingTime": 1,
+    "freshStart": true,
+    "type": "text"
+  },
+  {
+    "id":11,
+    "name": "Score points, once results are declared",
     "textType": "topText",
     "animation": {
       "start": 0,
@@ -134,11 +146,24 @@
       "duration": 1000,
       "type": "alpha"
     },
-    "waitingTime": 3000,
-    "freshStart": true,
+    "waitingTime": 1000,
     "type": "text"
   },
   {
+    "id":12,
+    "name": "After the game finishes, correct predictions get +10 points%, wrong ones -4 points&. Predict now to see how you score!",
+    "textType": "subTopText",
+    "animation": {
+      "start": 0,
+      "end": 1,
+      "duration": 1000,
+      "type": "alpha"
+    },
+    "waitingTime": 3000,
+    "type": "text"
+  },
+  {
+    "id":13,
     "question": {
       "question_id": 3,
       "match_id": 1,
@@ -157,6 +182,7 @@
     "type": "question"
   },
   {
+    "id":14,
     "textType": "topText",
     "animation": {
       "start": 1,
@@ -167,7 +193,38 @@
     "type": "text"
   },
   {
-    "name": "You scored #%1d points$ for that prediction!",
+    "id":15,
+    "name": "",
+    "textType": "",
+    "actionType": "powerupInfo",
+    "animation": {
+      "start": 0,
+      "end": 1,
+      "duration": 1000,
+      "type": "alpha"
+    },
+    "waitingTime": 1,
+    "freshStart": true,
+    "type": "powerupInfo"
+  },
+  {
+    "id":16,
+    "name": "",
+    "textType": "timelineLayout",
+    "timelineState":3,
+    "animation": {
+      "start": 0,
+      "end": 1,
+      "duration": 1000,
+      "type": "alpha"
+    },
+    "waitingTime": 1,
+    "freshStart": true,
+    "type": "text"
+  },
+  {
+    "id":17,
+    "name": "Use powerups from bottom bar",
     "textType": "topText",
     "animation": {
       "start": 0,
@@ -175,13 +232,13 @@
       "duration": 1000,
       "type": "alpha"
     },
-    "waitingTime": 2000,
-    "freshStart": true,
+    "waitingTime": 1000,
     "type": "text"
   },
   {
-    "name": "Use powerups to maximise your score and climb to the top of leaderboards. You'll find them at the bottom of your screen.",
-    "textType": "topText",
+    "id":18,
+    "name": "Just tap on powerup to apply it to prediction. You can add multiple powerups to any prediction you make.",
+    "textType": "subTopText",
     "animation": {
       "start": 0,
       "end": 1,
@@ -189,14 +246,15 @@
       "type": "alpha"
     },
     "waitingTime": 3000,
-    "freshStart": true,
     "type": "text"
   },
   {
-    "waitingTime": 1000,
+    "id":19,
+    "waitingTime": 1,
     "type": "powerup"
   },
   {
+    "id":20,
     "question": {
       "question_id": 4,
       "match_id": 1,
@@ -210,23 +268,13 @@
       "question_image_2": "https://cdn-images.spcafe.in/img/es3-cfit-s300/scGame/dummygame/dhoni_sixer.jpg",
       "question_answer": 2
     },
-    "waitingTime": 1000,
     "questionType": "powerups",
+    "waitingTime": 1000,
     "type": "question"
   },
   {
-    "textType": "topText",
-    "animation": {
-      "start": 1,
-      "end": 0.8,
-      "duration": 1000,
-      "type": "alpha"
-    },
-    "waitingTime": 1,
-    "type": "text"
-  },
-  {
-    "name": "Tap on a powerup to apply it.",
+    "id":21,
+    "name": "Tap on a powerup to apply it to the prediction!",
     "textType": "bottomText",
     "animation": {
       "start": 0,
@@ -234,52 +282,31 @@
       "duration": 1000,
       "type": "alpha"
     },
-    "waitingTime": 1000,
-    "type": "text"
-  },
-  {
-    "type": "animatePowerup"
-  },
-  {
-    "name": "You scored #%1d points$ for that prediction!",
-    "textType": "centerTopText",
-    "animation": {
-      "start": 0,
-      "end": 1,
-      "duration": 1000,
-      "type": "alpha"
-    },
-    "waitingTime": 1500,
-    "freshStart": true,
-    "type": "text"
-  },
-  {
-    "name": "You can use multiple powerups for each prediction, so make sure to try out different combos!\n\nScore maximum points by making all predicitions in a game, and playing all games in a challenge!",
-    "textType": "centerBottomText",
-    "animation": {
-      "start": 0,
-      "end": 1,
-      "duration": 1000,
-      "type": "alpha"
-    },
-    "waitingTime": 2000,
-    "type": "text"
-  },
-  {
-    "name": "Try more Powerups",
-    "textType": "action1",
-    "actionType": "powerups",
-    "animation": {
-      "start": 0,
-      "end": 1,
-      "duration": 1000,
-      "type": "alpha"
-    },
     "waitingTime": 1,
     "type": "text"
   },
   {
-    "name": "Start Playing!",
+    "id":22,
+    "type": "animatePowerup"
+  },
+  {
+    "id":23,
+    "name": "",
+    "textType": "",
+    "actionType": "",
+    "animation": {
+      "start": 0,
+      "end": 1,
+      "duration": 1000,
+      "type": "alpha"
+    },
+    "waitingTime": 1000,
+    "freshStart": true,
+    "type": "powerupTried"
+  },
+  {
+    "id":24,
+    "name": "",
     "textType": "action2",
     "actionType": "exit",
     "animation": {
@@ -288,6 +315,7 @@
       "duration": 1000,
       "type": "alpha"
     },
+    "waitingTime": 1,
     "type": "text"
   }
 ]

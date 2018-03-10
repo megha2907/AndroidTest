@@ -997,7 +997,7 @@ public class PredictionFragment extends NostraBaseFragment implements View.OnCli
 
     private boolean shouldAllowThirdOption(int index) {
         boolean isThirdOption = false;
-        if (mQuestionsCardAdapter != null && mCardStack != null) {
+        if (mQuestionsCardAdapter != null && mCardStack != null && index < mQuestionsCardAdapter.getCount()) {
             PredictionQuestion question = mQuestionsCardAdapter.getItem(index);
             if (question != null && !TextUtils.isEmpty(question.getQuestionOption3())) {
                 isThirdOption = true;

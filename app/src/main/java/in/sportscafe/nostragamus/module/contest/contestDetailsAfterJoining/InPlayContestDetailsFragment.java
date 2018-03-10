@@ -213,7 +213,8 @@ public class InPlayContestDetailsFragment extends NostraBaseFragment implements 
             fragment.setArguments(args);
 
         }   /* BumperEstimation fragment for Bumper Contest AND if challenge-not started */
-        else if (contestDto!=null && !TextUtils.isEmpty(contestDto.getContestMode()) &&
+        else if (contestDto!=null &&
+                !TextUtils.isEmpty(contestDto.getContestMode()) &&
                 contestDto.getContestMode().equalsIgnoreCase(Constants.ContestType.BUMPER)) {
 
             BumperPrizesEstimationScreenData screenData = new BumperPrizesEstimationScreenData();
