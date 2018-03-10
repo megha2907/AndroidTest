@@ -32,13 +32,13 @@ import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.navigation.help.dummygame.tindercard.FlingCardListener;
 import in.sportscafe.nostragamus.module.resultspeek.dto.Question;
 import in.sportscafe.nostragamus.utils.ViewUtils;
-import retrofit2.http.HEAD;
 
 public class DGPlayAdapter extends ArrayAdapter<Question> {
 
     interface QuestionType {
         String LEFT_RIGHT = "leftright";
         String NEITHER = "neither";
+        String LEFT_RIGHT_NEITHER = "leftRightNeither";
         String POINTS = "points";
     }
 
@@ -488,7 +488,7 @@ public class DGPlayAdapter extends ArrayAdapter<Question> {
             alpha = 1f;
         }
 
-        if (Math.abs(xPercent) > Math.abs(yPercent)) { // Locking horizontal options
+        /*if (Math.abs(xPercent) > Math.abs(yPercent)) { // Locking horizontal options
             if (xPercent < 0f) { // Locking left option
                 mLockingOption = mTopQuestion.getQuestionOption1();
 
@@ -505,7 +505,7 @@ public class DGPlayAdapter extends ArrayAdapter<Question> {
 
             mLeftAlpha = 1f - alpha / 2f;
             mRightAlpha = 1f - alpha / 2f;
-        } else { // No locking
+        } else { // No locking*/
             mLockingOption = "";
             alpha = 0f;
 
@@ -514,7 +514,7 @@ public class DGPlayAdapter extends ArrayAdapter<Question> {
 
             mLeftAlpha = 1f;
             mRightAlpha = 1f;
-        }
+//        }
 
         alpha = 1f - alpha;
 
@@ -628,7 +628,7 @@ public class DGPlayAdapter extends ArrayAdapter<Question> {
         mTopViewHolder.mainView.animate().alpha(1).scaleX(1).scaleY(1).setDuration(1000);
 
         if (null != mQuestionType && (QuestionType.LEFT_RIGHT.equalsIgnoreCase(mQuestionType)
-                || QuestionType.NEITHER.equalsIgnoreCase(mQuestionType))) {
+                || QuestionType.NEITHER.equalsIgnoreCase(mQuestionType) || QuestionType.LEFT_RIGHT_NEITHER.equalsIgnoreCase(mQuestionType))) {
 
             mTopViewHolder.cvMainCard.setEnabled(false);
             new Handler().postDelayed(new Runnable() {
@@ -646,15 +646,22 @@ public class DGPlayAdapter extends ArrayAdapter<Question> {
                 @Override
                 public void run() {
                     switch (mQuestionType) {
-                        case QuestionType.LEFT_RIGHT:
-                            getCardAutoMover().startLeftRightAnimation();
+
+                        case QuestionType.LEFT_RIGHT_NEITHER:
+                            getCardAutoMover().startCardMoveAnimation();
                             break;
+
+                        case QuestionType.LEFT_RIGHT:
+//                            getCardAutoMover().startLeftRightAnimation();
+                            break;
+
                         case QuestionType.NEITHER:
-                            getCardAutoMover().startNeitherAnimation();
+//                            getCardAutoMover().startNeitherAnimation();
                             break;
                         case QuestionType.POINTS:
 //                            mTopViewHolder.tvPointsLabel.animate().alpha(1).setDuration(1000);
                             break;
+
                     }
                 }
             }, 1500);

@@ -18,7 +18,8 @@ import in.sportscafe.nostragamus.module.common.NostragamusActivity;
 import in.sportscafe.nostragamus.module.store.StoreActivity;
 import in.sportscafe.nostragamus.utils.FragmentHelper;
 
-public class PowerupBankTransferToPlayActivity extends NostragamusActivity implements View.OnClickListener, PowerUpBankTransferFragmentListener {
+public class PowerupBankTransferToPlayActivity extends NostragamusActivity implements
+        View.OnClickListener, PowerUpBankTransferFragmentListener {
 
     private static final int STORE_REQUEST_CODE = 551;
 
@@ -37,7 +38,7 @@ public class PowerupBankTransferToPlayActivity extends NostragamusActivity imple
         setImmersiveFullScreenMode();
         initVisibleScreenLayout();
 
-        loadInfoFragment();
+//        loadInfoFragment();
         loadPowerupFragment();
         initViews();
     }
@@ -62,10 +63,10 @@ public class PowerupBankTransferToPlayActivity extends NostragamusActivity imple
         FragmentHelper.replaceFragment(this, R.id.powerup_bank_fragment_container, fragment);
     }
 
-    private void loadInfoFragment() {
+    /*private void loadInfoFragment() {
         mInfoFragment = new PowerupBankTransferInfoFragment();
         FragmentHelper.replaceFragment(this, R.id.powerup_bank_info_fragment_container, mInfoFragment);
-    }
+    }*/
 
     private void initVisibleScreenLayout() {
         try {
@@ -123,5 +124,20 @@ public class PowerupBankTransferToPlayActivity extends NostragamusActivity imple
                 ((PowerupBankTransferFragment) fragment).onStoreResponse();
             }
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.powerup_bank_fragment_container);
+        if (fragment != null && fragment instanceof PowerupBankTransferFragment) {
+            ((PowerupBankTransferFragment) fragment).onBackPressed();
+        } else {
+            super.onBackPressed();
+        }
+    }
+
+    @Override
+    public void cancelTransactionAndGoBack() {
+        super.onBackPressed();
     }
 }

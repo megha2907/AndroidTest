@@ -13,6 +13,9 @@ import in.sportscafe.nostragamus.module.resultspeek.dto.Question;
 @Parcel
 public class DGInstruction {
 
+    @SerializedName("id")
+    private int id;
+
     @SerializedName("name")
     private String name;
 
@@ -40,8 +43,18 @@ public class DGInstruction {
     @SerializedName("question")
     private Question question;
 
+    @SerializedName("timelineState")
+    private int timelineState;
 
     private Integer scoredPoints;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     @SerializedName("name")
     public String getName() {
@@ -141,5 +154,13 @@ public class DGInstruction {
 
     public void setScoredPoints(Integer scoredPoints) {
         this.scoredPoints = scoredPoints;
+    }
+
+    public int getTimelineState() {
+        return timelineState;
+    }
+
+    public void setTimelineState(int timelineState) {
+        this.timelineState = timelineState;
     }
 }

@@ -8,12 +8,16 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,8 +28,10 @@ import org.parceler.Parcels;
 import in.sportscafe.nostragamus.BuildConfig;
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Nostragamus;
+import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
+import in.sportscafe.nostragamus.module.customViews.CustomSnackBar;
 import in.sportscafe.nostragamus.module.prediction.playScreen.dto.PowerUp;
 import in.sportscafe.nostragamus.module.prediction.powerupBank.dataProvider.PowerupBankStatusApiModelImpl;
 import in.sportscafe.nostragamus.module.prediction.powerupBank.dataProvider.TransferPowerUpFromBankApiImpl;
@@ -81,7 +87,58 @@ public class PowerupBankTransferFragment extends BaseFragment implements View.On
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         initScreenDetails();
+        populateMsg();
+        showPowerupLayoutDelayedIfFirstTimeScreenShown();
         fetchPowerupBankStatusFromServer();
+    }
+
+    private void populateMsg() {
+        boolean isPowerUpTransferAttempted = NostragamusDataHandler.getInstance().isPowerUpTransferFromBankAttempted();
+        if (!isPowerUpTransferAttempted && getView() != null) {
+            TextView headingTextView = (TextView) getView().findViewById(R.id.powerup_transfer_heading_textView);
+            TextView subHeadingTextView = (TextView) getView().findViewById(R.id.powerup_transfer_subHeading_textView);
+
+            headingTextView.setText(getString(R.string.powerup_bank_transfer_from_bank_heading_first_time));
+            subHeadingTextView.setText(getString(R.string.powerup_bank_transfer_from_bank_sub_heading_first_time));
+        }
+    }
+
+    private void showPowerupLayoutDelayedIfFirstTimeScreenShown() {
+        if (getView() != null) {
+            boolean isScreenPreviouslyShown = NostragamusDataHandler.getInstance().isPowerUpTransferFromBankScreenShown();
+            if (!isScreenPreviouslyShown) {
+
+                NostragamusDataHandler.getInstance().setPowerUpTransferFromBankScreenShown();
+
+            /* First time, invisible layouts */
+                final LinearLayout linearLayout = (LinearLayout) getView().findViewById(R.id.powerup_transfer_detail_layout);
+                linearLayout.setVisibility(View.INVISIBLE);
+                mTransferPowerUpButton.setVisibility(View.INVISIBLE);
+
+            /* Animate */
+                Animation animation = AnimationUtils.loadAnimation(getContext(), R.anim.fade_in);
+                animation.setStartOffset(3000);
+                animation.setAnimationListener(new Animation.AnimationListener() {
+                    @Override
+                    public void onAnimationStart(Animation animation) {
+
+                    }
+
+                    @Override
+                    public void onAnimationEnd(Animation animation) {
+                        linearLayout.setVisibility(View.VISIBLE);
+                        mTransferPowerUpButton.setVisibility(View.VISIBLE);
+                    }
+
+                    @Override
+                    public void onAnimationRepeat(Animation animation) {
+
+                    }
+                });
+                linearLayout.startAnimation(animation);
+                mTransferPowerUpButton.startAnimation(animation);
+            }
+        }
     }
 
     private void fetchPowerupBankStatusFromServer() {
@@ -114,6 +171,7 @@ public class PowerupBankTransferFragment extends BaseFragment implements View.On
             public void onSuccessResponse(PowerUpBankStatusResponse response) {
                 dismissProgressbar();
                 onApiSuccess(response);
+                setMaxLimitMessage(response);
 
                 if (mFragmentListener != null && mScreenData != null && response != null) {
                     Bundle args = new Bundle();
@@ -123,6 +181,18 @@ public class PowerupBankTransferFragment extends BaseFragment implements View.On
                 }
             }
         };
+    }
+
+    private void setMaxLimitMessage(PowerUpBankStatusResponse response) {
+        if (response != null && response.getMaxTransferLimit() > 0 && getView() != null) {
+            TextView maxLimitTextView = (TextView) getView().findViewById(R.id.powerup_bank_max_limit_textView);
+
+            String msg = "Maximum limit - " + response.getMaxTransferLimit() + " more powerups each";
+            if (response.getMaxTransferLimit() == 1) {
+                msg = msg.replace("powerups", "powerup");
+            }
+            maxLimitTextView.setText(msg);
+        }
     }
 
     private void onApiSuccess(PowerUpBankStatusResponse response) {
@@ -166,6 +236,7 @@ public class PowerupBankTransferFragment extends BaseFragment implements View.On
         updatePowerUpDetailsOnUi();
         checkIfAlreadyTransferred();
         changeAddButtonsToBuyIfRequired();
+        hideResetButtons();
     }
 
     private void checkIfAlreadyTransferred() {
@@ -279,6 +350,10 @@ public class PowerupBankTransferFragment extends BaseFragment implements View.On
 
         enableTransferToChallengeButton(false);
         enableResetButton(false);
+
+        setLeftPowerupCountDoubler();
+        setLeftPowerupCountNoNegative();
+        setLeftPowerupCountAudiencePoll();
     }
 
     private void resetUi() {
@@ -551,8 +626,13 @@ public class PowerupBankTransferFragment extends BaseFragment implements View.On
 
                     enableResetButton(true);
                     enableTransferToChallengeButton(true);
-
                     changeAudiencePollToBuy();
+                    setLeftPowerupCountAudiencePoll();
+                    changeHeadingText();
+                    showResetButtons();
+
+                    // Once powerup added , consider as an attempt to transfer
+                    NostragamusDataHandler.getInstance().setPowerUpTransferFromBankAttempted();
                 } else {
                     onMaxAudiencePollPowerUpAdded(true);
                 }
@@ -563,28 +643,93 @@ public class PowerupBankTransferFragment extends BaseFragment implements View.On
         }
     }
 
+    private void setLeftPowerupCountAudiencePoll() {
+        if (getView() != null) {
+            TextView msgTextView = (TextView) getView().findViewById(R.id.powerup_bank_audience_add_err_textView);
+
+            if (mApiResponse.getMaxTransferLimit() > 0) {
+                int leftPowerup = mApiResponse.getMaxTransferLimit() - mUserDemandPowerup.getPlayerPoll();
+                if (leftPowerup > 0) {
+                    msgTextView.setText(leftPowerup + " Left");
+                    msgTextView.setTextColor(ContextCompat.getColor(msgTextView.getContext(), R.color.white_dim));
+                } else {
+                    onMaxAudiencePollPowerUpAdded(true);
+                }
+            }
+        }
+    }
+
     private void onMaxAudiencePollPowerUpAdded(boolean isMaxAdded) {
         if (getView() != null) {
             TextView errMsgTextView = (TextView) getView().findViewById(R.id.powerup_bank_audience_add_err_textView);
+
             if (isMaxAdded) {
-                errMsgTextView.setVisibility(View.VISIBLE);
+                errMsgTextView.setText("Max Added");
+                errMsgTextView.setTextColor(ContextCompat.getColor(errMsgTextView.getContext(), R.color.err_color));
                 mAddAudiencePollButton.setEnabled(false);
             } else {
-                errMsgTextView.setVisibility(View.INVISIBLE);
+//                errMsgTextView.setVisibility(View.INVISIBLE);
                 mAddAudiencePollButton.setEnabled(true);
             }
         }
     }
 
     private void enableResetButton(boolean enable) {
-        if (getView() != null) {
+        if (getView() != null && mResetButton != null) {
             mResetButton.setEnabled(enable);
         }
     }
 
     private void enableTransferToChallengeButton(boolean enable) {
-        if (getView() != null) {
+        if (getView() != null && mTransferPowerUpButton != null) {
             mTransferPowerUpButton.setEnabled(enable);
+        }
+    }
+
+    private void showResetButtons() {
+        if (mResetButton != null && mResetButton.getVisibility() != View.VISIBLE) {
+            Animation animation = AnimationUtils.loadAnimation(mResetButton.getContext(), R.anim.fade_in);
+            animation.setDuration(750);
+            animation.setAnimationListener(new Animation.AnimationListener() {
+                @Override
+                public void onAnimationStart(Animation animation) {
+
+                }
+
+                @Override
+                public void onAnimationEnd(Animation animation) {
+                    mResetButton.setVisibility(View.VISIBLE);
+                }
+
+                @Override
+                public void onAnimationRepeat(Animation animation) {
+
+                }
+            });
+            mResetButton.startAnimation(animation);
+        }
+    }
+
+    private void hideResetButtons() {
+        if (mResetButton != null&& mResetButton.getVisibility() == View.VISIBLE) {
+            Animation animation = AnimationUtils.loadAnimation(mResetButton.getContext(), R.anim.fade_out);
+            animation.setAnimationListener(new Animation.AnimationListener() {
+                @Override
+                public void onAnimationStart(Animation animation) {
+
+                }
+
+                @Override
+                public void onAnimationEnd(Animation animation) {
+                    mResetButton.setVisibility(View.INVISIBLE);
+                }
+
+                @Override
+                public void onAnimationRepeat(Animation animation) {
+
+                }
+            });
+            mResetButton.startAnimation(animation);
         }
     }
 
@@ -607,6 +752,12 @@ public class PowerupBankTransferFragment extends BaseFragment implements View.On
                     enableResetButton(true);
                     enableTransferToChallengeButton(true);
                     changeNoNegativeToBuy();
+                    setLeftPowerupCountNoNegative();
+                    changeHeadingText();
+                    showResetButtons();
+
+                    // Once powerup added , consider as an attempt to transfer
+                    NostragamusDataHandler.getInstance().setPowerUpTransferFromBankAttempted();
                 } else {
                     onMaxNoNegativePowerUpAdded(true);
                 }
@@ -617,15 +768,72 @@ public class PowerupBankTransferFragment extends BaseFragment implements View.On
         }
     }
 
+    private void setLeftPowerupCountNoNegative() {
+        if (getView() != null) {
+            TextView msgTextView = (TextView) getView().findViewById(R.id.powerup_bank_no_neg_add_err_textView);
+
+            if (mApiResponse.getMaxTransferLimit() > 0) {
+                int leftPowerup = mApiResponse.getMaxTransferLimit() - mUserDemandPowerup.getNoNegative();
+                if (leftPowerup > 0) {
+                    msgTextView.setText(leftPowerup + " Left");
+                    msgTextView.setTextColor(ContextCompat.getColor(msgTextView.getContext(), R.color.white_dim));
+                } else {
+                    onMaxNoNegativePowerUpAdded(true);
+                }
+            }
+        }
+    }
+
     private void onMaxNoNegativePowerUpAdded(boolean isMaxAdded) {
         if (getView() != null) {
             TextView errMsgTextView = (TextView) getView().findViewById(R.id.powerup_bank_no_neg_add_err_textView);
+
             if (isMaxAdded) {
-                errMsgTextView.setVisibility(View.VISIBLE);
+                errMsgTextView.setText("Max Added");
+                errMsgTextView.setTextColor(ContextCompat.getColor(errMsgTextView.getContext(), R.color.err_color));
                 mAddNoNegativeButton.setEnabled(false);
             } else {
-                errMsgTextView.setVisibility(View.INVISIBLE);
+//                errMsgTextView.setVisibility(View.INVISIBLE);
                 mAddNoNegativeButton.setEnabled(true);
+            }
+        }
+    }
+
+    /**
+     * If onboarding / first time texts were shown, then change the texts
+     */
+    private void changeHeadingText() {
+        if (getView() != null) {
+            final TextView headingTextView = (TextView) getView().findViewById(R.id.powerup_transfer_heading_textView);
+            final TextView subHeadingTextView = (TextView) getView().findViewById(R.id.powerup_transfer_subHeading_textView);
+
+            if (headingTextView.getText().toString().equalsIgnoreCase(getString(R.string.powerup_bank_transfer_from_bank_heading_first_time)) &&
+                    !NostragamusDataHandler.getInstance().isPowerUpTransferFromBankAttempted()) {
+
+                Animation animation = AnimationUtils.loadAnimation(getContext(), R.anim.fade_out);
+                animation.setAnimationListener(new Animation.AnimationListener() {
+                    @Override
+                    public void onAnimationStart(Animation animation) {
+
+                    }
+
+                    @Override
+                    public void onAnimationEnd(Animation animation) {
+                        headingTextView.setText(getString(R.string.powerup_bank_transfering_from_bank_heading_first_time));
+                        subHeadingTextView.setText(getString(R.string.powerup_bank_transfering_from_bank_sub_heading_first_time));
+
+                        Animation anim = AnimationUtils.loadAnimation(getContext(), R.anim.fade_in);
+                        headingTextView.startAnimation(anim);
+                        subHeadingTextView.startAnimation(anim);
+                    }
+
+                    @Override
+                    public void onAnimationRepeat(Animation animation) {
+
+                    }
+                });
+                headingTextView.startAnimation(animation);
+                subHeadingTextView.startAnimation(animation);
             }
         }
     }
@@ -650,6 +858,12 @@ public class PowerupBankTransferFragment extends BaseFragment implements View.On
                     enableResetButton(true);
                     enableTransferToChallengeButton(true);
                     changeDoublerToBuy();
+                    setLeftPowerupCountDoubler();
+                    changeHeadingText();
+                    showResetButtons();
+
+                    // Once powerup added , consider as an attempt to transfer
+                    NostragamusDataHandler.getInstance().setPowerUpTransferFromBankAttempted();
                 } else {
                     onMaxDoublerPowerUpAdded(true);
                 }
@@ -660,14 +874,32 @@ public class PowerupBankTransferFragment extends BaseFragment implements View.On
         }
     }
 
+    private void setLeftPowerupCountDoubler() {
+        if (getView() != null) {
+            TextView msgTextView = (TextView) getView().findViewById(R.id.powerup_bank_doubler_add_err_textView);
+
+            if (mApiResponse.getMaxTransferLimit() > 0) {
+                int leftPowerup = mApiResponse.getMaxTransferLimit() - mUserDemandPowerup.getDoubler();
+                if (leftPowerup > 0) {
+                    msgTextView.setText(leftPowerup + " Left");
+                    msgTextView.setTextColor(ContextCompat.getColor(msgTextView.getContext(), R.color.white_dim));
+                } else {
+                    onMaxDoublerPowerUpAdded(true);
+                }
+            }
+        }
+    }
+
     private void onMaxDoublerPowerUpAdded(boolean isMaxAdded) {
         if (getView() != null) {
             TextView errMsgTextView = (TextView) getView().findViewById(R.id.powerup_bank_doubler_add_err_textView);
+
             if (isMaxAdded) {
-                errMsgTextView.setVisibility(View.VISIBLE);
+                errMsgTextView.setText("Max Added");
+                errMsgTextView.setTextColor(ContextCompat.getColor(errMsgTextView.getContext(), R.color.err_color));
                 mAddDoublerButton.setEnabled(false);
             } else {
-                errMsgTextView.setVisibility(View.INVISIBLE);
+//                errMsgTextView.setVisibility(View.INVISIBLE);
                 mAddDoublerButton.setEnabled(true);
             }
         }
@@ -694,5 +926,29 @@ public class PowerupBankTransferFragment extends BaseFragment implements View.On
      */
     public void onStoreResponse() {
         fetchPowerupBankStatusFromServer();
+    }
+
+    public void onBackPressed() {
+        if (mUserDemandPowerup != null && getView() != null &&
+                (mUserDemandPowerup.getDoubler() > 0 ||
+                        mUserDemandPowerup.getNoNegative() > 0 ||
+                        mUserDemandPowerup.getPlayerPoll() > 0 )) {
+
+            CustomSnackBar customSnackBar = CustomSnackBar.make(getView(),
+                    "If you go back, the powerup won't be added to contest!", CustomSnackBar.DURATION_INFINITE);
+            customSnackBar.setAction("GOT IT", new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (mFragmentListener != null) {
+                        mFragmentListener.cancelTransactionAndGoBack();
+                    }
+                }
+            });
+            customSnackBar.show();
+        } else {
+            if (mFragmentListener != null) {
+                mFragmentListener.cancelTransactionAndGoBack();
+            }
+        }
     }
 }

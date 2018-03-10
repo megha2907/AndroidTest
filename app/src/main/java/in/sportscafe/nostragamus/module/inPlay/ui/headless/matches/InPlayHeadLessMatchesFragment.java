@@ -219,6 +219,7 @@ public class InPlayHeadLessMatchesFragment extends BaseFragment implements View.
             dataDto.setChallengeName(mHeadLessMatchScreenData.getChallengeName());
             dataDto.setChallengeStartTime(mHeadLessMatchScreenData.getStartTime());
             dataDto.setInPlayContestDto(mHeadLessMatchScreenData.getInPlayContestDto());
+            dataDto.setMaxPowerUpTransferLimit(inPlayMatch.getMaxTransferLimit());
 
             String subTitle = "";
             if (!TextUtils.isEmpty(mHeadLessMatchScreenData.getChallengeName())) {

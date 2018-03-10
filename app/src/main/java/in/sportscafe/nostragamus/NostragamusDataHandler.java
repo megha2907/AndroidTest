@@ -1,15 +1,8 @@
 package in.sportscafe.nostragamus;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
-
 import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
 import in.sportscafe.nostragamus.module.user.login.dto.JwtToken;
 import in.sportscafe.nostragamus.module.user.login.dto.UserInfo;
-import in.sportscafe.nostragamus.utils.timeutils.TimeUtils;
 import in.sportscafe.nostragamus.webservice.MyWebService;
 
 /**
@@ -442,4 +435,19 @@ public class NostragamusDataHandler extends AbstractDataHandler implements Const
         setSharedBooleanData(SharedKeys.EDITING_ANSWER_FIRST_TIME, false);
     }
 
+    public void setPowerUpTransferFromBankAttempted() {
+        setSharedBooleanData(SharedKeys.POWERUP_TRANSFER_FROM_BANK_ATTEMPTED, true);
+    }
+
+    public boolean isPowerUpTransferFromBankAttempted() {
+        return getSharedBooleanData(SharedKeys.POWERUP_TRANSFER_FROM_BANK_ATTEMPTED, false);
+    }
+
+    public void setPowerUpTransferFromBankScreenShown() {
+        setSharedBooleanData(SharedKeys.POWERUP_TRANSFER_FROM_BANK_SCREEN_SHOWN, true);
+    }
+
+    public boolean isPowerUpTransferFromBankScreenShown() {
+        return getSharedBooleanData(SharedKeys.POWERUP_TRANSFER_FROM_BANK_SCREEN_SHOWN, false);
+    }
 }

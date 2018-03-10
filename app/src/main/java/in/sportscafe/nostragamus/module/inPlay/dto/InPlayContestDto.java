@@ -51,6 +51,8 @@ public class InPlayContestDto {
     private int challengeId;
     private String challengeName;
     private String challengeStartTime;
+    private int maxPowerUpTransferLimit = -1;
+
     /**
      * Indicator to launch OR block Inplay-Matches screens (Headless / Contest) once it's been launched
      * Once These screens are launched, set flag to false
@@ -175,5 +177,13 @@ public class InPlayContestDto {
 
     public void setShouldLaunchMatchesScreen(boolean shouldLaunchMatchesScreen) {
         this.shouldLaunchMatchesScreen = shouldLaunchMatchesScreen;
+    }
+
+    public int getMaxPowerUpTransferLimit() {
+        return maxPowerUpTransferLimit;
+    }
+
+    public void setMaxPowerUpTransferLimit(int maxPowerUpTransferLimit) {
+        this.maxPowerUpTransferLimit = maxPowerUpTransferLimit;
     }
 }

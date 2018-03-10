@@ -174,7 +174,14 @@ public class PredictionFragment extends NostraBaseFragment implements View.OnCli
 
         initMembers();
         initHeading();
+        initPowerUpBankEnabled();
         animateTopBottomLayouts();
+    }
+
+    private void initPowerUpBankEnabled() {
+        if (mPlayScreenData != null && mPlayScreenData.getMaxPowerUpTransferLimit() == 0) {
+            mPowerUpImageView.setImageResource(R.drawable.powerup_bank_disabled_playscreen_img);
+        }
     }
 
     private void initMembers() {
@@ -552,7 +559,14 @@ public class PredictionFragment extends NostraBaseFragment implements View.OnCli
                 break;
 
             case R.id.prediction_powerup_bank_imgView:
-                onPowerUpBankClicked();
+                if (mPlayScreenData.getMaxPowerUpTransferLimit() == 0 && getView() != null) {
+                    CustomSnackBar msgBar = CustomSnackBar.make(getView(), "POWERUP BANK DISABLED", CustomSnackBar.DURATION_LONG);
+                    msgBar.setImageResource(R.drawable.powerup_bank_disabled);
+                    msgBar.show();
+
+                } else {
+                    onPowerUpBankClicked();
+                }
                 break;
 
             case R.id.prediction_help_play_imgView:
@@ -983,7 +997,7 @@ public class PredictionFragment extends NostraBaseFragment implements View.OnCli
 
     private boolean shouldAllowThirdOption(int index) {
         boolean isThirdOption = false;
-        if (mQuestionsCardAdapter != null && mCardStack != null) {
+        if (mQuestionsCardAdapter != null && mCardStack != null && index < mQuestionsCardAdapter.getCount()) {
             PredictionQuestion question = mQuestionsCardAdapter.getItem(index);
             if (question != null && !TextUtils.isEmpty(question.getQuestionOption3())) {
                 isThirdOption = true;

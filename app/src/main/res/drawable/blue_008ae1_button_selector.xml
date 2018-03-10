@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Pressed state -->
+    <item android:state_pressed="true">
+        <layer-list>
+            <item> <!-- Shadow -->
+                <shape>
+                    <solid android:color="#104468" />
+                    <corners android:radius="@dimen/dp_2" />
+                </shape>
+            </item>
+            <item android:bottom="@dimen/dp_3">
+                <shape>
+                    <solid android:color="#135481" />
+                    <corners android:radius="@dimen/dp_2" />
+                </shape>
+            </item>
+        </layer-list>
+    </item>
+
+    <!-- Disable state -->
+    <item android:state_enabled="false">
+        <layer-list>
+            <item>  <!-- shadow -->
+                <shape>
+                    <solid android:color="#122c3e" />
+                    <corners android:radius="@dimen/dp_2" />
+                </shape>
+            </item>
+            <item  android:bottom="@dimen/dp_3">
+                <shape>
+                    <solid android:color="#163f5b" />
+                    <corners android:radius="@dimen/dp_2" />
+                </shape>
+            </item>
+        </layer-list>
+    </item>
+
+    <!-- Default -->
+    <item>
+        <layer-list>
+            <!-- SHADOW -->
+            <item>
+                <shape>
+                    <solid android:color="#186aa2" />
+                    <corners android:radius="@dimen/dp_2" />
+                </shape>
+            </item>
+            <!-- BUTTON -->
+            <item android:bottom="@dimen/dp_3">
+                <shape android:shape="rectangle">
+                    <solid android:color="#008ae1" />
+                    <corners android:radius="@dimen/dp_2" />
+                </shape>
+            </item>
+        </layer-list>
+    </item>
+</selector>

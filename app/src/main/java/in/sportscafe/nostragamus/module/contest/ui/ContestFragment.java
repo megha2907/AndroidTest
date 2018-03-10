@@ -139,7 +139,8 @@ public class ContestFragment extends NostraBaseFragment implements View.OnClickL
                             switch (status) {
                                 case Constants.DataStatus.FROM_SERVER_API_SUCCESS:
                                     if (response != null && response.getData() != null && response.getData().getContests() != null) {
-                                        showOnUi(dataProvider.getContestTypeList(response.getData().getContests()), response.getData().getContests());
+                                        showOnUi(dataProvider.getContestTypeList(response.getData().getContests()),
+                                                response.getData().getContests(), response.getData().getMaxTransferLimit());
 
                                     } else {
                                         handleError(-1);
@@ -160,6 +161,7 @@ public class ContestFragment extends NostraBaseFragment implements View.OnClickL
                     });
         }
     }
+
 
     private void initMembers() {
         Bundle args = getArguments();
@@ -184,7 +186,7 @@ public class ContestFragment extends NostraBaseFragment implements View.OnClickL
         }
     }
 
-    private void showOnUi(List<ContestType> contestTypeList, List<Contest> contestList) {
+    private void showOnUi(List<ContestType> contestTypeList, List<Contest> contestList, int maxPowerUpTransferLimit) {
         if (getView() != null && getActivity() != null && mContestScreenData != null) {
             if (contestTypeList != null && contestTypeList.size() > 0
                     && contestList != null && contestList.size() > 0) {
@@ -218,6 +220,7 @@ public class ContestFragment extends NostraBaseFragment implements View.OnClickL
                             contestType.setContestCount(contestCount);
                             tabFragment.onContestData(contestFiltered, mContestScreenData);
                             tabFragment.setContestType(contestType);
+                            tabFragment.setMaxPowerupTransferLimit(maxPowerUpTransferLimit);
                             fragmentList.add(tabFragment);
                         }
                     }

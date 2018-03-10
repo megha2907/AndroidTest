@@ -10,4 +10,5 @@ public interface PowerUpBankTransferFragmentListener {
     void updatePowerUpInfoDetails(Bundle args);
     void finishActivity(Bundle args);
     void launchStore(Bundle args);
+    void cancelTransactionAndGoBack();
 }

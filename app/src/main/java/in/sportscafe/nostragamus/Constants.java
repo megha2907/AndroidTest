@@ -129,6 +129,8 @@ public interface Constants {
         String WHATS_NEW_SHOWN = "whatsNewShown";
         String EDITING_ANSWER_FIRST_TIME = "editingAnswerFirstTime";
         String EDITING_POWERUP_IN_EDIT_ANSWER_FIRST_TIME = "editingPowerupInEditAnswerForstTime";
+        String POWERUP_TRANSFER_FROM_BANK_ATTEMPTED = "powerupTransferFromBankAttempted";
+        String POWERUP_TRANSFER_FROM_BANK_SCREEN_SHOWN = "powerupTransferScreenShown";
     }
 
     interface Alerts {
