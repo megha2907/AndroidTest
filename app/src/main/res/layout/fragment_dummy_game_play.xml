@@ -205,7 +205,8 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentLeft="true"
                         android:clipToPadding="false"
-                        android:clipChildren="false">
+                        android:clipChildren="false"
+                        android:paddingLeft="@dimen/dim_2">
 
                         <ImageView
                             android:id="@+id/powerups_iv_2x"
@@ -264,7 +265,10 @@
                         android:id="@+id/powerups_rl_poll"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true">
+                        android:layout_alignParentRight="true"
+                        android:clipToPadding="false"
+                        android:clipChildren="false"
+                        android:paddingRight="@dimen/dim_2">
 
                         <ImageView
                             android:id="@+id/powerups_iv_poll"

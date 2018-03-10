@@ -336,7 +336,7 @@ public class DGTextFragment extends NostragamusFragment implements View.OnClickL
 
     private void setTimelineStep1() {
         TextView step1TextView = (TextView) findViewById(R.id.dg_timeline_step_1_node);
-        step1TextView.setBackgroundResource(R.drawable.timeline_blue_dot);
+        step1TextView.setBackgroundResource(R.drawable.blue_filled_circle_bg);
         step1TextView.setTextColor(ContextCompat.getColor(getContext(), R.color.white));
     }
 
@@ -348,11 +348,11 @@ public class DGTextFragment extends NostragamusFragment implements View.OnClickL
 
     private void setTimelineStep2() {
         TextView step2TextView = (TextView) findViewById(R.id.dg_timeline_step_2_node);
-        step2TextView.setBackgroundResource(R.drawable.timeline_blue_dot);
+        step2TextView.setBackgroundResource(R.drawable.blue_filled_circle_bg);
         step2TextView.setTextColor(ContextCompat.getColor(getContext(), R.color.white));
 
         View lineView = (View) findViewById(R.id.dg_timeline_step_2_line);
-        lineView.setBackgroundColor(ContextCompat.getColor(lineView.getContext(), R.color.venice_blue));
+        lineView.setBackgroundColor(ContextCompat.getColor(lineView.getContext(), R.color.blue_008ae1));
     }
 
     private void setTimelineStep2Passed() {
@@ -361,16 +361,16 @@ public class DGTextFragment extends NostragamusFragment implements View.OnClickL
         step2TextView.setText("");
 
         View lineView = (View) findViewById(R.id.dg_timeline_step_2_line);
-        lineView.setBackgroundColor(ContextCompat.getColor(lineView.getContext(), R.color.venice_blue));
+        lineView.setBackgroundColor(ContextCompat.getColor(lineView.getContext(), R.color.blue_008ae1));
     }
 
     private void setTimelineStep3() {
         TextView step3TextView = (TextView) findViewById(R.id.dg_timeline_step_3_node);
-        step3TextView.setBackgroundResource(R.drawable.timeline_blue_dot);
+        step3TextView.setBackgroundResource(R.drawable.blue_filled_circle_bg);
         step3TextView.setTextColor(ContextCompat.getColor(getContext(), R.color.white));
 
         View lineView = (View) findViewById(R.id.dg_timeline_step_3_line);
-        lineView.setBackgroundColor(ContextCompat.getColor(lineView.getContext(), R.color.venice_blue));
+        lineView.setBackgroundColor(ContextCompat.getColor(lineView.getContext(), R.color.blue_008ae1));
     }
 
     private void setTimelineStep3Passed() {
@@ -379,6 +379,6 @@ public class DGTextFragment extends NostragamusFragment implements View.OnClickL
         step3TextView.setText("");
 
         View lineView = (View) findViewById(R.id.dg_timeline_step_3_line);
-        lineView.setBackgroundColor(ContextCompat.getColor(lineView.getContext(), R.color.venice_blue));
+        lineView.setBackgroundColor(ContextCompat.getColor(lineView.getContext(), R.color.blue_008ae1));
     }
 }
