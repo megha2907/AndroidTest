@@ -276,12 +276,12 @@ public class DGPlayFragment extends NostragamusFragment implements DGPlayView, V
         final int finalCount = count;
         final float finalRotation = rotation;
 
-        Animation anim = new ScaleAnimation(1f, 1.20f, 1f, 1.20f,
+        Animation anim = new ScaleAnimation(1f, 1.15f, 1f, 1.15f,
                 Animation.RELATIVE_TO_SELF, 0.50f, Animation.RELATIVE_TO_SELF, 0.50f);
         anim.setFillAfter(false);
         anim.setRepeatMode(Animation.REVERSE);
         anim.setRepeatCount(3);
-        anim.setDuration(500);
+        anim.setDuration(250);
         view.startAnimation(anim);
 
         /*finalView.animate().rotation(rotation).setDuration(250).setListener(
