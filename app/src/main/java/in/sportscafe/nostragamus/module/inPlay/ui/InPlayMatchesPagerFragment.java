@@ -540,6 +540,11 @@ public class InPlayMatchesPagerFragment extends NostraBaseFragment {
                 dataDto.setMatchPartyTitle1(inPlayMatch.getMatchParties().get(0).getPartyName());
                 dataDto.setMatchPartyTitle2(inPlayMatch.getMatchParties().get(1).getPartyName());
             }
+
+            // Single party
+            if (inPlayMatch.getTopics() != null && !TextUtils.isEmpty(inPlayMatch.getTopics().getTopicName())) {
+                dataDto.setMatchPartyTitle1(inPlayMatch.getTopics().getTopicName());
+            }
         }
 
         return dataDto;

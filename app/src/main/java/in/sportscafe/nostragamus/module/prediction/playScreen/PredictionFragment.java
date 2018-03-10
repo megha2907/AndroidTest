@@ -299,6 +299,7 @@ public class PredictionFragment extends NostraBaseFragment implements View.OnCli
         if (getView() != null && getActivity() != null) {
             TextView headingParty1TextView = (TextView) getView().findViewById(R.id.prediction_heading_party1_textView);
             TextView headingParty2TextView = (TextView) getView().findViewById(R.id.prediction_heading_party2_textView);
+            TextView vsTextView = (TextView) getView().findViewById(R.id.prediction_heading_vs_textView);
             TextView subHeadingTextView = (TextView) getView().findViewById(R.id.prediction_sub_heading_textView);
 
             if (mPlayScreenData != null) {
@@ -308,6 +309,10 @@ public class PredictionFragment extends NostraBaseFragment implements View.OnCli
                 if (!TextUtils.isEmpty(party1) && !TextUtils.isEmpty(party2)) {
                     headingParty1TextView.setText(party1);
                     headingParty2TextView.setText(party2);
+
+                } else if (!TextUtils.isEmpty(party1) && TextUtils.isEmpty(party2)) {   // Single party
+                    headingParty1TextView.setText(party1);
+                    vsTextView.setVisibility(View.GONE);
                 }
 
                 if (!TextUtils.isEmpty(mPlayScreenData.getSubTitle())) {

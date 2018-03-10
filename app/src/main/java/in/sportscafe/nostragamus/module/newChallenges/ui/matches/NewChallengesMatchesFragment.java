@@ -225,6 +225,11 @@ public class NewChallengesMatchesFragment extends BaseFragment implements View.O
                 playData.setMatchPartyTitle2(match.getMatchParties().get(1).getPartyName());
             }
 
+            // Single party
+            if (match.getTopics() != null && !TextUtils.isEmpty(match.getTopics().getTopicName())) {
+                playData.setMatchPartyTitle1(match.getTopics().getTopicName());
+            }
+
             Bundle bundle = new Bundle();
             bundle.putParcelable(Constants.BundleKeys.PLAY_SCREEN_DATA, Parcels.wrap(playData));
 
