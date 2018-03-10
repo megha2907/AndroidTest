@@ -9,7 +9,6 @@
         android:id="@+id/powerup_applied_iv_icon"
         android:layout_width="@dimen/dp_46"
         android:layout_height="@dimen/dp_46"
-        android:layout_toRightOf="@id/powerups_iv_2x_global"
         android:padding="@dimen/dp_10"
         android:src="@drawable/powerup_2x_white" />
 

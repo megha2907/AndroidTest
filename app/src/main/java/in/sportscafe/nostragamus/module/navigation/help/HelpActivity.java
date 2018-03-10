@@ -22,6 +22,7 @@ import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.NostragamusActivity;
 import in.sportscafe.nostragamus.module.navigation.help.dummygame.DummyGameActivity;
+import in.sportscafe.nostragamus.module.navigation.help.howtoplay.HowToPlayActivity;
 import in.sportscafe.nostragamus.module.user.login.dto.UserInfo;
 import in.sportscafe.nostragamus.utils.FragmentHelper;
 
@@ -148,6 +149,17 @@ public class HelpActivity extends NostragamusActivity implements HelpFragmentLis
                 .filterByTags(tags, "generic");
         Freshchat.showConversations(getApplicationContext(), convOptions);
 
+    }
+
+    @Override
+    public void onHowToPlayClicked() {
+        if (getActivity() != null) {
+            Bundle args = new Bundle();
+            args.putString(Constants.BundleKeys.SLIDE_ID, Constants.SlideScreenNames.HOW_TO_PLAY);
+            Intent intent = new Intent(getActivity(), HowToPlayActivity.class);
+            intent.putExtras(args);
+            startActivity(intent);
+        }
     }
 
 }

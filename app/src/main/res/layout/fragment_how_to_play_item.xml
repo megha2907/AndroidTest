@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.jeeva.android.widgets.customfont.CustomTextView
+        android:id="@+id/how_to_play_tv_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dim_24"
+        android:layout_marginRight="@dimen/dim_24"
+        android:layout_marginTop="@dimen/dim_16"
+        android:layout_centerHorizontal="true"
+        android:text="Title"
+        android:textColor="@color/white"
+        android:textSize="@dimen/sp_14"
+        app:typeface="lato_bold" />
+
+    <com.jeeva.android.widgets.customfont.CustomTextView
+        android:id="@+id/how_to_play_tv_desc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="@dimen/dim_16"
+        android:layout_marginRight="@dimen/dim_16"
+        android:layout_marginTop="@dimen/dim_12"
+        android:text="Description"
+        android:gravity="center"
+        android:lineSpacingExtra="@dimen/dim_4"
+        android:layout_below="@+id/how_to_play_tv_title"
+        android:textColor="@color/white_60"
+        android:textSize="@dimen/sp_12"
+        app:typeface="lato_regular" />
+
+    <RelativeLayout
+        android:id="@+id/how_to_play_image_rl"
+        android:layout_width="@dimen/dim_328"
+        android:layout_height="@dimen/dim_380"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/how_to_play_tv_desc"
+        android:layout_marginTop="@dimen/dim_20"
+        android:layout_marginRight="@dimen/dim_16"
+        android:layout_marginLeft="@dimen/dim_16">
+
+        <com.jeeva.android.widgets.HmImageView
+            android:id="@+id/how_to_play_iv_image"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:defaultImage="@drawable/placeholder_icon"
+            android:alpha="0" />
+
+    </RelativeLayout>
+
+</RelativeLayout>

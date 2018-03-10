@@ -44,7 +44,6 @@ public class PowerUpBankFragment extends BaseFragment implements View.OnClickLis
     private HashMap<String, PowerUp> mPowerUpMaps;
 
     private TextView tvPowerupBankOne;
-    private TextView tvPowerupBankTwo;
     private TextView mTvRunningLow;
 
     private TextView tvPBPowerup2xCount;
@@ -114,8 +113,8 @@ public class PowerUpBankFragment extends BaseFragment implements View.OnClickLis
         rootView.findViewById(R.id.powerup_bank_terms_layout).setOnClickListener(this);
         rootView.findViewById(R.id.powerup_bank_txn_history_layout).setOnClickListener(this);
         rootView.findViewById(R.id.powerup_bank_store_layout).setOnClickListener(this);
+        rootView.findViewById(R.id.powerup_bank_how_to_use_layout).setOnClickListener(this);
         tvPowerupBankOne = (TextView) rootView.findViewById(R.id.powerup_bank_subheading_tv_one);
-        tvPowerupBankTwo = (TextView) rootView.findViewById(R.id.powerup_bank_subheading_tv_two);
         mTvRunningLow = (TextView) rootView.findViewById(R.id.powerup_bank_low_powerups);
 
         tvPBPowerup2xCount = (TextView) rootView.findViewById(R.id.powerup_bank_2x_powerup_count);
@@ -238,25 +237,7 @@ public class PowerUpBankFragment extends BaseFragment implements View.OnClickLis
     }
 
     private void setPowerUpText() {
-        tvPowerupBankOne.setText(Html.fromHtml(getResources().getString(R.string.pb_text_one)), TextView.BufferType.SPANNABLE);
-
-        /* Set the icon for "powerupbank" */
-        String src = String.valueOf(Html.fromHtml(getResources().getString(R.string.pb_text_two)));
-        SpannableString str = new SpannableString(src);
-        Drawable d = getResources().getDrawable(R.drawable.powerbank_profile_icon);
-        d.setBounds(0, 0, getResources().getDimensionPixelSize(R.dimen.dim_16), getResources().getDimensionPixelSize(R.dimen.dim_16));
-        ImageSpan span = new ImageSpan(d, ImageSpan.ALIGN_BOTTOM);
-        str.setSpan(span, str.toString().indexOf("@"), str.toString().indexOf("@") + 1, Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
-
-        final ForegroundColorSpan fcs = new ForegroundColorSpan(Color.WHITE);
-        final StyleSpan bss = new StyleSpan(android.graphics.Typeface.BOLD);
-
-        /* Set the text color for "powerupbank" text to white */
-        str.setSpan(fcs, str.toString().indexOf("@"), str.toString().indexOf("@") + 15, Spannable.SPAN_INCLUSIVE_INCLUSIVE);
-        /* make them also bold */
-        str.setSpan(bss, str.toString().indexOf("@"), str.toString().indexOf("@") + 15, Spannable.SPAN_INCLUSIVE_INCLUSIVE);
-
-        tvPowerupBankTwo.setText(str, TextView.BufferType.SPANNABLE);
+        tvPowerupBankOne.setText(getResources().getString(R.string.pb_text_one));
     }
 
 
@@ -298,6 +279,12 @@ public class PowerUpBankFragment extends BaseFragment implements View.OnClickLis
             case R.id.powerup_bank_store_layout:
                 if (mPowerUpBankFragmentListener != null) {
                     mPowerUpBankFragmentListener.onStoreClicked();
+                }
+                break;
+
+            case R.id.powerup_bank_how_to_use_layout:
+                if (mPowerUpBankFragmentListener != null) {
+                    mPowerUpBankFragmentListener.onHowToUsePowerUpBankClicked();
                 }
                 break;
         }
