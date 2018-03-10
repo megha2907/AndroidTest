@@ -13,10 +13,13 @@ public class UserPaymentInfoBankDto {
     @SerializedName("name")
     private String name;
 
-    @SerializedName("ifsc_code")
+    @SerializedName("address1")
+    private String address1;
+
+    @SerializedName("ifsc")
     private String ifscCode;
 
-    @SerializedName("account_no")
+    @SerializedName("bankAccount")
     private String accountNo;
 
     @SerializedName("name")
@@ -47,5 +50,13 @@ public class UserPaymentInfoBankDto {
     @SerializedName("account_no")
     public void setAccountNo(String accountNo) {
         this.accountNo = accountNo;
+    }
+
+    public String getAddress1() {
+        return address1;
+    }
+
+    public void setAddress1(String address1) {
+        this.address1 = address1;
     }
 }

@@ -16,6 +16,7 @@ import in.sportscafe.nostragamus.module.contest.dataProvider.JoinContestApiImpl;
 import in.sportscafe.nostragamus.module.contest.dto.JoinContestData;
 import in.sportscafe.nostragamus.module.contest.dto.VerifyJoinContestResponse;
 import in.sportscafe.nostragamus.module.contest.helper.JoinContestHelper;
+import in.sportscafe.nostragamus.module.navigation.wallet.addMoney.AddMoneyProcessListener;
 import in.sportscafe.nostragamus.module.navigation.wallet.addMoney.VerifyPaymentApiImpl;
 import in.sportscafe.nostragamus.module.navigation.wallet.addMoney.addByPaymentCoupon.AddMoneyThroughPaymentCouponFragment;
 import in.sportscafe.nostragamus.module.navigation.wallet.addMoney.addByPaymentCoupon.AddMoneyThroughPaymentCouponFragmentListener;
@@ -26,6 +27,7 @@ import in.sportscafe.nostragamus.module.navigation.wallet.addMoney.dto.CashFreeT
 import in.sportscafe.nostragamus.module.navigation.wallet.addMoney.selectPaymentMode.SelectPaymentModeFragment;
 import in.sportscafe.nostragamus.module.navigation.wallet.addMoney.selectPaymentMode.SelectPaymentModeFragmentListener;
 import in.sportscafe.nostragamus.module.navigation.wallet.paytmAndBank.TransactionFailureDialogFragment;
+import in.sportscafe.nostragamus.module.navigation.wallet.paytmAndBank.TransactionPendingDialogFragment;
 import in.sportscafe.nostragamus.module.navigation.wallet.paytmAndBank.TransactionSuccessDialogFragment;
 
 /**
@@ -36,21 +38,17 @@ public class AddMoneyByCashFreeHelper {
 
     private static final String TAG = AddMoneyByCashFreeHelper.class.getSimpleName();
 
-    private static AddMoneyByCashFreeProcessListener addMoneyByCashFreeProcessListener;
+    private static AddMoneyProcessListener addMoneyProcessListener;
 
-    public interface AddMoneyByCashFreeProcessListener {
-        void hideProgressBar();
-        void showProgressBar();
-    }
 
     /**
      * Generate Order and Get OrderDetails From server
      *
      * @param amount
      */
-    public static void getOrderDetails(@NonNull BaseFragment fragment, double amount, String paymentMode, @NonNull AddMoneyByCashFreeHelper.AddMoneyByCashFreeProcessListener listener) {
+    public static void getOrderDetails(@NonNull BaseFragment fragment, double amount, String paymentMode, @NonNull AddMoneyProcessListener listener) {
         if (Nostragamus.getInstance().hasNetworkConnection() && listener != null) {
-            addMoneyByCashFreeProcessListener = listener;
+            addMoneyProcessListener = listener;
             fragment.showProgressbar();
             GenerateCashFreeOrderApiModelImpl.newInstance(getGenerateCashFreeOrderApiListener(fragment, amount, paymentMode)).callGenerateOrderApi(amount);
         } else {
@@ -162,8 +160,8 @@ public class AddMoneyByCashFreeHelper {
 
         if (Nostragamus.getInstance().hasNetworkConnection() && cashFreeTransactionResponse != null
                 && !TextUtils.isEmpty(cashFreeTransactionResponse.getOrderId())) {
-            if (addMoneyByCashFreeProcessListener != null) {
-                addMoneyByCashFreeProcessListener.showProgressBar();
+            if (addMoneyProcessListener != null) {
+                addMoneyProcessListener.showProgressBar();
             }
             verifyPaymentApi.verifyPayment(cashFreeTransactionResponse.getOrderId());
         } else {
@@ -178,8 +176,8 @@ public class AddMoneyByCashFreeHelper {
             @Override
             public void onFailure(int dataStatus) {
                 if (fragment.getActivity() != null && fragment.getView() != null) {
-                    if (addMoneyByCashFreeProcessListener!=null){
-                        addMoneyByCashFreeProcessListener.hideProgressBar();
+                    if (addMoneyProcessListener!=null){
+                        addMoneyProcessListener.hideProgressBar();
                     }
                     Log.d(TAG, Constants.Alerts.PAYTM_TRANSACTION_FAILED);
                     showCashfreeTransactionFailureDialog(fragment, amount, paymentMode);
@@ -189,8 +187,8 @@ public class AddMoneyByCashFreeHelper {
             @Override
             public void onSuccessResponse(String orderStatus) {
                 if (fragment.getActivity() != null && fragment.getView() != null) {
-                    if (addMoneyByCashFreeProcessListener!=null){
-                        addMoneyByCashFreeProcessListener.hideProgressBar();
+                    if (addMoneyProcessListener!=null){
+                        addMoneyProcessListener.hideProgressBar();
                     }
                     if (orderStatus.equalsIgnoreCase(Constants.VerifyPaymentStatus.SUCCESS)) {
                         Log.d(TAG, "Cashfree Transaction Response - Success from Server");
@@ -200,6 +198,17 @@ public class AddMoneyByCashFreeHelper {
                         Log.d(TAG, Constants.Alerts.PAYTM_TRANSACTION_FAILED);
                         showCashfreeTransactionFailureDialog(fragment, amount, paymentMode);
                     }
+                }
+            }
+
+            @Override
+            public void onPendingResponse() {
+                if (fragment.getActivity() != null && fragment.getView() != null) {
+                    if (addMoneyProcessListener!=null){
+                        addMoneyProcessListener.hideProgressBar();
+                    }
+                    Log.d(TAG, Constants.Alerts.PAYTM_TRANSACTION_FAILED);
+                    showCashfreeTransactionPendingDialog(fragment, amount);
                 }
             }
 
@@ -245,6 +254,42 @@ public class AddMoneyByCashFreeHelper {
         }, 200);
     }
 
+    private static void showCashfreeTransactionPendingDialog(final BaseFragment fragment, final double amount) {
+        // As fragment resume may take some time, launch fragment after some time
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                TransactionPendingDialogFragment pendingDialogFragment =
+                        TransactionPendingDialogFragment.newInstance(1201, amount, getTransactionPendingActionListener(fragment));
+
+                if (fragment != null && fragment.getActivity() != null && !fragment.getActivity().isFinishing()) {
+                    FragmentManager fragmentManager = fragment.getChildFragmentManager();
+                    if (fragmentManager != null) {
+                        pendingDialogFragment.showDialogAllowingStateLoss(fragmentManager, pendingDialogFragment, "PENDING_DIALOG");
+                    }
+                }
+            }
+        }, 200);
+    }
+
+    /**
+     * Paytm transaction pending , then Pending dialog button click handler
+     *
+     * @return
+     */
+    private static TransactionPendingDialogFragment.IPendingActionListener
+    getTransactionPendingActionListener(final BaseFragment fragment) {
+        return new TransactionPendingDialogFragment.IPendingActionListener() {
+
+            @Override
+            public void onBackToWallet() {
+                Log.d(TAG, "On transaction Pending ");
+            }
+
+        };
+    }
+
+
     /**
      * Paytm transaction failed, then failure dialog button click handler
      *
@@ -262,8 +307,8 @@ public class AddMoneyByCashFreeHelper {
             @Override
             public void onRetryPayment() {
                 Log.d(TAG, "On Cashfree transaction failed - Retrying... ");
-                if (addMoneyByCashFreeProcessListener != null) {
-                    getOrderDetails(fragment, amount, paymentMode, addMoneyByCashFreeProcessListener);
+                if (addMoneyProcessListener != null) {
+                    getOrderDetails(fragment, amount, paymentMode, addMoneyProcessListener);
                 }
             }
         };

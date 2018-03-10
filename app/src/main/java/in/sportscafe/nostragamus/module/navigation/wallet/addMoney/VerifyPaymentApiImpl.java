@@ -121,7 +121,7 @@ public class VerifyPaymentApiImpl {
             }, 4000);   /* 4 seconds to wait before re-trying */
         } else {
             if (mListener != null) {
-                mListener.onFailure(Constants.DataStatus.NO_INTERNET);
+                mListener.onPendingResponse();
             }
         }
     }
@@ -131,5 +131,7 @@ public class VerifyPaymentApiImpl {
         void onFailure(int dataStatus);
 
         void onSuccessResponse(String orderStatus);
+
+        void onPendingResponse();
     }
 }

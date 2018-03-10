@@ -24,7 +24,6 @@ public class UpdateUserProfileRequest {
         this.userPhoto = userPhoto;
     }
 
-
     @SerializedName("user_nick")
     public String getUserNickName() {
         return userNickName;

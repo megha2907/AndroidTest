@@ -14,6 +14,7 @@ import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
 import in.sportscafe.nostragamus.module.navigation.NavigationFragment;
+import in.sportscafe.nostragamus.module.navigation.wallet.addMoney.AddMoneyProcessListener;
 import in.sportscafe.nostragamus.module.navigation.wallet.addMoney.AddMoneyWalletHelper;
 import in.sportscafe.nostragamus.module.navigation.wallet.addMoney.addByCashFree.AddMoneyByCashFreeHelper;
 import in.sportscafe.nostragamus.module.navigation.wallet.addMoney.addByPaymentCoupon.AddMoneyThroughPaymentCouponFragmentListener;
@@ -22,7 +23,7 @@ import in.sportscafe.nostragamus.module.navigation.wallet.addMoney.addByPaymentC
  * Created by deepanshi on 2/23/18.
  */
 
-public class SelectPaymentModeFragment extends BaseFragment implements View.OnClickListener, AddMoneyByCashFreeHelper.AddMoneyByCashFreeProcessListener {
+public class SelectPaymentModeFragment extends BaseFragment implements View.OnClickListener, AddMoneyProcessListener {
 
     private static final String TAG = NavigationFragment.class.getSimpleName();
 
@@ -150,7 +151,7 @@ public class SelectPaymentModeFragment extends BaseFragment implements View.OnCl
     private void onAddMoneyByPaytmClicked() {
         if (getAmountDetails() > 0) {
             double amount = getAmountDetails();
-            AddMoneyWalletHelper.initTransaction(this, amount);
+            AddMoneyWalletHelper.initTransaction(this, amount,this);
             NostragamusAnalytics.getInstance().trackClickEvent(Constants.AnalyticsCategory.PAYMENT_MODE,Constants.SelectPaymentModes.PAYTM);
         }
     }

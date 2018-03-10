@@ -12,14 +12,17 @@ import com.jeeva.android.Log;
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
+import in.sportscafe.nostragamus.module.navigation.wallet.addMoney.addByCashFree.AddMoneyByCashFreeHelper;
 import in.sportscafe.nostragamus.module.navigation.wallet.addMoney.addByPaymentCoupon.AddMoneyThroughPaymentCouponFragment;
 import in.sportscafe.nostragamus.module.navigation.wallet.addMoney.addByPaymentCoupon.AddMoneyThroughPaymentCouponFragmentListener;
 import in.sportscafe.nostragamus.module.navigation.wallet.addMoney.addByPaytm.AddMoneyThroughPaytmFragment;
 import in.sportscafe.nostragamus.module.navigation.wallet.addMoney.addByPaytm.AddMoneyThroughPaytmFragmentListener;
+import in.sportscafe.nostragamus.module.navigation.wallet.addMoney.dto.CashFreeTransactionResponse;
 import in.sportscafe.nostragamus.module.navigation.wallet.addMoney.selectPaymentMode.SelectPaymentModeFragment;
 import in.sportscafe.nostragamus.module.navigation.wallet.addMoney.selectPaymentMode.SelectPaymentModeFragmentListener;
 import in.sportscafe.nostragamus.module.navigation.wallet.paytmAndBank.PaytmApiModelImpl;
 import in.sportscafe.nostragamus.module.navigation.wallet.paytmAndBank.TransactionFailureDialogFragment;
+import in.sportscafe.nostragamus.module.navigation.wallet.paytmAndBank.TransactionPendingDialogFragment;
 import in.sportscafe.nostragamus.module.navigation.wallet.paytmAndBank.TransactionSuccessDialogFragment;
 import in.sportscafe.nostragamus.module.navigation.wallet.paytmAndBank.dto.GenerateOrderResponse;
 import in.sportscafe.nostragamus.module.navigation.wallet.paytmAndBank.dto.PaytmTransactionResponse;
@@ -31,6 +34,8 @@ import in.sportscafe.nostragamus.module.navigation.wallet.paytmAndBank.dto.Paytm
 public class AddMoneyWalletHelper {
 
     private static final String TAG = AddMoneyWalletHelper.class.getSimpleName();
+
+    private static AddMoneyProcessListener addMoneyProcessListener;
 
     public static double validateAddMoneyAmountValid(String amountStr) {
         double amount = 0;
@@ -46,13 +51,15 @@ public class AddMoneyWalletHelper {
         return amount;
     }
 
+
     /**
      * Initiate transaction
      *
      * @param amount
      */
-    public static void initTransaction(@NonNull BaseFragment fragment, double amount) {
-        if (Nostragamus.getInstance().hasNetworkConnection()) {
+    public static void initTransaction(@NonNull BaseFragment fragment, double amount, @NonNull AddMoneyProcessListener listener) {
+        if (Nostragamus.getInstance().hasNetworkConnection() && listener != null) {
+            addMoneyProcessListener = listener;
             fragment.showProgressbar();
             AddMoneyToWalletApiModelImpl.newInstance(getAddMoneyApiListener(fragment, amount)).callAddMoneyApi(amount);
         } else {
@@ -166,8 +173,7 @@ public class AddMoneyWalletHelper {
                 Log.d(TAG, "Paytm Transaction Response - Success");
 
                 NostragamusAnalytics.getInstance().trackWalletTransaction(true, amount);
-
-                showPaytmSuccessDialog(fragment, amount);
+                verifyPaymentApi(fragment, successResponse, amount);
             }
 
             @Override
@@ -175,6 +181,67 @@ public class AddMoneyWalletHelper {
                 Log.d(TAG, Constants.Alerts.PAYTM_TRANSACTION_FAILED);
                 showPaytmTransactionFailureDialog(fragment, amount);
             }
+        };
+    }
+
+
+    private static void verifyPaymentApi(BaseFragment fragment, PaytmTransactionResponse successResponse, double amount) {
+        VerifyPaymentApiImpl verifyPaymentApi = VerifyPaymentApiImpl.newInstance(getVerifyPaymentApiListener(fragment, successResponse, amount), fragment.getContext());
+
+        if (Nostragamus.getInstance().hasNetworkConnection() && successResponse != null
+                && !TextUtils.isEmpty(successResponse.getOrderId())) {
+            if (addMoneyProcessListener != null) {
+                addMoneyProcessListener.showProgressBar();
+            }
+            verifyPaymentApi.verifyPayment(successResponse.getOrderId());
+        } else {
+            fragment.showMessage(Constants.Alerts.NO_NETWORK_CONNECTION);
+        }
+
+    }
+
+    private static VerifyPaymentApiImpl.VerifyPaymentApiListener getVerifyPaymentApiListener(final BaseFragment fragment, PaytmTransactionResponse successResponse, final double amount) {
+        return new VerifyPaymentApiImpl.VerifyPaymentApiListener() {
+
+            @Override
+            public void onFailure(int dataStatus) {
+                if (fragment.getActivity() != null && fragment.getView() != null) {
+                    if (addMoneyProcessListener!=null){
+                        addMoneyProcessListener.hideProgressBar();
+                    }
+                    Log.d(TAG, Constants.Alerts.PAYTM_TRANSACTION_FAILED);
+                    showPaytmTransactionFailureDialog(fragment, amount);
+                }
+            }
+
+            @Override
+            public void onSuccessResponse(String orderStatus) {
+                if (fragment.getActivity() != null && fragment.getView() != null) {
+                    if (addMoneyProcessListener!=null){
+                        addMoneyProcessListener.hideProgressBar();
+                    }
+                    if (orderStatus.equalsIgnoreCase(Constants.VerifyPaymentStatus.SUCCESS)) {
+                        Log.d(TAG, "Cashfree Transaction Response - Success from Server");
+                        NostragamusAnalytics.getInstance().trackWalletTransaction(true, amount);
+                        showPaytmSuccessDialog(fragment, amount);
+                    } else {
+                        Log.d(TAG, Constants.Alerts.PAYTM_TRANSACTION_FAILED);
+                        showPaytmTransactionFailureDialog(fragment, amount);
+                    }
+                }
+            }
+
+            @Override
+            public void onPendingResponse() {
+                if (fragment.getActivity() != null && fragment.getView() != null) {
+                    if (addMoneyProcessListener!=null){
+                        addMoneyProcessListener.hideProgressBar();
+                    }
+                    Log.d(TAG, Constants.Alerts.PAYTM_TRANSACTION_FAILED);
+                    showTransactionPendingDialog(fragment,amount);
+                }
+            }
+
         };
     }
 
@@ -234,7 +301,9 @@ public class AddMoneyWalletHelper {
             @Override
             public void onRetryPayment() {
                 Log.d(TAG, "On Paytm transaction failed - Retrying... ");
-                initTransaction(fragment, amount);
+                if (addMoneyProcessListener != null) {
+                    initTransaction(fragment, amount, addMoneyProcessListener);
+                }
             }
         };
     }
@@ -282,6 +351,41 @@ public class AddMoneyWalletHelper {
                     }*/
                 }
             }
+        };
+    }
+
+    private static void showTransactionPendingDialog(final BaseFragment fragment, final double amount) {
+        // As fragment resume may take some time, launch fragment after some time
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                TransactionPendingDialogFragment pendingDialogFragment =
+                        TransactionPendingDialogFragment.newInstance(1201, amount, getTransactionPendingActionListener(fragment));
+
+                if (fragment != null && fragment.getActivity() != null && !fragment.getActivity().isFinishing()) {
+                    FragmentManager fragmentManager = fragment.getChildFragmentManager();
+                    if (fragmentManager != null) {
+                        pendingDialogFragment.showDialogAllowingStateLoss(fragmentManager, pendingDialogFragment, "PENDING_DIALOG");
+                    }
+                }
+            }
+        }, 200);
+    }
+
+    /**
+     * Paytm transaction pending , then Pending dialog button click handler
+     *
+     * @return
+     */
+    private static TransactionPendingDialogFragment.IPendingActionListener
+    getTransactionPendingActionListener(final BaseFragment fragment) {
+        return new TransactionPendingDialogFragment.IPendingActionListener() {
+
+            @Override
+            public void onBackToWallet() {
+                Log.d(TAG, "On transaction Pending ");
+            }
+
         };
     }
 
