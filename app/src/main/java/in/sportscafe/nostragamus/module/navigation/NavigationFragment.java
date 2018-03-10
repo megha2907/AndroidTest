@@ -35,6 +35,8 @@ import in.sportscafe.nostragamus.module.navigation.submitquestion.tourlist.TourL
 import in.sportscafe.nostragamus.module.navigation.wallet.WalletApiModelImpl;
 import in.sportscafe.nostragamus.module.navigation.wallet.WalletHelper;
 import in.sportscafe.nostragamus.module.navigation.wallet.WalletHomeActivity;
+import in.sportscafe.nostragamus.module.navigation.wallet.addMoney.addByCashFree.CashFreeSampleActivity;
+import in.sportscafe.nostragamus.module.navigation.wallet.addMoney.selectPaymentMode.SelectPaymentModeActivity;
 import in.sportscafe.nostragamus.module.navigation.wallet.dto.UserWalletResponse;
 import in.sportscafe.nostragamus.module.popups.challengepopups.ContestDetailsPopupActivity;
 import in.sportscafe.nostragamus.module.settings.app.dto.AppSettingsResponse;

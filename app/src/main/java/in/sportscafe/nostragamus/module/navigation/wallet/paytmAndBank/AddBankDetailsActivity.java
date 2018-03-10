@@ -15,6 +15,7 @@ import org.parceler.Parcels;
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.NostragamusActivity;
+import in.sportscafe.nostragamus.module.customViews.CustomSnackBar;
 import in.sportscafe.nostragamus.module.user.login.dto.UserPaymentInfo;
 import in.sportscafe.nostragamus.module.user.login.dto.UserPaymentInfoBankDto;
 
@@ -117,13 +118,13 @@ public class AddBankDetailsActivity extends NostragamusActivity implements View.
             @Override
             public void onNoInternet() {
                 dismissProgressbar();
-                showMessage(Constants.Alerts.NO_NETWORK_CONNECTION);
+                handleError("", Constants.DataStatus.NO_INTERNET);
             }
 
             @Override
             public void onAddDetailFailed() {
                 dismissProgressbar();
-                showMessage(Constants.Alerts.API_FAIL);
+                handleError("", Constants.DataStatus.FROM_SERVER_API_FAILED);
             }
 
             @Override
@@ -132,10 +133,31 @@ public class AddBankDetailsActivity extends NostragamusActivity implements View.
                 if (TextUtils.isEmpty(errorMsg)) {
                     errorMsg = Constants.Alerts.SOMETHING_WRONG;
                 }
-                Toast.makeText(AddBankDetailsActivity.this, errorMsg, Toast.LENGTH_LONG).show();
-//                showMessage(errorMsg);
+                handleError(errorMsg, -1);
             }
         };
+    }
+
+    private void handleError(String msg, int status) {
+        if (!isFinishing()) {
+            View view = findViewById(R.id.bank_details_error_rl);
+
+            if (view != null) {
+                if (!TextUtils.isEmpty(msg)) {
+                    CustomSnackBar.make(view, msg, CustomSnackBar.DURATION_SECS_5).show();
+                } else {
+                    switch (status) {
+                        case Constants.DataStatus.NO_INTERNET:
+                            CustomSnackBar.make(view, Constants.Alerts.NO_NETWORK_CONNECTION, CustomSnackBar.DURATION_SECS_5).show();
+                            break;
+
+                        default:
+                            CustomSnackBar.make(view, Constants.Alerts.SOMETHING_WRONG, CustomSnackBar.DURATION_SECS_5).show();
+                            break;
+                    }
+                }
+            }
+        }
     }
 
     private void onApiSuccess() {

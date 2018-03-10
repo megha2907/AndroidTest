@@ -42,7 +42,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/dim_8"
-                    android:text="Transaction failed!"
+                    android:text="Transaction Pending!"
                     android:textColor="@color/white"
                     android:textSize="@dimen/sp_14"
                     app:typeface="lato_bold" />
@@ -57,9 +57,9 @@
                 android:orientation="vertical">
 
                 <ImageView
-                    android:layout_width="wrap_content"
+                    android:layout_width="@dimen/dim_100"
                     android:layout_height="@dimen/dim_100"
-                    android:src="@drawable/paytm_trans_failed_img" />
+                    android:src="@drawable/txn_pending_icon" />
 
             </LinearLayout>
 
@@ -73,13 +73,13 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="@dimen/dim_16"
-                    android:text="Transaction Unsuccessful"
+                    android:text="Transaction in Progress"
                     android:textColor="@color/white"
                     android:textSize="@dimen/sp_14"
                     app:typeface="lato_bold" />
 
                 <com.jeeva.android.widgets.customfont.CustomTextView
-                    android:id="@+id/paytm_failed_challenge_str_Textview"
+                    android:id="@+id/pending_payment_Textview"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
@@ -87,18 +87,6 @@
                     android:layout_marginRight="@dimen/dim_30"
                     android:layout_marginTop="@dimen/dim_12"
                     android:gravity="center"
-                    android:text="The provider declined the payment.Please retry or check your credentials."
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/sp_12"
-                    app:typeface="lato_regular" />
-
-                <com.jeeva.android.widgets.customfont.CustomTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="@dimen/dim_12"
-                    android:gravity="center"
-                    android:text="If money has been debited from your \naccount, it will be refunded shortly."
                     android:textColor="@color/white"
                     android:textSize="@dimen/sp_12"
                     app:typeface="lato_regular" />
@@ -114,10 +102,10 @@
                 android:layout_marginBottom="@dimen/dim_20">
 
                 <com.jeeva.android.widgets.customfont.CustomButton
-                    android:id="@+id/paytm_failure_backToAddMoney_button"
+                    android:id="@+id/back_to_wallet_button"
                     android:layout_width="@dimen/dim_130"
                     android:layout_height="@dimen/dim_38"
-                    android:background="@drawable/grey_button_selector"
+                    android:background="@drawable/blue_button_selector"
                     android:gravity="center"
                     android:paddingBottom="@dimen/dp_3"
                     android:paddingTop="@dimen/dp_0"
@@ -127,20 +115,6 @@
                     android:textSize="@dimen/sp_14"
                     app:typeface="lato_bold" />
 
-                <com.jeeva.android.widgets.customfont.CustomButton
-                    android:id="@+id/paytm_failure_retry_payment_button"
-                    android:layout_width="@dimen/dim_130"
-                    android:layout_height="@dimen/dim_38"
-                    android:layout_marginLeft="@dimen/dim_10"
-                    android:background="@drawable/blue_button_selector"
-                    android:gravity="center"
-                    android:paddingBottom="@dimen/dp_3"
-                    android:paddingTop="@dimen/dp_0"
-                    android:text="Retry Payment"
-                    android:textAllCaps="false"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/sp_14"
-                    app:typeface="lato_bold" />
 
             </LinearLayout>
 

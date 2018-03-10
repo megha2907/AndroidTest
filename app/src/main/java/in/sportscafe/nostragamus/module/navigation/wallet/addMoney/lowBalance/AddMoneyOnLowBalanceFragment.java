@@ -7,16 +7,13 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.text.InputFilter;
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
-import android.text.Spanned;
 import android.text.TextUtils;
 import android.text.style.RelativeSizeSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import com.jeeva.android.BaseFragment;
@@ -28,20 +25,20 @@ import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.contest.dto.JoinContestData;
 import in.sportscafe.nostragamus.module.navigation.wallet.WalletHelper;
-import in.sportscafe.nostragamus.module.navigation.wallet.addMoney.AddMoneyWalletHelper;
 import in.sportscafe.nostragamus.module.navigation.wallet.addMoney.addByPaymentCoupon.AddMoneyThroughPaymentCouponFragment;
 import in.sportscafe.nostragamus.module.navigation.wallet.addMoney.addByPaymentCoupon.AddMoneyThroughPaymentCouponFragmentListener;
 import in.sportscafe.nostragamus.module.navigation.wallet.addMoney.addByPaytm.AddMoneyPaytmFragmentLaunchedFrom;
 import in.sportscafe.nostragamus.module.navigation.wallet.addMoney.addByPaytm.AddMoneyThroughPaytmFragment;
 import in.sportscafe.nostragamus.module.navigation.wallet.addMoney.addByPaytm.AddMoneyThroughPaytmFragmentListener;
-import in.sportscafe.nostragamus.module.navigation.wallet.paytmAndBank.PaytmTransactionSuccessDialogFragment;
+import in.sportscafe.nostragamus.module.navigation.wallet.addMoney.selectPaymentMode.SelectPaymentModeFragmentListener;
+import in.sportscafe.nostragamus.module.navigation.wallet.paytmAndBank.TransactionSuccessDialogFragment;
 import in.sportscafe.nostragamus.module.store.dto.StoreItems;
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class AddMoneyOnLowBalanceFragment extends BaseFragment implements View.OnClickListener,
-        AddMoneyThroughPaytmFragmentListener, AddMoneyThroughPaymentCouponFragmentListener {
+        AddMoneyThroughPaytmFragmentListener, AddMoneyThroughPaymentCouponFragmentListener,SelectPaymentModeFragmentListener{
 
     private static final String TAG = AddMoneyOnLowBalanceFragment.class.getSimpleName();
 
@@ -88,6 +85,9 @@ public class AddMoneyOnLowBalanceFragment extends BaseFragment implements View.O
     private void loadAddMoneyByPaytmFragment() {
         if (getActivity() != null) {
             AddMoneyThroughPaytmFragment fragment = new AddMoneyThroughPaytmFragment();
+            if (getArguments() != null) {
+                fragment.setArguments(getArguments());
+            }
             fragment.setLaunchedFrom(AddMoneyPaytmFragmentLaunchedFrom.ADD_MONEY_LOW_BALANCE);
             fragment.setFragmentListener(this);
 
@@ -248,16 +248,16 @@ public class AddMoneyOnLowBalanceFragment extends BaseFragment implements View.O
 
     @Override
     public void onPaymentCouponSuccess(int moneyAdded) {
-        PaytmTransactionSuccessDialogFragment successDialogFragment =
-                PaytmTransactionSuccessDialogFragment.newInstance(1200, moneyAdded,
+        TransactionSuccessDialogFragment successDialogFragment =
+                TransactionSuccessDialogFragment.newInstance(1200, moneyAdded,
                         getSuccessActionListener());
 
         successDialogFragment.show(getChildFragmentManager(), "SUCCESS_DIALOG");
     }
 
-    private PaytmTransactionSuccessDialogFragment.IPaytmSuccessActionListener
+    private TransactionSuccessDialogFragment.ISuccessActionListener
     getSuccessActionListener() {
-        return new PaytmTransactionSuccessDialogFragment.IPaytmSuccessActionListener() {
+        return new TransactionSuccessDialogFragment.ISuccessActionListener() {
             @Override
             public void onBackToHomeClicked() {
                 if (mFragmentListener != null) {
@@ -300,6 +300,18 @@ public class AddMoneyOnLowBalanceFragment extends BaseFragment implements View.O
             } else {
                 getActivity().finish();
             }
+        }
+    }
+
+    @Override
+    public void onBackClicked() {
+        onBackPressed();
+    }
+
+    @Override
+    public void onMoneyAddedToWalletSuccess() {
+        if (mFragmentListener != null) {
+            mFragmentListener.onSuccess(getArguments());
         }
     }
 }

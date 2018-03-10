@@ -15,8 +15,11 @@ import in.sportscafe.nostragamus.module.navigation.help.howtoplay.dto.HowToPlayD
 import in.sportscafe.nostragamus.module.navigation.help.howtoplay.dto.HowToPlayResponse;
 import in.sportscafe.nostragamus.module.navigation.wallet.addMoney.dto.AddMoneyPaymentCouponRequest;
 import in.sportscafe.nostragamus.module.navigation.wallet.addMoney.dto.AddMoneyPaymentCouponResponse;
+import in.sportscafe.nostragamus.module.navigation.wallet.addMoney.dto.CashFreeGenerateOrderRequest;
+import in.sportscafe.nostragamus.module.navigation.wallet.addMoney.dto.CashFreeGenerateOrderResponse;
 import in.sportscafe.nostragamus.module.navigation.wallet.addMoney.dto.VerifyPaymentCouponRequest;
 import in.sportscafe.nostragamus.module.navigation.wallet.addMoney.dto.VerifyPaymentCouponResponse;
+import in.sportscafe.nostragamus.module.navigation.wallet.addMoney.dto.VerifyPaymentResponse;
 import in.sportscafe.nostragamus.module.newChallenges.dto.BannerResponseData;
 import in.sportscafe.nostragamus.module.nostraHome.dto.TimeResponse;
 import in.sportscafe.nostragamus.module.common.dto.MatchesResponse;
@@ -454,6 +457,14 @@ public class MyWebService extends AbstractWebService<NostragamusService> {
 
     public Call<CopyAnswerResponse> copyAnswer(CopyAnswerRequest request) {
         return mNostragamusService.copyAnswer(request);
+    }
+
+    public Call<CashFreeGenerateOrderResponse> generateCashFreeOrderRequest(CashFreeGenerateOrderRequest request) {
+        return mNostragamusService.generateCashFreeOrder(request);
+    }
+
+    public Call<VerifyPaymentResponse> verifyPayment(String orderId) {
+        return mNostragamusService.verifyPayment(orderId);
     }
 
     public Call<HowToPlayResponse> getHowToPlayData(String slideId) {

@@ -13,34 +13,33 @@ import android.widget.TextView;
 
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
-import in.sportscafe.nostragamus.module.common.NostragamusDialogFragment;
 import in.sportscafe.nostragamus.module.common.PopUpDialogFragment;
 import in.sportscafe.nostragamus.module.navigation.wallet.WalletHelper;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class PaytmTransactionSuccessDialogFragment extends PopUpDialogFragment implements View.OnClickListener {
+public class TransactionSuccessDialogFragment extends PopUpDialogFragment implements View.OnClickListener {
 
-    public interface IPaytmSuccessActionListener {
+    public interface ISuccessActionListener {
         void onBackToHomeClicked();
     }
 
-    private IPaytmSuccessActionListener mPaytmFailureListener;
+    private ISuccessActionListener mPaytmFailureListener;
     private int mDialogRequestCode;
     private double mTransactionAmount;
 
-    public void setSuccessListener(IPaytmSuccessActionListener listener) {
+    public void setSuccessListener(ISuccessActionListener listener) {
         mPaytmFailureListener = listener;
     }
 
-    public static PaytmTransactionSuccessDialogFragment newInstance(int requestCode, double amount,
-                                                                    IPaytmSuccessActionListener listener) {
+    public static TransactionSuccessDialogFragment newInstance(int requestCode, double amount,
+                                                               ISuccessActionListener listener) {
         Bundle bundle = new Bundle();
         bundle.putInt(Constants.BundleKeys.DIALOG_REQUEST_CODE, requestCode);
         bundle.putDouble(Constants.BundleKeys.TRANSACTION_AMOUNT, amount);
 
-        PaytmTransactionSuccessDialogFragment fragment = new PaytmTransactionSuccessDialogFragment();
+        TransactionSuccessDialogFragment fragment = new TransactionSuccessDialogFragment();
         fragment.setSuccessListener(listener);
         fragment.setArguments(bundle);
         return fragment;
@@ -49,7 +48,7 @@ public class PaytmTransactionSuccessDialogFragment extends PopUpDialogFragment i
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_paytm_transaction_success_dialog, container, false);
+        return inflater.inflate(R.layout.fragment_transaction_success_dialog, container, false);
     }
 
     @NonNull

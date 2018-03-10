@@ -1,236 +1,251 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@id/content"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/content"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/black">
+    tools:context="in.sportscafe.nostragamus.module.prediction.copyAnswer.CopyAnswerActivity">
 
-    <!-- Toolbar -->
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/bank_toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/colorMedium"
-        android:elevation="4dp"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark" >
-
-        <com.jeeva.android.widgets.customfont.CustomTextView
-            android:id="@+id/bank_toolbar_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="@dimen/dp_10"
-            android:textColor="@color/white"
-            android:textSize="@dimen/sp_16"
-            app:typeface="lato_regular" />
-
-    </android.support.v7.widget.Toolbar>
-
-    <!-- Borro save button -->
-    <FrameLayout
-        android:id="@+id/bottom_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true">
-
-        <com.jeeva.android.widgets.customfont.CustomButton
-            android:id="@+id/add_bank_detail_btn"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_48"
-            android:background="@drawable/flat_blue_btn_selector"
-            android:gravity="center"
-            android:minWidth="@dimen/dp_200"
-            android:onClick="onAddBankSaveClicked"
-            android:paddingBottom="@dimen/dp_2"
-            android:paddingLeft="@dimen/dp_15"
-            android:paddingRight="@dimen/dp_15"
-            android:paddingTop="@dimen/dp_0"
-            android:text="Save Details"
-            android:textAllCaps="false"
-            android:textColor="@color/white"
-            android:textSize="@dimen/sp_14"
-            app:typeface="lato_bold" />
-
-    </FrameLayout>
-
-    <!-- Screen -->
-    <ScrollView
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/bank_toolbar"
-        android:background="@color/black"
-        android:layout_above="@id/bottom_layout">
+        android:background="@color/black">
 
-        <LinearLayout
+        <!-- Toolbar -->
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/bank_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorMedium"
+            android:elevation="4dp"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark">
+
+            <com.jeeva.android.widgets.customfont.CustomTextView
+                android:id="@+id/bank_toolbar_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/dp_10"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp_16"
+                app:typeface="lato_regular" />
+
+        </android.support.v7.widget.Toolbar>
+
+        <!-- Borro save button -->
+        <FrameLayout
+            android:id="@+id/bottom_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true">
+
+            <com.jeeva.android.widgets.customfont.CustomButton
+                android:id="@+id/add_bank_detail_btn"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_48"
+                android:background="@drawable/flat_blue_btn_selector"
+                android:gravity="center"
+                android:minWidth="@dimen/dp_200"
+                android:onClick="onAddBankSaveClicked"
+                android:paddingBottom="@dimen/dp_2"
+                android:paddingLeft="@dimen/dp_15"
+                android:paddingRight="@dimen/dp_15"
+                android:paddingTop="@dimen/dp_0"
+                android:text="Save Details"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp_14"
+                app:typeface="lato_bold" />
+
+        </FrameLayout>
+
+        <!-- Screen -->
+        <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:gravity="center_horizontal"
-            android:orientation="vertical"
-            android:paddingLeft="@dimen/dp_24"
-            android:paddingRight="@dimen/dp_24">
-
-
-            <com.jeeva.android.widgets.customfont.CustomTextView
-                android:id="@+id/add_bank_accHolder_head_textview"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="left"
-                android:layout_marginTop="@dimen/dp_16"
-                android:text="Acount Holder's Name"
-                android:textColor="@color/white_60"
-                android:textSize="@dimen/sp_14"
-                app:typeface="lato_regular" />
+            android:layout_above="@id/bottom_layout"
+            android:layout_below="@+id/bank_toolbar"
+            android:background="@color/black">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_horizontal"
                 android:orientation="vertical"
-                android:layout_marginTop="@dimen/dp_6">
+                android:paddingLeft="@dimen/dp_24"
+                android:paddingRight="@dimen/dp_24">
+
+
+                <com.jeeva.android.widgets.customfont.CustomTextView
+                    android:id="@+id/add_bank_accHolder_head_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:layout_marginTop="@dimen/dp_16"
+                    android:text="Acount Holder's Name"
+                    android:textColor="@color/white_60"
+                    android:textSize="@dimen/sp_14"
+                    app:typeface="lato_regular" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/dim_40"
-                    android:orientation="horizontal"
-                    android:gravity="center_vertical">
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_6"
+                    android:orientation="vertical">
 
-                    <ImageView
-                        style="@style/EditTextIconStyle"
-                        android:src="@drawable/profile_edittext_icon"
-                        android:padding="@dimen/dim_12"/>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dim_40"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
 
-                    <com.jeeva.android.widgets.customfont.CustomEditText
-                        android:id="@+id/add_bank_acc_holder_name_edittext"
-                        style="@style/NewEditTextStyle"
-                        android:inputType="textPersonName" />
+                        <ImageView
+                            style="@style/EditTextIconStyle"
+                            android:padding="@dimen/dim_12"
+                            android:src="@drawable/profile_edittext_icon" />
+
+                        <com.jeeva.android.widgets.customfont.CustomEditText
+                            android:id="@+id/add_bank_acc_holder_name_edittext"
+                            style="@style/NewEditTextStyle"
+                            android:inputType="textPersonName" />
+
+                    </LinearLayout>
+
+                    <com.jeeva.android.widgets.customfont.CustomTextView
+                        android:id="@+id/add_bank_acc_holder_name_error_textview"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right"
+                        android:layout_marginTop="@dimen/dp_6"
+                        android:text="Please provide account holder's name"
+                        android:textColor="@color/radical_red"
+                        android:textSize="@dimen/dp_14"
+                        android:visibility="gone"
+                        app:typeface="lato_regular" />
 
                 </LinearLayout>
 
                 <com.jeeva.android.widgets.customfont.CustomTextView
-                    android:id="@+id/add_bank_acc_holder_name_error_textview"
+                    android:id="@+id/add_bank_accNumber_head_textview"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="right"
-                    android:layout_marginTop="@dimen/dp_6"
-                    android:text="Please provide account holder's name"
-                    android:textColor="@color/radical_red"
-                    android:textSize="@dimen/dp_14"
-                    app:typeface="lato_regular"
-                    android:visibility="gone"/>
-
-            </LinearLayout>
-
-            <com.jeeva.android.widgets.customfont.CustomTextView
-                android:id="@+id/add_bank_accNumber_head_textview"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="left"
-                android:layout_marginTop="@dimen/dp_16"
-                android:text="Account Number"
-                android:textColor="@color/white_60"
-                android:textSize="@dimen/sp_14"
-                app:typeface="lato_regular" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_marginTop="@dimen/dp_6">
+                    android:layout_gravity="left"
+                    android:layout_marginTop="@dimen/dp_16"
+                    android:text="Account Number"
+                    android:textColor="@color/white_60"
+                    android:textSize="@dimen/sp_14"
+                    app:typeface="lato_regular" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/dim_40"
-                    android:orientation="horizontal"
-                    android:gravity="center_vertical">
-                    <ImageView
-                        style="@style/EditTextIconStyle"
-                        android:src="@drawable/acc_edittext_icon"
-                        android:padding="@dimen/dim_12"/>
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_6"
+                    android:orientation="vertical">
 
-                    <com.jeeva.android.widgets.customfont.CustomEditText
-                        android:id="@+id/add_bank_acc_number_edittext"
-                        style="@style/NewEditTextStyle"
-                        android:inputType="text" />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dim_40"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            style="@style/EditTextIconStyle"
+                            android:padding="@dimen/dim_12"
+                            android:src="@drawable/acc_edittext_icon" />
+
+                        <com.jeeva.android.widgets.customfont.CustomEditText
+                            android:id="@+id/add_bank_acc_number_edittext"
+                            style="@style/NewEditTextStyle"
+                            android:inputType="text" />
+
+                    </LinearLayout>
+
+                    <com.jeeva.android.widgets.customfont.CustomTextView
+                        android:id="@+id/add_bank_acc_no_error_textview"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right"
+                        android:layout_marginTop="@dimen/dp_6"
+                        android:text="Please provide account number"
+                        android:textColor="@color/radical_red"
+                        android:textSize="@dimen/dp_14"
+                        android:visibility="gone"
+                        app:typeface="lato_regular" />
 
                 </LinearLayout>
 
                 <com.jeeva.android.widgets.customfont.CustomTextView
-                    android:id="@+id/add_bank_acc_no_error_textview"
+                    android:id="@+id/add_bank_ifsc_head_textview"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="right"
-                    android:layout_marginTop="@dimen/dp_6"
-                    android:text="Please provide account number"
-                    android:textColor="@color/radical_red"
-                    android:textSize="@dimen/dp_14"
-                    app:typeface="lato_regular"
-                    android:visibility="gone"/>
-
-            </LinearLayout>
-
-            <com.jeeva.android.widgets.customfont.CustomTextView
-                android:id="@+id/add_bank_ifsc_head_textview"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="left"
-                android:layout_marginTop="@dimen/dp_16"
-                android:text="IFSC Code"
-                android:textColor="@color/white_60"
-                android:textSize="@dimen/sp_14"
-                app:typeface="lato_regular" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_marginTop="@dimen/dp_6">
+                    android:layout_gravity="left"
+                    android:layout_marginTop="@dimen/dp_16"
+                    android:text="IFSC Code"
+                    android:textColor="@color/white_60"
+                    android:textSize="@dimen/sp_14"
+                    app:typeface="lato_regular" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/dim_40"
-                    android:orientation="horizontal"
-                    android:gravity="center_vertical"
-                    >
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_6"
+                    android:orientation="vertical">
 
-                    <ImageView
-                        style="@style/EditTextIconStyle"
-                        android:src="@drawable/bank_ifscc_edittext"
-                        android:padding="@dimen/dim_12"/>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dim_40"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
 
-                    <com.jeeva.android.widgets.customfont.CustomEditText
-                        android:id="@+id/add_bank_ifsc_edittext"
-                        style="@style/NewEditTextStyle"
-                        android:inputType="text" />
+                        <ImageView
+                            style="@style/EditTextIconStyle"
+                            android:padding="@dimen/dim_12"
+                            android:src="@drawable/bank_ifscc_edittext" />
+
+                        <com.jeeva.android.widgets.customfont.CustomEditText
+                            android:id="@+id/add_bank_ifsc_edittext"
+                            style="@style/NewEditTextStyle"
+                            android:inputType="text" />
+
+                    </LinearLayout>
+
+                    <com.jeeva.android.widgets.customfont.CustomTextView
+                        android:id="@+id/add_bank_ifsc_error_textview"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right"
+                        android:layout_marginTop="@dimen/dp_6"
+                        android:text="Please provide IFSC code"
+                        android:textColor="@color/radical_red"
+                        android:textSize="@dimen/dp_14"
+                        android:visibility="gone"
+                        app:typeface="lato_regular" />
 
                 </LinearLayout>
 
                 <com.jeeva.android.widgets.customfont.CustomTextView
-                    android:id="@+id/add_bank_ifsc_error_textview"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="right"
-                    android:layout_marginTop="@dimen/dp_6"
-                    android:text="Please provide IFSC code"
-                    android:textColor="@color/radical_red"
-                    android:textSize="@dimen/dp_14"
-                    app:typeface="lato_regular"
-                    android:visibility="gone"/>
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="@dimen/dp_16"
+                    android:gravity="center"
+                    android:text="Paytm transactions are faster than NEFT transactions.\nPlease add your Paytm details for faster payouts!"
+                    android:textColor="@color/white_60"
+                    android:textSize="@dimen/sp_12"
+                    app:typeface="lato_regular" />
 
             </LinearLayout>
 
-            <com.jeeva.android.widgets.customfont.CustomTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="@dimen/dp_16"
-                android:gravity="center"
-                android:text="Paytm transactions are faster than NEFT transactions.\nPlease add your Paytm details for faster payouts!"
-                android:textColor="@color/white_60"
-                android:textSize="@dimen/sp_12"
-                app:typeface="lato_regular" />
+        </ScrollView>
 
-        </LinearLayout>
+    </RelativeLayout>
 
-    </ScrollView>
+    <android.support.design.widget.CoordinatorLayout
+        android:id="@+id/bank_details_error_rl"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="@dimen/dim_48"/>
 
-</RelativeLayout>
+
+</android.support.design.widget.CoordinatorLayout>

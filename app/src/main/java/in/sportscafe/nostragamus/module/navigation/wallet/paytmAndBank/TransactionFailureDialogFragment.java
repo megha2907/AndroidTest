@@ -18,27 +18,27 @@ import in.sportscafe.nostragamus.module.common.dto.Challenge;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class PaytmTransactionFailureDialogFragment extends PopUpDialogFragment implements View.OnClickListener {
+public class TransactionFailureDialogFragment extends PopUpDialogFragment implements View.OnClickListener {
 
-    public interface IPaytmFailureActionListener {
-        void onBackToAddMoney();
+    public interface IFailureActionListener {
+        void onBackToSelectPaymentMode();
         void onRetryPayment();
     }
 
-    private IPaytmFailureActionListener mPaytmFailureListener;
+    private IFailureActionListener mPaytmFailureListener;
     private int mDialogRequestCode;
     private Challenge mChallenge;
 
-    public void setFailureListener(IPaytmFailureActionListener listener) {
+    public void setFailureListener(IFailureActionListener listener) {
         mPaytmFailureListener = listener;
     }
 
-    public static PaytmTransactionFailureDialogFragment newInstance(int requestCode,
-                                                                    IPaytmFailureActionListener listener) {
+    public static TransactionFailureDialogFragment newInstance(int requestCode,
+                                                               IFailureActionListener listener) {
         Bundle bundle = new Bundle();
         bundle.putInt(Constants.BundleKeys.DIALOG_REQUEST_CODE, requestCode);
 
-        PaytmTransactionFailureDialogFragment fragment = new PaytmTransactionFailureDialogFragment();
+        TransactionFailureDialogFragment fragment = new TransactionFailureDialogFragment();
         fragment.setFailureListener(listener);
         fragment.setArguments(bundle);
         return fragment;
@@ -47,7 +47,7 @@ public class PaytmTransactionFailureDialogFragment extends PopUpDialogFragment i
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_paytm_transaction_failure_dialog, container, false);
+        return inflater.inflate(R.layout.fragment_transaction_failure_dialog, container, false);
     }
 
     @NonNull
@@ -83,7 +83,7 @@ public class PaytmTransactionFailureDialogFragment extends PopUpDialogFragment i
         switch (v.getId()) {
             case R.id.paytm_failure_backToAddMoney_button:
                 if (mPaytmFailureListener != null) {
-                    mPaytmFailureListener.onBackToAddMoney();
+                    mPaytmFailureListener.onBackToSelectPaymentMode();
                 }
                 dismiss();
                 break;

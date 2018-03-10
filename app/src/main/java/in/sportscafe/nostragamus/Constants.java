@@ -513,6 +513,7 @@ public interface Constants {
         String RESULTS = "Results";
         String WALLET_POPUP = "Wallet Popup";
         String REVENUE = "Revenue";
+        String PAYMENT_MODE = "Payment Mode";
     }
 
     interface AnalyticsClickLabels {
@@ -711,6 +712,7 @@ public interface Constants {
         String CONTEST_DETAILS = "ContestDetails";
         String POOL_CONTEST_REWARD_CALCULATION = "poolContestRewardCalculation";
         String HOW_TO_PLAY = "HowToPlay";
+        String SELECT_PAYMENT_MODE = "selectPaymentMode";
     }
 
     interface InAppPopups {
@@ -759,6 +761,7 @@ public interface Constants {
         String CALLBACK_URL = "CALLBACK_URL";
     }
 
+
     interface PaytmParamValues {
         String REQUEST_TYPE_DEFAULT = "DEFAULT";
         String MID_VALUE = "GAMBIT01441193333466";
@@ -800,9 +803,51 @@ public interface Constants {
         String TRANSACTION_OPEN = "OPEN";
     }
 
+
+    interface CashFreeParamsKeys {
+        String ORDER_ID = "orderId";
+        String ORDER_AMOUNT = "orderAmount";
+        String REFERENCE_ID = "referenceId";
+        String TRANSACTION_STATUS = "txStatus";
+        String PAYMENT_MODE = "paymentMode";
+        String TRANSACTION_MESSAGE = "txMsg";
+        String TRANSACTION_TIME = "txTime";
+    }
+
+    interface CashFreeTransactionResponseStatusValues {
+          /* NOTE: Values are from CashFree API documentation https://docs.gocashfree.com/docs/android/guide/
+          , should be compared against txStatus to know transaction status
+          * DO NOT CHANGE VALUES ... */
+
+        String TRANSACTION_SUCCESS = "SUCCESS";
+        String TRANSACTION_FLAGGED = "FLAGGED";
+        String TRANSACTION_FAILED = "FAILED";
+        String TRANSACTION_CANCELED = "CANCELED";
+    }
+
+
     interface AddUserPaymentDetailsPaymentModes {
         String BANK = "bank";
         String PAYTM = "paytm";
+    }
+
+    interface AddMoneyPaymentModes {
+        String PAYTM = "paytm";
+        String CASHFREE = "cashfree";
+    }
+
+    interface SelectPaymentModes {
+        String DEBIT_CARD = "dc";
+        String CREDIT_CARD = "cc";
+        String UPI = "upi";
+        String WALLET = "wallet";
+        String PAYTM = "paytm";
+    }
+
+    interface VerifyPaymentStatus {
+        String CREATED = "CREATED";
+        String SUCCESS = "SUCCESS";
+        String FAILURE = "FAILURE";
     }
 
     interface AppUpdateTypes {
