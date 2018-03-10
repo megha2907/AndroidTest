@@ -40,6 +40,7 @@
 
     <!-- Background layout -->
     <ScrollView
+        android:id="@+id/withdraw_money_sv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@id/withdraw_money_bottom_layout"
@@ -174,8 +175,18 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="right"
                     android:layout_marginTop="@dimen/dp_6"
-                    android:text="Please enter valid amount"
                     android:textColor="@color/radical_red"
+                    android:textSize="@dimen/dp_14"
+                    app:typeface="lato_regular"
+                    android:visibility="gone"/>
+
+                <com.jeeva.android.widgets.customfont.CustomTextView
+                    android:id="@+id/receive_amt_textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:layout_marginTop="@dimen/dp_6"
+                    android:textColor="@color/paid_entry_tv_color"
                     android:textSize="@dimen/dp_14"
                     app:typeface="lato_regular"
                     android:visibility="gone"/>
@@ -223,6 +234,7 @@
                         android:layout_marginTop="@dimen/dp_5"/>
 
                 <com.jeeva.android.widgets.customfont.CustomTextView
+                    android:id="@+id/withdraw_text_textView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal|bottom"

@@ -59,7 +59,7 @@
                 android:layout_marginTop="@dimen/dp_12"
                 android:background="@drawable/payout_choice_btn_selector"
                 android:minHeight="@dimen/wallet_payout_choice_item_height"
-                android:visibility="visible">
+                android:visibility="gone">
 
                 <ImageView
                     android:id="@+id/imgView"
@@ -120,7 +120,7 @@
                 android:layout_marginTop="@dimen/dp_12"
                 android:background="@drawable/payout_choice_btn_selector"
                 android:minHeight="@dimen/wallet_payout_choice_item_height"
-                android:visibility="visible">
+                android:visibility="gone">
 
                 <ImageView
                     android:id="@+id/imgView1"

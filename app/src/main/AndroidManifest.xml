@@ -357,6 +357,21 @@
             android:name=".module.prediction.editAnswer.EditAnswerPowerUpModifiedPopupActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.PopupTheme"/>
+        <activity
+            android:name=".module.navigation.help.howtoplay.HowToPlayActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".module.navigation.wallet.addMoney.addByCashFree.CashFreeSampleActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".module.navigation.wallet.addMoney.selectPaymentMode.SelectPaymentModeActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name="com.gocashfree.cashfreesdk.CFPaymentActivity"
+            android:screenOrientation="portrait" />
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"

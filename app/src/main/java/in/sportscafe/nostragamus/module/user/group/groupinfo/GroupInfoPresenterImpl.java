@@ -23,7 +23,6 @@ import io.branch.referral.Branch;
 import io.branch.referral.BranchError;
 import io.branch.referral.util.LinkProperties;
 
-import static in.sportscafe.nostragamus.R.id.code;
 
 /**
  * Created by Jeeva on 12/6/16.

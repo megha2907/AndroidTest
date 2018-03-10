@@ -1,6 +1,7 @@
 package in.sportscafe.nostragamus.module.navigation.wallet.addMoney.addByPaytm;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -14,10 +15,21 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import in.sportscafe.nostragamus.BuildConfig;
+import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
+
 import com.jeeva.android.BaseFragment;
+
+import org.parceler.Parcels;
+
+import in.sportscafe.nostragamus.module.contest.dto.Contest;
+import in.sportscafe.nostragamus.module.contest.dto.JoinContestData;
+import in.sportscafe.nostragamus.module.contest.ui.ContestsActivity;
 import in.sportscafe.nostragamus.module.navigation.wallet.WalletHelper;
 import in.sportscafe.nostragamus.module.navigation.wallet.addMoney.AddMoneyWalletHelper;
+import in.sportscafe.nostragamus.module.navigation.wallet.addMoney.selectPaymentMode.SelectPaymentModeActivity;
+import in.sportscafe.nostragamus.module.nostraHome.ui.NostraHomeActivity;
+import in.sportscafe.nostragamus.module.user.login.dto.BasicUserInfo;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -141,31 +153,64 @@ public class AddMoneyThroughPaytmFragment extends BaseFragment implements View.O
         double amount = AddMoneyWalletHelper.validateAddMoneyAmountValid(mAmountEditText.getText().toString().trim());
         if (getView() != null) {
             TextView errorTextView = (TextView) getView().findViewById(R.id.add_wallet_money_amt_error_textView);
-
             if (amount > 0) {
                 errorTextView.setVisibility(View.INVISIBLE);
-                AddMoneyWalletHelper.initTransaction(this, amount);
+                navigateToSelectPaymentMode(amount);
             } else {
                 errorTextView.setVisibility(View.VISIBLE);
             }
         }
     }
 
+    private void navigateToSelectPaymentMode(double amount) {
+
+        switch (mLaunchedFrom) {
+            case ADD_MONEY_LOW_BALANCE:
+                if (getActivity() != null && getArguments() != null && getArguments().containsKey(Constants.BundleKeys.JOIN_CONTEST_DATA)) {
+                    JoinContestData joinContestData = Parcels.unwrap(getArguments().getParcelable(Constants.BundleKeys.JOIN_CONTEST_DATA));
+
+                    Bundle args = new Bundle();
+                    args.putParcelable(Constants.BundleKeys.JOIN_CONTEST_DATA, Parcels.wrap(joinContestData));
+                    args.putDouble(Constants.BundleKeys.TRANSACTION_AMOUNT, amount);
+
+                    Intent clearTaskIntent = new Intent(getContext().getApplicationContext(), SelectPaymentModeActivity.class);
+                    clearTaskIntent.putExtra(Constants.BundleKeys.SCREEN_LAUNCHED_FROM_PARENT, SelectPaymentModeActivity.LaunchedFrom.ADD_MONEY_LOW_BALANCE);
+                    clearTaskIntent.putExtras(args);
+                    clearTaskIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                    startActivity(clearTaskIntent);
+                }
+                break;
+
+            case ADD_MONEY_INTO_WALLET:
+                if (getActivity() != null) {
+                    Bundle bundle = new Bundle();
+                    bundle.putDouble(Constants.BundleKeys.TRANSACTION_AMOUNT, amount);
+                    Intent clearTaskIntent = new Intent(getContext().getApplicationContext(), SelectPaymentModeActivity.class);
+                    clearTaskIntent.putExtra(Constants.BundleKeys.SCREEN_LAUNCHED_FROM_PARENT,SelectPaymentModeActivity.LaunchedFrom.ADD_MONEY_INTO_WALLET);
+                    clearTaskIntent.putExtras(bundle);
+                    clearTaskIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                    startActivity(clearTaskIntent);
+                }
+        }
+
+
+    }
+
     private void onAddMoney250Clicked() {
         double amt = WalletHelper.addMoreAmount(mAmountEditText.getText().toString().trim(), 250);
-        mAmountEditText.setText(String.valueOf((int)amt));
+        mAmountEditText.setText(String.valueOf((int) amt));
         setEditTextSelection();
     }
 
     private void onAddMoney100Clicked() {
         double amt = WalletHelper.addMoreAmount(mAmountEditText.getText().toString().trim(), 100);
-        mAmountEditText.setText(String.valueOf((int)amt));
+        mAmountEditText.setText(String.valueOf((int) amt));
         setEditTextSelection();
     }
 
     private void onAddMoney50Clicked() {
         double amt = WalletHelper.addMoreAmount(mAmountEditText.getText().toString().trim(), 50);
-        mAmountEditText.setText(String.valueOf((int)amt));
+        mAmountEditText.setText(String.valueOf((int) amt));
         setEditTextSelection();
     }
 

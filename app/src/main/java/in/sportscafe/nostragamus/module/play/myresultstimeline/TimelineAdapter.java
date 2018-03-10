@@ -355,21 +355,6 @@ public class TimelineAdapter extends Adapter<Match, TimelineAdapter.ViewHolder> 
         }
     }
 
-    class TourViewHolder extends RecyclerView.ViewHolder {
-
-        TextView mTvTournamentName;
-
-        LinearLayout mLlScheduleParent;
-
-        public TourViewHolder(View V) {
-            super(V);
-
-            mTvTournamentName = (TextView) V.findViewById(R.id.tour_row_tv_tour_name);
-            mLlScheduleParent = (LinearLayout) V.findViewById(R.id.tour_row_ll_schedule_parent);
-        }
-
-
-    }
 
     class ScheduleViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 

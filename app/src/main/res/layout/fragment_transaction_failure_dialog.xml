@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/popup_bg"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black_40">
+
+    <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/popup_card"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_marginLeft="@dimen/dim_20"
+        android:layout_marginRight="@dimen/dim_20"
+        app:cardBackgroundColor="@color/transparent"
+        app:cardCornerRadius="@dimen/dim_4"
+        android:layout_marginTop="@dimen/dim_15"
+        app:cardUseCompatPadding="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/grey_303030"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dim_56"
+                android:background="@color/colorBackground"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="@dimen/dim_15"
+                    android:layout_height="@dimen/dim_15"
+                    android:src="@drawable/tr_failure_cross_icon" />
+
+                <com.jeeva.android.widgets.customfont.CustomTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dim_8"
+                    android:text="Transaction failed!"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/sp_14"
+                    app:typeface="lato_bold" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dim_8"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="@dimen/dim_100"
+                    android:layout_height="@dimen/dim_100"
+                    android:src="@drawable/paytm_trans_failed_img" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <com.jeeva.android.widgets.customfont.CustomTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="@dimen/dim_16"
+                    android:text="Transaction Unsuccessful"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/sp_14"
+                    app:typeface="lato_bold" />
+
+                <com.jeeva.android.widgets.customfont.CustomTextView
+                    android:id="@+id/paytm_failed_challenge_str_Textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginLeft="@dimen/dim_30"
+                    android:layout_marginRight="@dimen/dim_30"
+                    android:layout_marginTop="@dimen/dim_12"
+                    android:gravity="center"
+                    android:text="The provider has declined the payment. Please retry the transactions."
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/sp_12"
+                    app:typeface="lato_regular" />
+
+                <com.jeeva.android.widgets.customfont.CustomTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="@dimen/dim_12"
+                    android:gravity="center"
+                    android:text="In case your money has been deducted, it will be automatically refunded shortly."
+                    android:textColor="@color/white_999999"
+                    android:textSize="@dimen/sp_12"
+                    app:typeface="lato_regular" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:layout_marginTop="@dimen/dim_20"
+                android:layout_marginBottom="@dimen/dim_20">
+
+                <com.jeeva.android.widgets.customfont.CustomButton
+                    android:id="@+id/paytm_failure_backToAddMoney_button"
+                    android:layout_width="@dimen/dim_130"
+                    android:layout_height="@dimen/dim_38"
+                    android:background="@drawable/grey_button_selector"
+                    android:gravity="center"
+                    android:paddingBottom="@dimen/dp_3"
+                    android:paddingTop="@dimen/dp_0"
+                    android:text="Back to Wallet"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/sp_14"
+                    app:typeface="lato_bold" />
+
+                <com.jeeva.android.widgets.customfont.CustomButton
+                    android:id="@+id/paytm_failure_retry_payment_button"
+                    android:layout_width="@dimen/dim_130"
+                    android:layout_height="@dimen/dim_38"
+                    android:layout_marginLeft="@dimen/dim_10"
+                    android:background="@drawable/blue_button_selector"
+                    android:gravity="center"
+                    android:paddingBottom="@dimen/dp_3"
+                    android:paddingTop="@dimen/dp_0"
+                    android:text="Retry Payment"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/sp_14"
+                    app:typeface="lato_bold" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </android.support.v7.widget.CardView>
+
+    <ImageView
+        android:id="@+id/popup_cross_btn"
+        android:layout_width="@dimen/dim_36"
+        android:layout_height="@dimen/dim_36"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/popup_card"
+        android:layout_marginTop="@dimen/dim_38"
+        android:elevation="@dimen/dp_4"
+        android:padding="@dimen/dp_5"
+        android:src="@drawable/popup_cross_icon"
+        android:visibility="visible" />
+
+</RelativeLayout>

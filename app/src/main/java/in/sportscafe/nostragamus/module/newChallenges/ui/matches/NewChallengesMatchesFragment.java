@@ -218,10 +218,16 @@ public class NewChallengesMatchesFragment extends BaseFragment implements View.O
             playData.setPlayingPseudoGame(true);
             playData.setChallengeName(mScreenData.getChallengeName());
             playData.setChallengeStartTime(mScreenData.getStartTime());
+            playData.setMaxPowerUpTransferLimit(match.getMaxTransferLimit());
 
             if (match.getMatchParties() != null && match.getMatchParties().size() == 2) {
                 playData.setMatchPartyTitle1(match.getMatchParties().get(0).getPartyName());
                 playData.setMatchPartyTitle2(match.getMatchParties().get(1).getPartyName());
+            }
+
+            // Single party
+            if (match.getTopics() != null && !TextUtils.isEmpty(match.getTopics().getTopicName())) {
+                playData.setMatchPartyTitle1(match.getTopics().getTopicName());
             }
 
             Bundle bundle = new Bundle();

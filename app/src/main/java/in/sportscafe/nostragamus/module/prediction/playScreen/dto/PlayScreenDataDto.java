@@ -23,6 +23,7 @@ public class PlayScreenDataDto {
     private boolean isPlayingPseudoGame = false;
     private boolean shouldLaunchMatchesScreen = false;
     private InPlayContestDto inPlayContestDto;
+    private int maxPowerUpTransferLimit = -1;
 
     public int getChallengeId() {
         return challengeId;
@@ -126,5 +127,13 @@ public class PlayScreenDataDto {
 
     public void setShouldLaunchMatchesScreen(boolean shouldLaunchMatchesScreen) {
         this.shouldLaunchMatchesScreen = shouldLaunchMatchesScreen;
+    }
+
+    public int getMaxPowerUpTransferLimit() {
+        return maxPowerUpTransferLimit;
+    }
+
+    public void setMaxPowerUpTransferLimit(int maxPowerUpTransferLimit) {
+        this.maxPowerUpTransferLimit = maxPowerUpTransferLimit;
     }
 }

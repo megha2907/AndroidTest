@@ -56,6 +56,7 @@ public class HelpFragment extends BaseFragment implements View.OnClickListener {
         rootView.findViewById(R.id.help_sample_game_play_layout).setOnClickListener(this);
         rootView.findViewById(R.id.settings_send_feedback_layout).setOnClickListener(this);
         rootView.findViewById(R.id.help_chat_layout).setOnClickListener(this);
+        rootView.findViewById(R.id.help_how_to_play_layout).setOnClickListener(this);
     }
 
     @Override
@@ -98,6 +99,11 @@ public class HelpFragment extends BaseFragment implements View.OnClickListener {
             case R.id.help_chat_layout:
                 if (mHelpFragmentListener != null) {
                     mHelpFragmentListener.onChatClicked();
+                }
+                break;
+            case R.id.help_how_to_play_layout:
+                if (mHelpFragmentListener != null) {
+                    mHelpFragmentListener.onHowToPlayClicked();
                 }
                 break;
 

@@ -24,7 +24,8 @@ import in.sportscafe.nostragamus.webservice.MyWebService;
 
 
 public class DummyGameActivity extends NostragamusActivity implements DGPlayFragment.OnDGPlayActionListener,
-        DGTextFragment.OnDGTextActionListener {
+        DGTextFragment.OnDGTextActionListener, DGPowerUpInfoFragment.DGPowerupInfoFragmentListener,
+        DGPowerupTriedFragment.DgPowerUpTriedFragmentListener{
 
     public static final int DELAY_TO_PERFORM_BACK_PRESS = 1000;
 
@@ -33,12 +34,15 @@ public class DummyGameActivity extends NostragamusActivity implements DGPlayFrag
         String QUESTION = "question";
         String POWERUP = "powerup";
         String ANIMATE_POWERUP = "animatePowerup";
+        String POWERUP_INFO = "powerupInfo";
+        String POWERUP_TRIED = "powerupTried";
     }
 
     interface ActionType {
         String GOTO_NEXT = "next";
         String EXIT = "exit";
         String GOTO_POWERUPS = "powerups";
+        String GOTO_POWERUP_INFO = "powerupInfo";
     }
 
     private List<DGInstruction> mInstructionList;
@@ -48,6 +52,10 @@ public class DummyGameActivity extends NostragamusActivity implements DGPlayFrag
     private DGPlayFragment mDummyGamePlayFragment;
 
     private DGTextFragment mDummyGameTextFragment;
+
+    private DGPowerUpInfoFragment mDummyGamePowerUpInfoFragment;
+
+    private DGPowerupTriedFragment mDummyGamePowerUpTriedFragment;
 
     private Integer mLastScoredPoints;
 
@@ -92,19 +100,82 @@ public class DummyGameActivity extends NostragamusActivity implements DGPlayFrag
             case InstructionType.TEXT:
                 addDummyText(instruction);
                 break;
+
             case InstructionType.QUESTION:
                 addDummyPlay(instruction.getQuestion(), instruction.getQuestionType());
                 break;
+
             case InstructionType.POWERUP:
                 mPowerUpsInstructionPos = mLastReadInstruction - 1;
                 addDummyPlay(instruction.getQuestion(), instruction.getQuestionType());
                 break;
+
             case InstructionType.ANIMATE_POWERUP:
                 mDummyGamePlayFragment.animatePowerUps();
                 break;
+
+            case InstructionType.POWERUP_INFO:
+                addPowerupInfo(instruction);
+                return;
+
+            case InstructionType.POWERUP_TRIED:
+                addPowerUpTried(instruction);
+                return;
         }
 
         checkWaitingTime(instruction.getWaitingTime());
+    }
+
+    private void addPowerUpTried(DGInstruction instruction) {
+        if (null != mLastScoredPoints) {
+            instruction.setScoredPoints(mLastScoredPoints);
+            mLastScoredPoints = null;
+        }
+
+        if (null == mDummyGamePowerUpTriedFragment) {
+            mDummyGamePowerUpTriedFragment = new DGPowerupTriedFragment();
+            mDummyGamePowerUpTriedFragment.setInstruction(instruction);
+
+            commitTransaction(getFragmentTransaction().replace(
+                    R.id.dummy_game_fl_play_holder,
+                    mDummyGamePowerUpTriedFragment
+            ));
+        } else {
+            mDummyGamePowerUpTriedFragment.applyInstruction(instruction);
+        }
+    }
+
+    private void removeDummyPowerupTried() {
+        if (null != mDummyGamePowerUpTriedFragment) {
+            commitTransaction(getFragmentTransaction().remove(mDummyGamePowerUpTriedFragment));
+            mDummyGamePowerUpTriedFragment = null;
+        }
+    }
+
+    private void addPowerupInfo(DGInstruction instruction) {
+        if (null != mLastScoredPoints) {
+            instruction.setScoredPoints(mLastScoredPoints);
+            mLastScoredPoints = null;
+        }
+
+        if (null == mDummyGamePowerUpInfoFragment) {
+            mDummyGamePowerUpInfoFragment = new DGPowerUpInfoFragment();
+            mDummyGamePowerUpInfoFragment.setInstruction(instruction);
+
+            commitTransaction(getFragmentTransaction().replace(
+                    R.id.dummy_game_fl_play_holder,
+                    mDummyGamePowerUpInfoFragment
+            ));
+        } else {
+            mDummyGamePowerUpInfoFragment.applyInstruction(instruction);
+        }
+    }
+
+    private void removeDummyPowerupInfo() {
+        if (null != mDummyGamePowerUpInfoFragment) {
+            commitTransaction(getFragmentTransaction().remove(mDummyGamePowerUpInfoFragment));
+            mDummyGamePowerUpInfoFragment = null;
+        }
     }
 
     private void checkWaitingTime(Long waitingTime) {
@@ -148,7 +219,9 @@ public class DummyGameActivity extends NostragamusActivity implements DGPlayFrag
                     mDummyGameTextFragment = DGTextFragment.newInstance(instruction)
             ));
         } else {
-            mDummyGameTextFragment.applyInstruction(instruction);
+            if (getActivity() != null && mDummyGameTextFragment.isAdded()) {
+                mDummyGameTextFragment.applyInstruction(instruction);
+            }
         }
     }
 
@@ -160,7 +233,7 @@ public class DummyGameActivity extends NostragamusActivity implements DGPlayFrag
     }
 
     private void commitTransaction(FragmentTransaction ft) {
-        if(!isDestroyed()) {
+        if (!isDestroyed()) {
             ft.commitAllowingStateLoss();
         }
     }
@@ -175,21 +248,21 @@ public class DummyGameActivity extends NostragamusActivity implements DGPlayFrag
     public void on2xApplied() {
 //        mDummyGameTextFragment.hideBottomText();
         addDummyText(getPowerUpInstruction("You used a Doubler powerup - this doubles the points you gain (or lose). Now swipe!"));
-        addDummyText(getSwipeInstruction());
+//        addDummyText(getSwipeInstruction());
     }
 
     @Override
     public void onNonegsApplied() {
 //        mDummyGameTextFragment.hideBottomText();
         addDummyText(getPowerUpInstruction("You used a No-Negatives powerup - this means NO points lost for a wrong prediction. Now swipe!"));
-        addDummyText(getSwipeInstruction());
+//        addDummyText(getSwipeInstruction());
     }
 
     @Override
     public void onPollApplied() {
 //        mDummyGameTextFragment.hideBottomText();
         addDummyText(getPowerUpInstruction("You used an Audience Poll - this shows you how others predicted this question. Now swipe!"));
-        addDummyText(getSwipeInstruction());
+//        addDummyText(getSwipeInstruction());
     }
 
     @Override
@@ -205,11 +278,17 @@ public class DummyGameActivity extends NostragamusActivity implements DGPlayFrag
             case ActionType.GOTO_NEXT:
                 readNextInstruction();
                 break;
+
             case ActionType.GOTO_POWERUPS:
                 mLastReadInstruction = mPowerUpsInstructionPos;
                 mInstructionList.get(mLastReadInstruction).setFreshStart(true);
                 readNextInstruction();
                 break;
+
+            case ActionType.GOTO_POWERUP_INFO:
+                readNextInstruction();
+                break;
+
             case ActionType.EXIT:
                 onBackPressed();
                 break;
@@ -219,6 +298,8 @@ public class DummyGameActivity extends NostragamusActivity implements DGPlayFrag
     private void startFresh() {
         removeDummyPlay();
         removeDummyText();
+        removeDummyPowerupInfo();
+        removeDummyPowerupTried();
     }
 
     private DGInstruction getPowerUpInstruction(String powerUpText) {
@@ -302,7 +383,8 @@ public class DummyGameActivity extends NostragamusActivity implements DGPlayFrag
                     new TypeReference<List<DGInstruction>>() {
                     }
             );*/
-            return new Gson().fromJson(json, new TypeReference<List<DGInstruction>>() {}.getType());
+            return new Gson().fromJson(json, new TypeReference<List<DGInstruction>>() {
+            }.getType());
         }
         return null;
     }
@@ -313,7 +395,7 @@ public class DummyGameActivity extends NostragamusActivity implements DGPlayFrag
 
     @Override
     public void onBackPressed() {
-        if(mLastReadInstruction == mInstructionList.size()) {
+        if (mLastReadInstruction == mInstructionList.size()) {
             NostragamusAnalytics.getInstance().trackDummyGame(AnalyticsActions.COMPLETED);
         } else {
             NostragamusAnalytics.getInstance().trackDummyGame(AnalyticsActions.SKIPPED, mLastReadInstruction);
@@ -349,5 +431,15 @@ public class DummyGameActivity extends NostragamusActivity implements DGPlayFrag
                 DummyGameActivity.super.onBackPressed();
             }
         }, DELAY_TO_PERFORM_BACK_PRESS);
+    }
+
+    @Override
+    public void onLearnPowerupClicked() {
+        readNextInstruction();
+    }
+
+    @Override
+    public void onGotItClicked() {
+        onActionClicked(ActionType.EXIT);
     }
 }

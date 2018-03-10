@@ -7,15 +7,97 @@
     android:paddingLeft="@dimen/dim_15"
     android:paddingRight="@dimen/dim_15">
 
+    <!-- Timeline ui -->
+    <RelativeLayout
+        android:id="@+id/dg_timeline_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="@dimen/dim_20"
+        android:visibility="invisible">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_centerHorizontal="true">
+
+            <com.jeeva.android.widgets.customfont.CustomTextView
+                android:id="@+id/dg_timeline_step_1_node"
+                android:layout_width="@dimen/dim_16"
+                android:layout_height="@dimen/dim_16"
+                android:background="@drawable/blue_filled_circle_bg"
+                android:gravity="center"
+                android:paddingBottom="@dimen/dim_1"
+                android:text="1"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp_8"
+                app:typeface="lato_regular" />
+
+            <View
+                android:id="@+id/dg_timeline_step_2_line"
+                android:layout_width="@dimen/dim_52"
+                android:layout_height="@dimen/dim_2"
+                android:background="@color/grey_777777"/>
+
+            <com.jeeva.android.widgets.customfont.CustomTextView
+                android:id="@+id/dg_timeline_step_2_node"
+                android:layout_width="@dimen/dim_16"
+                android:layout_height="@dimen/dim_16"
+                android:background="@drawable/grey_circle_border"
+                android:gravity="center"
+                android:paddingBottom="@dimen/dim_1"
+                android:text="2"
+                android:textColor="@color/grey_777777"
+                android:textSize="@dimen/sp_8"
+                app:typeface="lato_regular" />
+
+            <View
+                android:id="@+id/dg_timeline_step_3_line"
+                android:layout_width="@dimen/dim_52"
+                android:layout_height="@dimen/dim_2"
+                android:background="@color/grey_777777"/>
+
+            <com.jeeva.android.widgets.customfont.CustomTextView
+                android:id="@+id/dg_timeline_step_3_node"
+                android:layout_width="@dimen/dim_16"
+                android:layout_height="@dimen/dim_16"
+                android:background="@drawable/grey_circle_border"
+                android:gravity="center"
+                android:paddingBottom="@dimen/dim_1"
+                android:text="3"
+                android:textColor="@color/grey_777777"
+                android:textSize="@dimen/sp_8"
+                app:typeface="lato_regular" />
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
     <com.jeeva.android.widgets.customfont.CustomTextView
         android:id="@+id/dummy_game_tv_top_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="@dimen/dim_18"
+        android:layout_marginTop="@dimen/dim_10"
         android:gravity="center"
         android:textColor="@color/white"
-        android:textSize="@dimen/dim_14"
+        android:textSize="@dimen/sp_13"
+        android:visibility="invisible"
+        app:typeface="lato_bold"
+        android:layout_below="@id/dg_timeline_layout"/>
+
+    <com.jeeva.android.widgets.customfont.CustomTextView
+        android:id="@+id/dummy_game_tv_sub_top_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/dim_4"
+        android:layout_below="@id/dummy_game_tv_top_text"
+        android:gravity="center"
+        android:textColor="@color/white_dim"
+        android:textSize="@dimen/sp_12"
         android:visibility="invisible"
         app:typeface="lato_regular" />
 
@@ -45,9 +127,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:minLines="2"
+            android:lineSpacingExtra="@dimen/dim_4"
             android:textColor="@color/white"
-            android:textSize="@dimen/dim_14"
+            android:textSize="@dimen/sp_13"
             android:visibility="invisible"
             app:typeface="lato_bold" />
 
@@ -65,27 +147,27 @@
 
         <com.jeeva.android.widgets.customfont.CustomButton
             android:id="@+id/dummy_game_btn_action1"
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/dim_36"
-            android:layout_marginTop="@dimen/dim_26"
-            android:background="@drawable/tournament_ready_btn_bg"
+            android:layout_width="@dimen/dim_320"
+            android:layout_height="@dimen/dim_40"
+            android:layout_marginTop="@dimen/dim_24"
+            android:background="@drawable/blue_008ae1_button_selector"
             android:gravity="center"
             android:minWidth="@dimen/dim_72"
             android:paddingBottom="@dimen/dim_2"
             android:paddingLeft="@dimen/dim_15"
             android:paddingRight="@dimen/dim_15"
             android:paddingTop="@dimen/dp_0"
-            android:text="@string/dummy_start_action"
+            android:text="Start Walkthrough"
             android:textAllCaps="false"
             android:textColor="@color/white"
-            android:textSize="@dimen/dim_14"
+            android:textSize="@dimen/sp_13"
             android:visibility="invisible"
             app:typeface="lato_bold" />
 
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dim_26">
+            android:layout_marginTop="@dimen/dim_12">
 
             <com.jeeva.android.widgets.customfont.CustomButton
                 android:id="@+id/dummy_game_btn_action2"
@@ -109,7 +191,7 @@
                 android:id="@+id/dummy_game_btn_action3"
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/dim_36"
-                android:background="@drawable/dg_grey_btn_bg"
+                android:background="@null"
                 android:gravity="center"
                 android:minWidth="@dimen/dim_72"
                 android:paddingBottom="@dimen/dim_2"
@@ -118,10 +200,10 @@
                 android:paddingTop="@dimen/dim_0"
                 android:text="@string/dummy_start_action"
                 android:textAllCaps="false"
-                android:textColor="@color/grey6"
-                android:textSize="@dimen/dim_14"
+                android:textColor="@color/grey5"
+                android:textSize="@dimen/sp_13"
                 android:visibility="invisible"
-                app:typeface="lato_bold" />
+                app:typeface="lato_regular" />
 
 
         </RelativeLayout>

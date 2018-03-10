@@ -19,7 +19,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/leaderboard_play_challenge_btn"
-        android:layout_below="@+id/lb_landing_toolbar"
         android:scaleType="centerCrop"
         android:src="@drawable/empty_results_image"
         android:visibility="gone" />

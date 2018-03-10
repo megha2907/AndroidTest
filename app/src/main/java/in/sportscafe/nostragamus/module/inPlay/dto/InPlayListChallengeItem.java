@@ -20,6 +20,7 @@ public class InPlayListChallengeItem {
     private String challengeStartTime;
     private String challengeEndTime;
     private boolean onlyHeadlessStateExist;
+    private int maxPowerUpTransferLimit = -1;
 
     private List<String> challengeTournaments = new ArrayList<>();
 
@@ -103,4 +104,11 @@ public class InPlayListChallengeItem {
         this.onlyHeadlessStateExist = onlyHeadlessStateExist;
     }
 
+    public int getMaxPowerUpTransferLimit() {
+        return maxPowerUpTransferLimit;
+    }
+
+    public void setMaxPowerUpTransferLimit(int maxPowerUpTransferLimit) {
+        this.maxPowerUpTransferLimit = maxPowerUpTransferLimit;
+    }
 }

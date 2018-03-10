@@ -66,6 +66,7 @@ public class ContestViewPagerFragment extends NostraBaseFragment {
     private List<Contest> mContestList;
     private TextView mTvContestDesc;
     private ContestScreenData mContestScreenData;
+    private int mMaxPowerupTransferLimit = 0;
 
     public ContestViewPagerFragment() {
     }
@@ -104,7 +105,7 @@ public class ContestViewPagerFragment extends NostraBaseFragment {
         if (mContestList != null && !mContestList.isEmpty()) {
             List<Contest> filteredSortedList = getSortedList(getContestListPreparedForAdapterItemTypes(mContestList));
             mRecyclerView.setAdapter(new ContestRecyclerAdapter(mRecyclerView.getContext(),
-                    filteredSortedList,
+                    filteredSortedList, mMaxPowerupTransferLimit,
                     getContestAdapterListener()));
 
         } else {
@@ -202,6 +203,7 @@ public class ContestViewPagerFragment extends NostraBaseFragment {
             }
         };
     }
+
 
     private void goToReferAFriendScreen() {
         Intent intent = new Intent(getActivity(), ReferFriendActivity.class);
@@ -394,6 +396,10 @@ public class ContestViewPagerFragment extends NostraBaseFragment {
 
     public void setContestType(ContestType contestType) {
         this.mContestType = contestType;
+    }
+
+    public void setMaxPowerupTransferLimit(int maxPowerupTransferLimit) {
+        mMaxPowerupTransferLimit = maxPowerupTransferLimit;
     }
 
     public void onContestData(List<Contest> contests, ContestScreenData contestScreenData) {

@@ -23,6 +23,7 @@ public class ContestsActivity extends NostraBaseActivity implements ContestsFrag
         int PLAY_SCREEN_HEAD_LESS = 214;
         int RESULTS = 215;
         int IN_PLAY_JOIN_CONTEST = 216;
+        int SELECT_PAYMENT_MODE = 217;
     }
 
     private ContestFragment mContestFragment;

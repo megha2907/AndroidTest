@@ -219,6 +219,7 @@ public class InPlayHeadLessMatchesFragment extends BaseFragment implements View.
             dataDto.setChallengeName(mHeadLessMatchScreenData.getChallengeName());
             dataDto.setChallengeStartTime(mHeadLessMatchScreenData.getStartTime());
             dataDto.setInPlayContestDto(mHeadLessMatchScreenData.getInPlayContestDto());
+            dataDto.setMaxPowerUpTransferLimit(inPlayMatch.getMaxTransferLimit());
 
             String subTitle = "";
             if (!TextUtils.isEmpty(mHeadLessMatchScreenData.getChallengeName())) {
@@ -234,6 +235,11 @@ public class InPlayHeadLessMatchesFragment extends BaseFragment implements View.
             if (inPlayMatch.getMatchParties() != null && inPlayMatch.getMatchParties().size() == 2) {
                 dataDto.setMatchPartyTitle1(inPlayMatch.getMatchParties().get(0).getPartyName());
                 dataDto.setMatchPartyTitle2(inPlayMatch.getMatchParties().get(1).getPartyName());
+            }
+
+            // Single party
+            if (inPlayMatch.getTopics() != null && !TextUtils.isEmpty(inPlayMatch.getTopics().getTopicName())) {
+                dataDto.setMatchPartyTitle1(inPlayMatch.getTopics().getTopicName());
             }
         }
 
