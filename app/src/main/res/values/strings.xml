@@ -20,6 +20,7 @@
     <string name="firebase_api_key">AIzaSyDlx9THo_Luvb9ldGDznisfFX3rTks85HQ</string>
     <string name="firebase_gcm_sender_id">576361348926</string>
     <string name="firebase_url">https://sportscafe-scgame-prod.firebaseio.com</string>
+    <string name="cashfree_app_id">374123e1b8eb30b2ec8838d473</string>
 
     <!-- Start App update -->
     <string name="new_version_title">New Version Available!</string>
@@ -152,9 +153,7 @@
     ]]>
     </string>
     <string name="app_downloading">Your app is being downloaded in the background, click on Install after the download is over!</string>
-    <string name="pb_text_one"><![CDATA[- Powerups in your bank can be transferred to and used in any challenge you play]]></string>
-    <string name="pb_text_two"><![CDATA[- To transfer them to a challenge, click the @ powerup bank icon on the bottom left while playing any match in that challenge]]></string>
-
+    <string name="pb_text_one">These powerups can be transferred to contests and used to score more points. Use the links before to find out more</string>
     <string name="max_added">Max Added</string>
     <string name="earn_more_powerups_text">- You can add more powerups to your bank by referring friends or buying powerups</string>
 

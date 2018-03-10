@@ -6,10 +6,10 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.LocalBroadcastManager;
 import android.text.TextUtils;
+import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.ScaleAnimation;
@@ -17,32 +17,17 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.firebase.FirebaseApp;
-import com.google.firebase.FirebaseOptions;
-import com.google.firebase.iid.FirebaseInstanceId;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
+import com.crashlytics.android.Crashlytics;
 import com.jeeva.android.Log;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.lang.reflect.Type;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
 
 import in.sportscafe.nostragamus.BuildConfig;
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.R;
-import in.sportscafe.nostragamus.cache.CacheManagementHelper;
 import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
 import in.sportscafe.nostragamus.module.challengeCompleted.ui.CompletedChallengeHistoryFragment;
 import in.sportscafe.nostragamus.module.common.NostraBaseActivity;
-import in.sportscafe.nostragamus.module.inPlay.dataProvider.InPlayDataProvider;
 import in.sportscafe.nostragamus.module.inPlay.ui.InPlayFragment;
 import in.sportscafe.nostragamus.module.navigation.NavigationFragment;
 import in.sportscafe.nostragamus.module.navigation.appupdate.AppUpdateActivity;
@@ -53,7 +38,6 @@ import in.sportscafe.nostragamus.module.notifications.NostraNotification;
 import in.sportscafe.nostragamus.module.notifications.NotificationHelper;
 import in.sportscafe.nostragamus.module.notifications.inApp.InAppNotificationHelper;
 import in.sportscafe.nostragamus.module.user.group.allgroups.AllGroupsFragment;
-import in.sportscafe.nostragamus.module.user.login.LogInActivity;
 import in.sportscafe.nostragamus.module.user.login.UserInfoModelImpl;
 import in.sportscafe.nostragamus.module.user.login.dto.UserInfo;
 import in.sportscafe.nostragamus.module.user.myprofile.edit.EditProfileActivity;
@@ -84,6 +68,7 @@ public class NostraHomeActivity extends NostraBaseActivity implements View.OnCli
     private boolean mIsFirstBackPressed = false;
     private int mUnPlayedMatchCount = 0;
 
+
     @Override
     public String getScreenName() {
         return Constants.Notifications.SCREEN_HOME;
@@ -97,6 +82,9 @@ public class NostraHomeActivity extends NostraBaseActivity implements View.OnCli
         initMembers();
         initViews();
         getServerTime();
+
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         onNewChallengesClicked(getIntent().getExtras());
         handleNotifications();
 
@@ -295,6 +283,9 @@ public class NostraHomeActivity extends NostraBaseActivity implements View.OnCli
 
                 } else if (screenName.equalsIgnoreCase(Constants.Notifications.SCREEN_WEB_VIEW)) {
                     startActivity(notificationHelper.getWebViewScreenIntent(this, notification));
+
+                } else if (screenName.equalsIgnoreCase(Constants.Notifications.SCREEN_SLIDES)) {
+                    startActivity(notificationHelper.getSlidesScreenIntent(this, notification));
                 }
 
             } else {
@@ -305,9 +296,9 @@ public class NostraHomeActivity extends NostraBaseActivity implements View.OnCli
 
     private void initMembers() {
         UserInfoModelImpl.newInstance(getUserInfoCallBackListener()).getUserInfo();
-        NostragamusAnalytics.getInstance().setMoEngageUserProperties();
+        NostragamusAnalytics.getInstance().setMoEngageUserProperties(getApplicationContext());
         NostragamusAnalytics.getInstance().setFreshChatUserProperties(getApplicationContext());
-
+        NostragamusAnalytics.getInstance().setCrashlyticsUserProperties(getApplicationContext());
     }
 
     private void initViews() {
@@ -632,6 +623,22 @@ public class NostraHomeActivity extends NostraBaseActivity implements View.OnCli
             args = getIntent().getExtras();
         }
         onNewChallengesClicked(args);
+    }
+
+    @Override
+    public void showInPlayChallenges(Bundle args) {
+        if (args == null) {
+            args = getIntent().getExtras();
+        }
+        onInPlayClicked(args);
+    }
+
+    @Override
+    public void showHistoryChallenges(Bundle args) {
+        if (args == null) {
+            args = getIntent().getExtras();
+        }
+        onHistoryClicked(args);
     }
 
 

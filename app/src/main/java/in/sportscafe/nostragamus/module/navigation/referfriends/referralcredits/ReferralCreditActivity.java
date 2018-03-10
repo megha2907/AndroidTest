@@ -7,22 +7,14 @@ import android.widget.TextView;
 
 import com.jeeva.android.ExceptionTracker;
 
-import org.parceler.Parcels;
-
 import in.sportscafe.nostragamus.AppSnippet;
 import in.sportscafe.nostragamus.BuildConfig;
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Nostragamus;
-import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.NostragamusActivity;
-import in.sportscafe.nostragamus.module.navigation.referfriends.ReferFriendFragment;
-import in.sportscafe.nostragamus.module.navigation.wallet.WalletHomeFragment;
-import in.sportscafe.nostragamus.module.navigation.wallet.paytmAndBank.PaytmTransactionSuccessDialogFragment;
-import in.sportscafe.nostragamus.module.user.leaderboard.LeaderBoardFragment;
 import in.sportscafe.nostragamus.module.user.login.dto.UserInfo;
 import in.sportscafe.nostragamus.utils.FragmentHelper;
-import in.sportscafe.nostragamus.webservice.UserReferralInfo;
 import io.branch.indexing.BranchUniversalObject;
 import io.branch.referral.Branch;
 import io.branch.referral.BranchError;

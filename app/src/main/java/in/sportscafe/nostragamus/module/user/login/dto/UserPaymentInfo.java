@@ -10,18 +10,18 @@ import org.parceler.Parcel;
 @Parcel
 public class UserPaymentInfo {
 
-    @SerializedName("bank")
+    @SerializedName("cashfree")
     private UserPaymentInfoBankDto bank;
 
     @SerializedName("paytm")
     private UserPaymentInfoPaytmDto paytm;
 
-    @SerializedName("bank")
+    @SerializedName("cashfree")
     public UserPaymentInfoBankDto getBank() {
         return bank;
     }
 
-    @SerializedName("bank")
+    @SerializedName("cashfree")
     public void setBank(UserPaymentInfoBankDto bank) {
         this.bank = bank;
     }

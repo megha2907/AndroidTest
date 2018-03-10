@@ -14,11 +14,14 @@ public class AddBankDetailsRequest {
     @SerializedName("name")
     private String name;
 
-    @SerializedName("ifsc_code")
+    @SerializedName("ifsc")
     private String ifscCode;
 
-    @SerializedName("account_no")
+    @SerializedName("bankAccount")
     private String accountNo;
+
+    @SerializedName("address1")
+    private String addressLineOne;
 
     public String getPaymentMode() {
         return paymentMode;
@@ -50,5 +53,13 @@ public class AddBankDetailsRequest {
 
     public void setAccountNo(String accountNo) {
         this.accountNo = accountNo;
+    }
+
+    public String getAddressLineOne() {
+        return addressLineOne;
+    }
+
+    public void setAddressLineOne(String addressLineOne) {
+        this.addressLineOne = addressLineOne;
     }
 }

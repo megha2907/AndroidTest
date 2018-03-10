@@ -20,7 +20,7 @@ import in.sportscafe.nostragamus.module.navigation.wallet.addMoney.addByPaymentC
 import in.sportscafe.nostragamus.module.navigation.wallet.addMoney.addByPaymentCoupon.AddMoneyThroughPaymentCouponFragmentListener;
 import in.sportscafe.nostragamus.module.navigation.wallet.addMoney.addByPaytm.AddMoneyThroughPaytmFragment;
 import in.sportscafe.nostragamus.module.navigation.wallet.addMoney.addByPaytm.AddMoneyThroughPaytmFragmentListener;
-import in.sportscafe.nostragamus.module.navigation.wallet.paytmAndBank.PaytmTransactionSuccessDialogFragment;
+import in.sportscafe.nostragamus.module.navigation.wallet.paytmAndBank.TransactionSuccessDialogFragment;
 
 public class AddWalletMoneyFragment extends BaseFragment implements View.OnClickListener,
         AddMoneyThroughPaytmFragmentListener, AddMoneyThroughPaymentCouponFragmentListener {
@@ -117,16 +117,16 @@ public class AddWalletMoneyFragment extends BaseFragment implements View.OnClick
 
     @Override
     public void onPaymentCouponSuccess(int moneyAdded) {
-        PaytmTransactionSuccessDialogFragment successDialogFragment =
-                PaytmTransactionSuccessDialogFragment.newInstance(1200, moneyAdded,
+        TransactionSuccessDialogFragment successDialogFragment =
+                TransactionSuccessDialogFragment.newInstance(1200, moneyAdded,
                         getSuccessActionListener());
 
         successDialogFragment.show(getChildFragmentManager(), "SUCCESS_DIALOG");
     }
 
-    private PaytmTransactionSuccessDialogFragment.IPaytmSuccessActionListener
+    private TransactionSuccessDialogFragment.ISuccessActionListener
     getSuccessActionListener() {
-        return new PaytmTransactionSuccessDialogFragment.IPaytmSuccessActionListener() {
+        return new TransactionSuccessDialogFragment.ISuccessActionListener() {
             @Override
             public void onBackToHomeClicked() {
                 if (mFragmentListener != null) {

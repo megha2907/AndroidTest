@@ -47,6 +47,8 @@ public interface Constants {
         String SCREEN_APP_UPDATE = "appUpdate"; /* Update the App screen & What's New Screen */
         String SCREEN_WEB_VIEW = "webView";
         String SCREEN_EDIT_ANSWER = "editAnswer";
+        String SCREEN_NEW_CHALLENGE_GAMES = "newChallengeGames"; /* New Challenges Games Screen  */
+        String SCREEN_SLIDES = "slides"; /* How To Play Screen & How to use powerup screen in slide design */
     }
 
     interface SharedKeys {
@@ -353,6 +355,7 @@ public interface Constants {
         String REWARDS_SCREEN_DATA = "rewardsScreenData";
         String EDIT_ANSWER_SCREEN_DATA = "editAnswerScreenData";
         String COPY_ANSWER_POWERUP_COPIED = "copyAnswerPowerupCopied";
+        String BANNER = "banner";
 
         /* Wallet */
         String WALLET_WITHDRAWAL_AMT = "walletWithdrawAmt";
@@ -393,6 +396,7 @@ public interface Constants {
         String POWERUP_BANK_TRANSFER_SCREEN_DATA = "powerupBankTransferScreenData";
         String IN_APP_NOSTRA_NOTIFICATION_DETAILS = "inAppNostraNotification";
         String COPY_ANSWER_SCREEN_DATA = "copyAnswerScreenData";
+        String SLIDE_ID = "SlideId";
     }
 
     interface DateFormats {
@@ -509,6 +513,7 @@ public interface Constants {
         String RESULTS = "Results";
         String WALLET_POPUP = "Wallet Popup";
         String REVENUE = "Revenue";
+        String PAYMENT_MODE = "Payment Mode";
     }
 
     interface AnalyticsClickLabels {
@@ -641,6 +646,7 @@ public interface Constants {
         String WALLET_INIT = "Wallet Initial Amount";
         String LINK_NAME = "Link Name";
         String ACL_APP = "Acl App";
+        String APP_VERSION = "App Version";
     }
 
     interface AppType {
@@ -705,6 +711,8 @@ public interface Constants {
         String MATCHES_TIMELINE = "MatchesTimeline";
         String CONTEST_DETAILS = "ContestDetails";
         String POOL_CONTEST_REWARD_CALCULATION = "poolContestRewardCalculation";
+        String HOW_TO_PLAY = "HowToPlay";
+        String SELECT_PAYMENT_MODE = "selectPaymentMode";
     }
 
     interface InAppPopups {
@@ -753,6 +761,7 @@ public interface Constants {
         String CALLBACK_URL = "CALLBACK_URL";
     }
 
+
     interface PaytmParamValues {
         String REQUEST_TYPE_DEFAULT = "DEFAULT";
         String MID_VALUE = "GAMBIT01441193333466";
@@ -794,9 +803,51 @@ public interface Constants {
         String TRANSACTION_OPEN = "OPEN";
     }
 
+
+    interface CashFreeParamsKeys {
+        String ORDER_ID = "orderId";
+        String ORDER_AMOUNT = "orderAmount";
+        String REFERENCE_ID = "referenceId";
+        String TRANSACTION_STATUS = "txStatus";
+        String PAYMENT_MODE = "paymentMode";
+        String TRANSACTION_MESSAGE = "txMsg";
+        String TRANSACTION_TIME = "txTime";
+    }
+
+    interface CashFreeTransactionResponseStatusValues {
+          /* NOTE: Values are from CashFree API documentation https://docs.gocashfree.com/docs/android/guide/
+          , should be compared against txStatus to know transaction status
+          * DO NOT CHANGE VALUES ... */
+
+        String TRANSACTION_SUCCESS = "SUCCESS";
+        String TRANSACTION_FLAGGED = "FLAGGED";
+        String TRANSACTION_FAILED = "FAILED";
+        String TRANSACTION_CANCELED = "CANCELED";
+    }
+
+
     interface AddUserPaymentDetailsPaymentModes {
         String BANK = "bank";
         String PAYTM = "paytm";
+    }
+
+    interface AddMoneyPaymentModes {
+        String PAYTM = "paytm";
+        String CASHFREE = "cashfree";
+    }
+
+    interface SelectPaymentModes {
+        String DEBIT_CARD = "dc";
+        String CREDIT_CARD = "cc";
+        String UPI = "upi";
+        String WALLET = "wallet";
+        String PAYTM = "paytm";
+    }
+
+    interface VerifyPaymentStatus {
+        String CREATED = "CREATED";
+        String SUCCESS = "SUCCESS";
+        String FAILURE = "FAILURE";
     }
 
     interface AppUpdateTypes {
@@ -927,6 +978,13 @@ public interface Constants {
         String ONGOING = "ongoing";
         String COMPLETED = "completed";
         String LIVE = "live";
+    }
+
+    interface SlideScreenNames {
+        /* Synced with server as they come in api response */
+        String HOW_TO_PLAY = "how_to_play";
+        String HOW_TO_USE_POWERUP_BANK = "how_to_use_powerup_bank";
+
     }
 
     interface PredictionPoints {

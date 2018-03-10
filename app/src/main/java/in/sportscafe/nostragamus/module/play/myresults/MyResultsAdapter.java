@@ -48,6 +48,7 @@ import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
 import in.sportscafe.nostragamus.module.challengeCompleted.dto.CompletedContestDto;
 import in.sportscafe.nostragamus.module.common.Adapter;
+import in.sportscafe.nostragamus.module.common.NostraTagHandler;
 import in.sportscafe.nostragamus.module.common.NostraTextViewLinkClickMovementMethod;
 import in.sportscafe.nostragamus.module.contest.contestDetailsAfterJoining.InplayContestDetailsActivity;
 import in.sportscafe.nostragamus.module.contest.contestDetailsCompletedChallenges.ChallengeHistoryContestDetailsActivity;
@@ -1059,7 +1060,7 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
         if (null != match.getResultdesc() && !match.getResultdesc().trim().isEmpty()) {
             final TextView tvcommentary = (TextView) leaderboardView.findViewById(R.id.schedule_row_tv_match_result_commentary);
             tvcommentary.setVisibility(View.VISIBLE);
-            tvcommentary.setText(Html.fromHtml(match.getResultdesc()));
+            tvcommentary.setText(Html.fromHtml(match.getResultdesc(), null, new NostraTagHandler()));
             tvcommentary.setMovementMethod(new NostraTextViewLinkClickMovementMethod() {
                 @Override
                 public void onLinkClick(String url) {

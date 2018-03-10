@@ -50,6 +50,9 @@ public class NostraNotificationData {
     @SerializedName("webview_heading")
     private String webViewHeading;
 
+    @SerializedName("slide_id")
+    private String slideId;
+
     /* This is used for InApp Notification , where notification redirect to appropriate game screen */
     @SerializedName("inPlayContestDto")
     private InPlayContestDto inPlayContestDto;
@@ -156,5 +159,13 @@ public class NostraNotificationData {
 
     public void setInPlayContestDto(InPlayContestDto inPlayContestDto) {
         this.inPlayContestDto = inPlayContestDto;
+    }
+
+    public String getSlideId() {
+        return slideId;
+    }
+
+    public void setSlideId(String slideId) {
+        this.slideId = slideId;
     }
 }

@@ -219,7 +219,9 @@ public class DummyGameActivity extends NostragamusActivity implements DGPlayFrag
                     mDummyGameTextFragment = DGTextFragment.newInstance(instruction)
             ));
         } else {
-            mDummyGameTextFragment.applyInstruction(instruction);
+            if (getActivity() != null && mDummyGameTextFragment.isAdded()) {
+                mDummyGameTextFragment.applyInstruction(instruction);
+            }
         }
     }
 
@@ -231,7 +233,7 @@ public class DummyGameActivity extends NostragamusActivity implements DGPlayFrag
     }
 
     private void commitTransaction(FragmentTransaction ft) {
-        if(!isDestroyed()) {
+        if (!isDestroyed()) {
             ft.commitAllowingStateLoss();
         }
     }
@@ -381,7 +383,8 @@ public class DummyGameActivity extends NostragamusActivity implements DGPlayFrag
                     new TypeReference<List<DGInstruction>>() {
                     }
             );*/
-            return new Gson().fromJson(json, new TypeReference<List<DGInstruction>>() {}.getType());
+            return new Gson().fromJson(json, new TypeReference<List<DGInstruction>>() {
+            }.getType());
         }
         return null;
     }
@@ -392,7 +395,7 @@ public class DummyGameActivity extends NostragamusActivity implements DGPlayFrag
 
     @Override
     public void onBackPressed() {
-        if(mLastReadInstruction == mInstructionList.size()) {
+        if (mLastReadInstruction == mInstructionList.size()) {
             NostragamusAnalytics.getInstance().trackDummyGame(AnalyticsActions.COMPLETED);
         } else {
             NostragamusAnalytics.getInstance().trackDummyGame(AnalyticsActions.SKIPPED, mLastReadInstruction);

@@ -8,10 +8,16 @@ import in.sportscafe.nostragamus.module.challengeCompleted.dto.CompletedResponse
 import in.sportscafe.nostragamus.module.challengeRewards.dto.RewardsResponse;
 import in.sportscafe.nostragamus.module.challengeRules.dto.RulesResponse;
 import in.sportscafe.nostragamus.module.common.ApiResponse;
+import in.sportscafe.nostragamus.module.navigation.help.howtoplay.dto.HowToPlayDetails;
+import in.sportscafe.nostragamus.module.navigation.help.howtoplay.dto.HowToPlayResponse;
 import in.sportscafe.nostragamus.module.navigation.wallet.addMoney.dto.AddMoneyPaymentCouponRequest;
 import in.sportscafe.nostragamus.module.navigation.wallet.addMoney.dto.AddMoneyPaymentCouponResponse;
+import in.sportscafe.nostragamus.module.navigation.wallet.addMoney.dto.CashFreeGenerateOrderRequest;
+import in.sportscafe.nostragamus.module.navigation.wallet.addMoney.dto.CashFreeGenerateOrderResponse;
 import in.sportscafe.nostragamus.module.navigation.wallet.addMoney.dto.VerifyPaymentCouponRequest;
 import in.sportscafe.nostragamus.module.navigation.wallet.addMoney.dto.VerifyPaymentCouponResponse;
+import in.sportscafe.nostragamus.module.navigation.wallet.addMoney.dto.VerifyPaymentResponse;
+import in.sportscafe.nostragamus.module.newChallenges.dto.BannerResponseData;
 import in.sportscafe.nostragamus.module.nostraHome.dto.TimeResponse;
 import in.sportscafe.nostragamus.module.common.dto.MatchesResponse;
 import in.sportscafe.nostragamus.module.contest.dto.ContestEntriesResponse;
@@ -238,7 +244,7 @@ public interface NostragamusService {
     @POST("v2/game/generateOrder")
     Call<GenerateOrderResponse> generateOrder(@Body GenerateOrderRequest request);
 
-    @PUT("v2/game/users/paymentInfo")
+    @POST("v3/game/cashfree/addBankBeneficiary")
     Call<AddUserPaymentDetailsResponse> addUserPaymentBankDetails(@Body AddBankDetailsRequest request);
 
     @PUT("v2/game/users/paymentInfo")
@@ -393,9 +399,21 @@ public interface NostragamusService {
     @POST("v3/game/users/ticket")
     Call<ApiResponse> sendErrorReport(@Body SubmitReportRequest request);
 
+    @GET("v3/game/users/banners")
+    Call<BannerResponse> getBannerData();
+
     @GET("v3/game/users/getMatchContests")
     Call<CopyAnswerContestsResponse> getCopyAnswerContests(@Query("match_id") int matchId);
 
     @POST("v3/game/users/copyMatchAnswers")
     Call<CopyAnswerResponse> copyAnswer(@Body CopyAnswerRequest copyAnswerRequest);
+
+    @POST("v1/wallet/addMoneyToWallet")
+    Call<CashFreeGenerateOrderResponse> generateCashFreeOrder(@Body CashFreeGenerateOrderRequest request);
+
+    @GET("v1/wallet/getOrderStatus")
+    Call<VerifyPaymentResponse> verifyPayment(@Query("order_id") String orderId);
+
+    @GET("v3/game/slides")
+    Call<HowToPlayResponse> getHowToPlayData(@Query("slide_id") String slideId);
 }

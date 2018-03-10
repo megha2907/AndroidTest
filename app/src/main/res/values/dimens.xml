@@ -197,11 +197,13 @@
     <dimen name="dim_270">270dp</dimen>
     <dimen name="dim_300">300dp</dimen>
     <dimen name="dim_320">320dp</dimen>
+    <dimen name="dim_328">328dp</dimen>
     <dimen name="dim_330">330dp</dimen>
     <dimen name="dim_340">340dp</dimen>
     <dimen name="dim_370">370dp</dimen>
     <dimen name="dim_380">380dp</dimen>
     <dimen name="dim_382">382dp</dimen>
+
 
     <!-- Wallet -->
     <dimen name="wallet_home_row_height">52dp</dimen>
