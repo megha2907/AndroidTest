@@ -17,6 +17,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.crashlytics.android.Crashlytics;
 import com.jeeva.android.Log;
 
 import in.sportscafe.nostragamus.BuildConfig;
@@ -282,6 +283,9 @@ public class NostraHomeActivity extends NostraBaseActivity implements View.OnCli
 
                 } else if (screenName.equalsIgnoreCase(Constants.Notifications.SCREEN_WEB_VIEW)) {
                     startActivity(notificationHelper.getWebViewScreenIntent(this, notification));
+
+                } else if (screenName.equalsIgnoreCase(Constants.Notifications.SCREEN_SLIDES)) {
+                    startActivity(notificationHelper.getSlidesScreenIntent(this, notification));
                 }
 
             } else {
@@ -294,7 +298,7 @@ public class NostraHomeActivity extends NostraBaseActivity implements View.OnCli
         UserInfoModelImpl.newInstance(getUserInfoCallBackListener()).getUserInfo();
         NostragamusAnalytics.getInstance().setMoEngageUserProperties(getApplicationContext());
         NostragamusAnalytics.getInstance().setFreshChatUserProperties(getApplicationContext());
-
+        NostragamusAnalytics.getInstance().setCrashlyticsUserProperties(getApplicationContext());
     }
 
     private void initViews() {

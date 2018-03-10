@@ -17,6 +17,7 @@ import in.sportscafe.nostragamus.module.contest.contestDetailsCompletedChallenge
 import in.sportscafe.nostragamus.module.contest.ui.DetailScreensLaunchRequest;
 import in.sportscafe.nostragamus.module.inPlay.ui.ResultsScreenDataDto;
 import in.sportscafe.nostragamus.module.navigation.appupdate.AppUpdateActivity;
+import in.sportscafe.nostragamus.module.navigation.help.howtoplay.HowToPlayActivity;
 import in.sportscafe.nostragamus.module.navigation.referfriends.ReferFriendActivity;
 import in.sportscafe.nostragamus.module.navigation.referfriends.referralcredits.ReferralCreditActivity;
 import in.sportscafe.nostragamus.module.navigation.wallet.addMoney.AddWalletMoneyActivity;
@@ -270,4 +271,18 @@ public class NotificationHelper {
         return intent;
     }
 
+    @NonNull
+    public Intent getSlidesScreenIntent(Context context, NostraNotification notification) {
+        Bundle args = new Bundle();
+        if (notification != null) {
+            args.putString(Constants.BundleKeys.SLIDE_ID, notification.getData().getSlideId());
+
+            args.putBoolean(Constants.Notifications.IS_LAUNCHED_FROM_NOTIFICATION, true);
+            args.putParcelable(Constants.Notifications.NOSTRA_NOTIFICATION, Parcels.wrap(notification));
+        }
+
+        Intent intent = new Intent(context, HowToPlayActivity.class);
+        intent.putExtras(args);
+        return intent;
+    }
 }

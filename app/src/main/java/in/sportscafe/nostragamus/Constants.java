@@ -48,6 +48,7 @@ public interface Constants {
         String SCREEN_WEB_VIEW = "webView";
         String SCREEN_EDIT_ANSWER = "editAnswer";
         String SCREEN_NEW_CHALLENGE_GAMES = "newChallengeGames"; /* New Challenges Games Screen  */
+        String SCREEN_SLIDES = "slides"; /* How To Play Screen & How to use powerup screen in slide design */
     }
 
     interface SharedKeys {
@@ -395,6 +396,7 @@ public interface Constants {
         String POWERUP_BANK_TRANSFER_SCREEN_DATA = "powerupBankTransferScreenData";
         String IN_APP_NOSTRA_NOTIFICATION_DETAILS = "inAppNostraNotification";
         String COPY_ANSWER_SCREEN_DATA = "copyAnswerScreenData";
+        String SLIDE_ID = "SlideId";
     }
 
     interface DateFormats {
@@ -709,6 +711,7 @@ public interface Constants {
         String MATCHES_TIMELINE = "MatchesTimeline";
         String CONTEST_DETAILS = "ContestDetails";
         String POOL_CONTEST_REWARD_CALCULATION = "poolContestRewardCalculation";
+        String HOW_TO_PLAY = "HowToPlay";
         String SELECT_PAYMENT_MODE = "selectPaymentMode";
     }
 
@@ -975,6 +978,13 @@ public interface Constants {
         String ONGOING = "ongoing";
         String COMPLETED = "completed";
         String LIVE = "live";
+    }
+
+    interface SlideScreenNames {
+        /* Synced with server as they come in api response */
+        String HOW_TO_PLAY = "how_to_play";
+        String HOW_TO_USE_POWERUP_BANK = "how_to_use_powerup_bank";
+
     }
 
     interface PredictionPoints {

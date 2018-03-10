@@ -8,6 +8,8 @@ import in.sportscafe.nostragamus.module.challengeCompleted.dto.CompletedResponse
 import in.sportscafe.nostragamus.module.challengeRewards.dto.RewardsResponse;
 import in.sportscafe.nostragamus.module.challengeRules.dto.RulesResponse;
 import in.sportscafe.nostragamus.module.common.ApiResponse;
+import in.sportscafe.nostragamus.module.navigation.help.howtoplay.dto.HowToPlayDetails;
+import in.sportscafe.nostragamus.module.navigation.help.howtoplay.dto.HowToPlayResponse;
 import in.sportscafe.nostragamus.module.navigation.wallet.addMoney.dto.AddMoneyPaymentCouponRequest;
 import in.sportscafe.nostragamus.module.navigation.wallet.addMoney.dto.AddMoneyPaymentCouponResponse;
 import in.sportscafe.nostragamus.module.navigation.wallet.addMoney.dto.CashFreeGenerateOrderRequest;
@@ -397,7 +399,7 @@ public interface NostragamusService {
     @POST("v3/game/users/ticket")
     Call<ApiResponse> sendErrorReport(@Body SubmitReportRequest request);
 
-    @GET("v1/game/users/banners")
+    @GET("v3/game/users/banners")
     Call<BannerResponse> getBannerData();
 
     @GET("v3/game/users/getMatchContests")
@@ -411,4 +413,7 @@ public interface NostragamusService {
 
     @GET("v1/wallet/getOrderStatus")
     Call<VerifyPaymentResponse> verifyPayment(@Query("order_id") String orderId);
+
+    @GET("v3/game/slides")
+    Call<HowToPlayResponse> getHowToPlayData(@Query("slide_id") String slideId);
 }

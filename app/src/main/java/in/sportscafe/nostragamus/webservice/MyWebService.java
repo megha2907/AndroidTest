@@ -11,6 +11,8 @@ import in.sportscafe.nostragamus.module.challengeCompleted.dto.CompletedResponse
 import in.sportscafe.nostragamus.module.challengeRewards.dto.RewardsResponse;
 import in.sportscafe.nostragamus.module.challengeRules.dto.RulesResponse;
 import in.sportscafe.nostragamus.module.common.ApiResponse;
+import in.sportscafe.nostragamus.module.navigation.help.howtoplay.dto.HowToPlayDetails;
+import in.sportscafe.nostragamus.module.navigation.help.howtoplay.dto.HowToPlayResponse;
 import in.sportscafe.nostragamus.module.navigation.wallet.addMoney.dto.AddMoneyPaymentCouponRequest;
 import in.sportscafe.nostragamus.module.navigation.wallet.addMoney.dto.AddMoneyPaymentCouponResponse;
 import in.sportscafe.nostragamus.module.navigation.wallet.addMoney.dto.CashFreeGenerateOrderRequest;
@@ -463,5 +465,9 @@ public class MyWebService extends AbstractWebService<NostragamusService> {
 
     public Call<VerifyPaymentResponse> verifyPayment(String orderId) {
         return mNostragamusService.verifyPayment(orderId);
+    }
+
+    public Call<HowToPlayResponse> getHowToPlayData(String slideId) {
+        return mNostragamusService.getHowToPlayData(slideId);
     }
 }

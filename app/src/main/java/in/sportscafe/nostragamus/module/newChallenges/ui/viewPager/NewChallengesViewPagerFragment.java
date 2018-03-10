@@ -1,44 +1,39 @@
 package in.sportscafe.nostragamus.module.newChallenges.ui.viewPager;
 
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.animation.LayoutTransition;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SnapHelper;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.view.animation.TranslateAnimation;
 import android.widget.LinearLayout;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.jeeva.android.BaseFragment;
 import com.jeeva.android.Log;
 
-
 import org.parceler.Parcels;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.R;
-import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
-import in.sportscafe.nostragamus.module.contest.adapter.ContestAdapterListener;
-import in.sportscafe.nostragamus.module.contest.dto.Contest;
-import in.sportscafe.nostragamus.module.contest.dto.JoinContestData;
-import in.sportscafe.nostragamus.module.contest.ui.DetailScreensLaunchRequest;
+import in.sportscafe.nostragamus.module.common.NostraSnapHelper;
 import in.sportscafe.nostragamus.module.customViews.CustomSnackBar;
 import in.sportscafe.nostragamus.module.newChallenges.adapter.BannerAdapterListener;
 import in.sportscafe.nostragamus.module.newChallenges.adapter.BannerRecyclerAdapter;
@@ -53,7 +48,6 @@ import in.sportscafe.nostragamus.module.newChallenges.ui.matches.NewChallengesMa
 import in.sportscafe.nostragamus.module.nostraHome.ui.NostraHomeActivityListener;
 import in.sportscafe.nostragamus.module.notifications.NostraNotification;
 import in.sportscafe.nostragamus.module.notifications.NotificationHelper;
-import in.sportscafe.nostragamus.webservice.BannerResponse;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -93,7 +87,8 @@ public class NewChallengesViewPagerFragment extends BaseFragment {
         mRecyclerView = (RecyclerView) rootView.findViewById(R.id.challenge_recycler);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(mRecyclerView.getContext(), LinearLayoutManager.VERTICAL, false));
         mRecyclerView.setHasFixedSize(true);
-        mRecyclerView.setNestedScrollingEnabled(false);
+        mRecyclerView.setPadding(0, getResources().getDimensionPixelSize(R.dimen.dim_6),
+                0, getResources().getDimensionPixelSize(R.dimen.dim_6));
     }
 
     @Override
@@ -158,11 +153,13 @@ public class NewChallengesViewPagerFragment extends BaseFragment {
 
         if (bannerResponseDataList != null && bannerResponseDataList.size() > 0 && getView() != null) {
             RecyclerView mRcvHorizontal = (RecyclerView) getView().findViewById(R.id.challenges_rcv_horizontal);
-            mRcvHorizontal.setVisibility(View.VISIBLE);
             mRcvHorizontal.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
             mRcvHorizontal.setNestedScrollingEnabled(false);
             bannerRecyclerAdapter = new BannerRecyclerAdapter(bannerResponseDataList, getContext(), getBannerAdapterListener());
             mRcvHorizontal.setAdapter(bannerRecyclerAdapter);
+
+            SnapHelper snapHelper = new NostraSnapHelper();
+            snapHelper.attachToRecyclerView(mRcvHorizontal);
         } else {
             hideBanners();
         }
@@ -175,8 +172,16 @@ public class NewChallengesViewPagerFragment extends BaseFragment {
 
     public void showAdSection() {
         if (getView() != null) {
-            LinearLayout horizontalLayout = (LinearLayout) getView().findViewById(R.id.challenges_ads_layout);
+            final LinearLayout horizontalLayout = (LinearLayout) getView().findViewById(R.id.challenges_ads_layout);
             horizontalLayout.setVisibility(View.VISIBLE);
+
+            RecyclerView rvChallenge = (RecyclerView) getView().findViewById(R.id.challenge_recycler);
+
+            if (rvChallenge != null && rvChallenge.getLayoutTransition() != null) {
+                rvChallenge.setPadding(0, 0, 0, getResources().getDimensionPixelSize(R.dimen.dim_6));
+                rvChallenge.getLayoutTransition().enableTransitionType(LayoutTransition.APPEARING);
+            }
+
         }
     }
 
@@ -230,8 +235,7 @@ public class NewChallengesViewPagerFragment extends BaseFragment {
                             }
                             onNewChallengesClicked(bundle);
 
-                        } else if (screenName.equalsIgnoreCase(Constants.Notifications.SCREEN_NEW_CHALLENGES_GAMES)||
-                                screenName.equalsIgnoreCase(Constants.Notifications.SCREEN_NEW_CHALLENGE_GAMES)) {
+                        } else if (screenName.equalsIgnoreCase(Constants.Notifications.SCREEN_NEW_CHALLENGES_GAMES)) {
                             startActivity(notificationHelper.getNewChallengeMatchesScreenIntent(getContext(), notification));
 
                         } else if (screenName.equalsIgnoreCase(Constants.Notifications.SCREEN_IN_PLAY_MATCHES)) {
@@ -279,6 +283,8 @@ public class NewChallengesViewPagerFragment extends BaseFragment {
 
                         } else if (screenName.equalsIgnoreCase(Constants.Notifications.SCREEN_WEB_VIEW)) {
                             startActivity(notificationHelper.getWebViewScreenIntent(getContext(), notification));
+                        } else if (screenName.equalsIgnoreCase(Constants.Notifications.SCREEN_SLIDES)) {
+                            startActivity(notificationHelper.getSlidesScreenIntent(getContext(), notification));
                         }
 
                     }

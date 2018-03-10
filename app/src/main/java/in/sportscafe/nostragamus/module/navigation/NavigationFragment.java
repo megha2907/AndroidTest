@@ -69,7 +69,6 @@ public class NavigationFragment extends NostraBaseFragment implements View.OnCli
         view.findViewById(R.id.navigation_profile_layout).setOnClickListener(this);
         view.findViewById(R.id.navigation_wallet_layout).setOnClickListener(this);
         view.findViewById(R.id.navigation_powerup_bank_layout).setOnClickListener(this);
-        view.findViewById(R.id.navigation_store_layout).setOnClickListener(this);
         view.findViewById(R.id.navigation_whats_new_layout).setOnClickListener(this);
 //        view.findViewById(R.id.navigation_submit_question_layout).setOnClickListener(this);
         view.findViewById(R.id.navigation_help_layout).setOnClickListener(this);
@@ -106,10 +105,8 @@ public class NavigationFragment extends NostraBaseFragment implements View.OnCli
                 if (getView() != null) {
                     getView().findViewById(R.id.navigation_wallet_layout).setVisibility(View.GONE);
                     getView().findViewById(R.id.navigation_refer_layout).setVisibility(View.GONE);
-                    getView().findViewById(R.id.navigation_store_layout).setVisibility(View.GONE);
                     getView().findViewById(R.id.navigation_refer_separator).setVisibility(View.GONE);
                     getView().findViewById(R.id.navigation_powerup_bank_separator).setVisibility(View.GONE);
-                    getView().findViewById(R.id.navigation_store_separator).setVisibility(View.GONE);
 
                 /*change Earn More Money text to Earn More Powerups in playstore app */
                     TextView navEarnMore = (TextView) getView().findViewById(R.id.navigation_earn_more_tv_two);
@@ -200,11 +197,6 @@ public class NavigationFragment extends NostraBaseFragment implements View.OnCli
                 onPowerUpsClicked();
                 break;
 
-            case R.id.navigation_store_layout:
-                NostragamusAnalytics.getInstance().trackClickEvent(Constants.AnalyticsCategory.NAVIGATION_SCREEN, Constants.AnalyticsClickLabels.STORE);
-                onStoreClicked();
-                break;
-
             case R.id.navigation_whats_new_layout:
                 NostragamusAnalytics.getInstance().trackClickEvent(Constants.AnalyticsCategory.NAVIGATION_SCREEN, Constants.AnalyticsClickLabels.WHATS_NEW);
                 onWhatsNewClicked();
@@ -235,13 +227,6 @@ public class NavigationFragment extends NostraBaseFragment implements View.OnCli
                 onUpdateAppClicked();
                 break;
 
-        }
-    }
-
-    private void onStoreClicked() {
-        if (getActivity() != null) {
-            Intent intent = new Intent(getActivity(), StoreActivity.class);
-            startActivity(intent);
         }
     }
 

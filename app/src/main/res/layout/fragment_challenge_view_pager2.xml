@@ -23,16 +23,17 @@
                 android:id="@+id/challenges_ads_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:animateLayoutChanges="true"
                 android:visibility="gone">
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/challenges_rcv_horizontal"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/dim_6"
                     android:layout_marginTop="@dimen/dim_14"
                     android:clipToPadding="false"
-                    android:paddingRight="@dimen/dim_12"
-                    android:visibility="gone"/>
+                    android:paddingRight="@dimen/dim_6" />
 
             </LinearLayout>
 
@@ -40,9 +41,9 @@
                 android:id="@+id/challenge_recycler"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:clipToPadding="false"
                 android:paddingBottom="@dimen/dim_6"
                 android:paddingTop="@dimen/dim_6"
+                android:animateLayoutChanges="true"
                 app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
 

@@ -11,6 +11,7 @@ import org.parceler.Parcels;
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.NostragamusActivity;
+import in.sportscafe.nostragamus.module.navigation.help.howtoplay.HowToPlayActivity;
 import in.sportscafe.nostragamus.module.navigation.powerupbank.earnmorepowerups.EarnMorePowerUpActivity;
 import in.sportscafe.nostragamus.module.navigation.powerupbank.powerupbanktransaction.PBTransactionActivity;
 import in.sportscafe.nostragamus.module.navigation.referfriends.ReferFriendActivity;
@@ -92,6 +93,17 @@ public class PowerUpBankActivity extends NostragamusActivity implements PowerUpB
     public void onStoreClicked() {
         if (getActivity() != null) {
             Intent intent = new Intent(getActivity(), StoreActivity.class);
+            startActivity(intent);
+        }
+    }
+
+    @Override
+    public void onHowToUsePowerUpBankClicked() {
+        if (getActivity() != null) {
+            Bundle args = new Bundle();
+            args.putString(Constants.BundleKeys.SLIDE_ID, Constants.SlideScreenNames.HOW_TO_USE_POWERUP_BANK);
+            Intent intent = new Intent(getActivity(), HowToPlayActivity.class);
+            intent.putExtras(args);
             startActivity(intent);
         }
     }
