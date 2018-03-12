@@ -202,7 +202,7 @@ public class DGTextFragment extends NostragamusFragment implements View.OnClickL
 
         Typeface faceBold = Typefaces.get(getContext(), "fonts/lato/Lato-Bold.ttf");
 
-        if (name.equalsIgnoreCase("After the game finishes, correct predictions get +10 points%, wrong ones -4 points&. Prediction now to see how you score!")) {
+        if (name.equalsIgnoreCase("After the game finishes, correct predictions get +10 points%, wrong ones -4 points&. Predict now to see how you score!")) {
 
             int startIndex = name.indexOf("+");
             int endIndex = name.indexOf("%");
