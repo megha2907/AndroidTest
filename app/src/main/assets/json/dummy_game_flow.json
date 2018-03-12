@@ -151,7 +151,7 @@
   },
   {
     "id":12,
-    "name": "After the game finishes, correct predictions get +10 points%, wrong ones -4 points&. Predict now to see how you score!",
+    "name": "After the game finishes, correct predictions get +10 points%, wrong ones get -4 points&. Predict now to see how you score!",
     "textType": "subTopText",
     "animation": {
       "start": 0,
