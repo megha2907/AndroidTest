@@ -87,6 +87,7 @@ public class NewChallengesViewPagerFragment extends BaseFragment {
         mRecyclerView = (RecyclerView) rootView.findViewById(R.id.challenge_recycler);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(mRecyclerView.getContext(), LinearLayoutManager.VERTICAL, false));
         mRecyclerView.setHasFixedSize(true);
+        mRecyclerView.setNestedScrollingEnabled(false);
         mRecyclerView.setPadding(0, getResources().getDimensionPixelSize(R.dimen.dim_6),
                 0, getResources().getDimensionPixelSize(R.dimen.dim_6));
     }
@@ -154,7 +155,7 @@ public class NewChallengesViewPagerFragment extends BaseFragment {
         if (bannerResponseDataList != null && bannerResponseDataList.size() > 0 && getView() != null) {
             RecyclerView mRcvHorizontal = (RecyclerView) getView().findViewById(R.id.challenges_rcv_horizontal);
             mRcvHorizontal.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
-            mRcvHorizontal.setNestedScrollingEnabled(false);
+
             bannerRecyclerAdapter = new BannerRecyclerAdapter(bannerResponseDataList, getContext(), getBannerAdapterListener());
             mRcvHorizontal.setAdapter(bannerRecyclerAdapter);
 
