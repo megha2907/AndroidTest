@@ -149,17 +149,25 @@ public class OthersAnswersAdapter extends Adapter<Match, OthersAnswersAdapter.Vi
             holder.mTvMatchStage.setText(match.getStage());
         }
 
-        holder.mTvPartyAName.setText(match.getParties().get(0).getPartyName());
-        holder.mTvPartyBName.setText(match.getParties().get(1).getPartyName());
+        if (match.getParties() == null) {
+            holder.mTvOnePartyName.setText(match.getTopics().getTopicName());
+            holder.mIvOnePartyImage.setImageUrl(match.getTopics().getTopicUrl());
+            holder.mLlMultiParty.setVisibility(View.GONE);
+            holder.mLlOneParty.setVisibility(View.VISIBLE);
+            holder.mTvOnePartyDate.setText(holder.mTvDate.getText().toString());
+            holder.mTvOnePartyMatchStage.setText(match.getStage());
 
-        holder.mIvPartyAPhoto.setImageUrl(
-                match.getParties().get(0).getPartyImageUrl()
-        );
+        } else {
+            holder.mTvPartyAName.setText(match.getParties().get(0).getPartyName());
+            holder.mTvPartyBName.setText(match.getParties().get(1).getPartyName());
+            holder.mIvPartyAPhoto.setImageUrl(
+                    match.getParties().get(0).getPartyImageUrl()
+            );
 
-        holder.mIvPartyBPhoto.setImageUrl(
-                match.getParties().get(1).getPartyImageUrl()
-        );
-
+            holder.mIvPartyBPhoto.setImageUrl(
+                    match.getParties().get(1).getPartyImageUrl()
+            );
+        }
 
         if (null == match.getResult() || match.getResult().isEmpty()) {
             holder.mTvMatchResult.setVisibility(View.GONE);
@@ -170,7 +178,12 @@ public class OthersAnswersAdapter extends Adapter<Match, OthersAnswersAdapter.Vi
 
         } else {
             holder.mTvMatchResult.setVisibility(View.VISIBLE);
-            holder.mTvMatchResult.setText(match.getStage() + " - " + match.getResult());
+
+            if (match.getParties() == null) {
+                holder.mTvOnePartyMatchResult.setText(match.getResult());
+            } else {
+                holder.mTvMatchResult.setText(match.getStage() + " - " + match.getResult());
+            }
         }
 
         holder.mBtnMatchPoints.setText(String.valueOf(match.getAvgMatchPoints().intValue()));
@@ -223,6 +236,15 @@ public class OthersAnswersAdapter extends Adapter<Match, OthersAnswersAdapter.Vi
         RelativeLayout mRlMatchPoints;
         TextView mTvMatchPointsTxt;
 
+        LinearLayout mLlMultiParty;
+
+        LinearLayout mLlOneParty;
+        HmImageView mIvOnePartyImage;
+        TextView mTvOnePartyName;
+        TextView mTvOnePartyDate;
+        TextView mTvOnePartyMatchStage;
+        TextView mTvOnePartyMatchResult;
+
         RelativeLayout mRlAvgMatchPoints;
         TextView mTvAvgMatchPoints;
         RelativeLayout mRlHighestMatchPoints;
@@ -261,6 +283,16 @@ public class OthersAnswersAdapter extends Adapter<Match, OthersAnswersAdapter.Vi
             mRlHighestMatchPoints = (RelativeLayout) V.findViewById(R.id.schedule_row_rl_highest_score);
             mRlMatchPoints = (RelativeLayout) V.findViewById(R.id.schedule_row_rl_my_score);
             mTvMatchPointsTxt = (TextView) V.findViewById(R.id.schedule_row_tv_my_score_txt);
+            mLlMultiParty = (LinearLayout) V.findViewById(R.id.schedule_row_ll);
+
+            /* One Party Layout */
+            mLlOneParty = (LinearLayout) V.findViewById(R.id.schedule_row_one_party_ll);
+            mIvOnePartyImage = (HmImageView) V.findViewById(R.id.match_one_party_1_imgView);
+            mTvOnePartyName = (TextView) V.findViewById(R.id.match_one_party_1_textView);
+            mTvOnePartyDate = (TextView) V.findViewById(R.id.result_one_party_match_date_time_textView);
+            mTvOnePartyMatchStage = (TextView) V.findViewById(R.id.result_one_party_match_stage_textView);
+            mTvOnePartyMatchResult = (TextView) V.findViewById(R.id.result_one_party_match_result_textView);
+
         }
     }
 

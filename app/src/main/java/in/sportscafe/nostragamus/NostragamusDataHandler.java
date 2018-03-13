@@ -387,6 +387,15 @@ public class NostragamusDataHandler extends AbstractDataHandler implements Const
         setSharedStringData(SharedKeys.DISCLAIMER_TEXT, disclaimerText);
     }
 
+    public void setShowFAQ(boolean showFAQ) {
+        setSharedBooleanData(SharedKeys.SHOW_FAQ, showFAQ);
+    }
+
+    public boolean isShowFAQ() {
+        return getSharedBooleanData(SharedKeys.SHOW_FAQ, false);
+    }
+
+
     public void setIsPaymentDetailsShownAtHome(boolean isShownOnHome) {
         setSharedBooleanData(SharedKeys.PAYMENT_DETAILS_SCREEN_SHOWN_ONCE_ON_HOME, isShownOnHome);
     }

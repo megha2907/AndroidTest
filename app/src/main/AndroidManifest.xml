@@ -709,17 +709,21 @@
         <activity
             android:name="com.freshchat.consumer.sdk.activity.CategoryListActivity"
             android:theme="@style/MyCustomTheme"
-            tools:replace="android:theme"/>
+            tools:replace="android:theme"
+            android:screenOrientation="portrait"/>
 
         <activity
             android:name="com.freshchat.consumer.sdk.activity.ArticleListActivity"
             android:windowSoftInputMode="adjustResize"
             android:theme="@style/MyCustomTheme"
-            tools:replace="android:theme"/>
+            tools:replace="android:theme"
+            android:screenOrientation="portrait"/>
 
         <activity
             android:name="com.freshchat.consumer.sdk.activity.ArticleDetailActivity"
-            android:theme="@style/Theme.Freshchat.SelectedTheme" />
+            android:theme="@style/MyCustomTheme"
+            tools:replace="android:theme"
+            android:screenOrientation="portrait"/>
 
         <activity
             android:name="com.freshchat.consumer.sdk.activity.InterstitialActivity"
