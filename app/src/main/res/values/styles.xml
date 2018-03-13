@@ -460,6 +460,7 @@
     <style name="CustomFAQCategoryListItemStyle" parent="Widget.Freshchat.ChannelListItem">
         <item name="android:background">@drawable/list_divider</item>
         <item name="android:layout_margin">0dp</item>
+        <item name="android:padding">0dp</item>
     </style>
 
     <style name="CustomFAQListItemStyle" parent="Widget.Freshchat.ChannelListItem">

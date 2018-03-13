@@ -1,8 +1,8 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
 
 
-    <item android:left="@dimen/dim_6"
-        android:right="@dimen/dim_6">
+    <item android:left="@dimen/dim_10"
+        android:right="@dimen/dim_10">
         <shape android:shape="rectangle">
             <solid android:color="@color/line_separator"/>
         </shape>
