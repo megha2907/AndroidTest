@@ -406,7 +406,7 @@
         <item name="freshchatFAQListEmptyTextStyle">@style/FreshChatFAQTitle</item>
         <item name="freshchatFAQCategoryDescriptionTextStyle">@style/FreshChatFAQSubTitle</item>
         <item name="freshchatFAQCategoryAltIconStyle">@style/FreshChatFAQCategoryIcon</item>
-
+        <item name="android:windowAnimationStyle">@style/NostraEntryExitAnimation</item>
     </style>
 
     <style name="MyActionBar" parent="@style/Widget.AppCompat.Light.ActionBar.Solid.Inverse">
@@ -506,6 +506,13 @@
         <item name="android:layout_marginTop">@dimen/dim_16</item>
         <item name="android:layout_marginBottom">@dimen/dim_16</item>
         <item name="android:layout_marginRight">@dimen/dim_18</item>
+    </style>
+
+    <style name="NostraEntryExitAnimation" parent="@android:style/Animation.Activity">
+        <item name="android:activityOpenEnterAnimation">@anim/slide_left_from_right</item>
+        <item name="android:activityOpenExitAnimation">@anim/activity_anim_stay</item>
+        <item name="android:activityCloseEnterAnimation">@anim/activity_anim_stay</item>
+        <item name="android:activityCloseExitAnimation">@anim/slide_right_from_right</item>
     </style>
 
 </resources>
