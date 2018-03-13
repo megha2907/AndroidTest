@@ -239,7 +239,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal|bottom"
                     android:gravity="left"
-                    android:text="Withdrawals are generally status within 48 hours of initiation"
+                    android:text="Withdrawals are generally completed within 48 hours of initiation"
                     android:textColor="@color/white_909090"
                     android:textSize="@dimen/sp_13"
                     app:typeface="lato_regular"

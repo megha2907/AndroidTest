@@ -19,6 +19,7 @@ import java.util.Map;
 
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Nostragamus;
+import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.NostragamusActivity;
 import in.sportscafe.nostragamus.module.navigation.help.dummygame.DummyGameActivity;
@@ -82,14 +83,19 @@ public class HelpActivity extends NostragamusActivity implements HelpFragmentLis
 
     @Override
     public void onFaqClicked() {
-        navigateToWebView(Constants.WebPageUrls.FAQ, "FAQ");
 
-//        FaqOptions faqOptions = new FaqOptions()
-//                .showFaqCategoriesAsGrid(false)
-//                .showContactUsOnAppBar(false)
-//                .showContactUsOnFaqScreens(true)
-//                .showContactUsOnFaqNotHelpful(false);
-//        Freshchat.showFAQs(getApplicationContext(), faqOptions);
+        boolean isShowFAQ = NostragamusDataHandler.getInstance().isShowFAQ();
+
+        if (isShowFAQ) {
+            FaqOptions faqOptions = new FaqOptions()
+                    .showFaqCategoriesAsGrid(false)
+                    .showContactUsOnAppBar(false)
+                    .showContactUsOnFaqScreens(false)
+                    .showContactUsOnFaqNotHelpful(false);
+            Freshchat.showFAQs(getApplicationContext(), faqOptions);
+        } else {
+            navigateToWebView(Constants.WebPageUrls.FAQ, "FAQ");
+        }
 
     }
 

@@ -109,7 +109,7 @@ public class NewChallengesViewPagerFragment extends BaseFragment {
         if (mSportsTab != null) {
             switch (mSportsTab.getSportsId()) {
                 case SportsDataProvider.FILTER_ALL_SPORTS_ID:
-                    scrollToChallenge();
+                    showAdSection();
                     break;
             }
         }
@@ -321,9 +321,6 @@ public class NewChallengesViewPagerFragment extends BaseFragment {
         }
     }
 
-    private void scrollToChallenge() {
-
-    }
 
     @NonNull
     private NewChallengeAdapterListener getChallengeAdapterListener() {
