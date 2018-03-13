@@ -226,6 +226,7 @@ public class NewChallengesFragment extends NostraBaseFragment implements View.On
 
             TabLayout challengesTabLayout = (TabLayout) getView().findViewById(R.id.challenge_tabs);
             final ViewPager challengesViewPager = (ViewPager) getView().findViewById(R.id.challenge_viewPager);
+            challengesViewPager.setOffscreenPageLimit(4);
 
             if (BuildConfig.IS_ACL_VERSION) {
                 challengesTabLayout.setTabMode(TabLayout.MODE_FIXED);
@@ -313,39 +314,6 @@ public class NewChallengesFragment extends NostraBaseFragment implements View.On
 
                 /* If launched from notification, the handle further flow */
                 handleNotification(challengesViewPager, fragmentList);
-
-
-                final ViewPager.OnPageChangeListener pageChangeListener = new ViewPager.OnPageChangeListener() {
-                    @Override
-                    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-                    }
-
-                    @Override
-                    public void onPageSelected(int position) {
-                        if (position == 0) {
-                            NewChallengesViewPagerFragment sampleFragment = (NewChallengesViewPagerFragment)
-                                    ((NewChallengesViewPagerAdapter) challengesViewPager.getAdapter()).getItem(position);
-                            if (sampleFragment != null) {
-                                sampleFragment.showAdSection();
-                            }
-                        }
-                    }
-
-                    @Override
-                    public void onPageScrollStateChanged(int state) {
-
-                    }
-                };
-
-                challengesViewPager.setOnPageChangeListener(pageChangeListener);
-                challengesViewPager.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        pageChangeListener.onPageSelected(0);
-                    }
-                });
-
 
             } else {
                 showEmptyScreen(challengesViewPager, challengesTabLayout, sportsTabList);

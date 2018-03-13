@@ -132,6 +132,7 @@ public interface Constants {
         String EDITING_POWERUP_IN_EDIT_ANSWER_FIRST_TIME = "editingPowerupInEditAnswerForstTime";
         String POWERUP_TRANSFER_FROM_BANK_ATTEMPTED = "powerupTransferFromBankAttempted";
         String POWERUP_TRANSFER_FROM_BANK_SCREEN_SHOWN = "powerupTransferScreenShown";
+        String SHOW_FAQ = "showFAQ";
     }
 
     interface Alerts {

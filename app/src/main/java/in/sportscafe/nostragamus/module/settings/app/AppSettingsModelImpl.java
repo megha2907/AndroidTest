@@ -70,6 +70,12 @@ public class AppSettingsModelImpl implements AppSettingsModel {
             dataHandler.setAskFriendText(settingsDetails.getAskFriendText());
             dataHandler.setDisclaimerText(settingsDetails.getDisclaimerText());
 
+            if (settingsDetails.isShowFaq()!=null && settingsDetails.isShowFaq()) {
+                dataHandler.setShowFAQ(true);
+            }else {
+                dataHandler.setShowFAQ(false);
+            }
+
 
             /* New App Update Code */
 

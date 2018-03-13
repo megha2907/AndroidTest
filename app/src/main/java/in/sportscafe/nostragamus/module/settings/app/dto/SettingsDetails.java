@@ -36,6 +36,9 @@ public class SettingsDetails {
     @SerializedName("disclaimer_text")
     private String disclaimerText;
 
+    @SerializedName("show_faq")
+    private Boolean showFaq;
+
     @SerializedName("forceUpdateVersion")
     public Version getForceUpdateVersion() {
         return forceUpdateVersion;
@@ -126,4 +129,13 @@ public class SettingsDetails {
     public void setDisclaimerText(String disclaimerText) {
         this.disclaimerText = disclaimerText;
     }
+
+    public Boolean isShowFaq() {
+        return showFaq;
+    }
+
+    public void setShowFaq(Boolean showFaq) {
+        this.showFaq = showFaq;
+    }
+
 }
