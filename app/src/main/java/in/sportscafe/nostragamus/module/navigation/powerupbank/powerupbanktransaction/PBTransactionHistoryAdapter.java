@@ -21,8 +21,6 @@ import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.WordUtils;
 import in.sportscafe.nostragamus.module.navigation.powerupbank.powerupbanktransaction.dto.PBTransactionHistory;
 import in.sportscafe.nostragamus.module.navigation.powerupbank.powerupbanktransaction.dto.TransactionTypeInfo;
-import in.sportscafe.nostragamus.module.navigation.wallet.WalletHelper;
-import in.sportscafe.nostragamus.utils.AnimationHelper;
 import in.sportscafe.nostragamus.utils.timeutils.TimeUtils;
 
 /**
@@ -97,10 +95,44 @@ public class PBTransactionHistoryAdapter extends RecyclerView.Adapter<PBTransact
                 } else if (type.equalsIgnoreCase(Constants.TransactionHistory.CHALLENGE)) {
                     populateChallengeDetails(holder, pbTransactionHistory);
 
-                }else if (type.equalsIgnoreCase(Constants.TransactionHistory.STORE)) {
+                } else if (type.equalsIgnoreCase(Constants.TransactionHistory.STORE)) {
                     populateStoreDetails(holder, pbTransactionHistory);
 
+                } else if (type.equalsIgnoreCase(Constants.TransactionHistory.QUESTION_SUBMITTED)) {
+                    populateQuestionSubmittedDetails(holder, pbTransactionHistory);
+
+                } else {
+                    populateGenericDetails(holder, pbTransactionHistory);
                 }
+            } else {
+                populateGenericDetails(holder, pbTransactionHistory);
+            }
+        }
+    }
+
+    /**
+     * A generic method in case unknown type-param received
+     * @param holder
+     * @param pbTransactionHistory
+     */
+    private void populateGenericDetails(PBTransactionViewHolder holder, PBTransactionHistory pbTransactionHistory) {
+        if (pbTransactionHistory != null) {
+            holder.mTvReferralTitle.setText("Received powerups from Nostragamus");
+            holder.mTvReferralWinnings.setVisibility(View.GONE);
+            holder.powerUpHistoryTv.setText(" to your Bank");
+            showOrHidePowerUps(holder, pbTransactionHistory);
+        }
+    }
+
+    private void populateQuestionSubmittedDetails(PBTransactionViewHolder holder, PBTransactionHistory pbTransactionHistory) {
+        if (pbTransactionHistory != null) {
+            TransactionTypeInfo transactionTypeInfo = pbTransactionHistory.getTransactionTypeInfo();
+            if (transactionTypeInfo!=null) {
+                String str = (!TextUtils.isEmpty(transactionTypeInfo.getName()) ? transactionTypeInfo.getName() : "powerups");
+                holder.mTvReferralTitle.setText("Received " + str + " from Nostragamus");
+                holder.mTvReferralWinnings.setVisibility(View.GONE);
+                holder.powerUpHistoryTv.setText(" to your Bank");
+                showOrHidePowerUps(holder, pbTransactionHistory);
             }
         }
     }

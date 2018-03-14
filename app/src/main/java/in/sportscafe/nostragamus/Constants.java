@@ -893,6 +893,7 @@ public interface Constants {
         String CHALLENGE = "challenge";
         String REFERRAL = "referral";
         String STORE = "Store";
+        String QUESTION_SUBMITTED = "question_submitted";
     }
 
     interface ContestDetailsTabs {
