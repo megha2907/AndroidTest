@@ -154,8 +154,7 @@
                     android:id="@+id/powerups_iv_2x"
                     android:layout_width="@dimen/dp_40"
                     android:layout_height="@dimen/dp_40"
-                    android:onClick="onClick"
-                    android:src="@drawable/dg_powerup_doubler_icn"/>
+                    android:src="@drawable/powerup_doubler_without_bg"/>
 
                 <!--</FrameLayout>-->
 
@@ -205,8 +204,7 @@
                 <ImageView
                     android:layout_width="@dimen/dp_40"
                     android:layout_height="@dimen/dp_40"
-                    android:onClick="onClick"
-                    android:src="@drawable/dg_powerup_no_neg_icn"/>
+                    android:src="@drawable/powerup_no_neg_without_bg"/>
 
                 <!--</FrameLayout>-->
 
@@ -255,8 +253,7 @@
                 <ImageView
                     android:layout_width="@dimen/dp_40"
                     android:layout_height="@dimen/dp_40"
-                    android:onClick="onClick"
-                    android:src="@drawable/dg_powerup_audience_poll_icn"/>
+                    android:src="@drawable/powerup_audience_poll_without_bg"/>
 
                 <!--</FrameLayout>-->
 

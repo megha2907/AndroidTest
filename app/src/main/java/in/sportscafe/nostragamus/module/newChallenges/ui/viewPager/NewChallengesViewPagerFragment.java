@@ -159,6 +159,10 @@ public class NewChallengesViewPagerFragment extends BaseFragment {
             bannerRecyclerAdapter = new BannerRecyclerAdapter(bannerResponseDataList, getContext(), getBannerAdapterListener());
             mRcvHorizontal.setAdapter(bannerRecyclerAdapter);
 
+            if (mRcvHorizontal.getOnFlingListener() != null) {
+                mRcvHorizontal.setOnFlingListener(null);
+            }
+
             SnapHelper snapHelper = new NostraSnapHelper();
             snapHelper.attachToRecyclerView(mRcvHorizontal);
         } else {
