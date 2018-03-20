@@ -121,7 +121,6 @@
                     android:id="@+id/powerups_iv_2x"
                     android:layout_width="@dimen/dp_56"
                     android:layout_height="@dimen/dp_56"
-                    android:onClick="onClick"
                     android:src="@drawable/powerup_doubler_with_bg" />
 
             </FrameLayout>
@@ -179,7 +178,6 @@
                 <ImageView
                     android:layout_width="@dimen/dp_56"
                     android:layout_height="@dimen/dp_56"
-                    android:onClick="onClick"
                     android:src="@drawable/powerup_no_neg_with_bg" />
 
             </FrameLayout>
@@ -236,7 +234,6 @@
                 <ImageView
                     android:layout_width="@dimen/dp_56"
                     android:layout_height="@dimen/dp_56"
-                    android:onClick="onClick"
                     android:src="@drawable/powerup_audience_poll_with_bg" />
 
             </FrameLayout>
