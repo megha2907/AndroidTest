@@ -84,7 +84,7 @@ public class WithdrawWalletMoneyFragment extends BaseFragment implements View.On
                     public void onTextChanged(CharSequence s, int start, int before, int count) {
 
                         if (!TextUtils.isEmpty(s.toString())) {
-                            if (Double.valueOf(s.toString()) > 20 && WalletHelper.getWinningAmount() > 20) {
+                            if (Double.valueOf(s.toString()) > 20 && WalletHelper.getWinningAmount() > 20 && Double.valueOf(s.toString()) <= WalletHelper.getWinningAmount()) {
                                 if (Double.valueOf(s.toString()) < 100) {
                                     receiveAmountTextView.setText("You will receive " + Constants.RUPEE_SYMBOL + String.valueOf(Double.valueOf(s.toString()) - 20));
                                 } else {

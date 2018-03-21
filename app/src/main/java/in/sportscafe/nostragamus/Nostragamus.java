@@ -142,6 +142,9 @@ public class Nostragamus extends Application {
         freshchatConfig.setGallerySelectionEnabled(true);
         Freshchat.getInstance(getApplicationContext()).init(freshchatConfig);
 
+        // Moengage - Opt-out from Location Tracking and GeoFence
+        MoEHelper.getInstance(getApplicationContext()).optOutOfLocationTracking(true);
+        MoEHelper.getInstance(getApplicationContext()).optOutOfGeoFences(true);
     }
 
     @Override
