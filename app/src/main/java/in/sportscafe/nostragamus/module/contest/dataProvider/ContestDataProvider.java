@@ -107,6 +107,8 @@ public class ContestDataProvider {
             }
 
             /* Create a list of unique contest-names (Set will not keep duplicate values) */
+            contestSet.add(ContestFilterHelper.PRIVATE_CONTEST_STR);  // Add private contest
+
             for (Contest contest : contestList) {
                 if (contest.getContestType() != null && !TextUtils.isEmpty(contest.getContestType().getCategoryName())) {
                     contestSet.add(contest.getContestType().getCategoryName());
@@ -115,6 +117,10 @@ public class ContestDataProvider {
 
             /* create list of all contest-types based on contest-names  */
             for (String contestName : contestSet) {
+                if (contestName.equalsIgnoreCase(ContestFilterHelper.PRIVATE_CONTEST_STR)) {
+                    contestTypes.add(getPrivateContestTypeDto());
+                }
+
                 for (Contest contest : contestList) {
                     if (contest.getContestType() != null &&
                             contestName.equalsIgnoreCase(contest.getContestType().getCategoryName())) {
@@ -137,15 +143,28 @@ public class ContestDataProvider {
             });
             
             /* Add joined-contest always at end  */
-            ContestType joinedContestType = new ContestType();
-            joinedContestType.setCategoryName(ContestFilterHelper.JOINED_CONTEST);
-            joinedContestType.setCategoryDesc("These are the contests you've already joined");
-            joinedContestType.setPriority(-1);
+            contestTypes.add(getJoinedContestType());
 
-            contestTypes.add(joinedContestType);
         }
 
         return contestTypes;
+    }
+
+    @NonNull
+    private ContestType getJoinedContestType() {
+        ContestType joinedContestType = new ContestType();
+        joinedContestType.setCategoryName(ContestFilterHelper.JOINED_CONTEST);
+        joinedContestType.setCategoryDesc("These are the contests you've already joined");
+        joinedContestType.setPriority(-1);
+        return joinedContestType;
+    }
+
+    @NonNull
+    private ContestType getPrivateContestTypeDto() {
+        ContestType privateContestType = new ContestType();
+        privateContestType.setCategoryName(ContestFilterHelper.PRIVATE_CONTEST_STR);
+        privateContestType.setPriority(10000);  // Highest priority for Private contest so that it;s always first tab
+        return privateContestType;
     }
 
     public interface ContestDataProviderListener {

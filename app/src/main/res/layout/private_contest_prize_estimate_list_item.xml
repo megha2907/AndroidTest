@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:minHeight="@dimen/dim_80"
+    android:gravity="center_vertical"
+    android:background="@color/black"
+    android:paddingLeft="@dimen/dim_5"
+    android:paddingRight="@dimen/dim_5">
+
+    <com.jeeva.android.widgets.customfont.CustomTextView
+        android:id="@+id/rank_textView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="2"
+        android:layout_gravity="center_vertical"
+        android:textColor="@color/white_dim"
+        android:textSize="@dimen/sp_12"
+        android:text="1st"
+        app:typeface="lato_regular"/>
+
+    <com.jeeva.android.widgets.customfont.CustomTextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:layout_gravity="center_vertical"
+        android:textColor="@color/white_dim"
+        android:textSize="@dimen/sp_12"
+        android:text="-"
+        app:typeface="lato_regular"/>
+
+    <com.jeeva.android.widgets.customfont.CustomEditText
+        android:id="@+id/prizes_editView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="2"
+        android:layout_gravity="center_vertical"
+        android:inputType="number"
+        android:hint="10%"
+        android:textColor="@color/white_dim"
+        android:textSize="@dimen/sp_12"
+        app:typeface="lato_regular"/>
+
+    <com.jeeva.android.widgets.customfont.CustomTextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:layout_gravity="center_vertical"
+        android:textColor="@color/white_dim"
+        android:textSize="@dimen/sp_12"
+        android:text="1%"
+        app:typeface="lato_regular"/>
+
+    <com.jeeva.android.widgets.customfont.CustomTextView
+        android:id="@+id/calculated_amt_textView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="3"
+        android:gravity="right"
+        android:layout_gravity="center_vertical"
+        android:textColor="@color/white_dim"
+        android:textSize="@dimen/sp_12"
+        android:text="1st"
+        app:typeface="lato_regular"/>
+
+
+</LinearLayout>

@@ -8,4 +8,5 @@ public interface InPlayAdapterItemType {
     int CHALLENGE_ITEM = 1;
     int JOINED_CONTEST = 2;
     int HEADLESS_CONTEST = 3;
+    int JOINED_PRIVATE_CONTEST = 4;
 }

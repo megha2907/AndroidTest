@@ -17,6 +17,7 @@ public class JoinContestData {
     private int pseudoRoomId;
     private String contestType;
     private String contestName;
+    private int privateContestEntries;
 
     private boolean shouldScrollContestsInPlay = true;
 
@@ -100,5 +101,11 @@ public class JoinContestData {
         this.contestName = contestName;
     }
 
+    public int getPrivateContestEntries() {
+        return privateContestEntries;
+    }
 
+    public void setPrivateContestEntries(int privateContestEntries) {
+        this.privateContestEntries = privateContestEntries;
+    }
 }

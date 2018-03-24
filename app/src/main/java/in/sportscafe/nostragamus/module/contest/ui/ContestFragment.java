@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
 import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -16,7 +15,6 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.jeeva.android.Log;
@@ -42,15 +40,13 @@ import in.sportscafe.nostragamus.module.contest.dto.ContestType;
 import in.sportscafe.nostragamus.module.contest.dto.JoinContestData;
 import in.sportscafe.nostragamus.module.contest.helper.ContestFilterHelper;
 import in.sportscafe.nostragamus.module.contest.helper.JoinContestHelper;
+import in.sportscafe.nostragamus.module.privateContest.ui.PrivateContestViewPagerFragment;
 import in.sportscafe.nostragamus.module.contest.ui.viewPager.ContestViewPagerAdapter;
 import in.sportscafe.nostragamus.module.contest.ui.viewPager.ContestViewPagerFragment;
 import in.sportscafe.nostragamus.module.customViews.CustomSnackBar;
-import in.sportscafe.nostragamus.module.navigation.referfriends.ReferFriendActivity;
-import in.sportscafe.nostragamus.module.navigation.referfriends.ReferFriendFragmentListener;
 import in.sportscafe.nostragamus.module.navigation.wallet.WalletHelper;
 import in.sportscafe.nostragamus.module.navigation.wallet.addMoney.lowBalance.AddMoneyOnLowBalanceActivity;
 import in.sportscafe.nostragamus.module.newChallenges.helpers.DateTimeHelper;
-import in.sportscafe.nostragamus.module.newChallenges.ui.matches.NewChallengesMatchesFragment;
 import in.sportscafe.nostragamus.module.nostraHome.helper.TimerHelper;
 import in.sportscafe.nostragamus.module.nostraHome.ui.NostraHomeActivity;
 import in.sportscafe.nostragamus.module.popups.timerPopup.TimerFinishDialogHelper;
@@ -197,9 +193,11 @@ public class ContestFragment extends NostraBaseFragment implements View.OnClickL
                 TabLayout contestTabLayout = (TabLayout) getView().findViewById(R.id.contest_tabs);
                 ViewPager challengesViewPager = (ViewPager) getView().findViewById(R.id.contest_viewPager);
 
-                ArrayList<ContestViewPagerFragment> fragmentList = new ArrayList<>();
+                ArrayList<Fragment> fragmentList = new ArrayList<>();
                 ContestFilterHelper filterHelper = new ContestFilterHelper();
                 ContestViewPagerFragment tabFragment = null;
+
+
 
                 /* For all the tabs */
                 for (int temp = 0; temp < contestTypeList.size(); temp++) {
@@ -210,14 +208,27 @@ public class ContestFragment extends NostraBaseFragment implements View.OnClickL
                     if (contestType.getCategoryName().equalsIgnoreCase(ContestFilterHelper.JOINED_CONTEST)) {
                         contestFiltered = filterHelper.getJoinedContests(contestList);
 
-                    } else {
+                    } /*else if (contestType.getCategoryName().equalsIgnoreCase(ContestFilterHelper.PRIVATE_CONTEST_STR)) {
+                        contestFiltered = filterHelper.getPrivateContests(contestList);
+
+                    }*/ else {
                         contestFiltered = filterHelper.getFilteredContestByType(contestType.getCategoryName(), contestList);
                     }
 
                     if (contestFiltered != null) {
-                        int contestCount = getContestCounter(contestFiltered);
-                        if (contestCount > 0) {
-                            contestType.setContestCount(contestCount);
+                        if (contestType.getCategoryName().equalsIgnoreCase(ContestFilterHelper.PRIVATE_CONTEST_STR)) {  // Private contests have different ui fragments
+                            contestType.setContestCount(getContestCounter(contestFiltered));
+
+                            PrivateContestViewPagerFragment privateFragment = new PrivateContestViewPagerFragment();
+                            privateFragment.setContestList(contestFiltered);
+                            privateFragment.setContestScreenData(mContestScreenData);
+                            privateFragment.setContestType(contestType);
+                            privateFragment.setMaxPowerupTransferLimit(maxPowerUpTransferLimit);
+                            fragmentList.add(privateFragment);
+
+                        } else {
+
+                            contestType.setContestCount(getContestCounter(contestFiltered));
                             tabFragment.onContestData(contestFiltered, mContestScreenData);
                             tabFragment.setContestType(contestType);
                             tabFragment.setMaxPowerupTransferLimit(maxPowerUpTransferLimit);
@@ -239,6 +250,9 @@ public class ContestFragment extends NostraBaseFragment implements View.OnClickL
                     }
                 }
 
+                if (fragmentList.size() > 1) {
+                    challengesViewPager.setCurrentItem(1);  // default tab should be non-Private contest tab
+                }
                 setValues(contestList);
 
             } else {

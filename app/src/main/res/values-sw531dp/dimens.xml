@@ -122,6 +122,7 @@
     <dimen name="dim_170">194dp</dimen>
     <dimen name="dim_180">205dp</dimen>
     <dimen name="dim_185">211dp</dimen>
+    <dimen name="dim_190">216dp</dimen>
     <dimen name="dim_250">285dp</dimen>
     <dimen name="dim_240">274dp</dimen>
     <dimen name="dim_230">262dp</dimen>

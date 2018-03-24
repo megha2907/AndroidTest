@@ -26,12 +26,12 @@ import in.sportscafe.nostragamus.module.challengeRules.RulesFragment;
 import in.sportscafe.nostragamus.module.common.NostraBaseFragment;
 import in.sportscafe.nostragamus.module.contest.dto.PoolPrizeEstimationScreenData;
 import in.sportscafe.nostragamus.module.contest.dto.bumper.BumperPrizesEstimationScreenData;
+import in.sportscafe.nostragamus.module.privateContest.ui.PrivateContestInPlayInviteFragment;
 import in.sportscafe.nostragamus.module.contest.ui.bumperContest.BumperPrizesEstimationFragment;
 import in.sportscafe.nostragamus.module.contest.ui.poolContest.PoolPrizesEstimationFragment;
 import in.sportscafe.nostragamus.module.contest.ui.DetailScreensLaunchRequest;
 import in.sportscafe.nostragamus.module.inPlay.dto.InPlayContestDto;
 import in.sportscafe.nostragamus.module.inPlay.ui.InPlayMatchesPagerFragment;
-import in.sportscafe.nostragamus.module.newChallenges.helpers.DateTimeHelper;
 import in.sportscafe.nostragamus.module.user.leaderboard.LeaderBoardFragment;
 
 /**
@@ -129,6 +129,10 @@ public class InPlayContestDetailsFragment extends NostraBaseFragment implements 
                     case DetailScreensLaunchRequest.MATCHES_RULES_SCREEN:
                         mViewPager.setCurrentItem(3);   // Fourth TAB is rules
                         break;
+
+                    case DetailScreensLaunchRequest.MATCHES_INVITE_PRIVATE_CONTEST_SCREEN:
+                        mViewPager.setCurrentItem(4);   // Fifth TAB is Invite tab for Private contests
+                        break;
                 }
             }
         }
@@ -151,6 +155,13 @@ public class InPlayContestDetailsFragment extends NostraBaseFragment implements 
 
             RulesFragment rulesFragment = RulesFragment.newInstance(contestDto.getContestId());
             mViewPagerAdapter.addFragment(rulesFragment, Constants.ContestDetailsTabs.RULES);
+
+            if (!TextUtils.isEmpty(contestDto.getContestMode()) /*&&
+                    contestDto.getContestMode().equalsIgnoreCase(Constants.ContestType.PRIVATE)*/) {
+                PrivateContestInPlayInviteFragment fragment = new PrivateContestInPlayInviteFragment();
+                fragment.setInplayContestDto(contestDto);
+                mViewPagerAdapter.addFragment(fragment, Constants.ContestDetailsTabs.INVITE);
+            }
 
             mViewPager.setAdapter(mViewPagerAdapter);
             mViewPager.setOffscreenPageLimit(4);
@@ -185,6 +196,12 @@ public class InPlayContestDetailsFragment extends NostraBaseFragment implements 
                             // Fourth TAB is Rules
                             NostragamusAnalytics.getInstance().trackScreenShown(Constants.AnalyticsCategory.IN_PLAY_CONTEST_DETAILS,
                                     Constants.AnalyticsClickLabels.RULES);
+                            break;
+
+                        case 4:
+                            // Fifth TAB is Invite
+                            NostragamusAnalytics.getInstance().trackScreenShown(Constants.AnalyticsCategory.IN_PLAY_CONTEST_DETAILS,
+                                    Constants.AnalyticsClickLabels.INVITE_PRIVATE_CONTEST);
                             break;
                     }
                 }

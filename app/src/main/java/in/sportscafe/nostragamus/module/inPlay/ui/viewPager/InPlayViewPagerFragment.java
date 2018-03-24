@@ -28,6 +28,7 @@ import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.contest.contestDetailsAfterJoining.InplayContestDetailsActivity;
 import in.sportscafe.nostragamus.module.contest.dto.ContestScreenData;
+import in.sportscafe.nostragamus.module.contest.dto.ContestType;
 import in.sportscafe.nostragamus.module.contest.dto.JoinContestData;
 import in.sportscafe.nostragamus.module.contest.ui.ContestsActivity;
 import in.sportscafe.nostragamus.module.customViews.CustomSnackBar;
@@ -187,6 +188,11 @@ public class InPlayViewPagerFragment extends BaseFragment {
 
                             if (contestDto.isHeadlessState()) {
                                 listItem.setInPlayAdapterItemType(InPlayAdapterItemType.HEADLESS_CONTEST);
+
+                            } else if (!TextUtils.isEmpty(contestDto.getContestMode()) &&
+                                    contestDto.getContestMode().equalsIgnoreCase(Constants.ContestType.PRIVATE)) {
+                                listItem.setInPlayAdapterItemType(InPlayAdapterItemType.JOINED_PRIVATE_CONTEST);
+
                             } else {
                                 listItem.setInPlayAdapterItemType(InPlayAdapterItemType.JOINED_CONTEST);
                             }
@@ -272,6 +278,11 @@ public class InPlayViewPagerFragment extends BaseFragment {
 
             @Override
             public void onContestModeClicked(Bundle args) {
+                goToNewMatchesTimeline(args);
+            }
+
+            @Override
+            public void onInviteFriendsButtonClicked(Bundle args) {
                 goToNewMatchesTimeline(args);
             }
         };

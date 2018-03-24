@@ -21,7 +21,7 @@ public class ContestDetailsAfterJoinViewPagerAdapter extends FragmentPagerAdapte
 
     private final List<Fragment> mFragmentList = new ArrayList<>();
     private final List<String> mFragmentTitleList = new ArrayList<>();
-    private View[] mTabs = new View[4];
+    private View[] mTabs = new View[5];
     private Context mContext;
 
     public ContestDetailsAfterJoinViewPagerAdapter(FragmentManager manager, Context context) {
