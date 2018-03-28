@@ -372,12 +372,17 @@
         <activity
             android:name=".module.privateContest.ui.createContest.CreatePrivateContestActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateAlwaysHidden"/>
+            android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
-            android:name=".module.privateContest.ui.joinWithInviteCode.JoinPrivateContestWithInviteCodeActivity"
+            android:name=".module.privateContest.ui.joinPrivateContest.findContest.JoinPrivateContestWithInviteCodeActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".module.privateContest.ui.advancePrize.PrivateContestAdvancePrizeStructurePopupActivity"
+            android:name=".module.privateContest.ui.createContest.advancePrize.PrivateContestAdvancePrizeStructurePopupActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.PopupTheme"
+            android:windowSoftInputMode="stateAlwaysHidden" />
+        <activity
+            android:name=".module.privateContest.ui.joinPrivateContest.contestDetails.PrivateContestDetailsActivity"
             android:screenOrientation="portrait" />
 
         <meta-data

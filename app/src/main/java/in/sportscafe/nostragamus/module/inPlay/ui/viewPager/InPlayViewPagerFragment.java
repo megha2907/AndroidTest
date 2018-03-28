@@ -189,8 +189,8 @@ public class InPlayViewPagerFragment extends BaseFragment {
                             if (contestDto.isHeadlessState()) {
                                 listItem.setInPlayAdapterItemType(InPlayAdapterItemType.HEADLESS_CONTEST);
 
-                            } else if (!TextUtils.isEmpty(contestDto.getContestMode()) &&
-                                    contestDto.getContestMode().equalsIgnoreCase(Constants.ContestType.PRIVATE)) {
+                            } else if (!TextUtils.isEmpty(contestDto.getContestType()) &&
+                                    contestDto.getContestType().equalsIgnoreCase(Constants.ContestType.PRIVATE)) {
                                 listItem.setInPlayAdapterItemType(InPlayAdapterItemType.JOINED_PRIVATE_CONTEST);
 
                             } else {

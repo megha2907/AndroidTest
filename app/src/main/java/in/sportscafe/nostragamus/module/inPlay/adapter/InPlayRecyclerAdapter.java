@@ -407,7 +407,7 @@ public class InPlayRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
     private void bindPrivateContestValues(RecyclerView.ViewHolder holder, InPlayContestDto contest) {
         if (contest != null && contest.getMatches() != null) {
-            InPlayJoinedItemViewHolder viewHolder = (InPlayJoinedItemViewHolder) holder;
+            InPlayJoinedPrivateContestItemViewHolder viewHolder = (InPlayJoinedPrivateContestItemViewHolder) holder;
 
             viewHolder.contestTitleTextView.setText(contest.getContestName());
             viewHolder.entryFeeTextView.setText(Constants.RUPEE_SYMBOL + String.valueOf(contest.getEntryFee()));
@@ -659,6 +659,7 @@ public class InPlayRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                         args.putInt(Constants.BundleKeys.SCREEN_LAUNCH_REQUEST,
                                 DetailScreensLaunchRequest.MATCHES_INVITE_PRIVATE_CONTEST_SCREEN);
                         mInPlayAdapterListener.onInviteFriendsButtonClicked(args);
+
                         NostragamusAnalytics.getInstance().trackClickEvent(Constants.AnalyticsCategory.IN_PLAY,
                                 Constants.AnalyticsClickLabels.INVITE_PRIVATE_CONTEST);
                     }
@@ -670,7 +671,11 @@ public class InPlayRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         private Bundle getContestDataBundle() {
             Bundle args = new Bundle();
             InPlayListItem listItem = mItemsList.get(getAdapterPosition());
-            if (listItem != null && listItem.getInPlayAdapterItemType() == InPlayAdapterItemType.JOINED_CONTEST) {
+
+            if (listItem != null &&
+                    (listItem.getInPlayAdapterItemType() == InPlayAdapterItemType.JOINED_CONTEST ||
+                            listItem.getInPlayAdapterItemType() == InPlayAdapterItemType.JOINED_PRIVATE_CONTEST)) {
+
                 InPlayContestDto contestDto = (InPlayContestDto) listItem.getItemData();
                 args.putParcelable(Constants.BundleKeys.INPLAY_CONTEST, Parcels.wrap(contestDto));
             }

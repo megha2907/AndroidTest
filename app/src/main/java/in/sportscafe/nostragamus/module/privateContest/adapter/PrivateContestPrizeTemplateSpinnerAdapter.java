@@ -13,7 +13,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import in.sportscafe.nostragamus.R;
-import in.sportscafe.nostragamus.module.privateContest.dto.PrivateContestPrizeTemplateResponse;
+import in.sportscafe.nostragamus.module.privateContest.ui.createContest.dto.PrivateContestPrizeTemplateResponse;
 
 /**
  * Created by sc on 23/3/18.
@@ -43,7 +43,7 @@ public class PrivateContestPrizeTemplateSpinnerAdapter extends ArrayAdapter<Priv
         return null;
     }
 
-    @NonNull
+ /*   @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         ViewHolder viewHolder;
@@ -63,6 +63,29 @@ public class PrivateContestPrizeTemplateSpinnerAdapter extends ArrayAdapter<Priv
             String name = mPrizeTemplateList.get(position).getName();
             viewHolder.textView.setText(name);
         }
+        return convertView;
+    }*/
+
+    @Override
+    public View getDropDownView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+        ViewHolder viewHolder;
+
+        if (convertView == null) {
+            convertView = LayoutInflater.from(parent.getContext()).inflate(R.layout.private_contest_prize_spinner_item, parent, false);
+            viewHolder = new ViewHolder();
+            viewHolder.textView = (TextView) convertView.findViewById(R.id.spinner_item_textView);
+
+            convertView.setTag(viewHolder);
+        } else {
+            viewHolder = (ViewHolder) convertView.getTag();
+        }
+
+        if (mPrizeTemplateList.get(position) != null &&
+                !TextUtils.isEmpty(mPrizeTemplateList.get(position).getName())) {
+            String name = mPrizeTemplateList.get(position).getName();
+            viewHolder.textView.setText(name);
+        }
+
         return convertView;
     }
 

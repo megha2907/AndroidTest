@@ -1,4 +1,4 @@
-package in.sportscafe.nostragamus.module.privateContest.dto;
+package in.sportscafe.nostragamus.module.privateContest.ui.createContest.dto;
 
 import org.parceler.Parcel;
 

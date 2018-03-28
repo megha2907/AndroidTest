@@ -13,15 +13,13 @@ import com.jeeva.android.BaseFragment;
 
 import org.parceler.Parcels;
 
-import java.util.List;
-
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
-import in.sportscafe.nostragamus.module.contest.dto.Contest;
 import in.sportscafe.nostragamus.module.contest.dto.ContestScreenData;
 import in.sportscafe.nostragamus.module.contest.dto.ContestType;
-import in.sportscafe.nostragamus.module.privateContest.dto.CreatePrivateContestScreenData;
+import in.sportscafe.nostragamus.module.privateContest.ui.createContest.dto.CreatePrivateContestScreenData;
 import in.sportscafe.nostragamus.module.privateContest.ui.createContest.CreatePrivateContestActivity;
+import in.sportscafe.nostragamus.module.privateContest.ui.joinPrivateContest.findContest.JoinPrivateContestWithInviteCodeActivity;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -29,7 +27,6 @@ import in.sportscafe.nostragamus.module.privateContest.ui.createContest.CreatePr
 public class PrivateContestViewPagerFragment extends BaseFragment implements View.OnClickListener {
 
     private ContestType mContestType;
-    private List<Contest> mContestList;
     private ContestScreenData mContestScreenData;
     private int mMaxPowerupTransferLimit = 0;
 
@@ -55,14 +52,6 @@ public class PrivateContestViewPagerFragment extends BaseFragment implements Vie
 
     public void setContestType(ContestType contestType) {
         this.mContestType = contestType;
-    }
-
-    public List<Contest> getContestList() {
-        return mContestList;
-    }
-
-    public void setContestList(List<Contest> mContestList) {
-        this.mContestList = mContestList;
     }
 
     public ContestScreenData getContestScreenData() {
@@ -95,7 +84,16 @@ public class PrivateContestViewPagerFragment extends BaseFragment implements Vie
                 break;
 
             case R.id.private_contest_join_with_invite_code_btn:
+                onJoinPrivateContestClicked();
                 break;
+        }
+    }
+
+    private void onJoinPrivateContestClicked() {
+        if (getView() != null && getActivity() != null && !getActivity().isFinishing()) {
+
+            Intent intent = new Intent(getActivity(), JoinPrivateContestWithInviteCodeActivity.class);
+            getActivity().startActivityFromFragment(this, intent, 90);
         }
     }
 

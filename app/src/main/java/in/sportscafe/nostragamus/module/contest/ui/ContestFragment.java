@@ -188,7 +188,6 @@ public class ContestFragment extends NostraBaseFragment implements View.OnClickL
                     && contestList != null && contestList.size() > 0) {
 
                 addChallengeDetailsIntoContest(contestList);
-                addReferCardIntoContestList(contestList);
 
                 TabLayout contestTabLayout = (TabLayout) getView().findViewById(R.id.contest_tabs);
                 ViewPager challengesViewPager = (ViewPager) getView().findViewById(R.id.contest_viewPager);
@@ -197,42 +196,45 @@ public class ContestFragment extends NostraBaseFragment implements View.OnClickL
                 ContestFilterHelper filterHelper = new ContestFilterHelper();
                 ContestViewPagerFragment tabFragment = null;
 
-
-
                 /* For all the tabs */
                 for (int temp = 0; temp < contestTypeList.size(); temp++) {
                     ContestType contestType = contestTypeList.get(temp);
-                    tabFragment = new ContestViewPagerFragment();
-                    List<Contest> contestFiltered = null;
 
-                    if (contestType.getCategoryName().equalsIgnoreCase(ContestFilterHelper.JOINED_CONTEST)) {
-                        contestFiltered = filterHelper.getJoinedContests(contestList);
+                    if (contestType != null && !TextUtils.isEmpty(contestType.getCategoryName())) {
 
-                    } /*else if (contestType.getCategoryName().equalsIgnoreCase(ContestFilterHelper.PRIVATE_CONTEST_STR)) {
-                        contestFiltered = filterHelper.getPrivateContests(contestList);
+                        /* Filter list for each tab */
+                        if (contestType.getCategoryName().equalsIgnoreCase(ContestFilterHelper.PRIVATE_CONTEST_STR)) {
 
-                    }*/ else {
-                        contestFiltered = filterHelper.getFilteredContestByType(contestType.getCategoryName(), contestList);
-                    }
+                            /* NOTE : No filtered list required for this tab */
 
-                    if (contestFiltered != null) {
-                        if (contestType.getCategoryName().equalsIgnoreCase(ContestFilterHelper.PRIVATE_CONTEST_STR)) {  // Private contests have different ui fragments
-                            contestType.setContestCount(getContestCounter(contestFiltered));
+                            contestType.setContestCount(0);
 
                             PrivateContestViewPagerFragment privateFragment = new PrivateContestViewPagerFragment();
-                            privateFragment.setContestList(contestFiltered);
                             privateFragment.setContestScreenData(mContestScreenData);
                             privateFragment.setContestType(contestType);
                             privateFragment.setMaxPowerupTransferLimit(maxPowerUpTransferLimit);
                             fragmentList.add(privateFragment);
 
                         } else {
+                            List<Contest> contestFiltered = null;
+                            tabFragment = new ContestViewPagerFragment();
 
-                            contestType.setContestCount(getContestCounter(contestFiltered));
-                            tabFragment.onContestData(contestFiltered, mContestScreenData);
-                            tabFragment.setContestType(contestType);
-                            tabFragment.setMaxPowerupTransferLimit(maxPowerUpTransferLimit);
-                            fragmentList.add(tabFragment);
+                            if (contestType.getCategoryName().equalsIgnoreCase(ContestFilterHelper.JOINED_CONTEST)) {
+                                contestFiltered = filterHelper.getJoinedContests(contestList);
+                            } else {
+                                contestFiltered = filterHelper.getFilteredContestByType(contestType.getCategoryName(), contestList);
+                            }
+
+                            if (contestFiltered != null && contestFiltered.size() > 0) {
+
+                                addReferCardIntoContestList(contestFiltered);
+
+                                contestType.setContestCount(getContestCounter(contestFiltered));
+                                tabFragment.onContestData(contestFiltered, mContestScreenData);
+                                tabFragment.setContestType(contestType);
+                                tabFragment.setMaxPowerupTransferLimit(maxPowerUpTransferLimit);
+                                fragmentList.add(tabFragment);
+                            }
                         }
                     }
                 }

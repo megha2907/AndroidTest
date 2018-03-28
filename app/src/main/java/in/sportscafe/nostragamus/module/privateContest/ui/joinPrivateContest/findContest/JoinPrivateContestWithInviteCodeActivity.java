@@ -1,4 +1,4 @@
-package in.sportscafe.nostragamus.module.privateContest.ui.joinWithInviteCode;
+package in.sportscafe.nostragamus.module.privateContest.ui.joinPrivateContest.findContest;
 
 import android.os.Bundle;
 
@@ -16,6 +16,7 @@ public class JoinPrivateContestWithInviteCodeActivity extends NostraBaseActivity
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        setShouldAnimateActivity(true);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_join_private_contest_with_invite_code);
         loadFragment();
@@ -31,6 +32,6 @@ public class JoinPrivateContestWithInviteCodeActivity extends NostraBaseActivity
 
     @Override
     public void onBackClicked() {
-
+        finish();
     }
 }

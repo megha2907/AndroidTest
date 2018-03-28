@@ -1,4 +1,4 @@
-package in.sportscafe.nostragamus.module.privateContest.ui.joinWithInviteCode;
+package in.sportscafe.nostragamus.module.privateContest.ui.joinPrivateContest.findContest;
 
 /**
  * Created by sc on 21/3/18.

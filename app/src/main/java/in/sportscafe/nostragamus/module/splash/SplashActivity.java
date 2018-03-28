@@ -9,6 +9,7 @@ import com.jeeva.android.Log;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Constants.AnalyticsLabels;
 import in.sportscafe.nostragamus.Constants.BundleKeys;
 import in.sportscafe.nostragamus.Nostragamus;
@@ -16,11 +17,14 @@ import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
 import in.sportscafe.nostragamus.module.getstart.GetStartActivity;
+import in.sportscafe.nostragamus.module.getstart.Splash;
 import in.sportscafe.nostragamus.module.user.group.joingroup.JoinGroupActivity;
 import io.branch.referral.Branch;
 import io.branch.referral.BranchError;
 
 public class SplashActivity extends Activity {
+
+    private static final String TAG = SplashActivity.class.getSimpleName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,6 +97,10 @@ public class SplashActivity extends Activity {
                             }
                         }
 
+                        if (referringParams.has("~campaign")) {
+                            checkForPrivateContest(referringParams);
+                        }
+
                     } catch (JSONException e) {
                         e.printStackTrace();
                         Log.d("BranchValue:--", "No Campaign / No Channel");
@@ -104,6 +112,19 @@ public class SplashActivity extends Activity {
             }
         }, this.getIntent().getData(), this);
 
+    }
+
+    private void checkForPrivateContest(JSONObject referringParams) {
+        try {
+            if (referringParams.getString("~campaign").equalsIgnoreCase(Constants.PrivateContests.BranchLink.LINKED_PROPERTIES_CAMPAIGN) &&
+                    referringParams.has(Constants.PrivateContests.BranchLink.PRIVATE_CONTEST_INVITATION_CODE)) {
+
+                Log.d(TAG, " Private Contest link opened!");
+                // TODO: save privatecode into Data-handler
+            }
+        } catch (JSONException ex) {
+            ex.printStackTrace();
+        }
     }
 
     private void navigateToGetStarted() {

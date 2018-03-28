@@ -195,7 +195,7 @@
             <!-- Card Content bar -->
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dim_68"
+                android:layout_height="wrap_content"
                 android:background="@drawable/inplay_card_content_bg"
                 android:gravity="center_vertical"
                 android:orientation="vertical"
@@ -217,7 +217,7 @@
 
                 <LinearLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                    android:layout_height="@dimen/dim_68"
                     android:gravity="center_horizontal"
                     android:orientation="vertical">
 
@@ -254,23 +254,23 @@
 
                 </LinearLayout>
 
+                <com.jeeva.android.widgets.customfont.CustomButton
+                    android:id="@+id/private_contest_share_btn"
+                    android:layout_width="@dimen/dim_300"
+                    android:layout_height="@dimen/dim_30"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/blue_008ae1_button_selector"
+                    android:gravity="center"
+                    android:text="Invite your friends"
+                    android:textAllCaps="true"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/sp_13"
+                    app:typeface="lato_bold"
+                    android:layout_marginBottom="@dimen/dim_12"/>
+
             </LinearLayout>
 
         </LinearLayout>
-
-        <com.jeeva.android.widgets.customfont.CustomButton
-            android:id="@+id/private_contest_share_btn"
-            android:layout_width="@dimen/dim_300"
-            android:layout_height="@dimen/dim_30"
-            android:layout_gravity="center_horizontal"
-            android:background="@drawable/blue_008ae1_button_selector"
-            android:gravity="center"
-            android:text="Invite your friends"
-            android:textAllCaps="true"
-            android:textColor="@color/white"
-            android:textSize="@dimen/sp_13"
-            app:typeface="lato_bold"
-            android:layout_marginBottom="@dimen/dim_12"/>
 
     </LinearLayout>
 

@@ -1,4 +1,4 @@
-package in.sportscafe.nostragamus.module.privateContest.dto;
+package in.sportscafe.nostragamus.module.privateContest.ui.createContest.dto;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -18,6 +18,8 @@ public class PrivateContestPrizeTemplateResponse {
 
     @SerializedName("shareType")
     private String shareType;
+
+    private int TemplateType = PrivateContestPrizeSpinnerItemType.PRIZE_TEMPLATE;
 
     public String getName() {
         return name;
@@ -41,6 +43,14 @@ public class PrivateContestPrizeTemplateResponse {
 
     public void setShareType(String shareType) {
         this.shareType = shareType;
+    }
+
+    public int getTemplateType() {
+        return TemplateType;
+    }
+
+    public void setTemplateType(int templateType) {
+        TemplateType = templateType;
     }
 
     /**

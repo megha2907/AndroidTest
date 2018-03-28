@@ -8,7 +8,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import java.util.List;
@@ -16,14 +15,14 @@ import java.util.List;
 import in.sportscafe.nostragamus.AppSnippet;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.navigation.wallet.WalletHelper;
-import in.sportscafe.nostragamus.module.privateContest.dto.PrizeListItemDto;
+import in.sportscafe.nostragamus.module.privateContest.ui.createContest.dto.PrizeListItemDto;
 
 /**
  * NOTE : Used to show prize values as calculated based on templates
  */
 public class PrivateContestPrizeListRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private static final String TAG = PrivateContestPrizeEstimationRecyclerAdapter.class.getSimpleName();
+    private static final String TAG = PrivateContestPrizeListRecyclerAdapter.class.getSimpleName();
 
     private List<PrizeListItemDto> mPrizeDtoList;
 
@@ -65,7 +64,6 @@ public class PrivateContestPrizeListRecyclerAdapter extends RecyclerView.Adapter
 
         TextView rankTextView;
         TextView calculatedAmtTextView;
-        EditText prizePercentageEditText;
         TextView sharePercentTextView;
 
         public PrizeViewHolder(View itemView) {
@@ -73,7 +71,6 @@ public class PrivateContestPrizeListRecyclerAdapter extends RecyclerView.Adapter
 
             rankTextView = (TextView) itemView.findViewById(R.id.rank_textView);
             calculatedAmtTextView = (TextView) itemView.findViewById(R.id.calculated_amt_textView);
-            prizePercentageEditText = (EditText) itemView.findViewById(R.id.prizes_editView);
             sharePercentTextView = (TextView) itemView.findViewById(R.id.share_percent_textView);
         }
 

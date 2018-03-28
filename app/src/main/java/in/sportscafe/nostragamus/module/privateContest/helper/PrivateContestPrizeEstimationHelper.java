@@ -8,9 +8,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import in.sportscafe.nostragamus.Constants;
-import in.sportscafe.nostragamus.module.privateContest.dto.PrivateContestPrizeResponse;
-import in.sportscafe.nostragamus.module.privateContest.dto.PrivateContestPrizeTemplateResponse;
-import in.sportscafe.nostragamus.module.privateContest.dto.PrizeListItemDto;
+import in.sportscafe.nostragamus.module.privateContest.ui.createContest.dto.PrivateContestPrizeResponse;
+import in.sportscafe.nostragamus.module.privateContest.ui.createContest.dto.PrivateContestPrizeTemplateResponse;
+import in.sportscafe.nostragamus.module.privateContest.ui.createContest.dto.PrizeListItemDto;
 
 /**
  * Created by sc on 23/3/18.
@@ -94,11 +94,12 @@ public class PrivateContestPrizeEstimationHelper {
                             prizeAmount = (int) (winningMoney / usersCount);
 
                         /* For every countable-user */
+                        float sharePercentage = (prizeResponse.getSharePercentage() * 100) / usersCount;
                             for (int count = 1; count <= usersCount; count++) {
                                 prizeListItemDto = new PrizeListItemDto();
                                 prizeListItemDto.setWinnerRank(count);
                                 prizeListItemDto.setAmount(prizeAmount);
-                                prizeListItemDto.setSharePercent(prizeResponse.getSharePercentage() * 100);
+                                prizeListItemDto.setSharePercent(sharePercentage);
 
                                 prizeListItemDtoList.add(prizeListItemDto);
                             }
@@ -120,5 +121,15 @@ public class PrivateContestPrizeEstimationHelper {
         }
 
         return prizeListItemDtoList;
+    }
+
+    public double getAdvancePrizeValue(double totalPrizeAmount, float percents) {
+        double prize = 0;
+
+        if (totalPrizeAmount > 0 && percents > 0) {
+            prize = (totalPrizeAmount * percents) / 100;
+        }
+
+        return prize;
     }
 }

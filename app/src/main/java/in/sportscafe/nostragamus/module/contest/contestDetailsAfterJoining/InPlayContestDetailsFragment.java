@@ -156,8 +156,9 @@ public class InPlayContestDetailsFragment extends NostraBaseFragment implements 
             RulesFragment rulesFragment = RulesFragment.newInstance(contestDto.getContestId());
             mViewPagerAdapter.addFragment(rulesFragment, Constants.ContestDetailsTabs.RULES);
 
-            if (!TextUtils.isEmpty(contestDto.getContestMode()) /*&&
-                    contestDto.getContestMode().equalsIgnoreCase(Constants.ContestType.PRIVATE)*/) {
+            if (!TextUtils.isEmpty(contestDto.getContestType()) &&
+                    contestDto.getContestType().equalsIgnoreCase(Constants.ContestType.PRIVATE)) {
+
                 PrivateContestInPlayInviteFragment fragment = new PrivateContestInPlayInviteFragment();
                 fragment.setInplayContestDto(contestDto);
                 mViewPagerAdapter.addFragment(fragment, Constants.ContestDetailsTabs.INVITE);

@@ -399,6 +399,9 @@ public interface Constants {
         String COPY_ANSWER_SCREEN_DATA = "copyAnswerScreenData";
         String SLIDE_ID = "SlideId";
         String PRIVATE_CONTEST_SCREEN_DATA = "privateContestScreeenData";
+        String PRIVATE_CONTEST_ADVANCE_PRIZE_STRUCTURE_SCREEN_DATA = "privateContestAdvancePrizeScreenData";
+        String PRIVATE_CONTEST_ADVANCE_PRIZE_LIST = "privateContestAdvancePrizeList";
+        String PRIVATE_CONTEST_DETAILS_SCREEN_DATA = "privateContestScreenData";
     }
 
     interface DateFormats {
@@ -1012,8 +1015,9 @@ public interface Constants {
 
     interface PrivateContests {
 
-        double MAX_ENTRY_FEE = 20000;   //User is allowed to enter max entry fee
+        double MAX_ENTRY_FEE = 20000;   // User is allowed to enter max entry fee
         int MAX_ENTRIES = 40;           // User is allowed to enter max contest entries
+        int PRIVATE_CODE_LENGTH = 5;
 
         interface PrizeEstimationTemplateType {
             String PERCENT = "percent";
@@ -1024,6 +1028,7 @@ public interface Constants {
             String LINKED_PROPERTIES_CHANNEL = "App";
             String LINKED_PROPERTIES_FEATURE = "privateContest";
             String LINKED_PROPERTIES_CAMPAIGN = "AppPrivateCampaign";
+            String LINKED_PATH = "app/privateContest";
 
             String PRIVATE_CONTEST_INVITATION_CODE = "private_contest_invitation_code";
         }

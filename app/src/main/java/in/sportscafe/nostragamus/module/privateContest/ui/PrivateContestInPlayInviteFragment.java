@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.jeeva.android.BaseFragment;
 import com.jeeva.android.ExceptionTracker;
 
+import in.sportscafe.nostragamus.AppSnippet;
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.R;
@@ -28,12 +29,13 @@ import io.branch.referral.util.LinkProperties;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class PrivateContestInPlayInviteFragment extends BaseFragment {
+public class PrivateContestInPlayInviteFragment extends BaseFragment implements View.OnClickListener {
 
     private static final String TAG = PrivateContestInPlayInviteFragment.class.getSimpleName();
 
     private TextView mShareLinkTextView;
     private InPlayContestDto mInplayContestDto;
+    private String mShareLink = "";
 
     public PrivateContestInPlayInviteFragment() {
     }
@@ -49,27 +51,38 @@ public class PrivateContestInPlayInviteFragment extends BaseFragment {
     private void initViews(View view) {
         mShareLinkTextView = (TextView) view.findViewById(R.id.private_contest_invitation_share_link_textView);
 
+        view.findViewById(R.id.private_contest_share_btn).setOnClickListener(this);
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        showPrivateCode();
         createContestShareLink();
     }
 
-    private void createContestShareLink() {
-        UserInfo userInfo = Nostragamus.getInstance().getServerDataManager().getUserInfo();
-        if (userInfo != null && userInfo.getId() != null) {
+    private void showPrivateCode() {
+        if (getView() != null) {
+            if (mInplayContestDto != null && !TextUtils.isEmpty(mInplayContestDto.getPrivateCode())) {
+                TextView privateCodeTextView = (TextView) getView().findViewById(R.id.private_contest_invitation_code);
+                privateCodeTextView.setText(mInplayContestDto.getPrivateCode());
+            }
+        }
+    }
 
+    private void createContestShareLink() {
+        if (mInplayContestDto != null && !TextUtils.isEmpty(mInplayContestDto.getPrivateCode())) {
             BranchUniversalObject branchUniversalObject = new BranchUniversalObject();
             branchUniversalObject.setContentIndexingMode(BranchUniversalObject.CONTENT_INDEX_MODE.PUBLIC);
-            branchUniversalObject.addContentMetadata(Constants.PrivateContests.BranchLink.PRIVATE_CONTEST_INVITATION_CODE, "123"/*TODO: change*/);
+            branchUniversalObject.addContentMetadata(Constants.PrivateContests.BranchLink.PRIVATE_CONTEST_INVITATION_CODE,
+                    mInplayContestDto.getPrivateCode());
 
             LinkProperties linkProperties = new LinkProperties();
             linkProperties.addTag(Constants.PrivateContests.BranchLink.LINKED_PROPERTIES_FEATURE);
             linkProperties.setChannel(Constants.PrivateContests.BranchLink.LINKED_PROPERTIES_CHANNEL);
             linkProperties.setCampaign(Constants.PrivateContests.BranchLink.LINKED_PROPERTIES_CAMPAIGN);
             linkProperties.setFeature(Constants.PrivateContests.BranchLink.LINKED_PROPERTIES_FEATURE);
+            linkProperties.addControlParameter("$android_deeplink_path", Constants.PrivateContests.BranchLink.LINKED_PATH);
 
             branchUniversalObject.generateShortUrl(getContext(), linkProperties,
                     new Branch.BranchLinkCreateListener() {
@@ -77,17 +90,16 @@ public class PrivateContestInPlayInviteFragment extends BaseFragment {
                         public void onLinkCreate(String shortLink, BranchError branchError) {
                             if (branchError == null) {
 
-                                mShareLinkTextView.setText(shortLink);
-
+                                mShareLink = shortLink;
+                                mShareLinkTextView.setText(mShareLink);
                             } else {
                                 ExceptionTracker.track(branchError.getMessage());
                             }
                         }
                     });
-
         } else {
-            handleError(Constants.Alerts.SOMETHING_WRONG, -1);
-            Log.d(TAG, "UserInfo null! Can not create contest sharing link");
+            Log.d(TAG, "No Private Code!!");
+            handleError("", -1);
         }
     }
 
@@ -110,11 +122,21 @@ public class PrivateContestInPlayInviteFragment extends BaseFragment {
         }
     }
 
-    public InPlayContestDto getInplayContestDto() {
-        return mInplayContestDto;
-    }
-
     public void setInplayContestDto(InPlayContestDto inplayContestDto) {
         this.mInplayContestDto = inplayContestDto;
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.private_contest_share_btn:
+                onShareButtonClicked();
+                break;
+        }
+    }
+
+    private void onShareButtonClicked() {
+        String shareText = "Invite your friends to join " + mShareLink + " private contest!";
+        AppSnippet.doGeneralShare(getContext().getApplicationContext(), shareText);
     }
 }

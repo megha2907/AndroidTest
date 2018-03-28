@@ -58,6 +58,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
+                    android:gravity="center_vertical"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="@dimen/dim_16">
@@ -73,7 +74,7 @@
                         android:id="@+id/toolbar_wallet_money"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="1221"
+                        android:text=""
                         android:textColor="@color/white_60"
                         android:textSize="@dimen/sp_14"
                         app:typeface="lato_regular" />

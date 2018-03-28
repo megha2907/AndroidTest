@@ -1,4 +1,4 @@
-package in.sportscafe.nostragamus.module.privateContest.dto;
+package in.sportscafe.nostragamus.module.privateContest.ui.createContest.dto;
 
 import org.parceler.Parcel;
 
@@ -8,6 +8,7 @@ import org.parceler.Parcel;
 @Parcel
 public class PrizeListItemDto {
 
+    private int listItemType = PrivateContestPrizeSpinnerItemType.PRIZE_TEMPLATE;
     private int winnerRank;
     private double amount;
     private float sharePercent;
@@ -34,5 +35,13 @@ public class PrizeListItemDto {
 
     public void setSharePercent(float sharePercent) {
         this.sharePercent = sharePercent;
+    }
+
+    public int getListItemType() {
+        return listItemType;
+    }
+
+    public void setListItemType(int listItemType) {
+        this.listItemType = listItemType;
     }
 }
