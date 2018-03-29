@@ -133,6 +133,7 @@ public interface Constants {
         String POWERUP_TRANSFER_FROM_BANK_ATTEMPTED = "powerupTransferFromBankAttempted";
         String POWERUP_TRANSFER_FROM_BANK_SCREEN_SHOWN = "powerupTransferScreenShown";
         String SHOW_FAQ = "showFAQ";
+        String PRIVATE_CONTEST_INVITATION_CODE = "privateContestInvitationCode";
     }
 
     interface Alerts {
@@ -398,6 +399,11 @@ public interface Constants {
         String IN_APP_NOSTRA_NOTIFICATION_DETAILS = "inAppNostraNotification";
         String COPY_ANSWER_SCREEN_DATA = "copyAnswerScreenData";
         String SLIDE_ID = "SlideId";
+        String PRIVATE_CONTEST_SCREEN_DATA = "privateContestScreeenData";
+        String PRIVATE_CONTEST_ADVANCE_PRIZE_STRUCTURE_SCREEN_DATA = "privateContestAdvancePrizeScreenData";
+        String PRIVATE_CONTEST_ADVANCE_PRIZE_LIST = "privateContestAdvancePrizeList";
+        String PRIVATE_CONTEST_DETAILS_SCREEN_DATA = "privateContestScreenData";
+        String JOIN_PRIVATE_CONTEST_WITH_INVITATION_CODE_SCREEN_DATA = "joinPvtContestWithInvitationCodeScreenData";
     }
 
     interface DateFormats {
@@ -561,6 +567,7 @@ public interface Constants {
         String CONTEST_JOIN_POPUP = "Join Popup";
         String CONTEST_LOW_MONEY = "Low Money";
         String CONTEST_MODES_POPUP = "Contest Modes Popup";
+        String INVITE_PRIVATE_CONTEST = "Invite Private Contest";
 
         /* in play */
         String HEADLESS_CARD = "Headless Card";
@@ -903,6 +910,7 @@ public interface Constants {
         String WINNERS = "Winners";
         String RULES = "Rules";
         String LEADERBOARDS = "Leaderboard";
+        String INVITE = "Invite";
     }
 
     interface ContestType {
@@ -910,6 +918,7 @@ public interface Constants {
         String NON_GUARANTEED = "ng";
         String POOL = "p";
         String BUMPER = "b";
+        String PRIVATE = "private";
     }
 
     interface WebPageUrls {
@@ -1004,5 +1013,30 @@ public interface Constants {
         int DPI = 21;
         int HEIGHT = 22;
         int WIDTH = 23;
+    }
+
+    interface PrivateContests {
+
+        double MAX_ENTRY_FEE = 20000;   // User is allowed to enter max entry fee
+        int MAX_ENTRIES = 40;           // User is allowed to enter max contest entries
+        int PRIVATE_CODE_LENGTH = 5;
+        float ADVANCE_TEMPLATE_PROFIT_MARGIN = 0.1f;
+
+        interface PrizeEstimationTemplateType {
+            String PERCENT = "percent";
+            String RANK = "rank";
+        }
+
+        interface BranchLink {
+            String LINKED_PROPERTIES_CHANNEL = "App";
+            String LINKED_PROPERTIES_FEATURE = "privateContest";
+            String LINKED_PROPERTIES_CAMPAIGN = "AppPrivateCampaign";
+            String LINKED_PATH = "app/privateContest";
+
+            String USER_NICK = "userNick";
+            String USER_PHOTO_URL = "userPhotoUrl";
+
+            String PRIVATE_CONTEST_INVITATION_CODE = "private_contest_invitation_code";
+        }
     }
 }

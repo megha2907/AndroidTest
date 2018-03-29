@@ -182,6 +182,8 @@ dependencies {
         exclude group: 'com.android.support', module: 'design'
         exclude group: 'com.android.support', module: 'recyclerview-v7'
     }
+
+    compile project(':cashfreeSDK')
     compile 'com.google.android.gms:play-services-auth:10.2.1'
     compile 'com.moengage:moe-android-sdk:7.7.15'
     compile 'com.moengage:addon-inbox:2.8.0'
@@ -202,9 +204,7 @@ dependencies {
     compile 'com.github.freshdesk:freshchat-android:1.2.1'
     compile 'uk.co.chrisjenx:calligraphy:2.1.0'
     compile 'com.github.rubensousa:gravitysnaphelper:1.5'
-
     testCompile 'junit:junit:4.12'
     apt 'org.parceler:parceler:1.1.6'
-    compile project(':cashfreeSDK')
 }
 apply plugin: 'com.google.gms.google-services'

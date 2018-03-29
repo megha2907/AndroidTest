@@ -11,7 +11,9 @@ import in.sportscafe.nostragamus.module.challengeCompleted.dto.CompletedResponse
 import in.sportscafe.nostragamus.module.challengeRewards.dto.RewardsResponse;
 import in.sportscafe.nostragamus.module.challengeRules.dto.RulesResponse;
 import in.sportscafe.nostragamus.module.common.ApiResponse;
-import in.sportscafe.nostragamus.module.navigation.help.howtoplay.dto.HowToPlayDetails;
+import in.sportscafe.nostragamus.module.privateContest.ui.createContest.dto.PrivateContestPrizeTemplateResponse;
+import in.sportscafe.nostragamus.module.privateContest.ui.createContest.dto.CreatePrivateContestRequest;
+import in.sportscafe.nostragamus.module.privateContest.ui.createContest.dto.CreatePrivateContestResponse;
 import in.sportscafe.nostragamus.module.navigation.help.howtoplay.dto.HowToPlayResponse;
 import in.sportscafe.nostragamus.module.navigation.wallet.addMoney.dto.AddMoneyPaymentCouponRequest;
 import in.sportscafe.nostragamus.module.navigation.wallet.addMoney.dto.AddMoneyPaymentCouponResponse;
@@ -20,7 +22,6 @@ import in.sportscafe.nostragamus.module.navigation.wallet.addMoney.dto.CashFreeG
 import in.sportscafe.nostragamus.module.navigation.wallet.addMoney.dto.VerifyPaymentCouponRequest;
 import in.sportscafe.nostragamus.module.navigation.wallet.addMoney.dto.VerifyPaymentCouponResponse;
 import in.sportscafe.nostragamus.module.navigation.wallet.addMoney.dto.VerifyPaymentResponse;
-import in.sportscafe.nostragamus.module.newChallenges.dto.BannerResponseData;
 import in.sportscafe.nostragamus.module.nostraHome.dto.TimeResponse;
 import in.sportscafe.nostragamus.module.common.dto.MatchesResponse;
 import in.sportscafe.nostragamus.module.contest.dto.ContestEntriesResponse;
@@ -68,6 +69,7 @@ import in.sportscafe.nostragamus.module.prediction.powerupBank.dto.PowerUpBankSt
 import in.sportscafe.nostragamus.module.prediction.powerupBank.dto.PowerupBankStatusRequest;
 import in.sportscafe.nostragamus.module.prediction.powerupBank.dto.TransferPowerUpFromBankRequest;
 import in.sportscafe.nostragamus.module.prediction.powerupBank.dto.TransferPowerUpFromBankResponse;
+import in.sportscafe.nostragamus.module.privateContest.ui.joinPrivateContest.dto.FindPrivateContestResponse;
 import in.sportscafe.nostragamus.module.settings.app.dto.AppSettingsResponse;
 import in.sportscafe.nostragamus.module.store.buy.BuyRequest;
 import in.sportscafe.nostragamus.module.store.buy.BuyResponse;
@@ -469,5 +471,17 @@ public class MyWebService extends AbstractWebService<NostragamusService> {
 
     public Call<HowToPlayResponse> getHowToPlayData(String slideId) {
         return mNostragamusService.getHowToPlayData(slideId);
+    }
+
+    public Call<CreatePrivateContestResponse> createPrivateContest(CreatePrivateContestRequest request) {
+        return mNostragamusService.createPrivateContest(request);
+    }
+
+    public Call<List<PrivateContestPrizeTemplateResponse>> getPrivateContestPrizeTemplates() {
+        return mNostragamusService.getPrivateContestPrizeTemplates();
+    }
+
+    public Call<FindPrivateContestResponse> getPrivateContestDetails(String privatCode) {
+        return mNostragamusService.getPrivateContestDetails(privatCode);
     }
 }

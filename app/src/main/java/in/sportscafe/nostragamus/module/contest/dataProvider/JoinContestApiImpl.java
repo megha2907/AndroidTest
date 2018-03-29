@@ -136,7 +136,7 @@ public class JoinContestApiImpl {
                     public void onFailure(Call<VerifyJoinContestResponse> call, Throwable t) {
                         super.onFailure(call, t);
 
-                        Log.e(TAG, "Verify JoinContest Api failure");
+                        Log.e(TAG, "Verify createAndJoinPrivateContest Api failure");
                         if (mListener != null) {
                             mListener.onFailure(Constants.DataStatus.FROM_SERVER_API_FAILED);
                         }

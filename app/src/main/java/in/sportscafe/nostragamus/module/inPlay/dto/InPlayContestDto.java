@@ -48,6 +48,12 @@ public class InPlayContestDto {
     @SerializedName("matches")
     private List<InPlayContestMatchDto> matches = null;
 
+    @SerializedName("contest_type")
+    private String contestType;
+
+    @SerializedName("private_code")
+    private String privateCode;
+
     private int challengeId;
     private String challengeName;
     private String challengeStartTime;
@@ -185,5 +191,21 @@ public class InPlayContestDto {
 
     public void setMaxPowerUpTransferLimit(int maxPowerUpTransferLimit) {
         this.maxPowerUpTransferLimit = maxPowerUpTransferLimit;
+    }
+
+    public String getContestType() {
+        return contestType;
+    }
+
+    public void setContestType(String contestType) {
+        this.contestType = contestType;
+    }
+
+    public String getPrivateCode() {
+        return privateCode;
+    }
+
+    public void setPrivateCode(String privateCode) {
+        this.privateCode = privateCode;
     }
 }
