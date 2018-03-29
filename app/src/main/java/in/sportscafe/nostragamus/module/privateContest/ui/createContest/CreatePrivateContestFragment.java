@@ -50,15 +50,17 @@ import in.sportscafe.nostragamus.module.privateContest.adapter.PrivateContestPri
 import in.sportscafe.nostragamus.module.privateContest.adapter.PrivateContestPrizeTemplateSpinnerAdapter;
 import in.sportscafe.nostragamus.module.privateContest.dataProvider.CreatePrivateContestApiMoelImpl;
 import in.sportscafe.nostragamus.module.privateContest.dataProvider.PrivateContestPrizeTemplatesApiModelImpl;
+import in.sportscafe.nostragamus.module.privateContest.helper.CreateAndJoinPrivateContestHelper;
+import in.sportscafe.nostragamus.module.privateContest.helper.PrivateContestPrizeEstimationHelper;
+import in.sportscafe.nostragamus.module.privateContest.ui.createContest.advancePrize.PrivateContestAdvancePrizeStructurePopupActivity;
 import in.sportscafe.nostragamus.module.privateContest.ui.createContest.dto.CreatePrivateContestResponse;
 import in.sportscafe.nostragamus.module.privateContest.ui.createContest.dto.CreatePrivateContestScreenData;
 import in.sportscafe.nostragamus.module.privateContest.ui.createContest.dto.PrivateContestAdvancePrizeScreenData;
 import in.sportscafe.nostragamus.module.privateContest.ui.createContest.dto.PrivateContestPrizeSpinnerItemType;
 import in.sportscafe.nostragamus.module.privateContest.ui.createContest.dto.PrivateContestPrizeTemplateResponse;
 import in.sportscafe.nostragamus.module.privateContest.ui.createContest.dto.PrizeListItemDto;
-import in.sportscafe.nostragamus.module.privateContest.helper.JoinPrivateContestHelper;
-import in.sportscafe.nostragamus.module.privateContest.helper.PrivateContestPrizeEstimationHelper;
-import in.sportscafe.nostragamus.module.privateContest.ui.createContest.advancePrize.PrivateContestAdvancePrizeStructurePopupActivity;
+
+import static in.sportscafe.nostragamus.module.privateContest.helper.PrivateContestPrizeEstimationHelper.getDistributableTotalPrize;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -111,20 +113,20 @@ public class CreatePrivateContestFragment extends BaseFragment implements
     }
 
     private void calculatePrizeEstimation() {
-            if (isEntryFeeValid()) {
-                handleEntryFeeValid(true);
+        if (isEntryFeeValid()) {
+            handleEntryFeeValid(true);
 
-                if (isEntriesValid()) {
-                    handleEntriesValid(true);
+            if (isEntriesValid()) {
+                handleEntriesValid(true);
 
-                    performEstimation(mSelectedPrizeTemplate, getEntryFee(), getEntries());
+                performEstimation(mSelectedPrizeTemplate, getEntryFee(), getEntries());
 
-                } else {
-                    handleEntriesValid(false);
-                }
             } else {
                 handleEntriesValid(false);
             }
+        } else {
+            handleEntriesValid(false);
+        }
     }
 
     @NonNull
@@ -265,12 +267,11 @@ public class CreatePrivateContestFragment extends BaseFragment implements
     private void performEstimation(PrivateContestPrizeTemplateResponse prizeResponseItem, double prizeFee, int entries) {
         if (prizeResponseItem != null) {
 
-            double totalPrizeAmount = prizeFee * entries;
+            double totalPrizeAmount = getDistributableTotalPrize(prizeFee, entries, prizeResponseItem.getMargin());
             setTotalPrizeAmount(totalPrizeAmount);
 
             List<PrizeListItemDto> prizeListItemDtoList = new PrivateContestPrizeEstimationHelper()
-                    .getPrizeList(prizeResponseItem, totalPrizeAmount, entries,
-                            getPrizeEstimationListener());
+                    .getPrizeList(prizeResponseItem, totalPrizeAmount, entries, getPrizeEstimationListener());
 
             setEstimatePrizeAdapter(prizeListItemDtoList);
         }
@@ -336,6 +337,8 @@ public class CreatePrivateContestFragment extends BaseFragment implements
 
                     final JoinContestData joinPrivateContestData = new JoinContestData();
                     joinPrivateContestData.setChallengeId(contestScreenData.getChallengeId());
+                    joinPrivateContestData.setChallengeName(contestScreenData.getChallengeName());
+                    joinPrivateContestData.setChallengeStartTime(contestScreenData.getChallengeStartTime());
                     joinPrivateContestData.setEntryFee(entryFee);
                     joinPrivateContestData.setContestName(contestName);
                     joinPrivateContestData.setPrivateContestEntries(entries);
@@ -359,57 +362,64 @@ public class CreatePrivateContestFragment extends BaseFragment implements
 
     private void performCreateAndJoin(final Bundle args) {
         if (args != null && args.containsKey(Constants.BundleKeys.JOIN_CONTEST_DATA)) {
-            CustomProgressbar.getProgressbar(getContext()).show();
 
             JoinContestData joinPrivateContestData =
                     Parcels.unwrap(args.getParcelable(Constants.BundleKeys.JOIN_CONTEST_DATA));
 
-            new JoinPrivateContestHelper().JoinPrivateContest(joinPrivateContestData,
-                    (AppCompatActivity) getActivity(),
-                    new JoinPrivateContestHelper.JoinPrivateContestProcessListener() {
-                        @Override
-                        public void noInternet() {
-                            CustomProgressbar.getProgressbar(getContext()).dismissProgress();
-                            handleError("", Constants.DataStatus.NO_INTERNET);
-                        }
+            if (joinPrivateContestData != null &&
+                    TimerFinishDialogHelper.canJoinContest(joinPrivateContestData.getChallengeStartTime())) {
 
-                        @Override
-                        public void lowWalletBalance(JoinContestData joinContestData) {
-                            CustomProgressbar.getProgressbar(getContext()).dismissProgress();
-                            launchLowBalActivity(args);
-                        }
-
-                        @Override
-                        public void joinPrivateContestSuccess(int status, CreatePrivateContestResponse createPrivateContestResponse) {
-                            CustomProgressbar.getProgressbar(getContext()).dismissProgress();
-                            onContestJoinedSuccessfulResponse(createPrivateContestResponse);
-                        }
-
-                        @Override
-                        public void onApiFailure() {
-                            CustomProgressbar.getProgressbar(getContext()).dismissProgress();
-                            handleError("", Constants.DataStatus.FROM_SERVER_API_FAILED);
-                        }
-
-                        @Override
-                        public void onServerReturnedError(String msg) {
-                            CustomProgressbar.getProgressbar(getContext()).dismissProgress();
-                            if (TextUtils.isEmpty(msg)) {
-                                msg = Constants.Alerts.SOMETHING_WRONG;
+                CustomProgressbar.getProgressbar(getContext()).show();
+                new CreateAndJoinPrivateContestHelper().createAndJoinPrivateContest(joinPrivateContestData,
+                        (AppCompatActivity) getActivity(),
+                        new CreateAndJoinPrivateContestHelper.JoinPrivateContestProcessListener() {
+                            @Override
+                            public void noInternet() {
+                                CustomProgressbar.getProgressbar(getContext()).dismissProgress();
+                                handleError("", Constants.DataStatus.NO_INTERNET);
                             }
-                            handleError(msg, -1);
-                        }
 
-                        @Override
-                        public void hideProgressBar() {
-                            CustomProgressbar.getProgressbar(getContext()).dismissProgress();
-                        }
+                            @Override
+                            public void lowWalletBalance(JoinContestData joinContestData) {
+                                CustomProgressbar.getProgressbar(getContext()).dismissProgress();
+                                launchLowBalActivity(args);
+                            }
 
-                        @Override
-                        public void showProgressBar() {
-                            CustomProgressbar.getProgressbar(getContext()).show();
-                        }
-                    });
+                            @Override
+                            public void joinPrivateContestSuccess(int status, CreatePrivateContestResponse createPrivateContestResponse) {
+                                CustomProgressbar.getProgressbar(getContext()).dismissProgress();
+                                onContestJoinedSuccessfulResponse(createPrivateContestResponse);
+                            }
+
+                            @Override
+                            public void onApiFailure() {
+                                CustomProgressbar.getProgressbar(getContext()).dismissProgress();
+                                handleError("", Constants.DataStatus.FROM_SERVER_API_FAILED);
+                            }
+
+                            @Override
+                            public void onServerReturnedError(String msg) {
+                                CustomProgressbar.getProgressbar(getContext()).dismissProgress();
+                                if (TextUtils.isEmpty(msg)) {
+                                    msg = Constants.Alerts.SOMETHING_WRONG;
+                                }
+                                handleError(msg, -1);
+                            }
+
+                            @Override
+                            public void hideProgressBar() {
+                                CustomProgressbar.getProgressbar(getContext()).dismissProgress();
+                            }
+
+                            @Override
+                            public void showProgressBar() {
+                                CustomProgressbar.getProgressbar(getContext()).show();
+                            }
+                        });
+
+            } else {
+                TimerFinishDialogHelper.showCanNotJoinTimerOutDialog((AppCompatActivity) getActivity());
+            }
         }
     }
 
@@ -595,13 +605,13 @@ public class CreatePrivateContestFragment extends BaseFragment implements
 
                             TimerFinishDialogHelper.showChallengeStartedTimerOutDialog(getChildFragmentManager(),
                                     msg, new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-                                    if (mFragmentListener != null) {
-                                        mFragmentListener.onBackClicked();
-                                    }
-                                }
-                            });
+                                        @Override
+                                        public void onClick(View v) {
+                                            if (mFragmentListener != null) {
+                                                mFragmentListener.onBackClicked();
+                                            }
+                                        }
+                                    });
                         }
                     }
                 }, 500);

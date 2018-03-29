@@ -24,7 +24,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dim_22">
+                android:layout_marginTop="@dimen/dim_16">
 
                 <ImageView
                     android:id="@+id/back_btn"
@@ -83,7 +83,8 @@
 
             </LinearLayout>
 
-            <ImageView
+            <com.jeeva.android.widgets.HmImageView
+                android:id="@+id/join_private_contest_invitee_photo"
                 android:layout_width="@dimen/dim_66"
                 android:layout_height="@dimen/dim_75"
                 android:layout_gravity="center_horizontal"
@@ -94,11 +95,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
+                android:gravity="center"
                 android:text="Enter Contest Invitation Code to Join &amp; Play the Contest "
                 android:textColor="@color/white"
                 android:textSize="@dimen/sp_12"
                 app:typeface="lato_regular"
-                android:layout_marginTop="@dimen/dim_10" />
+                android:layout_marginTop="@dimen/dim_10"
+                android:layout_marginLeft="@dimen/dim_20"
+                android:layout_marginRight="@dimen/dim_20"/>
 
         </LinearLayout>
 

@@ -23,6 +23,8 @@ import in.sportscafe.nostragamus.module.privateContest.adapter.PrivateContestPri
 import in.sportscafe.nostragamus.module.privateContest.ui.createContest.dto.PrivateContestAdvancePrizeScreenData;
 import in.sportscafe.nostragamus.module.privateContest.ui.createContest.dto.PrizeListItemDto;
 
+import static in.sportscafe.nostragamus.module.privateContest.helper.PrivateContestPrizeEstimationHelper.getDistributableTotalPrize;
+
 public class PrivateContestAdvancePrizeStructurePopupActivity extends PopUpDialogActivity implements View.OnClickListener {
 
     private static final String TAG = PrivateContestAdvancePrizeStructurePopupActivity.class.getSimpleName();
@@ -63,7 +65,8 @@ public class PrivateContestAdvancePrizeStructurePopupActivity extends PopUpDialo
     private void calculateTotalAmount(double entryFee) {
         int entries = getEntries();
         if (entryFee > 0 && entries > 0) {
-            mTotalAmount = entries * entryFee;
+            mTotalAmount = getDistributableTotalPrize(entryFee, entries,
+                    Constants.PrivateContests.ADVANCE_TEMPLATE_PROFIT_MARGIN);
 
             TextView totalAmount = (TextView) findViewById(R.id.private_contest_prize_total_amount_textView);
             totalAmount.setText(WalletHelper.getFormattedStringOfAmount(mTotalAmount));

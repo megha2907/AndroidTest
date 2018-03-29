@@ -19,6 +19,9 @@ public class PrivateContestPrizeTemplateResponse {
     @SerializedName("shareType")
     private String shareType;
 
+    @SerializedName("margin")
+    private float margin;
+
     private int TemplateType = PrivateContestPrizeSpinnerItemType.PRIZE_TEMPLATE;
 
     public String getName() {
@@ -51,6 +54,14 @@ public class PrivateContestPrizeTemplateResponse {
 
     public void setTemplateType(int templateType) {
         TemplateType = templateType;
+    }
+
+    public float getMargin() {
+        return margin;
+    }
+
+    public void setMargin(float margin) {
+        this.margin = margin;
     }
 
     /**

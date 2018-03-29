@@ -26,29 +26,32 @@ public class PrivateContestPrizeEstimationHelper {
 
     /**
      *
-     * @param prize
-     * @param totalPrizeAmount
+     * @param prizeTemplate
+     * @param distributableTotalPrizeAmt
      * @param numberOfParticipants
      * @return
      */
-    public List<PrizeListItemDto> getPrizeList(PrivateContestPrizeTemplateResponse prize,
-                                               double totalPrizeAmount, int numberOfParticipants,
+    public List<PrizeListItemDto> getPrizeList(PrivateContestPrizeTemplateResponse prizeTemplate,
+                                               double distributableTotalPrizeAmt, int numberOfParticipants,
                                                PrivateContestPrizeEstimationListener listener) {
         List<PrizeListItemDto> prizeListItemDtoList = null;
 
-        if (prize != null && !TextUtils.isEmpty(prize.getShareType()) && prize.getPrizes() != null && totalPrizeAmount > 0) {
+        if (prizeTemplate != null && !TextUtils.isEmpty(prizeTemplate.getShareType())
+                && prizeTemplate.getPrizes() != null && distributableTotalPrizeAmt > 0) {
             prizeListItemDtoList = new ArrayList<>();
 
-            if (prize.getShareType().equalsIgnoreCase(Constants.PrivateContests.PrizeEstimationTemplateType.RANK)) {
 
-                if (numberOfParticipants > prize.getPrizes().size()) {
+            /* If RANK based template chosen */
+            if (prizeTemplate.getShareType().equalsIgnoreCase(Constants.PrivateContests.PrizeEstimationTemplateType.RANK)) {
+
+                if (numberOfParticipants > prizeTemplate.getPrizes().size()) {
                     PrizeListItemDto prizeListItemDto = null;
 
-                    for (PrivateContestPrizeResponse prizeResponse : prize.getPrizes()) {
+                    for (PrivateContestPrizeResponse prizeResponse : prizeTemplate.getPrizes()) {
                         if (prizeResponse.getSharePercentage() > 0) {
                             prizeListItemDto = new PrizeListItemDto();
 
-                            double prizeAmount = totalPrizeAmount * prizeResponse.getSharePercentage();
+                            double prizeAmount = distributableTotalPrizeAmt * prizeResponse.getSharePercentage();
 
                             prizeListItemDto.setWinnerRank(prizeResponse.getWinnerRank());
                             prizeListItemDto.setAmount(prizeAmount);
@@ -64,10 +67,10 @@ public class PrivateContestPrizeEstimationHelper {
                 }
 
 
-            } else if (prize.getShareType().equalsIgnoreCase(Constants.PrivateContests.PrizeEstimationTemplateType.PERCENT)) {
+            } else if (prizeTemplate.getShareType().equalsIgnoreCase(Constants.PrivateContests.PrizeEstimationTemplateType.PERCENT)) {
 
                 PrizeListItemDto prizeListItemDto = null;
-                for (PrivateContestPrizeResponse prizeResponse : prize.getPrizes()) {
+                for (PrivateContestPrizeResponse prizeResponse : prizeTemplate.getPrizes()) {
                     if (prizeResponse.getWinningPercentage() >= 0 && prizeResponse.getSharePercentage() >= 0) {
 
                         int prizeAmount = 0, usersCount = 0;
@@ -87,9 +90,9 @@ public class PrivateContestPrizeEstimationHelper {
                             usersCount++;
                         }*/
 
-                    /* Percentage-of-prize out of total prize which is to be shared equally for
+                    /* Percentage-of-prizeTemplate out of total prizeTemplate which is to be shared equally for
                      * countable-users in payout-level(this iteration)  */
-                        winningMoney = totalPrizeAmount * prizeResponse.getSharePercentage();
+                        winningMoney = distributableTotalPrizeAmt * prizeResponse.getSharePercentage();
                         if (winningMoney > 0 && usersCount > 0) {
                             prizeAmount = (int) (winningMoney / usersCount);
 
@@ -107,12 +110,13 @@ public class PrivateContestPrizeEstimationHelper {
 
                         Log.d(TAG, "\n ----------- \n" +
                                 "\n Total-participants : " + numberOfParticipants +
-                                "\n Total-prize (calculated) : " + totalPrizeAmount +
+                                "\n Total-prizeTemplate (calculated) : " + distributableTotalPrizeAmt +
+                                "\n Margin :" + prizeTemplate.getMargin() +
                                 "\n ------------- " +
                                 "\n %-of-user(percent) : " + participantsRation + "("+prizeResponse.getWinningPercentage()+")" +
                                 "\n countable-user (based on %) :" + usersCount +
                                 "\n step/rounding : " + "" +
-                                "\n %-of-prize (share) : " + winningMoney + "("+prizeResponse.getSharePercentage()+")" +
+                                "\n %-of-prizeTemplate (share) : " + winningMoney + "("+prizeResponse.getSharePercentage()+")" +
                                 "\n prizeAmountPerUser : " + prizeAmount);
                     }
                 }
@@ -123,13 +127,23 @@ public class PrivateContestPrizeEstimationHelper {
         return prizeListItemDtoList;
     }
 
-    public double getAdvancePrizeValue(double totalPrizeAmount, float percents) {
-        double prize = 0;
+    /**
+     * Reduces margin/profit amt from total prize-amt
+     * @param prizeFee
+     * @param entries
+     * @param margin
+     * @return
+     */
+    public static synchronized double getDistributableTotalPrize(double prizeFee, int entries, float margin) {
+        double prizeAmt = 0;
 
-        if (totalPrizeAmount > 0 && percents > 0) {
-            prize = (totalPrizeAmount * percents) / 100;
+        double totalAmount = prizeFee * entries;
+        if (margin > 0 && totalAmount > 0) {
+            double marginAmt = totalAmount * margin;
+            prizeAmt = totalAmount - marginAmt;
         }
 
-        return prize;
+        return prizeAmt;
     }
+
 }

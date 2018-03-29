@@ -77,6 +77,13 @@ public class PrivateContestInPlayInviteFragment extends BaseFragment implements 
             branchUniversalObject.addContentMetadata(Constants.PrivateContests.BranchLink.PRIVATE_CONTEST_INVITATION_CODE,
                     mInplayContestDto.getPrivateCode());
 
+            if (Nostragamus.getInstance().getServerDataManager().getUserInfo() != null) {
+                branchUniversalObject.addContentMetadata(Constants.PrivateContests.BranchLink.USER_NICK,
+                        Nostragamus.getInstance().getServerDataManager().getUserInfo().getUserNickName());
+                branchUniversalObject.addContentMetadata(Constants.PrivateContests.BranchLink.USER_PHOTO_URL,
+                        Nostragamus.getInstance().getServerDataManager().getUserInfo().getPhoto());
+            }
+
             LinkProperties linkProperties = new LinkProperties();
             linkProperties.addTag(Constants.PrivateContests.BranchLink.LINKED_PROPERTIES_FEATURE);
             linkProperties.setChannel(Constants.PrivateContests.BranchLink.LINKED_PROPERTIES_CHANNEL);
@@ -136,7 +143,7 @@ public class PrivateContestInPlayInviteFragment extends BaseFragment implements 
     }
 
     private void onShareButtonClicked() {
-        String shareText = "Invite your friends to join " + mShareLink + " private contest!";
+        String shareText = "Hey, join this private contest " + mShareLink + " and let's play and win with Nostragamus!";
         AppSnippet.doGeneralShare(getContext().getApplicationContext(), shareText);
     }
 }

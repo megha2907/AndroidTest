@@ -18,6 +18,7 @@ public class JoinContestData {
     private String contestType;
     private String contestName;
     private int privateContestEntries;
+    private String challengeStartTime;
 
     private boolean shouldScrollContestsInPlay = true;
 
@@ -107,5 +108,13 @@ public class JoinContestData {
 
     public void setPrivateContestEntries(int privateContestEntries) {
         this.privateContestEntries = privateContestEntries;
+    }
+
+    public String getChallengeStartTime() {
+        return challengeStartTime;
+    }
+
+    public void setChallengeStartTime(String challengeStartTime) {
+        this.challengeStartTime = challengeStartTime;
     }
 }

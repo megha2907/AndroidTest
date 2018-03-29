@@ -3,6 +3,7 @@ package in.sportscafe.nostragamus.module.privateContest.ui.joinPrivateContest.fi
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -10,11 +11,13 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import com.jeeva.android.BaseFragment;
 import com.jeeva.android.widgets.CustomProgressbar;
+import com.jeeva.android.widgets.HmImageView;
 
 import org.parceler.Parcels;
 
@@ -25,6 +28,7 @@ import in.sportscafe.nostragamus.module.navigation.wallet.WalletHelper;
 import in.sportscafe.nostragamus.module.privateContest.dataProvider.PrivateContestDetailsApiModelImpl;
 import in.sportscafe.nostragamus.module.privateContest.ui.joinPrivateContest.contestDetails.PrivateContestDetailsActivity;
 import in.sportscafe.nostragamus.module.privateContest.ui.joinPrivateContest.dto.FindPrivateContestResponse;
+import in.sportscafe.nostragamus.module.privateContest.ui.joinPrivateContest.dto.JoinPrivateContestWithInviteCodeScreenData;
 import in.sportscafe.nostragamus.module.privateContest.ui.joinPrivateContest.dto.PrivateContestDetailsScreenData;
 
 /**
@@ -34,8 +38,11 @@ public class JoinPrivateContestWithInviteCodeFragment extends BaseFragment imple
 
     private static final String TAG = JoinPrivateContestWithInviteCodeFragment.class.getSimpleName();
 
-    private JoinPrivateContestWithInviteCodeFragmentListener mFragmentListner;
+    private JoinPrivateContestWithInviteCodeFragmentListener mFragmentListener;
+    private JoinPrivateContestWithInviteCodeScreenData mScreenData;
+
     private EditText mPrivateCodeEditText;
+    private Button mFindContestButton;
 
     public JoinPrivateContestWithInviteCodeFragment() {
     }
@@ -44,7 +51,7 @@ public class JoinPrivateContestWithInviteCodeFragment extends BaseFragment imple
     public void onAttach(Context context) {
         super.onAttach(context);
         if (context instanceof JoinPrivateContestWithInviteCodeFragmentListener) {
-            mFragmentListner = (JoinPrivateContestWithInviteCodeFragmentListener) context;
+            mFragmentListener = (JoinPrivateContestWithInviteCodeFragmentListener) context;
         } else {
             throw new RuntimeException(TAG + "Should implement " +
                     JoinPrivateContestWithInviteCodeFragmentListener.class.getSimpleName());
@@ -61,15 +68,25 @@ public class JoinPrivateContestWithInviteCodeFragment extends BaseFragment imple
 
     private void initViews(View view) {
         mPrivateCodeEditText = (EditText) view.findViewById(R.id.join_contest_private_code_editText);
+        mFindContestButton = (Button) view.findViewById(R.id.find_pvt_contest_details_btn);
 
         view.findViewById(R.id.back_btn).setOnClickListener(this);
-        view.findViewById(R.id.find_pvt_contest_details_btn).setOnClickListener(this);
+        mFindContestButton.setOnClickListener(this);
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        initMembers();
         showHeaderValues();
+        setInvitationCodeIfReceived();
+    }
+
+    private void initMembers() {
+        Bundle args = getArguments();
+        if (args != null && args.containsKey(Constants.BundleKeys.JOIN_PRIVATE_CONTEST_WITH_INVITATION_CODE_SCREEN_DATA)) {
+            mScreenData = Parcels.unwrap(args.getParcelable(Constants.BundleKeys.JOIN_PRIVATE_CONTEST_WITH_INVITATION_CODE_SCREEN_DATA));
+        }
     }
 
     private void showHeaderValues() {
@@ -79,13 +96,51 @@ public class JoinPrivateContestWithInviteCodeFragment extends BaseFragment imple
         }
     }
 
+    private void setInvitationCodeIfReceived() {
+        if (mScreenData != null && getView() != null) {
+
+            /* Private code in screenData , received means just populate and make auto search */
+            if (!TextUtils.isEmpty(mScreenData.getPrivateCode())) {
+
+                if (mScreenData.getShareDetails() != null) {
+                    HmImageView photoImageView = (HmImageView) getView().findViewById(R.id.join_private_contest_invitee_photo);
+                    photoImageView.setImageUrl(mScreenData.getShareDetails().getUserPhotoUrl());
+
+                    String name = (!TextUtils.isEmpty(mScreenData.getShareDetails().getUserNick())) ?
+                            mScreenData.getShareDetails().getUserNick() : "";
+                    String msg = name + " invite you in private contest. So, let's join & play the contest";
+
+                    TextView msgTextView = (TextView) getView().findViewById(R.id.join_private_contest_header_msg_textView);
+                    msgTextView.setText(msg);
+                }
+
+                // Set private invitation code
+                mPrivateCodeEditText.setText(mScreenData.getPrivateCode());
+                int length = mPrivateCodeEditText.getText().length();
+                mPrivateCodeEditText.setSelection(length, length);
+
+                // User should not allow to click as auto-click event will occur
+                mFindContestButton.setEnabled(false);
+
+                // set auto click even
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        mFindContestButton.setEnabled(true);
+                        onFindContestClicked();
+                    }
+                }, 3000);
+            }
+        }
+    }
+
     @Override
     public void onClick(View view) {
 
         switch (view.getId()) {
             case R.id.back_btn:
-                if (mFragmentListner != null) {
-                    mFragmentListner.onBackClicked();
+                if (mFragmentListener != null) {
+                    mFragmentListener.onBackClicked();
                 }
                 break;
 

@@ -21,9 +21,9 @@ import in.sportscafe.nostragamus.module.privateContest.ui.createContest.dto.Crea
  * Created by sc on 22/3/18.
  */
 
-public class JoinPrivateContestHelper {
+public class CreateAndJoinPrivateContestHelper {
 
-    private static final String TAG = JoinPrivateContestHelper.class.getSimpleName();
+    private static final String TAG = CreateAndJoinPrivateContestHelper.class.getSimpleName();
     private static final int JOIN_CHALLENGE_CONFIRMATION_REQUEST_CODE = 151;
 
     private JoinPrivateContestProcessListener mListener;
@@ -39,9 +39,9 @@ public class JoinPrivateContestHelper {
         void showProgressBar();
     }
 
-    public synchronized int JoinPrivateContest(@NonNull JoinContestData joinPrivateContestData,
-                                               @NonNull AppCompatActivity appCompatActivity,
-                                               @NonNull JoinPrivateContestProcessListener listener) {
+    public synchronized int createAndJoinPrivateContest(@NonNull JoinContestData joinPrivateContestData,
+                                                        @NonNull AppCompatActivity appCompatActivity,
+                                                        @NonNull JoinPrivateContestProcessListener listener) {
 
         if (joinPrivateContestData != null && listener != null && appCompatActivity != null) {
             mListener = listener;
@@ -139,8 +139,9 @@ public class JoinPrivateContestHelper {
                 joinContestData.getChallengeId(),
                 joinContestData.getEntryFee(),
                 joinContestData.getContestName(),
+                2, /* Min 2 participants always */
                 joinContestData.getPrivateContestEntries(),
-                100, "up",
+                "up",
                 mListener);
     }
 

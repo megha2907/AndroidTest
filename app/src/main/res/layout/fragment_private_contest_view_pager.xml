@@ -15,7 +15,7 @@
         <ImageView
             android:layout_width="@dimen/dim_190"
             android:layout_height="@dimen/dim_156"
-            android:src="@drawable/dg_master_inplay_img"
+            android:src="@drawable/private_contest_img"
             android:layout_marginTop="@dimen/dim_20"/>
 
         <com.jeeva.android.widgets.customfont.CustomTextView

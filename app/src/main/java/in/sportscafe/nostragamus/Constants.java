@@ -133,6 +133,7 @@ public interface Constants {
         String POWERUP_TRANSFER_FROM_BANK_ATTEMPTED = "powerupTransferFromBankAttempted";
         String POWERUP_TRANSFER_FROM_BANK_SCREEN_SHOWN = "powerupTransferScreenShown";
         String SHOW_FAQ = "showFAQ";
+        String PRIVATE_CONTEST_INVITATION_CODE = "privateContestInvitationCode";
     }
 
     interface Alerts {
@@ -402,6 +403,7 @@ public interface Constants {
         String PRIVATE_CONTEST_ADVANCE_PRIZE_STRUCTURE_SCREEN_DATA = "privateContestAdvancePrizeScreenData";
         String PRIVATE_CONTEST_ADVANCE_PRIZE_LIST = "privateContestAdvancePrizeList";
         String PRIVATE_CONTEST_DETAILS_SCREEN_DATA = "privateContestScreenData";
+        String JOIN_PRIVATE_CONTEST_WITH_INVITATION_CODE_SCREEN_DATA = "joinPvtContestWithInvitationCodeScreenData";
     }
 
     interface DateFormats {
@@ -1018,6 +1020,7 @@ public interface Constants {
         double MAX_ENTRY_FEE = 20000;   // User is allowed to enter max entry fee
         int MAX_ENTRIES = 40;           // User is allowed to enter max contest entries
         int PRIVATE_CODE_LENGTH = 5;
+        float ADVANCE_TEMPLATE_PROFIT_MARGIN = 0.1f;
 
         interface PrizeEstimationTemplateType {
             String PERCENT = "percent";
@@ -1029,6 +1032,9 @@ public interface Constants {
             String LINKED_PROPERTIES_FEATURE = "privateContest";
             String LINKED_PROPERTIES_CAMPAIGN = "AppPrivateCampaign";
             String LINKED_PATH = "app/privateContest";
+
+            String USER_NICK = "userNick";
+            String USER_PHOTO_URL = "userPhotoUrl";
 
             String PRIVATE_CONTEST_INVITATION_CODE = "private_contest_invitation_code";
         }

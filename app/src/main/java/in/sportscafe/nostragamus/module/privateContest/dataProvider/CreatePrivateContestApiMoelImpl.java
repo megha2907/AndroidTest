@@ -8,7 +8,7 @@ import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.module.common.ErrorResponse;
 import in.sportscafe.nostragamus.module.privateContest.ui.createContest.dto.CreatePrivateContestRequest;
 import in.sportscafe.nostragamus.module.privateContest.ui.createContest.dto.CreatePrivateContestResponse;
-import in.sportscafe.nostragamus.module.privateContest.helper.JoinPrivateContestHelper;
+import in.sportscafe.nostragamus.module.privateContest.helper.CreateAndJoinPrivateContestHelper;
 import in.sportscafe.nostragamus.webservice.ApiCallBack;
 import in.sportscafe.nostragamus.webservice.MyWebService;
 import retrofit2.Call;
@@ -24,7 +24,7 @@ public class CreatePrivateContestApiMoelImpl {
 
     public void callCreateContestApi(int challengeId, double fee, String cofigName,
                                      int minParticipants, int maxParticipants, String step,
-            final JoinPrivateContestHelper.JoinPrivateContestProcessListener listener) {
+            final CreateAndJoinPrivateContestHelper.JoinPrivateContestProcessListener listener) {
 
         CreatePrivateContestRequest request = new CreatePrivateContestRequest();
         request.setChallengeId(challengeId);
@@ -83,7 +83,7 @@ public class CreatePrivateContestApiMoelImpl {
     }
 
     private void handleErrorCode400(Response<CreatePrivateContestResponse> response,
-                                    JoinPrivateContestHelper.JoinPrivateContestProcessListener listener) {
+                                    CreateAndJoinPrivateContestHelper.JoinPrivateContestProcessListener listener) {
         ErrorResponse errorResponse = null;
         try {
             errorResponse = new Gson().fromJson(response.errorBody().string(), ErrorResponse.class);

@@ -95,6 +95,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/onboard_text_et_referral_code"
         android:layout_centerHorizontal="true"
+        android:gravity="center"
         android:layout_marginTop="@dimen/dp_20"
         android:layout_marginLeft="@dimen/dp_20"
         android:layout_marginRight="@dimen/dp_20"
