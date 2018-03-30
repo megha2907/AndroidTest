@@ -37,6 +37,7 @@ import in.sportscafe.nostragamus.module.nostraHome.helper.BottomBarCountHelper;
 import in.sportscafe.nostragamus.module.notifications.NostraNotification;
 import in.sportscafe.nostragamus.module.notifications.NotificationHelper;
 import in.sportscafe.nostragamus.module.notifications.inApp.InAppNotificationHelper;
+import in.sportscafe.nostragamus.module.recentActivity.ui.RecentActivityFragment;
 import in.sportscafe.nostragamus.module.user.group.allgroups.AllGroupsFragment;
 import in.sportscafe.nostragamus.module.user.login.UserInfoModelImpl;
 import in.sportscafe.nostragamus.module.user.login.dto.UserInfo;
@@ -54,14 +55,14 @@ public class NostraHomeActivity extends NostraBaseActivity implements View.OnCli
         int SHOW_NEW_CHALLENGES = -111;
         int SHOW_IN_PLAY = -112;
         int SHOW_COMPLETED = -113;
-        int SHOW_GROUPS = -114;
+        int SHOW_RECENT_ACTIVITY = -114;
         int SHOW_NAVIGATION = -115;
     }
 
     private LinearLayout mNewChallengesBottomButton;
     private LinearLayout mInPlayBottomButton;
     private LinearLayout mCompletedChallengeBottomButton;
-    private LinearLayout mGroupBottomButton;
+    private LinearLayout mRecentActivityBottomButton;
     private LinearLayout mProfileBottomButton;
     private TextView mUnPlayedMatchCounterTextView;
 
@@ -218,8 +219,8 @@ public class NostraHomeActivity extends NostraBaseActivity implements View.OnCli
                         onHistoryClicked(intent.getExtras());
                         break;
 
-                    case LaunchedFrom.SHOW_GROUPS:
-                        onGroupClicked(intent.getExtras());
+                    case LaunchedFrom.SHOW_RECENT_ACTIVITY:
+                        onRecentActivityClicked(intent.getExtras());
                         break;
 
                     case LaunchedFrom.SHOW_NAVIGATION:
@@ -286,6 +287,8 @@ public class NostraHomeActivity extends NostraBaseActivity implements View.OnCli
 
                 } else if (screenName.equalsIgnoreCase(Constants.Notifications.SCREEN_SLIDES)) {
                     startActivity(notificationHelper.getSlidesScreenIntent(this, notification));
+                } else if (screenName.equalsIgnoreCase(Constants.Notifications.SCREEN_ANNOUNCEMENT)) {
+                    startActivity(notificationHelper.getAnnouncementScreenIntent(this, notification));
                 }
 
             } else {
@@ -305,14 +308,14 @@ public class NostraHomeActivity extends NostraBaseActivity implements View.OnCli
         mNewChallengesBottomButton = (LinearLayout) findViewById(R.id.home_challenges_tab_layout);
         mInPlayBottomButton = (LinearLayout) findViewById(R.id.home_inPlay_tab_layout);
         mCompletedChallengeBottomButton = (LinearLayout) findViewById(R.id.home_completed_tab_layout);
-        mGroupBottomButton = (LinearLayout) findViewById(R.id.home_group_tab_layout);
+        mRecentActivityBottomButton = (LinearLayout) findViewById(R.id.home_recent_activity_tab_layout);
         mProfileBottomButton = (LinearLayout) findViewById(R.id.home_profile_tab_layout);
         mUnPlayedMatchCounterTextView = (TextView) findViewById(R.id.home_inPlay_matches_count);
 
         mNewChallengesBottomButton.setOnClickListener(this);
         mInPlayBottomButton.setOnClickListener(this);
         mCompletedChallengeBottomButton.setOnClickListener(this);
-        mGroupBottomButton.setOnClickListener(this);
+        mRecentActivityBottomButton.setOnClickListener(this);
         mProfileBottomButton.setOnClickListener(this);
     }
 
@@ -331,8 +334,8 @@ public class NostraHomeActivity extends NostraBaseActivity implements View.OnCli
                 onHistoryClicked(getIntent().getExtras());
                 break;
 
-            case R.id.home_group_tab_layout:
-                onGroupClicked(getIntent().getExtras());
+            case R.id.home_recent_activity_tab_layout:
+                onRecentActivityClicked(getIntent().getExtras());
                 break;
 
             case R.id.home_profile_tab_layout:
@@ -345,7 +348,7 @@ public class NostraHomeActivity extends NostraBaseActivity implements View.OnCli
         mNewChallengesBottomButton.setSelected(true);
         mInPlayBottomButton.setSelected(false);
         mCompletedChallengeBottomButton.setSelected(false);
-        mGroupBottomButton.setSelected(false);
+        mRecentActivityBottomButton.setSelected(false);
         mProfileBottomButton.setSelected(false);
     }
 
@@ -353,7 +356,7 @@ public class NostraHomeActivity extends NostraBaseActivity implements View.OnCli
         mInPlayBottomButton.setSelected(true);
         mNewChallengesBottomButton.setSelected(false);
         mCompletedChallengeBottomButton.setSelected(false);
-        mGroupBottomButton.setSelected(false);
+        mRecentActivityBottomButton.setSelected(false);
         mProfileBottomButton.setSelected(false);
     }
 
@@ -361,12 +364,12 @@ public class NostraHomeActivity extends NostraBaseActivity implements View.OnCli
         mInPlayBottomButton.setSelected(false);
         mNewChallengesBottomButton.setSelected(false);
         mCompletedChallengeBottomButton.setSelected(true);
-        mGroupBottomButton.setSelected(false);
+        mRecentActivityBottomButton.setSelected(false);
         mProfileBottomButton.setSelected(false);
     }
 
     protected void setGroupSelected() {
-        mGroupBottomButton.setSelected(true);
+        mRecentActivityBottomButton.setSelected(true);
         mNewChallengesBottomButton.setSelected(false);
         mCompletedChallengeBottomButton.setSelected(false);
         mInPlayBottomButton.setSelected(false);
@@ -378,8 +381,17 @@ public class NostraHomeActivity extends NostraBaseActivity implements View.OnCli
         mNewChallengesBottomButton.setSelected(false);
         mCompletedChallengeBottomButton.setSelected(false);
         mInPlayBottomButton.setSelected(false);
-        mGroupBottomButton.setSelected(false);
+        mRecentActivityBottomButton.setSelected(false);
     }
+
+    private void setRecentActivitySelected() {
+        mRecentActivityBottomButton.setSelected(true);
+        mNewChallengesBottomButton.setSelected(false);
+        mCompletedChallengeBottomButton.setSelected(false);
+        mInPlayBottomButton.setSelected(false);
+        mProfileBottomButton.setSelected(false);
+    }
+
 
     private void onNavigationClicked(Bundle args) {
         setProfileSelected();
@@ -387,11 +399,12 @@ public class NostraHomeActivity extends NostraBaseActivity implements View.OnCli
         NostragamusAnalytics.getInstance().trackScreenShown(Constants.AnalyticsCategory.HOME_SCREEN, Constants.AnalyticsClickLabels.NAVIGATION);
     }
 
-    private void onGroupClicked(Bundle args) {
-        setGroupSelected();
-        loadGroupFragment(args);
-        NostragamusAnalytics.getInstance().trackScreenShown(Constants.AnalyticsCategory.HOME_SCREEN, Constants.AnalyticsClickLabels.GROUPS);
+    private void onRecentActivityClicked(Bundle args) {
+        setRecentActivitySelected();
+        loadRecentActivityFragment(args);
+        NostragamusAnalytics.getInstance().trackScreenShown(Constants.AnalyticsCategory.HOME_SCREEN, Constants.AnalyticsClickLabels.RECENT_ACTIVITY);
     }
+
 
     private void onInPlayClicked(Bundle args) {
         setInPlaySelected();
@@ -433,6 +446,14 @@ public class NostraHomeActivity extends NostraBaseActivity implements View.OnCli
             newChallengesFragment.setArguments(args);
         }
         FragmentHelper.replaceFragment(this, R.id.fragment_container, newChallengesFragment);
+    }
+
+    private void loadRecentActivityFragment(Bundle args) {
+        RecentActivityFragment recentActivityFragment = new RecentActivityFragment();
+        if (args != null) {
+            recentActivityFragment.setArguments(args);
+        }
+        FragmentHelper.replaceFragment(this, R.id.fragment_container, recentActivityFragment);
     }
 
     private void loadHistoryFragment(Bundle args) {

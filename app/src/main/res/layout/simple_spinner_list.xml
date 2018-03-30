@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="fill_parent"
+    android:drawablePadding="@dimen/dim_7"
+    android:drawableRight="@drawable/challenge_down_arrow"
+    android:gravity="center|left"
+    android:paddingStart="@dimen/dim_18"
+    android:textColor="@color/white"
+    android:textSize="@dimen/sp_10" />

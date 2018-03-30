@@ -5,6 +5,8 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,9 +16,11 @@ import android.widget.TextView;
 import com.jeeva.android.BaseFragment;
 
 import in.sportscafe.nostragamus.Constants;
+import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
 import in.sportscafe.nostragamus.module.navigation.wallet.dto.UserWalletResponse;
+import in.sportscafe.nostragamus.module.user.login.dto.UserInfo;
 import in.sportscafe.nostragamus.utils.AnimationHelper;
 
 /**
@@ -31,7 +35,8 @@ public class WalletHomeFragment extends BaseFragment implements View.OnClickList
     private LinearLayout mPromoMoneyInfoLayout;
     private LinearLayout mWinningInfoLayout;
 
-    public WalletHomeFragment() {}
+    public WalletHomeFragment() {
+    }
 
     @Override
     public void onAttach(Context context) {
@@ -39,7 +44,7 @@ public class WalletHomeFragment extends BaseFragment implements View.OnClickList
         if (context instanceof WalletHomeFragmentListener) {
             mFragmentListener = (WalletHomeFragmentListener) context;
         } else {
-            throw  new RuntimeException("Activity must implement " +
+            throw new RuntimeException("Activity must implement " +
                     WalletHomeFragmentListener.class.getSimpleName());
         }
     }
@@ -61,6 +66,7 @@ public class WalletHomeFragment extends BaseFragment implements View.OnClickList
         rootView.findViewById(R.id.wallet_home_card_money_layout).setOnClickListener(this);
         rootView.findViewById(R.id.wallet_home_card_promo_layout).setOnClickListener(this);
         rootView.findViewById(R.id.wallet_home_card_winning_layout).setOnClickListener(this);
+        rootView.findViewById(R.id.wallet_kyc_layout).setOnClickListener(this);
 
         mWalletMoneyInfoLayout = (LinearLayout) rootView.findViewById(R.id.wallet_deposit_info_layout);
         mPromoMoneyInfoLayout = (LinearLayout) rootView.findViewById(R.id.wallet_promo_info_layout);
@@ -86,6 +92,8 @@ public class WalletHomeFragment extends BaseFragment implements View.OnClickList
 
         /* Fetch again the values and update later */
         fetchUserWalletFromServer();
+
+        updateKYCStatus();
     }
 
     private void fetchUserWalletFromServer() {
@@ -131,7 +139,7 @@ public class WalletHomeFragment extends BaseFragment implements View.OnClickList
                 TextView withdrawProgressTextView = (TextView) rootView.findViewById(R.id.wallet_home_withdraw_progress_textView);
                 if (withdrawInProgress > 1) {
                     withdrawProgressTextView.setText(withdrawInProgress + " withdrawals in progress");
-                }else {
+                } else {
                     withdrawProgressTextView.setText(withdrawInProgress + " withdrawal in progress");
                 }
             }
@@ -142,12 +150,64 @@ public class WalletHomeFragment extends BaseFragment implements View.OnClickList
                 TextView payoutAccountsTextView = (TextView) rootView.findViewById(R.id.wallet_home_account_added_textView);
                 if (payoutAccount > 1) {
                     payoutAccountsTextView.setText(payoutAccount + " accounts added");
-                }else {
+                } else {
                     payoutAccountsTextView.setText(payoutAccount + " account added");
                 }
             }
         }
     }
+
+    private void updateKYCStatus() {
+        if (getView() != null && getActivity() != null) {
+            TextView kycStatusTv = (TextView) getView().findViewById(R.id.wallet_kyc_status_textView);
+
+            UserInfo userInfo = Nostragamus.getInstance().getServerDataManager().getUserInfo();
+            if (userInfo != null && userInfo.getInfoDetails() != null && !TextUtils.isEmpty(userInfo.getInfoDetails().getKycStatus())) {
+                updateKYCStatus(userInfo.getInfoDetails().getKycStatus(), kycStatusTv);
+            }
+        }
+    }
+
+    private void updateKYCStatus(String kycStatusFromServer, TextView kycStatusTv) {
+
+        String kycStatus = "Get Benefits";
+
+        switch (kycStatusFromServer) {
+            case Constants.KYCStatus.NOT_REQUIRED:
+                kycStatus = "Get Benefits";
+                kycStatusTv.setTextColor(ContextCompat.getColor(getContext(), R.color.white_dim));
+                break;
+
+            case Constants.KYCStatus.REQUIRED:
+                kycStatus = "Get Benefits";
+                kycStatusTv.setTextColor(ContextCompat.getColor(getContext(), R.color.blue_008ae1));
+                break;
+
+            case Constants.KYCStatus.UPLOADED:
+                kycStatus = "Verification in Progress";
+                kycStatusTv.setTextColor(ContextCompat.getColor(getContext(), R.color.blue_008ae1));
+                break;
+
+            case Constants.KYCStatus.VERIFIED:
+                kycStatus = "Verification completed";
+                kycStatusTv.setTextColor(ContextCompat.getColor(getContext(), R.color.paid_entry_tv_color));
+                break;
+
+            case Constants.KYCStatus.FAILED:
+                kycStatus = "KYC Rejected";
+                kycStatusTv.setTextColor(ContextCompat.getColor(getContext(), R.color.radical_red));
+                break;
+
+            case Constants.KYCStatus.BLOCKED:
+                kycStatus = "KYC Rejected, Please contact customer care";
+                kycStatusTv.setTextColor(ContextCompat.getColor(getContext(), R.color.radical_red));
+                break;
+
+        }
+
+        kycStatusTv.setText(kycStatus);
+    }
+
 
     @Override
     public void onClick(View view) {
@@ -187,6 +247,10 @@ public class WalletHomeFragment extends BaseFragment implements View.OnClickList
 
             case R.id.wallet_home_card_winning_layout:
                 onWinningInfoLayoutClicked();
+                break;
+
+            case R.id.wallet_kyc_layout:
+                onKYCClicked();
                 break;
         }
     }
@@ -234,9 +298,7 @@ public class WalletHomeFragment extends BaseFragment implements View.OnClickList
     }
 
     private void onWithdrawMoneyClicked() {
-        if (mFragmentListener != null) {
-            mFragmentListener.onWithdrawMoneyClicked();
-        }
+        checkKYCStatus();
     }
 
     private void onAddMoneyClicked() {
@@ -244,4 +306,61 @@ public class WalletHomeFragment extends BaseFragment implements View.OnClickList
             mFragmentListener.onAddMoneyClicked();
         }
     }
+
+    private void onKYCClicked() {
+        if (mFragmentListener != null) {
+            mFragmentListener.onKYCClicked();
+        }
+    }
+
+    private void checkKYCStatus() {
+
+        String kycStatusFromServer = "";
+
+        UserInfo userInfo = Nostragamus.getInstance().getServerDataManager().getUserInfo();
+        if (userInfo != null && userInfo.getInfoDetails() != null && !TextUtils.isEmpty(userInfo.getInfoDetails().getKycStatus())) {
+            kycStatusFromServer = userInfo.getInfoDetails().getKycStatus();
+        }
+
+        switch (kycStatusFromServer) {
+            case Constants.KYCStatus.NOT_REQUIRED:
+                if (mFragmentListener != null) {
+                    mFragmentListener.onAddMoneyClicked();
+                }
+                break;
+
+            case Constants.KYCStatus.REQUIRED:
+                if (mFragmentListener != null) {
+                    mFragmentListener.onKYCClicked();
+                }
+                break;
+
+            case Constants.KYCStatus.UPLOADED:
+                if (mFragmentListener != null) {
+                    mFragmentListener.onOpenKYCRequiredPopup();
+                }
+                break;
+
+            case Constants.KYCStatus.VERIFIED:
+                if (mFragmentListener != null) {
+                    mFragmentListener.onAddMoneyClicked();
+                }
+                break;
+
+            case Constants.KYCStatus.FAILED:
+                if (mFragmentListener != null) {
+                    mFragmentListener.onKYCClicked();
+                }
+                break;
+
+            case Constants.KYCStatus.BLOCKED:
+                if (mFragmentListener != null) {
+                    mFragmentListener.onKYCClicked();
+                }
+                break;
+
+        }
+
+    }
+
 }

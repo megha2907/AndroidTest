@@ -290,6 +290,8 @@ public class NewChallengesViewPagerFragment extends BaseFragment {
                             startActivity(notificationHelper.getWebViewScreenIntent(getContext(), notification));
                         } else if (screenName.equalsIgnoreCase(Constants.Notifications.SCREEN_SLIDES)) {
                             startActivity(notificationHelper.getSlidesScreenIntent(getContext(), notification));
+                        }else if (screenName.equalsIgnoreCase(Constants.Notifications.SCREEN_ANNOUNCEMENT)) {
+                            startActivity(notificationHelper.getAnnouncementScreenIntent(getContext(), notification));
                         }
 
                     }

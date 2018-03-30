@@ -129,11 +129,13 @@ public class HowToPlayFragment extends BaseFragment implements View.OnClickListe
     }
 
     private void setScreenTitle(String title) {
-        TextView screenTitle = (TextView) findViewById(R.id.how_to_play_tv_heading);
-        if (!TextUtils.isEmpty(title)) {
-            screenTitle.setText(title);
-        } else {
-            screenTitle.setText("Nostragamus");
+        if (getActivity() != null && getView() != null) {
+            TextView screenTitle = (TextView) getView().findViewById(R.id.how_to_play_tv_heading);
+            if (!TextUtils.isEmpty(title)) {
+                screenTitle.setText(title);
+            } else {
+                screenTitle.setText("Nostragamus");
+            }
         }
     }
 

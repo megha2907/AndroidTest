@@ -164,7 +164,7 @@ public class ChallengeHistoryContestDetailFragment extends NostraBaseFragment im
         Bundle args = new Bundle();
         args.putInt(Constants.BundleKeys.SCREEN_LAUNCHED_FROM_PARENT, RewardsLaunchedFrom.CHALLENGE_HISTORY_CONTEST_DETAILS);
 
-        if (completedContestDto.getContestMode().equalsIgnoreCase(Constants.ContestType.POOL)) {
+        if (completedContestDto.getContestMode()!=null && completedContestDto.getContestMode().equalsIgnoreCase(Constants.ContestType.POOL)) {
 
             PoolPrizeEstimationScreenData screenData = new PoolPrizeEstimationScreenData();
             screenData.setRewardScreenLauncherParent(RewardsLaunchedFrom.CHALLENGE_HISTORY_CONTEST_DETAILS);
@@ -177,7 +177,7 @@ public class ChallengeHistoryContestDetailFragment extends NostraBaseFragment im
             fragment.setArguments(args);
 
         }
-        else if (completedContestDto.getContestMode().equalsIgnoreCase(Constants.ContestType.BUMPER)) {
+        else if (completedContestDto.getContestMode()!=null && completedContestDto.getContestMode().equalsIgnoreCase(Constants.ContestType.BUMPER)) {
 
             BumperPrizesEstimationScreenData screenData = new BumperPrizesEstimationScreenData();
             screenData.setRewardScreenLauncherParent(RewardsLaunchedFrom.CHALLENGE_HISTORY_CONTEST_DETAILS);

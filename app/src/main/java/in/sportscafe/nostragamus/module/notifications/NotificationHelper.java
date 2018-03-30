@@ -25,6 +25,8 @@ import in.sportscafe.nostragamus.module.navigation.wallet.walletHistory.WalletHi
 import in.sportscafe.nostragamus.module.newChallenges.dto.NewChallengeMatchesScreenData;
 import in.sportscafe.nostragamus.module.newChallenges.ui.matches.NewChallengesMatchActivity;
 import in.sportscafe.nostragamus.module.play.myresults.MyResultsActivity;
+import in.sportscafe.nostragamus.module.recentActivity.announcement.AnnouncementActivity;
+import in.sportscafe.nostragamus.module.recentActivity.announcement.AnnouncementScreenData;
 import in.sportscafe.nostragamus.module.store.StoreActivity;
 
 /**
@@ -282,6 +284,26 @@ public class NotificationHelper {
         }
 
         Intent intent = new Intent(context, HowToPlayActivity.class);
+        intent.putExtras(args);
+        return intent;
+    }
+
+    @NonNull
+    public Intent getAnnouncementScreenIntent(Context context, NostraNotification notification) {
+        Bundle args = new Bundle();
+        AnnouncementScreenData announcementScreenData = new AnnouncementScreenData();
+
+        if (notification != null && notification.getData()!=null) {
+            announcementScreenData.setAnnouncementTitle(notification.getData().getAnnouncementTitle());
+            announcementScreenData.setAnnouncementDesc(notification.getData().getAnnouncementDesc());
+            announcementScreenData.setAnnouncementDate(notification.getData().getAnnouncementTime());
+
+            args.putBoolean(Constants.Notifications.IS_LAUNCHED_FROM_NOTIFICATION, true);
+            args.putParcelable(Constants.Notifications.NOSTRA_NOTIFICATION, Parcels.wrap(notification));
+            args.putParcelable(Constants.BundleKeys.ANNOUNCEMENT_SCREEN_DATA, Parcels.wrap(announcementScreenData));
+        }
+
+        Intent intent = new Intent(context, AnnouncementActivity.class);
         intent.putExtras(args);
         return intent;
     }

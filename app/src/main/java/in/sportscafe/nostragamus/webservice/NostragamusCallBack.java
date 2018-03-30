@@ -1,5 +1,9 @@
 package in.sportscafe.nostragamus.webservice;
 
+import com.crashlytics.android.Crashlytics;
+import com.google.gson.Gson;
+import com.jeeva.android.Log;
+
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Nostragamus;
 import okhttp3.MediaType;
@@ -19,9 +23,20 @@ public abstract class NostragamusCallBack<T> implements Callback<T> {
     @Override
     public void onResponse(Call<T> call, Response<T> response) {
         // checking if it not authorized
-        if(response.code() == 401) {
+        if (response.code() == 401) {
             Nostragamus.getInstance().logout();
         }
+
+        try {
+            if (response.isSuccessful() && response.body() != null && response.body() != null && call != null) {
+                Crashlytics.log("Api Call:-->" + String.valueOf(call.request().url()) +
+                        "\nTimeStamp:-->" + Nostragamus.getInstance().getServerTime()
+                        + "\nResponse:-->" + new Gson().toJson(response.body()));
+            }
+        } catch (Exception e) {
+             Log.e("Error","Something went wrong with Crashlytics log");
+        }
+
     }
 
     @Override

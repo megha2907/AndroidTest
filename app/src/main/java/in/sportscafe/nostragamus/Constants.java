@@ -49,6 +49,8 @@ public interface Constants {
         String SCREEN_EDIT_ANSWER = "editAnswer";
         String SCREEN_NEW_CHALLENGE_GAMES = "newChallengeGames"; /* New Challenges Games Screen  */
         String SCREEN_SLIDES = "slides"; /* How To Play Screen & How to use powerup screen in slide design */
+        String SCREEN_ANNOUNCEMENT = "announcementDetails"; /* Activity Details / Announcement  */
+        String SCREEN_KYC_DETAILS = "KYCDetails"; /* Add KYC Details */
     }
 
     interface SharedKeys {
@@ -357,6 +359,7 @@ public interface Constants {
         String EDIT_ANSWER_SCREEN_DATA = "editAnswerScreenData";
         String COPY_ANSWER_POWERUP_COPIED = "copyAnswerPowerupCopied";
         String BANNER = "banner";
+        String RECENT_ACTIVITY = "recentActivity";
 
         /* Wallet */
         String WALLET_WITHDRAWAL_AMT = "walletWithdrawAmt";
@@ -398,6 +401,7 @@ public interface Constants {
         String IN_APP_NOSTRA_NOTIFICATION_DETAILS = "inAppNostraNotification";
         String COPY_ANSWER_SCREEN_DATA = "copyAnswerScreenData";
         String SLIDE_ID = "SlideId";
+        String ANNOUNCEMENT_SCREEN_DATA = "announcementScreenData";
     }
 
     interface DateFormats {
@@ -536,7 +540,7 @@ public interface Constants {
         String NEW_CHALLENGES = "New Challenges";
         String IN_PLAY = "In Play";
         String HISTORY = "History";
-        String GROUPS = "Groups";
+        String RECENT_ACTIVITY = "Recent Activity";
         String NAVIGATION = "Navigation";
 
         /* Wallet */
@@ -714,6 +718,7 @@ public interface Constants {
         String POOL_CONTEST_REWARD_CALCULATION = "poolContestRewardCalculation";
         String HOW_TO_PLAY = "HowToPlay";
         String SELECT_PAYMENT_MODE = "selectPaymentMode";
+        String ANNOUNCEMENT = "Announcement";
     }
 
     interface InAppPopups {
@@ -1004,5 +1009,23 @@ public interface Constants {
         int DPI = 21;
         int HEIGHT = 22;
         int WIDTH = 23;
+    }
+
+    interface RecentActivityTypes {
+        /* Synced with server as they come in api response */
+        String ALL = "ALL";
+        String ANNOUNCEMENT = "ANNOUNCEMENT";
+        String RESULT = "RESULT";
+        String PROMOTION = "PROMOTION";
+    }
+
+    interface KYCStatus {
+        /* Synced with server as they come in api response */
+        String NOT_REQUIRED = "not_required";
+        String REQUIRED = "required";
+        String UPLOADED = "uploaded";
+        String FAILED = "failed";
+        String VERIFIED = "verified";
+        String BLOCKED = "blocked";
     }
 }
