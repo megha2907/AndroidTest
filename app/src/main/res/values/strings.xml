@@ -136,6 +136,7 @@
     <string name="ok">OK</string>
     <string name="double_back_press_msg">Press back button again to exit</string>
     <string name="match_results">Game Result</string>
+    <string name="rupee_symbol">₹ </string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
@@ -171,4 +172,6 @@
     <string name="powerup_bank_transfering_from_bank_sub_heading_first_time">Once added, two buttons appear. Use the buttons to either transfer the selected powerups to contest, or reset them</string>
     <string name="powerup_bank_transfer_from_bank_heading">Extra powerups you can transfer to Contest</string>
     <string name="powerup_bank_transfer_from_bank_sub_heading">These are the powerups you buy or get for the referrals. Add and transfer these powerups to contests, using the bank</string>
+
+    <string name="default_amount_with_rupee_symbol">₹ 0</string>
 </resources>

@@ -13,6 +13,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -83,6 +84,11 @@ public class InPlayRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                 View v3 = inflater.inflate(R.layout.in_play_headless_card_layout, parent, false);
                 viewHolder = new InPlayHeadLessItemViewHolder(v3);
                 break;
+
+            case InPlayAdapterItemType.JOINED_PRIVATE_CONTEST:
+                View v4 = inflater.inflate(R.layout.in_play_private_contest_card, parent, false);
+                viewHolder = new InPlayJoinedPrivateContestItemViewHolder(v4);
+                break;
         }
 
         return viewHolder;
@@ -107,6 +113,11 @@ public class InPlayRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                 case InPlayAdapterItemType.HEADLESS_CONTEST:
                     contest = (InPlayContestDto) listItem.getItemData();
                     bindHeadLessValues(holder, contest);
+                    break;
+
+                case InPlayAdapterItemType.JOINED_PRIVATE_CONTEST:
+                    contest = (InPlayContestDto) listItem.getItemData();
+                    bindPrivateContestValues(holder, contest);
                     break;
             }
         }
@@ -315,14 +326,117 @@ public class InPlayRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                 viewHolder.totalPlayersTextView.setText(" / " + contest.getTotalParticipants());
             }
 
-            if (contest.getContestMode().equalsIgnoreCase(Constants.ContestType.GUARANTEED)) {
-                viewHolder.contestModeImageView.setImageResource(R.drawable.guaranteed_icon);
-            } else if (contest.getContestMode().equalsIgnoreCase(Constants.ContestType.POOL)) {
-                viewHolder.contestModeImageView.setImageResource(R.drawable.pool_icon);
-            } else if (contest.getContestMode().equalsIgnoreCase(Constants.ContestType.BUMPER)) {
-                viewHolder.contestModeImageView.setImageResource(R.drawable.pool_icon);
-            } else if (contest.getContestMode().equalsIgnoreCase(Constants.ContestType.NON_GUARANTEED)) {
-                viewHolder.contestModeImageView.setImageResource(R.drawable.no_guarantee_icon);
+            if (!TextUtils.isEmpty(contest.getContestMode())) {
+                if (contest.getContestMode().equalsIgnoreCase(Constants.ContestType.GUARANTEED)) {
+                    viewHolder.contestModeImageView.setImageResource(R.drawable.guaranteed_icon);
+                } else if (contest.getContestMode().equalsIgnoreCase(Constants.ContestType.POOL)) {
+                    viewHolder.contestModeImageView.setImageResource(R.drawable.pool_icon);
+                } else if (contest.getContestMode().equalsIgnoreCase(Constants.ContestType.BUMPER)) {
+                    viewHolder.contestModeImageView.setImageResource(R.drawable.pool_icon);
+                } else if (contest.getContestMode().equalsIgnoreCase(Constants.ContestType.NON_GUARANTEED)) {
+                    viewHolder.contestModeImageView.setImageResource(R.drawable.no_guarantee_icon);
+                }
+            }
+
+            if (contest.getMaxPowerUpTransferLimit() == 0) { // Only if maxLimit == 0, then powerup-bank disabled
+                viewHolder.noExtraPowerUpImgView.setVisibility(View.VISIBLE);
+            }
+
+            viewHolder.timelineHeaderParent.removeAllViews();
+            viewHolder.timelineContentParent.removeAllViews();
+            viewHolder.timelineFooterParent.removeAllViews();
+
+            /* Timeline */
+            int totalMatches = contest.getMatches().size();
+            for (int temp = 0; temp < totalMatches; temp++) {
+                InPlayContestMatchDto match = contest.getMatches().get(temp);
+
+                boolean isNodeLineRequired = true;
+                if (temp == 0) {
+                    isNodeLineRequired = false;
+                }
+
+                int matchAttemptedStatus = match.isPlayed();
+                boolean isPlayed;
+                if (Constants.GameAttemptedStatus.COMPLETELY == matchAttemptedStatus) {
+                    isPlayed = true;
+                } else if (Constants.GameAttemptedStatus.PARTIALLY == matchAttemptedStatus) {
+                    isPlayed = false;
+                } else {
+                    isPlayed = false;
+                }
+
+                LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) viewHolder.timelineFooterParent.getLayoutParams();
+                params.setMargins(0, 0, 0, 0);
+
+                    /* Content */
+                TimelineHelper.addNode(viewHolder.timelineContentParent, match.getStatus(), matchAttemptedStatus, isPlayed,
+                        isNodeLineRequired, TimelineHelper.MatchTimelineTypeEnum.IN_PLAY_JOINED, contest.getMatches().size());
+
+                    /* Title */
+                TimelineHelper.addTextNode(viewHolder.timelineHeaderParent, "Game " + (temp + 1), contest.getMatches().size(),
+                        match.getStatus(), TimelineHelper.MatchTimelineTypeEnum.IN_PLAY_JOINED, isPlayed, matchAttemptedStatus);
+
+                /* Footer */
+                String footerStr = DateTimeHelper.getInPlayMatchTime(match.getStartTime());
+                if (match.getStatus().equalsIgnoreCase(Constants.InPlayMatchStatus.COMPLETED)) {
+
+                    if (Constants.GameAttemptedStatus.COMPLETELY == matchAttemptedStatus ||
+                            Constants.GameAttemptedStatus.PARTIALLY == matchAttemptedStatus) {
+                        footerStr = String.valueOf(match.getScore()) + " Points";
+                    } else {
+                        footerStr = "   DNP    ";
+                    }
+
+                    params.setMargins(10, 0, 0, 0);
+
+                } else if (match.getStatus().equalsIgnoreCase(Constants.InPlayMatchStatus.LIVE)) {
+                    footerStr = "In Progress";
+                }
+
+                TimelineHelper.addFooterTextNode(viewHolder.timelineFooterParent, footerStr,
+                        contest.getMatches().size(), match.getStatus(),
+                        TimelineHelper.MatchTimelineTypeEnum.IN_PLAY_JOINED,
+                        isPlayed, match.getStartTime(), matchAttemptedStatus);
+
+                /* Layout params */
+                viewHolder.timelineFooterParent.setLayoutParams(params);
+            }
+        }
+    }
+
+    private void bindPrivateContestValues(RecyclerView.ViewHolder holder, InPlayContestDto contest) {
+        if (contest != null && contest.getMatches() != null) {
+            InPlayJoinedPrivateContestItemViewHolder viewHolder = (InPlayJoinedPrivateContestItemViewHolder) holder;
+
+            viewHolder.contestTitleTextView.setText(contest.getContestName());
+            viewHolder.entryFeeTextView.setText(Constants.RUPEE_SYMBOL + String.valueOf(contest.getEntryFee()));
+
+            double winningAmount = contest.getWinningAmount();
+            int winningAmountValue = (int) winningAmount;
+
+            viewHolder.prizesTextView.setText(Constants.RUPEE_SYMBOL + CodeSnippet.getFormattedAmount(winningAmountValue));
+
+            if (contest.getRank() > 0) {
+                viewHolder.currentRankTextView.setText(AppSnippet.ordinal(contest.getRank()));
+            } else {
+                viewHolder.currentRankTextView.setText("NA");
+            }
+
+            if (contest.getTotalParticipants() > 0) {
+                viewHolder.totalPlayersTextView.setText(" / " + contest.getTotalParticipants());
+            }
+
+            if (!TextUtils.isEmpty(contest.getContestMode())) {
+                if (contest.getContestMode().equalsIgnoreCase(Constants.ContestType.GUARANTEED)) {
+                    viewHolder.contestModeImageView.setImageResource(R.drawable.guaranteed_icon);
+                } else if (contest.getContestMode().equalsIgnoreCase(Constants.ContestType.POOL)) {
+                    viewHolder.contestModeImageView.setImageResource(R.drawable.pool_icon);
+                } else if (contest.getContestMode().equalsIgnoreCase(Constants.ContestType.BUMPER)) {
+                    viewHolder.contestModeImageView.setImageResource(R.drawable.pool_icon);
+                } else if (contest.getContestMode().equalsIgnoreCase(Constants.ContestType.NON_GUARANTEED)) {
+                    viewHolder.contestModeImageView.setImageResource(R.drawable.no_guarantee_icon);
+                }
             }
 
             if (contest.getMaxPowerUpTransferLimit() == 0) { // Only if maxLimit == 0, then powerup-bank disabled
@@ -459,6 +573,115 @@ public class InPlayRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     }
 
     /* ================== View Holders ===================== */
+
+    private class InPlayJoinedPrivateContestItemViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+
+        LinearLayout root;
+        LinearLayout timelineHeaderParent;
+        LinearLayout timelineContentParent;
+        LinearLayout timelineFooterParent;
+        LinearLayout currentRankLayout;
+        LinearLayout prizesLayout;
+        TextView contestTitleTextView;
+        ImageView contestModeImageView;
+        ImageView noExtraPowerUpImgView;
+        TextView entryFeeTextView;
+        TextView currentRankTextView;
+        TextView totalPlayersTextView;
+        TextView prizesTextView;
+        Button inviteFriendsButton;
+
+        public InPlayJoinedPrivateContestItemViewHolder(View itemView) {
+            super(itemView);
+            root = (LinearLayout) itemView.findViewById(R.id.in_play_private_contest_card_parent);
+            timelineHeaderParent = (LinearLayout) itemView.findViewById(R.id.inplay_joined_card_timeline_heading_parent);
+            timelineContentParent = (LinearLayout) itemView.findViewById(R.id.inplay_joined_card_timeline_content_parent);
+            timelineFooterParent = (LinearLayout) itemView.findViewById(R.id.inplay_joined_card_timeline_footer_parent);
+            currentRankLayout = (LinearLayout) itemView.findViewById(R.id.inplay_private_contest_list_current_rank_layout);
+            prizesLayout = (LinearLayout) itemView.findViewById(R.id.inplay_private_contest_list_prizes_layout);
+            contestTitleTextView = (TextView) itemView.findViewById(R.id.inplay_private_contest_card_title_textView);
+            contestModeImageView = (ImageView) itemView.findViewById(R.id.inplay_private_contest_card_header_mode_imgView);
+            entryFeeTextView = (TextView) itemView.findViewById(R.id.inplay_private_contest_card_header_entry_fee_textView);
+            currentRankTextView = (TextView) itemView.findViewById(R.id.inplay_private_contest_card_header_current_rank_textView);
+            prizesTextView = (TextView) itemView.findViewById(R.id.inplay_private_contest_card_header_prizes_textView);
+            totalPlayersTextView = (TextView) itemView.findViewById(R.id.inplay_private_contest_card_header_total_players);
+            noExtraPowerUpImgView = (ImageView) itemView.findViewById(R.id.no_extra_powerup_imgView);
+            inviteFriendsButton = (Button) itemView.findViewById(R.id.private_contest_share_btn);
+
+            root.setOnClickListener(this);
+            currentRankLayout.setOnClickListener(this);
+            prizesLayout.setOnClickListener(this);
+            contestModeImageView.setOnClickListener(this);
+            inviteFriendsButton.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View view) {
+            switch (view.getId()) {
+                case R.id.in_play_joined_card_parent:
+                    if (mInPlayAdapterListener != null) {
+                        Bundle args = getContestDataBundle();
+                        mInPlayAdapterListener.onJoinedContestCardClicked(args);
+                        NostragamusAnalytics.getInstance().trackClickEvent(Constants.AnalyticsCategory.IN_PLAY, Constants.AnalyticsClickLabels.JOINED_CARD);
+                    }
+                    break;
+
+                case R.id.inplay_contest_list_current_rank_layout:
+                    if (mInPlayAdapterListener != null) {
+                        Bundle args = getContestDataBundle();
+                        args.putInt(Constants.BundleKeys.SCREEN_LAUNCH_REQUEST, DetailScreensLaunchRequest.MATCHES_LEADER_BOARD_SCREEN);
+                        mInPlayAdapterListener.onJoinedContestCurrentRankClicked(args);
+                        NostragamusAnalytics.getInstance().trackClickEvent(Constants.AnalyticsCategory.IN_PLAY, Constants.AnalyticsClickLabels.RANK);
+                    }
+                    break;
+
+                case R.id.inplay_contest_list_prizes_layout:
+                    if (mInPlayAdapterListener != null) {
+                        Bundle args = getContestDataBundle();
+                        args.putInt(Constants.BundleKeys.SCREEN_LAUNCH_REQUEST, DetailScreensLaunchRequest.MATCHES_REWARDS_SCREEN);
+                        mInPlayAdapterListener.onJoinedContestPrizesClicked(args);
+                        NostragamusAnalytics.getInstance().trackClickEvent(Constants.AnalyticsCategory.IN_PLAY, Constants.AnalyticsClickLabels.PRIZES);
+                    }
+                    break;
+
+                case R.id.inplay_contest_card_header_mode_imgView:
+                    if (mInPlayAdapterListener != null) {
+                        Bundle args = getContestDataBundle();
+                        args.putInt(Constants.BundleKeys.SCREEN_LAUNCH_REQUEST, DetailScreensLaunchRequest.MATCHES_RULES_SCREEN);
+                        mInPlayAdapterListener.onContestModeClicked(args);
+                        NostragamusAnalytics.getInstance().trackClickEvent(Constants.AnalyticsCategory.IN_PLAY, Constants.AnalyticsClickLabels.MODE);
+                    }
+                    break;
+
+                case R.id.private_contest_share_btn:
+                    if (mInPlayAdapterListener != null) {
+                        Bundle args = getContestDataBundle();
+                        args.putInt(Constants.BundleKeys.SCREEN_LAUNCH_REQUEST,
+                                DetailScreensLaunchRequest.MATCHES_INVITE_PRIVATE_CONTEST_SCREEN);
+                        mInPlayAdapterListener.onInviteFriendsButtonClicked(args);
+
+                        NostragamusAnalytics.getInstance().trackClickEvent(Constants.AnalyticsCategory.IN_PLAY,
+                                Constants.AnalyticsClickLabels.INVITE_PRIVATE_CONTEST);
+                    }
+                    break;
+            }
+        }
+
+        @NonNull
+        private Bundle getContestDataBundle() {
+            Bundle args = new Bundle();
+            InPlayListItem listItem = mItemsList.get(getAdapterPosition());
+
+            if (listItem != null &&
+                    (listItem.getInPlayAdapterItemType() == InPlayAdapterItemType.JOINED_CONTEST ||
+                            listItem.getInPlayAdapterItemType() == InPlayAdapterItemType.JOINED_PRIVATE_CONTEST)) {
+
+                InPlayContestDto contestDto = (InPlayContestDto) listItem.getItemData();
+                args.putParcelable(Constants.BundleKeys.INPLAY_CONTEST, Parcels.wrap(contestDto));
+            }
+            return args;
+        }
+    }
 
     private class InPlayJoinedItemViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 

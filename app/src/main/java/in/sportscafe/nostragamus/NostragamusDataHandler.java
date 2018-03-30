@@ -459,4 +459,12 @@ public class NostragamusDataHandler extends AbstractDataHandler implements Const
     public boolean isPowerUpTransferFromBankScreenShown() {
         return getSharedBooleanData(SharedKeys.POWERUP_TRANSFER_FROM_BANK_SCREEN_SHOWN, false);
     }
+
+    public void setPrivateContestInvitationCode(String privateCode) {
+        setSharedStringData(SharedKeys.PRIVATE_CONTEST_INVITATION_CODE, privateCode);
+    }
+
+    public String getPrivateContestInvitationCode() {
+        return getSharedStringData(SharedKeys.PRIVATE_CONTEST_INVITATION_CODE);
+    }
 }

@@ -15,7 +15,6 @@
         android:layout_gravity="center"
         android:layout_marginTop="@dimen/dim_4"
         android:textSize="@dimen/sp_16"
-        android:text="5"
         app:typeface="lato_bold" />
 
     <com.jeeva.android.widgets.customfont.CustomTextView
@@ -24,7 +23,7 @@
         android:layout_height="wrap_content"
         android:textColor="@drawable/tab_tv_selector"
         android:layout_gravity="center"
-        android:text="head to head"
+        android:text="Contest"
         android:textSize="@dimen/sp_10"
         android:gravity="center"
         app:typeface="lato_regular" />

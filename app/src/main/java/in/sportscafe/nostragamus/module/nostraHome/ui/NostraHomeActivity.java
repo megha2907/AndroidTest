@@ -17,8 +17,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.crashlytics.android.Crashlytics;
+import com.google.gson.Gson;
 import com.jeeva.android.Log;
+
+import org.parceler.Parcels;
 
 import in.sportscafe.nostragamus.BuildConfig;
 import in.sportscafe.nostragamus.Constants;
@@ -38,6 +40,9 @@ import in.sportscafe.nostragamus.module.notifications.NostraNotification;
 import in.sportscafe.nostragamus.module.notifications.NotificationHelper;
 import in.sportscafe.nostragamus.module.notifications.inApp.InAppNotificationHelper;
 import in.sportscafe.nostragamus.module.recentActivity.ui.RecentActivityFragment;
+import in.sportscafe.nostragamus.module.privateContest.ui.branchShare.ShareDetailsDto;
+import in.sportscafe.nostragamus.module.privateContest.ui.joinPrivateContest.dto.JoinPrivateContestWithInviteCodeScreenData;
+import in.sportscafe.nostragamus.module.privateContest.ui.joinPrivateContest.findContest.JoinPrivateContestWithInviteCodeActivity;
 import in.sportscafe.nostragamus.module.user.group.allgroups.AllGroupsFragment;
 import in.sportscafe.nostragamus.module.user.login.UserInfoModelImpl;
 import in.sportscafe.nostragamus.module.user.login.dto.UserInfo;
@@ -232,11 +237,12 @@ public class NostraHomeActivity extends NostraBaseActivity implements View.OnCli
     }
 
     private void handleNotifications() {
-        NotificationHelper notificationHelper = new NotificationHelper();
-        NostraNotification notification = notificationHelper.getNotificationIfToBeSent(getIntent());
+        if (NostragamusDataHandler.getInstance().isLoggedInUser()) {
 
-        if (notification != null && !TextUtils.isEmpty(notification.getScreenName())) {
-            if (NostragamusDataHandler.getInstance().isLoggedInUser()) {
+            NotificationHelper notificationHelper = new NotificationHelper();
+            NostraNotification notification = notificationHelper.getNotificationIfToBeSent(getIntent());
+            if (notification != null && !TextUtils.isEmpty(notification.getScreenName())) {
+
                 String screenName = notification.getScreenName();
                 Log.d("Notification", "ScreenName : " + screenName);
 
@@ -291,8 +297,41 @@ public class NostraHomeActivity extends NostraBaseActivity implements View.OnCli
                     startActivity(notificationHelper.getAnnouncementScreenIntent(this, notification));
                 }
 
-            } else {
-                Log.d("Notification", "User Logged out, can not launch Home!");
+            } else {    // Keep this always into else part
+                checkForPrivateContest();
+            }
+        } else {
+            Log.d("Notification", "User Logged out, can not launch Home!");
+        }
+    }
+
+
+    private void checkForPrivateContest() {
+        if (!TextUtils.isEmpty(NostragamusDataHandler.getInstance().getPrivateContestInvitationCode())) {
+
+            /* Get dataDto  */
+            ShareDetailsDto shareDetailsDto = new Gson().fromJson(
+                    NostragamusDataHandler.getInstance().getPrivateContestInvitationCode(), ShareDetailsDto.class);
+
+            if (shareDetailsDto != null && !TextUtils.isEmpty(shareDetailsDto.getPrivateCode())) {
+
+                Log.d(TAG, "Code Private contest Invitation code : " + shareDetailsDto.getPrivateCode());
+
+                JoinPrivateContestWithInviteCodeScreenData privateCodeScreenData = new JoinPrivateContestWithInviteCodeScreenData();
+                privateCodeScreenData.setPrivateCode(shareDetailsDto.getPrivateCode());
+                privateCodeScreenData.setShareDetails(shareDetailsDto);
+
+                Bundle bundle = new Bundle();
+                bundle.putParcelable(Constants.BundleKeys.JOIN_PRIVATE_CONTEST_WITH_INVITATION_CODE_SCREEN_DATA,
+                        Parcels.wrap(privateCodeScreenData));
+
+                Intent intent = new Intent(this, JoinPrivateContestWithInviteCodeActivity.class);
+                intent.putExtras(bundle);
+                startActivity(intent);
+
+                /* As private contest action is going to be taken now, remove this data ;
+                    so that next time the same action not be taken */
+                NostragamusDataHandler.getInstance().setPrivateContestInvitationCode("");
             }
         }
     }

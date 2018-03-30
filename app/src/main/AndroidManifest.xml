@@ -320,8 +320,8 @@
             android:theme="@style/AppTheme.PopupTheme" />
         <activity
             android:name=".module.nostraHome.ui.NostraHomeActivity"
-            android:screenOrientation="portrait"
-            android:launchMode="singleTask"/>
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".module.newChallenges.ui.matches.NewChallengesMatchActivity"
             android:screenOrientation="portrait" />
@@ -362,21 +362,33 @@
         <activity
             android:name=".module.prediction.editAnswer.EditAnswerPowerUpModifiedPopupActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.PopupTheme"/>
+            android:theme="@style/AppTheme.PopupTheme" />
         <activity
             android:name=".module.navigation.help.howtoplay.HowToPlayActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".module.navigation.wallet.addMoney.addByCashFree.CashFreeSampleActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".module.navigation.wallet.addMoney.selectPaymentMode.SelectPaymentModeActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name="com.gocashfree.cashfreesdk.CFPaymentActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".module.privateContest.ui.createContest.CreatePrivateContestActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysHidden" />
+        <activity
+            android:name=".module.privateContest.ui.joinPrivateContest.findContest.JoinPrivateContestWithInviteCodeActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".module.privateContest.ui.createContest.advancePrize.PrivateContestAdvancePrizeStructurePopupActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.PopupTheme"
+            android:windowSoftInputMode="stateAlwaysHidden" />
+        <activity
+            android:name=".module.privateContest.ui.joinPrivateContest.contestDetails.PrivateContestDetailsActivity"
             android:screenOrientation="portrait" />
 
         <activity
@@ -626,8 +638,8 @@
 
         <service
             android:name=".module.common.NostraFireBaseMessagingService"
-            android:exported="true" >
-            <intent-filter android:priority="-500" >
+            android:exported="true">
+            <intent-filter android:priority="-500">
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
@@ -635,8 +647,10 @@
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_icon"
             android:resource="@drawable/white_notification_icon" />
-        <!-- Set color used with incoming notification messages. This is used when no color is set for the incoming
-             notification message. See README(https://goo.gl/6BKBk7) for more. -->
+        <!--
+             Set color used with incoming notification messages. This is used when no color is set for the incoming
+             notification message. See README(https://goo.gl/6BKBk7) for more.
+        -->
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_color"
             android:resource="@color/black" />
@@ -644,7 +658,7 @@
         <receiver
             android:name="com.google.firebase.iid.FirebaseInstanceIdReceiver"
             android:exported="true"
-            android:permission="com.google.android.c2dm.permission.SEND" >
+            android:permission="com.google.android.c2dm.permission.SEND">
             <intent-filter>
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
                 <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
@@ -652,18 +666,14 @@
                 <category android:name="com.fc.debug" />
             </intent-filter>
         </receiver>
-
-
         <receiver
             android:name="com.google.firebase.iid.FirebaseInstanceIdInternalReceiver"
             android:exported="false" />
-        <!--
-
-        -->
+        <!--  -->
         <service
             android:name=".module.common.NostraFireBaseInstanceIDService"
-            android:exported="true" >
-            <intent-filter android:priority="-500" >
+            android:exported="true">
+            <intent-filter android:priority="-500">
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
         </service>
@@ -676,7 +686,7 @@
 
         <receiver
             android:name="com.google.android.gms.measurement.AppMeasurementReceiver"
-            android:enabled="true" >
+            android:enabled="true">
             <intent-filter>
                 <action android:name="com.google.android.gms.measurement.UPLOAD" />
             </intent-filter>
@@ -701,45 +711,38 @@
         <activity
             android:name="com.freshchat.consumer.sdk.activity.ChannelListActivity"
             android:theme="@style/MyCustomTheme"
-            tools:replace="android:theme"/>
-
+            tools:replace="android:theme" />
         <activity
             android:name="com.freshchat.consumer.sdk.activity.ConversationDetailActivity"
             android:configChanges="orientation|screenSize"
             android:theme="@style/MyCustomTheme"
-            tools:replace="android:theme"
-            android:windowSoftInputMode="stateHidden" />
-
+            android:windowSoftInputMode="stateHidden"
+            tools:replace="android:theme" />
         <activity
             android:name="com.freshchat.consumer.sdk.activity.DeeplinkInterstitialActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Freshchat.SelectedTheme" />
-
         <activity
             android:name="com.freshchat.consumer.sdk.activity.PictureAttachmentActivity"
             android:configChanges="orientation|screenSize"
-            android:windowSoftInputMode="adjustResize"
-            android:theme="@style/Theme.Freshchat.SelectedTheme" />
-
+            android:theme="@style/Theme.Freshchat.SelectedTheme"
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name="com.freshchat.consumer.sdk.activity.CategoryListActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/MyCustomTheme"
-            tools:replace="android:theme"
-            android:screenOrientation="portrait"/>
-
+            tools:replace="android:theme" />
         <activity
             android:name="com.freshchat.consumer.sdk.activity.ArticleListActivity"
-            android:windowSoftInputMode="adjustResize"
+            android:screenOrientation="portrait"
             android:theme="@style/MyCustomTheme"
-            tools:replace="android:theme"
-            android:screenOrientation="portrait"/>
-
+            android:windowSoftInputMode="adjustResize"
+            tools:replace="android:theme" />
         <activity
             android:name="com.freshchat.consumer.sdk.activity.ArticleDetailActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/MyCustomTheme"
-            tools:replace="android:theme"
-            android:screenOrientation="portrait"/>
-
+            tools:replace="android:theme" />
         <activity
             android:name="com.freshchat.consumer.sdk.activity.InterstitialActivity"
             android:configChanges="orientation|screenSize"
@@ -754,13 +757,11 @@
                 <action android:name="android.intent.action.MY_PACKAGE_REPLACED" />
             </intent-filter>
         </receiver>
-
         <receiver android:name="com.freshchat.consumer.sdk.receiver.FreshchatNetworkChangeReceiver">
             <intent-filter>
                 <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
             </intent-filter>
         </receiver>
-
     </application>
 
 </manifest>

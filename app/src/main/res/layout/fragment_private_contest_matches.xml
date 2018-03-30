@@ -1,0 +1,61 @@
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/black"
+    tools:context="in.sportscafe.nostragamus.module.privateContest.ui.joinPrivateContest.contestDetails.PrivateContestMatchesFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
+
+        <!-- Tip text -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="center"
+            android:paddingBottom="@dimen/dim_11"
+            android:layout_marginTop="@dimen/dim_10">
+
+            <com.jeeva.android.widgets.customfont.CustomTextView
+                android:id="@+id/games_tip_text_textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white_999999"
+                android:gravity="center"
+                android:text="TIP:"
+                android:layout_gravity="center"
+                android:textSize="@dimen/sp_12"
+                app:typeface="lato_regular" />
+
+            <com.jeeva.android.widgets.customfont.CustomTextView
+                android:id="@+id/games_tip_textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/grey6"
+                android:text="Play all games to have best chance of winning prizes."
+                android:layout_gravity="center"
+                android:textSize="@dimen/sp_12"
+                app:typeface="lato_bold" />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dim_0.5"
+            android:background="@color/line_separator"/>
+
+        <!-- Matches Layout -->
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/private_contest_match_recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingBottom="@dimen/dim_90"/>
+
+    </LinearLayout>
+
+</android.support.design.widget.CoordinatorLayout>

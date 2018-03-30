@@ -135,7 +135,7 @@ public class WalletHomeActivity extends NostragamusActivity implements WalletHom
             switch (resultCode) {
                 case RESULT_OK:
                     // KYC Uploaded, re create screen as kyc status needs to be updated
-                    showSnackbarMessage(R.drawable.edit_answer_success_snackbar_icn, "Your kyc details were uploaded successfully!");
+                    showSnackbarMessage(R.drawable.edit_answer_success_snackbar_icn, "Your KYC details were uploaded successfully!");
                     break;
             }
         }

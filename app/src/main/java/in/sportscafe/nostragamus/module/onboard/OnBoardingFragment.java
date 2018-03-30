@@ -21,6 +21,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.google.gson.Gson;
 import com.jeeva.android.Log;
 import com.jeeva.android.widgets.HmImageView;
 
@@ -36,11 +37,13 @@ import java.util.List;
 
 import in.sportscafe.nostragamus.BuildConfig;
 import in.sportscafe.nostragamus.Constants;
+import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
 import in.sportscafe.nostragamus.module.common.NostragamusFragment;
 import in.sportscafe.nostragamus.module.common.ViewPagerAdapter;
+import in.sportscafe.nostragamus.module.privateContest.ui.branchShare.ShareDetailsDto;
 import in.sportscafe.nostragamus.utils.ViewUtils;
 import in.sportscafe.nostragamus.webservice.MyWebService;
 import me.relex.circleindicator.CircleIndicator;
@@ -212,6 +215,19 @@ public class OnBoardingFragment extends NostragamusFragment {
             onBoardingDto.setReferralCode(NostragamusDataHandler.getInstance().getUserReferralCode());
             onBoardingDto.setReferral(true);
             onBoardingList.add(onBoardingDto);
+
+        } else if (!TextUtils.isEmpty(NostragamusDataHandler.getInstance().getPrivateContestInvitationCode())) {
+            ShareDetailsDto shareDetailsDto = new Gson().fromJson(
+                    NostragamusDataHandler.getInstance().getPrivateContestInvitationCode(), ShareDetailsDto.class);
+
+            if (shareDetailsDto != null) {
+                OnBoardingDto privateInvitationCode = new OnBoardingDto();
+                privateInvitationCode.setTitle("Join " + shareDetailsDto.getUserNick() + "'s private contest");
+                privateInvitationCode.setDesc(shareDetailsDto.getUserNick() + " invited you to play a private contest.\nLogin and reclick link or join and start playing");
+                privateInvitationCode.setImageUrl(shareDetailsDto.getUserPhotoUrl());
+
+                onBoardingList.add(privateInvitationCode);
+            }
         }
 
         if (null != json) {

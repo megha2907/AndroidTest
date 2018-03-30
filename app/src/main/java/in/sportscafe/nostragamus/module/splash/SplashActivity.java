@@ -4,11 +4,15 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 
+import com.google.gson.Gson;
 import com.jeeva.android.Log;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.HashMap;
+
+import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Constants.AnalyticsLabels;
 import in.sportscafe.nostragamus.Constants.BundleKeys;
 import in.sportscafe.nostragamus.Nostragamus;
@@ -16,11 +20,15 @@ import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
 import in.sportscafe.nostragamus.module.getstart.GetStartActivity;
+import in.sportscafe.nostragamus.module.getstart.Splash;
+import in.sportscafe.nostragamus.module.privateContest.ui.branchShare.ShareDetailsDto;
 import in.sportscafe.nostragamus.module.user.group.joingroup.JoinGroupActivity;
 import io.branch.referral.Branch;
 import io.branch.referral.BranchError;
 
 public class SplashActivity extends Activity {
+
+    private static final String TAG = SplashActivity.class.getSimpleName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,6 +101,10 @@ public class SplashActivity extends Activity {
                             }
                         }
 
+                        if (referringParams.has("~campaign")) {
+                            checkForPrivateContest(referringParams);
+                        }
+
                     } catch (JSONException e) {
                         e.printStackTrace();
                         Log.d("BranchValue:--", "No Campaign / No Channel");
@@ -104,6 +116,33 @@ public class SplashActivity extends Activity {
             }
         }, this.getIntent().getData(), this);
 
+    }
+
+    private void checkForPrivateContest(JSONObject referringParams) {
+        try {
+            if (referringParams.getString("~campaign").equalsIgnoreCase(Constants.PrivateContests.BranchLink.LINKED_PROPERTIES_CAMPAIGN) &&
+                    referringParams.has(Constants.PrivateContests.BranchLink.PRIVATE_CONTEST_INVITATION_CODE)) {
+
+                String privateContestInvitationCode = referringParams.getString(Constants.PrivateContests.BranchLink.PRIVATE_CONTEST_INVITATION_CODE);
+                String userNick = referringParams.getString(Constants.PrivateContests.BranchLink.USER_NICK);
+                String userPhotoUrl = referringParams.getString(Constants.PrivateContests.BranchLink.USER_PHOTO_URL);
+
+                Log.d(TAG, String.format("Private Contest link opened! \n code : %s, UserNick : %s, UserPhoto : %s ",
+                        privateContestInvitationCode, userNick, userPhotoUrl));
+
+                // Save into data handler
+                ShareDetailsDto shareDetailsDto = new ShareDetailsDto();
+                shareDetailsDto.setPrivateCode(privateContestInvitationCode);
+                shareDetailsDto.setUserNick(userNick);
+                shareDetailsDto.setUserPhotoUrl(userPhotoUrl);
+
+                String string = new Gson().toJson(shareDetailsDto);
+
+                NostragamusDataHandler.getInstance().setPrivateContestInvitationCode(string);
+            }
+        } catch (JSONException ex) {
+            ex.printStackTrace();
+        }
     }
 
     private void navigateToGetStarted() {

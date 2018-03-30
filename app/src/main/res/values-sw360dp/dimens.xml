@@ -114,6 +114,7 @@
     <dimen name="dim_170">170dp</dimen>
     <dimen name="dim_180">180dp</dimen>
     <dimen name="dim_185">185dp</dimen>
+    <dimen name="dim_190">190dp</dimen>
     <dimen name="dim_250">250dp</dimen>
     <dimen name="dim_240">240dp</dimen>
     <dimen name="dim_230">230dp</dimen>

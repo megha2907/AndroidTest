@@ -11,7 +11,9 @@ import in.sportscafe.nostragamus.module.challengeCompleted.dto.CompletedResponse
 import in.sportscafe.nostragamus.module.challengeRewards.dto.RewardsResponse;
 import in.sportscafe.nostragamus.module.challengeRules.dto.RulesResponse;
 import in.sportscafe.nostragamus.module.common.ApiResponse;
-import in.sportscafe.nostragamus.module.navigation.help.howtoplay.dto.HowToPlayDetails;
+import in.sportscafe.nostragamus.module.privateContest.ui.createContest.dto.PrivateContestPrizeTemplateResponse;
+import in.sportscafe.nostragamus.module.privateContest.ui.createContest.dto.CreatePrivateContestRequest;
+import in.sportscafe.nostragamus.module.privateContest.ui.createContest.dto.CreatePrivateContestResponse;
 import in.sportscafe.nostragamus.module.navigation.help.howtoplay.dto.HowToPlayResponse;
 import in.sportscafe.nostragamus.module.navigation.wallet.addMoney.dto.AddMoneyPaymentCouponRequest;
 import in.sportscafe.nostragamus.module.navigation.wallet.addMoney.dto.AddMoneyPaymentCouponResponse;
@@ -71,6 +73,7 @@ import in.sportscafe.nostragamus.module.prediction.powerupBank.dto.PowerupBankSt
 import in.sportscafe.nostragamus.module.prediction.powerupBank.dto.TransferPowerUpFromBankRequest;
 import in.sportscafe.nostragamus.module.prediction.powerupBank.dto.TransferPowerUpFromBankResponse;
 import in.sportscafe.nostragamus.module.recentActivity.dto.RecentActivityResponse;
+import in.sportscafe.nostragamus.module.privateContest.ui.joinPrivateContest.dto.FindPrivateContestResponse;
 import in.sportscafe.nostragamus.module.settings.app.dto.AppSettingsResponse;
 import in.sportscafe.nostragamus.module.store.buy.BuyRequest;
 import in.sportscafe.nostragamus.module.store.buy.BuyResponse;
@@ -493,5 +496,17 @@ public class MyWebService extends AbstractWebService<NostragamusService> {
 
     public Call<ResponseBody> getKYCPANImage() {
         return mNostragamusService.getKYCPANImage();
+    }
+
+    public Call<CreatePrivateContestResponse> createPrivateContest(CreatePrivateContestRequest request) {
+        return mNostragamusService.createPrivateContest(request);
+    }
+
+    public Call<List<PrivateContestPrizeTemplateResponse>> getPrivateContestPrizeTemplates() {
+        return mNostragamusService.getPrivateContestPrizeTemplates();
+    }
+
+    public Call<FindPrivateContestResponse> getPrivateContestDetails(String privatCode) {
+        return mNostragamusService.getPrivateContestDetails(privatCode);
     }
 }
