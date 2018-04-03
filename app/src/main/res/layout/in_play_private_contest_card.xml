@@ -256,7 +256,7 @@
 
                 <com.jeeva.android.widgets.customfont.CustomButton
                     android:id="@+id/private_contest_share_btn"
-                    android:layout_width="@dimen/dim_300"
+                    android:layout_width="match_parent"
                     android:layout_height="@dimen/dim_30"
                     android:layout_gravity="center_horizontal"
                     android:background="@drawable/blue_008ae1_button_selector"
@@ -266,7 +266,9 @@
                     android:textColor="@color/white"
                     android:textSize="@dimen/sp_13"
                     app:typeface="lato_bold"
-                    android:layout_marginBottom="@dimen/dim_12"/>
+                    android:layout_marginBottom="@dimen/dim_12"
+                    android:layout_marginLeft="@dimen/dim_18"
+                    android:layout_marginRight="@dimen/dim_18"/>
 
             </LinearLayout>
 

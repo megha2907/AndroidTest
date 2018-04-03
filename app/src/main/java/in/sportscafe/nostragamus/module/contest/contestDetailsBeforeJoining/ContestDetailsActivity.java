@@ -180,7 +180,7 @@ public class ContestDetailsActivity extends NostraBaseActivity implements Contes
                                     }
 
                                     @Override
-                                    public void onServerReturnedError(String msg) {
+                                    public void onServerReturnedError(String msg, int errorCode) {
                                         CustomProgressbar.getProgressbar(ContestDetailsActivity.this).dismissProgress();
                                         if (TextUtils.isEmpty(msg)) {
                                             msg = Constants.Alerts.SOMETHING_WRONG;
@@ -261,7 +261,15 @@ public class ContestDetailsActivity extends NostraBaseActivity implements Contes
             if (!TextUtils.isEmpty(msg)) {
                 CustomSnackBar.make(view, msg, CustomSnackBar.DURATION_LONG).show();
             } else {
-                CustomSnackBar.make(view, Constants.Alerts.SOMETHING_WRONG, CustomSnackBar.DURATION_LONG).show();
+                switch (status) {
+                    case Constants.DataStatus.NO_INTERNET:
+                        CustomSnackBar.make(view, Constants.Alerts.NO_INTERNET_CONNECTION, CustomSnackBar.DURATION_LONG).show();
+                        break;
+
+                    default:
+                        CustomSnackBar.make(view, Constants.Alerts.SOMETHING_WRONG, CustomSnackBar.DURATION_LONG).show();
+                        break;
+                }
             }
         }
     }

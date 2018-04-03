@@ -218,6 +218,44 @@
                 android:layout_marginRight="@dimen/dp_10"
                 android:background="@color/line_separator" />
 
+            <!-- Join Private Contest section -->
+            <LinearLayout
+                android:id="@+id/navigation_join_private_contest_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp_24"
+                android:layout_marginRight="@dimen/dp_24"
+                android:background="?android:attr/selectableItemBackground"
+                android:gravity="center_vertical"
+                android:minHeight="@dimen/nav_row_height"
+                android:orientation="horizontal"
+                android:visibility="visible">
+
+                <ImageView
+                    android:layout_width="@dimen/nav_row_icon_dimen"
+                    android:layout_height="@dimen/nav_row_icon_dimen"
+                    android:src="@drawable/join_pvt_contest_navigation_icn" />
+
+                <com.jeeva.android.widgets.customfont.CustomTextView
+                    android:id="@+id/navigation_join_pvt_contest_textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp_20"
+                    android:text="Join Private Contest"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/sp_14"
+                    app:typeface="lato_regular" />
+
+            </LinearLayout>
+
+            <View
+                android:id="@+id/navigation_pvt_contest_separator"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_0.5"
+                android:layout_marginLeft="@dimen/dp_10"
+                android:layout_marginRight="@dimen/dp_10"
+                android:background="@color/line_separator" />
+
             <!--Whats new section -->
             <LinearLayout
                 android:id="@+id/navigation_whats_new_layout"

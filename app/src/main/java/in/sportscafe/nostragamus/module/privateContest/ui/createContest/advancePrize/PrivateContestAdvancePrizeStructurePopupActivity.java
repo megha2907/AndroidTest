@@ -22,6 +22,7 @@ import in.sportscafe.nostragamus.module.popups.PopUpDialogActivity;
 import in.sportscafe.nostragamus.module.privateContest.adapter.PrivateContestPrizeEstimationRecyclerAdapter;
 import in.sportscafe.nostragamus.module.privateContest.ui.createContest.dto.PrivateContestAdvancePrizeScreenData;
 import in.sportscafe.nostragamus.module.privateContest.ui.createContest.dto.PrizeListItemDto;
+import in.sportscafe.nostragamus.utils.CodeSnippet;
 
 import static in.sportscafe.nostragamus.module.privateContest.helper.PrivateContestPrizeEstimationHelper.getDistributableTotalPrize;
 
@@ -52,10 +53,17 @@ public class PrivateContestAdvancePrizeStructurePopupActivity extends PopUpDialo
 
     private void populateScreenData() {
         if (mScreenData != null) {
+
+            /* Number of winners */
             if (mScreenData.getEntryFee() > 0 && mScreenData.getEntries() > 0) {
                 mNumberOfWinnersEditText.setText(String.valueOf(mScreenData.getEntries()));
                 int length = mNumberOfWinnersEditText.getText().length();
                 mNumberOfWinnersEditText.setSelection(length, length);
+            }
+
+            /* Set error msg for entries (invisible as of now) */
+            if (mScreenData.getEntries() > 0) {
+                mEntriesErrorTextView.setText("Enter a number between 2 and " + mScreenData.getEntries());
             }
 
             calculateTotalAmount(mScreenData.getEntryFee());
@@ -69,7 +77,7 @@ public class PrivateContestAdvancePrizeStructurePopupActivity extends PopUpDialo
                     Constants.PrivateContests.ADVANCE_TEMPLATE_PROFIT_MARGIN);
 
             TextView totalAmount = (TextView) findViewById(R.id.private_contest_prize_total_amount_textView);
-            totalAmount.setText(WalletHelper.getFormattedStringOfAmount(mTotalAmount));
+            totalAmount.setText(Constants.RUPEE_SYMBOL + CodeSnippet.getFormattedAmount(mTotalAmount));
 
             createAdvancePrizeListAdapter(entries);
         }
@@ -100,17 +108,16 @@ public class PrivateContestAdvancePrizeStructurePopupActivity extends PopUpDialo
         mNumberOfWinnersEditText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
             }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-
             }
 
             @Override
             public void afterTextChanged(Editable s) {
-                if (isEntriesValid() && mScreenData != null && mScreenData.getEntryFee() > 0) {
+                if (isEntriesValid(mScreenData.getEntries()) && mScreenData != null
+                        && mScreenData.getEntryFee() > 0) {
                     createAdvancePrizeListAdapter(getEntries());
                 }
             }
@@ -212,11 +219,11 @@ public class PrivateContestAdvancePrizeStructurePopupActivity extends PopUpDialo
         }
     }
 
-    private boolean isEntriesValid() {
+    private boolean isEntriesValid(int entryValid) {
         boolean isValid = false;
         int entries = getEntries();
 
-        if (entries <= 0 || entries > Constants.PrivateContests.MAX_ENTRIES) {
+        if (entries <= 0 || entries >= entryValid) {
             mEntriesErrorTextView.setVisibility(View.VISIBLE);
         } else {
             mEntriesErrorTextView.setVisibility(View.GONE);

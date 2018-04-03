@@ -1,5 +1,7 @@
 package in.sportscafe.nostragamus.module.privateContest.dataProvider;
 
+import android.text.TextUtils;
+
 import com.google.gson.Gson;
 import com.jeeva.android.Log;
 
@@ -39,10 +41,21 @@ public class PrivateContestDetailsApiModelImpl {
                             } else {
 
                                 if (response.isSuccessful() && response.body() != null) {
-                                    Log.d(TAG, "Server response success");
-                                    if (apiListener != null) {
-                                        apiListener.onSuccessResponse(Constants.DataStatus.FROM_SERVER_API_SUCCESS, response.body());
+
+                                    // Check for error
+                                    if (response.body().getErrorCode() > 0) {
+                                        if (apiListener != null) {
+                                            apiListener.onServerSentError(response.body().getError(),
+                                                    response.body().getErrorCode());
+                                        }
+                                    } else {
+
+                                        Log.d(TAG, "Server response success");
+                                        if (apiListener != null) {
+                                            apiListener.onSuccessResponse(Constants.DataStatus.FROM_SERVER_API_SUCCESS, response.body());
+                                        }
                                     }
+
                                 } else {
                                     Log.d(TAG, "Server response null");
                                     if (apiListener != null) {
@@ -80,7 +93,7 @@ public class PrivateContestDetailsApiModelImpl {
         } catch (Exception e) {e.printStackTrace();}
         if (listener != null) {
             if (errorResponse != null) {
-                listener.onServerSentError(errorResponse.getError());
+                listener.onServerSentError(errorResponse.getError(), errorResponse.getErrorCode());
             } else {
                 listener.onError(Constants.DataStatus.FROM_SERVER_API_FAILED);
             }
@@ -90,6 +103,6 @@ public class PrivateContestDetailsApiModelImpl {
     public interface PrivateContestDetailApiListener {
         void onSuccessResponse(int status, FindPrivateContestResponse response);
         void onError(int status);
-        void onServerSentError(String errorMsg);
+        void onServerSentError(String errorMsg, int errorCode);
     }
 }
