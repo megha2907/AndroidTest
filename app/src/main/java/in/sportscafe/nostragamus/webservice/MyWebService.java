@@ -22,6 +22,9 @@ import in.sportscafe.nostragamus.module.navigation.wallet.addMoney.dto.CashFreeG
 import in.sportscafe.nostragamus.module.navigation.wallet.addMoney.dto.VerifyPaymentCouponRequest;
 import in.sportscafe.nostragamus.module.navigation.wallet.addMoney.dto.VerifyPaymentCouponResponse;
 import in.sportscafe.nostragamus.module.navigation.wallet.addMoney.dto.VerifyPaymentResponse;
+import in.sportscafe.nostragamus.module.navigation.wallet.doKYC.dto.KYCPANImageResponse;
+import in.sportscafe.nostragamus.module.navigation.wallet.doKYC.dto.KYCResponse;
+import in.sportscafe.nostragamus.module.newChallenges.dto.BannerResponseData;
 import in.sportscafe.nostragamus.module.nostraHome.dto.TimeResponse;
 import in.sportscafe.nostragamus.module.common.dto.MatchesResponse;
 import in.sportscafe.nostragamus.module.contest.dto.ContestEntriesResponse;
@@ -69,6 +72,7 @@ import in.sportscafe.nostragamus.module.prediction.powerupBank.dto.PowerUpBankSt
 import in.sportscafe.nostragamus.module.prediction.powerupBank.dto.PowerupBankStatusRequest;
 import in.sportscafe.nostragamus.module.prediction.powerupBank.dto.TransferPowerUpFromBankRequest;
 import in.sportscafe.nostragamus.module.prediction.powerupBank.dto.TransferPowerUpFromBankResponse;
+import in.sportscafe.nostragamus.module.recentActivity.dto.RecentActivityResponse;
 import in.sportscafe.nostragamus.module.privateContest.ui.joinPrivateContest.dto.FindPrivateContestResponse;
 import in.sportscafe.nostragamus.module.settings.app.dto.AppSettingsResponse;
 import in.sportscafe.nostragamus.module.store.buy.BuyRequest;
@@ -97,6 +101,7 @@ import in.sportscafe.nostragamus.module.user.playerprofile.dto.PlayerInfoRespons
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 
 /**
@@ -120,7 +125,7 @@ public class MyWebService extends AbstractWebService<NostragamusService> {
     public Call<LogInResponse> getLogInRequest(LogInRequest logInRequest) {
         if (BuildConfig.IS_PAID_VERSION) {
             return mNostragamusService.loginUserV3(logInRequest);
-        }else {
+        } else {
             return mNostragamusService.loginUserV2(logInRequest);
         }
     }
@@ -143,7 +148,7 @@ public class MyWebService extends AbstractWebService<NostragamusService> {
 
 
     public Call<PredictionAllQuestionResponse> getAllPredictionQuestions(int matchId, int roomId) {
-        return mNostragamusService.getAllPredictionQuestions(matchId,roomId);
+        return mNostragamusService.getAllPredictionQuestions(matchId, roomId);
     }
 
     public Call<TournamentFeedResponse> getCurrentTournaments(boolean isCurrent) {
@@ -174,7 +179,7 @@ public class MyWebService extends AbstractWebService<NostragamusService> {
     }
 
     public Call<MyResultsResponse> getMyResultsRequest(Integer matchId, Integer playerId, int roomId) {
-        return mNostragamusService.getMyResults(matchId, playerId,roomId);
+        return mNostragamusService.getMyResults(matchId, playerId, roomId);
     }
 
     public Call<LeaderBoardResponse> getLeaderBoardDetailRequest(Integer groupId,
@@ -206,8 +211,8 @@ public class MyWebService extends AbstractWebService<NostragamusService> {
                 RequestBody.create(MediaType.parse("multipart/form-data"), filename));
     }
 
-    public Call<AppSettingsResponse> getAppSettingsRequest(String uniqueId,String flavor) {
-        return mNostragamusService.getAppSettings(uniqueId,flavor);
+    public Call<AppSettingsResponse> getAppSettingsRequest(String uniqueId, String flavor) {
+        return mNostragamusService.getAppSettings(uniqueId, flavor);
     }
 
     public Call<JwtToken> getRefreshTokenRequest() {
@@ -226,8 +231,8 @@ public class MyWebService extends AbstractWebService<NostragamusService> {
         return mNostragamusService.getTimelines(roomId, playerUserId, skip, limit);
     }
 
-    public Call<MyResultsResponse> getPlayerResultRequest(Integer playerId, Integer matchId,int roomId) {
-        return mNostragamusService.getPlayerResult(playerId, matchId,roomId);
+    public Call<MyResultsResponse> getPlayerResultRequest(Integer playerId, Integer matchId, int roomId) {
+        return mNostragamusService.getPlayerResult(playerId, matchId, roomId);
     }
 
     public Call<MatchAnswerStatsResponse> getPlayerResultPercentageRequest(Integer matchId) {
@@ -327,8 +332,8 @@ public class MyWebService extends AbstractWebService<NostragamusService> {
         return mNostragamusService.getLatestApk();
     }
 
-    public Call<UserReferralHistoryResponse> getUserReferralHistory(String flavor,String transactionType) {
-        return mNostragamusService.getUserReferralHistory(flavor,transactionType);
+    public Call<UserReferralHistoryResponse> getUserReferralHistory(String flavor, String transactionType) {
+        return mNostragamusService.getUserReferralHistory(flavor, transactionType);
     }
 
     public Call<VerifyReferralCodeResponse> verifyReferralCodeRequest(String referralCode) {
@@ -347,7 +352,7 @@ public class MyWebService extends AbstractWebService<NostragamusService> {
         return mNostragamusService.verifyOTPRequest(otp);
     }
 
-    public Call<StoreApiResponse> getStoreDetails (String category) {
+    public Call<StoreApiResponse> getStoreDetails(String category) {
         return mNostragamusService.getStoreDetails(category);
     }
 
@@ -369,19 +374,19 @@ public class MyWebService extends AbstractWebService<NostragamusService> {
 
     public Call<List<NewChallengesResponse>> getNewHomeChallenges() {
         String flavor = "PS";
-        if (BuildConfig.IS_ACL_VERSION && BuildConfig.IS_PAID_VERSION){
+        if (BuildConfig.IS_ACL_VERSION && BuildConfig.IS_PAID_VERSION) {
             flavor = "ACL";
-        }else if (BuildConfig.IS_PAID_VERSION){
+        } else if (BuildConfig.IS_PAID_VERSION) {
             flavor = "PRO";
         }
 
         boolean showOnePartyChallenge = true;
 
-        return mNostragamusService.getNewHomeChallenges(flavor,showOnePartyChallenge);
+        return mNostragamusService.getNewHomeChallenges(flavor, showOnePartyChallenge);
     }
 
     public Call<ContestResponse> getContests(int challengeId, boolean needPoolContest) {
-        return mNostragamusService.getContests(challengeId, Nostragamus.getInstance().getAppTypeFlavor(), needPoolContest,true);
+        return mNostragamusService.getContests(challengeId, Nostragamus.getInstance().getAppTypeFlavor(), needPoolContest, true);
     }
 
     public Call<List<InPlayResponse>> getInPlayChallenges() {
@@ -389,7 +394,7 @@ public class MyWebService extends AbstractWebService<NostragamusService> {
     }
 
     public Call<RewardsResponse> getRewardsDetails(Integer rewardsRequest, Integer configId) {
-        return mNostragamusService.getRewardDetails(rewardsRequest,configId);
+        return mNostragamusService.getRewardDetails(rewardsRequest, configId);
     }
 
     public Call<ContestEntriesResponse> getContestEntries(int contestId) {
@@ -471,6 +476,26 @@ public class MyWebService extends AbstractWebService<NostragamusService> {
 
     public Call<HowToPlayResponse> getHowToPlayData(String slideId) {
         return mNostragamusService.getHowToPlayData(slideId);
+    }
+
+    public Call<RecentActivityResponse> getRecentActivityData() {
+        return mNostragamusService.getRecentActivityData("8 weeks");
+    }
+
+    public Call<ApiResponse> addUserPANCardDetails(String userName, String panNumber, String dob, File file) {
+        return mNostragamusService.addUserPANCardDetails(MultipartBody.Part.createFormData("panFile", file.getName(),
+                RequestBody.create(MediaType.parse("multipart/form-data"), file))
+                , RequestBody.create(MediaType.parse("multipart/form-data"), panNumber)
+                , RequestBody.create(MediaType.parse("multipart/form-data"), userName),
+                RequestBody.create(MediaType.parse("multipart/form-data"), dob));
+    }
+
+    public Call<KYCResponse> getKYCUserDetails() {
+        return mNostragamusService.getKYCUserDetails();
+    }
+
+    public Call<ResponseBody> getKYCPANImage() {
+        return mNostragamusService.getKYCPANImage();
     }
 
     public Call<CreatePrivateContestResponse> createPrivateContest(CreatePrivateContestRequest request) {

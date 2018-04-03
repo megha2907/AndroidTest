@@ -36,7 +36,6 @@ public interface Constants {
         String SCREEN_RESULTS = "results"; /* Results Screen */
         String SCREEN_RESULTS_PEEK = "results_peek"; /* Compare Results Screen */
         String SCREEN_AVERAGE_SCORE = "average_score";  /* Average Score Screen */
-        String SCREEN_WALLET_HOME = "wallet"; /* Wallet Home Screen */
         String SCREEN_WALLET_ADD_MONEY = "addMoney"; /* Add money to wallet */
         String SCREEN_WALLET_HISTORY = "walletHistory"; /* Wallet History Screen */
         String SCREEN_WALLET_PAYOUT_HOME = "walletPayoutHome"; /* Withdrawal Details Screen ( Paytm & Bank account) */
@@ -44,11 +43,17 @@ public interface Constants {
         String SCREEN_REFER_FRIEND = "ReferFriend"; /* Refer a Friend Screen */
         String SCREEN_REFERRAL_CREDITS = "referralCredits";  /* Referral History Screen */
         String SCREEN_STORE = "Store";  /* Store - Buy Powerups */
-        String SCREEN_APP_UPDATE = "appUpdate"; /* Update the App screen & What's New Screen */
+        String SCREEN_APP_UPDATE = "appUpdate"; /* Update the App screen */
         String SCREEN_WEB_VIEW = "webView";
         String SCREEN_EDIT_ANSWER = "editAnswer";
         String SCREEN_NEW_CHALLENGE_GAMES = "newChallengeGames"; /* New Challenges Games Screen  */
         String SCREEN_SLIDES = "slides"; /* How To Play Screen & How to use powerup screen in slide design */
+        String SCREEN_ANNOUNCEMENT = "announcementDetails"; /* Activity Details / Announcement  */
+        String SCREEN_KYC_DETAILS = "KYCDetails"; /* Add KYC Details */
+        String SCREEN_CHALLENGE_HISTORY_LEADERBOARDS = "ChallengeHistoryLeaderboard"; /* Contest Details with Leaderboards tab open for Completed */
+        String SCREEN_WHATS_NEW = "whatsNew"; /* What's New Screen */
+        String SCREEN_WALLET_HOME = "walletHome"; /* Open Wallet Home  */
+        String NONE = "NONE"; /* open nothing on click  */
     }
 
     interface SharedKeys {
@@ -358,6 +363,7 @@ public interface Constants {
         String EDIT_ANSWER_SCREEN_DATA = "editAnswerScreenData";
         String COPY_ANSWER_POWERUP_COPIED = "copyAnswerPowerupCopied";
         String BANNER = "banner";
+        String RECENT_ACTIVITY = "recentActivity";
 
         /* Wallet */
         String WALLET_WITHDRAWAL_AMT = "walletWithdrawAmt";
@@ -399,6 +405,7 @@ public interface Constants {
         String IN_APP_NOSTRA_NOTIFICATION_DETAILS = "inAppNostraNotification";
         String COPY_ANSWER_SCREEN_DATA = "copyAnswerScreenData";
         String SLIDE_ID = "SlideId";
+        String ANNOUNCEMENT_SCREEN_DATA = "announcementScreenData";
         String PRIVATE_CONTEST_SCREEN_DATA = "privateContestScreeenData";
         String PRIVATE_CONTEST_ADVANCE_PRIZE_STRUCTURE_SCREEN_DATA = "privateContestAdvancePrizeScreenData";
         String PRIVATE_CONTEST_ADVANCE_PRIZE_LIST = "privateContestAdvancePrizeList";
@@ -542,7 +549,7 @@ public interface Constants {
         String NEW_CHALLENGES = "New Challenges";
         String IN_PLAY = "In Play";
         String HISTORY = "History";
-        String GROUPS = "Groups";
+        String RECENT_ACTIVITY = "Recent Activity";
         String NAVIGATION = "Navigation";
 
         /* Wallet */
@@ -721,6 +728,7 @@ public interface Constants {
         String POOL_CONTEST_REWARD_CALCULATION = "poolContestRewardCalculation";
         String HOW_TO_PLAY = "HowToPlay";
         String SELECT_PAYMENT_MODE = "selectPaymentMode";
+        String ANNOUNCEMENT = "Announcement";
     }
 
     interface InAppPopups {
@@ -1013,6 +1021,24 @@ public interface Constants {
         int DPI = 21;
         int HEIGHT = 22;
         int WIDTH = 23;
+    }
+
+    interface RecentActivityTypes {
+        /* Synced with server as they come in api response */
+        String ALL = "ALL";
+        String ANNOUNCEMENT = "ANNOUNCEMENT";
+        String RESULT = "RESULT";
+        String PROMOTION = "PROMOTION";
+    }
+
+    interface KYCStatus {
+        /* Synced with server as they come in api response */
+        String NOT_REQUIRED = "not_required";
+        String REQUIRED = "required";
+        String UPLOADED = "uploaded";
+        String FAILED = "failed";
+        String VERIFIED = "verified";
+        String BLOCKED = "blocked";
     }
 
     interface PrivateContests {

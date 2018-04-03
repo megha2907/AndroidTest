@@ -10,4 +10,7 @@ public interface WalletHomeFragmentListener {
     void onWithdrawMoneyClicked();
     void onTransactionHistoryClicked();
     void onPayoutDetailsClicked();
+    void onKYCClicked();
+    void onOpenKYCRequiredPopup();
+    void onOpenKYCBlockedPopup();
 }

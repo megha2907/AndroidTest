@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/spinner_value_layout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#132A4C"
+    android:orientation="horizontal"
+    android:paddingBottom="@dimen/dim_16"
+    android:paddingLeft="@dimen/dim_18"
+    android:paddingTop="@dimen/dim_7">
+
+    <TextView
+        android:id="@+id/spinnerTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:singleLine="true"
+        android:textColor="@color/white"
+        android:textSize="@dimen/sp_10" />
+
+    <ImageView
+        android:id="@+id/spinnerImages"
+        android:layout_width="@dimen/dim_7"
+        android:layout_height="@dimen/dim_7"
+        android:layout_gravity="center"
+        android:visibility="gone"
+        android:layout_marginLeft="@dimen/dim_7"
+        android:src="@drawable/white_tick_icon" />
+
+
+</LinearLayout>

@@ -269,6 +269,9 @@ public class NewChallengesViewPagerFragment extends BaseFragment {
                         } else if (screenName.equalsIgnoreCase(Constants.Notifications.SCREEN_APP_UPDATE)) {
                             startActivity(notificationHelper.getAppUpdateScreenIntent(getContext(), notification));
 
+                        } else if (screenName.equalsIgnoreCase(Constants.Notifications.SCREEN_WHATS_NEW)) {
+                            startActivity(notificationHelper.getWhatsNewScreenIntent(getContext(), notification));
+
                         } else if (screenName.equalsIgnoreCase(Constants.Notifications.SCREEN_WALLET_HISTORY)) {
                             startActivity(notificationHelper.getWalletHistoryScreenIntent(getContext(), notification));
 
@@ -286,10 +289,21 @@ public class NewChallengesViewPagerFragment extends BaseFragment {
                         } else if (screenName.equalsIgnoreCase(Constants.Notifications.SCREEN_CHALLENGE_HISTORY_GAMES)) {
                             startActivity(notificationHelper.getChallengeHistoryMatchesScreenIntent(getContext(), notification));
 
+                        } else if (screenName.equalsIgnoreCase(Constants.Notifications.SCREEN_CHALLENGE_HISTORY_LEADERBOARDS)) {
+                            startActivity(notificationHelper.getChallengeHistoryLeaderBoardsScreenIntent(getContext(), notification));
+
                         } else if (screenName.equalsIgnoreCase(Constants.Notifications.SCREEN_WEB_VIEW)) {
                             startActivity(notificationHelper.getWebViewScreenIntent(getContext(), notification));
                         } else if (screenName.equalsIgnoreCase(Constants.Notifications.SCREEN_SLIDES)) {
                             startActivity(notificationHelper.getSlidesScreenIntent(getContext(), notification));
+                        } else if (screenName.equalsIgnoreCase(Constants.Notifications.SCREEN_ANNOUNCEMENT)) {
+                            startActivity(notificationHelper.getAnnouncementScreenIntent(getContext(), notification));
+                        } else if (screenName.equalsIgnoreCase(Constants.Notifications.SCREEN_WALLET_HOME)) {
+                            startActivity(notificationHelper.getWalletHomeScreenIntent(getContext(), notification));
+                        } else if (screenName.equalsIgnoreCase(Constants.Notifications.SCREEN_KYC_DETAILS)) {
+                            startActivity(notificationHelper.getKYCScreenIntent(getContext(), notification));
+                        } else if (screenName.equalsIgnoreCase(Constants.Notifications.NONE)) {
+                            /* NO CLICK EVENT SHOULD HAPPEN */
                         }
 
                     }

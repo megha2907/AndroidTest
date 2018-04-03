@@ -53,6 +53,15 @@ public class NostraNotificationData {
     @SerializedName("slide_id")
     private String slideId;
 
+    @SerializedName("announcement_title")
+    private String announcementTitle;
+
+    @SerializedName("announcement_desc")
+    private String announcementDesc;
+
+    @SerializedName("announcement_time")
+    private String announcementTime;
+
     /* This is used for InApp Notification , where notification redirect to appropriate game screen */
     @SerializedName("inPlayContestDto")
     private InPlayContestDto inPlayContestDto;
@@ -167,5 +176,29 @@ public class NostraNotificationData {
 
     public void setSlideId(String slideId) {
         this.slideId = slideId;
+    }
+
+    public String getAnnouncementTitle() {
+        return announcementTitle;
+    }
+
+    public void setAnnouncementTitle(String announcementTitle) {
+        this.announcementTitle = announcementTitle;
+    }
+
+    public String getAnnouncementDesc() {
+        return announcementDesc;
+    }
+
+    public void setAnnouncementDesc(String announcementDesc) {
+        this.announcementDesc = announcementDesc;
+    }
+
+    public String getAnnouncementTime() {
+        return announcementTime;
+    }
+
+    public void setAnnouncementTime(String announcementTime) {
+        this.announcementTime = announcementTime;
     }
 }

@@ -200,7 +200,7 @@
                 <com.jeeva.android.widgets.customfont.CustomTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Removes  negative making for any prediction"
+                    android:text="Removes  negative marking for any prediction"
                     android:textColor="@color/grey6"
                     android:textSize="@dimen/sp_12"
                     app:typeface="lato_regular" />

@@ -49,6 +49,9 @@ public class InfoDetails {
     @SerializedName("wallet_created")
     private boolean isWalletCreated;
 
+    @SerializedName("kyc_status")
+    private String kycStatus;
+
     @SerializedName("powerups")
     public HashMap<String, Integer> getPowerUps() {
         return powerUps;
@@ -159,5 +162,13 @@ public class InfoDetails {
         this.otpVerified = otpVerified;
     }
 
+    @SerializedName("kyc_status")
+    public String getKycStatus() {
+        return kycStatus;
+    }
+    @SerializedName("kyc_status")
+    public void setKycStatus(String kycStatus) {
+        this.kycStatus = kycStatus;
+    }
 
 }

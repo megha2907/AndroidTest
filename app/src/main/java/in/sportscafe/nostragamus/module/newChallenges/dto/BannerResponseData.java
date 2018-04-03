@@ -13,23 +13,14 @@ import in.sportscafe.nostragamus.module.notifications.NostraNotificationData;
 @Parcel
 public class BannerResponseData {
 
-    @SerializedName("id")
+    @SerializedName("banner_id")
     private int bannerId;
 
-    @SerializedName("name")
+    @SerializedName("banner_name")
     private String bannerName;
 
     @SerializedName("url")
     private String bannerImageUrl;
-
-    @SerializedName("target_screen")
-    private String targetScreen;
-
-    @SerializedName("is_active")
-    private boolean isActive;
-
-    @SerializedName("priority")
-    private int priority;
 
     @SerializedName("info")
     private NostraNotification nostraBannerInfo;
@@ -58,30 +49,6 @@ public class BannerResponseData {
         this.bannerImageUrl = bannerImageUrl;
     }
 
-    public String getTargetScreen() {
-        return targetScreen;
-    }
-
-    public void setTargetScreen(String targetScreen) {
-        this.targetScreen = targetScreen;
-    }
-
-    public boolean isActive() {
-        return isActive;
-    }
-
-    public void setActive(boolean active) {
-        isActive = active;
-    }
-
-    public int getPriority() {
-        return priority;
-    }
-
-    public void setPriority(int priority) {
-        this.priority = priority;
-    }
-
     public NostraNotification getNostraBannerInfo() {
         return nostraBannerInfo;
     }
@@ -89,6 +56,5 @@ public class BannerResponseData {
     public void setNostraBannerInfo(NostraNotification nostraBannerInfo) {
         this.nostraBannerInfo = nostraBannerInfo;
     }
-
 
 }

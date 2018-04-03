@@ -4,7 +4,10 @@ import android.content.Context;
 import android.os.Bundle;
 import android.text.TextUtils;
 
+import com.crashlytics.android.Crashlytics;
+import com.google.gson.Gson;
 import com.jeeva.android.ExceptionTracker;
+import com.jeeva.android.Log;
 
 import org.parceler.Parcels;
 
