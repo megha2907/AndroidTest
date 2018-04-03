@@ -618,7 +618,7 @@ public class InPlayRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         @Override
         public void onClick(View view) {
             switch (view.getId()) {
-                case R.id.in_play_joined_card_parent:
+                case R.id.in_play_private_contest_card_parent:
                     if (mInPlayAdapterListener != null) {
                         Bundle args = getContestDataBundle();
                         mInPlayAdapterListener.onJoinedContestCardClicked(args);
@@ -626,7 +626,7 @@ public class InPlayRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                     }
                     break;
 
-                case R.id.inplay_contest_list_current_rank_layout:
+                case R.id.inplay_private_contest_list_current_rank_layout:
                     if (mInPlayAdapterListener != null) {
                         Bundle args = getContestDataBundle();
                         args.putInt(Constants.BundleKeys.SCREEN_LAUNCH_REQUEST, DetailScreensLaunchRequest.MATCHES_LEADER_BOARD_SCREEN);
@@ -635,7 +635,7 @@ public class InPlayRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                     }
                     break;
 
-                case R.id.inplay_contest_list_prizes_layout:
+                case R.id.inplay_private_contest_list_prizes_layout:
                     if (mInPlayAdapterListener != null) {
                         Bundle args = getContestDataBundle();
                         args.putInt(Constants.BundleKeys.SCREEN_LAUNCH_REQUEST, DetailScreensLaunchRequest.MATCHES_REWARDS_SCREEN);
@@ -644,7 +644,7 @@ public class InPlayRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                     }
                     break;
 
-                case R.id.inplay_contest_card_header_mode_imgView:
+                case R.id.inplay_private_contest_card_header_mode_imgView:
                     if (mInPlayAdapterListener != null) {
                         Bundle args = getContestDataBundle();
                         args.putInt(Constants.BundleKeys.SCREEN_LAUNCH_REQUEST, DetailScreensLaunchRequest.MATCHES_RULES_SCREEN);

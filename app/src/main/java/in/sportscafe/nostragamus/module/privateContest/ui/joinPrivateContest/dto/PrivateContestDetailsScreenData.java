@@ -2,6 +2,8 @@ package in.sportscafe.nostragamus.module.privateContest.ui.joinPrivateContest.dt
 
 import org.parceler.Parcel;
 
+import in.sportscafe.nostragamus.module.privateContest.ui.branchShare.ShareDetailsDto;
+
 /**
  * Created by sc on 27/3/18.
  */
@@ -10,6 +12,7 @@ public class PrivateContestDetailsScreenData {
 
     private String privateCode;
     private FindPrivateContestResponse privateContestDetailsResponse;
+    private ShareDetailsDto shareDetails;
 
     public String getPrivateCode() {
         return privateCode;
@@ -25,5 +28,13 @@ public class PrivateContestDetailsScreenData {
 
     public void setPrivateContestDetailsResponse(FindPrivateContestResponse privateContestDetailsResponse) {
         this.privateContestDetailsResponse = privateContestDetailsResponse;
+    }
+
+    public ShareDetailsDto getShareDetails() {
+        return shareDetails;
+    }
+
+    public void setShareDetails(ShareDetailsDto shareDetails) {
+        this.shareDetails = shareDetails;
     }
 }

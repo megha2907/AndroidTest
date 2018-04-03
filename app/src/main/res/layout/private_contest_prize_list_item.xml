@@ -60,7 +60,7 @@
         android:layout_weight="1"
         android:gravity="right"
         android:layout_gravity="center_vertical"
-        android:textColor="@color/white_3f3f3f"
+        android:textColor="@color/white"
         android:textSize="@dimen/sp_12"
         android:text="1st"
         app:typeface="lato_regular"/>
