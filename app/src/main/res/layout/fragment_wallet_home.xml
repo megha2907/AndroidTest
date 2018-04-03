@@ -557,6 +557,83 @@
                     android:layout_marginRight="@dimen/dp_10"
                     android:background="@color/line_separator" />
 
+                <!-- PayoutDto Details -->
+                <LinearLayout
+                    android:id="@+id/wallet_kyc_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:minHeight="@dimen/dp_72"
+                    android:layout_gravity="center_vertical"
+                    android:gravity="center_vertical"
+                    android:background="?android:attr/selectableItemBackground">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:paddingTop="@dimen/dp_10"
+                        android:paddingBottom="@dimen/dp_10"
+                        android:layout_marginLeft="@dimen/dp_20">
+
+                        <com.jeeva.android.widgets.customfont.CustomTextView
+                            android:id="@+id/wallet_kyc_textView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Update your KYC"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/sp_14"
+                            app:typeface="lato_regular" />
+
+                        <!--<com.jeeva.android.widgets.customfont.CustomTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Add or edit your details to withdraw money"
+                            android:textColor="@color/white_999999"
+                            android:textSize="@dimen/sp_11"
+                            app:typeface="lato_regular"
+                            android:layout_marginTop="@dimen/dp_4"/>-->
+
+                        <com.jeeva.android.widgets.customfont.CustomTextView
+                            android:id="@+id/wallet_kyc_status_textView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/white_dim"
+                            android:textSize="@dimen/sp_12"
+                            app:typeface="lato_regular"/>
+
+                    </LinearLayout>
+
+                    <ImageView
+                        android:id="@+id/wallet_tick_icon"
+                        android:layout_width="@dimen/dp_10"
+                        android:layout_height="@dimen/dp_10"
+                        android:src="@drawable/back_icon_grey"
+                        android:rotation="180"
+                        android:layout_gravity="center"
+                        android:visibility="visible"
+                        android:layout_marginRight="@dimen/dp_24"/>
+
+                    <ImageView
+                        android:id="@+id/wallet_kyc_status_icon"
+                        android:layout_width="@dimen/dim_16"
+                        android:layout_height="@dimen/dim_16"
+                        android:src="@drawable/green_tick_circle"
+                        android:layout_gravity="center"
+                        android:visibility="gone"
+                        android:layout_marginRight="@dimen/dp_24"/>
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_0.5"
+                    android:layout_marginLeft="@dimen/dp_10"
+                    android:layout_marginRight="@dimen/dp_10"
+                    android:background="@color/line_separator" />
+
+
             </LinearLayout>
 
             <LinearLayout

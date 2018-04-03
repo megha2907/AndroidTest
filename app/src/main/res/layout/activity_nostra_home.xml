@@ -140,29 +140,29 @@
 
             </LinearLayout>
 
-            <!-- Group tab -->
+            <!-- Recent Activity tab -->
             <LinearLayout
-                android:id="@+id/home_group_tab_layout"
+                android:id="@+id/home_recent_activity_tab_layout"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:orientation="vertical"
-                android:visibility="gone">
+                android:visibility="visible">
 
                 <ImageView
-                    android:id="@+id/home_group_imgView"
+                    android:id="@+id/home_recent_activity_imgView"
                     android:layout_width="@dimen/dim_16"
                     android:layout_height="@dimen/dim_16"
                     android:layout_marginTop="@dimen/dp_8"
-                    android:src="@drawable/menu_group_btn_selector" />
+                    android:src="@drawable/menu_activity_btn_selector" />
 
                 <com.jeeva.android.widgets.customfont.CustomTextView
-                    android:id="@+id/home_group_tab_textView"
+                    android:id="@+id/home_recent_activity_tab_textView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/dim_2"
-                    android:text="Group"
+                    android:text="Activity"
                     android:textColor="@drawable/menu_tv_selector"
                     android:textSize="@dimen/sp_11"
                     app:typeface="lato_regular" />

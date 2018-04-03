@@ -1,6 +1,8 @@
 package in.sportscafe.nostragamus.module.newChallenges.helpers;
 
+import android.content.Context;
 import android.text.TextUtils;
+import android.text.format.DateFormat;
 
 import com.jeeva.android.Log;
 
@@ -202,6 +204,39 @@ public class DateTimeHelper {
         }
 
         return isDay;
+    }
+
+
+    public synchronized static String getFormattedDate(String time) {
+
+        long millis = 0;
+        if (!TextUtils.isEmpty(time)) {
+            try {
+                millis = TimeUtils.getMillisecondsFromDateString(time,
+                        Constants.DateFormats.FORMAT_DATE_T_TIME_ZONE, Constants.DateFormats.GMT);
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        }
+
+        Calendar smsTime = Calendar.getInstance();
+        smsTime.setTimeInMillis(millis);
+
+        Calendar now = Calendar.getInstance();
+        now.setTimeInMillis(Nostragamus.getInstance().getServerTime());
+
+        final String timeFormatString = "h:mm aa";
+        final String dateTimeFormatString = "dd MMM";
+        final long HOURS = 60 * 60 * 60;
+        if (now.get(Calendar.DATE) == smsTime.get(Calendar.DATE) ) {
+            return "Today";
+        } else if (now.get(Calendar.DATE) - smsTime.get(Calendar.DATE) == 1  ){
+            return "Yesterday";
+        } else if (now.get(Calendar.YEAR) == smsTime.get(Calendar.YEAR)) {
+            return DateFormat.format(dateTimeFormatString, smsTime).toString();
+        } else {
+            return DateFormat.format("dd MMM", smsTime).toString();
+        }
     }
 
 }
