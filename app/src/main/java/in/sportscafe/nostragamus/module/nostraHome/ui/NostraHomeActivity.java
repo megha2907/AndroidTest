@@ -276,6 +276,9 @@ public class NostraHomeActivity extends NostraBaseActivity implements View.OnCli
                 } else if (screenName.equalsIgnoreCase(Constants.Notifications.SCREEN_APP_UPDATE)) {
                     startActivity(notificationHelper.getAppUpdateScreenIntent(this, notification));
 
+                }else if (screenName.equalsIgnoreCase(Constants.Notifications.SCREEN_WHATS_NEW)) {
+                    startActivity(notificationHelper.getWhatsNewScreenIntent(this, notification));
+
                 } else if (screenName.equalsIgnoreCase(Constants.Notifications.SCREEN_WALLET_HISTORY)) {
                     startActivity(notificationHelper.getWalletHistoryScreenIntent(this, notification));
 
@@ -288,6 +291,9 @@ public class NostraHomeActivity extends NostraBaseActivity implements View.OnCli
                 } else if (screenName.equalsIgnoreCase(Constants.Notifications.SCREEN_CHALLENGE_HISTORY_GAMES)) {
                     startActivity(notificationHelper.getChallengeHistoryMatchesScreenIntent(this, notification));
 
+                } else if (screenName.equalsIgnoreCase(Constants.Notifications.SCREEN_CHALLENGE_HISTORY_LEADERBOARDS)) {
+                    startActivity(notificationHelper.getChallengeHistoryLeaderBoardsScreenIntent(this, notification));
+
                 } else if (screenName.equalsIgnoreCase(Constants.Notifications.SCREEN_WEB_VIEW)) {
                     startActivity(notificationHelper.getWebViewScreenIntent(this, notification));
 
@@ -295,6 +301,12 @@ public class NostraHomeActivity extends NostraBaseActivity implements View.OnCli
                     startActivity(notificationHelper.getSlidesScreenIntent(this, notification));
                 } else if (screenName.equalsIgnoreCase(Constants.Notifications.SCREEN_ANNOUNCEMENT)) {
                     startActivity(notificationHelper.getAnnouncementScreenIntent(this, notification));
+                } else if (screenName.equalsIgnoreCase(Constants.Notifications.SCREEN_WALLET_HOME)) {
+                    startActivity(notificationHelper.getWalletHomeScreenIntent(this, notification));
+                } else if (screenName.equalsIgnoreCase(Constants.Notifications.SCREEN_KYC_DETAILS)) {
+                    startActivity(notificationHelper.getKYCScreenIntent(this, notification));
+                } else if (screenName.equalsIgnoreCase(Constants.Notifications.NONE)) {
+                            /* NO CLICK EVENT SHOULD HAPPEN */
                 }
 
             } else {    // Keep this always into else part

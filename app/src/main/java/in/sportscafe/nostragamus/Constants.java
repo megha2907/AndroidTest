@@ -36,7 +36,6 @@ public interface Constants {
         String SCREEN_RESULTS = "results"; /* Results Screen */
         String SCREEN_RESULTS_PEEK = "results_peek"; /* Compare Results Screen */
         String SCREEN_AVERAGE_SCORE = "average_score";  /* Average Score Screen */
-        String SCREEN_WALLET_HOME = "wallet"; /* Wallet Home Screen */
         String SCREEN_WALLET_ADD_MONEY = "addMoney"; /* Add money to wallet */
         String SCREEN_WALLET_HISTORY = "walletHistory"; /* Wallet History Screen */
         String SCREEN_WALLET_PAYOUT_HOME = "walletPayoutHome"; /* Withdrawal Details Screen ( Paytm & Bank account) */
@@ -44,13 +43,17 @@ public interface Constants {
         String SCREEN_REFER_FRIEND = "ReferFriend"; /* Refer a Friend Screen */
         String SCREEN_REFERRAL_CREDITS = "referralCredits";  /* Referral History Screen */
         String SCREEN_STORE = "Store";  /* Store - Buy Powerups */
-        String SCREEN_APP_UPDATE = "appUpdate"; /* Update the App screen & What's New Screen */
+        String SCREEN_APP_UPDATE = "appUpdate"; /* Update the App screen */
         String SCREEN_WEB_VIEW = "webView";
         String SCREEN_EDIT_ANSWER = "editAnswer";
         String SCREEN_NEW_CHALLENGE_GAMES = "newChallengeGames"; /* New Challenges Games Screen  */
         String SCREEN_SLIDES = "slides"; /* How To Play Screen & How to use powerup screen in slide design */
         String SCREEN_ANNOUNCEMENT = "announcementDetails"; /* Activity Details / Announcement  */
         String SCREEN_KYC_DETAILS = "KYCDetails"; /* Add KYC Details */
+        String SCREEN_CHALLENGE_HISTORY_LEADERBOARDS = "ChallengeHistoryLeaderboard"; /* Contest Details with Leaderboards tab open for Completed */
+        String SCREEN_WHATS_NEW = "whatsNew"; /* What's New Screen */
+        String SCREEN_WALLET_HOME = "walletHome"; /* Open Wallet Home  */
+        String NONE = "NONE"; /* open nothing on click  */
     }
 
     interface SharedKeys {

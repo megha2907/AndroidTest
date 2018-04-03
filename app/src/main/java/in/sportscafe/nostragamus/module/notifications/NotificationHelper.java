@@ -20,7 +20,9 @@ import in.sportscafe.nostragamus.module.navigation.appupdate.AppUpdateActivity;
 import in.sportscafe.nostragamus.module.navigation.help.howtoplay.HowToPlayActivity;
 import in.sportscafe.nostragamus.module.navigation.referfriends.ReferFriendActivity;
 import in.sportscafe.nostragamus.module.navigation.referfriends.referralcredits.ReferralCreditActivity;
+import in.sportscafe.nostragamus.module.navigation.wallet.WalletHomeActivity;
 import in.sportscafe.nostragamus.module.navigation.wallet.addMoney.AddWalletMoneyActivity;
+import in.sportscafe.nostragamus.module.navigation.wallet.doKYC.AddKYCDetailsActivity;
 import in.sportscafe.nostragamus.module.navigation.wallet.walletHistory.WalletHistoryActivity;
 import in.sportscafe.nostragamus.module.newChallenges.dto.NewChallengeMatchesScreenData;
 import in.sportscafe.nostragamus.module.newChallenges.ui.matches.NewChallengesMatchActivity;
@@ -80,6 +82,7 @@ public class NotificationHelper {
         if (notification != null && notification.getData() != null) {
             screenData.setChallengeId(notification.getData().getChallengeId());
             screenData.setChallengeName(notification.getData().getChallengeName());
+            screenData.setStartTime(notification.getData().getChallengeStartTime());
 
             args.putBoolean(Constants.Notifications.IS_LAUNCHED_FROM_NOTIFICATION, true);
             args.putParcelable(Constants.Notifications.NOSTRA_NOTIFICATION, Parcels.wrap(notification));
@@ -138,6 +141,29 @@ public class NotificationHelper {
     }
 
     @NonNull
+    public Intent getChallengeHistoryLeaderBoardsScreenIntent(Context context, NostraNotification notification) {
+        Bundle args = new Bundle();
+        CompletedContestDto completedContestDto = new CompletedContestDto();
+
+        if (notification != null && notification.getData() != null) {
+            completedContestDto.setChallengeId(notification.getData().getChallengeId());
+            completedContestDto.setRoomId(notification.getData().getRoomId());
+            completedContestDto.setContestId(notification.getData().getContestId());
+            completedContestDto.setContestName(notification.getData().getContestName());
+            completedContestDto.setChallengeName(notification.getData().getChallengeName());
+
+            args.putBoolean(Constants.Notifications.IS_LAUNCHED_FROM_NOTIFICATION, true);
+            args.putParcelable(Constants.Notifications.NOSTRA_NOTIFICATION, Parcels.wrap(notification));
+            args.putInt(Constants.BundleKeys.SCREEN_LAUNCH_REQUEST, DetailScreensLaunchRequest.MATCHES_LEADER_BOARD_SCREEN);
+        }
+        args.putParcelable(Constants.BundleKeys.COMPLETED_CONTEST, Parcels.wrap(completedContestDto));
+
+        Intent intent = new Intent(context, ChallengeHistoryContestDetailsActivity.class);
+        intent.putExtras(args);
+        return intent;
+    }
+
+    @NonNull
     public Intent getReferFriendScreenIntent(Context context, NostraNotification notification) {
         Bundle args = new Bundle();
         if (notification != null) {
@@ -185,6 +211,20 @@ public class NotificationHelper {
         if (notification != null) {
             args.putBoolean(Constants.Notifications.IS_LAUNCHED_FROM_NOTIFICATION, true);
             args.putParcelable(Constants.Notifications.NOSTRA_NOTIFICATION, Parcels.wrap(notification));
+        }
+
+        Intent intent = new Intent(context, AppUpdateActivity.class);
+        intent.putExtras(args);
+        return intent;
+    }
+
+    @NonNull
+    public Intent getWhatsNewScreenIntent(Context context, NostraNotification notification) {
+        Bundle args = new Bundle();
+        if (notification != null) {
+            args.putBoolean(Constants.Notifications.IS_LAUNCHED_FROM_NOTIFICATION, true);
+            args.putParcelable(Constants.Notifications.NOSTRA_NOTIFICATION, Parcels.wrap(notification));
+            args.putString(Constants.BundleKeys.SCREEN, Constants.ScreenNames.WHATS_NEW);
         }
 
         Intent intent = new Intent(context, AppUpdateActivity.class);
@@ -307,4 +347,31 @@ public class NotificationHelper {
         intent.putExtras(args);
         return intent;
     }
+
+    @NonNull
+    public Intent getWalletHomeScreenIntent(Context context, NostraNotification notification) {
+        Bundle args = new Bundle();
+        if (notification != null) {
+            args.putBoolean(Constants.Notifications.IS_LAUNCHED_FROM_NOTIFICATION, true);
+            args.putParcelable(Constants.Notifications.NOSTRA_NOTIFICATION, Parcels.wrap(notification));
+        }
+
+        Intent intent = new Intent(context, WalletHomeActivity.class);
+        intent.putExtras(args);
+        return intent;
+    }
+
+    @NonNull
+    public Intent getKYCScreenIntent(Context context, NostraNotification notification) {
+        Bundle args = new Bundle();
+        if (notification != null) {
+            args.putBoolean(Constants.Notifications.IS_LAUNCHED_FROM_NOTIFICATION, true);
+            args.putParcelable(Constants.Notifications.NOSTRA_NOTIFICATION, Parcels.wrap(notification));
+        }
+
+        Intent intent = new Intent(context, AddKYCDetailsActivity.class);
+        intent.putExtras(args);
+        return intent;
+    }
+
 }

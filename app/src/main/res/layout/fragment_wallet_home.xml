@@ -578,6 +578,7 @@
                         android:layout_marginLeft="@dimen/dp_20">
 
                         <com.jeeva.android.widgets.customfont.CustomTextView
+                            android:id="@+id/wallet_kyc_textView"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Update your KYC"
@@ -598,7 +599,6 @@
                             android:id="@+id/wallet_kyc_status_textView"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Get benefits"
                             android:textColor="@color/white_dim"
                             android:textSize="@dimen/sp_12"
                             app:typeface="lato_regular"/>
@@ -606,11 +606,22 @@
                     </LinearLayout>
 
                     <ImageView
+                        android:id="@+id/wallet_tick_icon"
                         android:layout_width="@dimen/dp_10"
                         android:layout_height="@dimen/dp_10"
                         android:src="@drawable/back_icon_grey"
                         android:rotation="180"
                         android:layout_gravity="center"
+                        android:visibility="visible"
+                        android:layout_marginRight="@dimen/dp_24"/>
+
+                    <ImageView
+                        android:id="@+id/wallet_kyc_status_icon"
+                        android:layout_width="@dimen/dim_16"
+                        android:layout_height="@dimen/dim_16"
+                        android:src="@drawable/green_tick_circle"
+                        android:layout_gravity="center"
+                        android:visibility="gone"
                         android:layout_marginRight="@dimen/dp_24"/>
 
                 </LinearLayout>

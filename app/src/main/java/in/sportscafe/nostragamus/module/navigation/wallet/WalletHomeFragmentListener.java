@@ -12,4 +12,5 @@ public interface WalletHomeFragmentListener {
     void onPayoutDetailsClicked();
     void onKYCClicked();
     void onOpenKYCRequiredPopup();
+    void onOpenKYCBlockedPopup();
 }

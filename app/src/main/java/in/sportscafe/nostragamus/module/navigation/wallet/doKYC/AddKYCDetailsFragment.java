@@ -9,6 +9,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
@@ -28,11 +29,11 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.jeeva.android.BaseFragment;
-import com.jeeva.android.Log;
-
-import org.parceler.Parcels;
-
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
@@ -42,16 +43,10 @@ import java.util.regex.Pattern;
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.R;
-import in.sportscafe.nostragamus.module.addphoto.AddPhotoActivity;
-import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
-import in.sportscafe.nostragamus.module.customViews.CustomSnackBar;
 import in.sportscafe.nostragamus.module.navigation.wallet.doKYC.dto.KYCDetails;
-import in.sportscafe.nostragamus.module.navigation.wallet.paytmAndBank.AddPaytmOrBankDetailModelModelImpl;
 import in.sportscafe.nostragamus.module.permission.PermissionsActivity;
 import in.sportscafe.nostragamus.module.permission.PermissionsChecker;
 import in.sportscafe.nostragamus.module.user.login.dto.UserInfo;
-import in.sportscafe.nostragamus.module.user.login.dto.UserPaymentInfo;
-import in.sportscafe.nostragamus.module.user.login.dto.UserPaymentInfoBankDto;
 import okhttp3.ResponseBody;
 
 import static android.app.Activity.RESULT_OK;
@@ -155,8 +150,6 @@ public class AddKYCDetailsFragment extends BaseFragment implements View.OnFocusC
         if (getView() != null) {
             getView().findViewById(R.id.add_kyc_details_failed_layout).setVisibility(View.VISIBLE);
             getView().findViewById(R.id.kyc_benefits_layout).setVisibility(View.GONE);
-            TextView failedStatus = (TextView) getView().findViewById(R.id.add_kyc_details_failed_status_msg);
-            failedStatus.setText("KYC rejected because the data entered does not match the PAN image. Please upload valid info to complete your KYC");
         }
     }
 
@@ -302,9 +295,17 @@ public class AddKYCDetailsFragment extends BaseFragment implements View.OnFocusC
         String imagePath = imageData.getStringExtra(Constants.BundleKeys.ADDED_NEW_IMAGE_PATH);
         panCardFile = new File(imagePath);
         mPanImageView.setImageURI(Uri.fromFile(panCardFile));
-        final RelativeLayout uploadPANLayout = (RelativeLayout) getView().findViewById(R.id.add_kyc_details_show_pan_image_layout);
-        uploadPANLayout.setVisibility(View.VISIBLE);
+        showImageView();
         scrollView();
+    }
+
+    private void showImageView() {
+        if (getView() != null && getActivity() != null) {
+            RelativeLayout uploadPANLayout = (RelativeLayout) getView().findViewById(R.id.add_kyc_details_show_pan_image_layout);
+            ImageView uploadedImageIcon = (ImageView) getView().findViewById(R.id.add_kyc_details_pan_uploaded_icon);
+            uploadPANLayout.setVisibility(View.VISIBLE);
+            uploadedImageIcon.setVisibility(View.VISIBLE);
+        }
     }
 
     private void getUserKYCInfo() {
@@ -336,8 +337,8 @@ public class AddKYCDetailsFragment extends BaseFragment implements View.OnFocusC
                     // display the image data in a ImageView
                     Bitmap bm = BitmapFactory.decodeStream(body.byteStream());
                     mPanImageView.setImageBitmap(bm);
-                    final RelativeLayout uploadPANLayout = (RelativeLayout) getView().findViewById(R.id.add_kyc_details_show_pan_image_layout);
-                    uploadPANLayout.setVisibility(View.VISIBLE);
+                    persistImage(body.byteStream());
+                    showImageView();
                 }
             }
 
@@ -349,6 +350,7 @@ public class AddKYCDetailsFragment extends BaseFragment implements View.OnFocusC
             }
         };
     }
+
 
     private void setKYCDetails(KYCDetails kycDetails) {
 
@@ -362,8 +364,57 @@ public class AddKYCDetailsFragment extends BaseFragment implements View.OnFocusC
             if (!TextUtils.isEmpty(kycDetails.getDateOfBirth())) {
                 mDOBEditText.setText(kycDetails.getDateOfBirth());
             }
+            if (!TextUtils.isEmpty(kycDetails.getKycRejectedError())) {
+                TextView uploadPanErrorTextView = (TextView) getView().findViewById(R.id.add_kyc_details_failed_status_msg);
+                uploadPanErrorTextView.setText(kycDetails.getKycRejectedError());
+            }
+
         }
 
+    }
+
+    private void persistImage(InputStream inputStream) {
+        FileOutputStream out = null;
+        try {
+            panCardFile = getExternalRandomFile();
+            out = new FileOutputStream(panCardFile);
+            copyStream(inputStream, out);
+            out.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (out != null) {
+                    out.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private File getExternalRandomFile() {
+        File dir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
+                .getAbsolutePath() + "/Nostragamus");
+        dir.mkdirs();
+
+        if (dir.exists()) {
+            try {
+                return File.createTempFile("IMG_" + Calendar.getInstance().getTimeInMillis(), ".png", dir);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return null;
+    }
+
+    public static void copyStream(InputStream in, OutputStream out) throws IOException {
+        byte[] buffer = new byte[1024];
+        int read;
+        while ((read = in.read(buffer)) != -1) {
+            out.write(buffer, 0, read);
+        }
     }
 
     public void onAddKYCDetailsSaveClicked() {
@@ -399,7 +450,7 @@ public class AddKYCDetailsFragment extends BaseFragment implements View.OnFocusC
                 panCardErrorTextView.setVisibility(View.GONE);
                 nameErrorTextView.setVisibility(View.GONE);
             } // check if Pan card image uploaded
-            else if (!hasImage(panImageView) && panCardFile != null) {
+            else if (!hasImage(panImageView) && panCardFile != null && !TextUtils.isEmpty(panCardFile.getName())) {
                 uploadPanErrorTextView.setVisibility(View.VISIBLE);
                 panCardErrorTextView.setVisibility(View.GONE);
                 nameErrorTextView.setVisibility(View.GONE);
@@ -471,7 +522,7 @@ public class AddKYCDetailsFragment extends BaseFragment implements View.OnFocusC
                 case R.id.add_kyc_details_name_edittext:
                     TextView textView = (TextView) getView().findViewById(R.id.add_kyc_details_name_textview);
                     if (hasFocus) {
-                        textView.setTextColor(ContextCompat.getColor(getContext(), R.color.white));
+                        textView.setTextColor(ContextCompat.getColor(getContext(), R.color.blue_008ae1));
                     } else {
                         textView.setTextColor(ContextCompat.getColor(getContext(), R.color.white_999999));
                     }
@@ -480,7 +531,7 @@ public class AddKYCDetailsFragment extends BaseFragment implements View.OnFocusC
                 case R.id.add_kyc_details_pan_number_edittext:
                     textView = (TextView) getView().findViewById(R.id.add_kyc_details_pan_number_textview);
                     if (hasFocus) {
-                        textView.setTextColor(ContextCompat.getColor(getContext(), R.color.white));
+                        textView.setTextColor(ContextCompat.getColor(getContext(), R.color.blue_008ae1));
                     } else {
                         textView.setTextColor(ContextCompat.getColor(getContext(), R.color.white_999999));
                     }
@@ -489,7 +540,7 @@ public class AddKYCDetailsFragment extends BaseFragment implements View.OnFocusC
                 case R.id.add_kyc_details_dob_edittext:
                     textView = (TextView) getView().findViewById(R.id.add_kyc_details_dob_textview);
                     if (hasFocus) {
-                        textView.setTextColor(ContextCompat.getColor(getContext(), R.color.white));
+                        textView.setTextColor(ContextCompat.getColor(getContext(), R.color.blue_008ae1));
                     } else {
                         textView.setTextColor(ContextCompat.getColor(getContext(), R.color.white_999999));
                     }

@@ -56,6 +56,14 @@ public class WalletHomeActivity extends NostragamusActivity implements WalletHom
         }
     }
 
+    private void notifyWalletHomeFragmentAndUpdateKYCStatus() {
+        Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.fragment_container);
+        if (fragment != null &&  fragment instanceof WalletHomeFragment) {
+            ((WalletHomeFragment) fragment).refreshKYCStatus();
+        }
+    }
+
+
     private void initToolbar() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.wallet_toolbar);
         TextView tvToolbar = (TextView) findViewById(R.id.wallet_toolbar_tv);
@@ -128,6 +136,11 @@ public class WalletHomeActivity extends NostragamusActivity implements WalletHom
     }
 
     @Override
+    public void onOpenKYCBlockedPopup() {
+
+    }
+
+    @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
@@ -135,6 +148,7 @@ public class WalletHomeActivity extends NostragamusActivity implements WalletHom
             switch (resultCode) {
                 case RESULT_OK:
                     // KYC Uploaded, re create screen as kyc status needs to be updated
+                    notifyWalletHomeFragmentAndUpdateKYCStatus();
                     showSnackbarMessage(R.drawable.edit_answer_success_snackbar_icn, "Your KYC details were uploaded successfully!");
                     break;
             }

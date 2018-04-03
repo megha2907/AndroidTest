@@ -10,16 +10,19 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.jeeva.android.BaseFragment;
+import com.jeeva.android.Log;
 
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
 import in.sportscafe.nostragamus.module.navigation.wallet.dto.UserWalletResponse;
+import in.sportscafe.nostragamus.module.user.login.UserInfoModelImpl;
 import in.sportscafe.nostragamus.module.user.login.dto.UserInfo;
 import in.sportscafe.nostragamus.utils.AnimationHelper;
 
@@ -83,6 +86,11 @@ public class WalletHomeFragment extends BaseFragment implements View.OnClickList
         fetchUserWalletFromServer();
     }
 
+    public void refreshKYCStatus() {
+        /* Fetch User Info from server to update kyc status */
+        fetchUserInfo();
+    }
+
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -93,7 +101,9 @@ public class WalletHomeFragment extends BaseFragment implements View.OnClickList
         /* Fetch again the values and update later */
         fetchUserWalletFromServer();
 
-        updateKYCStatus();
+        /* Fetch User Info from server to update kyc status */
+        fetchUserInfo();
+
     }
 
     private void fetchUserWalletFromServer() {
@@ -117,6 +127,26 @@ public class WalletHomeFragment extends BaseFragment implements View.OnClickList
                 updateWalletDetailsOnUi();
             }
         }).performApiCall();
+    }
+
+    private void fetchUserInfo() {
+        if (Nostragamus.getInstance().hasNetworkConnection()) {
+            UserInfoModelImpl.newInstance(new UserInfoModelImpl.OnGetUserInfoModelListener() {
+                @Override
+                public void onSuccessGetUpdatedUserInfo(UserInfo updatedUserInfo) {
+                    /* check and update kyc status from user info */
+                    checkAndUpdateKYCStatus();
+                }
+
+                @Override
+                public void onFailedGetUpdateUserInfo(String message) {}
+
+                @Override
+                public void onNoInternet() {}
+            }).getUserInfo();
+        } else {
+            Log.i(TAG, "No internet");
+        }
     }
 
 
@@ -157,20 +187,23 @@ public class WalletHomeFragment extends BaseFragment implements View.OnClickList
         }
     }
 
-    private void updateKYCStatus() {
+    private void checkAndUpdateKYCStatus() {
         if (getView() != null && getActivity() != null) {
             TextView kycStatusTv = (TextView) getView().findViewById(R.id.wallet_kyc_status_textView);
+            TextView kycTv = (TextView) getView().findViewById(R.id.wallet_kyc_textView);
+            ImageView tickIcon = (ImageView) getView().findViewById(R.id.wallet_tick_icon);
+            ImageView kycIcon = (ImageView) getView().findViewById(R.id.wallet_kyc_status_icon);
 
             UserInfo userInfo = Nostragamus.getInstance().getServerDataManager().getUserInfo();
             if (userInfo != null && userInfo.getInfoDetails() != null && !TextUtils.isEmpty(userInfo.getInfoDetails().getKycStatus())) {
-                updateKYCStatus(userInfo.getInfoDetails().getKycStatus(), kycStatusTv);
+                updateKYCStatus(userInfo.getInfoDetails().getKycStatus(), kycStatusTv, kycTv, kycIcon, tickIcon);
             }
         }
     }
 
-    private void updateKYCStatus(String kycStatusFromServer, TextView kycStatusTv) {
+    private void updateKYCStatus(String kycStatusFromServer, TextView kycStatusTv, TextView kycTv, ImageView kycIcon, ImageView tickIcon) {
 
-        String kycStatus = "Get Benefits";
+        String kycStatus = "";
 
         switch (kycStatusFromServer) {
             case Constants.KYCStatus.NOT_REQUIRED:
@@ -189,8 +222,11 @@ public class WalletHomeFragment extends BaseFragment implements View.OnClickList
                 break;
 
             case Constants.KYCStatus.VERIFIED:
-                kycStatus = "Verification completed";
-                kycStatusTv.setTextColor(ContextCompat.getColor(getContext(), R.color.paid_entry_tv_color));
+                kycTv.setText("KYC Verified!");
+                kycTv.setTextColor(ContextCompat.getColor(getContext(), R.color.paid_entry_tv_color));
+                kycIcon.setVisibility(View.VISIBLE);
+                tickIcon.setVisibility(View.GONE);
+                kycStatusTv.setVisibility(View.GONE);
                 break;
 
             case Constants.KYCStatus.FAILED:
@@ -308,8 +344,48 @@ public class WalletHomeFragment extends BaseFragment implements View.OnClickList
     }
 
     private void onKYCClicked() {
-        if (mFragmentListener != null) {
-            mFragmentListener.onKYCClicked();
+
+        String kycStatusFromServer = "";
+
+        UserInfo userInfo = Nostragamus.getInstance().getServerDataManager().getUserInfo();
+        if (userInfo != null && userInfo.getInfoDetails() != null && !TextUtils.isEmpty(userInfo.getInfoDetails().getKycStatus())) {
+            kycStatusFromServer = userInfo.getInfoDetails().getKycStatus();
+        }
+
+        switch (kycStatusFromServer) {
+            case Constants.KYCStatus.NOT_REQUIRED:
+                if (mFragmentListener != null) {
+                    mFragmentListener.onKYCClicked();
+                }
+                break;
+
+            case Constants.KYCStatus.REQUIRED:
+                if (mFragmentListener != null) {
+                    mFragmentListener.onKYCClicked();
+                }
+                break;
+
+            case Constants.KYCStatus.UPLOADED:
+                if (mFragmentListener != null) {
+                    mFragmentListener.onOpenKYCRequiredPopup();
+                }
+                break;
+
+            case Constants.KYCStatus.VERIFIED:
+                break;
+
+            case Constants.KYCStatus.FAILED:
+                if (mFragmentListener != null) {
+                    mFragmentListener.onKYCClicked();
+                }
+                break;
+
+            case Constants.KYCStatus.BLOCKED:
+                if (mFragmentListener != null) {
+                    mFragmentListener.onOpenKYCBlockedPopup();
+                }
+                break;
+
         }
     }
 
@@ -355,7 +431,7 @@ public class WalletHomeFragment extends BaseFragment implements View.OnClickList
 
             case Constants.KYCStatus.BLOCKED:
                 if (mFragmentListener != null) {
-                    mFragmentListener.onKYCClicked();
+                    mFragmentListener.onOpenKYCBlockedPopup();
                 }
                 break;
 

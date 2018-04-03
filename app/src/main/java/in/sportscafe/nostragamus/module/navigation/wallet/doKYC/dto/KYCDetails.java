@@ -20,6 +20,9 @@ public class KYCDetails {
     @SerializedName("dateOfBirth")
     private String dateOfBirth;
 
+    @SerializedName("rejected_error")
+    private String kycRejectedError;
+
     public String getUserName() {
         return userName;
     }
@@ -43,4 +46,13 @@ public class KYCDetails {
     public void setDateOfBirth(String dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
     }
+
+    public String getKycRejectedError() {
+        return kycRejectedError;
+    }
+
+    public void setKycRejectedError(String kycRejectedError) {
+        this.kycRejectedError = kycRejectedError;
+    }
+
 }
