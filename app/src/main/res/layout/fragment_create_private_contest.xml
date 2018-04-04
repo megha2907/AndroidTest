@@ -6,439 +6,447 @@
     android:background="@color/black"
     tools:context="in.sportscafe.nostragamus.module.privateContest.ui.createContest.CreatePrivateContestFragment">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
-        <!-- Heading layout -->
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/toolbar_bg"
-            android:minHeight="@dimen/dim_60">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-            <ImageView
-                android:id="@+id/back_btn"
-                android:layout_width="@dimen/dp_32"
-                android:layout_height="@dimen/dp_32"
-                android:layout_gravity="center"
-                android:layout_marginLeft="@dimen/dim_6"
-                android:padding="@dimen/dim_10"
-                android:src="@drawable/back_icon_grey"
-                android:background="?attr/selectableItemBackgroundBorderless"/>
-
-            <RelativeLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginLeft="@dimen/dim_6">
-
-                <com.jeeva.android.widgets.customfont.CustomTextView
-                    android:id="@+id/toolbar_heading_one"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Create Private Contest"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/sp_14"
-                    app:typeface="lato_regular" />
-
-                <com.jeeva.android.widgets.customfont.CustomTextView
-                    android:id="@+id/toolbar_heading_two"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/toolbar_heading_one"
-                    android:text=""
-                    android:textColor="@color/white_60"
-                    android:textSize="@dimen/sp_12"
-                    app:typeface="lato_regular" />
-
-                <LinearLayout
-                    android:id="@+id/toolbar_wallet_linear_layout"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="center_vertical"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="@dimen/dim_16">
-
-                    <ImageView
-                        android:id="@+id/toolbar_wallet_icon"
-                        android:layout_width="@dimen/dim_14"
-                        android:layout_height="@dimen/dim_14"
-                        android:layout_marginRight="@dimen/dim_4"
-                        android:src="@drawable/toolbar_wallet_icon" />
-
-                    <com.jeeva.android.widgets.customfont.CustomTextView
-                        android:id="@+id/toolbar_wallet_money"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text=""
-                        android:textColor="@color/white_60"
-                        android:textSize="@dimen/sp_14"
-                        app:typeface="lato_regular" />
-
-                </LinearLayout>
-
-            </RelativeLayout>
-
-        </LinearLayout>
-
-        <android.support.v4.widget.NestedScrollView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingBottom="@dimen/dim_10"
-            >
-
+            <!-- Heading layout -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:background="@drawable/toolbar_bg"
+                android:minHeight="@dimen/dim_60">
 
-                <!-- Form section -->
-                <LinearLayout
-                    android:layout_width="match_parent"
+                <ImageView
+                    android:id="@+id/back_btn"
+                    android:layout_width="@dimen/dp_32"
+                    android:layout_height="@dimen/dp_32"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="@dimen/dim_6"
+                    android:padding="@dimen/dim_10"
+                    android:src="@drawable/back_icon_grey"
+                    android:background="?attr/selectableItemBackgroundBorderless"/>
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:background="@color/grey_1f1f1f"
-                    android:layout_marginTop="@dimen/dim_12"
-                    android:layout_marginLeft="@dimen/dim_12"
-                    android:layout_marginRight="@dimen/dim_12">
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="@dimen/dim_6">
 
                     <com.jeeva.android.widgets.customfont.CustomTextView
+                        android:id="@+id/toolbar_heading_one"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Create Private Contest"
-                        android:layout_gravity="center_horizontal"
                         android:textColor="@color/white"
                         android:textSize="@dimen/sp_14"
-                        app:typeface="lato_bold"
-                        android:layout_marginTop="@dimen/dim_10"/>
+                        app:typeface="lato_regular" />
 
-                    <!-- Contest Name -->
-                    <LinearLayout
-                        android:id="@+id/pvt_contest_name_layout"
-                        android:layout_width="match_parent"
+                    <com.jeeva.android.widgets.customfont.CustomTextView
+                        android:id="@+id/toolbar_heading_two"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:layout_marginLeft="@dimen/dim_20"
-                        android:layout_marginRight="@dimen/dim_20"
-                        android:layout_marginTop="@dimen/dim_20">
+                        android:layout_below="@+id/toolbar_heading_one"
+                        android:text=""
+                        android:textColor="@color/white_60"
+                        android:textSize="@dimen/sp_12"
+                        app:typeface="lato_regular" />
 
-                        <com.jeeva.android.widgets.customfont.CustomTextView
-                            android:id="@+id/create_contest_name_heading_TextView"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Name of Contest (Optional)"
-                            android:textColor="@color/white_999999"
-                            android:textSize="@dimen/sp_12"
-                            app:typeface="lato_bold" />
-
-                        <com.jeeva.android.widgets.customfont.CustomEditText
-                            android:id="@+id/create_contest_name_editText"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:hint="Enter the contest name"
-                            android:textColorHint="@color/white_606060"
-                            android:textSize="@dimen/sp_12"
-                            android:textColor="@color/white"
-                            android:inputType="textCapWords"
-                            android:background="@null"
-                            android:layout_marginTop="@dimen/dim_10"/>
-
-                        <View
-                            android:id="@+id/create_private_name_line_view"
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/dim_0.5"
-                            android:background="@color/white_606060"
-                            android:layout_marginTop="@dimen/dim_10"/>
-
-                        <!--<com.jeeva.android.widgets.customfont.CustomTextView
-                            android:id="@+id/create_contest_name_heading_err_TextView"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="right"
-                            android:text=""
-                            android:textColor="@color/radical_red"
-                            android:textSize="@dimen/sp_12"
-                            app:typeface="lato_regular" />-->
-
-                    </LinearLayout>
-
-                    <!-- Entries -->
                     <LinearLayout
-                        android:id="@+id/pvt_contest_entries_layout"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:layout_marginLeft="@dimen/dim_20"
-                        android:layout_marginRight="@dimen/dim_20"
-                        android:layout_marginTop="@dimen/dim_30">
-
-                        <com.jeeva.android.widgets.customfont.CustomTextView
-                            android:id="@+id/create_contest_entries_heading_TextView"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Entries"
-                            android:textColor="@color/white_999999"
-                            android:textSize="@dimen/sp_12"
-                            app:typeface="lato_bold" />
-
-                        <com.jeeva.android.widgets.customfont.CustomEditText
-                            android:id="@+id/create_contest_entries_editText"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:hint="Enter the entries between 2 to 40"
-                            android:maxLength="2"
-                            android:textColorHint="@color/white_606060"
-                            android:textSize="@dimen/sp_12"
-                            android:textColor="@color/white"
-                            android:inputType="numberDecimal"
-                            android:background="@null"
-                            android:layout_marginTop="@dimen/dim_10"/>
-
-                        <View
-                            android:id="@+id/create_private_entries_line_view"
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/dim_0.5"
-                            android:background="@color/white_606060"
-                            android:layout_marginTop="@dimen/dim_10"/>
-
-                        <com.jeeva.android.widgets.customfont.CustomTextView
-                            android:id="@+id/create_contest_entries_heading_err_TextView"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="right"
-                            android:text="Enter a number between 2 and 40"
-                            android:textColor="@color/radical_red"
-                            android:textSize="@dimen/sp_12"
-                            app:typeface="lato_regular"
-                            android:visibility="gone"
-                            android:layout_marginTop="@dimen/dim_5"/>
-
-                    </LinearLayout>
-
-                    <!-- Entry Fee -->
-                    <LinearLayout
-                        android:id="@+id/pvt_contest_entry_fee_layout"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:layout_marginLeft="@dimen/dim_20"
-                        android:layout_marginRight="@dimen/dim_20"
-                        android:layout_marginTop="@dimen/dim_30">
-
-                        <com.jeeva.android.widgets.customfont.CustomTextView
-                            android:id="@+id/create_contest_fee_heading_TextView"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Entry Fee"
-                            android:textColor="@color/white_999999"
-                            android:textSize="@dimen/sp_12"
-                            app:typeface="lato_bold" />
-
-                        <com.jeeva.android.widgets.customfont.CustomEditText
-                            android:id="@+id/create_contest_fee_editText"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:hint="Enter the amount between 0 to 20,000"
-                            android:textColorHint="@color/white_606060"
-                            android:maxLength="5"
-                            android:textSize="@dimen/sp_12"
-                            android:textColor="@color/white"
-                            android:inputType="numberDecimal"
-                            android:background="@null"
-                            android:imeOptions="actionDone"
-                            android:layout_marginTop="@dimen/dim_10"
-                            />
-
-                        <View
-                            android:id="@+id/create_private_fee_line_view"
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/dim_0.5"
-                            android:background="@color/white_606060"
-                            android:layout_marginTop="@dimen/dim_10"/>
-
-                        <com.jeeva.android.widgets.customfont.CustomTextView
-                            android:id="@+id/create_contest_fee_heading_err_TextView"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="right"
-                            android:text="Enter an amount between 0 to 20000"
-                            android:textColor="@color/radical_red"
-                            android:textSize="@dimen/sp_12"
-                            app:typeface="lato_regular"
-                            android:visibility="gone"
-                            android:layout_marginTop="@dimen/dim_5"/>
-
-                    </LinearLayout>
-
-                    <!-- Prize structure -->
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:layout_marginLeft="@dimen/dim_20"
-                        android:layout_marginRight="@dimen/dim_20"
-                        android:layout_marginTop="@dimen/dim_30">
-
-                        <com.jeeva.android.widgets.customfont.CustomTextView
-                            android:id="@+id/create_contest_prize_structure_heading_TextView"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Prize Structure"
-                            android:textColor="@color/white_999999"
-                            android:textSize="@dimen/sp_12"
-                            app:typeface="lato_bold" />
-
-                        <in.sportscafe.nostragamus.module.customViews.CustomSpinner
-                            android:id="@+id/create_contest_prize_spinner"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            style="@style/spinnerStyle"
-                            android:dropDownSelector="@drawable/spinner_selector"
-                            android:spinnerMode="dropdown"
-                            android:gravity="center_vertical"
-                            android:drawSelectorOnTop="true"
-                            android:layout_marginTop="@dimen/dim_10"
-                            />
-
-                        <View
-                            android:id="@+id/create_private_prize_structure_line_view"
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/dim_0.5"
-                            android:background="@color/grey6"
-                            android:layout_marginTop="@dimen/dim_10"/>
-
-                        <com.jeeva.android.widgets.customfont.CustomTextView
-                            android:id="@+id/create_contest_prize_structure_heading_err_TextView"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="right"
-                            android:text=""
-                            android:textColor="@color/radical_red"
-                            android:textSize="@dimen/sp_12"
-                            app:typeface="lato_regular"
-                            android:layout_marginTop="@dimen/dim_5"/>
-
-                    </LinearLayout>
-
-                    <!-- Total prize money layout -->
-                    <RelativeLayout
-                        android:layout_width="match_parent"
+                        android:id="@+id/toolbar_wallet_linear_layout"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:layout_marginLeft="@dimen/dim_20"
-                        android:layout_marginRight="@dimen/dim_20"
-                        android:layout_marginTop="@dimen/dim_15">
+                        android:gravity="center_vertical"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="@dimen/dim_16">
+
+                        <ImageView
+                            android:id="@+id/toolbar_wallet_icon"
+                            android:layout_width="@dimen/dim_14"
+                            android:layout_height="@dimen/dim_14"
+                            android:layout_marginRight="@dimen/dim_4"
+                            android:src="@drawable/toolbar_wallet_icon" />
 
                         <com.jeeva.android.widgets.customfont.CustomTextView
+                            android:id="@+id/toolbar_wallet_money"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Total Amount"
-                            android:textColor="@color/white_999999"
-                            android:textSize="@dimen/sp_12"
+                            android:text=""
+                            android:textColor="@color/white_60"
+                            android:textSize="@dimen/sp_14"
                             app:typeface="lato_regular" />
 
-                        <com.jeeva.android.widgets.customfont.CustomTextView
-                            android:id="@+id/private_contest_total_prize_amt_textView"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:gravity="right"
-                            android:text="@string/default_amount_with_rupee_symbol"
-                            android:textColor="@color/white"
-                            android:textSize="@dimen/sp_12"
-                            app:typeface="lato_bold"
-                            android:layout_alignParentRight="true"/>
+                    </LinearLayout>
 
-                    </RelativeLayout>
+                </RelativeLayout>
 
-                    <!-- List Header -->
+            </LinearLayout>
+
+            <android.support.v4.widget.NestedScrollView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:paddingBottom="@dimen/dim_10">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <!-- Form section -->
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:layout_marginTop="@dimen/dim_10"
+                        android:orientation="vertical"
+                        android:background="@color/grey_1f1f1f"
+                        android:layout_marginTop="@dimen/dim_12"
+                        android:layout_marginLeft="@dimen/dim_12"
+                        android:layout_marginRight="@dimen/dim_12">
+
+                        <com.jeeva.android.widgets.customfont.CustomTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Create Private Contest"
+                            android:layout_gravity="center_horizontal"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/sp_14"
+                            app:typeface="lato_bold"
+                            android:layout_marginTop="@dimen/dim_10"/>
+
+                        <!-- Contest Name -->
+                        <LinearLayout
+                            android:id="@+id/pvt_contest_name_layout"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:layout_marginLeft="@dimen/dim_20"
+                            android:layout_marginRight="@dimen/dim_20"
+                            android:layout_marginTop="@dimen/dim_20">
+
+                            <com.jeeva.android.widgets.customfont.CustomTextView
+                                android:id="@+id/create_contest_name_heading_TextView"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Name of Contest (Optional)"
+                                android:textColor="@color/white_999999"
+                                android:textSize="@dimen/sp_12"
+                                app:typeface="lato_bold" />
+
+                            <com.jeeva.android.widgets.customfont.CustomEditText
+                                android:id="@+id/create_contest_name_editText"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:hint="Enter the contest name"
+                                android:textColorHint="@color/white_606060"
+                                android:textSize="@dimen/sp_14"
+                                app:typeface="lato_regular"
+                                android:textColor="@color/white"
+                                android:inputType="textCapWords"
+                                android:background="@null"
+                                android:layout_marginTop="@dimen/dim_10"/>
+
+                            <View
+                                android:id="@+id/create_private_name_line_view"
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/dim_0.5"
+                                android:background="@color/white_606060"/>
+
+                            <!--<com.jeeva.android.widgets.customfont.CustomTextView
+                                android:id="@+id/create_contest_name_heading_err_TextView"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="right"
+                                android:text=""
+                                android:textColor="@color/radical_red"
+                                android:textSize="@dimen/sp_12"
+                                app:typeface="lato_regular" />-->
+
+                        </LinearLayout>
+
+                        <!-- Entries -->
+                        <LinearLayout
+                            android:id="@+id/pvt_contest_entries_layout"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:layout_marginLeft="@dimen/dim_20"
+                            android:layout_marginRight="@dimen/dim_20"
+                            android:layout_marginTop="@dimen/dim_30">
+
+                            <com.jeeva.android.widgets.customfont.CustomTextView
+                                android:id="@+id/create_contest_entries_heading_TextView"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Entries"
+                                android:textColor="@color/white_999999"
+                                android:textSize="@dimen/sp_12"
+                                app:typeface="lato_bold" />
+
+                            <com.jeeva.android.widgets.customfont.CustomEditText
+                                android:id="@+id/create_contest_entries_editText"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:hint="Enter the entries between 2 to 40"
+                                android:maxLength="2"
+                                android:textColorHint="@color/white_606060"
+                                android:textSize="@dimen/sp_14"
+                                app:typeface="lato_regular"
+                                android:textColor="@color/white"
+                                android:inputType="number"
+                                android:background="@null"
+                                android:layout_marginTop="@dimen/dim_10"/>
+
+                            <View
+                                android:id="@+id/create_private_entries_line_view"
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/dim_0.5"
+                                android:background="@color/white_606060"/>
+
+                            <com.jeeva.android.widgets.customfont.CustomTextView
+                                android:id="@+id/create_contest_entries_heading_err_TextView"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="right"
+                                android:text="Enter a number between 2 and 40"
+                                android:textColor="@color/radical_red"
+                                android:textSize="@dimen/sp_12"
+                                app:typeface="lato_regular"
+                                android:visibility="gone"
+                                android:layout_marginTop="@dimen/dim_5"/>
+
+                        </LinearLayout>
+
+                        <!-- Entry Fee -->
+                        <LinearLayout
+                            android:id="@+id/pvt_contest_entry_fee_layout"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:layout_marginLeft="@dimen/dim_20"
+                            android:layout_marginRight="@dimen/dim_20"
+                            android:layout_marginTop="@dimen/dim_30">
+
+                            <com.jeeva.android.widgets.customfont.CustomTextView
+                                android:id="@+id/create_contest_fee_heading_TextView"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Entry Fee"
+                                android:textColor="@color/white_999999"
+                                android:textSize="@dimen/sp_12"
+                                app:typeface="lato_bold" />
+
+                            <com.jeeva.android.widgets.customfont.CustomEditText
+                                android:id="@+id/create_contest_fee_editText"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:hint="Enter the amount between 1 to 20,000"
+                                android:textColorHint="@color/white_606060"
+                                android:maxLength="5"
+                                android:textSize="@dimen/sp_14"
+                                app:typeface="lato_regular"
+                                android:textColor="@color/white"
+                                android:inputType="number"
+                                android:background="@null"
+                                android:imeOptions="actionDone"
+                                android:layout_marginTop="@dimen/dim_10"
+                                />
+
+                            <View
+                                android:id="@+id/create_private_fee_line_view"
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/dim_0.5"
+                                android:background="@color/white_606060"/>
+
+                            <com.jeeva.android.widgets.customfont.CustomTextView
+                                android:id="@+id/create_contest_fee_heading_err_TextView"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="right"
+                                android:text="Enter an amount between 1 to 20000"
+                                android:textColor="@color/radical_red"
+                                android:textSize="@dimen/sp_12"
+                                app:typeface="lato_regular"
+                                android:visibility="gone"
+                                android:layout_marginTop="@dimen/dim_5"/>
+
+                        </LinearLayout>
+
+                        <!-- Prize structure -->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:layout_marginLeft="@dimen/dim_20"
+                            android:layout_marginRight="@dimen/dim_20"
+                            android:layout_marginTop="@dimen/dim_30">
+
+                            <com.jeeva.android.widgets.customfont.CustomTextView
+                                android:id="@+id/create_contest_prize_structure_heading_TextView"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Prize Structure"
+                                android:textColor="@color/white_999999"
+                                android:textSize="@dimen/sp_12"
+                                app:typeface="lato_bold" />
+
+                            <in.sportscafe.nostragamus.module.customViews.CustomSpinner
+                                android:id="@+id/create_contest_prize_spinner"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                style="@style/privateContestSpinnerStyle"
+                                android:dropDownSelector="@drawable/spinner_selector"
+                                android:spinnerMode="dropdown"
+                                android:gravity="center_vertical"
+                                android:drawSelectorOnTop="true"
+                                android:layout_marginTop="@dimen/dim_10"
+                                android:overlapAnchor="true"
+                                android:popupElevation="0dp"/>
+
+                            <View
+                                android:id="@+id/create_private_prize_structure_line_view"
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/dim_0.5"
+                                android:background="@color/grey6"/>
+
+                            <com.jeeva.android.widgets.customfont.CustomTextView
+                                android:id="@+id/create_contest_prize_structure_heading_err_TextView"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="right"
+                                android:text=""
+                                android:textColor="@color/radical_red"
+                                android:textSize="@dimen/sp_12"
+                                app:typeface="lato_regular"
+                                android:layout_marginTop="@dimen/dim_5"/>
+
+                        </LinearLayout>
+
+                        <!-- Total prize money layout -->
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:layout_marginLeft="@dimen/dim_20"
+                            android:layout_marginRight="@dimen/dim_20"
+                            android:layout_marginTop="@dimen/dim_15">
+
+                            <com.jeeva.android.widgets.customfont.CustomTextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Total Amount"
+                                android:textColor="@color/white_999999"
+                                android:textSize="@dimen/sp_12"
+                                app:typeface="lato_regular" />
+
+                            <com.jeeva.android.widgets.customfont.CustomTextView
+                                android:id="@+id/private_contest_total_prize_amt_textView"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="right"
+                                android:text="@string/default_amount_with_rupee_symbol"
+                                android:textColor="@color/white"
+                                android:textSize="@dimen/sp_12"
+                                app:typeface="lato_bold"
+                                android:layout_alignParentRight="true"/>
+
+                        </RelativeLayout>
+
+                        <!-- List Header -->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:layout_marginTop="@dimen/dim_10"
+                            android:layout_marginLeft="@dimen/dim_20"
+                            android:layout_marginRight="@dimen/dim_20">
+
+                            <com.jeeva.android.widgets.customfont.CustomTextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Rank"
+                                android:textColor="@color/white_999999"
+                                android:textSize="@dimen/sp_12"
+                                app:typeface="lato_regular" />
+
+                            <com.jeeva.android.widgets.customfont.CustomTextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="right"
+                                android:textColor="@color/white_999999"
+                                android:textSize="@dimen/sp_12"
+                                android:text="Prizes"
+                                app:typeface="lato_regular"
+                                android:layout_marginLeft="@dimen/dim_44"/>
+
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <!-- estimation prize list recylerView -->
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/prize_estimation_recyclerView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:clipToPadding="false"
+                        android:background="@color/grey_1f1f1f"
+                        android:layout_marginLeft="@dimen/dim_12"
+                        android:layout_marginRight="@dimen/dim_12"
+                        android:paddingTop="@dimen/dim_20"
+                        android:nestedScrollingEnabled="false"/>
+
+                    <!-- Message & button section -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:gravity="center_horizontal"
                         android:layout_marginLeft="@dimen/dim_20"
                         android:layout_marginRight="@dimen/dim_20">
 
                         <com.jeeva.android.widgets.customfont.CustomTextView
+                            android:id="@+id/create_private_contest_msg_textView"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Rank"
-                            android:textColor="@color/white_999999"
+                            android:layout_gravity="center_horizontal"
+                            android:gravity="center"
+                            android:textColor="@color/white_60"
+                            android:text="The contest will go on even if the entries are not filled. The prize money will be updated accordingly "
                             android:textSize="@dimen/sp_12"
-                            app:typeface="lato_regular" />
-
-                        <com.jeeva.android.widgets.customfont.CustomTextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:gravity="right"
-                            android:textColor="@color/white_999999"
-                            android:textSize="@dimen/sp_12"
-                            android:text="Prizes"
                             app:typeface="lato_regular"
-                            android:layout_marginLeft="@dimen/dim_44"/>
-
+                            android:layout_marginTop="@dimen/dim_20"/>
 
                     </LinearLayout>
 
                 </LinearLayout>
 
-                <!-- estimation prize list recylerView -->
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/prize_estimation_recyclerView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:clipToPadding="false"
-                    android:background="@color/grey_1f1f1f"
-                    android:layout_marginLeft="@dimen/dim_12"
-                    android:layout_marginRight="@dimen/dim_12"
-                    android:paddingTop="@dimen/dim_20"
-                    android:nestedScrollingEnabled="false"/>
+            </android.support.v4.widget.NestedScrollView>
 
-                <!-- Message & button section -->
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:gravity="center_horizontal"
-                    android:layout_marginLeft="@dimen/dim_20"
-                    android:layout_marginRight="@dimen/dim_20">
+        <com.jeeva.android.widgets.customfont.CustomButton
+            android:id="@+id/create_join_private_contest_btn"
+            android:layout_width="@dimen/dim_320"
+            android:layout_height="@dimen/dim_50"
+            android:paddingBottom="@dimen/dim_2"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/light_blue_button_selector"
+            android:onClick="onClick"
+            android:text="Create &amp; Join Private Contest"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp_15"
+            app:typeface="lato_bold"
+            android:layout_marginBottom="@dimen/dim_10"
+            android:layout_alignParentBottom="true"/>
 
-                    <com.jeeva.android.widgets.customfont.CustomTextView
-                        android:id="@+id/create_private_contest_msg_textView"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:gravity="center"
-                        android:textColor="@color/white_60"
-                        android:text="The contest will go on even if the entries are not filled. The prize money will be updated accordingly "
-                        android:textSize="@dimen/sp_12"
-                        app:typeface="lato_regular"
-                        android:layout_marginTop="@dimen/dim_20"/>
+        </LinearLayout>
 
-                    <com.jeeva.android.widgets.customfont.CustomButton
-                        android:id="@+id/create_join_private_contest_btn"
-                        android:layout_width="@dimen/dim_320"
-                        android:layout_height="@dimen/dim_50"
-                        android:paddingBottom="@dimen/dim_2"
-                        android:background="@drawable/light_blue_button_selector"
-                        android:onClick="onClick"
-                        android:text="Create &amp; Join Private Contest"
-                        android:textAllCaps="false"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/sp_15"
-                        app:typeface="lato_bold"
-                        android:layout_marginTop="@dimen/dim_20"/>
-
-                </LinearLayout>
-
-            </LinearLayout>
-
-        </android.support.v4.widget.NestedScrollView>
-
-    </LinearLayout>
+    </RelativeLayout>
 
 </android.support.design.widget.CoordinatorLayout>

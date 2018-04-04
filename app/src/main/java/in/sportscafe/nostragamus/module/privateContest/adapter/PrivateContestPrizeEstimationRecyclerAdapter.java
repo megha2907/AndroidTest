@@ -13,9 +13,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import in.sportscafe.nostragamus.AppSnippet;
+import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
-import in.sportscafe.nostragamus.module.navigation.wallet.WalletHelper;
 import in.sportscafe.nostragamus.module.privateContest.ui.createContest.dto.PrizeListItemDto;
+import in.sportscafe.nostragamus.utils.CodeSnippet;
 
 /**
  * Created by sc on 23/3/18.
@@ -72,8 +73,8 @@ public class PrivateContestPrizeEstimationRecyclerAdapter extends RecyclerView.A
 
             if (prizeListItemDto != null) {
                 viewHolder.rankTextView.setText(AppSnippet.ordinal(prizeListItemDto.getWinnerRank()));
-                viewHolder.prizePercentageEditText.setText(String.valueOf(prizeListItemDto.getSharePercent()));
-                viewHolder.calculatedAmtTextView.setText(WalletHelper.getFormattedStringOfAmount(prizeListItemDto.getAmount()));
+                viewHolder.prizePercentageEditText.setText(CodeSnippet.getFormattedPercentage(prizeListItemDto.getSharePercent()));
+                viewHolder.calculatedAmtTextView.setText(Constants.RUPEE_SYMBOL + CodeSnippet.getFormattedAmount(prizeListItemDto.getAmount()));
             }
         }
     }

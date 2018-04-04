@@ -13,9 +13,11 @@ import android.widget.TextView;
 import java.util.List;
 
 import in.sportscafe.nostragamus.AppSnippet;
+import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.navigation.wallet.WalletHelper;
 import in.sportscafe.nostragamus.module.privateContest.ui.createContest.dto.PrizeListItemDto;
+import in.sportscafe.nostragamus.utils.CodeSnippet;
 
 /**
  * NOTE : Used to show prize values as calculated based on templates
@@ -49,8 +51,8 @@ public class PrivateContestPrizeListRecyclerAdapter extends RecyclerView.Adapter
 
             if (prizeListItemDto != null) {
                 viewHolder.rankTextView.setText(AppSnippet.ordinal(prizeListItemDto.getWinnerRank()));
-                viewHolder.calculatedAmtTextView.setText(WalletHelper.getFormattedStringOfAmount(prizeListItemDto.getAmount()));
-                viewHolder.sharePercentTextView.setText(String.valueOf(prizeListItemDto.getSharePercent()));
+                viewHolder.sharePercentTextView.setText(CodeSnippet.getFormattedPercentage(prizeListItemDto.getSharePercent()));
+                viewHolder.calculatedAmtTextView.setText(Constants.RUPEE_SYMBOL + String.valueOf(prizeListItemDto.getAmount()));
             }
         }
     }

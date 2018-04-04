@@ -45,17 +45,19 @@ public class ContestViewPagerAdapter extends FragmentStatePagerAdapter {
     public View getTabView(Context context, int position) {
         if (mContestFragmentList != null && mContestFragmentList.size() > position) {
             ContestType contestType = null;
+            LinearLayout parentLayout = null;
 
             if (mContestFragmentList.get(position) instanceof ContestViewPagerFragment) {
                 contestType = ((ContestViewPagerFragment) mContestFragmentList.get(position)).getContestType();
+                parentLayout = (LinearLayout) LayoutInflater.from(context).inflate(R.layout.contest_tab, null);
 
             } else if (mContestFragmentList.get(position) instanceof PrivateContestViewPagerFragment) {
                 contestType = ((PrivateContestViewPagerFragment) mContestFragmentList.get(position)).getContestType();
+                parentLayout = (LinearLayout) LayoutInflater.from(context).inflate(R.layout.private_contest_tab, null);
+
             }
 
-            if (contestType != null) {
-                LinearLayout parentLayout = (LinearLayout) LayoutInflater.from(context).inflate(R.layout.contest_tab, null);
-
+            if (contestType != null && parentLayout != null) {
                 if (contestType.getContestCount() > 0) {
                     TextView contestCountTextView = (TextView) parentLayout.findViewById(R.id.contest_tab_count_textView);
                     contestCountTextView.setText(String.valueOf(contestType.getContestCount()));

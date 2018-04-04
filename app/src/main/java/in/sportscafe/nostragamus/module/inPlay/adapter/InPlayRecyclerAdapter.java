@@ -589,7 +589,7 @@ public class InPlayRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         TextView currentRankTextView;
         TextView totalPlayersTextView;
         TextView prizesTextView;
-        Button inviteFriendsButton;
+        LinearLayout inviteFriendsButton;
 
         public InPlayJoinedPrivateContestItemViewHolder(View itemView) {
             super(itemView);
@@ -606,7 +606,7 @@ public class InPlayRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             prizesTextView = (TextView) itemView.findViewById(R.id.inplay_private_contest_card_header_prizes_textView);
             totalPlayersTextView = (TextView) itemView.findViewById(R.id.inplay_private_contest_card_header_total_players);
             noExtraPowerUpImgView = (ImageView) itemView.findViewById(R.id.no_extra_powerup_imgView);
-            inviteFriendsButton = (Button) itemView.findViewById(R.id.private_contest_share_btn);
+            inviteFriendsButton = (LinearLayout) itemView.findViewById(R.id.private_contest_share_btn);
 
             root.setOnClickListener(this);
             currentRankLayout.setOnClickListener(this);

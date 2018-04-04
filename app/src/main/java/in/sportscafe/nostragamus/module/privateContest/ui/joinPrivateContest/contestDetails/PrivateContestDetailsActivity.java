@@ -37,6 +37,7 @@ import in.sportscafe.nostragamus.module.newChallenges.helpers.DateTimeHelper;
 import in.sportscafe.nostragamus.module.nostraHome.helper.TimerHelper;
 import in.sportscafe.nostragamus.module.nostraHome.ui.NostraHomeActivity;
 import in.sportscafe.nostragamus.module.popups.timerPopup.TimerFinishDialogHelper;
+import in.sportscafe.nostragamus.module.popups.walletpopups.WalletBalancePopupActivity;
 import in.sportscafe.nostragamus.module.privateContest.ui.joinPrivateContest.dto.FindPrivateContestResponseContestData;
 import in.sportscafe.nostragamus.module.privateContest.ui.joinPrivateContest.dto.FindPrivateContestResponseData;
 import in.sportscafe.nostragamus.module.privateContest.ui.joinPrivateContest.dto.PrivateContestDetailsScreenData;
@@ -86,6 +87,7 @@ public class PrivateContestDetailsActivity extends NostraBaseActivity implements
         mPayAndJoinButton = (Button) findViewById(R.id.join_contest_btn);
 
         findViewById(R.id.back_btn).setOnClickListener(this);
+        findViewById(R.id.toolbar_wallet_linear_layout).setOnClickListener(this);
         mPayAndJoinButton.setOnClickListener(this);
     }
 
@@ -211,6 +213,11 @@ public class PrivateContestDetailsActivity extends NostraBaseActivity implements
 
             case R.id.back_btn:
                 finish();
+                break;
+
+            case R.id.toolbar_wallet_linear_layout:
+                Intent intent = new Intent(this, WalletBalancePopupActivity.class);
+                startActivity(intent);
                 break;
 
             case R.id.join_contest_btn:

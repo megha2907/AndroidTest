@@ -965,6 +965,7 @@ public interface Constants {
     String AMOUNT_DECIMAL_PATTERN = "##,##,##0.00";
     String RUPEE_SYMBOL = "₹ ";
     String INDIAN_CURRENCY_CODE = "INR";
+    String PERCENTAGE_PATTERN = "##.##";
 
     interface FaceBookAnalyticsEvents {
         String MATCH_PLAY_COMPLETED = "Played";

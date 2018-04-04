@@ -18,7 +18,8 @@
         <com.jeeva.android.widgets.HmImageView
             android:id="@+id/entry_user_photo"
             android:layout_width="@dimen/dim_20"
-            android:layout_height="@dimen/dim_20"/>
+            android:layout_height="@dimen/dim_20"
+            android:layout_marginLeft="@dimen/dim_12"/>
 
         <com.jeeva.android.widgets.customfont.CustomTextView
             android:id="@+id/entry_user_nick_textView"
@@ -29,7 +30,7 @@
             android:layout_gravity="center"
             android:textSize="@dimen/sp_12"
             app:typeface="lato_regular"
-            android:layout_marginLeft="@dimen/dim_10"/>
+            android:layout_marginLeft="@dimen/dim_20"/>
 
     </LinearLayout>
 

@@ -1,9 +1,11 @@
 package in.sportscafe.nostragamus.module.privateContest.ui.createContest;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.NostraBaseActivity;
+import in.sportscafe.nostragamus.module.popups.walletpopups.WalletBalancePopupActivity;
 import in.sportscafe.nostragamus.utils.FragmentHelper;
 
 public class CreatePrivateContestActivity extends NostraBaseActivity implements CreatePrivateContestFragmentListener {
@@ -36,6 +38,7 @@ public class CreatePrivateContestActivity extends NostraBaseActivity implements 
 
     @Override
     public void onWalletClicked() {
-
+        Intent intent = new Intent(this, WalletBalancePopupActivity.class);
+        startActivity(intent);
     }
 }

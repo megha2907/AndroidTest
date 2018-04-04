@@ -317,33 +317,41 @@ public class NostraHomeActivity extends NostraBaseActivity implements View.OnCli
         }
     }
 
-
     private void checkForPrivateContest() {
-        if (!TextUtils.isEmpty(NostragamusDataHandler.getInstance().getPrivateContestInvitationCode())) {
+        if (!TextUtils.isEmpty(NostragamusDataHandler.getInstance().getPrivateContestInvitationCode()) &&
+                NostragamusDataHandler.getInstance().isLoggedInUser()) {
+
+            /* If Getting disclaimerAccepted AND otpVerified to true; then only launch private contest */
+            UserInfo userInfo = Nostragamus.getInstance().getServerDataManager().getUserInfo();
+            if (userInfo != null && userInfo.getInfoDetails() != null &&
+                    userInfo.getInfoDetails().getDisclaimerAccepted() != null && userInfo.getInfoDetails().getDisclaimerAccepted() &&
+                    userInfo.getInfoDetails().getOtpVerified() != null && userInfo.getInfoDetails().getOtpVerified()) {
 
             /* Get dataDto  */
-            ShareDetailsDto shareDetailsDto = new Gson().fromJson(
-                    NostragamusDataHandler.getInstance().getPrivateContestInvitationCode(), ShareDetailsDto.class);
+                ShareDetailsDto shareDetailsDto = new Gson().fromJson(
+                        NostragamusDataHandler.getInstance().getPrivateContestInvitationCode(), ShareDetailsDto.class);
 
-            if (shareDetailsDto != null && !TextUtils.isEmpty(shareDetailsDto.getPrivateCode())) {
+                if (shareDetailsDto != null && !TextUtils.isEmpty(shareDetailsDto.getPrivateCode())) {
 
-                Log.d(TAG, "Code Private contest Invitation code : " + shareDetailsDto.getPrivateCode());
+                    Log.d(TAG, "Code Private contest Invitation code : " + shareDetailsDto.getPrivateCode());
 
-                JoinPrivateContestWithInviteCodeScreenData privateCodeScreenData = new JoinPrivateContestWithInviteCodeScreenData();
-                privateCodeScreenData.setPrivateCode(shareDetailsDto.getPrivateCode());
-                privateCodeScreenData.setShareDetails(shareDetailsDto);
+                    JoinPrivateContestWithInviteCodeScreenData privateCodeScreenData = new JoinPrivateContestWithInviteCodeScreenData();
+                    privateCodeScreenData.setPrivateCode(shareDetailsDto.getPrivateCode());
+                    privateCodeScreenData.setShareDetails(shareDetailsDto);
 
-                Bundle bundle = new Bundle();
-                bundle.putParcelable(Constants.BundleKeys.JOIN_PRIVATE_CONTEST_WITH_INVITATION_CODE_SCREEN_DATA,
-                        Parcels.wrap(privateCodeScreenData));
+                    Bundle bundle = new Bundle();
+                    bundle.putParcelable(Constants.BundleKeys.JOIN_PRIVATE_CONTEST_WITH_INVITATION_CODE_SCREEN_DATA,
+                            Parcels.wrap(privateCodeScreenData));
 
-                Intent intent = new Intent(this, JoinPrivateContestWithInviteCodeActivity.class);
-                intent.putExtras(bundle);
-                startActivity(intent);
+                    Intent intent = new Intent(this, JoinPrivateContestWithInviteCodeActivity.class);
+                    intent.putExtras(bundle);
+                    startActivity(intent);
 
                 /* As private contest action is going to be taken now, remove this data ;
                     so that next time the same action not be taken */
-                NostragamusDataHandler.getInstance().setPrivateContestInvitationCode("");
+                    NostragamusDataHandler.getInstance().setPrivateContestInvitationCode("");
+
+                }
             }
         }
     }

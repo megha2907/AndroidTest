@@ -108,17 +108,21 @@
 
         <!-- Invite code layout -->
         <LinearLayout
+            android:id="@+id/invite_code_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_margin="@dimen/dim_10"
+            android:layout_marginLeft="@dimen/dim_20"
+            android:layout_marginRight="@dimen/dim_20"
             android:layout_below="@id/header_layout">
 
             <com.jeeva.android.widgets.customfont.CustomTextView
+                android:id="@+id/pvt_contest_invite_code_heading_textView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="INVITE CODE"
+                android:text="Invite Code"
                 android:textColor="@color/white"
+                android:textAllCaps="false"
                 android:textSize="@dimen/sp_12"
                 app:typeface="lato_regular"
                 android:layout_marginTop="@dimen/dim_10" />
@@ -138,6 +142,7 @@
                 android:layout_marginTop="@dimen/dim_10"/>
 
             <View
+                android:id="@+id/pvt_contest_invite_code_line"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dim_0.5"
                 android:background="@color/grey"/>
@@ -155,6 +160,12 @@
 
         </LinearLayout>
 
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="@dimen/dim_16">
+
         <!-- Find pvt contest -->
         <com.jeeva.android.widgets.customfont.CustomButton
             android:id="@+id/find_pvt_contest_details_btn"
@@ -163,7 +174,6 @@
             android:layout_alignParentBottom="true"
             android:layout_marginLeft="@dimen/dim_16"
             android:layout_marginRight="@dimen/dim_16"
-            android:layout_marginBottom="@dimen/dim_16"
             android:layout_centerHorizontal="true"
             android:paddingBottom="@dimen/dim_2"
             android:background="@drawable/light_blue_button_selector"
@@ -172,6 +182,8 @@
             android:textColor="@color/white"
             android:textSize="@dimen/sp_15"
             app:typeface="lato_bold" />
+
+        </RelativeLayout>
 
     </RelativeLayout>
 

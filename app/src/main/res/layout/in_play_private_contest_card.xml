@@ -16,15 +16,15 @@
         android:clipToPadding="false"
         android:paddingBottom="@dimen/dim_6"
         android:paddingLeft="@dimen/dim_5"
-        android:paddingRight="@dimen/dim_5"
-        android:background="@drawable/dark_grey_gradient_bg">
+        android:paddingRight="@dimen/dim_5">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:elevation="@dimen/dim_4"
-            android:layout_weight="4">
+            android:layout_weight="4"
+            android:background="@drawable/dark_grey_gradient_bg">
 
             <!-- Card Header bar -->
             <LinearLayout
@@ -55,7 +55,8 @@
                             android:ellipsize="end"
                             android:includeFontPadding="false"
                             android:maxLines="1"
-                            android:text="Daily Double Up"
+                            android:text=""
+                            android:maxLength="25"
                             android:textColor="@color/white"
                             android:textSize="@dimen/sp_13"
                             app:typeface="lato_regular" />
@@ -204,17 +205,6 @@
                 android:paddingRight="@dimen/dim_5"
                 android:paddingTop="@dimen/dim_10">
 
-                <!--<LinearLayout-->
-                <!--android:id="@+id/inplay_joined_card_timeline_heading_parent"-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:gravity="center_vertical"-->
-                <!--android:orientation="horizontal"-->
-                <!--android:layout_gravity="left"-->
-                <!--android:scrollbars="horizontal"-->
-                <!--android:layout_marginLeft="@dimen/dim_5"-->
-                <!--/>-->
-
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/dim_68"
@@ -254,21 +244,37 @@
 
                 </LinearLayout>
 
-                <com.jeeva.android.widgets.customfont.CustomButton
+                <!--  Invite friend button -->
+                <LinearLayout
                     android:id="@+id/private_contest_share_btn"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/dim_30"
+                    android:layout_height="@dimen/dim_35"
                     android:layout_gravity="center_horizontal"
                     android:background="@drawable/blue_008ae1_button_selector"
-                    android:gravity="center"
-                    android:text="Invite your friends"
-                    android:textAllCaps="true"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/sp_13"
-                    app:typeface="lato_bold"
-                    android:layout_marginBottom="@dimen/dim_12"
+                    android:layout_marginBottom="@dimen/dim_10"
                     android:layout_marginLeft="@dimen/dim_18"
-                    android:layout_marginRight="@dimen/dim_18"/>
+                    android:layout_marginRight="@dimen/dim_18">
+
+                    <ImageView
+                        android:layout_width="@dimen/dim_16"
+                        android:layout_height="@dimen/dim_16"
+                        android:layout_gravity="center"
+                        android:src="@drawable/pvt_contest_invite_frnd_icn"
+                        android:layout_marginLeft="@dimen/dim_20"/>
+
+                    <com.jeeva.android.widgets.customfont.CustomTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center_horizontal"
+                        android:text="Invite your friends"
+                        android:textAllCaps="true"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/sp_10"
+                        app:typeface="lato_regular"
+                        android:layout_marginLeft="@dimen/dim_50"/>
+
+                </LinearLayout>
 
             </LinearLayout>
 

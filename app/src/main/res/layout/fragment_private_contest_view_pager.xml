@@ -38,7 +38,8 @@
             android:layout_marginLeft="@dimen/dim_20"
             android:layout_marginRight="@dimen/dim_20"/>
 
-        <com.jeeva.android.widgets.customfont.CustomButton
+        <!-- Create button -->
+        <LinearLayout
             android:id="@+id/create_private_contest_btn"
             android:layout_width="@dimen/dim_320"
             android:layout_height="@dimen/dim_40"
@@ -47,19 +48,28 @@
             android:layout_marginRight="@dimen/dim_20"
             android:layout_gravity="center_horizontal"
             android:background="@drawable/blue_008ae1_button_selector"
-            android:gravity="center"
-            android:minWidth="@dimen/dim_72"
-            android:paddingBottom="@dimen/dim_2"
-            android:paddingLeft="@dimen/dim_15"
-            android:paddingRight="@dimen/dim_15"
-            android:paddingTop="@dimen/dp_0"
-            android:text="Create contest &amp; Invite"
-            android:textAllCaps="false"
-            android:textColor="@color/white"
-            android:textSize="@dimen/sp_13"
-            app:typeface="lato_bold"/>
+            android:gravity="center">
 
-        <com.jeeva.android.widgets.customfont.CustomButton
+            <ImageView
+                android:layout_width="@dimen/dim_16"
+                android:layout_height="@dimen/dim_16"
+                android:src="@drawable/create_pvt_cont_btn_icn"/>
+            
+            <com.jeeva.android.widgets.customfont.CustomTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:text="Create contest &amp; Invite"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp_13"
+                app:typeface="lato_bold"
+                android:layout_marginLeft="@dimen/dim_50"/>
+
+        </LinearLayout>
+
+        <!-- Join button -->
+        <LinearLayout
             android:id="@+id/private_contest_join_with_invite_code_btn"
             android:layout_width="@dimen/dim_320"
             android:layout_height="@dimen/dim_40"
@@ -68,17 +78,25 @@
             android:layout_marginRight="@dimen/dim_20"
             android:layout_gravity="center_horizontal"
             android:background="@drawable/light_blue_button_selector"
-            android:gravity="center"
-            android:minWidth="@dimen/dim_72"
-            android:paddingBottom="@dimen/dim_2"
-            android:paddingLeft="@dimen/dim_15"
-            android:paddingRight="@dimen/dim_15"
-            android:paddingTop="@dimen/dp_0"
-            android:text="Join with Invite Code"
-            android:textAllCaps="false"
-            android:textColor="@color/white"
-            android:textSize="@dimen/sp_13"
-            app:typeface="lato_bold"/>
+            android:gravity="center">
+
+            <ImageView
+                android:layout_width="@dimen/dim_16"
+                android:layout_height="@dimen/dim_16"
+                android:src="@drawable/join_pvt_contest_navigation_icn"/>
+
+            <com.jeeva.android.widgets.customfont.CustomTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:text="Join with Invite Code"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp_13"
+                app:typeface="lato_bold"
+                android:layout_marginLeft="@dimen/dim_50"/>
+
+        </LinearLayout>
 
     </LinearLayout>
 
