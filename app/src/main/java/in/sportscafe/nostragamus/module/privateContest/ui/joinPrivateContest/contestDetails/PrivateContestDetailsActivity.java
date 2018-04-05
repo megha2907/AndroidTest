@@ -111,6 +111,15 @@ public class PrivateContestDetailsActivity extends NostraBaseActivity implements
                             getPrivateContestData().get(0).getConfigName());
                 }
 
+                /* Template Name/Id */
+                if (!TextUtils.isEmpty(mScreenData.getPrivateContestDetailsResponse().getData().
+                        getPrivateContestData().get(0).getTemplateId())) {
+
+                    TextView templateTextView = (TextView) findViewById(R.id.private_contest_prize_template_textView);
+                    templateTextView.setText(mScreenData.getPrivateContestDetailsResponse().getData().
+                            getPrivateContestData().get(0).getTemplateId());
+                }
+
                 /* Show prize on pay button */
                 if (mScreenData.getPrivateContestDetailsResponse().getData().getPrivateContestData().get(0).getFee() >= 0) {
                     mPayAndJoinButton.setText("Pay " + Constants.RUPEE_SYMBOL +
@@ -330,7 +339,35 @@ public class PrivateContestDetailsActivity extends NostraBaseActivity implements
             case Constants.PrivateContests.ErrorCodes.UNKNOWN_ERROR:
                 showUnknownErrorDialog();
                 break;
+
+            case Constants.PrivateContests.ErrorCodes.CONTEST_ALREADY_JOINED:
+                showContestAlreadyJoinedDialog();
+                break;
         }
+    }
+
+    private void showContestAlreadyJoinedDialog() {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if (!isFinishing()) {
+
+                    String imgUrl = (mScreenData != null && mScreenData.getShareDetails() != null &&
+                            !TextUtils.isEmpty(mScreenData.getShareDetails().getUserPhotoUrl())) ?
+                            mScreenData.getShareDetails().getUserPhotoUrl() :
+                            "";
+
+                    TimerFinishDialogHelper.showPrivateContestAlreadyJoinedDialog(getSupportFragmentManager(),
+                            imgUrl,
+                            new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    onBackPressed();
+                                }
+                            });
+                }
+            }
+        }, 500);
     }
 
     private void showUnknownErrorDialog() {

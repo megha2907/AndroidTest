@@ -23,16 +23,15 @@ public class CreatePrivateContestApiMoelImpl {
     private static final String TAG = CreatePrivateContestApiMoelImpl.class.getSimpleName();
 
     public void callCreateContestApi(int challengeId, double fee, String cofigName,
-                                     int minParticipants, int maxParticipants, String step,
+                                     int maxParticipants, String templateId,
             final CreateAndJoinPrivateContestHelper.JoinPrivateContestProcessListener listener) {
 
         CreatePrivateContestRequest request = new CreatePrivateContestRequest();
         request.setChallengeId(challengeId);
         request.setFee(fee);
         request.setConfigName(cofigName);
-        request.setMinParticipants(minParticipants);
         request.setMaxParticipants(maxParticipants);
-        request.setStep(step);
+        request.setTemplateId(templateId);
 
         if (Nostragamus.getInstance().hasNetworkConnection()) {
 

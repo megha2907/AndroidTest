@@ -29,6 +29,10 @@ public class PrivateContestPrizeTemplateSpinnerAdapter extends ArrayAdapter<Priv
         mPrizeTemplateList = responseList;
     }
 
+    public List<PrivateContestPrizeTemplateResponse> getPrizeTemplateList() {
+        return mPrizeTemplateList;
+    }
+
     @Override
     public int getCount() {
         return (mPrizeTemplateList != null) ? mPrizeTemplateList.size() : 0;

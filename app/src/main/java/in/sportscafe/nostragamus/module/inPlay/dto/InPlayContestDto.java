@@ -54,6 +54,9 @@ public class InPlayContestDto {
     @SerializedName("private_code")
     private String privateCode;
 
+    @SerializedName("share_link")
+    private boolean shouldShareLink;
+
     private int challengeId;
     private String challengeName;
     private String challengeStartTime;
@@ -207,5 +210,13 @@ public class InPlayContestDto {
 
     public void setPrivateCode(String privateCode) {
         this.privateCode = privateCode;
+    }
+
+    public boolean isShouldShareLink() {
+        return shouldShareLink;
+    }
+
+    public void setShouldShareLink(boolean shouldShareLink) {
+        this.shouldShareLink = shouldShareLink;
     }
 }

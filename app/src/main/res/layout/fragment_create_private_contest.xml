@@ -6,88 +6,92 @@
     android:background="@color/black"
     tools:context="in.sportscafe.nostragamus.module.privateContest.ui.createContest.CreatePrivateContestFragment">
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
+        <!-- Heading layout -->
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_height="wrap_content"
+            android:background="@drawable/toolbar_bg"
+            android:minHeight="@dimen/dim_60">
 
-            <!-- Heading layout -->
-            <LinearLayout
+            <ImageView
+                android:id="@+id/back_btn"
+                android:layout_width="@dimen/dp_32"
+                android:layout_height="@dimen/dp_32"
+                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/dim_6"
+                android:padding="@dimen/dim_10"
+                android:src="@drawable/back_icon_grey"
+                android:background="?attr/selectableItemBackgroundBorderless"/>
+
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/toolbar_bg"
-                android:minHeight="@dimen/dim_60">
+                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/dim_6">
 
-                <ImageView
-                    android:id="@+id/back_btn"
-                    android:layout_width="@dimen/dp_32"
-                    android:layout_height="@dimen/dp_32"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="@dimen/dim_6"
-                    android:padding="@dimen/dim_10"
-                    android:src="@drawable/back_icon_grey"
-                    android:background="?attr/selectableItemBackgroundBorderless"/>
-
-                <RelativeLayout
+                <com.jeeva.android.widgets.customfont.CustomTextView
+                    android:id="@+id/toolbar_heading_one"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="@dimen/dim_6">
+                    android:text="Create Private Contest"
+                    android:textColor="@color/white"
+                    android:maxLength="35"
+                    android:textSize="@dimen/sp_14"
+                    app:typeface="lato_regular" />
+
+                <com.jeeva.android.widgets.customfont.CustomTextView
+                    android:id="@+id/toolbar_heading_two"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/toolbar_heading_one"
+                    android:text=""
+                    android:textColor="@color/white_60"
+                    android:textSize="@dimen/sp_12"
+                    app:typeface="lato_regular" />
+
+                <LinearLayout
+                    android:id="@+id/toolbar_wallet_linear_layout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/dim_16">
+
+                    <ImageView
+                        android:id="@+id/toolbar_wallet_icon"
+                        android:layout_width="@dimen/dim_14"
+                        android:layout_height="@dimen/dim_14"
+                        android:layout_marginRight="@dimen/dim_4"
+                        android:src="@drawable/toolbar_wallet_icon" />
 
                     <com.jeeva.android.widgets.customfont.CustomTextView
-                        android:id="@+id/toolbar_heading_one"
+                        android:id="@+id/toolbar_wallet_money"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Create Private Contest"
-                        android:textColor="@color/white"
+                        android:text=""
+                        android:textColor="@color/white_60"
                         android:textSize="@dimen/sp_14"
                         app:typeface="lato_regular" />
 
-                    <com.jeeva.android.widgets.customfont.CustomTextView
-                        android:id="@+id/toolbar_heading_two"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/toolbar_heading_one"
-                        android:text=""
-                        android:textColor="@color/white_60"
-                        android:textSize="@dimen/sp_12"
-                        app:typeface="lato_regular" />
+                </LinearLayout>
 
-                    <LinearLayout
-                        android:id="@+id/toolbar_wallet_linear_layout"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:gravity="center_vertical"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
-                        android:layout_marginRight="@dimen/dim_16">
+            </RelativeLayout>
 
-                        <ImageView
-                            android:id="@+id/toolbar_wallet_icon"
-                            android:layout_width="@dimen/dim_14"
-                            android:layout_height="@dimen/dim_14"
-                            android:layout_marginRight="@dimen/dim_4"
-                            android:src="@drawable/toolbar_wallet_icon" />
+        </LinearLayout>
 
-                        <com.jeeva.android.widgets.customfont.CustomTextView
-                            android:id="@+id/toolbar_wallet_money"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text=""
-                            android:textColor="@color/white_60"
-                            android:textSize="@dimen/sp_14"
-                            app:typeface="lato_regular" />
-
-                    </LinearLayout>
-
-                </RelativeLayout>
-
-            </LinearLayout>
+        <LinearLayout
+            android:id="@+id/pvt_contest_layouts"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:visibility="gone">
 
             <android.support.v4.widget.NestedScrollView
                 android:layout_width="match_parent"
@@ -421,7 +425,7 @@
                             android:text="The contest will go on even if the entries are not filled. The prize money will be updated accordingly "
                             android:textSize="@dimen/sp_12"
                             app:typeface="lato_regular"
-                            android:layout_marginTop="@dimen/dim_20"/>
+                            android:layout_marginTop="@dimen/dim_10"/>
 
                     </LinearLayout>
 
@@ -429,24 +433,40 @@
 
             </android.support.v4.widget.NestedScrollView>
 
-        <com.jeeva.android.widgets.customfont.CustomButton
-            android:id="@+id/create_join_private_contest_btn"
-            android:layout_width="@dimen/dim_320"
-            android:layout_height="@dimen/dim_50"
-            android:paddingBottom="@dimen/dim_2"
-            android:layout_gravity="center_horizontal"
-            android:background="@drawable/light_blue_button_selector"
-            android:onClick="onClick"
-            android:text="Create &amp; Join Private Contest"
-            android:textAllCaps="false"
-            android:textColor="@color/white"
-            android:textSize="@dimen/sp_15"
-            app:typeface="lato_bold"
-            android:layout_marginBottom="@dimen/dim_10"
-            android:layout_alignParentBottom="true"/>
+            <com.jeeva.android.widgets.customfont.CustomButton
+                android:id="@+id/create_join_private_contest_btn"
+                android:layout_width="@dimen/dim_320"
+                android:layout_height="@dimen/dim_50"
+                android:paddingBottom="@dimen/dim_2"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/light_blue_button_selector"
+                android:onClick="onClick"
+                android:text="Create &amp; Join Private Contest"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp_15"
+                app:typeface="lato_bold"
+                android:layout_marginBottom="@dimen/dim_10"
+                android:layout_alignParentBottom="true"/>
 
         </LinearLayout>
 
-    </RelativeLayout>
+    <LinearLayout
+        android:id="@+id/loading_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <in.sportscafe.nostragamus.utils.loadingAnim.LoadingIndicatorView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:indicatorColor="@color/loading_animation_color" />
+
+
+    </LinearLayout>
+
+
+    </LinearLayout>
 
 </android.support.design.widget.CoordinatorLayout>

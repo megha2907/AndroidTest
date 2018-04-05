@@ -52,6 +52,9 @@ public class FindPrivateContestResponseContestData {
     @SerializedName("maxTransferLimit")
     private int maxTransferLimit;
 
+    @SerializedName("t_id")
+    private String templateId;
+
     public int getConfigId() {
         return configId;
     }
@@ -162,5 +165,13 @@ public class FindPrivateContestResponseContestData {
 
     public void setMaxTransferLimit(int maxTransferLimit) {
         this.maxTransferLimit = maxTransferLimit;
+    }
+
+    public String getTemplateId() {
+        return templateId;
+    }
+
+    public void setTemplateId(String templateId) {
+        this.templateId = templateId;
     }
 }

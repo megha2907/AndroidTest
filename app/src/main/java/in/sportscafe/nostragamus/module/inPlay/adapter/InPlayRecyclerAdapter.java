@@ -439,6 +439,10 @@ public class InPlayRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                 }
             }
 
+            if (contest.isShouldShareLink()) {
+                viewHolder.inviteFriendsButton.setVisibility(View.VISIBLE);
+            }
+
             if (contest.getMaxPowerUpTransferLimit() == 0) { // Only if maxLimit == 0, then powerup-bank disabled
                 viewHolder.noExtraPowerUpImgView.setVisibility(View.VISIBLE);
             }

@@ -10,6 +10,9 @@ import java.util.List;
 
 public class PrivateContestPrizeTemplateResponse {
 
+    @SerializedName("t_id")
+    private String templateId;
+
     @SerializedName("name")
     private String name;
 
@@ -62,6 +65,14 @@ public class PrivateContestPrizeTemplateResponse {
 
     public void setMargin(float margin) {
         this.margin = margin;
+    }
+
+    public String getTemplateId() {
+        return templateId;
+    }
+
+    public void setTemplateId(String templateId) {
+        this.templateId = templateId;
     }
 
     /**

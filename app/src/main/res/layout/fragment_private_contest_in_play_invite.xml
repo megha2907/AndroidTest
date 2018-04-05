@@ -32,7 +32,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
-            android:text="Share the contest invitation with your friends. Share the code with your friends to let them join"
+            android:text="Create a new contest with your own rules &amp;  prizes then invite friends to join or join an existing private contest"
             android:textColor="@color/white_60"
             android:textSize="@dimen/sp_11"
             app:typeface="lato_regular"

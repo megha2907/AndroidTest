@@ -114,8 +114,9 @@ public class JoinPrivateContestWithInviteCodeFragment extends BaseFragment imple
                     photoImageView.setImageUrl(mScreenData.getShareDetails().getUserPhotoUrl());
 
                     String name = (!TextUtils.isEmpty(mScreenData.getShareDetails().getUserNick())) ?
-                            mScreenData.getShareDetails().getUserNick() : "";
-                    String msg = name + " invite you in private contest. So, let's join & play the contest";
+                            mScreenData.getShareDetails().getUserNick() + " has invited you " :
+                            "You have been invited ";
+                    String msg = name + " to a private contest. Pay and join to play the private contest";
 
                     TextView msgTextView = (TextView) getView().findViewById(R.id.join_private_contest_header_msg_textView);
                     msgTextView.setText(msg);
@@ -259,7 +260,37 @@ public class JoinPrivateContestWithInviteCodeFragment extends BaseFragment imple
             case Constants.PrivateContests.ErrorCodes.UNKNOWN_ERROR:
                 showUnknownErrorDialog();
                 break;
+
+            case Constants.PrivateContests.ErrorCodes.CONTEST_ALREADY_JOINED:
+                showContestAlreadyJoinedDialog();
+                break;
         }
+    }
+
+    private void showContestAlreadyJoinedDialog() {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if (JoinPrivateContestWithInviteCodeFragment.this.isVisible()) {
+
+                    String imgUrl = (mScreenData != null && mScreenData.getShareDetails() != null &&
+                            !TextUtils.isEmpty(mScreenData.getShareDetails().getUserPhotoUrl())) ?
+                            mScreenData.getShareDetails().getUserPhotoUrl() :
+                            "";
+
+                    TimerFinishDialogHelper.showPrivateContestAlreadyJoinedDialog(getChildFragmentManager(),
+                            imgUrl,
+                            new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    if (mFragmentListener != null) {
+                                        mFragmentListener.onBackClicked();
+                                    }
+                                }
+                            });
+                }
+            }
+        }, 500);
     }
 
     private void onChallengeStarted() {

@@ -19,8 +19,10 @@ public class JoinContestData {
     private String contestName;
     private int privateContestEntries;
     private String challengeStartTime;
+    private String privateContestTemplateId;
 
     private boolean shouldScrollContestsInPlay = true;
+    private boolean shouldShowPrivateContestCreatedMsg = false;
 
     public int getChallengeId() {
         return challengeId;
@@ -116,5 +118,21 @@ public class JoinContestData {
 
     public void setChallengeStartTime(String challengeStartTime) {
         this.challengeStartTime = challengeStartTime;
+    }
+
+    public String getPrivateContestTemplateId() {
+        return privateContestTemplateId;
+    }
+
+    public void setPrivateContestTemplateId(String privateContestTemplateId) {
+        this.privateContestTemplateId = privateContestTemplateId;
+    }
+
+    public boolean isShouldShowPrivateContestCreatedMsg() {
+        return shouldShowPrivateContestCreatedMsg;
+    }
+
+    public void setShouldShowPrivateContestCreatedMsg(boolean shouldShowPrivateContestCreatedMsg) {
+        this.shouldShowPrivateContestCreatedMsg = shouldShowPrivateContestCreatedMsg;
     }
 }

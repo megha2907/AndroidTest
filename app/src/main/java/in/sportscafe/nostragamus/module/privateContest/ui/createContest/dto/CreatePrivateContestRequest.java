@@ -20,11 +20,8 @@ public class CreatePrivateContestRequest {
     @SerializedName("max_participants")
     private int maxParticipants;
 
-    @SerializedName("min_participants")
-    private int minParticipants;
-
-    @SerializedName("step")
-    private String step;
+    @SerializedName("t_id")
+    private String templateId;
 
     public int getChallengeId() {
         return challengeId;
@@ -58,19 +55,11 @@ public class CreatePrivateContestRequest {
         this.maxParticipants = maxParticipants;
     }
 
-    public int getMinParticipants() {
-        return minParticipants;
+    public String getTemplateId() {
+        return templateId;
     }
 
-    public void setMinParticipants(int minParticipants) {
-        this.minParticipants = minParticipants;
-    }
-
-    public String getStep() {
-        return step;
-    }
-
-    public void setStep(String step) {
-        this.step = step;
+    public void setTemplateId(String templateId) {
+        this.templateId = templateId;
     }
 }

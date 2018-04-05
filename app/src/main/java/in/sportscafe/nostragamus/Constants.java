@@ -1018,7 +1018,8 @@ public interface Constants {
         int CAN_NOT_PLAY_GAME = 3112;
         int CHALLENGE_STARTED = 3113;
         int PRIVATE_CONTEST_FULL = 3114;
-        int CAN_NOT_JOIN_PRIVATE_CONTEST = 3115;
+        int PRIVATE_CONTEST_UNKNOWN_ERROR = 3115;
+        int PRIVATE_CONTEST_ALREADY_JOINED = 3116;
     }
 
     interface ScreenDetails {
@@ -1054,11 +1055,13 @@ public interface Constants {
         int PRIVATE_CODE_LENGTH = 5;
         float ADVANCE_TEMPLATE_PROFIT_MARGIN = 0.1f;
 
+        /* ALERT : Synced with server response */
         interface ErrorCodes {
             int INVALID_INVITE_PRIVATE_CODE = 11;
             int CONTEST_FULL = 12;
             int UNKNOWN_ERROR = 13;  // Generic error
             int CHALLENGE_STARTED = 14;
+            int CONTEST_ALREADY_JOINED = 15;
         }
 
         interface PrizeEstimationTemplateType {

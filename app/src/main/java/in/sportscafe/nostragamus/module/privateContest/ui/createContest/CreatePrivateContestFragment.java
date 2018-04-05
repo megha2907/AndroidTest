@@ -78,6 +78,7 @@ public class CreatePrivateContestFragment extends BaseFragment implements
     private CreatePrivateContestFragmentListener mFragmentListener;
     private CreatePrivateContestScreenData mScreenData;
     private PrivateContestPrizeListRecyclerAdapter mPrizeTemplateAdapter;
+    private PrivateContestPrizeTemplateSpinnerAdapter mSpinnerAdapter;
     private PrivateContestPrizeTemplateResponse mSelectedPrizeTemplate;
 
     private Spinner mPrizeStructureSpinner;
@@ -145,7 +146,6 @@ public class CreatePrivateContestFragment extends BaseFragment implements
                 if (isEntriesValid()) {
                     handleEntriesValid(true, "");
 
-                    enableCreatePrivateContestButton(true);
                     performEstimation(mSelectedPrizeTemplate, getEntryFee(), getEntries());
 
                 } else {
@@ -421,7 +421,7 @@ public class CreatePrivateContestFragment extends BaseFragment implements
             /* Validate input again before joining */
             if (isEntriesValid()) {
                 if (isEntryFeeValid()) {
-                    if (isProperTemplateSelected()) {
+                    if (!TextUtils.isEmpty(getSelectedPrizeTemplateId())) {
 
                         ContestScreenData contestScreenData = mScreenData.getContestScreenData();
                         int entries = getEntries();
@@ -429,6 +429,7 @@ public class CreatePrivateContestFragment extends BaseFragment implements
                         String contestName = mContestNameEditText.getText().toString();
 
                         final JoinContestData joinPrivateContestData = new JoinContestData();
+                        joinPrivateContestData.setPrivateContestTemplateId(getSelectedPrizeTemplateId());
                         joinPrivateContestData.setChallengeId(contestScreenData.getChallengeId());
                         joinPrivateContestData.setChallengeName(contestScreenData.getChallengeName());
                         joinPrivateContestData.setChallengeStartTime(contestScreenData.getChallengeStartTime());
@@ -456,15 +457,15 @@ public class CreatePrivateContestFragment extends BaseFragment implements
         }
     }
 
-    private boolean isProperTemplateSelected() {
-        boolean isProperTemplate = true;    //TODO: If Advance prize structure gets included , then verify
+    private String getSelectedPrizeTemplateId() {
+        String templateId = "";
 
-        /*if (mSelectedPrizeTemplate != null &&
-                mSelectedPrizeTemplate.getTemplateType() == PrivateContestPrizeSpinnerItemType.ADVANCE_TEMPLATE) {
+        if (mSelectedPrizeTemplate != null &&
+                !TextUtils.isEmpty(mSelectedPrizeTemplate.getTemplateId())) {
+            templateId = mSelectedPrizeTemplate.getTemplateId();
+        }
 
-        }*/
-
-        return isProperTemplate;
+        return templateId;
     }
 
     private void performCreateAndJoin(final Bundle args) {
@@ -590,6 +591,7 @@ public class CreatePrivateContestFragment extends BaseFragment implements
                 /* Add joinContestData to make it scroll to joined contest in inplay */
                 JoinContestData joinContestData = new JoinContestData();
                 joinContestData.setContestId(createPrivateContestResponse.getConfigId());
+                joinContestData.setShouldShowPrivateContestCreatedMsg(true);
 
                 Bundle args = new Bundle();
                 args.putParcelable(Constants.BundleKeys.JOIN_CONTEST_DATA, Parcels.wrap(joinContestData));
@@ -727,18 +729,19 @@ public class CreatePrivateContestFragment extends BaseFragment implements
     }
 
     private void loadPrizeTemplatesFromServer() {
-        CustomProgressbar.getProgressbar(getContext()).show();
+        showLoadingProgressBar();
 
-        new PrivateContestPrizeTemplatesApiModelImpl().fetchPrizeTemplates(new PrivateContestPrizeTemplatesApiModelImpl.PrivateContestDetailApiListener() {
+        new PrivateContestPrizeTemplatesApiModelImpl().fetchPrizeTemplates(
+                new PrivateContestPrizeTemplatesApiModelImpl.PrivateContestDetailApiListener() {
             @Override
             public void onSuccessResponse(int status, List<PrivateContestPrizeTemplateResponse> responseList) {
-                CustomProgressbar.getProgressbar(getContext()).dismissProgress();
+                hideLoadingProgressBar();
                 onPrizeStructureReceived(responseList);
             }
 
             @Override
             public void onError(int status) {
-                CustomProgressbar.getProgressbar(getContext()).dismissProgress();
+                hideLoadingProgressBar();
                 handleError("", status);
             }
         });
@@ -757,10 +760,9 @@ public class CreatePrivateContestFragment extends BaseFragment implements
             advanceTemplate.setName("Advance");
             responseList.add(advanceTemplate);
 
-            PrivateContestPrizeTemplateSpinnerAdapter arrayAdapter =
-                    new PrivateContestPrizeTemplateSpinnerAdapter(getContext(), responseList);
+            mSpinnerAdapter = new PrivateContestPrizeTemplateSpinnerAdapter(getContext(), responseList);
 
-            mPrizeStructureSpinner.setAdapter(arrayAdapter);
+            mPrizeStructureSpinner.setAdapter(mSpinnerAdapter);
             mPrizeStructureSpinner.setSelected(false);
             mPrizeStructureSpinner.setSelection(0, true);  // default item selected
             mPrizeStructureSpinner.setOnItemSelectedListener(getSpinnerItemSelectedListener());
@@ -881,7 +883,6 @@ public class CreatePrivateContestFragment extends BaseFragment implements
                 }
 
                 setErrorState(titleTextView, lineView, true);
-                enableCreatePrivateContestButton(false);
                 mEntriesErrorTextView.setText(str);
                 mEntriesErrorTextView.setVisibility(View.VISIBLE);
             }
@@ -925,7 +926,6 @@ public class CreatePrivateContestFragment extends BaseFragment implements
 
             } else {
                 mFeeErrorTextView.setVisibility(View.VISIBLE);
-                enableCreatePrivateContestButton(false);
                 setErrorState(titleTextView, lineView, true);
             }
         }
@@ -943,7 +943,17 @@ public class CreatePrivateContestFragment extends BaseFragment implements
         return fee;
     }
 
-    private void enableCreatePrivateContestButton(boolean enable) {
-        mCreatePrivateContestButton.setEnabled(enable);
+    private void showLoadingProgressBar() {
+        if (getView() != null) {
+            getView().findViewById(R.id.pvt_contest_layouts).setVisibility(View.GONE);
+            getView().findViewById(R.id.loading_layout).setVisibility(View.VISIBLE);
+        }
+    }
+
+    private void hideLoadingProgressBar() {
+        if (getView() != null) {
+            getView().findViewById(R.id.loading_layout).setVisibility(View.GONE);
+            getView().findViewById(R.id.pvt_contest_layouts).setVisibility(View.VISIBLE);
+        }
     }
 }

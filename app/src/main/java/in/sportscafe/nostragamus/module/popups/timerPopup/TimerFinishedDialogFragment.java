@@ -10,6 +10,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.jeeva.android.widgets.HmImageView;
+
 import org.parceler.Parcels;
 
 import in.sportscafe.nostragamus.Constants;
@@ -83,7 +85,7 @@ public class TimerFinishedDialogFragment extends PopUpDialogFragment implements 
             TextView dialogTitleTextView = (TextView) rootView.findViewById(R.id.timer_finish_dialog_title_textView);
             TextView msgTextView = (TextView) rootView.findViewById(R.id.timer_finish_dialog_message_textView);
             TextView subMessageTextView = (TextView) rootView.findViewById(R.id.timer_finish_dialog_sub_message_textView);
-            ImageView iconImageView = (ImageView) rootView.findViewById(R.id.timer_finish_dialog_icon_imgView);
+            HmImageView iconImageView = (HmImageView) rootView.findViewById(R.id.timer_finish_dialog_icon_imgView);
 
             if (!TextUtils.isEmpty(mScreenData.getDialogTitle())) {
                 dialogTitleTextView.setText(mScreenData.getDialogTitle());
@@ -99,6 +101,12 @@ public class TimerFinishedDialogFragment extends PopUpDialogFragment implements 
 
             if (mScreenData.getIconResource() != 0) {
                 iconImageView.setImageResource(mScreenData.getIconResource());
+
+            } else if (!TextUtils.isEmpty(mScreenData.getIconImageUrl())) {
+                iconImageView.setImageUrl(mScreenData.getIconImageUrl());
+
+                HmImageView errIconImgView = (HmImageView) rootView.findViewById(R.id.err_indicator_icn_imgView);
+                errIconImgView.setVisibility(View.VISIBLE);
             }
         }
     }

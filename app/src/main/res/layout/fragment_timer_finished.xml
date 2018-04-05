@@ -48,20 +48,31 @@
 
             </LinearLayout>
 
-            <LinearLayout
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/dim_100"
                 android:layout_marginTop="@dimen/dim_8"
                 android:gravity="center"
                 android:orientation="vertical">
 
-                <ImageView
+                <com.jeeva.android.widgets.HmImageView
                     android:id="@+id/timer_finish_dialog_icon_imgView"
                     android:layout_width="@dimen/dim_100"
                     android:layout_height="@dimen/dim_100"
-                    android:src="@drawable/stop_watch_icn" />
+                    android:src="@drawable/stop_watch_icn"
+                    app:defaultImage="@drawable/stop_watch_icn"/>
 
-            </LinearLayout>
+                <com.jeeva.android.widgets.HmImageView
+                    android:id="@+id/err_indicator_icn_imgView"
+                    android:layout_width="@dimen/dim_30"
+                    android:layout_height="@dimen/dim_30"
+                    android:layout_alignParentBottom="true"
+                    app:defaultImage="@drawable/err_dialog_err_indicator_icn"
+                    android:layout_marginRight="-15dp"
+                    android:layout_alignRight="@id/timer_finish_dialog_icon_imgView"
+                    android:visibility="gone"/>
+                
+            </RelativeLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"

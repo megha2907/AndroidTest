@@ -222,8 +222,8 @@ public class OnBoardingFragment extends NostragamusFragment {
 
             if (shareDetailsDto != null) {
                 OnBoardingDto privateInvitationCode = new OnBoardingDto();
-                privateInvitationCode.setTitle("Join " + shareDetailsDto.getUserNick() + "'s private contest");
-                privateInvitationCode.setDesc(shareDetailsDto.getUserNick() + " invited you to play a private contest.\nLogin and reclick link or join and start playing");
+                privateInvitationCode.setTitle(shareDetailsDto.getUserNick() + " invited you to a private contest");
+                privateInvitationCode.setDesc("Log in and click again on the invite link to join the contest");
                 privateInvitationCode.setImageUrl(shareDetailsDto.getUserPhotoUrl());
 
                 onBoardingList.add(privateInvitationCode);
