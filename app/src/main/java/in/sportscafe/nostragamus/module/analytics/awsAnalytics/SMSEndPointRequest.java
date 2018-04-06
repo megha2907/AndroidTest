@@ -32,9 +32,9 @@ public class SMSEndPointRequest {
     public void createEndpoint(final AmazonPinpointClient client, final String appId) {
 
         UserInfo userInfo = Nostragamus.getInstance().getServerDataManager().getUserInfo();
-        String endpointId ="";
+        String endpointId = "";
         if (userInfo != null) {
-            endpointId = String.valueOf(userInfo.getId())+"SMS";
+            endpointId = String.valueOf(userInfo.getId()) + "SMS";
         }
         System.out.println("Endpoint ID: " + endpointId);
 
@@ -89,7 +89,7 @@ public class SMSEndPointRequest {
             EndpointUser user = new EndpointUser()
                     .withUserId(String.valueOf(userInfo.getId()));
 
-            endpointRequest.withAddress(userInfo.getOtpMobileNumber())
+            endpointRequest.withAddress("+91" + userInfo.getOtpMobileNumber())
                     .withChannelType("SMS")
                     .withAttributes(customAttributes)
                     .withDemographic(demographic)
