@@ -100,6 +100,8 @@ public class JoinPrivateContestWithInviteCodeFragment extends BaseFragment imple
         if (getView() != null) {
             TextView walletAmtTextView = (TextView) getView().findViewById(R.id.toolbar_wallet_money);
             walletAmtTextView.setText(CodeSnippet.getFormattedAmount(WalletHelper.getTotalBalance()));
+
+            setInviteCodeActive();
         }
     }
 

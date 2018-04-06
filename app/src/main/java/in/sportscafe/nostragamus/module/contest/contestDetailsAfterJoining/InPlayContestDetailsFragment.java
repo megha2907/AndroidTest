@@ -161,7 +161,8 @@ public class InPlayContestDetailsFragment extends NostraBaseFragment implements 
             if (!TextUtils.isEmpty(contestDto.getContestType()) &&
                     contestDto.getContestType().equalsIgnoreCase(Constants.ContestType.PRIVATE) &&
                     !TextUtils.isEmpty(contestDto.getChallengeStartTime()) &&
-                    !DateTimeHelper.isMatchStarted(contestDto.getChallengeStartTime())) {
+                    !DateTimeHelper.isMatchStarted(contestDto.getChallengeStartTime()) &&
+                    contestDto.isShouldShareLink()) {
 
                 PrivateContestInPlayInviteFragment fragment = new PrivateContestInPlayInviteFragment();
                 fragment.setInplayContestDto(contestDto);

@@ -30,10 +30,17 @@ public class PrivateContestPrizeEstimationHelper {
 
     /**
      *
-     * @param prizeTemplate
-     * @param distributableTotalPrizeAmt
-     * @param numberOfParticipants
-     * @return
+     * @param prizeTemplate - Template based on the calculation for prize is considered
+     *                      1. Rank based templates (Top 2 wins, Top 5 wins, Top 10 wins)
+     *                      2. Percentage based templates (Top 30% wins, Top 50% wins, Top 1/3rd Wins)
+     *
+     *                     Tamplates are received from server along with other values like company margin etc
+     * @param distributableTotalPrizeAmt - Total contest amount after deduction of margin from user inputted values
+     *                                   distributable = totalAmount - marginAmount
+     *                                   totalAmount = fee * entries
+     *                                   marginAmount = totalAmount * margin (margin always between 0 and 1)
+     * @param numberOfParticipants - entries
+     * @return - A list of calcuated prize
      */
     @NonNull
     public List<PrizeListItemDto> getPrizeList(PrivateContestPrizeTemplateResponse prizeTemplate,
@@ -141,10 +148,10 @@ public class PrivateContestPrizeEstimationHelper {
 
     /**
      * Reduces margin/profit amt from total prize-amt
-     * @param prizeFee
-     * @param entries
-     * @param margin
-     * @return
+     * @param prizeFee - User given entry fee per entry
+     * @param entries - max participants
+     * @param margin - server sent margin percentage (ALWAYS between 0 and 1)
+     * @return - returns amount to distribute among users after deducting margins
      */
     public static synchronized double getDistributableTotalPrize(double prizeFee, int entries, float margin) {
         double prizeAmt = 0;

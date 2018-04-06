@@ -21,11 +21,10 @@
         <com.jeeva.android.widgets.customfont.CustomTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Invite your friends"
-            android:textAllCaps="true"
+            android:text="Invite Your Friends"
             android:textColor="@color/white"
-            android:textSize="@dimen/sp_11"
-            app:typeface="lato_bold"
+            android:textSize="@dimen/sp_16"
+            app:typeface="lato_regular"
             android:layout_marginTop="@dimen/dim_20"/>
 
         <com.jeeva.android.widgets.customfont.CustomTextView
@@ -51,8 +50,7 @@
             <com.jeeva.android.widgets.customfont.CustomTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Your invitation code"
-                android:textAllCaps="true"
+                android:text="Your Invitation Code : "
                 android:textColor="@color/white"
                 android:textSize="@dimen/sp_11"
                 app:typeface="lato_regular"/>
@@ -91,7 +89,7 @@
             android:id="@+id/private_contest_share_btn"
             android:layout_width="@dimen/dim_320"
             android:layout_height="@dimen/dim_40"
-            android:layout_marginTop="@dimen/dim_40"
+            android:layout_marginTop="@dimen/dim_20"
             android:layout_marginLeft="@dimen/dim_20"
             android:layout_marginRight="@dimen/dim_20"
             android:layout_gravity="center_horizontal"

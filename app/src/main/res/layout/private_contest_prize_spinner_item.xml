@@ -5,7 +5,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:minHeight="@dimen/dim_40"
     android:orientation="vertical"
-    android:gravity="center_vertical">
+    android:gravity="center_vertical"
+    android:id="@+id/spinner_item_parent"
+    android:background="@drawable/private_contest_spinner_selector">
 
     <com.jeeva.android.widgets.customfont.CustomTextView
         android:id="@+id/spinner_item_textView"
@@ -13,10 +15,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ellipsize="end"
+        android:maxLines="1"
         android:textColor="@color/white"
-        android:textSize="@dimen/dim_12"
+        android:textSize="@dimen/sp_14"
         app:typeface="lato_regular"
-        android:background="@drawable/private_contest_spinner_selector"/>
+        />
 
 </LinearLayout>
 

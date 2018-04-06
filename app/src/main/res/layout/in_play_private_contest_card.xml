@@ -56,7 +56,7 @@
                             android:includeFontPadding="false"
                             android:maxLines="1"
                             android:text=""
-                            android:maxLength="25"
+                            android:maxLength="20"
                             android:textColor="@color/white"
                             android:textSize="@dimen/sp_13"
                             app:typeface="lato_regular" />
@@ -207,7 +207,7 @@
 
                 <LinearLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="@dimen/dim_68"
+                    android:layout_height="@dimen/dim_60"
                     android:gravity="center_horizontal"
                     android:orientation="vertical">
 
@@ -251,7 +251,6 @@
                     android:layout_height="@dimen/dim_35"
                     android:layout_gravity="center_horizontal"
                     android:background="@drawable/blue_008ae1_button_selector"
-                    android:layout_marginBottom="@dimen/dim_10"
                     android:layout_marginLeft="@dimen/dim_18"
                     android:layout_marginRight="@dimen/dim_18"
                     android:visibility="gone">
@@ -268,8 +267,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:gravity="center_horizontal"
-                        android:text="Invite your friends"
-                        android:textAllCaps="true"
+                        android:text="Invite Your Friends"
                         android:textColor="@color/white"
                         android:textSize="@dimen/sp_10"
                         app:typeface="lato_regular"

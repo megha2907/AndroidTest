@@ -170,13 +170,6 @@ public class CreatePrivateContestFragment extends BaseFragment implements
 
             @Override
             public void afterTextChanged(Editable s) {
-                /*double entryFee = getEntryFee();
-                if (entryFee < 1) {
-                    setSpinnerEnabled(false);
-                } else {
-                    setSpinnerEnabled(true);
-
-                }*/
                 validatePrizeStructureTemplate();
 
                 if (!TextUtils.isEmpty(mEntryFeeEditText.getText().toString())) {
@@ -255,6 +248,7 @@ public class CreatePrivateContestFragment extends BaseFragment implements
         view.findViewById(R.id.pvt_contest_name_layout).setOnClickListener(this);
         view.findViewById(R.id.pvt_contest_entries_layout).setOnClickListener(this);
         view.findViewById(R.id.pvt_contest_entry_fee_layout).setOnClickListener(this);
+        view.findViewById(R.id.pvt_contest_spinner_layout).setOnClickListener(this);
 
         mContestNameEditText.setOnFocusChangeListener(this);
         mEntriesEditText.setOnFocusChangeListener(this);
@@ -270,6 +264,7 @@ public class CreatePrivateContestFragment extends BaseFragment implements
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 mSelectedPrizeTemplate = (PrivateContestPrizeTemplateResponse)mPrizeStructureSpinner.getSelectedItem();
+                mSpinnerAdapter.setSelectedTemplate(mSelectedPrizeTemplate);
                 if (mSelectedPrizeTemplate != null) {
                     onPrizeTemplateSelected(mSelectedPrizeTemplate);
                 }
@@ -410,6 +405,10 @@ public class CreatePrivateContestFragment extends BaseFragment implements
             case R.id.pvt_contest_entry_fee_layout:
                 mEntryFeeEditText.requestFocus();
                 showKeyBoard(mEntriesEditText);
+                break;
+
+            case R.id.pvt_contest_spinner_layout:
+                mPrizeStructureSpinner.performClick();
                 break;
         }
     }
@@ -755,12 +754,14 @@ public class CreatePrivateContestFragment extends BaseFragment implements
             mSelectedPrizeTemplate = responseList.get(0);
 
             /* Add Advance Template */
-            PrivateContestPrizeTemplateResponse advanceTemplate = new PrivateContestPrizeTemplateResponse();
+            /*PrivateContestPrizeTemplateResponse advanceTemplate = new PrivateContestPrizeTemplateResponse();
             advanceTemplate.setTemplateType(PrivateContestPrizeSpinnerItemType.ADVANCE_TEMPLATE);
             advanceTemplate.setName("Advance");
-            responseList.add(advanceTemplate);
+            responseList.add(advanceTemplate);*/
 
-            mSpinnerAdapter = new PrivateContestPrizeTemplateSpinnerAdapter(getContext(), responseList);
+            mSpinnerAdapter = new PrivateContestPrizeTemplateSpinnerAdapter(
+                    getContext(), responseList, mSelectedPrizeTemplate);
+            mSpinnerAdapter.setDropDownViewResource(R.layout.pvt_contest_spinner_textview);
 
             mPrizeStructureSpinner.setAdapter(mSpinnerAdapter);
             mPrizeStructureSpinner.setSelected(false);

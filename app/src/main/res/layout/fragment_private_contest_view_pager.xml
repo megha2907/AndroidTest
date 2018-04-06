@@ -79,14 +79,14 @@
             android:layout_marginLeft="@dimen/dim_20"
             android:layout_marginRight="@dimen/dim_20"
             android:layout_gravity="center_horizontal"
-            android:background="@drawable/green_button_border"
+            android:background="@drawable/green_border_button_selector"
             android:gravity="center_vertical">
 
             <ImageView
                 android:layout_width="@dimen/dim_16"
                 android:layout_height="@dimen/dim_16"
                 android:layout_marginLeft="@dimen/dim_26"
-                android:src="@drawable/join_pvt_contest_navigation_icn"/>
+                android:src="@drawable/pvt_contest_green_icn"/>
 
             <com.jeeva.android.widgets.customfont.CustomTextView
                 android:layout_width="wrap_content"

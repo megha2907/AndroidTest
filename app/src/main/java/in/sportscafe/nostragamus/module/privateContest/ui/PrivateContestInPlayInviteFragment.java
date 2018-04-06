@@ -143,7 +143,21 @@ public class PrivateContestInPlayInviteFragment extends BaseFragment implements 
     }
 
     private void onShareButtonClicked() {
-        String shareText = "Hey, join this private contest " + mShareLink + " and let's play and win with Nostragamus!";
-        AppSnippet.doGeneralShare(getContext().getApplicationContext(), shareText);
+        if (mInplayContestDto != null && !TextUtils.isEmpty(mShareLink)) {
+            String pvtContestName = (mInplayContestDto.getContestName().length() > 20) ?
+                    mInplayContestDto.getContestName().substring(0, 20) + "... " :
+                    mInplayContestDto.getContestName();
+
+            String socialMsg = String.format("Think you know sports better than me? Beat me at my own game and prove it!\n" +
+                            "Join and Play the ₹%1$s %2$s - %3$s contest with me on Nostra Pro to win ₹%4$s\n" +
+                            "by clicking on the %5$s\n" +
+                            "or by using the following code %6$s",
+                    mInplayContestDto.getEntryFee(), mInplayContestDto.getChallengeName(), pvtContestName,
+                    (long)mInplayContestDto.getWinningAmount(),
+                    mShareLink,
+                    mInplayContestDto.getPrivateCode());
+
+            AppSnippet.doGeneralShare(getContext().getApplicationContext(), socialMsg);
+        }
     }
 }

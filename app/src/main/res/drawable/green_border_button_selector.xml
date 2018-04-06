@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Pressed state -->
+    <item android:state_pressed="true">
+        <layer-list>
+            <!--<item> &lt;!&ndash; Shadow &ndash;&gt;
+                <shape>
+                    <solid android:color="@color/green_dark_shadow_pressed" />
+                    <corners android:radius="@dimen/dp_2" />
+                </shape>
+            </item>-->
+            <item android:bottom="@dimen/dp_3">
+                <shape>
+                    <stroke android:color="@color/grey" android:width="@dimen/dim_2" />
+                    <corners android:radius="@dimen/dp_2" />
+                </shape>
+            </item>
+        </layer-list>
+    </item>
+
+    <!-- Disable state -->
+    <item android:state_enabled="false">
+        <layer-list>
+            <!--<item>  &lt;!&ndash; shadow &ndash;&gt;
+                <shape>
+                    <solid android:color="@color/green_dark_shadow_disable" />
+                    <corners android:radius="@dimen/dp_2" />
+                </shape>
+            </item>-->
+            <item  android:bottom="@dimen/dp_3">
+                <shape>
+                    <stroke android:color="@color/green_disable" android:width="@dimen/dim_2" />
+                    <corners android:radius="@dimen/dp_2" />
+                </shape>
+            </item>
+        </layer-list>
+    </item>
+
+    <!-- Default -->
+    <item>
+        <layer-list>
+            <!-- SHADOW -->
+            <!--<item>
+                <shape>
+                    <solid android:color="@color/green_dark_shadow" />
+                    <corners android:radius="@dimen/dp_2" />
+                </shape>
+            </item>-->
+            <!-- BUTTON -->
+            <item android:bottom="@dimen/dp_3">
+                <shape android:shape="rectangle">
+                    <stroke android:color="@color/green" android:width="@dimen/dim_2" />
+                    <corners android:radius="@dimen/dp_2" />
+                </shape>
+            </item>
+        </layer-list>
+    </item>
+</selector>

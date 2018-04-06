@@ -44,7 +44,7 @@ public class TimerFinishDialogHelper {
         screenData.setRequestCode(Constants.TimerOutDialogRequestCode.CHALLENGE_STARTED);
         screenData.setDialogTitle("Challenge Started");
         screenData.setMessage("Oops! Time is up!");
-        screenData.setSubMessage(subMessage);
+        screenData.setSubMessage("This challenge has already started. Please join another challenge");
         screenData.setButtonText("Ok");
 
         return screenData;
