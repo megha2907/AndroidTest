@@ -6,25 +6,54 @@ import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.os.NetworkOnMainThreadException;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
-import android.widget.TextView;
 
+import com.amazonaws.AmazonClientException;
+import com.amazonaws.auth.AWSCredentialsProvider;
+import com.amazonaws.auth.CognitoCachingCredentialsProvider;
+import com.amazonaws.mobile.auth.core.IdentityManager;
+import com.amazonaws.mobile.client.AWSMobileClient;
+import com.amazonaws.mobile.client.AWSStartupHandler;
+import com.amazonaws.mobile.client.AWSStartupResult;
+import com.amazonaws.mobile.config.AWSConfiguration;
+import com.amazonaws.mobileconnectors.pinpoint.PinpointConfiguration;
+import com.amazonaws.mobileconnectors.pinpoint.PinpointManager;
+import com.amazonaws.mobileconnectors.pinpoint.analytics.AnalyticsEvent;
+import com.amazonaws.mobileconnectors.pinpoint.analytics.monetization.AmazonMonetizationEventBuilder;
+import com.amazonaws.mobileconnectors.pinpoint.analytics.monetization.GooglePlayMonetizationEventBuilder;
+import com.amazonaws.mobileconnectors.pinpoint.targeting.TargetingClient;
+import com.amazonaws.mobileconnectors.pinpoint.targeting.endpointProfile.EndpointProfile;
+import com.amazonaws.mobileconnectors.pinpoint.targeting.endpointProfile.EndpointProfileUser;
+import com.amazonaws.regions.Regions;
+import com.amazonaws.services.pinpoint.AmazonPinpointClient;
 import com.amplitude.api.Amplitude;
 import com.amplitude.api.AmplitudeClient;
 import com.amplitude.api.Revenue;
 import com.crashlytics.android.Crashlytics;
+import com.crashlytics.android.answers.Answers;
+import com.crashlytics.android.answers.ContentViewEvent;
+import com.crashlytics.android.answers.CustomEvent;
+import com.crashlytics.android.answers.InviteEvent;
+import com.crashlytics.android.answers.PurchaseEvent;
+import com.crashlytics.android.answers.ShareEvent;
+import com.crashlytics.android.answers.SignUpEvent;
 import com.crashlytics.android.core.CrashlyticsCore;
 import com.facebook.FacebookSdk;
-import com.facebook.LoggingBehavior;
-import com.facebook.appevents.AppEventsConstants;
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
 import com.facebook.appevents.AppEventsLogger;
 import com.freshchat.consumer.sdk.Freshchat;
 import com.freshchat.consumer.sdk.FreshchatUser;
 import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
+import com.google.android.gms.gcm.GoogleCloudMessaging;
+import com.google.android.gms.iid.InstanceID;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.jeeva.android.Log;
 import com.moe.pushlibrary.MoEHelper;
 import com.moe.pushlibrary.PayloadBuilder;
@@ -33,9 +62,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.math.BigDecimal;
+import java.util.Arrays;
 import java.util.Currency;
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -48,6 +76,9 @@ import in.sportscafe.nostragamus.Constants.UserProperties;
 import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.R;
+import in.sportscafe.nostragamus.module.analytics.awsAnalytics.EMAILEndPointRequest;
+import in.sportscafe.nostragamus.module.analytics.awsAnalytics.NotificationEndPointRequest;
+import in.sportscafe.nostragamus.module.analytics.awsAnalytics.SMSEndPointRequest;
 import in.sportscafe.nostragamus.module.newChallenges.dataProvider.SportsDataProvider;
 import in.sportscafe.nostragamus.module.newChallenges.dto.SportsTab;
 import in.sportscafe.nostragamus.module.user.login.dto.UserInfo;
@@ -87,13 +118,25 @@ public class NostragamusAnalytics {
 
     private boolean mAppOpeningTracked = false;
 
-    public NostragamusAnalytics init(Context context) {
+    public static PinpointManager pinpointManager;
+
+    private IdentityManager identityManager;
+
+    private AWSConfiguration awsConfiguration;
+
+    private String AWS_APP_ID = "2dbeb11bf7474761afac1a7e69a61e25";
+
+    public IdentityManager getIdentityManager() {
+        return identityManager;
+    }
+
+    public NostragamusAnalytics init(final Context context) {
         GoogleAnalytics ga = GoogleAnalytics.getInstance(context);
         ga.setAppOptOut(BuildConfig.DEBUG);
 
         if (!BuildConfig.DEBUG) {
 
-            // Initializing the google analytics
+            // Initializing the google analyticsReceived
             this.mTracker = ga.newTracker(R.xml.app_tracker);
             this.mTracker.enableAdvertisingIdCollection(true);
 
@@ -113,9 +156,55 @@ public class NostragamusAnalytics {
             // Tracking flavor
             //trackFlavor();
 
+            //Tracking events on fabric
+            Fabric.with(context, new Answers());
+
             // Facebook Analytics
             FacebookSdk.sdkInitialize(context);
             sFaceBookAppEventLogger = AppEventsLogger.newLogger(context);
+
+            try {
+
+                // initialize AWS Mobile client
+                AWSMobileClient.getInstance().initialize(context, new AWSStartupHandler() {
+                    @Override
+                    public void onComplete(AWSStartupResult awsStartupResult) {
+                        Log.i("inside", "successAWS");
+                    }
+                });
+
+            /* initialize Pinpoint Manager & CognitoCachingCredentialsProvider
+             *  aws app id and aws pool id is linked to aws account
+             *  Please don't change it until it's change in aws configuration file */
+                CognitoCachingCredentialsProvider cognitoCachingCredentialsProvider = new CognitoCachingCredentialsProvider(context, context.getString(R.string.aws_pinpoint_pool_id), Regions.AP_SOUTHEAST_1);
+                PinpointConfiguration config = new PinpointConfiguration(context, context.getString(R.string.aws_app_id), Regions.US_EAST_1, cognitoCachingCredentialsProvider);
+                this.pinpointManager = new PinpointManager(config);
+
+                this.awsConfiguration = new AWSConfiguration(context);
+                identityManager = new IdentityManager(context, awsConfiguration);
+                identityManager.setDefaultIdentityManager(identityManager);
+
+            } catch (final AmazonClientException ex) {
+
+            }
+
+           new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+
+                        if (!TextUtils.isEmpty(Nostragamus.getInstance().getServerDataManager().getGcmDeviceToken())) {
+                            Log.e("NotError", Nostragamus.getInstance().getServerDataManager().getGcmDeviceToken());
+                            pinpointManager.getNotificationClient().registerDeviceToken(Nostragamus.getInstance().getServerDataManager().getGcmDeviceToken());
+
+                        }
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            }).start();
+
         }
 
         return this;
@@ -131,6 +220,23 @@ public class NostragamusAnalytics {
         if (!mAppOpeningTracked) {
             track(AnalyticsCategory.APP_OPENING, null, openingFrom, null);
             mAppOpeningTracked = true;
+
+            // Start a session with Pinpoint
+            if (pinpointManager != null && pinpointManager.getSessionClient() != null) {
+                pinpointManager.getSessionClient().startSession();
+            }
+        }
+    }
+
+    /**
+     * track app closing
+     * <p>
+     * closingFrom - home screen on back pressed
+     */
+    public void trackAppClosing() {
+        // Stop the session with Pinpoint
+        if (pinpointManager != null && pinpointManager.getSessionClient() != null) {
+            pinpointManager.getSessionClient().stopSession();
         }
     }
 
@@ -166,6 +272,9 @@ public class NostragamusAnalytics {
      */
     public void trackDummyGame(String actions) {
         track(AnalyticsCategory.DUMMY_GAME, actions, null, null);
+        trackAWSEvent(AnalyticsCategory.DUMMY_GAME, "Action", actions);
+        trackFabricEvent(AnalyticsCategory.DUMMY_GAME, "Action", actions);
+        logFbEvents(AnalyticsCategory.DUMMY_GAME, "Action", actions);
     }
 
     /**
@@ -213,6 +322,7 @@ public class NostragamusAnalytics {
      */
     public void trackNewUsers(String actions, String label) {
         track(AnalyticsCategory.NEW_USERS, actions, label, null);
+        trackSignUpFabric(AnalyticsCategory.NEW_USERS + "-" + actions);
     }
 
     /**
@@ -621,6 +731,8 @@ public class NostragamusAnalytics {
             if (mMoEHelper != null) {
                 mMoEHelper.trackEvent(category, jsonObject);
             }
+
+            updateEndPointProfile(UserProperties.HAS_DEPOSITED, "true");
         }
     }
 
@@ -647,6 +759,9 @@ public class NostragamusAnalytics {
      */
     public void trackClickEvent(@NonNull String category, String label) {
         track(category, AnalyticsActions.CLICKED, label, null);
+        trackAWSEvent(category, AnalyticsActions.CLICKED, label);
+        trackFabricEvent(category, AnalyticsActions.CLICKED, label);
+        logFbEvents(category, AnalyticsActions.CLICKED, label);
     }
 
     /**
@@ -656,6 +771,9 @@ public class NostragamusAnalytics {
      */
     public void trackScreenShown(@NonNull String category, String label) {
         track(category, AnalyticsActions.OPENED, label, null);
+        trackAWSEvent(category, AnalyticsActions.OPENED, label);
+        trackFabricEvent(category, AnalyticsActions.OPENED, label);
+        logFbEvents(category, AnalyticsActions.OPENED, label);
     }
 
     public void trackReferralBenefitScreenShown() {
@@ -678,12 +796,15 @@ public class NostragamusAnalytics {
      *
      * @param challengeId
      * @param sportId
+     * @param prizes
+     * @param challengeStartTime
      * @param category
      */
-    public void trackNewChallenges(int challengeId, String challengeName, int[] sportId, String category) {
+    public void trackNewChallenges(int challengeId, String challengeName, int[] sportId, int prizes, String challengeStartTime, String category) {
 
         if (BuildConfig.IS_PAID_VERSION && mAmplitude != null) {
 
+            String sportsName = "";
             JSONObject sportsJson = null;
             if (sportId != null) {
                 SportsDataProvider sportsDataProvider = new SportsDataProvider();
@@ -696,6 +817,7 @@ public class NostragamusAnalytics {
 
                             try {
                                 sportsJson.put("sportsName", sportsTab.getSportsName());
+                                sportsName = sportsTab.getSportsName();
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
@@ -719,6 +841,44 @@ public class NostragamusAnalytics {
             if (mMoEHelper != null) {
                 mMoEHelper.trackEvent(category, jsonObject);
             }
+
+
+              /* Send Contest Joining Data to aws pinpoint */
+            if (pinpointManager != null && pinpointManager.getAnalyticsClient() != null) {
+
+                final AnalyticsEvent event = pinpointManager.getAnalyticsClient().createEvent(AnalyticsCategory.NEW_CHALLENGES)
+                        .withAttribute("challengeId", String.valueOf(challengeId))
+                        .withAttribute("challengeName", challengeName)
+                        .withAttribute("prizeMoney", String.valueOf(prizes))
+                        .withAttribute("challengeStartTime", challengeStartTime)
+                        .withAttribute("sportName", sportsName);
+
+                pinpointManager.getAnalyticsClient().recordEvent(event);
+                pinpointManager.getAnalyticsClient().submitEvents();
+
+            }
+
+              /* Send Contest Joining Data to Fabric */
+            Answers.getInstance().logCustom(new CustomEvent(AnalyticsCategory.NEW_CHALLENGES)
+                    .putCustomAttribute("challengeId", String.valueOf(challengeId))
+                    .putCustomAttribute("challengeName", challengeName)
+                    .putCustomAttribute("prizeMoney", String.valueOf(prizes))
+                    .putCustomAttribute("challengeStartTime", challengeStartTime)
+                    .putCustomAttribute("sportName", sportsName));
+
+
+            /* Send Contest Joining Data to Fb Analytics */
+            Bundle contestBundle = new Bundle();
+            contestBundle.putInt("challengeId", challengeId);
+            contestBundle.putString("challengeName", challengeName);
+            contestBundle.putString("challengeStartTime", challengeStartTime);
+            contestBundle.putInt("prizeMoney", prizes);
+            contestBundle.putString("sportName", sportsName);
+
+            if (sFaceBookAppEventLogger != null) {
+                sFaceBookAppEventLogger.logEvent(AnalyticsCategory.NEW_CHALLENGES, contestBundle);
+            }
+
 
         } else {
             Log.d("App", "Can't log revenue, Amplitude null!");
@@ -761,6 +921,42 @@ public class NostragamusAnalytics {
                 mMoEHelper.trackEvent(category, jsonObject);
             }
 
+            if (pinpointManager != null && pinpointManager.getAnalyticsClient() != null) {
+
+                final AnalyticsEvent event = pinpointManager.getAnalyticsClient().createEvent(AnalyticsCategory.CONTEST_JOINED)
+                        .withAttribute("contestId", String.valueOf(contestId))
+                        .withAttribute("contestName", contestName)
+                        .withAttribute("contestType", contestType)
+                        .withAttribute("contestEntryFee", String.valueOf(entryFee))
+                        .withAttribute("contestChallengeId", String.valueOf(challengeId))
+                        .withAttribute("screenJoinedFrom", screenName);
+
+                pinpointManager.getAnalyticsClient().recordEvent(event);
+                pinpointManager.getAnalyticsClient().submitEvents();
+
+            }
+
+            Answers.getInstance().logCustom(new CustomEvent(AnalyticsCategory.CONTEST_JOINED)
+                    .putCustomAttribute("contestId", String.valueOf(contestId))
+                    .putCustomAttribute("contestName", contestName)
+                    .putCustomAttribute("contestType", contestType)
+                    .putCustomAttribute("contestEntryFee", String.valueOf(entryFee))
+                    .putCustomAttribute("contestChallengeId", String.valueOf(challengeId))
+                    .putCustomAttribute("screenJoinedFrom", screenName));
+
+            /* Send Contest Joining Data to Fb Analytics */
+            Bundle contestBundle = new Bundle();
+            contestBundle.putInt("contestId", contestId);
+            contestBundle.putString("contestName", contestName);
+            contestBundle.putString("contestType", contestType);
+            contestBundle.putInt("contestEntryFee", entryFee);
+            contestBundle.putInt("contestChallengeId", challengeId);
+            contestBundle.putString("screenJoinedFrom", screenName);
+
+            if (sFaceBookAppEventLogger != null) {
+                sFaceBookAppEventLogger.logEvent(AnalyticsCategory.CONTEST_JOINED, contestBundle);
+            }
+
         } else {
             Log.d("App", "Can't log revenue, Amplitude null!");
         }
@@ -772,7 +968,7 @@ public class NostragamusAnalytics {
      *
      * @param price
      */
-    public void trackRevenue(double price, int contestId, String contestName, String contestType) {
+    public void trackRevenue(double price, int contestId, String contestName, String contestType, String orderId) {
         if (BuildConfig.IS_PAID_VERSION && mAmplitude != null) {
             JSONObject eventPropertiesJson = new JSONObject();
             try {
@@ -803,8 +999,12 @@ public class NostragamusAnalytics {
         contestBundle.putInt("contestId", contestId);
         contestBundle.putString("contestName", contestName);
         contestBundle.putString("contestType", contestType);
-        NostragamusAnalytics.getInstance().logFbRevenue(price, contestBundle);
+        logFbRevenue(price, contestBundle);
 
+        /* Send Revenue Data to Aws Pinpoint */
+        trackAWSMonetizationEvent(price, AnalyticsActions.CONTEST_JOINED, orderId);
+        trackFabricPurchaseEvent(price, AnalyticsActions.CONTEST_JOINED, orderId);
+        updateEndPointProfile(UserProperties.HAS_SPENT, "true");
     }
 
     /**
@@ -822,6 +1022,19 @@ public class NostragamusAnalytics {
                 ex.printStackTrace();
             }
         }
+    }
+
+
+    /**
+     * Tracks Banners
+     *
+     * @param bannerId
+     * @param bannerRedirectScreen
+     */
+    public void trackBanners(String bannerId, String bannerRedirectScreen) {
+        trackAWSEvent(AnalyticsCategory.BANNERS, bannerId, bannerRedirectScreen);
+        trackFabricEvent(AnalyticsCategory.BANNERS, bannerId, bannerRedirectScreen);
+        logFbEvents(AnalyticsCategory.BANNERS, bannerId, bannerRedirectScreen);
     }
 
     public void setFreshChatUserProperties(Context context) {
@@ -855,7 +1068,7 @@ public class NostragamusAnalytics {
                     .core(new CrashlyticsCore.Builder().disabled(BuildConfig.DEBUG).build())
                     .build();
 
-            if (crashlyticsKit != null && context!=null) {
+            if (crashlyticsKit != null && context != null) {
                 try {
                     Fabric.with(context, crashlyticsKit);
                     /* Set UserInfo  */
@@ -868,5 +1081,180 @@ public class NostragamusAnalytics {
                 }
             }
         }
+    }
+
+    public void trackAWSEvent(String eventName, String eventAttribute, String eventAttributeValue) {
+
+        if (pinpointManager != null && pinpointManager.getAnalyticsClient() != null) {
+
+            final AnalyticsEvent event = pinpointManager.getAnalyticsClient().createEvent(eventName)
+                    .withAttribute(eventAttribute, eventAttributeValue);
+
+            pinpointManager.getAnalyticsClient().recordEvent(event);
+            pinpointManager.getAnalyticsClient().submitEvents();
+
+        }
+    }
+
+    public void trackAWSMonetizationEvent(Double price, String productId, String transactionID) {
+
+        if (pinpointManager != null && pinpointManager.getAnalyticsClient() != null) {
+
+            final AnalyticsEvent event =
+                    GooglePlayMonetizationEventBuilder.create(pinpointManager.getAnalyticsClient())
+                            .withItemPrice(price)
+                            .withProductId(productId)
+                            .withQuantity(1.0)
+                            .withProductId(transactionID).build();
+
+
+            pinpointManager.getAnalyticsClient().recordEvent(event);
+            pinpointManager.getAnalyticsClient().submitEvents();
+
+        }
+    }
+
+
+    public void updateEndPointProfile(String endPoint, String endPointValue) {
+        if (pinpointManager != null && pinpointManager.getTargetingClient() != null) {
+            TargetingClient targetingClient = this.pinpointManager.getTargetingClient();
+            targetingClient.addAttribute(endPoint, Arrays.asList(new String[]{endPointValue}));
+            targetingClient.updateEndpointProfile();
+        }
+    }
+
+    public void updateEndPointUserProperties() {
+
+        UserInfo userInfo = Nostragamus.getInstance().getServerDataManager().getUserInfo();
+
+        if (pinpointManager != null && pinpointManager.getTargetingClient() != null
+                && userInfo != null) {
+            TargetingClient targetingClient = this.pinpointManager.getTargetingClient();
+            targetingClient.addAttribute(UserProperties.COUNT_REFERRALS, Arrays.asList(new String[]{String.valueOf(userInfo.getReferralCount())}));
+            targetingClient.addAttribute(UserProperties.HAS_REFERRED, Arrays.asList(new String[]{String.valueOf(userInfo.isHasReferred())}));
+            targetingClient.addAttribute(UserProperties.HAS_DEPOSITED, Arrays.asList(new String[]{String.valueOf(userInfo.isHasDeposited())}));
+            targetingClient.addAttribute(UserProperties.COUNT_DEPOSITS, Arrays.asList(new String[]{String.valueOf(userInfo.getDepositCount())}));
+            targetingClient.addAttribute(UserProperties.COUNT_CONTESTS_JOINED, Arrays.asList(new String[]{String.valueOf(userInfo.getContestJoinedCount())}));
+            targetingClient.addAttribute(UserProperties.COUNT_PAID_CONTESTS_JOINED, Arrays.asList(new String[]{String.valueOf(userInfo.getPaidContestJoinedCount())}));
+            targetingClient.addAttribute(UserProperties.MOST_PLAYED_SPORT, Arrays.asList(new String[]{String.valueOf(userInfo.getMostPlayedSport())}));
+            targetingClient.updateEndpointProfile();
+        }
+    }
+
+    public void setAwsPinPointUserProperties() {
+        UserInfo userInfo = Nostragamus.getInstance().getServerDataManager().getUserInfo();
+        if (userInfo != null && pinpointManager != null && pinpointManager.getTargetingClient() != null) {
+
+            EndpointProfile profile = this.pinpointManager.getTargetingClient().currentEndpoint();
+            EndpointProfileUser user = new EndpointProfileUser();
+            user.setUserId(String.valueOf(userInfo.getId()));
+            profile.setUser(user);
+            this.pinpointManager.getTargetingClient().updateEndpointProfile(profile);
+
+        }
+    }
+
+
+    public void trackFabricEvent(String eventName, String eventAttribute, String eventAttributeValue) {
+        Answers.getInstance().logCustom(new CustomEvent(eventName)
+                .putCustomAttribute(eventAttribute, eventAttributeValue));
+    }
+
+    public void trackFabricPurchaseEvent(Double price, String productId, String transactionID) {
+        Answers.getInstance().logPurchase(new PurchaseEvent()
+                .putItemPrice(BigDecimal.valueOf(price))
+                .putCurrency(Currency.getInstance("INR"))
+                .putItemName(productId)
+                .putItemType("Contest")
+                .putItemId(transactionID)
+                .putSuccess(true));
+    }
+
+
+    public void trackFabricContentRealTimeEvent(String contentName, String contentType, String contentId) {
+        Answers.getInstance().logContentView(new ContentViewEvent()
+                .putContentName(contentName)
+                .putContentType(contentType)
+                .putContentId(contentId));
+    }
+
+
+    public void trackFabricShareEvent(String method, String contentName, String contentType, String contentId) {
+        Answers.getInstance().logShare(new ShareEvent()
+                .putMethod(method)
+                .putContentName(contentName)
+                .putContentType(contentType)
+                .putContentId(contentId));
+    }
+
+    public void trackInviteInFabric() {
+        Answers.getInstance().logInvite(new InviteEvent()
+                .putMethod("AppInvite"));
+    }
+
+    public void trackSignUpFabric(String source) {
+        Answers.getInstance().logSignUp(new SignUpEvent()
+                .putMethod(source)
+                .putSuccess(true));
+    }
+
+    /**
+     * Logs Facebook events
+     *
+     * @param eventName
+     * @param eventAttribute
+     * @param eventAttributeValue
+     */
+    public void logFbEvents(String eventName, String eventAttribute, String eventAttributeValue) {
+        Bundle args = new Bundle();
+        args.putString(eventAttribute, eventAttributeValue);
+        if (sFaceBookAppEventLogger != null) {
+            sFaceBookAppEventLogger.logEvent(eventName, args);
+        }
+    }
+
+    public void logFbUserProperties(UserInfo userInfo) {
+
+        if (userInfo != null ) {
+
+            Bundle user_props = new Bundle();
+            user_props.putInt(UserProperties.COUNT_REFERRALS, userInfo.getReferralCount());
+            user_props.putBoolean(UserProperties.HAS_REFERRED, userInfo.isHasReferred());
+            user_props.putBoolean(UserProperties.HAS_DEPOSITED, userInfo.isHasDeposited());
+            user_props.putInt(UserProperties.COUNT_DEPOSITS, userInfo.getDepositCount());
+            user_props.putInt(UserProperties.COUNT_CONTESTS_JOINED, userInfo.getContestJoinedCount());
+            user_props.putInt(UserProperties.COUNT_PAID_CONTESTS_JOINED, userInfo.getPaidContestJoinedCount());
+            user_props.putString(UserProperties.MOST_PLAYED_SPORT, userInfo.getMostPlayedSport());
+
+            if (sFaceBookAppEventLogger != null) {
+
+                sFaceBookAppEventLogger.setUserID(String.valueOf(userInfo.getId()));
+
+                sFaceBookAppEventLogger.updateUserProperties(user_props, new GraphRequest.Callback() {
+                    @Override
+                    public void onCompleted(GraphResponse response) {
+
+                    }
+                });
+            }
+        }
+
+    }
+
+    public void logUserProperties(UserInfo userInfo) {
+
+        logFbUserProperties(userInfo);
+
+        if (getIdentityManager() != null) {
+            final AWSCredentialsProvider cp = getIdentityManager().getCredentialsProvider();
+            AmazonPinpointClient client = new AmazonPinpointClient(cp);
+            SMSEndPointRequest.getInstance().createEndpoint(client,AWS_APP_ID);
+            EMAILEndPointRequest.getInstance().createEndpoint(client,AWS_APP_ID);
+
+            if (!TextUtils.isEmpty(Nostragamus.getInstance().getServerDataManager().getGcmDeviceToken())) {
+                 NotificationEndPointRequest.getInstance().createEndpoint(client,AWS_APP_ID);
+            }
+        }
+
     }
 }

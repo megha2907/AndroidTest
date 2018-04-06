@@ -28,6 +28,7 @@ import in.sportscafe.nostragamus.BuildConfig;
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.R;
+import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
 import in.sportscafe.nostragamus.module.navigation.powerupbank.earnmorepowerups.PowerUp;
 import in.sportscafe.nostragamus.module.user.login.dto.UserInfo;
 
@@ -259,6 +260,7 @@ public class PowerUpBankFragment extends BaseFragment implements View.OnClickLis
             case R.id.powerup_bank_earn_more_layout:
                 if (mPowerUpBankFragmentListener != null) {
                     mPowerUpBankFragmentListener.onEarnMorePowerUpsClicked();
+                    NostragamusAnalytics.getInstance().trackClickEvent(Constants.AnalyticsCategory.POWERUP_BANK_SCREEN, Constants.AnalyticsClickLabels.REFER_FRIEND);
                 } else {
                     showMessage(Constants.Alerts.SOMETHING_WRONG);
                 }
@@ -273,18 +275,21 @@ public class PowerUpBankFragment extends BaseFragment implements View.OnClickLis
             case R.id.powerup_bank_txn_history_layout:
                 if (mPowerUpBankFragmentListener != null) {
                     mPowerUpBankFragmentListener.onPowerUpTransactionHistoryClicked(mBundle);
+                    NostragamusAnalytics.getInstance().trackClickEvent(Constants.AnalyticsCategory.POWERUP_BANK_SCREEN, Constants.AnalyticsClickLabels.TRANSACTION_HISTORY);
                 }
                 break;
 
             case R.id.powerup_bank_store_layout:
                 if (mPowerUpBankFragmentListener != null) {
                     mPowerUpBankFragmentListener.onStoreClicked();
+                    NostragamusAnalytics.getInstance().trackClickEvent(Constants.AnalyticsCategory.POWERUP_BANK_SCREEN, Constants.AnalyticsClickLabels.STORE);
                 }
                 break;
 
             case R.id.powerup_bank_how_to_use_layout:
                 if (mPowerUpBankFragmentListener != null) {
                     mPowerUpBankFragmentListener.onHowToUsePowerUpBankClicked();
+                    NostragamusAnalytics.getInstance().trackClickEvent(Constants.AnalyticsCategory.POWERUP_BANK_SCREEN, Constants.AnalyticsClickLabels.HOW_TO_USE_POWERUP_BANK);
                 }
                 break;
         }

@@ -43,6 +43,7 @@ android {
             targetSdkVersion 23
             versionCode vCode
             versionName vName
+            multiDexEnabled true
         }
     } else {
         throw new GradleException("Could not read version.properties!")
@@ -59,7 +60,7 @@ android {
 
     buildTypes {
         release {
-            multiDexEnabled false
+            multiDexEnabled true
             minifyEnabled true
             shrinkResources true
             signingConfig signingConfigs.release
@@ -202,6 +203,12 @@ dependencies {
     compile 'com.github.freshdesk:freshchat-android:1.2.1'
     compile 'uk.co.chrisjenx:calligraphy:2.1.0'
     compile 'com.github.rubensousa:gravitysnaphelper:1.5'
+    compile('com.amazonaws:aws-android-sdk-mobile-client:2.6.+@aar') {
+        transitive = true;
+    }
+    compile 'com.amazonaws:aws-android-sdk-pinpoint:2.6.+'
+    compile 'com.amazonaws:aws-android-sdk-cognito:2.6.+'
+    compile 'com.amazonaws:aws-android-sdk-core:2.6.+'
 
     testCompile 'junit:junit:4.12'
     apt 'org.parceler:parceler:1.1.6'

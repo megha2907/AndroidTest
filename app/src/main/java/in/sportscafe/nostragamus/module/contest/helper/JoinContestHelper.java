@@ -33,7 +33,7 @@ public class JoinContestHelper {
     public interface JoinContestProcessListener {
         void noInternet();
         void lowWalletBalance(JoinContestData joinContestData);
-        void joinContestSuccess(JoinContestData joinContestData);
+        void joinContestSuccess(JoinContestData joinContestData, String orderId);
         void onApiFailure();
         void onServerReturnedError(String msg);
         void hideProgressBar();
@@ -151,9 +151,9 @@ public class JoinContestHelper {
             }
 
             @Override
-            public void onSuccessResponse(VerifyJoinContestResponse verifyJoinContestResponse) {
+            public void onSuccessResponse(VerifyJoinContestResponse verifyJoinContestResponse, String orderId) {
                 if (mListener != null) {
-                    mListener.joinContestSuccess(joinContestData);
+                    mListener.joinContestSuccess(joinContestData,orderId);
                 }
             }
         });

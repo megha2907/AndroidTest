@@ -121,10 +121,10 @@ public class NewChallengesRecyclerAdapter extends RecyclerView.Adapter<RecyclerV
                     newChallengesItemViewHolder.noExtraPowerUpImageView.setVisibility(View.VISIBLE);
                 }
 
-                if (newChallengesResponse.getTournaments()!=null && !newChallengesResponse.getTournaments().isEmpty()) {
+                if (newChallengesResponse.getTournaments() != null && !newChallengesResponse.getTournaments().isEmpty()) {
                     setTournaments(newChallengesItemViewHolder.tournamentsLinearLayout, newChallengesResponse.getTournaments());
                 }
-                setSportsIcons(newChallengesItemViewHolder.gameIconLinearLayout,newChallengesResponse.getSportsIdArray());
+                setSportsIcons(newChallengesItemViewHolder.gameIconLinearLayout, newChallengesResponse.getSportsIdArray());
 
             }
         }
@@ -150,54 +150,54 @@ public class NewChallengesRecyclerAdapter extends RecyclerView.Adapter<RecyclerV
 
         if (tournamentList != null && tournamentList.size() > 0) {
 
-                for (int temp = 0; temp < tournamentList.size(); temp++) {
+            for (int temp = 0; temp < tournamentList.size(); temp++) {
 
-                    LinearLayout childLayout = new LinearLayout(mContext);
+                LinearLayout childLayout = new LinearLayout(mContext);
 
-                    LinearLayout.LayoutParams linearParams = new LinearLayout.LayoutParams(
-                            LinearLayout.LayoutParams.WRAP_CONTENT,
-                            LinearLayout.LayoutParams.WRAP_CONTENT);
-                    childLayout.setLayoutParams(linearParams);
+                LinearLayout.LayoutParams linearParams = new LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.WRAP_CONTENT,
+                        LinearLayout.LayoutParams.WRAP_CONTENT);
+                childLayout.setLayoutParams(linearParams);
 
-                    mType = new TextView(mContext);
-                    imageView = new ImageView(mContext);
+                mType = new TextView(mContext);
+                imageView = new ImageView(mContext);
 
-                    LinearLayout.LayoutParams lpImage = new LinearLayout.LayoutParams(
-                            LinearLayout.LayoutParams.WRAP_CONTENT,
-                            LinearLayout.LayoutParams.WRAP_CONTENT);
-                    lpImage.setMargins(0,2,0,0);
-                    imageView.setLayoutParams(lpImage);
+                LinearLayout.LayoutParams lpImage = new LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.WRAP_CONTENT,
+                        LinearLayout.LayoutParams.WRAP_CONTENT);
+                lpImage.setMargins(0, 2, 0, 0);
+                imageView.setLayoutParams(lpImage);
 
-                    LinearLayout.LayoutParams lpText = new LinearLayout.LayoutParams(
-                            LinearLayout.LayoutParams.WRAP_CONTENT,
-                            LinearLayout.LayoutParams.WRAP_CONTENT);
-                    lpText.setMargins(0,0,8,0);
-                    mType.setLayoutParams(lpText);
+                LinearLayout.LayoutParams lpText = new LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.WRAP_CONTENT,
+                        LinearLayout.LayoutParams.WRAP_CONTENT);
+                lpText.setMargins(0, 0, 8, 0);
+                mType.setLayoutParams(lpText);
 
-                    mType.setTextSize(TypedValue.COMPLEX_UNIT_PX,mContext.getResources().getDimension(R.dimen.sp_9_5));
-                    mType.setTextColor(ContextCompat.getColor(mContext,R.color.grey6));
-                    mType.setTypeface(face);
+                mType.setTextSize(TypedValue.COMPLEX_UNIT_PX, mContext.getResources().getDimension(R.dimen.sp_9_5));
+                mType.setTextColor(ContextCompat.getColor(mContext, R.color.grey6));
+                mType.setTypeface(face);
 
-                    mType.setText(tournamentList.get(temp));
-                    imageView.setImageResource(R.drawable.grey_circle);
-                    imageView.getLayoutParams().height = (int)mContext.getResources().getDimension(R.dimen.dim_2);
-                    imageView.getLayoutParams().width = (int) mContext.getResources().getDimension(R.dimen.dim_2);
+                mType.setText(tournamentList.get(temp));
+                imageView.setImageResource(R.drawable.grey_circle);
+                imageView.getLayoutParams().height = (int) mContext.getResources().getDimension(R.dimen.dim_2);
+                imageView.getLayoutParams().width = (int) mContext.getResources().getDimension(R.dimen.dim_2);
 
-                    childLayout.addView(mType);
+                childLayout.addView(mType);
 
-                    if (temp != tournamentList.size()-1) {
-                        childLayout.addView(imageView);
-                    }
-
-                    childLayout.setGravity(Gravity.CENTER);
-
-                    LinearLayout.LayoutParams relativeParams =
-                            new LinearLayout.LayoutParams(
-                                    LinearLayout.LayoutParams.WRAP_CONTENT,  LinearLayout.LayoutParams.WRAP_CONTENT);
-                    relativeParams.setMargins(0,0,8,0);
-                    layout2.addView(childLayout, relativeParams);
-
+                if (temp != tournamentList.size() - 1) {
+                    childLayout.addView(imageView);
                 }
+
+                childLayout.setGravity(Gravity.CENTER);
+
+                LinearLayout.LayoutParams relativeParams =
+                        new LinearLayout.LayoutParams(
+                                LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                relativeParams.setMargins(0, 0, 8, 0);
+                layout2.addView(childLayout, relativeParams);
+
+            }
         }
 
     }
@@ -223,7 +223,7 @@ public class NewChallengesRecyclerAdapter extends RecyclerView.Adapter<RecyclerV
                         ImageView imageView = new ImageView(gameIconLinearLayout.getContext());
                         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams
                                 (LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-                        lp.setMargins((int)imageView.getResources().getDimension(R.dimen.dim_6),0,0,0);
+                        lp.setMargins((int) imageView.getResources().getDimension(R.dimen.dim_6), 0, 0, 0);
                         imageView.setLayoutParams(lp);
                         imageView.getLayoutParams().height = (int) gameIconLinearLayout.getContext().getResources().getDimension(R.dimen.dim_12);
                         imageView.getLayoutParams().width = (int) gameIconLinearLayout.getContext().getResources().getDimension(R.dimen.dim_12);
@@ -257,13 +257,13 @@ public class NewChallengesRecyclerAdapter extends RecyclerView.Adapter<RecyclerV
                 for (String s : tournamentList) {
                     str = str.concat(" , " + s);
                 }
-            }else {
+            } else {
                 for (String s : tournamentList) {
                     str = s;
                 }
             }
         }
-        return str.replaceAll(","," ·");
+        return str.replaceAll(",", " ·");
     }
 
     @Override
@@ -320,8 +320,12 @@ public class NewChallengesRecyclerAdapter extends RecyclerView.Adapter<RecyclerV
                 args.putParcelable(Constants.BundleKeys.NEW_CHALLENGE_MATCHES_SCREEN_DATA, Parcels.wrap(screenData));
                 mChallengeListener.onChallengeClicked(args);
                 NostragamusAnalytics.getInstance().trackNewChallenges(newChallengesResponse.getChallengeId(),
-                        newChallengesResponse.getChallengeName(),newChallengesResponse.getSportsIdArray(),
+                        newChallengesResponse.getChallengeName(), newChallengesResponse.getSportsIdArray(),
+                        newChallengesResponse.getPrizes(), newChallengesResponse.getChallengeStartTime(),
                         Constants.AnalyticsCategory.NEW_CHALLENGES);
+
+                NostragamusAnalytics.getInstance().trackFabricContentRealTimeEvent("Challenge", newChallengesResponse.getChallengeName(),
+                        String.valueOf(newChallengesResponse.getChallengeId()));
             }
         }
     }

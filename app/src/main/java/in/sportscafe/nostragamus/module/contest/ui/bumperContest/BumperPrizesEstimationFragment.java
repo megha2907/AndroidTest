@@ -371,7 +371,6 @@ public class BumperPrizesEstimationFragment extends BaseFragment implements View
         if (getView() != null) {
             TextView minEntryTextView = (TextView) getView().findViewById(R.id.estimation_seekbar_min_textView);
             TextView maxEntryTextView = (TextView) getView().findViewById(R.id.estimation_seekbar_max_textView);
-
             int max = getMaxParticipants();
             int min = getMinParticipants();
 

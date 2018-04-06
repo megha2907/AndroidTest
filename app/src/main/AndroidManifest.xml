@@ -314,8 +314,8 @@
             android:theme="@style/AppTheme.PopupTheme" />
         <activity
             android:name=".module.nostraHome.ui.NostraHomeActivity"
-            android:screenOrientation="portrait"
-            android:launchMode="singleTask"/>
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".module.newChallenges.ui.matches.NewChallengesMatchActivity"
             android:screenOrientation="portrait" />
@@ -356,7 +356,7 @@
         <activity
             android:name=".module.prediction.editAnswer.EditAnswerPowerUpModifiedPopupActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.PopupTheme"/>
+            android:theme="@style/AppTheme.PopupTheme" />
         <activity
             android:name=".module.navigation.help.howtoplay.HowToPlayActivity"
             android:screenOrientation="portrait" />
@@ -611,8 +611,9 @@
 
         <service
             android:name=".module.common.NostraFireBaseMessagingService"
-            android:exported="true" >
-            <intent-filter android:priority="-500" >
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter android:priority="-500">
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
@@ -629,7 +630,7 @@
         <receiver
             android:name="com.google.firebase.iid.FirebaseInstanceIdReceiver"
             android:exported="true"
-            android:permission="com.google.android.c2dm.permission.SEND" >
+            android:permission="com.google.android.c2dm.permission.SEND">
             <intent-filter>
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
                 <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
@@ -647,8 +648,8 @@
         -->
         <service
             android:name=".module.common.NostraFireBaseInstanceIDService"
-            android:exported="true" >
-            <intent-filter android:priority="-500" >
+            android:exported="true">
+            <intent-filter android:priority="-500">
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
         </service>
@@ -661,7 +662,7 @@
 
         <receiver
             android:name="com.google.android.gms.measurement.AppMeasurementReceiver"
-            android:enabled="true" >
+            android:enabled="true">
             <intent-filter>
                 <action android:name="com.google.android.gms.measurement.UPLOAD" />
             </intent-filter>
@@ -686,14 +687,14 @@
         <activity
             android:name="com.freshchat.consumer.sdk.activity.ChannelListActivity"
             android:theme="@style/MyCustomTheme"
-            tools:replace="android:theme"/>
+            tools:replace="android:theme" />
 
         <activity
             android:name="com.freshchat.consumer.sdk.activity.ConversationDetailActivity"
             android:configChanges="orientation|screenSize"
             android:theme="@style/MyCustomTheme"
-            tools:replace="android:theme"
-            android:windowSoftInputMode="stateHidden" />
+            android:windowSoftInputMode="stateHidden"
+            tools:replace="android:theme" />
 
         <activity
             android:name="com.freshchat.consumer.sdk.activity.DeeplinkInterstitialActivity"
@@ -703,27 +704,27 @@
         <activity
             android:name="com.freshchat.consumer.sdk.activity.PictureAttachmentActivity"
             android:configChanges="orientation|screenSize"
-            android:windowSoftInputMode="adjustResize"
-            android:theme="@style/Theme.Freshchat.SelectedTheme" />
+            android:theme="@style/Theme.Freshchat.SelectedTheme"
+            android:windowSoftInputMode="adjustResize" />
 
         <activity
             android:name="com.freshchat.consumer.sdk.activity.CategoryListActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/MyCustomTheme"
-            tools:replace="android:theme"
-            android:screenOrientation="portrait"/>
+            tools:replace="android:theme" />
 
         <activity
             android:name="com.freshchat.consumer.sdk.activity.ArticleListActivity"
-            android:windowSoftInputMode="adjustResize"
+            android:screenOrientation="portrait"
             android:theme="@style/MyCustomTheme"
-            tools:replace="android:theme"
-            android:screenOrientation="portrait"/>
+            android:windowSoftInputMode="adjustResize"
+            tools:replace="android:theme" />
 
         <activity
             android:name="com.freshchat.consumer.sdk.activity.ArticleDetailActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/MyCustomTheme"
-            tools:replace="android:theme"
-            android:screenOrientation="portrait"/>
+            tools:replace="android:theme" />
 
         <activity
             android:name="com.freshchat.consumer.sdk.activity.InterstitialActivity"
@@ -744,6 +745,35 @@
             <intent-filter>
                 <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
             </intent-filter>
+        </receiver>
+
+        <!--aws gcm receiver-->
+        <receiver
+            android:name="com.google.android.gms.gcm.GcmReceiver"
+            android:exported="true"
+            android:permission="com.google.android.c2dm.permission.SEND">
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+                <category android:name="in.sportscafe.nostragamus${buildTypeSuffix}" />
+            </intent-filter>
+        </receiver>
+
+        <service
+            android:name=".module.analytics.awsAnalytics.NostraGCMListener"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+            </intent-filter>
+        </service>
+
+        <receiver
+            android:name="com.amazonaws.mobileconnectors.pinpoint.targeting.notification.PinpointNotificationReceiver"
+            android:exported="false">
+             
+            <intent-filter>
+                <action android:name="com.amazonaws.intent.fcm.NOTIFICATION_OPEN" />
+            </intent-filter>
+
         </receiver>
 
     </application>
