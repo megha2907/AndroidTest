@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.os.NetworkOnMainThreadException;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
@@ -22,6 +23,7 @@ import com.amazonaws.mobileconnectors.pinpoint.PinpointConfiguration;
 import com.amazonaws.mobileconnectors.pinpoint.PinpointManager;
 import com.amazonaws.mobileconnectors.pinpoint.analytics.AnalyticsEvent;
 import com.amazonaws.mobileconnectors.pinpoint.analytics.monetization.AmazonMonetizationEventBuilder;
+import com.amazonaws.mobileconnectors.pinpoint.analytics.monetization.GooglePlayMonetizationEventBuilder;
 import com.amazonaws.mobileconnectors.pinpoint.targeting.TargetingClient;
 import com.amazonaws.mobileconnectors.pinpoint.targeting.endpointProfile.EndpointProfile;
 import com.amazonaws.mobileconnectors.pinpoint.targeting.endpointProfile.EndpointProfileUser;
@@ -185,20 +187,17 @@ public class NostragamusAnalytics {
             } catch (final AmazonClientException ex) {
 
             }
-            new Thread(new Runnable() {
+
+           new Thread(new Runnable() {
                 @Override
                 public void run() {
                     try {
-//                        String deviceToken =
-//                                InstanceID.getInstance(context).getToken(context.getString(R.string.firebase_gcm_sender_id),
-//                                        GoogleCloudMessaging.INSTANCE_ID_SCOPE);
 
-                        FirebaseApp.initializeApp(context);
-                        String deviceToken = FirebaseInstanceId.getInstance().getToken();
-                        Log.e("NotError", deviceToken);
-                        pinpointManager.getNotificationClient().registerDeviceToken(deviceToken);
+                        if (!TextUtils.isEmpty(Nostragamus.getInstance().getServerDataManager().getGcmDeviceToken())) {
+                            Log.e("NotError", Nostragamus.getInstance().getServerDataManager().getGcmDeviceToken());
+                            pinpointManager.getNotificationClient().registerDeviceToken(Nostragamus.getInstance().getServerDataManager().getGcmDeviceToken());
 
-                        Nostragamus.getInstance().getServerDataManager().setGcmDeviceToken(deviceToken);
+                        }
 
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -1102,7 +1101,7 @@ public class NostragamusAnalytics {
         if (pinpointManager != null && pinpointManager.getAnalyticsClient() != null) {
 
             final AnalyticsEvent event =
-                    AmazonMonetizationEventBuilder.create(pinpointManager.getAnalyticsClient())
+                    GooglePlayMonetizationEventBuilder.create(pinpointManager.getAnalyticsClient())
                             .withItemPrice(price)
                             .withProductId(productId)
                             .withQuantity(1.0)
@@ -1251,7 +1250,10 @@ public class NostragamusAnalytics {
             AmazonPinpointClient client = new AmazonPinpointClient(cp);
             SMSEndPointRequest.getInstance().createEndpoint(client,AWS_APP_ID);
             EMAILEndPointRequest.getInstance().createEndpoint(client,AWS_APP_ID);
-            NotificationEndPointRequest.getInstance().createEndpoint(client,AWS_APP_ID);
+
+            if (!TextUtils.isEmpty(Nostragamus.getInstance().getServerDataManager().getGcmDeviceToken())) {
+                 NotificationEndPointRequest.getInstance().createEndpoint(client,AWS_APP_ID);
+            }
         }
 
     }

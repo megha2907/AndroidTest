@@ -13,7 +13,7 @@ public class ServerDataManager {
     private UserWalletResponse userWalletResponse;
     private UserInfo userInfo;
     private AppSettingsResponse appSettingsResponse;
-    private String gcmDeviceToken;
+    private String gcmDeviceToken="";
 
     public UserWalletResponse getUserWalletResponse() {
         return userWalletResponse;

@@ -28,7 +28,7 @@ public class NostraFireBaseMessagingService extends FirebaseMessagingService {
 
     public static PinpointManager pinpointManager;
 
-    public static final String LOGTAG = NostraGCMListener.class.getSimpleName();
+    public static final String LOGTAG = NostraFireBaseMessagingService.class.getSimpleName();
 
 
     // Intent action used in local broadcast
@@ -70,35 +70,37 @@ public class NostraFireBaseMessagingService extends FirebaseMessagingService {
 
         // Handle FreshChat Notifications with FCM
         if (Freshchat.isFreshchatNotification(message)) {
+            Log.d(LOGTAG, "inside:freschat");
             Freshchat.getInstance(this).handleFcmMessage(message);
         } else {
             //Handle notifications with data payload for your app
-        }
+            Log.d(LOGTAG, "inside:aws");
+            Log.d(LOGTAG, "From:" + message.getFrom());
+            Log.d(LOGTAG, "Data:" + message.toString());
 
-        Log.d(LOGTAG, "From:" + message.getFrom());
-        Log.d(LOGTAG, "Data:" + message.toString());
+            CognitoCachingCredentialsProvider cognitoCachingCredentialsProvider = new CognitoCachingCredentialsProvider(getApplicationContext(), getApplicationContext().getString(R.string.aws_pinpoint_pool_id), Regions.AP_SOUTHEAST_1);
+            PinpointConfiguration config = new PinpointConfiguration(getApplicationContext(), getApplicationContext().getString(R.string.aws_app_id), Regions.US_EAST_1, cognitoCachingCredentialsProvider);
+            this.pinpointManager = new PinpointManager(config);
 
-        CognitoCachingCredentialsProvider cognitoCachingCredentialsProvider = new CognitoCachingCredentialsProvider(getApplicationContext(), getApplicationContext().getString(R.string.aws_pinpoint_pool_id), Regions.AP_SOUTHEAST_1);
-        PinpointConfiguration config = new PinpointConfiguration(getApplicationContext(), getApplicationContext().getString(R.string.aws_app_id), Regions.US_EAST_1, cognitoCachingCredentialsProvider);
-        this.pinpointManager = new PinpointManager(config);
+            NotificationClient.CampaignPushResult pushResult = pinpointManager.getNotificationClient().handleFCMCampaignPush(message.getFrom(), message.getData());
 
-        NotificationClient.CampaignPushResult pushResult = pinpointManager.getNotificationClient().handleFCMCampaignPush(message.getFrom(), message.getData());
-
-        if (!NotificationClient.CampaignPushResult.NOT_HANDLED.equals(pushResult)) {
-            // The push message was due to a Pinpoint campaign.
-            // If the app was in the background, a local notification was added
-            // in the notification center. If the app was in the foreground, an
-            // event was recorded indicating the app was in the foreground,
-            // for the demo, we will broadcast the notification to let the main
-            // activity display it in a dialog.
-            if (
-                    NotificationClient.CampaignPushResult.APP_IN_FOREGROUND.equals(pushResult)) {
-                // Create a message that will display the raw
-                //data of the campaign push in a dialog.
-                //message.putString("message", String.format("Received Campaign Push:\n%s", message.toString()));
-                broadcast(message.getFrom(), message);
+            if (!NotificationClient.CampaignPushResult.NOT_HANDLED.equals(pushResult)) {
+                // The push message was due to a Pinpoint campaign.
+                // If the app was in the background, a local notification was added
+                // in the notification center. If the app was in the foreground, an
+                // event was recorded indicating the app was in the foreground,
+                // for the demo, we will broadcast the notification to let the main
+                // activity display it in a dialog.
+                if (
+                        NotificationClient.CampaignPushResult.APP_IN_FOREGROUND.equals(pushResult)) {
+                    // Create a message that will display the raw
+                    //data of the campaign push in a dialog.
+                    //message.putString("message", String.format("Received Campaign Push:\n%s", message.toString()));
+                    broadcast(message.getFrom(), message);
+                }
+                return;
             }
-            return;
+
         }
     }
 }
