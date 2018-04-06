@@ -40,6 +40,7 @@ import java.util.List;
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.cache.CacheManagementHelper;
+import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
 import in.sportscafe.nostragamus.module.common.NostraBaseFragment;
 import in.sportscafe.nostragamus.module.customViews.CustomSnackBar;
 import in.sportscafe.nostragamus.module.inPlay.ui.ResultsScreenDataDto;
@@ -571,11 +572,13 @@ public class PredictionFragment extends NostraBaseFragment implements View.OnCli
 
                 } else {
                     onPowerUpBankClicked();
+                    NostragamusAnalytics.getInstance().trackClickEvent(Constants.AnalyticsCategory.PLAY, Constants.AnalyticsClickLabels.POWER_UP_BANK);
                 }
                 break;
 
             case R.id.prediction_help_play_imgView:
                 onHelpPlayClicked();
+                NostragamusAnalytics.getInstance().trackClickEvent(Constants.AnalyticsCategory.PLAY, Constants.AnalyticsClickLabels.HELP);
                 break;
         }
     }

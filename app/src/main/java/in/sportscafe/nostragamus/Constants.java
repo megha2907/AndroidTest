@@ -478,7 +478,6 @@ public interface Constants {
         String LOGOUT = "Logout";
         String EDIT_PROFILE = "Edit Profile";
         String PROFILE = "Profile";
-        String PLAY = "Play";
         String BADGE = "Badge";
         String FLAVOR = "Flavor";
         String APP_UPDATE = "App Update";
@@ -515,6 +514,10 @@ public interface Constants {
         String WALLET_POPUP = "Wallet Popup";
         String REVENUE = "Revenue";
         String PAYMENT_MODE = "Payment Mode";
+        String BANNERS = "Banners";
+        String PLAY = "Play";
+        String POWERUP_BANK_SCREEN = "Powerup Bank Screen";
+        String ADD_MONEY = "Add Money";
     }
 
     interface AnalyticsClickLabels {
@@ -574,8 +577,19 @@ public interface Constants {
 
         /* Play */
         String PSEUDO_GAME_FLOW = "Pseudo Game Flow";
+        String ADD_DOUBLER = "Add Doubler";
+        String ADD_NO_NEGATIVE = "Add No Negative";
+        String ADD_AUDIENCE_POLL = "Add Audience Poll";
+        String TRANSFER_TO_CHALLENGE = "Transfer To Challenge";
+        String RESET_POWERUP = "Reset Powerup";
+        String BUY_DOUBLER = "Buy Doubler";
+        String BUY_NO_NEGATIVE = "Buy No Negative";
+        String BUY_AUDIENCE_POLL = "Buy Audience Poll";
 
         String DEPOSIT_MONEY = "Deposit Money";
+        String HOW_TO_USE_POWERUP_BANK = "How to use powerup bank";
+        String TRANSACTION_FAILED = "Transaction Failed";
+        String TRANSACTION_SUCCESS = "Transaction Success";
     }
 
     interface AnalyticsActions {
@@ -635,6 +649,7 @@ public interface Constants {
         String NOTIFICATION = "Notification";
         String GROUP = "Group";
         String REFER_FRIEND = "Refer Friend";
+        String REFER_FRIEND_BUTTON = "Refer Friend Button";
         String PROFILE = "Profile";
         String NO_POWERUP = "No Powerup";
     }
@@ -648,6 +663,15 @@ public interface Constants {
         String LINK_NAME = "Link Name";
         String ACL_APP = "Acl App";
         String APP_VERSION = "App Version";
+        String HAS_SPENT = "has_spent";
+        String HAS_DEPOSITED = "has_deposited";
+        String COUNT_CONTESTS_JOINED = "count_contests_joined";
+        String COUNT_PAID_CONTESTS_JOINED = "count_paid_contests_joined";
+        String LAST_PLAYED_SPORT = "last_played_sport";
+        String MOST_PLAYED_SPORT = "most_played_sport";
+        String HAS_REFERRED = "has_referred";
+        String COUNT_REFERRALS = "count_referrals";
+        String COUNT_DEPOSITS = "count_deposits";
     }
 
     interface AppType {

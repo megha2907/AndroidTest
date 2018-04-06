@@ -257,6 +257,7 @@ public class AddMoneyWalletHelper {
                     FragmentManager fragmentManager = fragment.getChildFragmentManager();
                     if (fragmentManager != null) {
                         successDialogFragment.showDialogAllowingStateLoss(fragmentManager,successDialogFragment,"SUCCESS_DIALOG");
+                        NostragamusAnalytics.getInstance().trackScreenShown(Constants.AnalyticsCategory.ADD_MONEY,Constants.AnalyticsClickLabels.TRANSACTION_SUCCESS);
                     }
                 }
             }
@@ -275,6 +276,7 @@ public class AddMoneyWalletHelper {
                     if (fragmentManager != null) {
                         try {
                             failureDialogFragment.showDialogAllowingStateLoss(fragmentManager,failureDialogFragment, "FAILURE_DIALOG");
+                            NostragamusAnalytics.getInstance().trackScreenShown(Constants.AnalyticsCategory.ADD_MONEY,Constants.AnalyticsClickLabels.TRANSACTION_FAILED);
                         } catch (Exception ex) {
                             ex.printStackTrace();
                         }

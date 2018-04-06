@@ -1,4 +1,8 @@
-package in.sportscafe.nostragamus.module.common;
+package in.sportscafe.nostragamus.module.analytics.awsAnalytics;
+
+/**
+ * Created by deepanshi on 4/5/18.
+ */
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -6,36 +10,26 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
 import com.amazonaws.auth.CognitoCachingCredentialsProvider;
-import com.amazonaws.mobile.client.AWSMobileClient;
 import com.amazonaws.mobileconnectors.pinpoint.PinpointConfiguration;
 import com.amazonaws.mobileconnectors.pinpoint.PinpointManager;
 import com.amazonaws.mobileconnectors.pinpoint.targeting.notification.NotificationClient;
 import com.amazonaws.regions.Regions;
-import com.freshchat.consumer.sdk.Freshchat;
-import com.google.firebase.messaging.FirebaseMessagingService;
-import com.google.firebase.messaging.RemoteMessage;
+import com.google.android.gms.gcm.GcmListenerService;
 
 import in.sportscafe.nostragamus.R;
-import in.sportscafe.nostragamus.module.analytics.awsAnalytics.NostraGCMListener;
 
-import static in.sportscafe.nostragamus.module.analytics.awsAnalytics.NostraGCMListener.LOGTAG;
-
-/**
- * Created by deepanshi on 1/16/18.
- */
-
-public class NostraFireBaseMessagingService extends FirebaseMessagingService {
-
-    public static PinpointManager pinpointManager;
+public class NostraGCMListener extends GcmListenerService {
 
     public static final String LOGTAG = NostraGCMListener.class.getSimpleName();
-
 
     // Intent action used in local broadcast
     public static final String ACTION_PUSH_NOTIFICATION = "push-notification";
     // Intent keys
     public static final String INTENT_SNS_NOTIFICATION_FROM = "from";
     public static final String INTENT_SNS_NOTIFICATION_DATA = "data";
+
+
+    public static PinpointManager pinpointManager;
 
     /**
      * Helper method to extract push message from bundle.
@@ -51,38 +45,28 @@ public class NostraFireBaseMessagingService extends FirebaseMessagingService {
                 "message", "");
     }
 
-    private void broadcast(final String from, RemoteMessage message) {
+    private void broadcast(final String from, final Bundle data) {
         Intent intent = new Intent(ACTION_PUSH_NOTIFICATION);
         intent.putExtra(INTENT_SNS_NOTIFICATION_FROM, from);
-        intent.putExtra(INTENT_SNS_NOTIFICATION_DATA, message);
+        intent.putExtra(INTENT_SNS_NOTIFICATION_DATA, data);
         LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
     }
 
-
-    // Sets an ID for the notification, so it can be updated
-    public NostraFireBaseMessagingService() {
-        super();
-    }
-
-
     @Override
-    public void onMessageReceived(RemoteMessage message) {
+    public void onMessageReceived(final String from, final Bundle data) {
 
-        // Handle FreshChat Notifications with FCM
-        if (Freshchat.isFreshchatNotification(message)) {
-            Freshchat.getInstance(this).handleFcmMessage(message);
-        } else {
-            //Handle notifications with data payload for your app
-        }
-
-        Log.d(LOGTAG, "From:" + message.getFrom());
-        Log.d(LOGTAG, "Data:" + message.toString());
+        Log.d(LOGTAG, "From:" + from);
+        Log.d(LOGTAG, "Data:" + data.toString());
 
         CognitoCachingCredentialsProvider cognitoCachingCredentialsProvider = new CognitoCachingCredentialsProvider(getApplicationContext(), getApplicationContext().getString(R.string.aws_pinpoint_pool_id), Regions.AP_SOUTHEAST_1);
         PinpointConfiguration config = new PinpointConfiguration(getApplicationContext(), getApplicationContext().getString(R.string.aws_app_id), Regions.US_EAST_1, cognitoCachingCredentialsProvider);
         this.pinpointManager = new PinpointManager(config);
 
-        NotificationClient.CampaignPushResult pushResult = pinpointManager.getNotificationClient().handleFCMCampaignPush(message.getFrom(), message.getData());
+
+        final NotificationClient notificationClient = this.pinpointManager.getNotificationClient();
+
+        NotificationClient.CampaignPushResult pushResult =
+                notificationClient.handleGCMCampaignPush(from, data, this.getClass());
 
         if (!NotificationClient.CampaignPushResult.NOT_HANDLED.equals(pushResult)) {
             // The push message was due to a Pinpoint campaign.
@@ -95,8 +79,8 @@ public class NostraFireBaseMessagingService extends FirebaseMessagingService {
                     NotificationClient.CampaignPushResult.APP_IN_FOREGROUND.equals(pushResult)) {
                 // Create a message that will display the raw
                 //data of the campaign push in a dialog.
-                //message.putString("message", String.format("Received Campaign Push:\n%s", message.toString()));
-                broadcast(message.getFrom(), message);
+                data.putString("message", String.format("Received Campaign Push:\n%s", data.toString()));
+                broadcast(from, data);
             }
             return;
         }

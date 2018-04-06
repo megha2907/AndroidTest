@@ -161,7 +161,7 @@ public class ContestDetailsActivity extends NostraBaseActivity implements Contes
                                     }
 
                                     @Override
-                                    public void joinContestSuccess(JoinContestData contestJoinedSuccessfully) {
+                                    public void joinContestSuccess(JoinContestData contestJoinedSuccessfully, String orderId) {
                                         CustomProgressbar.getProgressbar(ContestDetailsActivity.this).dismissProgress();
                                         onContestJoinedSuccessfully(contestJoinedSuccessfully);
 
@@ -169,7 +169,7 @@ public class ContestDetailsActivity extends NostraBaseActivity implements Contes
                                                 String.valueOf(contestJoinedSuccessfully.getContestId()));
 
                                         if (contestJoinedSuccessfully != null) {
-                                            sendContestJoinedDataToAmplitude(contestJoinedSuccessfully);
+                                            sendContestJoinedDataToAmplitude(contestJoinedSuccessfully,orderId);
                                         }
                                     }
 
@@ -266,11 +266,11 @@ public class ContestDetailsActivity extends NostraBaseActivity implements Contes
         }
     }
 
-    private void sendContestJoinedDataToAmplitude(JoinContestData contest) {
+    private void sendContestJoinedDataToAmplitude(JoinContestData contest,String orderId) {
 
         /* Joining a contest = Revenue */
         NostragamusAnalytics.getInstance().trackRevenue(contest.getEntryFee(), contest.getContestId(),
-                contest.getContestName(), contest.getContestType());
+                contest.getContestName(), contest.getContestType(),orderId);
 
         /* Send Contest Joined Details to Amplitude */
         NostragamusAnalytics.getInstance().trackContestJoined(contest.getContestId(),
