@@ -7,6 +7,7 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import org.parceler.Parcels;
@@ -82,6 +83,7 @@ public class TimerFinishedDialogFragment extends PopUpDialogFragment implements 
             TextView dialogTitleTextView = (TextView) rootView.findViewById(R.id.timer_finish_dialog_title_textView);
             TextView msgTextView = (TextView) rootView.findViewById(R.id.timer_finish_dialog_message_textView);
             TextView subMessageTextView = (TextView) rootView.findViewById(R.id.timer_finish_dialog_sub_message_textView);
+            ImageView iconImageView = (ImageView) rootView.findViewById(R.id.timer_finish_dialog_icon_imgView);
 
             if (!TextUtils.isEmpty(mScreenData.getDialogTitle())) {
                 dialogTitleTextView.setText(mScreenData.getDialogTitle());
@@ -93,6 +95,10 @@ public class TimerFinishedDialogFragment extends PopUpDialogFragment implements 
 
             if (!TextUtils.isEmpty(mScreenData.getSubMessage())) {
                 subMessageTextView.setText(mScreenData.getSubMessage());
+            }
+
+            if (mScreenData.getIconResource() != 0) {
+                iconImageView.setImageResource(mScreenData.getIconResource());
             }
         }
     }

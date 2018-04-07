@@ -10,6 +10,12 @@ import org.parceler.Parcel;
 @Parcel
 public class FindPrivateContestResponse {
 
+    @SerializedName("error")
+    private String error;
+
+    @SerializedName("error_code")
+    private int errorCode = 0;
+
     @SerializedName("data")
     private FindPrivateContestResponseData data;
 
@@ -19,5 +25,21 @@ public class FindPrivateContestResponse {
 
     public void setData(FindPrivateContestResponseData data) {
         this.data = data;
+    }
+
+    public String getError() {
+        return error;
+    }
+
+    public void setError(String error) {
+        this.error = error;
+    }
+
+    public int getErrorCode() {
+        return errorCode;
+    }
+
+    public void setErrorCode(int errorCode) {
+        this.errorCode = errorCode;
     }
 }

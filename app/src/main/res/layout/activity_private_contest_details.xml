@@ -111,9 +111,6 @@
                 android:layout_marginRight="@dimen/dim_7"
                 android:layout_marginTop="@dimen/dim_6"
                 android:clipToPadding="false"
-                android:paddingBottom="@dimen/dim_6"
-                android:paddingLeft="@dimen/dim_5"
-                android:paddingRight="@dimen/dim_5"
                 android:background="@drawable/dark_grey_gradient_bg">
 
                     <!-- Card Header bar -->

@@ -546,6 +546,7 @@ public interface Constants {
         String STORE = "Store";
         String BUY_PRODUCT = "Buy Product";
         String PRODUCT_PURCHASED = "Product Purchased";
+        String JOIN_PRIVATE_CONTEST = "Join Private Contest";
 
         /* Home */
         String NEW_CHALLENGES = "New Challenges";
@@ -1017,6 +1018,8 @@ public interface Constants {
         int CAN_NOT_JOIN = 3111;
         int CAN_NOT_PLAY_GAME = 3112;
         int CHALLENGE_STARTED = 3113;
+        int PRIVATE_CONTEST_FULL = 3114;
+        int CAN_NOT_JOIN_PRIVATE_CONTEST = 3115;
     }
 
     interface ScreenDetails {
@@ -1047,8 +1050,17 @@ public interface Constants {
 
         double MAX_ENTRY_FEE = 20000;   // User is allowed to enter max entry fee
         int MAX_ENTRIES = 40;           // User is allowed to enter max contest entries
+        int MIN_ENTRIES = 2;
+
         int PRIVATE_CODE_LENGTH = 5;
         float ADVANCE_TEMPLATE_PROFIT_MARGIN = 0.1f;
+
+        interface ErrorCodes {
+            int INVALID_INVITE_PRIVATE_CODE = 11;
+            int CONTEST_FULL = 12;
+            int UNKNOWN_ERROR = 13;  // Generic error
+            int CHALLENGE_STARTED = 14;
+        }
 
         interface PrizeEstimationTemplateType {
             String PERCENT = "percent";

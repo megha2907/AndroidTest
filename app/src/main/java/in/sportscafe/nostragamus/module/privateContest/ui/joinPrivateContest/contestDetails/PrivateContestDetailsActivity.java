@@ -26,7 +26,6 @@ import in.sportscafe.nostragamus.module.challengeRewards.RewardsLaunchedFrom;
 import in.sportscafe.nostragamus.module.challengeRules.RulesFragment;
 import in.sportscafe.nostragamus.module.common.NostraBaseActivity;
 import in.sportscafe.nostragamus.module.contest.contestDetailsBeforeJoining.CompletePaymentDialogFragment;
-import in.sportscafe.nostragamus.module.contest.contestDetailsBeforeJoining.ContestDetailsActivity;
 import in.sportscafe.nostragamus.module.contest.dto.JoinContestData;
 import in.sportscafe.nostragamus.module.contest.dto.bumper.BumperPrizesEstimationScreenData;
 import in.sportscafe.nostragamus.module.contest.helper.JoinContestHelper;
@@ -41,6 +40,7 @@ import in.sportscafe.nostragamus.module.popups.timerPopup.TimerFinishDialogHelpe
 import in.sportscafe.nostragamus.module.privateContest.ui.joinPrivateContest.dto.FindPrivateContestResponseContestData;
 import in.sportscafe.nostragamus.module.privateContest.ui.joinPrivateContest.dto.FindPrivateContestResponseData;
 import in.sportscafe.nostragamus.module.privateContest.ui.joinPrivateContest.dto.PrivateContestDetailsScreenData;
+import in.sportscafe.nostragamus.utils.CodeSnippet;
 
 public class PrivateContestDetailsActivity extends NostraBaseActivity implements View.OnClickListener {
 
@@ -94,12 +94,28 @@ public class PrivateContestDetailsActivity extends NostraBaseActivity implements
 
             /* Header */
             TextView walletAmtTextView = (TextView) findViewById(R.id.toolbar_wallet_money);
-            walletAmtTextView.setText(WalletHelper.getFormattedStringOfAmount(WalletHelper.getTotalBalance()));
+            walletAmtTextView.setText(CodeSnippet.getFormattedAmount(WalletHelper.getTotalBalance()));
 
-            try {
-                TextView contestNameTextView = (TextView) findViewById(R.id.toolbar_heading_one);
-                contestNameTextView.setText(mScreenData.getPrivateContestDetailsResponse().getData().getPrivateContestData().get(0).getConfigName());
-            } catch (Exception e) {}
+            if (mScreenData.getPrivateContestDetailsResponse() != null && mScreenData.getPrivateContestDetailsResponse().getData() != null &&
+                    mScreenData.getPrivateContestDetailsResponse().getData().getPrivateContestData() != null &&
+                    mScreenData.getPrivateContestDetailsResponse().getData().getPrivateContestData().size() > 0 &&
+                    mScreenData.getPrivateContestDetailsResponse().getData().getPrivateContestData().get(0) != null) {
+
+                /* Showing contest name */
+                if (!TextUtils.isEmpty(mScreenData.getPrivateContestDetailsResponse().getData().
+                        getPrivateContestData().get(0).getConfigName())) {
+                    TextView contestNameTextView = (TextView) findViewById(R.id.toolbar_heading_one);
+                    contestNameTextView.setText(mScreenData.getPrivateContestDetailsResponse().getData().
+                            getPrivateContestData().get(0).getConfigName());
+                }
+
+                /* Show prize on pay button */
+                if (mScreenData.getPrivateContestDetailsResponse().getData().getPrivateContestData().get(0).getFee() >= 0) {
+                    mPayAndJoinButton.setText("Pay " + Constants.RUPEE_SYMBOL +
+                            mScreenData.getPrivateContestDetailsResponse().getData().getPrivateContestData().get(0).getFee() +
+                            " and Join Contest");
+                }
+            }
 
             setTimer();
 
@@ -126,9 +142,9 @@ public class PrivateContestDetailsActivity extends NostraBaseActivity implements
             if (challengeData.getPrivateContestData() != null && challengeData.getPrivateContestData().size() > 0) {
                 FindPrivateContestResponseContestData contestData = challengeData.getPrivateContestData().get(0);
 
-                prizeTextView.setText(WalletHelper.getFormattedStringOfAmount(contestData.getPrizeMoney()));
+                prizeTextView.setText(Constants.RUPEE_SYMBOL + CodeSnippet.getFormattedAmount(contestData.getPrizeMoney()));
                 maxEntriesTextView.setText(String.valueOf(contestData.getMaxParticipants()));
-                entryFeeTextView.setText(WalletHelper.getFormattedStringOfAmount(contestData.getFee()));
+                entryFeeTextView.setText(Constants.RUPEE_SYMBOL + CodeSnippet.getFormattedAmount(contestData.getFee()));
             }
         }
     }
@@ -149,14 +165,14 @@ public class PrivateContestDetailsActivity extends NostraBaseActivity implements
 
                 @Override
                 public void onFinish() {
-                    onMatchStarted(challengeStartTime);
+                    onChallengeStarted(challengeStartTime);
                 }
             };
             countDownTimer.start();
         }
     }
 
-    private void onMatchStarted(String challengeStartTime) {
+    private void onChallengeStarted(String challengeStartTime) {
         if (mScreenData != null && !TextUtils.isEmpty(challengeStartTime)) {
             boolean isMatchStarted = DateTimeHelper.isMatchStarted(challengeStartTime);
             if (isMatchStarted) {
@@ -164,13 +180,18 @@ public class PrivateContestDetailsActivity extends NostraBaseActivity implements
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        if (!isFinishing() && mScreenData.getPrivateContestDetailsResponse() != null &&
-                                mScreenData.getPrivateContestDetailsResponse().getData() != null) {
+                        if (!isFinishing()) {
 
-                            String msg = String.format(Constants.Alerts.CHALLENGE_STARTED_ALERT_FOR_TIMER,
-                                    mScreenData.getPrivateContestDetailsResponse().getData().getChallengeName());
+                            String msg = "Please join another challenge as this challenge already started";
 
-                            TimerFinishDialogHelper.showChallengeStartedTimerOutDialog(getSupportFragmentManager(), msg,
+                            if (mScreenData.getPrivateContestDetailsResponse() != null &&
+                                    mScreenData.getPrivateContestDetailsResponse().getData() != null) {
+                                msg = String.format(Constants.Alerts.CHALLENGE_STARTED_ALERT_FOR_TIMER,
+                                        mScreenData.getPrivateContestDetailsResponse().getData().getChallengeName());
+                            }
+
+                            TimerFinishDialogHelper.showChallengeStartedTimerOutDialog(getSupportFragmentManager(),
+                                    msg,
                                     new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
@@ -247,12 +268,17 @@ public class PrivateContestDetailsActivity extends NostraBaseActivity implements
                                 }
 
                                 @Override
-                                public void onServerReturnedError(String msg) {
+                                public void onServerReturnedError(String msg, int errorCode) {
                                     CustomProgressbar.getProgressbar(PrivateContestDetailsActivity.this).dismissProgress();
-                                    if (TextUtils.isEmpty(msg)) {
-                                        msg = Constants.Alerts.SOMETHING_WRONG;
+
+                                    if (errorCode > 0) {
+                                        showServerSentErrorDialog(errorCode);
+                                    } else {
+                                        if (TextUtils.isEmpty(msg)) {
+                                            msg = Constants.Alerts.SOMETHING_WRONG;
+                                        }
+                                        handleError(-1, msg);
                                     }
-                                    handleError(-1, msg);
                                 }
 
                                 @Override
@@ -276,6 +302,74 @@ public class PrivateContestDetailsActivity extends NostraBaseActivity implements
         } else {
             handleError(-1, "");
         }
+    }
+
+    private void showServerSentErrorDialog(int errorCode) {
+        switch (errorCode) {
+            case Constants.PrivateContests.ErrorCodes.CONTEST_FULL:
+                showContestFullDialog();
+                break;
+
+            case Constants.PrivateContests.ErrorCodes.CHALLENGE_STARTED:
+                if (mScreenData != null && mScreenData.getPrivateContestDetailsResponse() != null &&
+                        mScreenData.getPrivateContestDetailsResponse().getData() != null) {
+
+                    onChallengeStarted(mScreenData.getPrivateContestDetailsResponse().
+                            getData().getChallengeStarttime());
+                }
+                break;
+
+            case Constants.PrivateContests.ErrorCodes.INVALID_INVITE_PRIVATE_CODE:
+            case Constants.PrivateContests.ErrorCodes.UNKNOWN_ERROR:
+                showUnknownErrorDialog();
+                break;
+        }
+    }
+
+    private void showUnknownErrorDialog() {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if (!isFinishing()) {
+
+                    TimerFinishDialogHelper.showPrivateContestUnknownErrorDialog(getSupportFragmentManager(),
+                            "Something went wrong, try again later",
+                            new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    onBackPressed();
+                                }
+                            });
+                }
+            }
+        }, 500);
+    }
+
+    private void showContestFullDialog() {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if (!isFinishing()) {
+
+                    String name = "";
+                    if (mScreenData != null && mScreenData.getShareDetails() != null) {
+                        name = (!TextUtils.isEmpty(mScreenData.getShareDetails().getUserNick())) ?
+                                mScreenData.getShareDetails().getUserNick() + "'s " : "";
+                    }
+
+                    String msg = String.format("%sPrivate contest is full. Join another contest to play this challenge",
+                            name);
+
+                    TimerFinishDialogHelper.showPrivateContestFullDialog(getSupportFragmentManager(),
+                            msg, new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                   onBackPressed();
+                                }
+                            });
+                }
+            }
+        }, 500);
     }
 
     private void launchLowBalanceActivity(JoinContestData joinContestData) {
@@ -402,19 +496,6 @@ public class PrivateContestDetailsActivity extends NostraBaseActivity implements
     private BumperPrizesEstimationFragment getPrizeFragments() {
         Bundle args = new Bundle();
         FindPrivateContestResponseContestData contestData = getPrivateContest();
-
-        /*if (contestData != null) {
-            RewardScreenData rewardScreenData = new RewardScreenData();
-            rewardScreenData.setRoomId(-1);
-            rewardScreenData.setConfigId(contestData.getConfigId());
-            rewardScreenData.setContestName(contestData.getConfigName());
-            rewardScreenData.setPoolContest(false);
-
-            args.putParcelable(Constants.BundleKeys.REWARDS_SCREEN_DATA, Parcels.wrap(rewardScreenData));
-        }
-
-        RewardsFragment fragment = new RewardsFragment();
-        fragment.setArguments(args);*/
 
         BumperPrizesEstimationScreenData screenData = new BumperPrizesEstimationScreenData();
         if (contestData != null) {

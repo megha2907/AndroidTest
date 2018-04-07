@@ -65,7 +65,7 @@ public class JoinContestApiImpl {
 
                         if (!TextUtils.isEmpty(joinContestQueueResponse.getError())) {
                             if (mListener != null) {
-                                mListener.onServerReturnedError(joinContestQueueResponse.getError());
+                                mListener.onServerReturnedError(joinContestQueueResponse.getError(), -1);
                             }
                         } else {
                             Log.d(TAG, "OrderId :" + joinContestQueueResponse.getOrderId());
@@ -113,7 +113,7 @@ public class JoinContestApiImpl {
 
                             if (!TextUtils.isEmpty(verifyJoinContestResponse.getError())) {
                                 if (mListener != null) {
-                                    mListener.onServerReturnedError(verifyJoinContestResponse.getError());
+                                    mListener.onServerReturnedError(verifyJoinContestResponse.getError(), -1);
                                 }
                             } else if (verifyJoinContestResponse.isTryAgain()) {
                                 tryAgain(orderId);
@@ -175,7 +175,7 @@ public class JoinContestApiImpl {
 
     public interface JoinContestApiListener {
         void onFailure(int dataStatus);
-        void onServerReturnedError(String msg);
+        void onServerReturnedError(String msg, int errorCode);
         void onSuccessResponse(VerifyJoinContestResponse verifyJoinContestResponse);
     }
 }

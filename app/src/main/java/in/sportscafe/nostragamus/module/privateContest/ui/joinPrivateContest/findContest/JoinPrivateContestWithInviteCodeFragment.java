@@ -25,11 +25,13 @@ import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.customViews.CustomSnackBar;
 import in.sportscafe.nostragamus.module.navigation.wallet.WalletHelper;
+import in.sportscafe.nostragamus.module.popups.timerPopup.TimerFinishDialogHelper;
 import in.sportscafe.nostragamus.module.privateContest.dataProvider.PrivateContestDetailsApiModelImpl;
 import in.sportscafe.nostragamus.module.privateContest.ui.joinPrivateContest.contestDetails.PrivateContestDetailsActivity;
 import in.sportscafe.nostragamus.module.privateContest.ui.joinPrivateContest.dto.FindPrivateContestResponse;
 import in.sportscafe.nostragamus.module.privateContest.ui.joinPrivateContest.dto.JoinPrivateContestWithInviteCodeScreenData;
 import in.sportscafe.nostragamus.module.privateContest.ui.joinPrivateContest.dto.PrivateContestDetailsScreenData;
+import in.sportscafe.nostragamus.utils.CodeSnippet;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -41,8 +43,9 @@ public class JoinPrivateContestWithInviteCodeFragment extends BaseFragment imple
     private JoinPrivateContestWithInviteCodeFragmentListener mFragmentListener;
     private JoinPrivateContestWithInviteCodeScreenData mScreenData;
 
-    private EditText mPrivateCodeEditText;
+    private EditText mInviteCodeEditText;
     private Button mFindContestButton;
+    private TextView mInviteCodeErrorTextView;
 
     public JoinPrivateContestWithInviteCodeFragment() {
     }
@@ -67,8 +70,9 @@ public class JoinPrivateContestWithInviteCodeFragment extends BaseFragment imple
     }
 
     private void initViews(View view) {
-        mPrivateCodeEditText = (EditText) view.findViewById(R.id.join_contest_private_code_editText);
+        mInviteCodeEditText = (EditText) view.findViewById(R.id.join_contest_private_code_editText);
         mFindContestButton = (Button) view.findViewById(R.id.find_pvt_contest_details_btn);
+        mInviteCodeErrorTextView = (TextView) view.findViewById(R.id.invite_code_err_TextView) ;
 
         view.findViewById(R.id.back_btn).setOnClickListener(this);
         mFindContestButton.setOnClickListener(this);
@@ -92,7 +96,7 @@ public class JoinPrivateContestWithInviteCodeFragment extends BaseFragment imple
     private void showHeaderValues() {
         if (getView() != null) {
             TextView walletAmtTextView = (TextView) getView().findViewById(R.id.toolbar_wallet_money);
-            walletAmtTextView.setText(WalletHelper.getFormattedStringOfAmount(WalletHelper.getTotalBalance()));
+            walletAmtTextView.setText(CodeSnippet.getFormattedAmount(WalletHelper.getTotalBalance()));
         }
     }
 
@@ -115,21 +119,19 @@ public class JoinPrivateContestWithInviteCodeFragment extends BaseFragment imple
                 }
 
                 // Set private invitation code
-                mPrivateCodeEditText.setText(mScreenData.getPrivateCode());
-                int length = mPrivateCodeEditText.getText().length();
-                mPrivateCodeEditText.setSelection(length, length);
+                mInviteCodeEditText.setText(mScreenData.getPrivateCode());
+                int length = mInviteCodeEditText.getText().length();
+                mInviteCodeEditText.setSelection(length, length);
 
-                // User should not allow to click as auto-click event will occur
-                mFindContestButton.setEnabled(false);
+                mFindContestButton.setVisibility(View.GONE);    // Don't show this button, if link opened
 
                 // set auto click even
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        mFindContestButton.setEnabled(true);
                         onFindContestClicked();
                     }
-                }, 3000);
+                }, 1300);
             }
         }
     }
@@ -153,19 +155,22 @@ public class JoinPrivateContestWithInviteCodeFragment extends BaseFragment imple
     private void onFindContestClicked() {
         if (getView() != null && getActivity() != null && !getActivity().isFinishing()) {
 
-            String privateCode = mPrivateCodeEditText.getText().toString();
+            String privateCode = mInviteCodeEditText.getText().toString();
             if (!TextUtils.isEmpty(privateCode)) {
                 if (privateCode.length() == Constants.PrivateContests.PRIVATE_CODE_LENGTH) {
 
                     CustomProgressbar.getProgressbar(getContext()).show();
                     new PrivateContestDetailsApiModelImpl().
-                            fetchPrivateContestData(privateCode, getContestDetailsApiListener(privateCode));
+                            fetchPrivateContestData(privateCode,
+                                    getContestDetailsApiListener(privateCode));
 
                 } else {
-                    handleError("Please enter proper private code", -1);
+                    mInviteCodeErrorTextView.setText("Please enter valid invite code");
+                    mInviteCodeErrorTextView.setVisibility(View.VISIBLE);
                 }
             } else {
-                handleError("Please enter Private Code", -1);
+                mInviteCodeErrorTextView.setText("Please enter invite code");
+                mInviteCodeErrorTextView.setVisibility(View.VISIBLE);
             }
         }
     }
@@ -187,11 +192,109 @@ public class JoinPrivateContestWithInviteCodeFragment extends BaseFragment imple
             }
 
             @Override
-            public void onServerSentError(String errorMsg) {
+            public void onServerSentError(String errorMsg, int errorCode) {
                 CustomProgressbar.getProgressbar(getContext()).dismissProgress();
-                handleError(errorMsg, -1);
+                if (errorCode > 0 ) {
+                    showServerSentErrorDialog(errorCode);
+                } else {
+                    handleError(errorMsg, -1);
+                }
             }
         };
+    }
+
+    private void showServerSentErrorDialog(int errorCode) {
+        switch (errorCode) {
+            case Constants.PrivateContests.ErrorCodes.CONTEST_FULL:
+                showContestFullDialog();
+                break;
+
+            case Constants.PrivateContests.ErrorCodes.INVALID_INVITE_PRIVATE_CODE:
+                mInviteCodeErrorTextView.setText("Please enter valid invite code");
+                mInviteCodeErrorTextView.setVisibility(View.VISIBLE);
+                break;
+
+            case Constants.PrivateContests.ErrorCodes.CHALLENGE_STARTED:
+                onChallengeStarted();
+                break;
+
+            case Constants.PrivateContests.ErrorCodes.UNKNOWN_ERROR:
+                showUnknownErrorDialog();
+                break;
+        }
+    }
+
+    private void onChallengeStarted() {
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (JoinPrivateContestWithInviteCodeFragment.this.isVisible()) {
+
+                            String msg = "Please join other challenges as this already started";
+
+                            TimerFinishDialogHelper.showChallengeStartedTimerOutDialog(getChildFragmentManager(),
+                                    msg,
+                                    new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                            if (mFragmentListener != null) {
+                                                mFragmentListener.onBackClicked();
+                                            }
+                                        }
+                                    });
+                        }
+                    }
+                }, 500);
+    }
+
+    private void showUnknownErrorDialog() {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if (JoinPrivateContestWithInviteCodeFragment.this.isVisible()) {
+
+                    TimerFinishDialogHelper.showPrivateContestUnknownErrorDialog(getChildFragmentManager(),
+                            "Something went wrong, try again later",
+                            new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    if (mFragmentListener != null) {
+                                        mFragmentListener.onBackClicked();
+                                    }
+                                }
+                            });
+                }
+            }
+        }, 500);
+    }
+
+    private void showContestFullDialog() {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if (JoinPrivateContestWithInviteCodeFragment.this.isVisible()) {
+
+                    String name = "";
+                    if (mScreenData != null && mScreenData.getShareDetails() != null) {
+                        name = (!TextUtils.isEmpty(mScreenData.getShareDetails().getUserNick())) ?
+                                mScreenData.getShareDetails().getUserNick() + "'s " : "";
+                    }
+
+                    String msg = String.format("%sPrivate contest is full. Join another contest to play this challenge",
+                            name);
+
+                    TimerFinishDialogHelper.showPrivateContestFullDialog(getChildFragmentManager(),
+                            msg, new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            if (mFragmentListener != null) {
+                                mFragmentListener.onBackClicked();
+                            }
+                        }
+                    });
+                }
+            }
+        }, 500);
     }
 
     private void onContestDetailsSuccess(String privateCode, FindPrivateContestResponse response) {
@@ -200,6 +303,9 @@ public class JoinPrivateContestWithInviteCodeFragment extends BaseFragment imple
             PrivateContestDetailsScreenData screenData = new PrivateContestDetailsScreenData();
             screenData.setPrivateCode(privateCode);
             screenData.setPrivateContestDetailsResponse(response);
+            if (mScreenData != null) {
+                screenData.setShareDetails(mScreenData.getShareDetails());
+            }
 
             Bundle args = new Bundle();
             args.putParcelable(Constants.BundleKeys.PRIVATE_CONTEST_DETAILS_SCREEN_DATA, Parcels.wrap(screenData));
@@ -207,6 +313,13 @@ public class JoinPrivateContestWithInviteCodeFragment extends BaseFragment imple
             Intent intent = new Intent(getActivity(), PrivateContestDetailsActivity.class);
             intent.putExtras(args);
             getActivity().startActivityFromFragment(this, intent, 95);
+
+            // Finish activity if screen opened from the click of the link
+            if (mFindContestButton.getVisibility() == View.GONE) {
+                if (mFragmentListener != null) {
+                    mFragmentListener.onBackClicked();
+                }
+            }
         }
     }
 

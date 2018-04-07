@@ -288,7 +288,7 @@ public class ContestViewPagerFragment extends NostraBaseFragment {
                                 }
 
                                 @Override
-                                public void onServerReturnedError(String msg) {
+                                public void onServerReturnedError(String msg, int errorCode) {
                                     CustomProgressbar.getProgressbar(getContext()).dismissProgress();
                                     if (TextUtils.isEmpty(msg)) {
                                         msg = Constants.Alerts.SOMETHING_WRONG;

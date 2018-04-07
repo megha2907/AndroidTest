@@ -39,6 +39,7 @@ import in.sportscafe.nostragamus.module.navigation.wallet.addMoney.addByCashFree
 import in.sportscafe.nostragamus.module.navigation.wallet.addMoney.selectPaymentMode.SelectPaymentModeActivity;
 import in.sportscafe.nostragamus.module.navigation.wallet.dto.UserWalletResponse;
 import in.sportscafe.nostragamus.module.popups.challengepopups.ContestDetailsPopupActivity;
+import in.sportscafe.nostragamus.module.privateContest.ui.joinPrivateContest.findContest.JoinPrivateContestWithInviteCodeActivity;
 import in.sportscafe.nostragamus.module.settings.app.dto.AppSettingsResponse;
 import in.sportscafe.nostragamus.module.settings.app.dto.AppUpdateInfo;
 import in.sportscafe.nostragamus.module.store.StoreActivity;
@@ -75,6 +76,7 @@ public class NavigationFragment extends NostraBaseFragment implements View.OnCli
         view.findViewById(R.id.navigation_settings_layout).setOnClickListener(this);
         view.findViewById(R.id.navigation_app_update_layout).setOnClickListener(this);
         view.findViewById(R.id.navigation_refer_layout).setOnClickListener(this);
+        view.findViewById(R.id.navigation_join_private_contest_layout).setOnClickListener(this);
     }
 
     @Override
@@ -227,6 +229,18 @@ public class NavigationFragment extends NostraBaseFragment implements View.OnCli
                 onUpdateAppClicked();
                 break;
 
+            case R.id.navigation_join_private_contest_layout:
+                NostragamusAnalytics.getInstance().trackClickEvent(Constants.AnalyticsCategory.NAVIGATION_SCREEN, Constants.AnalyticsClickLabels.JOIN_PRIVATE_CONTEST);
+                onJoinPrivateContestClicked();
+                break;
+
+        }
+    }
+
+    private void onJoinPrivateContestClicked() {
+        if (getActivity() != null) {
+            Intent intent = new Intent(getActivity(), JoinPrivateContestWithInviteCodeActivity.class);
+            startActivity(intent);
         }
     }
 

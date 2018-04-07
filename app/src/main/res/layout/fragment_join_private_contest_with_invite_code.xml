@@ -88,7 +88,7 @@
                 android:layout_width="@dimen/dim_66"
                 android:layout_height="@dimen/dim_75"
                 android:layout_gravity="center_horizontal"
-                android:src="@drawable/history_empty_screen_img"/>
+                app:defaultImage="@drawable/pvt_contest_invite_default_img" />
 
             <com.jeeva.android.widgets.customfont.CustomTextView
                 android:id="@+id/join_private_contest_header_msg_textView"
@@ -141,6 +141,17 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dim_0.5"
                 android:background="@color/grey"/>
+
+            <com.jeeva.android.widgets.customfont.CustomTextView
+                android:id="@+id/invite_code_err_TextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:text="Enter proper invite code"
+                android:textColor="@color/radical_red"
+                android:textSize="@dimen/sp_12"
+                app:typeface="lato_regular"
+                android:visibility="gone"/>
 
         </LinearLayout>
 

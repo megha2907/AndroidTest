@@ -21,7 +21,9 @@ public class PrivateContestPrizeEstimationHelper {
     private static final String TAG = PrivateContestPrizeEstimationHelper.class.getSimpleName();
 
     public interface PrivateContestPrizeEstimationListener {
-        void onError(String msg);
+        int ERR_CODE_ENTRIES_LESS_THAN_WINNERS = 121;
+
+        void onError(String msg, int errorCode);
     }
 
     /**
@@ -62,7 +64,7 @@ public class PrivateContestPrizeEstimationHelper {
                     }
                 } else {
                     if (listener != null) {
-                        listener.onError("Entries are less than winners");
+                        listener.onError("Entries are less than winners", PrivateContestPrizeEstimationListener.ERR_CODE_ENTRIES_LESS_THAN_WINNERS);
                     }
                 }
 
