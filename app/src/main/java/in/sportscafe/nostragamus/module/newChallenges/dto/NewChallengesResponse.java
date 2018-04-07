@@ -5,6 +5,7 @@ import com.google.gson.annotations.SerializedName;
 import org.parceler.Parcel;
 
 import java.util.List;
+
 import in.sportscafe.nostragamus.module.newChallenges.adapter.NewChallengeAdapterItemType;
 
 /**
@@ -45,6 +46,9 @@ public class NewChallengesResponse {
 
     @SerializedName("is_daily")
     private boolean isDaily;
+
+    @SerializedName("featured")
+    private boolean isFeaturedContest = false;
 
     @SerializedName("maxtransferlimit")
     private int maxTransferLimit = -1;
@@ -143,5 +147,13 @@ public class NewChallengesResponse {
 
     public void setMaxTransferLimit(int maxTransferLimit) {
         this.maxTransferLimit = maxTransferLimit;
+    }
+
+    public boolean isFeaturedContest() {
+        return isFeaturedContest;
+    }
+
+    public void setFeaturedContest(boolean featuredContest) {
+        isFeaturedContest = featuredContest;
     }
 }

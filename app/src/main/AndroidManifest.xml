@@ -398,7 +398,7 @@
         <activity
             android:name=".module.navigation.wallet.doKYC.AddKYCDetailsActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan"/>
+            android:windowSoftInputMode="adjustResize"/>
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"

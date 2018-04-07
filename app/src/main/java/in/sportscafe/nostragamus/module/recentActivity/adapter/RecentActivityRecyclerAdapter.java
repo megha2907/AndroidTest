@@ -140,7 +140,7 @@ public class RecentActivityRecyclerAdapter extends RecyclerView.Adapter<RecentAc
     @NonNull
     private Bundle getRecentActivityData(int adapterPos) {
         Bundle args = new Bundle();
-        args.putParcelable(Constants.BundleKeys.RECENT_ACTIVITY, Parcels.wrap(recentActivityList.get(adapterPos)));
+        args.putParcelable(Constants.BundleKeys.RECENT_ACTIVITY, Parcels.wrap(recentActivityFilteredList.get(adapterPos)));
         return args;
     }
 

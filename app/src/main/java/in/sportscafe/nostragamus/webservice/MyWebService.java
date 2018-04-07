@@ -479,7 +479,7 @@ public class MyWebService extends AbstractWebService<NostragamusService> {
     }
 
     public Call<RecentActivityResponse> getRecentActivityData() {
-        return mNostragamusService.getRecentActivityData("8 weeks");
+        return mNostragamusService.getRecentActivityData();
     }
 
     public Call<ApiResponse> addUserPANCardDetails(String userName, String panNumber, String dob, File file) {

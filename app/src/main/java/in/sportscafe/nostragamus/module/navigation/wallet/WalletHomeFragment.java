@@ -207,12 +207,12 @@ public class WalletHomeFragment extends BaseFragment implements View.OnClickList
 
         switch (kycStatusFromServer) {
             case Constants.KYCStatus.NOT_REQUIRED:
-                kycStatus = "Get Benefits";
+                kycStatus = "Get free powerups and unlimited withdrawals!";
                 kycStatusTv.setTextColor(ContextCompat.getColor(getContext(), R.color.white_dim));
                 break;
 
             case Constants.KYCStatus.REQUIRED:
-                kycStatus = "Get Benefits";
+                kycStatus = "Get free powerups and unlimited withdrawals!";
                 kycStatusTv.setTextColor(ContextCompat.getColor(getContext(), R.color.blue_008ae1));
                 break;
 

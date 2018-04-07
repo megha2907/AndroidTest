@@ -123,6 +123,8 @@ public interface Constants {
         String DOWNLOAD_PAID_APP = "downloadPaidApp";
         String ASK_FRIEND = "askFriendText";
         String DISCLAIMER_TEXT = "disclaimerText";
+        String KYC_BENEFITS_ONE = "KYCBenefitsOne";
+        String KYC_BENEFITS_TWO = "KYCBenefitsTwo";
         String PAYMENT_DETAILS_SCREEN_SHOWN_ONCE_ON_HOME = "paymentDetailsShownOnHome";
         String IS_PROFILE_DISCLAIMER_ACCEPTED = "isProfileDisclaimerAccepted";
         String INSTALL_REFERRAL_CAMPAIGN_KEY = "installReferralCampaignKey";
