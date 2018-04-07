@@ -20,6 +20,7 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
@@ -77,7 +78,7 @@ public class CreatePrivateContestFragment extends BaseFragment implements
 
     private CreatePrivateContestFragmentListener mFragmentListener;
     private CreatePrivateContestScreenData mScreenData;
-    private PrivateContestPrizeListRecyclerAdapter mPrizeTemplateAdapter;
+    private PrivateContestPrizeListRecyclerAdapter mPrizeListAdapter;
     private PrivateContestPrizeTemplateSpinnerAdapter mSpinnerAdapter;
     private PrivateContestPrizeTemplateResponse mSelectedPrizeTemplate;
 
@@ -264,6 +265,9 @@ public class CreatePrivateContestFragment extends BaseFragment implements
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 mSelectedPrizeTemplate = (PrivateContestPrizeTemplateResponse)mPrizeStructureSpinner.getSelectedItem();
                 mSpinnerAdapter.setSelectedTemplate(mSelectedPrizeTemplate);
+
+                showSpinnerError(false, "");
+
                 if (mSelectedPrizeTemplate != null) {
                     onPrizeTemplateSelected(mSelectedPrizeTemplate);
                 }
@@ -286,14 +290,7 @@ public class CreatePrivateContestFragment extends BaseFragment implements
                 if (isEntryFeeValid()) {
                     handleEntryFeeValid(true);
 
-                    if (!TextUtils.isEmpty(getSelectedPrizeTemplateId())) {
-                        showSpinnerError(false, "");
-
                         performEstimation(prizeResponse, getEntryFee(), getEntries());
-
-                    } else {
-                        showSpinnerError(true, "Select prize structure");
-                    }
 
                 } else {
                     handleEntryFeeValid(false);
@@ -344,8 +341,8 @@ public class CreatePrivateContestFragment extends BaseFragment implements
 
     private void setEstimatePrizeAdapter(List<PrizeListItemDto> prizeListItemDtoList) {
         if (prizeListItemDtoList != null) {
-            mPrizeTemplateAdapter = new PrivateContestPrizeListRecyclerAdapter(prizeListItemDtoList);
-            mEstimatedPrizeRecyclerView.setAdapter(mPrizeTemplateAdapter);
+            mPrizeListAdapter = new PrivateContestPrizeListRecyclerAdapter(prizeListItemDtoList);
+            mEstimatedPrizeRecyclerView.setAdapter(mPrizeListAdapter);
         }
     }
 
@@ -395,6 +392,7 @@ public class CreatePrivateContestFragment extends BaseFragment implements
                 break;
 
             case R.id.create_join_private_contest_btn:
+                hideKeyBoard();
                 onCreateAndJoinContestClicked();
                 break;
 
@@ -419,48 +417,62 @@ public class CreatePrivateContestFragment extends BaseFragment implements
         }
     }
 
+    private void hideKeyBoard() {
+        if (getActivity() != null && getActivity().getCurrentFocus() != null) {
+            InputMethodManager inputMethodManager = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+            if (inputMethodManager != null) {
+                inputMethodManager.hideSoftInputFromWindow(getActivity().getCurrentFocus()
+                        .getApplicationWindowToken(), 0);
+            }
+        }
+    }
+
+
     private void onCreateAndJoinContestClicked() {
         if (mScreenData != null && mScreenData.getContestScreenData() != null &&
                 getActivity() != null && !getActivity().isFinishing()) {
 
             /* No error on scree visible */
-            if (mEntriesErrorTextView.getVisibility() == View.INVISIBLE &&
-                    mFeeErrorTextView.getVisibility() == View.INVISIBLE &&
-                    mPrizesErrorTextView.getVisibility() == View.INVISIBLE) {
+            if (mEntriesErrorTextView.getVisibility() != View.VISIBLE &&
+                    mFeeErrorTextView.getVisibility() != View.VISIBLE) {
+                if (mPrizeListAdapter != null && mPrizeListAdapter.getItemCount() > 0) {
 
                 /* Validate input again before joining */
-                if (isEntriesValid()) {
-                    if (isEntryFeeValid()) {
-                        if (!TextUtils.isEmpty(getSelectedPrizeTemplateId())) {
+                    if (isEntriesValid()) {
+                        if (isEntryFeeValid()) {
+                            if (!TextUtils.isEmpty(getSelectedPrizeTemplateId())) {
 
-                            ContestScreenData contestScreenData = mScreenData.getContestScreenData();
-                            int entries = getEntries();
-                            double entryFee = getEntryFee();
-                            String contestName = mContestNameEditText.getText().toString();
+                                ContestScreenData contestScreenData = mScreenData.getContestScreenData();
+                                int entries = getEntries();
+                                double entryFee = getEntryFee();
+                                String contestName = mContestNameEditText.getText().toString();
 
-                            final JoinContestData joinPrivateContestData = new JoinContestData();
-                            joinPrivateContestData.setPrivateContestTemplateId(getSelectedPrizeTemplateId());
-                            joinPrivateContestData.setChallengeId(contestScreenData.getChallengeId());
-                            joinPrivateContestData.setChallengeName(contestScreenData.getChallengeName());
-                            joinPrivateContestData.setChallengeStartTime(contestScreenData.getChallengeStartTime());
-                            joinPrivateContestData.setEntryFee(entryFee);
-                            joinPrivateContestData.setContestName(contestName);
-                            joinPrivateContestData.setPrivateContestEntries(entries);
-                            joinPrivateContestData.setJoiContestDialogLaunchMode(CompletePaymentDialogFragment.DialogLaunchMode.JOINING_CHALLENGE_LAUNCH);
+                                final JoinContestData joinPrivateContestData = new JoinContestData();
+                                joinPrivateContestData.setPrivateContestTemplateId(getSelectedPrizeTemplateId());
+                                joinPrivateContestData.setChallengeId(contestScreenData.getChallengeId());
+                                joinPrivateContestData.setChallengeName(contestScreenData.getChallengeName());
+                                joinPrivateContestData.setChallengeStartTime(contestScreenData.getChallengeStartTime());
+                                joinPrivateContestData.setEntryFee(entryFee);
+                                joinPrivateContestData.setContestName(contestName);
+                                joinPrivateContestData.setPrivateContestEntries(entries);
+                                joinPrivateContestData.setJoiContestDialogLaunchMode(CompletePaymentDialogFragment.DialogLaunchMode.JOINING_CHALLENGE_LAUNCH);
 
-                            Bundle args = new Bundle();
-                            args.putParcelable(Constants.BundleKeys.JOIN_CONTEST_DATA, Parcels.wrap(joinPrivateContestData));
+                                Bundle args = new Bundle();
+                                args.putParcelable(Constants.BundleKeys.JOIN_CONTEST_DATA, Parcels.wrap(joinPrivateContestData));
 
-                            performCreateAndJoin(args);
+                                performCreateAndJoin(args);
 
+                            } else {
+                                showSpinnerError(true, "Select prize structure");
+                            }
                         } else {
-                            showSpinnerError(true, "Select prize structure");
+                            handleEntryFeeValid(false);
                         }
                     } else {
-                        handleEntryFeeValid(false);
+                        handleEntriesValid(false, "");
                     }
                 } else {
-                    handleEntriesValid(false, "");
+                    handleError("Select proper prize structure", -1);
                 }
             } else {
                 handleError("Please select prize structure", -1);
