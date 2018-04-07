@@ -101,7 +101,7 @@ public class PrivateContestPrizeTemplateSpinnerAdapter extends ArrayAdapter<Priv
                 viewHolder.textView.setText(mPrizeTemplateList.get(position).getName());
             }
 
-            int bgColor = R.color.black;
+            int bgColor = R.color.grey_303030;
             if (mSelectedTemplate != null && !TextUtils.isEmpty(mSelectedTemplate.getTemplateId()) &&
                     !TextUtils.isEmpty(template.getTemplateId()) &&
                     mSelectedTemplate.getTemplateId().equals(template.getTemplateId())) {

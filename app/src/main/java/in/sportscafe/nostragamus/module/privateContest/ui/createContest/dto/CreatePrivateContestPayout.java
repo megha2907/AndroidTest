@@ -9,5 +9,5 @@ import com.google.gson.annotations.SerializedName;
 public class CreatePrivateContestPayout {
 
     @SerializedName("1")
-    private int first;
+    private float first;
 }

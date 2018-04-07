@@ -129,8 +129,7 @@ public class CreatePrivateContestFragment extends BaseFragment implements
         if (mSelectedPrizeTemplate != null &&
                 mSelectedPrizeTemplate.getTemplateType() == PrivateContestPrizeSpinnerItemType.ADVANCE_TEMPLATE) {
 
-            mPrizesErrorTextView.setText("Set new prize structure");
-            mPrizesErrorTextView.setVisibility(View.VISIBLE);
+            showSpinnerError(true, "Select different prize structure");
             // re-set ui
             setEstimatePrizeAdapter(new ArrayList<PrizeListItemDto>());
         }
@@ -287,7 +286,14 @@ public class CreatePrivateContestFragment extends BaseFragment implements
                 if (isEntryFeeValid()) {
                     handleEntryFeeValid(true);
 
-                    performEstimation(prizeResponse, getEntryFee(), getEntries());
+                    if (!TextUtils.isEmpty(getSelectedPrizeTemplateId())) {
+                        showSpinnerError(false, "");
+
+                        performEstimation(prizeResponse, getEntryFee(), getEntries());
+
+                    } else {
+                        showSpinnerError(true, "Select prize structure");
+                    }
 
                 } else {
                     handleEntryFeeValid(false);
@@ -417,42 +423,60 @@ public class CreatePrivateContestFragment extends BaseFragment implements
         if (mScreenData != null && mScreenData.getContestScreenData() != null &&
                 getActivity() != null && !getActivity().isFinishing()) {
 
-            /* Validate input again before joining */
-            if (isEntriesValid()) {
-                if (isEntryFeeValid()) {
-                    if (!TextUtils.isEmpty(getSelectedPrizeTemplateId())) {
+            /* No error on scree visible */
+            if (mEntriesErrorTextView.getVisibility() == View.INVISIBLE &&
+                    mFeeErrorTextView.getVisibility() == View.INVISIBLE &&
+                    mPrizesErrorTextView.getVisibility() == View.INVISIBLE) {
 
-                        ContestScreenData contestScreenData = mScreenData.getContestScreenData();
-                        int entries = getEntries();
-                        double entryFee = getEntryFee();
-                        String contestName = mContestNameEditText.getText().toString();
+                /* Validate input again before joining */
+                if (isEntriesValid()) {
+                    if (isEntryFeeValid()) {
+                        if (!TextUtils.isEmpty(getSelectedPrizeTemplateId())) {
 
-                        final JoinContestData joinPrivateContestData = new JoinContestData();
-                        joinPrivateContestData.setPrivateContestTemplateId(getSelectedPrizeTemplateId());
-                        joinPrivateContestData.setChallengeId(contestScreenData.getChallengeId());
-                        joinPrivateContestData.setChallengeName(contestScreenData.getChallengeName());
-                        joinPrivateContestData.setChallengeStartTime(contestScreenData.getChallengeStartTime());
-                        joinPrivateContestData.setEntryFee(entryFee);
-                        joinPrivateContestData.setContestName(contestName);
-                        joinPrivateContestData.setPrivateContestEntries(entries);
-                        joinPrivateContestData.setJoiContestDialogLaunchMode(CompletePaymentDialogFragment.DialogLaunchMode.JOINING_CHALLENGE_LAUNCH);
+                            ContestScreenData contestScreenData = mScreenData.getContestScreenData();
+                            int entries = getEntries();
+                            double entryFee = getEntryFee();
+                            String contestName = mContestNameEditText.getText().toString();
 
-                        Bundle args = new Bundle();
-                        args.putParcelable(Constants.BundleKeys.JOIN_CONTEST_DATA, Parcels.wrap(joinPrivateContestData));
+                            final JoinContestData joinPrivateContestData = new JoinContestData();
+                            joinPrivateContestData.setPrivateContestTemplateId(getSelectedPrizeTemplateId());
+                            joinPrivateContestData.setChallengeId(contestScreenData.getChallengeId());
+                            joinPrivateContestData.setChallengeName(contestScreenData.getChallengeName());
+                            joinPrivateContestData.setChallengeStartTime(contestScreenData.getChallengeStartTime());
+                            joinPrivateContestData.setEntryFee(entryFee);
+                            joinPrivateContestData.setContestName(contestName);
+                            joinPrivateContestData.setPrivateContestEntries(entries);
+                            joinPrivateContestData.setJoiContestDialogLaunchMode(CompletePaymentDialogFragment.DialogLaunchMode.JOINING_CHALLENGE_LAUNCH);
 
-                        performCreateAndJoin(args);
+                            Bundle args = new Bundle();
+                            args.putParcelable(Constants.BundleKeys.JOIN_CONTEST_DATA, Parcels.wrap(joinPrivateContestData));
 
+                            performCreateAndJoin(args);
+
+                        } else {
+                            showSpinnerError(true, "Select prize structure");
+                        }
                     } else {
-                        handleError("Please set prize structure", -1);
+                        handleEntryFeeValid(false);
                     }
                 } else {
-                    handleEntryFeeValid(false);
+                    handleEntriesValid(false, "");
                 }
             } else {
-                handleEntriesValid(false, "");
+                handleError("Please select prize structure", -1);
             }
         } else {
             handleError("", -1);
+        }
+    }
+
+    private void showSpinnerError(boolean isError, String text) {
+        if (isError) {
+            mPrizesErrorTextView.setText(text);
+            mPrizesErrorTextView.setVisibility(View.VISIBLE);
+        } else {
+            mPrizesErrorTextView.setText("Select prize structure");
+            mPrizesErrorTextView.setVisibility(View.GONE);
         }
     }
 
@@ -460,7 +484,9 @@ public class CreatePrivateContestFragment extends BaseFragment implements
         String templateId = "";
 
         if (mSelectedPrizeTemplate != null &&
-                !TextUtils.isEmpty(mSelectedPrizeTemplate.getTemplateId())) {
+                !TextUtils.isEmpty(mSelectedPrizeTemplate.getTemplateId()) &&
+                !mSelectedPrizeTemplate.getTemplateId().equalsIgnoreCase(PrivateContestPrizeSpinnerItemType.DEFAULT_PRIZE_TEMPLATE_ID)) {
+
             templateId = mSelectedPrizeTemplate.getTemplateId();
         }
 
@@ -750,6 +776,13 @@ public class CreatePrivateContestFragment extends BaseFragment implements
         if (getView() != null && getActivity() != null && !getActivity().isFinishing() &&
                 responseList != null && responseList.size() > 0) {
 
+            /* Add Always first Selected item */
+            PrivateContestPrizeTemplateResponse defaultTemplate = new PrivateContestPrizeTemplateResponse();
+            defaultTemplate.setTemplateType(PrivateContestPrizeSpinnerItemType.DEFAULT_PRIZE_TEMPLATE);
+            defaultTemplate.setName(PrivateContestPrizeSpinnerItemType.DEFAULT_PRIZE_TEMPLATE_ID);  // name same as id
+            defaultTemplate.setTemplateId(PrivateContestPrizeSpinnerItemType.DEFAULT_PRIZE_TEMPLATE_ID);
+            responseList.add(0, defaultTemplate);
+
             /* Select top template as default */
             mSelectedPrizeTemplate = responseList.get(0);
 
@@ -862,7 +895,8 @@ public class CreatePrivateContestFragment extends BaseFragment implements
         boolean isValid = false;
         int entries = getEntries();
 
-        if (entries >= Constants.PrivateContests.MIN_ENTRIES && entries <= Constants.PrivateContests.MAX_ENTRIES) {
+        if (entries >= Constants.PrivateContests.MIN_ENTRIES &&
+                entries <= Constants.PrivateContests.MAX_ENTRIES) {
             isValid = true;
         }
 

@@ -409,7 +409,9 @@ public class InPlayRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         if (contest != null && contest.getMatches() != null) {
             InPlayJoinedPrivateContestItemViewHolder viewHolder = (InPlayJoinedPrivateContestItemViewHolder) holder;
 
-            viewHolder.contestTitleTextView.setText(contest.getContestName());
+            if (!TextUtils.isEmpty(contest.getContestName())) {
+                viewHolder.contestTitleTextView.setText((contest.getContestName().length() > 14) ? contest.getContestName().substring(0, 14) + ".." : contest.getContestName());
+            }
             viewHolder.entryFeeTextView.setText(Constants.RUPEE_SYMBOL + String.valueOf(contest.getEntryFee()));
 
             double winningAmount = contest.getWinningAmount();

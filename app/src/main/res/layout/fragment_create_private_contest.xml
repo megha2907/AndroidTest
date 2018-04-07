@@ -164,7 +164,7 @@
                             <View
                                 android:id="@+id/create_private_name_line_view"
                                 android:layout_width="match_parent"
-                                android:layout_height="@dimen/dim_2"
+                                android:layout_height="@dimen/dim_1"
                                 android:background="@color/white_606060"/>
 
                             <!--<com.jeeva.android.widgets.customfont.CustomTextView
@@ -215,7 +215,7 @@
                             <View
                                 android:id="@+id/create_private_entries_line_view"
                                 android:layout_width="match_parent"
-                                android:layout_height="@dimen/dim_2"
+                                android:layout_height="@dimen/dim_1"
                                 android:background="@color/white_606060"/>
 
                             <com.jeeva.android.widgets.customfont.CustomTextView
@@ -270,7 +270,7 @@
                             <View
                                 android:id="@+id/create_private_fee_line_view"
                                 android:layout_width="match_parent"
-                                android:layout_height="@dimen/dim_2"
+                                android:layout_height="@dimen/dim_1"
                                 android:background="@color/white_606060"/>
 
                             <com.jeeva.android.widgets.customfont.CustomTextView
@@ -325,7 +325,7 @@
                             <View
                                 android:id="@+id/create_private_prize_structure_line_view"
                                 android:layout_width="match_parent"
-                                android:layout_height="@dimen/dim_2"
+                                android:layout_height="@dimen/dim_1"
                                 android:background="@color/white_606060"/>
 
                             <com.jeeva.android.widgets.customfont.CustomTextView

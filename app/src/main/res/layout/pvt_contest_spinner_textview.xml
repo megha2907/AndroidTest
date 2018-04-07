@@ -9,4 +9,5 @@
     android:textColor="@color/white"
     android:textSize="@dimen/sp_14"
     app:typeface="lato_regular"
-    android:drawableRight="@drawable/challenge_down_arrow"/>
+    android:drawableRight="@drawable/challenge_down_arrow"
+    android:background="@color/grey_303030"/>

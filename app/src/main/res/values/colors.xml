@@ -192,4 +192,6 @@
     <color name="loading_animation_color">#186aa2</color>
     <color name="custom_snackbar_bg_color">#192535</color>
     <color name="snackbar_action_button_text_color">#008ae1</color>
+
+    <drawable name="spinner_background_color">@color/grey_303030</drawable>
 </resources>

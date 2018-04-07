@@ -54,9 +54,9 @@
                             android:layout_height="wrap_content"
                             android:ellipsize="end"
                             android:includeFontPadding="false"
-                            android:maxLines="1"
+                            android:singleLine="true"
+                            android:maxLength="16"
                             android:text=""
-                            android:maxLength="20"
                             android:textColor="@color/white"
                             android:textSize="@dimen/sp_13"
                             app:typeface="lato_regular" />
@@ -269,7 +269,7 @@
                         android:gravity="center_horizontal"
                         android:text="Invite Your Friends"
                         android:textColor="@color/white"
-                        android:textSize="@dimen/sp_10"
+                        android:textSize="@dimen/sp_13"
                         app:typeface="lato_regular"
                         android:layout_marginLeft="@dimen/dim_50"/>
 

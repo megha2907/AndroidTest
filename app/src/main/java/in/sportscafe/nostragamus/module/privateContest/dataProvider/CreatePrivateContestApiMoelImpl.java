@@ -1,5 +1,7 @@
 package in.sportscafe.nostragamus.module.privateContest.dataProvider;
 
+import android.text.TextUtils;
+
 import com.google.gson.Gson;
 import com.jeeva.android.Log;
 
@@ -29,7 +31,7 @@ public class CreatePrivateContestApiMoelImpl {
         CreatePrivateContestRequest request = new CreatePrivateContestRequest();
         request.setChallengeId(challengeId);
         request.setFee(fee);
-        request.setConfigName(cofigName);
+        request.setConfigName((TextUtils.isEmpty(cofigName)) ? "N.A." : cofigName); // Empty contest name with constant string
         request.setMaxParticipants(maxParticipants);
         request.setTemplateId(templateId);
 

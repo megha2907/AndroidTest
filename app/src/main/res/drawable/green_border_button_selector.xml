@@ -11,7 +11,7 @@
             </item>-->
             <item android:bottom="@dimen/dp_3">
                 <shape>
-                    <stroke android:color="@color/grey" android:width="@dimen/dim_2" />
+                    <stroke android:color="#0B4028" android:width="@dimen/dim_2" />
                     <corners android:radius="@dimen/dp_2" />
                 </shape>
             </item>

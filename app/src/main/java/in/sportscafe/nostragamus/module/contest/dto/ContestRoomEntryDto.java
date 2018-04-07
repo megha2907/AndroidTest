@@ -14,7 +14,7 @@ public class ContestRoomEntryDto {
     @SerializedName("user_photo")
     private String userPicUrl;
 
-    @SerializedName("is_creator")
+    @SerializedName("creator")
     private boolean isPrivateContestCreator = false;
 
     public String getUserName() {
