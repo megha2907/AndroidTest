@@ -43,7 +43,7 @@
         <LinearLayout
             android:id="@+id/create_private_contest_btn"
             android:layout_width="@dimen/dim_320"
-            android:layout_height="@dimen/dim_40"
+            android:layout_height="@dimen/dim_42"
             android:layout_marginTop="@dimen/dim_16"
             android:layout_marginLeft="@dimen/dim_20"
             android:layout_marginRight="@dimen/dim_20"
@@ -54,7 +54,8 @@
                 android:layout_width="@dimen/dim_16"
                 android:layout_height="@dimen/dim_16"
                 android:layout_marginLeft="@dimen/dim_26"
-                android:src="@drawable/create_pvt_cont_btn_icn"/>
+                android:src="@drawable/create_pvt_cont_btn_icn"
+                android:layout_marginBottom="@dimen/dim_2"/>
             
             <com.jeeva.android.widgets.customfont.CustomTextView
                 android:layout_width="wrap_content"
@@ -66,7 +67,8 @@
                 android:textColor="@color/white"
                 android:textSize="@dimen/sp_14"
                 app:typeface="lato_bold"
-                android:layout_marginLeft="@dimen/dim_50"/>
+                android:layout_marginLeft="@dimen/dim_50"
+                android:layout_marginBottom="@dimen/dim_2"/>
 
         </LinearLayout>
 
@@ -74,7 +76,7 @@
         <LinearLayout
             android:id="@+id/private_contest_join_with_invite_code_btn"
             android:layout_width="@dimen/dim_320"
-            android:layout_height="@dimen/dim_42"
+            android:layout_height="@dimen/dim_44"
             android:layout_marginTop="@dimen/dim_18"
             android:layout_marginLeft="@dimen/dim_20"
             android:layout_marginRight="@dimen/dim_20"
@@ -87,7 +89,7 @@
                 android:layout_height="@dimen/dim_16"
                 android:layout_marginLeft="@dimen/dim_26"
                 android:src="@drawable/pvt_contest_green_icn"
-                android:layout_marginBottom="@dimen/dim_2"/>
+                android:layout_marginBottom="@dimen/dim_3"/>
 
             <com.jeeva.android.widgets.customfont.CustomTextView
                 android:layout_width="wrap_content"
@@ -99,7 +101,7 @@
                 android:textSize="@dimen/sp_14"
                 app:typeface="lato_bold"
                 android:layout_marginLeft="@dimen/dim_50"
-                android:layout_marginBottom="@dimen/dim_2"/>
+                android:layout_marginBottom="@dimen/dim_3"/>
 
         </LinearLayout>
 

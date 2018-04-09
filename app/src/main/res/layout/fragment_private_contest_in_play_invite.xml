@@ -24,19 +24,20 @@
             android:text="Invite Your Friends"
             android:textColor="@color/white"
             android:textSize="@dimen/sp_16"
-            app:typeface="lato_regular"
+            app:typeface="lato_bold"
             android:layout_marginTop="@dimen/dim_20"/>
 
         <com.jeeva.android.widgets.customfont.CustomTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
-            android:text="Create a new contest with your own rules &amp;  prizes then invite friends to join or join an existing private contest"
+            android:text="Player can only join this contest with a invite link or code. Share the code with your friends to let them join."
             android:textColor="@color/white_60"
-            android:textSize="@dimen/sp_11"
+            android:textSize="@dimen/sp_12"
             app:typeface="lato_regular"
             android:layout_marginLeft="@dimen/dim_20"
-            android:layout_marginRight="@dimen/dim_20"/>
+            android:layout_marginRight="@dimen/dim_20"
+            android:layout_marginTop="@dimen/dim_6"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -45,7 +46,7 @@
             android:gravity="center"
             android:layout_marginLeft="@dimen/dim_20"
             android:layout_marginRight="@dimen/dim_20"
-            android:layout_marginTop="@dimen/dim_22">
+            android:layout_marginTop="@dimen/dim_14">
 
             <com.jeeva.android.widgets.customfont.CustomTextView
                 android:layout_width="wrap_content"
@@ -72,7 +73,7 @@
             android:orientation="vertical"
             android:gravity="center"
             android:background="@drawable/btn_refer_code_bg"
-            android:layout_marginTop="@dimen/dim_22">
+            android:layout_marginTop="@dimen/dim_14">
 
             <com.jeeva.android.widgets.customfont.CustomTextView
                 android:id="@+id/private_contest_invitation_share_link_textView"
@@ -82,7 +83,7 @@
                 android:textSize="@dimen/sp_11"
                 app:typeface="lato_bold"
                 android:layout_marginLeft="@dimen/dim_7"
-                android:layout_marginBottom="@dimen/dim_2"/>
+                android:layout_marginBottom="@dimen/dim_3"/>
 
         </LinearLayout>
 

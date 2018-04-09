@@ -23,7 +23,10 @@
             android:minHeight="@dimen/button_height_48"
             android:orientation="vertical"
             android:gravity="center"
-            android:background="@drawable/flat_blue_btn_selector">
+            android:background="@drawable/green_button_selector"
+            android:layout_marginLeft="@dimen/dim_14"
+            android:layout_marginRight="@dimen/dim_14"
+            android:layout_marginBottom="@dimen/dim_14">
 
             <com.jeeva.android.widgets.customfont.CustomTextView
                 android:layout_width="wrap_content"

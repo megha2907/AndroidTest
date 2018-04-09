@@ -208,7 +208,7 @@
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/dim_60"
-                    android:gravity="center_horizontal"
+                    android:gravity="center_vertical"
                     android:orientation="vertical">
 
                     <LinearLayout
@@ -253,14 +253,17 @@
                     android:background="@drawable/blue_008ae1_button_selector"
                     android:layout_marginLeft="@dimen/dim_18"
                     android:layout_marginRight="@dimen/dim_18"
+                    android:layout_marginTop="@dimen/dim_4"
+                    android:layout_marginBottom="@dimen/dim_4"
                     android:visibility="gone">
 
                     <ImageView
-                        android:layout_width="@dimen/dim_16"
-                        android:layout_height="@dimen/dim_16"
+                        android:layout_width="@dimen/dim_18"
+                        android:layout_height="@dimen/dim_18"
                         android:layout_gravity="center"
                         android:src="@drawable/pvt_contest_invite_frnd_icn"
-                        android:layout_marginLeft="@dimen/dim_20"/>
+                        android:layout_marginLeft="@dimen/dim_20"
+                        android:layout_marginBottom="@dimen/dim_2"/>
 
                     <com.jeeva.android.widgets.customfont.CustomTextView
                         android:layout_width="wrap_content"
@@ -270,8 +273,9 @@
                         android:text="Invite Your Friends"
                         android:textColor="@color/white"
                         android:textSize="@dimen/sp_13"
-                        app:typeface="lato_regular"
-                        android:layout_marginLeft="@dimen/dim_50"/>
+                        app:typeface="lato_bold"
+                        android:layout_marginLeft="@dimen/dim_50"
+                        android:layout_marginBottom="@dimen/dim_2"/>
 
                 </LinearLayout>
 

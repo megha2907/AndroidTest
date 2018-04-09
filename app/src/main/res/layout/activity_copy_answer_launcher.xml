@@ -135,7 +135,7 @@
                 android:layout_marginRight="@dimen/dim_16"
                 android:layout_marginBottom="@dimen/dim_16"
                 android:paddingBottom="@dimen/dim_2"
-                android:background="@drawable/light_blue_button_selector"
+                android:background="@drawable/green_button_selector"
                 android:onClick="onClick"
                 android:gravity="center"
                 android:layout_below="@id/copy_answer_launcher_import_prediction_desc_textView"

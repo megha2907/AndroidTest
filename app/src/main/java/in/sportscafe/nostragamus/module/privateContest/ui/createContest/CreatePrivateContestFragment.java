@@ -510,35 +510,38 @@ public class CreatePrivateContestFragment extends BaseFragment implements
             /* No error on scree visible */
             if (mEntriesErrorTextView.getVisibility() != View.VISIBLE &&
                     mFeeErrorTextView.getVisibility() != View.VISIBLE) {
-                if (mPrizeListAdapter != null && mPrizeListAdapter.getItemCount() > 0) {
+
 
                 /* Validate input again before joining */
                     if (isEntriesValid()) {
                         if (isEntryFeeValid()) {
                             if (!TextUtils.isEmpty(getSelectedPrizeTemplateId())) {
+                                if (mPrizeListAdapter != null && mPrizeListAdapter.getItemCount() > 0) {
 
-                                ContestScreenData contestScreenData = mScreenData.getContestScreenData();
-                                int entries = getEntries();
-                                double entryFee = getEntryFee();
-                                String contestName = mContestNameEditText.getText().toString();
+                                    ContestScreenData contestScreenData = mScreenData.getContestScreenData();
+                                    int entries = getEntries();
+                                    double entryFee = getEntryFee();
+                                    String contestName = mContestNameEditText.getText().toString();
 
-                                final JoinContestData joinPrivateContestData = new JoinContestData();
-                                joinPrivateContestData.setPrivateContestTemplateId(getSelectedPrizeTemplateId());
-                                joinPrivateContestData.setChallengeId(contestScreenData.getChallengeId());
-                                joinPrivateContestData.setChallengeName(contestScreenData.getChallengeName());
-                                joinPrivateContestData.setChallengeStartTime(contestScreenData.getChallengeStartTime());
-                                joinPrivateContestData.setEntryFee(entryFee);
-                                joinPrivateContestData.setContestName(contestName);
-                                joinPrivateContestData.setPrivateContestEntries(entries);
-                                joinPrivateContestData.setJoiContestDialogLaunchMode(CompletePaymentDialogFragment.DialogLaunchMode.JOINING_CHALLENGE_LAUNCH);
+                                    final JoinContestData joinPrivateContestData = new JoinContestData();
+                                    joinPrivateContestData.setPrivateContestTemplateId(getSelectedPrizeTemplateId());
+                                    joinPrivateContestData.setChallengeId(contestScreenData.getChallengeId());
+                                    joinPrivateContestData.setChallengeName(contestScreenData.getChallengeName());
+                                    joinPrivateContestData.setChallengeStartTime(contestScreenData.getChallengeStartTime());
+                                    joinPrivateContestData.setEntryFee(entryFee);
+                                    joinPrivateContestData.setContestName(contestName);
+                                    joinPrivateContestData.setPrivateContestEntries(entries);
+                                    joinPrivateContestData.setJoiContestDialogLaunchMode(CompletePaymentDialogFragment.DialogLaunchMode.JOINING_CHALLENGE_LAUNCH);
 
-                                Bundle args = new Bundle();
-                                args.putParcelable(Constants.BundleKeys.JOIN_CONTEST_DATA, Parcels.wrap(joinPrivateContestData));
+                                    Bundle args = new Bundle();
+                                    args.putParcelable(Constants.BundleKeys.JOIN_CONTEST_DATA, Parcels.wrap(joinPrivateContestData));
 
-                                performCreateAndJoin(args);
+                                    performCreateAndJoin(args);
 
+                                } else {
+                                    showSpinnerError(true, "Select proper prize structure");
+                                }
                             } else {
-//                                showSpinnerError(true, "Select prize structure");
                                 showSpinnerError(true, "Select prize structure");
                             }
                         } else {
@@ -547,13 +550,7 @@ public class CreatePrivateContestFragment extends BaseFragment implements
                     } else {
                         handleEntriesValid(false, "");
                     }
-                } else {
-//                    handleError("Select proper prize structure", -1);
-                    showSpinnerError(true, "Select proper prize structure");
                 }
-            } else {
-//                handleError("Please select prize structure", -1);
-            }
         } else {
             handleError("", -1);
         }

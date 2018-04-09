@@ -311,12 +311,14 @@
                                 <!-- Prize structure Spinner -->
                                 <RelativeLayout
                                     android:layout_width="match_parent"
-                                    android:layout_height="wrap_content">
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="@dimen/dim_10">
 
                                     <ImageView
                                         android:layout_width="@dimen/dim_12"
                                         android:layout_height="@dimen/dim_12"
-                                        android:src="@drawable/challenge_down_arrow"
+                                        android:src="@drawable/right_icon_grey"
+                                        android:rotation="90"
                                         android:layout_centerVertical="true"
                                         android:layout_marginRight="@dimen/dim_5"
                                         android:layout_alignParentRight="true"/>
@@ -335,7 +337,8 @@
                                         android:layout_centerVertical="true"
                                         android:clipToPadding="false"
                                         android:overlapAnchor="true"
-                                        android:popupElevation="0dp"/>
+                                        android:popupElevation="0dp"
+                                        android:paddingBottom="0dp"/>
 
                                 </RelativeLayout>
 
@@ -354,6 +357,7 @@
                                     android:textColor="@color/radical_red"
                                     android:textSize="@dimen/sp_12"
                                     app:typeface="lato_regular"
+                                    android:visibility="gone"
                                     android:layout_marginTop="@dimen/dim_5"/>
 
                             </LinearLayout>
@@ -365,7 +369,7 @@
                                 android:orientation="horizontal"
                                 android:layout_marginLeft="@dimen/dim_20"
                                 android:layout_marginRight="@dimen/dim_20"
-                                android:layout_marginTop="@dimen/dim_15">
+                                android:layout_marginTop="@dimen/dim_30">
 
                                 <com.jeeva.android.widgets.customfont.CustomTextView
                                     android:layout_width="wrap_content"
@@ -373,7 +377,7 @@
                                     android:text="Total Amount"
                                     android:textColor="@color/white_999999"
                                     android:textSize="@dimen/sp_12"
-                                    app:typeface="lato_regular" />
+                                    app:typeface="lato_bold" />
 
                                 <com.jeeva.android.widgets.customfont.CustomTextView
                                     android:id="@+id/private_contest_total_prize_amt_textView"
@@ -393,7 +397,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:orientation="horizontal"
-                                android:layout_marginTop="@dimen/dim_10"
+                                android:layout_marginTop="@dimen/dim_30"
                                 android:layout_marginLeft="@dimen/dim_20"
                                 android:layout_marginRight="@dimen/dim_20">
 
@@ -401,9 +405,11 @@
                                     android:layout_width="@dimen/dim_30"
                                     android:layout_height="wrap_content"
                                     android:text="Rank"
+                                    android:gravity="right"
                                     android:textColor="@color/white_999999"
                                     android:textSize="@dimen/sp_12"
-                                    app:typeface="lato_regular" />
+                                    app:typeface="lato_regular"
+                                    android:layout_marginLeft="@dimen/dim_2"/>
 
                                 <com.jeeva.android.widgets.customfont.CustomTextView
                                     android:layout_width="@dimen/dim_35"
@@ -412,7 +418,7 @@
                                     android:textSize="@dimen/sp_12"
                                     android:text="Prizes"
                                     app:typeface="lato_regular"
-                                    android:layout_marginLeft="@dimen/dim_45"/>
+                                    android:layout_marginLeft="@dimen/dim_42"/>
 
                             </LinearLayout>
 
@@ -427,7 +433,7 @@
                             android:background="@color/grey_1f1f1f"
                             android:layout_marginLeft="@dimen/dim_12"
                             android:layout_marginRight="@dimen/dim_12"
-                            android:paddingTop="@dimen/dim_20"
+                            android:paddingTop="@dimen/dim_3"
                             android:nestedScrollingEnabled="false"/>
 
                         <!-- Message & button section -->

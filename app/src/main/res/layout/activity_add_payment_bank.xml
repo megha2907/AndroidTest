@@ -5,6 +5,7 @@
     android:id="@+id/content"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/black"
     tools:context="in.sportscafe.nostragamus.module.prediction.copyAnswer.CopyAnswerActivity">
 
     <RelativeLayout
@@ -38,13 +39,14 @@
             android:id="@+id/bottom_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true">
+            android:layout_alignParentBottom="true"
+            android:background="@color/black">
 
             <com.jeeva.android.widgets.customfont.CustomButton
                 android:id="@+id/add_bank_detail_btn"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_48"
-                android:background="@drawable/flat_blue_btn_selector"
+                android:background="@drawable/blue_button_selector"
                 android:gravity="center"
                 android:minWidth="@dimen/dp_200"
                 android:onClick="onAddBankSaveClicked"
@@ -56,7 +58,10 @@
                 android:textAllCaps="false"
                 android:textColor="@color/white"
                 android:textSize="@dimen/sp_14"
-                app:typeface="lato_bold" />
+                app:typeface="lato_bold"
+                android:layout_marginLeft="@dimen/dim_14"
+                android:layout_marginRight="@dimen/dim_14"
+                android:layout_marginBottom="@dimen/dim_14"/>
 
         </FrameLayout>
 
@@ -83,7 +88,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="left"
                     android:layout_marginTop="@dimen/dp_16"
-                    android:text="Acount Holder's Name"
+                    android:text="Account Holder's Name"
                     android:textColor="@color/white_60"
                     android:textSize="@dimen/sp_14"
                     app:typeface="lato_regular" />
