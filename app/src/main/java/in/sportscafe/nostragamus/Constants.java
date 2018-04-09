@@ -54,6 +54,9 @@ public interface Constants {
         String SCREEN_WHATS_NEW = "whatsNew"; /* What's New Screen */
         String SCREEN_WALLET_HOME = "walletHome"; /* Open Wallet Home  */
         String NONE = "NONE"; /* open nothing on click  */
+        String SCREEN_INPLAY_CONTEST = "InPlayContest"; /* open inPlayContest Screen  */
+        String SCREEN_INPLAY_CONTEST_LEADERBOARDS = "InPlayContestLeaderBoards"; /* open inPlayContest Screen Leaderboards TAB */
+        String SCREEN_POWERUP_TRANSACTION = "PowerupTransaction"; /* open Powerup Transaction screen  */
     }
 
     interface SharedKeys {

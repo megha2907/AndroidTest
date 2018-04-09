@@ -142,10 +142,6 @@ public class RecentActivityFragment extends NostraBaseFragment {
     }
 
     private void onDataReceived(int status, List<RecentActivity> recentActivityList) {
-        if (mFragmentListener != null) {
-            mFragmentListener.updateInplayCounter();
-        }
-
         switch (status) {
             case Constants.DataStatus.FROM_SERVER_API_SUCCESS:
                 showDataOnUi(recentActivityList, true);
@@ -379,15 +375,29 @@ public class RecentActivityFragment extends NostraBaseFragment {
 
                         } else if (screenName.equalsIgnoreCase(Constants.Notifications.SCREEN_WEB_VIEW)) {
                             startActivity(notificationHelper.getWebViewScreenIntent(getContext(), notification));
+
                         } else if (screenName.equalsIgnoreCase(Constants.Notifications.SCREEN_SLIDES)) {
                             startActivity(notificationHelper.getSlidesScreenIntent(getContext(), notification));
+
                         } else if (screenName.equalsIgnoreCase(Constants.Notifications.SCREEN_ANNOUNCEMENT)) {
                             startActivity(notificationHelper.getAnnouncementScreenIntent(getContext(), notification));
+
                         } else if (screenName.equalsIgnoreCase(Constants.Notifications.SCREEN_WALLET_HOME)) {
                             startActivity(notificationHelper.getWalletHomeScreenIntent(getContext(), notification));
+
                         } else if (screenName.equalsIgnoreCase(Constants.Notifications.SCREEN_KYC_DETAILS)) {
                             startActivity(notificationHelper.getKYCScreenIntent(getContext(), notification));
-                        } else if (screenName.equalsIgnoreCase(Constants.Notifications.NONE)) {
+
+                        } else if (screenName.equalsIgnoreCase(Constants.Notifications.SCREEN_INPLAY_CONTEST)) {
+                            startActivity(notificationHelper.getInPlayContestScreenIntent(getContext(), notification));
+
+                        } else if (screenName.equalsIgnoreCase(Constants.Notifications.SCREEN_INPLAY_CONTEST_LEADERBOARDS)) {
+                            startActivity(notificationHelper.getInPlayContestLeaderBoardScreenIntent(getContext(), notification));
+
+                        } else if (screenName.equalsIgnoreCase(Constants.Notifications.SCREEN_POWERUP_TRANSACTION)) {
+                            startActivity(notificationHelper.getPowerUpTransactionScreenIntent(getContext(), notification));
+
+                        }else if (screenName.equalsIgnoreCase(Constants.Notifications.NONE)) {
                             /* NO CLICK EVENT SHOULD HAPPEN */
                         }
 

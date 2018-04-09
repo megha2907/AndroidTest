@@ -224,6 +224,10 @@ public class AddKYCDetailsFragment extends BaseFragment implements View.OnFocusC
 
 
         final Calendar dobCalendar = Calendar.getInstance();
+        int year = dobCalendar.get(Calendar.YEAR);
+        int month = dobCalendar.get(Calendar.MONTH);
+        int day = dobCalendar.get(Calendar.DAY_OF_MONTH);
+
         final DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
 
             @Override
@@ -234,6 +238,11 @@ public class AddKYCDetailsFragment extends BaseFragment implements View.OnFocusC
                 dobCalendar.set(Calendar.MONTH, monthOfYear);
                 dobCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
                 updateLabel(dobCalendar, mDOBEditText);
+
+                TextView dobHeading = (TextView) getView().findViewById(R.id.add_kyc_details_dob_textview);
+                dobHeading.setTextColor(ContextCompat.getColor(getContext(), R.color.white_999999));
+                mDOBEditText.getBackground().setColorFilter(ContextCompat.getColor(getContext(), R.color.white_999999), PorterDuff.Mode.SRC_IN);
+
             }
 
         };
@@ -246,11 +255,17 @@ public class AddKYCDetailsFragment extends BaseFragment implements View.OnFocusC
                 mPANNumberEditText.clearFocus();
                 mDOBEditText.requestFocus();
                 TextView dobHeading = (TextView) getView().findViewById(R.id.add_kyc_details_dob_textview);
-                dobHeading.setTextColor(ContextCompat.getColor(getContext(), R.color.white_999999));
-                mDOBEditText.getBackground().setColorFilter(ContextCompat.getColor(getContext(), R.color.white_999999), PorterDuff.Mode.SRC_IN);
-                new DatePickerDialog(getContext(), date, dobCalendar
-                        .get(Calendar.YEAR), dobCalendar.get(Calendar.MONTH),
-                        dobCalendar.get(Calendar.DAY_OF_MONTH)).show();
+                dobHeading.setTextColor(ContextCompat.getColor(getContext(), R.color.blue_008ae1));
+                mDOBEditText.getBackground().setColorFilter(ContextCompat.getColor(getContext(), R.color.blue_008ae1), PorterDuff.Mode.SRC_IN);
+
+                DatePickerDialog dialog = new DatePickerDialog(getContext(), date,
+                        dobCalendar.get(Calendar.YEAR),
+                        dobCalendar.get(Calendar.MONTH),
+                        dobCalendar.get(Calendar.DAY_OF_MONTH));
+
+                dialog.getDatePicker().setMaxDate(System.currentTimeMillis());
+                dialog.show();
+
             }
         });
 
@@ -473,6 +488,7 @@ public class AddKYCDetailsFragment extends BaseFragment implements View.OnFocusC
             TextView userNameHeading = (TextView) getView().findViewById(R.id.add_kyc_details_name_textview);
             TextView panNumberHeading = (TextView) getView().findViewById(R.id.add_kyc_details_pan_number_textview);
             TextView dobHeading = (TextView) getView().findViewById(R.id.add_kyc_details_dob_textview);
+            TextView panImageHeading = (TextView) getView().findViewById(R.id.add_kyc_details_upload_pan_textview);
 
             //Verify if PAN Number is correct
             Pattern pattern = Pattern.compile("[A-Z]{5}[0-9]{4}[A-Z]{1}");
@@ -506,6 +522,7 @@ public class AddKYCDetailsFragment extends BaseFragment implements View.OnFocusC
                 panCardErrorTextView.setVisibility(View.GONE);
                 nameErrorTextView.setVisibility(View.GONE);
                 dobErrorTextView.setVisibility(View.GONE);
+                panImageHeading.setTextColor(ContextCompat.getColor(getContext(), R.color.radical_red));
             } // send all details to api
             else {
                 uploadPanErrorTextView.setVisibility(View.GONE);
