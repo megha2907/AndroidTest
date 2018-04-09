@@ -36,7 +36,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Contest Available"
-                android:maxLength="25"
+                android:maxLength="30"
                 android:ellipsize="end"
                 android:textColor="@color/white"
                 android:textSize="@dimen/sp_14"

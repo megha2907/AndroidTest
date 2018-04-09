@@ -51,7 +51,7 @@ public class PrivateContestPrizeListRecyclerAdapter extends RecyclerView.Adapter
 
             if (prizeListItemDto != null) {
                 viewHolder.rankTextView.setText(AppSnippet.ordinal(prizeListItemDto.getWinnerRank()));
-                viewHolder.sharePercentTextView.setText(CodeSnippet.getFormattedPercentage(prizeListItemDto.getSharePercent()));
+                viewHolder.sharePercentTextView.setText(CodeSnippet.getFormattedPercentage(prizeListItemDto.getSharePercent()) + "%");
                 viewHolder.calculatedAmtTextView.setText(Constants.RUPEE_SYMBOL + String.valueOf(prizeListItemDto.getAmount()));
             }
         }

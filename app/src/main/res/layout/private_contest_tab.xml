@@ -14,7 +14,7 @@
         android:layout_height="@dimen/dim_18"
         android:layout_marginTop="@dimen/dim_4"
         android:src="@drawable/pvt_contest_tab_icn"
-        android:layout_marginBottom="@dimen/dim_2"/>
+        android:layout_marginBottom="@dimen/dim_4"/>
 
     <com.jeeva.android.widgets.customfont.CustomTextView
         android:id="@+id/contest_type_tab_textView"

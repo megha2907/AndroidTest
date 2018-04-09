@@ -658,6 +658,8 @@ public class NostraHomeActivity extends NostraBaseActivity implements View.OnCli
                     Boolean otpVerified = userInfo.getInfoDetails().getOtpVerified();
                     if (otpVerified == null || !otpVerified) {
                         launchVerifyOTP();
+                    } else {
+                        checkForPrivateContest();
                     }
                 }
             }

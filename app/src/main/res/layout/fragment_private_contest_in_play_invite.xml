@@ -81,7 +81,8 @@
                 android:textColor="@color/paid_entry_tv_color"
                 android:textSize="@dimen/sp_11"
                 app:typeface="lato_bold"
-                android:layout_marginLeft="@dimen/dim_7"/>
+                android:layout_marginLeft="@dimen/dim_7"
+                android:layout_marginBottom="@dimen/dim_2"/>
 
         </LinearLayout>
 

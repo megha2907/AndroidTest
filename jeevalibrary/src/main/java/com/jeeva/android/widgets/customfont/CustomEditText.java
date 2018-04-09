@@ -5,6 +5,7 @@ import android.content.res.TypedArray;
 import android.support.v7.widget.AppCompatEditText;
 import android.util.AttributeSet;
 import android.view.KeyEvent;
+import android.view.inputmethod.EditorInfo;
 
 import com.jeeva.android.R;
 
@@ -40,14 +41,27 @@ public class CustomEditText extends AppCompatEditText /*implements TextWatcher*/
                 event.getAction() == KeyEvent.ACTION_UP) {
             if (mOnImeBack != null) {
                 mOnImeBack.onImeBack(this, this.getText().toString());
-                return true;
+//                return true;
             }
         }
         return super.dispatchKeyEvent(event);
     }
 
+    @Override
+    public void onEditorAction(int actionCode) {
+        switch (actionCode) {
+            case EditorInfo.IME_ACTION_DONE:
+                if (mOnImeBack != null) {
+                    mOnImeBack.onImeActionDoneClicked();
+                }
+                break;
+        }
+        super.onEditorAction(actionCode);
+    }
+
     public interface EditTextImeBackListener {
 
         void onImeBack(CustomEditText ctrl, String text);
+        void onImeActionDoneClicked();
     }
 }

@@ -55,7 +55,7 @@
                             android:ellipsize="end"
                             android:includeFontPadding="false"
                             android:singleLine="true"
-                            android:maxLength="16"
+                            android:maxLength="18"
                             android:text=""
                             android:textColor="@color/white"
                             android:textSize="@dimen/sp_13"
