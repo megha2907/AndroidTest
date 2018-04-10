@@ -182,7 +182,7 @@ public class ContestFragment extends NostraBaseFragment implements View.OnClickL
         }
     }
 
-    private void showOnUi(List<ContestType> contestTypeList, List<Contest> contestList, int maxPowerUpTransferLimit) {
+    private void showOnUi(final List<ContestType> contestTypeList, final List<Contest> contestList, int maxPowerUpTransferLimit) {
         if (getView() != null && getActivity() != null && mContestScreenData != null) {
             if (contestTypeList != null && contestTypeList.size() > 0
                     && contestList != null && contestList.size() > 0) {
@@ -190,9 +190,9 @@ public class ContestFragment extends NostraBaseFragment implements View.OnClickL
                 addChallengeDetailsIntoContest(contestList);
 
                 TabLayout contestTabLayout = (TabLayout) getView().findViewById(R.id.contest_tabs);
-                ViewPager challengesViewPager = (ViewPager) getView().findViewById(R.id.contest_viewPager);
+                ViewPager contestViewPager = (ViewPager) getView().findViewById(R.id.contest_viewPager);
 
-                ArrayList<Fragment> fragmentList = new ArrayList<>();
+                final ArrayList<Fragment> fragmentList = new ArrayList<>();
                 ContestFilterHelper filterHelper = new ContestFilterHelper();
                 ContestViewPagerFragment tabFragment = null;
 
@@ -241,9 +241,9 @@ public class ContestFragment extends NostraBaseFragment implements View.OnClickL
 
                 ContestViewPagerAdapter viewPagerAdapter = new ContestViewPagerAdapter(
                         getActivity().getSupportFragmentManager(), fragmentList);
-                challengesViewPager.setAdapter(viewPagerAdapter);
+                contestViewPager.setAdapter(viewPagerAdapter);
 
-                contestTabLayout.setupWithViewPager(challengesViewPager);
+                contestTabLayout.setupWithViewPager(contestViewPager);
 
                 for (int temp = 0; temp < contestTabLayout.getTabCount(); temp++) {
                     TabLayout.Tab tab = contestTabLayout.getTabAt(temp);
@@ -253,9 +253,25 @@ public class ContestFragment extends NostraBaseFragment implements View.OnClickL
                 }
 
                 if (fragmentList.size() > 1) {
-                    challengesViewPager.setCurrentItem(1);  // default tab should be non-Private contest tab
+                    contestViewPager.setCurrentItem(1);  // default tab should be non-Private contest tab
                 }
                 setValues(contestList);
+
+                /* track click event on contest type tabs */
+                contestViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+                    public void onPageScrollStateChanged(int state) {
+                    }
+
+                    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                    }
+
+                    public void onPageSelected(int position) {
+                        if (!contestTypeList.isEmpty() && contestTypeList != null && contestTypeList.get(position) != null) {
+                            NostragamusAnalytics.getInstance().trackTabClicked(Constants.AnalyticsCategory.CONTEST,
+                                    contestTypeList.get(position).getCategoryName());
+                        }
+                    }
+                });
 
             } else {
                 handleError(-1);
@@ -391,6 +407,7 @@ public class ContestFragment extends NostraBaseFragment implements View.OnClickL
                     joinContestData.setEntryFee(contest.getEntryFee());
                     joinContestData.setJoiContestDialogLaunchMode(CompletePaymentDialogFragment.DialogLaunchMode.JOINING_CHALLENGE_LAUNCH);
                     joinContestData.setContestName(contest.getConfigName());
+                    joinContestData.setPrizeMoney(contest.getPrizes());
 
                     if (contest.getContestType() != null) {
                         joinContestData.setContestType(contest.getContestType().getCategoryName());
@@ -434,16 +451,13 @@ public class ContestFragment extends NostraBaseFragment implements View.OnClickL
                                 }
 
                                 @Override
-                                public void joinContestSuccess(JoinContestData contestJoinedSuccessfully) {
+                                public void joinContestSuccess(JoinContestData contestJoinedSuccessfully, String orderId) {
 
                                     CustomProgressbar.getProgressbar(getContext()).dismissProgress();
                                     onContestJoinedSuccessfully(contestJoinedSuccessfully);
 
-                                    NostragamusAnalytics.getInstance().trackClickEvent(Constants.AnalyticsCategory.CONTEST_JOINED,
-                                            String.valueOf(contestJoinedSuccessfully.getContestId()));
-
                                     if (contestJoinedSuccessfully != null) {
-                                        sendContestJoinedDataToAmplitude(contestJoinedSuccessfully);
+                                        sendContestJoinedDataToAmplitude(contestJoinedSuccessfully, orderId);
                                     }
                                 }
 
@@ -526,11 +540,11 @@ public class ContestFragment extends NostraBaseFragment implements View.OnClickL
         }
     }
 
-    private void sendContestJoinedDataToAmplitude(JoinContestData contest) {
+    private void sendContestJoinedDataToAmplitude(JoinContestData contest, String orderId) {
 
         /* Joining a contest = Revenue */
         NostragamusAnalytics.getInstance().trackRevenue(contest.getEntryFee(), contest.getContestId(),
-                contest.getContestName(), contest.getContestType());
+                contest.getContestName(), contest.getContestType(), orderId);
 
         /* Send Contest Joined Details to Amplitude */
         Bundle activityBundle = null;
@@ -568,21 +582,29 @@ public class ContestFragment extends NostraBaseFragment implements View.OnClickL
                             screenName = "In Play Join Contest";
                             break;
 
+                        case ContestsActivity.LaunchedFrom.SELECT_PAYMENT_MODE:
+                            screenName = "Wallet Low Balance";
+                            break;
+
                     }
 
-                    NostragamusAnalytics.getInstance().trackContestJoined(contest.getContestId(),
+                    NostragamusAnalytics.getInstance().trackContestJoined(
                             contest.getContestName(), contest.getContestType(),
-                            (int) contest.getEntryFee(), contest.getChallengeId(), screenName);
+                            (int) contest.getEntryFee(), screenName,
+                            contest.getChallengeName(), contest.getPrizeMoney());
                 } else {
-                    NostragamusAnalytics.getInstance().trackContestJoined(contest.getContestId(),
+                    NostragamusAnalytics.getInstance().trackContestJoined(
                             contest.getContestName(), contest.getContestType(),
-                            (int) contest.getEntryFee(), contest.getChallengeId(), "contest");
+                            (int) contest.getEntryFee(), "contest",
+                            contest.getChallengeName(), contest.getPrizeMoney());
+
                 }
             }
         } else {
-            NostragamusAnalytics.getInstance().trackContestJoined(contest.getContestId(),
+            NostragamusAnalytics.getInstance().trackContestJoined(
                     contest.getContestName(), contest.getContestType(),
-                    (int) contest.getEntryFee(), contest.getChallengeId(), "contest");
+                    (int) contest.getEntryFee(), "contest",
+                    contest.getChallengeName(), contest.getPrizeMoney());
         }
     }
 

@@ -139,10 +139,12 @@ public class WalletHomeFragment extends BaseFragment implements View.OnClickList
                 }
 
                 @Override
-                public void onFailedGetUpdateUserInfo(String message) {}
+                public void onFailedGetUpdateUserInfo(String message) {
+                }
 
                 @Override
-                public void onNoInternet() {}
+                public void onNoInternet() {
+                }
             }).getUserInfo();
         } else {
             Log.i(TAG, "No internet");
@@ -197,6 +199,7 @@ public class WalletHomeFragment extends BaseFragment implements View.OnClickList
             UserInfo userInfo = Nostragamus.getInstance().getServerDataManager().getUserInfo();
             if (userInfo != null && userInfo.getInfoDetails() != null && !TextUtils.isEmpty(userInfo.getInfoDetails().getKycStatus())) {
                 updateKYCStatus(userInfo.getInfoDetails().getKycStatus(), kycStatusTv, kycTv, kycIcon, tickIcon);
+                NostragamusAnalytics.getInstance().trackEvent(Constants.AnalyticsCategory.KYC, Constants.AnalyticsCategory.KYC_STATUS, userInfo.getInfoDetails().getKycStatus());
             }
         }
     }
@@ -286,6 +289,7 @@ public class WalletHomeFragment extends BaseFragment implements View.OnClickList
                 break;
 
             case R.id.wallet_kyc_layout:
+                NostragamusAnalytics.getInstance().trackClickEvent(Constants.AnalyticsCategory.WALLET, Constants.AnalyticsClickLabels.KYC);
                 onKYCClicked();
                 break;
         }
@@ -334,7 +338,7 @@ public class WalletHomeFragment extends BaseFragment implements View.OnClickList
     }
 
     private void onWithdrawMoneyClicked() {
-        checkKYCStatus();
+        checkKYCStatusForWithdrawal();
     }
 
     private void onAddMoneyClicked() {
@@ -356,12 +360,14 @@ public class WalletHomeFragment extends BaseFragment implements View.OnClickList
             case Constants.KYCStatus.NOT_REQUIRED:
                 if (mFragmentListener != null) {
                     mFragmentListener.onKYCClicked();
+                    NostragamusAnalytics.getInstance().trackEvent(Constants.AnalyticsCategory.KYC, Constants.AnalyticsActions.OPENED_FROM, Constants.AnalyticsCategory.WALLET_MENU);
                 }
                 break;
 
             case Constants.KYCStatus.REQUIRED:
                 if (mFragmentListener != null) {
                     mFragmentListener.onKYCClicked();
+                    NostragamusAnalytics.getInstance().trackEvent(Constants.AnalyticsCategory.KYC, Constants.AnalyticsActions.OPENED_FROM, Constants.AnalyticsCategory.WALLET_MENU);
                 }
                 break;
 
@@ -377,61 +383,78 @@ public class WalletHomeFragment extends BaseFragment implements View.OnClickList
             case Constants.KYCStatus.FAILED:
                 if (mFragmentListener != null) {
                     mFragmentListener.onKYCClicked();
+                    NostragamusAnalytics.getInstance().trackEvent(Constants.AnalyticsCategory.KYC, Constants.AnalyticsActions.OPENED_FROM, Constants.AnalyticsCategory.WALLET_MENU);
                 }
                 break;
 
             case Constants.KYCStatus.BLOCKED:
                 if (mFragmentListener != null) {
-                    mFragmentListener.onOpenKYCBlockedPopup();
+                    // No click on blocked
                 }
                 break;
 
         }
     }
 
-    private void checkKYCStatus() {
+    private void checkKYCStatusForWithdrawal() {
 
         String kycStatusFromServer = "";
 
+        boolean withdrawBlocked = false;
         UserInfo userInfo = Nostragamus.getInstance().getServerDataManager().getUserInfo();
         if (userInfo != null && userInfo.getInfoDetails() != null && !TextUtils.isEmpty(userInfo.getInfoDetails().getKycStatus())) {
             kycStatusFromServer = userInfo.getInfoDetails().getKycStatus();
+            withdrawBlocked = userInfo.getInfoDetails().isWithdrawalBlocked();
         }
 
         switch (kycStatusFromServer) {
             case Constants.KYCStatus.NOT_REQUIRED:
                 if (mFragmentListener != null) {
-                    mFragmentListener.onAddMoneyClicked();
+                    mFragmentListener.onWithdrawMoneyClicked();
                 }
                 break;
 
             case Constants.KYCStatus.REQUIRED:
                 if (mFragmentListener != null) {
                     mFragmentListener.onKYCClicked();
+                    NostragamusAnalytics.getInstance().trackEvent(Constants.AnalyticsCategory.KYC, Constants.AnalyticsActions.OPENED_FROM, Constants.AnalyticsCategory.WALLET_WITHDRAW_MONEY);
                 }
                 break;
 
             case Constants.KYCStatus.UPLOADED:
                 if (mFragmentListener != null) {
-                    mFragmentListener.onOpenKYCRequiredPopup();
+                    if (withdrawBlocked) {
+                        mFragmentListener.onOpenKYCRequiredPopup();
+                    } else {
+                        mFragmentListener.onWithdrawMoneyClicked();
+                    }
                 }
                 break;
 
             case Constants.KYCStatus.VERIFIED:
                 if (mFragmentListener != null) {
-                    mFragmentListener.onAddMoneyClicked();
+                    mFragmentListener.onWithdrawMoneyClicked();
                 }
                 break;
 
             case Constants.KYCStatus.FAILED:
                 if (mFragmentListener != null) {
-                    mFragmentListener.onKYCClicked();
+                    if (withdrawBlocked) {
+                        mFragmentListener.onKYCClicked();
+                        NostragamusAnalytics.getInstance().trackEvent(Constants.AnalyticsCategory.KYC, Constants.AnalyticsActions.OPENED_FROM, Constants.AnalyticsCategory.WALLET_WITHDRAW_MONEY);
+                    } else {
+                        mFragmentListener.onWithdrawMoneyClicked();
+                    }
                 }
                 break;
 
             case Constants.KYCStatus.BLOCKED:
                 if (mFragmentListener != null) {
-                    mFragmentListener.onOpenKYCBlockedPopup();
+                    if (withdrawBlocked) {
+                        // No click on blocked
+                    } else {
+                        mFragmentListener.onWithdrawMoneyClicked();
+                    }
                 }
                 break;
 

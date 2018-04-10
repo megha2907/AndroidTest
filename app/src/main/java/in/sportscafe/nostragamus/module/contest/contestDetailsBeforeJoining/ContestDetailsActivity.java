@@ -117,6 +117,7 @@ public class ContestDetailsActivity extends NostraBaseActivity implements Contes
                     joinContestData.setEntryFee(contest.getEntryFee());
                     joinContestData.setJoiContestDialogLaunchMode(CompletePaymentDialogFragment.DialogLaunchMode.JOINING_CHALLENGE_LAUNCH);
                     joinContestData.setContestName(contest.getConfigName());
+                    joinContestData.setPrizeMoney(contest.getPrizes());
 
                     if (contest.getContestType() != null) {
                         joinContestData.setContestType(contest.getContestType().getCategoryName());
@@ -161,15 +162,12 @@ public class ContestDetailsActivity extends NostraBaseActivity implements Contes
                                     }
 
                                     @Override
-                                    public void joinContestSuccess(JoinContestData contestJoinedSuccessfully) {
+                                    public void joinContestSuccess(JoinContestData contestJoinedSuccessfully, String orderId) {
                                         CustomProgressbar.getProgressbar(ContestDetailsActivity.this).dismissProgress();
                                         onContestJoinedSuccessfully(contestJoinedSuccessfully);
 
-                                        NostragamusAnalytics.getInstance().trackClickEvent(Constants.AnalyticsCategory.CONTEST_JOINED,
-                                                String.valueOf(contestJoinedSuccessfully.getContestId()));
-
                                         if (contestJoinedSuccessfully != null) {
-                                            sendContestJoinedDataToAmplitude(contestJoinedSuccessfully);
+                                            sendContestJoinedDataToAmplitude(contestJoinedSuccessfully, orderId);
                                         }
                                     }
 
@@ -274,16 +272,17 @@ public class ContestDetailsActivity extends NostraBaseActivity implements Contes
         }
     }
 
-    private void sendContestJoinedDataToAmplitude(JoinContestData contest) {
+    private void sendContestJoinedDataToAmplitude(JoinContestData contest, String orderId) {
 
         /* Joining a contest = Revenue */
         NostragamusAnalytics.getInstance().trackRevenue(contest.getEntryFee(), contest.getContestId(),
-                contest.getContestName(), contest.getContestType());
+                contest.getContestName(), contest.getContestType(), orderId);
 
         /* Send Contest Joined Details to Amplitude */
-        NostragamusAnalytics.getInstance().trackContestJoined(contest.getContestId(),
+        NostragamusAnalytics.getInstance().trackContestJoined(
                 contest.getContestName(), contest.getContestType(),
-                (int) contest.getEntryFee(), contest.getChallengeId(), "Contest Details - Join Contest");
+                (int) contest.getEntryFee(), "Contest Details - Join Contest",
+                contest.getChallengeName(), contest.getPrizeMoney());
 
     }
 

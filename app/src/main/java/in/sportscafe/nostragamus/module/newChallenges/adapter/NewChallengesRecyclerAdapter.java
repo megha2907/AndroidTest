@@ -329,7 +329,11 @@ public class NewChallengesRecyclerAdapter extends RecyclerView.Adapter<RecyclerV
                 mChallengeListener.onChallengeClicked(args);
                 NostragamusAnalytics.getInstance().trackNewChallenges(newChallengesResponse.getChallengeId(),
                         newChallengesResponse.getChallengeName(), newChallengesResponse.getSportsIdArray(),
+                        newChallengesResponse.getPrizes(), newChallengesResponse.getChallengeStartTime(),
                         Constants.AnalyticsCategory.NEW_CHALLENGES);
+
+                NostragamusAnalytics.getInstance().trackFabricContentRealTimeEvent("Challenge", newChallengesResponse.getChallengeName(),
+                        String.valueOf(newChallengesResponse.getChallengeId()));
             }
         }
     }

@@ -33,6 +33,7 @@ import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.R;
+import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
 import in.sportscafe.nostragamus.module.common.NostraSnapHelper;
 import in.sportscafe.nostragamus.module.customViews.CustomSnackBar;
 import in.sportscafe.nostragamus.module.newChallenges.adapter.BannerAdapterListener;
@@ -96,7 +97,6 @@ public class NewChallengesViewPagerFragment extends BaseFragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         loadData();
-        loadBannerData();
     }
 
     private void loadData() {
@@ -109,6 +109,7 @@ public class NewChallengesViewPagerFragment extends BaseFragment {
         if (mSportsTab != null) {
             switch (mSportsTab.getSportsId()) {
                 case SportsDataProvider.FILTER_ALL_SPORTS_ID:
+                    loadBannerData();
                     showAdSection();
                     break;
             }
@@ -223,6 +224,7 @@ public class NewChallengesViewPagerFragment extends BaseFragment {
                     if (NostragamusDataHandler.getInstance().isLoggedInUser()) {
                         String screenName = notification.getScreenName();
                         Log.d("Banner", "ScreenName : " + screenName);
+                        NostragamusAnalytics.getInstance().trackBanners("BannerName", bannerResponseData.getBannerName());
 
                         if (screenName.equalsIgnoreCase(Constants.Notifications.SCREEN_NEW_CHALLENGE)) {
                             Bundle bundle = new Bundle();
@@ -316,7 +318,7 @@ public class NewChallengesViewPagerFragment extends BaseFragment {
                         } else if (screenName.equalsIgnoreCase(Constants.Notifications.SCREEN_POWERUP_TRANSACTION)) {
                             startActivity(notificationHelper.getPowerUpTransactionScreenIntent(getContext(), notification));
 
-                        }  else if (screenName.equalsIgnoreCase(Constants.Notifications.NONE)) {
+                        } else if (screenName.equalsIgnoreCase(Constants.Notifications.NONE)) {
                             /* NO CLICK EVENT SHOULD HAPPEN */
                         }
 

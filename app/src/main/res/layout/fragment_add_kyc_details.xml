@@ -412,7 +412,7 @@
                     android:layout_marginLeft="@dimen/dim_21"
                     android:layout_marginRight="@dimen/dim_21"
                     android:layout_marginTop="@dimen/dim_10"
-                    android:paddingBottom="@dimen/dim_50"
+                    android:paddingBottom="@dimen/dim_10"
                     android:visibility="gone">
 
                     <ImageView

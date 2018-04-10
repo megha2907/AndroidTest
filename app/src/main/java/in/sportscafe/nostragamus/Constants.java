@@ -238,6 +238,7 @@ public interface Constants {
         String COULD_NOT_FETCH_DATA_FROM_SERVER = "Could not fetch data from Server!";
         String CHALLENGE_STARTED_ALERT_FOR_TIMER = "Please join other challenges as %s already started";
         String NO_MORE_HISTORY = "No more history available";
+        String COULD_NOT_LOAD_IMAGE = "Could not load image! Try again!";
 
         /*--- Paytm Msg ---*/
         String PAYTM_AUTHENTICATION_FAILED = "Could not transact, please try again";
@@ -496,7 +497,6 @@ public interface Constants {
         String LOGOUT = "Logout";
         String EDIT_PROFILE = "Edit Profile";
         String PROFILE = "Profile";
-        String PLAY = "Play";
         String BADGE = "Badge";
         String FLAVOR = "Flavor";
         String APP_UPDATE = "App Update";
@@ -533,6 +533,17 @@ public interface Constants {
         String WALLET_POPUP = "Wallet Popup";
         String REVENUE = "Revenue";
         String PAYMENT_MODE = "Payment Mode";
+        String BANNERS = "Banners";
+        String PLAY = "Play";
+        String POWERUP_BANK_SCREEN = "Powerup Bank Screen";
+        String ADD_MONEY = "Add Money";
+        String MATCH_REMINDER = "Match Reminder";
+        String ACTIVITY = "Activity";
+        String WALLET_MENU = "Wallet Menu";
+
+        String KYC = "KYC";
+        String KYC_STATUS = "KYC Status";
+        String POST_SIGN_UP = "Post SignUp";
     }
 
     interface AnalyticsClickLabels {
@@ -564,6 +575,7 @@ public interface Constants {
         String WITHDRAW = "Withdraw";
         String TRANSACTION_HISTORY = "Transaction History";
         String ADD_EDIT_WITHDRAWAL_DETAILS = "Add/Edit Withdraw Details";
+        String KYC = "KYC";
 
         /* Refer */
         String REFER_NOW = "Refer Now";
@@ -573,7 +585,6 @@ public interface Constants {
 
         /* Contest */
         String CARD = "Card";
-        String PRIZES = "Prizes";
         String MAX_ENTRIES = "Max Entries";
         String ENTRY_FEE = "Entry Fee";
         String MODE = "Mode";
@@ -581,6 +592,7 @@ public interface Constants {
         String CONTEST_LOW_MONEY = "Low Money";
         String CONTEST_MODES_POPUP = "Contest Modes Popup";
         String INVITE_PRIVATE_CONTEST = "Invite Private Contest";
+        String JOIN_BUTTON = "Join Button";
 
         /* in play */
         String HEADLESS_CARD = "Headless Card";
@@ -590,12 +602,26 @@ public interface Constants {
         /* in play contest details */
         String GAMES = "Games";
         String LEADERBOARD = "Leaderboard";
-        String RULES = "Rules";
 
         /* Play */
         String PSEUDO_GAME_FLOW = "Pseudo Game Flow";
+        String ADD_DOUBLER = "Add Doubler";
+        String ADD_NO_NEGATIVE = "Add No Negative";
+        String ADD_AUDIENCE_POLL = "Add Audience Poll";
+        String TRANSFER_TO_CHALLENGE = "Transfer To Challenge";
+        String RESET_POWERUP = "Reset Powerup";
+        String BUY_DOUBLER = "Buy Doubler";
+        String BUY_NO_NEGATIVE = "Buy No Negative";
+        String BUY_AUDIENCE_POLL = "Buy Audience Poll";
 
         String DEPOSIT_MONEY = "Deposit Money";
+        String HOW_TO_USE_POWERUP_BANK = "How to use powerup bank";
+        String TRANSACTION_FAILED = "Transaction Failed";
+        String TRANSACTION_SUCCESS = "Transaction Success";
+
+        String ENTRIES = "Entries";
+        String PRIZES = "Prizes";
+        String RULES = "Rules";
     }
 
     interface AnalyticsActions {
@@ -637,6 +663,12 @@ public interface Constants {
         String VIEW_OTHERS_ANSWERS = "View Other's Answers";
         String OTHERS_RESULTS_WAITING = "Other's Results Waiting";
         String CONTEST_JOINED = "Contest Joined";
+        String TAB_CLICKED = "tab_clicked";
+        String SEND = "SEND";
+        String OPENED_FROM = "Opened From";
+        String EDITED_PROFILE = "Edited Profile";
+        String ENTERED_MOBILE = "Entered Mobile";
+        String VERIFIED_OTP = "Verified OTP";
     }
 
     interface AnalyticsLabels {
@@ -655,6 +687,7 @@ public interface Constants {
         String NOTIFICATION = "Notification";
         String GROUP = "Group";
         String REFER_FRIEND = "Refer Friend";
+        String REFER_FRIEND_BUTTON = "Refer Friend Button";
         String PROFILE = "Profile";
         String NO_POWERUP = "No Powerup";
     }
@@ -668,6 +701,16 @@ public interface Constants {
         String LINK_NAME = "Link Name";
         String ACL_APP = "Acl App";
         String APP_VERSION = "App Version";
+        String HAS_SPENT = "has_spent";
+        String HAS_DEPOSITED = "has_deposited";
+        String COUNT_CONTESTS_JOINED = "count_contests_joined";
+        String COUNT_PAID_CONTESTS_JOINED = "count_paid_contests_joined";
+        String LAST_PLAYED_SPORT = "last_played_sport";
+        String MOST_PLAYED_SPORT = "most_played_sport";
+        String HAS_REFERRED = "has_referred";
+        String COUNT_REFERRALS = "count_referrals";
+        String COUNT_DEPOSITS = "count_deposits";
+        String PAID_CONTESTS_JOINED = "paid_contests_joined";
     }
 
     interface AppType {
@@ -984,6 +1027,7 @@ public interface Constants {
         int NO_INTERNET = 6;
         int NO_MORE_DATA_WHILE_LOAD_MORE = 7;
         int FROM_DATABASE_CACHED_DATA = 8;
+        int COULD_NOT_LOAD_IMAGE = 9;
     }
 
     interface MatchStatusStrings {

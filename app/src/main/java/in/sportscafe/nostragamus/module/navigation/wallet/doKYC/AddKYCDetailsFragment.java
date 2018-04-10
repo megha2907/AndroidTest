@@ -1,10 +1,13 @@
 package in.sportscafe.nostragamus.module.navigation.wallet.doKYC;
 
+import android.Manifest;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -17,6 +20,7 @@ import android.os.Environment;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.Toolbar;
@@ -35,6 +39,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.jeeva.android.BaseFragment;
+import com.jeeva.android.Log;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -105,6 +110,24 @@ public class AddKYCDetailsFragment extends BaseFragment implements View.OnFocusC
         super.onActivityCreated(savedInstanceState);
 
         checkKYCStatus();
+        checkForPermissions();
+    }
+
+    private void checkForPermissions() {
+
+        if (getActivity() != null) {
+            // Check if we have write permission
+            int permission = ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE);
+
+            if (permission != PackageManager.PERMISSION_GRANTED) {
+                // We don't have permission so prompt the user
+                ActivityCompat.requestPermissions(
+                        getActivity(),
+                        Constants.AppPermissions.STORAGE,
+                        Constants.RequestCodes.STORAGE_PERMISSION
+                );
+            }
+        }
     }
 
 
@@ -197,14 +220,14 @@ public class AddKYCDetailsFragment extends BaseFragment implements View.OnFocusC
         TextView kycBenefitsOne = (TextView) rootView.findViewById(R.id.kyc_benefits_text_one);
         if (!TextUtils.isEmpty(NostragamusDataHandler.getInstance().getKYCBenefitsOne())) {
             kycBenefitsOne.setText(NostragamusDataHandler.getInstance().getKYCBenefitsOne());
-        }else {
-            kycBenefitsOne.setText("After winning above ₹2500, KYC details are mandatory to make withdrawals");
+        } else {
+            kycBenefitsOne.setText("You have reached your transaction limit. Please update your KYC to make withdrawals");
         }
 
         TextView kycBenefitsTwo = (TextView) rootView.findViewById(R.id.kyc_benefits_text_two);
         if (!TextUtils.isEmpty(NostragamusDataHandler.getInstance().getKYCBenefitsTwo())) {
             kycBenefitsTwo.setText(NostragamusDataHandler.getInstance().getKYCBenefitsTwo());
-        }else {
+        } else {
             kycBenefitsTwo.setText("On updating KYC, users will get 2 powerups each added to their powerup bank!");
         }
 
@@ -224,10 +247,6 @@ public class AddKYCDetailsFragment extends BaseFragment implements View.OnFocusC
 
 
         final Calendar dobCalendar = Calendar.getInstance();
-        int year = dobCalendar.get(Calendar.YEAR);
-        int month = dobCalendar.get(Calendar.MONTH);
-        int day = dobCalendar.get(Calendar.DAY_OF_MONTH);
-
         final DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
 
             @Override
@@ -360,6 +379,7 @@ public class AddKYCDetailsFragment extends BaseFragment implements View.OnFocusC
         if (getActivity() != null) {
             GetKYCDetailsDataProvider dataProvider = new GetKYCDetailsDataProvider();
             dataProvider.getKYCDetails(getContext(), getKYCDetailsCallBackListener());
+            showLoadingProgressBar();
         }
     }
 
@@ -381,28 +401,41 @@ public class AddKYCDetailsFragment extends BaseFragment implements View.OnFocusC
 
             @Override
             public void onImageData(int status, @Nullable ResponseBody body) {
-                if (body != null && mPanImageView != null) {
-                    // display the image data in a ImageView
-                    Bitmap bm = BitmapFactory.decodeStream(body.byteStream());
-                    mPanImageView.setImageBitmap(bm);
-                    persistImage(body.byteStream());
-                    showImageView();
+                if (body != null) {
+                    if (DownloadImage(body)) {
+                        setPanCardImage();
+                    } else {
+                        onCouldNotLoadImage();
+                    }
+                } else {
+                    onCouldNotLoadImage();
                 }
+            }
+
+            @Override
+            public void onImageFailed() {
+                onCouldNotLoadImage();
             }
 
             @Override
             public void onNoInternet() {
                 if (mFragmentListener != null) {
-                    mFragmentListener.handleError("", Constants.DataStatus.NO_INTERNET);
+                    mFragmentListener.handleError("", Constants.DataStatus.FROM_SERVER_API_FAILED);
                 }
             }
         };
     }
 
+    private void onCouldNotLoadImage() {
+        if (mFragmentListener != null) {
+            mFragmentListener.handleError("", Constants.DataStatus.COULD_NOT_LOAD_IMAGE);
+        }
+    }
+
 
     private void setKYCDetails(KYCDetails kycDetails) {
 
-        if (kycDetails != null) {
+        if (kycDetails != null && getView() != null) {
             if (!TextUtils.isEmpty(kycDetails.getUserName())) {
                 mUserNameEditText.setText(kycDetails.getUserName());
             }
@@ -421,49 +454,63 @@ public class AddKYCDetailsFragment extends BaseFragment implements View.OnFocusC
 
     }
 
-    private void persistImage(InputStream inputStream) {
-        FileOutputStream out = null;
-        try {
-            panCardFile = getExternalRandomFile();
-            out = new FileOutputStream(panCardFile);
-            copyStream(inputStream, out);
-            out.close();
 
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
+    private boolean DownloadImage(ResponseBody body) {
+
+        try {
+            Log.d("DownloadImage", "Reading and writing file");
+            InputStream in = null;
+            FileOutputStream out = null;
+
             try {
+                in = body.byteStream();
+                out = new FileOutputStream(Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + "/Nostragamus");
+                // Transfer bytes from in to out
+                byte[] buf = new byte[1024];
+                int len;
+                while ((len = in.read(buf)) > 0) {
+                    out.write(buf, 0, len);
+                }
+
+            } catch (IOException e) {
+                Log.d("DownloadImage", e.toString());
+                return false;
+            } finally {
+                if (in != null) {
+                    in.close();
+                }
                 if (out != null) {
                     out.close();
                 }
-            } catch (IOException e) {
-                e.printStackTrace();
             }
+
+            return true;
+
+        } catch (IOException e) {
+            Log.d("DownloadImage", e.toString());
+            onCouldNotLoadImage();
+            return false;
         }
     }
 
-    private File getExternalRandomFile() {
-        File dir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
-                .getAbsolutePath() + "/Nostragamus");
-        dir.mkdirs();
+    private void setPanCardImage() {
 
-        if (dir.exists()) {
-            try {
-                return File.createTempFile("IMG_" + Calendar.getInstance().getTimeInMillis(), ".png", dir);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+        if (mPanImageView != null) {
+            int width, height;
+            panCardFile = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + "/Nostragamus");
+            Bitmap bMap = BitmapFactory.decodeFile(Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + "/Nostragamus");
+            width = bMap.getWidth();
+            height = bMap.getHeight();
+            Bitmap bMap2 = Bitmap.createScaledBitmap(bMap, width, height, false);
+            mPanImageView.setImageBitmap(bMap2);
+            showImageView();
+            hideLoadingProgressBar();
+        } else {
+            onCouldNotLoadImage();
         }
-        return null;
+
     }
 
-    public static void copyStream(InputStream in, OutputStream out) throws IOException {
-        byte[] buffer = new byte[1024];
-        int read;
-        while ((read = in.read(buffer)) != -1) {
-            out.write(buffer, 0, read);
-        }
-    }
 
     public void onAddKYCDetailsSaveClicked() {
 
@@ -517,7 +564,7 @@ public class AddKYCDetailsFragment extends BaseFragment implements View.OnFocusC
                 dobHeading.setTextColor(ContextCompat.getColor(getContext(), R.color.radical_red));
                 dobEditText.getBackground().setColorFilter(ContextCompat.getColor(getContext(), R.color.radical_red), PorterDuff.Mode.SRC_IN);
             } // check if Pan card image uploaded
-            else if(!hasImage(panImageView)) {
+            else if (!hasImage(panImageView)) {
                 uploadPanErrorTextView.setVisibility(View.VISIBLE);
                 panCardErrorTextView.setVisibility(View.GONE);
                 nameErrorTextView.setVisibility(View.GONE);

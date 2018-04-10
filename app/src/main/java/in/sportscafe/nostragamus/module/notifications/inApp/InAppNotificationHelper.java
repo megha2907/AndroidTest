@@ -20,6 +20,7 @@ import java.util.Random;
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.R;
+import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
 import in.sportscafe.nostragamus.module.inPlay.dto.InPlayContestDto;
 import in.sportscafe.nostragamus.module.nostraHome.ui.NostraHomeActivity;
 import in.sportscafe.nostragamus.module.notifications.NostraNotification;
@@ -37,6 +38,7 @@ public class InAppNotificationHelper {
 
     /**
      * Checks OR Sets repeating alarm for InApp Notifications
+     *
      * @param appContext
      */
     public synchronized void setAlarmForInAppNotifications(Context appContext) {
@@ -60,6 +62,7 @@ public class InAppNotificationHelper {
 
     /**
      * sends InApp Notifications
+     *
      * @param appContext
      * @param title
      * @param msg
@@ -87,11 +90,12 @@ public class InAppNotificationHelper {
         NotificationManager notificationManager = (NotificationManager) appContext.getSystemService(Context.NOTIFICATION_SERVICE);
         notificationManager.notify(requestCode, notificationBuilder.build());
 
+        NostragamusAnalytics.getInstance().trackInAppNotifications(Constants.AnalyticsActions.SEND, inPlayContestDto.getContestName());
     }
 
     /**
      * InApp notifications also, will work as normal notifications which do pass data for notification actions
-     *
+     * <p>
      * These need to be handled same as GCM/FCM (Moengage) notifications flows
      *
      * @param inPlayContestDto

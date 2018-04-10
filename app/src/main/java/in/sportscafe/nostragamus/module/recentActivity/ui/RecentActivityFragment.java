@@ -28,6 +28,7 @@ import java.util.List;
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.R;
+import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
 import in.sportscafe.nostragamus.module.common.NostraBaseFragment;
 import in.sportscafe.nostragamus.module.customViews.CustomSnackBar;
 import in.sportscafe.nostragamus.module.nostraHome.ui.NostraHomeActivityListener;
@@ -304,6 +305,8 @@ public class RecentActivityFragment extends NostraBaseFragment {
                     if (NostragamusDataHandler.getInstance().isLoggedInUser()) {
                         String screenName = notification.getScreenName();
                         Log.d("Banner", "ScreenName : " + screenName);
+
+                        NostragamusAnalytics.getInstance().trackClickEvent(Constants.AnalyticsCategory.ACTIVITY, recentActivity.getActivityType());
 
                         if (screenName.equalsIgnoreCase(Constants.Notifications.SCREEN_NEW_CHALLENGE)) {
                             Bundle bundle = new Bundle();

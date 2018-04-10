@@ -19,8 +19,11 @@
     <string name="firebase_app_id">1:576361348926:android:3c3bd6e49df59227</string>
     <string name="firebase_api_key">AIzaSyDlx9THo_Luvb9ldGDznisfFX3rTks85HQ</string>
     <string name="firebase_gcm_sender_id">576361348926</string>
+    <string name="firebase_token">AIzaSyBrV_SlcRbyF_YLZDTghKrZKc066uMuxw4</string>
     <string name="firebase_url">https://sportscafe-scgame-prod.firebaseio.com</string>
     <string name="cashfree_app_id">374123e1b8eb30b2ec8838d473</string>
+    <string name="aws_pinpoint_pool_id">ap-southeast-1:9b181389-3a74-4cc6-89c1-3c99a50e428d</string>
+    <string name="aws_app_id">2dbeb11bf7474761afac1a7e69a61e25</string>
 
     <!-- Start App update -->
     <string name="new_version_title">New Version Available!</string>

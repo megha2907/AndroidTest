@@ -13,6 +13,7 @@ public class ServerDataManager {
     private UserWalletResponse userWalletResponse;
     private UserInfo userInfo;
     private AppSettingsResponse appSettingsResponse;
+    private String gcmDeviceToken="";
 
     public UserWalletResponse getUserWalletResponse() {
         return userWalletResponse;
@@ -37,4 +38,14 @@ public class ServerDataManager {
     public void setAppSettingsResponse(AppSettingsResponse appSettingsResponse) {
         this.appSettingsResponse = appSettingsResponse;
     }
+
+    public String getGcmDeviceToken() {
+        return gcmDeviceToken;
+    }
+
+    public void setGcmDeviceToken(String gcmDeviceToken) {
+        this.gcmDeviceToken = gcmDeviceToken;
+    }
+
+
 }

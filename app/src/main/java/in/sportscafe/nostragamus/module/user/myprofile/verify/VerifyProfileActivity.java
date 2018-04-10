@@ -60,7 +60,7 @@ public class VerifyProfileActivity extends NostragamusActivity implements Verify
 
     private void setInfo() {
         UserInfo userInfo = Nostragamus.getInstance().getServerDataManager().getUserInfo();
-        if (userInfo!=null) {
+        if (userInfo != null) {
             userPhoto.setImageUrl(userInfo.getPhoto());
             userName.setText(userInfo.getUserName());
         }
@@ -142,7 +142,7 @@ public class VerifyProfileActivity extends NostragamusActivity implements Verify
 
             @Override
             public void onApiFailed() {
-                if (verifyOTPFragment!=null) {
+                if (verifyOTPFragment != null) {
                     verifyOTPFragment.hideLoadingProgressBar();
                 }
                 showMessage(Constants.Alerts.API_FAIL);
@@ -150,7 +150,7 @@ public class VerifyProfileActivity extends NostragamusActivity implements Verify
 
             @Override
             public void onSuccessResponse(VerifyOTPInfo verifyOTPInfo, String phoneNumber) {
-                if (verifyOTPFragment!=null) {
+                if (verifyOTPFragment != null) {
                     verifyOTPFragment.hideLoadingProgressBar();
                 }
             }
@@ -159,7 +159,7 @@ public class VerifyProfileActivity extends NostragamusActivity implements Verify
 
     private void verifyPhoneNumberValid(VerifyOTPInfo verifyOTPInfo, String phoneNumber) {
 
-        if (verifyOTPInfo!=null) {
+        if (verifyOTPInfo != null) {
             Integer verifyPhoneNumber = verifyOTPInfo.getValidOTPCode();
             if (verifyPhoneNumber == null || verifyPhoneNumber == 0) {
                 if (getActivity() != null) {
@@ -169,8 +169,9 @@ public class VerifyProfileActivity extends NostragamusActivity implements Verify
                 }
             } else {
                 loadVerifyOTPFragment(phoneNumber);
+                NostragamusAnalytics.getInstance().trackPostSignUp(Constants.AnalyticsActions.ENTERED_MOBILE);
             }
-        }else {
+        } else {
             if (getActivity() != null) {
                 if (verifyPhoneNumberFragment != null) {
                     verifyPhoneNumberFragment.setErrorMessage();
@@ -212,7 +213,7 @@ public class VerifyProfileActivity extends NostragamusActivity implements Verify
 
     private void verifyOTPValid(VerifyOTPInfo verifyOTPInfo) {
 
-        if (verifyOTPInfo!=null) {
+        if (verifyOTPInfo != null) {
             Integer verifyOTPCode = verifyOTPInfo.getValidOTPCode();
             if (verifyOTPCode == null || verifyOTPCode == 0) {
                 if (getActivity() != null) {
@@ -223,7 +224,7 @@ public class VerifyProfileActivity extends NostragamusActivity implements Verify
             } else {
                 checkForSuccessfulReferral(verifyOTPInfo.getWalletBalance());
             }
-        }else {
+        } else {
             if (getActivity() != null) {
                 if (verifyOTPFragment != null) {
                     verifyOTPFragment.setErrorMessage();
@@ -238,6 +239,8 @@ public class VerifyProfileActivity extends NostragamusActivity implements Verify
         NostragamusDataHandler.getInstance().setWalletInitialAmount(walletBalance);
         navigateToSuccessfulReferral();
         getAndSendTimeForOnBoarding();
+
+        NostragamusAnalytics.getInstance().trackPostSignUp(Constants.AnalyticsActions.VERIFIED_OTP);
 
         /* Intent intent = getIntent();
         Bundle extras = intent.getExtras();
@@ -273,7 +276,7 @@ public class VerifyProfileActivity extends NostragamusActivity implements Verify
             int secs = (int) (getTimeDiff / 1000);
 
             NostragamusAnalytics.getInstance().trackOnBoarding
-                    (Constants.AnalyticsActions.ONBOARDING_TIME,Constants.AnalyticsActions.ONBOARDING_TIME,secs);
+                    (Constants.AnalyticsActions.ONBOARDING_TIME, Constants.AnalyticsActions.ONBOARDING_TIME, secs);
         } else {
 
             NostragamusAnalytics.getInstance().trackOnBoarding
@@ -308,7 +311,7 @@ public class VerifyProfileActivity extends NostragamusActivity implements Verify
 
     @Override
     public void onBackPressed() {
-        Fragment fragment = getSupportFragmentManager().findFragmentById( R.id.fragment_container);
+        Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.fragment_container);
         if (fragment != null && fragment instanceof VerifyOTPFragment) {
             ((VerifyOTPFragment) fragment).onBackPressed(this);
             backBtn.setVisibility(View.INVISIBLE);

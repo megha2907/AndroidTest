@@ -1,5 +1,7 @@
 package in.sportscafe.nostragamus.module.nostraHome.ui;
 
+import android.app.Notification;
+import android.app.NotificationManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -7,7 +9,9 @@ import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.LocalBroadcastManager;
+import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.view.View;
@@ -18,17 +22,23 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.jeeva.android.Log;
 
 import org.parceler.Parcels;
+
+import java.lang.reflect.Type;
+import java.util.Map;
 
 import in.sportscafe.nostragamus.BuildConfig;
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
+import in.sportscafe.nostragamus.module.analytics.awsAnalytics.NostraGCMListener;
 import in.sportscafe.nostragamus.module.challengeCompleted.ui.CompletedChallengeHistoryFragment;
 import in.sportscafe.nostragamus.module.common.NostraBaseActivity;
+import in.sportscafe.nostragamus.module.common.NostraFireBaseMessagingService;
 import in.sportscafe.nostragamus.module.inPlay.ui.InPlayFragment;
 import in.sportscafe.nostragamus.module.navigation.NavigationFragment;
 import in.sportscafe.nostragamus.module.navigation.appupdate.AppUpdateActivity;
@@ -101,6 +111,10 @@ public class NostraHomeActivity extends NostraBaseActivity implements View.OnCli
         super.onResume();
 
         updateUnPlayedMatchCount();
+
+        // register notification receiver
+        LocalBroadcastManager.getInstance(this).registerReceiver(notificationReceiver,
+                new IntentFilter(NostraGCMListener.ACTION_PUSH_NOTIFICATION));
     }
 
     private void updateUnPlayedMatchCount() {
@@ -366,6 +380,7 @@ public class NostraHomeActivity extends NostraBaseActivity implements View.OnCli
         NostragamusAnalytics.getInstance().setMoEngageUserProperties(getApplicationContext());
         NostragamusAnalytics.getInstance().setFreshChatUserProperties(getApplicationContext());
         NostragamusAnalytics.getInstance().setCrashlyticsUserProperties(getApplicationContext());
+        NostragamusAnalytics.getInstance().setAwsPinPointUserProperties();
     }
 
     private void initViews() {
@@ -553,6 +568,7 @@ public class NostraHomeActivity extends NostraBaseActivity implements View.OnCli
      */
     private void handleDoubleBackPressToExitApp() {
         if (mIsFirstBackPressed) {
+            NostragamusAnalytics.getInstance().trackAppClosing();
             super.onBackPressed();
         } else {
 
@@ -621,18 +637,6 @@ public class NostraHomeActivity extends NostraBaseActivity implements View.OnCli
                     com.jeeva.android.Log.d(TAG, "[onBoard] Paid app..");
                     performOnBoardFlow(userInfo);
                     updateRecentActivityCounter(userInfo);
-
-                    /* Get Moengage details JsonObject from server and Send Key/Value to Moengage  */
-                    /*  Gson gson = new Gson();
-                    String json = gson.toJson(userInfo.getUserPaymentInfo().getBank());
-
-                    // Convert JSON string back to Map.
-                    Type type = new TypeToken<Map<String, String>>(){}.getType();
-                    Map<String, String> map = gson.fromJson(json, type);
-                    for (String key : map.keySet()) {
-                        System.out.println(key + " = " + map.get(key));
-                    } */
-
 
                 } else {
                     Log.d(TAG, "[onBoard] User Payment info null");
@@ -774,4 +778,21 @@ public class NostraHomeActivity extends NostraBaseActivity implements View.OnCli
         mUnReadRecentActivityIcon.setVisibility(View.INVISIBLE);
     }
 
+
+    private final BroadcastReceiver notificationReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            Log.d("", "Received notification from local broadcast. Display it in a dialog.");
+
+            /*Bundle data = intent.getBundleExtra(NostraFireBaseMessagingService.INTENT_SNS_NOTIFICATION_DATA);
+            String message = NostraFireBaseMessagingService.getMessage(data);
+
+            new AlertDialog.Builder(getApplicationContext())
+                    .setTitle("Nostragamus")
+                    .setMessage(message)
+                    .setIcon(R.drawable.white_notification_icon)
+                    .show(); */
+
+        }
+    };
 }
