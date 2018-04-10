@@ -157,12 +157,12 @@ public class InPlayContestDetailsFragment extends NostraBaseFragment implements 
             RulesFragment rulesFragment = RulesFragment.newInstance(contestDto.getContestId());
             mViewPagerAdapter.addFragment(rulesFragment, Constants.ContestDetailsTabs.RULES);
 
-            /* If contest_type is private AND challenge not started , then show INVITE tab */
+            /* If contest_type is private AND challenge not started AND share_tab is true then show INVITE tab */
             if (!TextUtils.isEmpty(contestDto.getContestType()) &&
                     contestDto.getContestType().equalsIgnoreCase(Constants.ContestType.PRIVATE) &&
                     !TextUtils.isEmpty(contestDto.getChallengeStartTime()) &&
                     !DateTimeHelper.isMatchStarted(contestDto.getChallengeStartTime()) &&
-                    contestDto.isShouldShareLink()) {
+                    contestDto.isShouldShowShareTab()) {
 
                 PrivateContestInPlayInviteFragment fragment = new PrivateContestInPlayInviteFragment();
                 fragment.setInplayContestDto(contestDto);

@@ -195,7 +195,7 @@
                                     android:id="@+id/create_contest_entries_heading_TextView"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="Entries"
+                                    android:text="Entries*"
                                     android:textColor="@color/white_999999"
                                     android:textSize="@dimen/sp_12"
                                     app:typeface="lato_bold" />
@@ -248,7 +248,7 @@
                                     android:id="@+id/create_contest_fee_heading_TextView"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="Entry Fee"
+                                    android:text="Entry Fee*"
                                     android:textColor="@color/white_999999"
                                     android:textSize="@dimen/sp_12"
                                     app:typeface="lato_bold" />
@@ -303,7 +303,7 @@
                                     android:id="@+id/create_contest_prize_structure_heading_TextView"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="Prize Structure"
+                                    android:text="Prize Structure*"
                                     android:textColor="@color/white_999999"
                                     android:textSize="@dimen/sp_12"
                                     app:typeface="lato_bold" />
@@ -397,7 +397,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:orientation="horizontal"
-                                android:layout_marginTop="@dimen/dim_30"
+                                android:layout_marginTop="@dimen/dim_25"
                                 android:layout_marginLeft="@dimen/dim_20"
                                 android:layout_marginRight="@dimen/dim_20">
 

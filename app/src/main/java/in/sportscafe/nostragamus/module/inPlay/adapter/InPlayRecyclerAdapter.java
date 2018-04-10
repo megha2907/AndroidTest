@@ -442,8 +442,11 @@ public class InPlayRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                 }
             }
 
+            /* Show or hide Share button */
             if (contest.isShouldShareLink()) {
                 viewHolder.inviteFriendsButton.setVisibility(View.VISIBLE);
+            } else {
+                viewHolder.inviteFriendsButton.setVisibility(View.GONE);
             }
 
             if (contest.getMaxPowerUpTransferLimit() == 0) { // Only if maxLimit == 0, then powerup-bank disabled

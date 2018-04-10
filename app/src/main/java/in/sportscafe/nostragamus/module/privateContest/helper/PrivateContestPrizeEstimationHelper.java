@@ -79,10 +79,10 @@ public class PrivateContestPrizeEstimationHelper {
                     }
                 } else {
                     if (listener != null) {
-                        listener.onError("Entries are less than winners", PrivateContestPrizeEstimationListener.ERR_CODE_ENTRIES_LESS_THAN_WINNERS);
+                        listener.onError("Entries should be more than winners",
+                                PrivateContestPrizeEstimationListener.ERR_CODE_ENTRIES_LESS_THAN_WINNERS);
                     }
                 }
-
 
             } else if (prizeTemplate.getShareType().equalsIgnoreCase(Constants.PrivateContests.PrizeEstimationTemplateType.PERCENT)) {
 

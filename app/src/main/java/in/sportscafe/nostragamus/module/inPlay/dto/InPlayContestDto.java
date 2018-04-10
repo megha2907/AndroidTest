@@ -57,6 +57,9 @@ public class InPlayContestDto {
     @SerializedName("share_link")
     private boolean shouldShareLink;
 
+    @SerializedName("share_tab")
+    private boolean shouldShowShareTab;
+
     private int challengeId;
     private String challengeName;
     private String challengeStartTime;
@@ -218,5 +221,13 @@ public class InPlayContestDto {
 
     public void setShouldShareLink(boolean shouldShareLink) {
         this.shouldShareLink = shouldShareLink;
+    }
+
+    public boolean isShouldShowShareTab() {
+        return shouldShowShareTab;
+    }
+
+    public void setShouldShowShareTab(boolean shouldShowShareTab) {
+        this.shouldShowShareTab = shouldShowShareTab;
     }
 }
