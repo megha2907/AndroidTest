@@ -323,14 +323,14 @@ public class CreatePrivateContestFragment extends BaseFragment implements
                 mSpinnerAdapter.setSelectedTemplate(mSelectedPrizeTemplate);
 
                 showSpinnerError(false, "");
+                showMinEntryRadioIfRequired(mSelectedPrizeTemplate);
 
                 if (mSelectedPrizeTemplate != null && !TextUtils.isEmpty(mSelectedPrizeTemplate.getTemplateId()) &&
                         !mSelectedPrizeTemplate.getTemplateId().equalsIgnoreCase(PrivateContestPrizeSpinnerItemType.DEFAULT_PRIZE_TEMPLATE_ID)) {
 
-                    showMinEntryRadioIfRequired(mSelectedPrizeTemplate);
                     onPrizeTemplateSelected(mSelectedPrizeTemplate);
 
-                    scrollNestedView();
+//                    scrollNestedView();
                 } else {
                     setEmptyEstimationList(); // Make list empty
                 }
@@ -580,6 +580,8 @@ public class CreatePrivateContestFragment extends BaseFragment implements
 
         if (mSelectedPrizeTemplate != null && mSelectedPrizeTemplate.getMinEntryRequired() > 0) {
             top1Win = mTop1WinRadio.isChecked();
+        } else {
+            top1Win = false;
         }
 
         return top1Win;
