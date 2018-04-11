@@ -279,6 +279,7 @@ public class ContestFragment extends NostraBaseFragment implements View.OnClickL
         if (contestList.size() >= 1) {
             Contest referContest = new Contest();
             referContest.setContestItemType(ContestAdapterItemType.REFER_FRIEND_AD);
+            referContest.setPriority(-99999);   // Lowest ever
             contestList.add(referContest);
         }
     }

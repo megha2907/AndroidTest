@@ -137,7 +137,7 @@ public class ContestViewPagerFragment extends NostraBaseFragment {
     private List<Contest> getSortedList(List<Contest> contestList) {
         if (contestList != null) {
 
-            Collections.sort(contestList, new Comparator<Contest>() {
+            /*Collections.sort(contestList, new Comparator<Contest>() {
                 @Override
                 public int compare(Contest contest1, Contest contest2) {
                     if (contest2.isContestJoined()) {
@@ -153,13 +153,29 @@ public class ContestViewPagerFragment extends NostraBaseFragment {
                                 return -1;
                             }
                             return 0;
-                            /*} else {                        // closed
+                            *//*} else {                        // closed
                                 return -1;
-                            }*/
+                            }*//*
                         }
                     }
                 }
-            });
+            });*/
+
+            if (contestList.size() > 1) {
+                for (int i = 0; i < contestList.size(); ++i) {
+                    for (int j = 0; j < contestList.size() - i - 1; ++j) {
+
+                        if (!contestList.get(j).isContestJoined()) {
+                            if (contestList.get(j).getPriority() < contestList.get(j + 1).getPriority()) {
+
+                                Contest tmp = contestList.get(j);
+                                contestList.set(j, contestList.get(j+1));
+                                contestList.set(j+1, tmp);
+                            }
+                        }
+                    }
+                }
+            }
         }
 
         return contestList;
