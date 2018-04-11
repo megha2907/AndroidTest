@@ -23,6 +23,9 @@ public class CreatePrivateContestRequest {
     @SerializedName("t_id")
     private String templateId;
 
+    @SerializedName("top_1_win")
+    private boolean isPrivateContestTop1Win;
+
     public int getChallengeId() {
         return challengeId;
     }
@@ -61,5 +64,13 @@ public class CreatePrivateContestRequest {
 
     public void setTemplateId(String templateId) {
         this.templateId = templateId;
+    }
+
+    public boolean isPrivateContestTop1Win() {
+        return isPrivateContestTop1Win;
+    }
+
+    public void setPrivateContestTop1Win(boolean privateContestTop1Win) {
+        isPrivateContestTop1Win = privateContestTop1Win;
     }
 }

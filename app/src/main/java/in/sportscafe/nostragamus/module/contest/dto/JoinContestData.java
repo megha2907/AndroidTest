@@ -20,6 +20,7 @@ public class JoinContestData {
     private int privateContestEntries;
     private String challengeStartTime;
     private String privateContestTemplateId;
+    private boolean privateContestTop1Wins;
 
     private boolean shouldScrollContestsInPlay = true;
     private boolean shouldShowPrivateContestCreatedMsg = false;
@@ -134,5 +135,13 @@ public class JoinContestData {
 
     public void setShouldShowPrivateContestCreatedMsg(boolean shouldShowPrivateContestCreatedMsg) {
         this.shouldShowPrivateContestCreatedMsg = shouldShowPrivateContestCreatedMsg;
+    }
+
+    public boolean isPrivateContestTop1Wins() {
+        return privateContestTop1Wins;
+    }
+
+    public void setPrivateContestTop1Wins(boolean privateContestTop1Wins) {
+        this.privateContestTop1Wins = privateContestTop1Wins;
     }
 }

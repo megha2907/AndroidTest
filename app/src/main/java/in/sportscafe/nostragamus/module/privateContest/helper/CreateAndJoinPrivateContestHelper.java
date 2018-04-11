@@ -142,6 +142,7 @@ public class CreateAndJoinPrivateContestHelper {
                 joinContestData.getContestName(),
                 joinContestData.getPrivateContestEntries(),
                 joinContestData.getPrivateContestTemplateId(),
+                joinContestData.isPrivateContestTop1Wins(),
                 mListener);
     }
 

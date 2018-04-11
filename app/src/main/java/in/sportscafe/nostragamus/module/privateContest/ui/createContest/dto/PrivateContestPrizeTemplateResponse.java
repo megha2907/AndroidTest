@@ -22,6 +22,9 @@ public class PrivateContestPrizeTemplateResponse {
     @SerializedName("shareType")
     private String shareType;
 
+    @SerializedName("min_entry")
+    private int minEntryRequired = 0;
+
     @SerializedName("margin")
     private float margin;
 
@@ -73,6 +76,14 @@ public class PrivateContestPrizeTemplateResponse {
 
     public void setTemplateId(String templateId) {
         this.templateId = templateId;
+    }
+
+    public int getMinEntryRequired() {
+        return minEntryRequired;
+    }
+
+    public void setMinEntryRequired(int minEntryRequired) {
+        this.minEntryRequired = minEntryRequired;
     }
 
     /**

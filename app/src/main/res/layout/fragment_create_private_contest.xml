@@ -360,6 +360,57 @@
                                     android:visibility="gone"
                                     android:layout_marginTop="@dimen/dim_5"/>
 
+                                <!-- Prize structure payout details radio options -->
+                                <LinearLayout
+                                    android:id="@+id/pvt_contest_prize_spinner_radio_layout"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="vertical"
+                                    android:animateLayoutChanges="true"
+                                    android:layout_marginTop="@dimen/dim_14"
+                                    android:visibility="gone">
+
+                                <com.jeeva.android.widgets.customfont.CustomTextView
+                                    android:id="@+id/pvt_contest_spinner_msg_textView"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text=""
+                                    android:textColor="@color/white_999999"
+                                    android:textSize="@dimen/sp_12"
+                                    app:typeface="lato_regular" />
+
+                                    <RadioGroup
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:orientation="vertical"
+                                        android:layout_marginTop="@dimen/dim_14">
+
+                                        <android.support.v7.widget.AppCompatRadioButton
+                                            android:id="@+id/pvt_contest_top_1_win_radio"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:text="Only the top 1 wins"
+                                            android:textColor="@color/white"
+                                            android:textSize="@dimen/sp_13"
+                                            android:checked="true"
+                                            android:paddingLeft="@dimen/dim_15"
+                                            android:button="@drawable/pvt_contest_radio_selector"/>
+
+                                        <android.support.v7.widget.AppCompatRadioButton
+                                            android:id="@+id/pvt_contest_cancel_radio"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:text="Cancel the contest and refund entry fees"
+                                            android:textColor="@color/white"
+                                            android:textSize="@dimen/sp_13"
+                                            android:button="@drawable/pvt_contest_radio_selector"
+                                            android:layout_marginTop="@dimen/dim_14"
+                                            android:paddingLeft="@dimen/dim_15"/>
+
+                                    </RadioGroup>
+
+                                </LinearLayout>
+
                             </LinearLayout>
 
                             <!-- Total prize money layout -->

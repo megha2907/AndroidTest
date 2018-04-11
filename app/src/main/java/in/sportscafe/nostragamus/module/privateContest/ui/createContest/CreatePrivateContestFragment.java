@@ -18,7 +18,6 @@ import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,6 +26,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -97,6 +97,7 @@ public class CreatePrivateContestFragment extends BaseFragment implements
     private TextView mMessageTextView;
     private RecyclerView mEstimatedPrizeRecyclerView;
     private NestedScrollView mNestedScrollView;
+    private RadioButton mTop1WinRadio;
 
     private TextWatcher mEntriesTextWatcher = getEntriesTextWatcher();
     private TextWatcher mEntryFeeTextWatcher = getEntryFeeTextWatcher();
@@ -269,6 +270,7 @@ public class CreatePrivateContestFragment extends BaseFragment implements
         mSubHeaderTimerTextView = (TextView) view.findViewById(R.id.toolbar_heading_two);
         mMessageTextView = (TextView) view.findViewById(R.id.create_private_contest_msg_textView);
         mNestedScrollView = (NestedScrollView) view.findViewById(R.id.create_contest_nestedScrollView);
+        mTop1WinRadio = (RadioButton) view.findViewById(R.id.pvt_contest_top_1_win_radio);
 
         mEstimatedPrizeRecyclerView = (RecyclerView) view.findViewById(R.id.prize_estimation_recyclerView);
         mEstimatedPrizeRecyclerView.setHasFixedSize(true);
@@ -325,6 +327,7 @@ public class CreatePrivateContestFragment extends BaseFragment implements
                 if (mSelectedPrizeTemplate != null && !TextUtils.isEmpty(mSelectedPrizeTemplate.getTemplateId()) &&
                         !mSelectedPrizeTemplate.getTemplateId().equalsIgnoreCase(PrivateContestPrizeSpinnerItemType.DEFAULT_PRIZE_TEMPLATE_ID)) {
 
+                    showMinEntryRadioIfRequired(mSelectedPrizeTemplate);
                     onPrizeTemplateSelected(mSelectedPrizeTemplate);
 
                     scrollNestedView();
@@ -361,13 +364,27 @@ public class CreatePrivateContestFragment extends BaseFragment implements
                 if (isEntryFeeValid()) {
                     handleEntryFeeValid(true);
 
-                        performEstimation(prizeResponse, getEntryFee(), getEntries());
+                    performEstimation(prizeResponse, getEntryFee(), getEntries());
 
                 } else {
                     handleEntryFeeValid(false);
                 }
             } else {
                 handleEntriesValid(false, "");
+            }
+        }
+    }
+
+    private void showMinEntryRadioIfRequired(PrivateContestPrizeTemplateResponse prizeResponse) {
+        if (prizeResponse != null && getView() != null) {
+            LinearLayout linearLayout = (LinearLayout) getView().findViewById(R.id.pvt_contest_prize_spinner_radio_layout);
+
+            if (prizeResponse.getMinEntryRequired() > 0) {
+                TextView msgTextView = (TextView) getView().findViewById(R.id.pvt_contest_spinner_msg_textView);
+                msgTextView.setText("What if there are less than " + prizeResponse.getMinEntryRequired() + " entries in the contest?");
+                linearLayout.setVisibility(View.VISIBLE);
+            } else {
+                linearLayout.setVisibility(View.GONE);
             }
         }
     }
@@ -522,6 +539,7 @@ public class CreatePrivateContestFragment extends BaseFragment implements
                                     int entries = getEntries();
                                     double entryFee = getEntryFee();
                                     String contestName = mContestNameEditText.getText().toString();
+                                    boolean shouldTop1Win = getPrizeStructureRadioChoice();
 
                                     final JoinContestData joinPrivateContestData = new JoinContestData();
                                     joinPrivateContestData.setPrivateContestTemplateId(getSelectedPrizeTemplateId());
@@ -531,6 +549,7 @@ public class CreatePrivateContestFragment extends BaseFragment implements
                                     joinPrivateContestData.setEntryFee(entryFee);
                                     joinPrivateContestData.setContestName(contestName);
                                     joinPrivateContestData.setPrivateContestEntries(entries);
+                                    joinPrivateContestData.setPrivateContestTop1Wins(shouldTop1Win);
                                     joinPrivateContestData.setJoiContestDialogLaunchMode(CompletePaymentDialogFragment.DialogLaunchMode.JOINING_CHALLENGE_LAUNCH);
 
                                     Bundle args = new Bundle();
@@ -554,6 +573,16 @@ public class CreatePrivateContestFragment extends BaseFragment implements
         } else {
             handleError("", -1);
         }
+    }
+
+    private boolean getPrizeStructureRadioChoice() {
+        boolean top1Win = true; // default chosen item
+
+        if (mSelectedPrizeTemplate != null && mSelectedPrizeTemplate.getMinEntryRequired() > 0) {
+            top1Win = mTop1WinRadio.isChecked();
+        }
+
+        return top1Win;
     }
 
     private void showSpinnerError(boolean isError, String text) {

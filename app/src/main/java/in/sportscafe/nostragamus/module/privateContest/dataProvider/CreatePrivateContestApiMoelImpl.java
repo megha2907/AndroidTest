@@ -25,7 +25,7 @@ public class CreatePrivateContestApiMoelImpl {
     private static final String TAG = CreatePrivateContestApiMoelImpl.class.getSimpleName();
 
     public void callCreateContestApi(int challengeId, double fee, String cofigName,
-                                     int maxParticipants, String templateId,
+                                     int maxParticipants, String templateId, boolean isPvtContestTop1Win,
             final CreateAndJoinPrivateContestHelper.JoinPrivateContestProcessListener listener) {
 
         CreatePrivateContestRequest request = new CreatePrivateContestRequest();
@@ -34,6 +34,7 @@ public class CreatePrivateContestApiMoelImpl {
         request.setConfigName((TextUtils.isEmpty(cofigName)) ? "N.A." : cofigName); // Empty contest name with constant string
         request.setMaxParticipants(maxParticipants);
         request.setTemplateId(templateId);
+        request.setPrivateContestTop1Win(isPvtContestTop1Win);
 
         if (Nostragamus.getInstance().hasNetworkConnection()) {
 
