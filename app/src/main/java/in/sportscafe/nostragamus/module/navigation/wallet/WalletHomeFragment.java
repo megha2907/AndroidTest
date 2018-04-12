@@ -238,8 +238,9 @@ public class WalletHomeFragment extends BaseFragment implements View.OnClickList
                 break;
 
             case Constants.KYCStatus.BLOCKED:
-                kycStatus = "KYC Rejected, Please contact customer care";
+                kycStatus = "KYC blocked, Please contact customer care";
                 kycStatusTv.setTextColor(ContextCompat.getColor(getContext(), R.color.radical_red));
+                tickIcon.setVisibility(View.GONE);
                 break;
 
         }

@@ -52,7 +52,7 @@ public class InfoDetails {
     @SerializedName("kyc_status")
     private String kycStatus;
 
-    @SerializedName("wallet_withdrawal")
+    @SerializedName("wallet_withdrawal_blocked")
     private boolean withdrawalBlocked = false;
 
     @SerializedName("powerups")

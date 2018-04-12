@@ -802,6 +802,19 @@ public class NostragamusAnalytics {
     }
 
     /**
+     * Tracks source
+     *
+     * @param category
+     */
+    public void trackSource(@NonNull String category, String label) {
+        if (!BuildConfig.DEBUG) {
+            track(category, AnalyticsActions.SOURCE, label, null);
+            trackEvent(category, AnalyticsActions.SOURCE, label);
+        }
+    }
+
+
+    /**
      * Tracks tab clicked
      *
      * @param category

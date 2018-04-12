@@ -137,7 +137,7 @@ public class MyResultsActivity extends NostragamusActivity implements MyResultsV
             Button btnJoinContest = (Button) findViewById(R.id.results_join_contest_button);
             btnJoinContest.setOnClickListener(this);
 
-            NostragamusAnalytics.getInstance().trackScreenShown(Constants.AnalyticsCategory.RESULTS, Constants.AnalyticsClickLabels.PSEUDO_GAME_FLOW);
+            NostragamusAnalytics.getInstance().trackSource(Constants.AnalyticsCategory.RESULTS, Constants.AnalyticsClickLabels.PSEUDO_GAME_FLOW);
 
         }
     }

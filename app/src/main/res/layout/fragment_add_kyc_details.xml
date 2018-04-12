@@ -122,10 +122,10 @@
                         android:orientation="horizontal">
 
                         <ImageView
-                            android:layout_width="@dimen/dim_11"
-                            android:layout_height="@dimen/dim_11"
+                            android:layout_width="@dimen/dim_10"
+                            android:layout_height="@dimen/dim_10"
                             android:src="@drawable/warning_icon"
-                            android:layout_marginTop="@dimen/dim_1"/>
+                            android:layout_marginTop="@dimen/dim_2"/>
 
                         <com.jeeva.android.widgets.customfont.CustomTextView
                             android:layout_width="wrap_content"

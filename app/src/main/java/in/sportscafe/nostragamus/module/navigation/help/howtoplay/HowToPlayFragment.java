@@ -25,6 +25,7 @@ import java.util.List;
 
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
+import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
 import in.sportscafe.nostragamus.module.common.ViewPagerAdapter;
 import in.sportscafe.nostragamus.module.crash.NostragamusUncaughtExceptionHandler;
 import in.sportscafe.nostragamus.module.customViews.CustomSnackBar;
@@ -49,6 +50,7 @@ public class HowToPlayFragment extends BaseFragment implements View.OnClickListe
     private TextView nextOption;
     private String slideId; /* To Send Request for different screens with same slide design */
     private CustomSnackBar mSnackBar;
+    private String screenTitle = "";
 
     @Override
     public void onAttach(Context context) {
@@ -130,11 +132,12 @@ public class HowToPlayFragment extends BaseFragment implements View.OnClickListe
 
     private void setScreenTitle(String title) {
         if (getActivity() != null && getView() != null) {
-            TextView screenTitle = (TextView) getView().findViewById(R.id.how_to_play_tv_heading);
+            TextView screenTitleTv = (TextView) getView().findViewById(R.id.how_to_play_tv_heading);
             if (!TextUtils.isEmpty(title)) {
-                screenTitle.setText(title);
+                screenTitleTv.setText(title);
+                screenTitle = title;
             } else {
-                screenTitle.setText("Nostragamus");
+                screenTitleTv.setText("Nostragamus");
             }
         }
     }
@@ -173,6 +176,10 @@ public class HowToPlayFragment extends BaseFragment implements View.OnClickListe
 
                 @Override
                 public void onPageSelected(int position) {
+                    String newPos = String.valueOf(position);
+                    if (!TextUtils.isEmpty(screenTitle)) {
+                        NostragamusAnalytics.getInstance().trackScreenShown(screenTitle, "Slide " + newPos);
+                    }
                 }
 
                 @Override

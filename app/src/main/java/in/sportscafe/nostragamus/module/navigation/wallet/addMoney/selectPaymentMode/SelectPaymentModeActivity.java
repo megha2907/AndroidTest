@@ -6,6 +6,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.TextView;
 
+import com.jeeva.android.Log;
+
 import org.parceler.Parcels;
 
 import in.sportscafe.nostragamus.Constants;
@@ -22,7 +24,7 @@ import in.sportscafe.nostragamus.utils.FragmentHelper;
  * Created by deepanshi on 2/23/18.
  */
 
-public class SelectPaymentModeActivity extends NostragamusActivity implements SelectPaymentModeFragmentListener{
+public class SelectPaymentModeActivity extends NostragamusActivity implements SelectPaymentModeFragmentListener {
 
     @Override
     public String getScreenName() {

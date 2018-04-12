@@ -274,6 +274,7 @@ public class NostraHomeActivity extends NostraBaseActivity implements View.OnCli
 
                 } else if (screenName.equalsIgnoreCase(Constants.Notifications.SCREEN_RESULTS)) {
                     startActivity(notificationHelper.getResultsScreenIntent(this, notification));
+                    NostragamusAnalytics.getInstance().trackSource(Constants.AnalyticsCategory.RESULTS, Constants.AnalyticsClickLabels.NOTIFICATIONS);
 
                 } else if (screenName.equalsIgnoreCase(Constants.Notifications.SCREEN_CHALLENGE_HISTORY_WINNINGS)) {
                     startActivity(notificationHelper.getChallengeHistoryWinningsScreenIntent(this, notification));

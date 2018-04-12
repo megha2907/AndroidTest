@@ -417,6 +417,7 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
                 case R.id.schedule_row_rl_leaderboard:
                     Match leaderBoardMatch = (Match) v.getTag();
                     navigateToLeaderboards(v.getContext(), leaderBoardMatch);
+                    NostragamusAnalytics.getInstance().trackClickEvent(Constants.AnalyticsCategory.RESULTS, Constants.AnalyticsClickLabels.LEADERBOARD);
                     break;
 
                 case R.id.schedule_row_rl_average_score:
@@ -1179,8 +1180,6 @@ public class MyResultsAdapter extends Adapter<Match, MyResultsAdapter.ViewHolder
                 context.startActivity(intent);
             }
 
-            NostragamusAnalytics.getInstance().trackClickEvent(Constants.AnalyticsCategory.RESULTS,
-                    Constants.AnalyticsClickLabels.LEADERBOARD + " - InPlay");
 
         } else if (mCompletedContestDto != null) {
 

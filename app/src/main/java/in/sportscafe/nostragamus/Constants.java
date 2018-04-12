@@ -56,7 +56,7 @@ public interface Constants {
         String NONE = "NONE"; /* open nothing on click  */
         String SCREEN_INPLAY_CONTEST = "InPlayContest"; /* open inPlayContest Screen  */
         String SCREEN_INPLAY_CONTEST_LEADERBOARDS = "InPlayContestLeaderBoards"; /* open inPlayContest Screen Leaderboards TAB */
-        String SCREEN_POWERUP_TRANSACTION = "PowerupTransaction"; /* open Powerup Transaction screen  */
+        String SCREEN_POWERUP_TRANSACTION = "PowerupBankHistory"; /* open Powerup Transaction screen  */
     }
 
     interface SharedKeys {
@@ -544,6 +544,7 @@ public interface Constants {
         String KYC = "KYC";
         String KYC_STATUS = "KYC Status";
         String POST_SIGN_UP = "Post SignUp";
+        String RULES = "Rules";
     }
 
     interface AnalyticsClickLabels {
@@ -622,6 +623,13 @@ public interface Constants {
         String ENTRIES = "Entries";
         String PRIZES = "Prizes";
         String RULES = "Rules";
+
+        String FAQ = "FAQ";
+        String GAME_PLAY = "GamePlay";
+        String FEEDBACK = "Feedback";
+        String CHAT = "Chat";
+        String HOW_TO_PLAY = "How To Play";
+        String NOTIFICATIONS = "Notifications";
     }
 
     interface AnalyticsActions {
@@ -669,6 +677,7 @@ public interface Constants {
         String EDITED_PROFILE = "Edited Profile";
         String ENTERED_MOBILE = "Entered Mobile";
         String VERIFIED_OTP = "Verified OTP";
+        String SOURCE = "Source";
     }
 
     interface AnalyticsLabels {

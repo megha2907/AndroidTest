@@ -340,6 +340,13 @@ public class AddKYCDetailsFragment extends BaseFragment implements View.OnFocusC
         } else {
             navigateToAddPhoto(ADD_PHOTO_REQUEST_CODE);
         }
+
+        if (getView() != null) {
+            TextView panImageHeading = (TextView) getView().findViewById(R.id.add_kyc_details_upload_pan_textview);
+            panImageHeading.setTextColor(ContextCompat.getColor(getContext(), R.color.white_999999));
+            TextView uploadPanErrorTextView = (TextView) getView().findViewById(R.id.add_kyc_details_upload_pan_error_textview);
+            uploadPanErrorTextView.setVisibility(View.GONE);
+        }
     }
 
     @Override
@@ -427,6 +434,7 @@ public class AddKYCDetailsFragment extends BaseFragment implements View.OnFocusC
     }
 
     private void onCouldNotLoadImage() {
+        hideLoadingProgressBar();
         if (mFragmentListener != null) {
             mFragmentListener.handleError("", Constants.DataStatus.COULD_NOT_LOAD_IMAGE);
         }
@@ -499,16 +507,19 @@ public class AddKYCDetailsFragment extends BaseFragment implements View.OnFocusC
             int width, height;
             panCardFile = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + "/Nostragamus");
             Bitmap bMap = BitmapFactory.decodeFile(Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + "/Nostragamus");
-            width = bMap.getWidth();
-            height = bMap.getHeight();
-            Bitmap bMap2 = Bitmap.createScaledBitmap(bMap, width, height, false);
-            mPanImageView.setImageBitmap(bMap2);
-            showImageView();
-            hideLoadingProgressBar();
+            if (bMap != null) {
+                width = bMap.getWidth();
+                height = bMap.getHeight();
+                Bitmap bMap2 = Bitmap.createScaledBitmap(bMap, width, height, false);
+                mPanImageView.setImageBitmap(bMap2);
+                showImageView();
+                hideLoadingProgressBar();
+            } else {
+                onCouldNotLoadImage();
+            }
         } else {
             onCouldNotLoadImage();
         }
-
     }
 
 

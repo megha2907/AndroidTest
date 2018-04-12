@@ -83,7 +83,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="left"
                     android:layout_marginTop="@dimen/dp_16"
-                    android:text="Acount Holder's Name"
+                    android:text="Account Holder's Name"
                     android:textColor="@color/white_60"
                     android:textSize="@dimen/sp_14"
                     app:typeface="lato_regular" />

@@ -64,7 +64,7 @@ public class RecentActivityRecyclerAdapter extends RecyclerView.Adapter<RecentAc
             final RecentActivity recentActivity = recentActivityFilteredList.get(position);
             if (recentActivity != null) {
                 viewHolder.mTvActivityType.setText(recentActivity.getActivityType());
-                viewHolder.mTvActivityText.setText(Html.fromHtml(recentActivity.getActivityText(), null, new NostraTagHandler()));
+                viewHolder.mTvActivityText.setText(noTrailingwhiteLines(Html.fromHtml(recentActivity.getActivityText(), null, new NostraTagHandler())));
 
                 String recentActivityType = recentActivity.getActivityType();
                 if (!TextUtils.isEmpty(recentActivityType)) {
@@ -101,6 +101,14 @@ public class RecentActivityRecyclerAdapter extends RecyclerView.Adapter<RecentAc
             }
 
         }
+    }
+
+    private CharSequence noTrailingwhiteLines(CharSequence text) {
+
+        while (text.charAt(text.length() - 1) == '\n') {
+            text = text.subSequence(0, text.length() - 1);
+        }
+        return text;
     }
 
     public class RecentActivityViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {

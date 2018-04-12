@@ -337,6 +337,7 @@ public class RecentActivityFragment extends NostraBaseFragment {
 
                         } else if (screenName.equalsIgnoreCase(Constants.Notifications.SCREEN_RESULTS)) {
                             startActivity(notificationHelper.getResultsScreenIntent(getContext(), notification));
+                            NostragamusAnalytics.getInstance().trackSource(Constants.AnalyticsCategory.RESULTS, Constants.AnalyticsClickLabels.RECENT_ACTIVITY);
 
                         } else if (screenName.equalsIgnoreCase(Constants.Notifications.SCREEN_CHALLENGE_HISTORY_WINNINGS)) {
                             startActivity(notificationHelper.getChallengeHistoryWinningsScreenIntent(getContext(), notification));
