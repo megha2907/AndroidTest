@@ -354,7 +354,8 @@ public class NostraHomeActivity extends NostraBaseActivity implements View.OnCli
             UserInfo userInfo = Nostragamus.getInstance().getServerDataManager().getUserInfo();
             if (userInfo != null && userInfo.getInfoDetails() != null &&
                     userInfo.getInfoDetails().getDisclaimerAccepted() != null && userInfo.getInfoDetails().getDisclaimerAccepted() &&
-                    userInfo.getInfoDetails().getOtpVerified() != null && userInfo.getInfoDetails().getOtpVerified()) {
+                    userInfo.getInfoDetails().getOtpVerified() != null && userInfo.getInfoDetails().getOtpVerified() &&
+                    !Nostragamus.getInstance().getServerDataManager().isNewUser() /* Totally NewUser from server and first time only */) {
 
             /* Get dataDto  */
                 ShareDetailsDto shareDetailsDto = new Gson().fromJson(
