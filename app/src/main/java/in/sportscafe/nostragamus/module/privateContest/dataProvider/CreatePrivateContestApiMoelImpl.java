@@ -1,5 +1,7 @@
 package in.sportscafe.nostragamus.module.privateContest.dataProvider;
 
+import android.text.TextUtils;
+
 import com.google.gson.Gson;
 import com.jeeva.android.Log;
 
@@ -23,16 +25,16 @@ public class CreatePrivateContestApiMoelImpl {
     private static final String TAG = CreatePrivateContestApiMoelImpl.class.getSimpleName();
 
     public void callCreateContestApi(int challengeId, double fee, String cofigName,
-                                     int minParticipants, int maxParticipants, String step,
+                                     int maxParticipants, String templateId, boolean isPvtContestTop1Win,
             final CreateAndJoinPrivateContestHelper.JoinPrivateContestProcessListener listener) {
 
         CreatePrivateContestRequest request = new CreatePrivateContestRequest();
         request.setChallengeId(challengeId);
         request.setFee(fee);
-        request.setConfigName(cofigName);
-        request.setMinParticipants(minParticipants);
+        request.setConfigName((TextUtils.isEmpty(cofigName)) ? "N.A." : cofigName); // Empty contest name with constant string
         request.setMaxParticipants(maxParticipants);
-        request.setStep(step);
+        request.setTemplateId(templateId);
+        request.setPrivateContestTop1Win(isPvtContestTop1Win);
 
         if (Nostragamus.getInstance().hasNetworkConnection()) {
 

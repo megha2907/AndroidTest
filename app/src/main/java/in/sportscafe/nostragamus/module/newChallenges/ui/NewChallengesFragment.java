@@ -238,7 +238,7 @@ public class NewChallengesFragment extends NostraBaseFragment implements View.On
             List<SportsTab> sportsTabList = sportsDataProvider.getSportsList();
 
             if (newChallengesResponseData != null && newChallengesResponseData.size() > 0) {
-                mTvTBarNumberOfChallenges.setText("(" + String.valueOf(newChallengesResponseData.size()) + ")");
+                //mTvTBarNumberOfChallenges.setText("(" + String.valueOf(newChallengesResponseData.size()) + ")");
 
                 final ArrayList<NewChallengesViewPagerFragment> fragmentList = new ArrayList<>();
                 NewChallengesFilterHelper filterHelper = new NewChallengesFilterHelper();

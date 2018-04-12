@@ -409,7 +409,10 @@ public class InPlayRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         if (contest != null && contest.getMatches() != null) {
             InPlayJoinedPrivateContestItemViewHolder viewHolder = (InPlayJoinedPrivateContestItemViewHolder) holder;
 
-            viewHolder.contestTitleTextView.setText(contest.getContestName());
+            if (!TextUtils.isEmpty(contest.getContestName())) {
+                viewHolder.contestTitleTextView.setText((contest.getContestName().length() > 16) ?
+                        contest.getContestName().substring(0, 16) + ".." : contest.getContestName());
+            }
             viewHolder.entryFeeTextView.setText(Constants.RUPEE_SYMBOL + String.valueOf(contest.getEntryFee()));
 
             double winningAmount = contest.getWinningAmount();
@@ -437,6 +440,13 @@ public class InPlayRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                 } else if (contest.getContestMode().equalsIgnoreCase(Constants.ContestType.NON_GUARANTEED)) {
                     viewHolder.contestModeImageView.setImageResource(R.drawable.no_guarantee_icon);
                 }
+            }
+
+            /* Show or hide Share button */
+            if (contest.isShouldShareLink()) {
+                viewHolder.inviteFriendsButton.setVisibility(View.VISIBLE);
+            } else {
+                viewHolder.inviteFriendsButton.setVisibility(View.GONE);
             }
 
             if (contest.getMaxPowerUpTransferLimit() == 0) { // Only if maxLimit == 0, then powerup-bank disabled
@@ -589,7 +599,7 @@ public class InPlayRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         TextView currentRankTextView;
         TextView totalPlayersTextView;
         TextView prizesTextView;
-        Button inviteFriendsButton;
+        LinearLayout inviteFriendsButton;
 
         public InPlayJoinedPrivateContestItemViewHolder(View itemView) {
             super(itemView);
@@ -606,7 +616,7 @@ public class InPlayRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             prizesTextView = (TextView) itemView.findViewById(R.id.inplay_private_contest_card_header_prizes_textView);
             totalPlayersTextView = (TextView) itemView.findViewById(R.id.inplay_private_contest_card_header_total_players);
             noExtraPowerUpImgView = (ImageView) itemView.findViewById(R.id.no_extra_powerup_imgView);
-            inviteFriendsButton = (Button) itemView.findViewById(R.id.private_contest_share_btn);
+            inviteFriendsButton = (LinearLayout) itemView.findViewById(R.id.private_contest_share_btn);
 
             root.setOnClickListener(this);
             currentRankLayout.setOnClickListener(this);

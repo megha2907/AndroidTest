@@ -638,6 +638,7 @@
 
         <service
             android:name=".module.common.NostraFireBaseMessagingService"
+            android:enabled="true"
             android:exported="true">
             <intent-filter android:priority="-500">
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
@@ -712,14 +713,11 @@
             android:name="com.freshchat.consumer.sdk.activity.ChannelListActivity"
             android:theme="@style/MyCustomTheme"
             tools:replace="android:theme" />
-            tools:replace="android:theme" />
 
         <activity
             android:name="com.freshchat.consumer.sdk.activity.ConversationDetailActivity"
             android:configChanges="orientation|screenSize"
             android:theme="@style/MyCustomTheme"
-            android:windowSoftInputMode="stateHidden"
-            tools:replace="android:theme" />
             android:windowSoftInputMode="stateHidden"
             tools:replace="android:theme" />
 
@@ -732,14 +730,10 @@
             android:configChanges="orientation|screenSize"
             android:theme="@style/Theme.Freshchat.SelectedTheme"
             android:windowSoftInputMode="adjustResize" />
-            android:theme="@style/Theme.Freshchat.SelectedTheme"
-            android:windowSoftInputMode="adjustResize" />
-
         <activity
             android:name="com.freshchat.consumer.sdk.activity.CategoryListActivity"
             android:screenOrientation="portrait"
             android:theme="@style/MyCustomTheme"
-            tools:replace="android:theme" />
             tools:replace="android:theme" />
 
         <activity
@@ -748,14 +742,11 @@
             android:theme="@style/MyCustomTheme"
             android:windowSoftInputMode="adjustResize"
             tools:replace="android:theme" />
-            android:windowSoftInputMode="adjustResize"
-            tools:replace="android:theme" />
 
         <activity
             android:name="com.freshchat.consumer.sdk.activity.ArticleDetailActivity"
             android:screenOrientation="portrait"
             android:theme="@style/MyCustomTheme"
-            tools:replace="android:theme" />
             tools:replace="android:theme" />
 
         <activity

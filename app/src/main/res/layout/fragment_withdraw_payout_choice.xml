@@ -212,7 +212,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/dp_5"
-                        android:text="You have not added any payout details"
+                        android:text="You have not added any payoutList details"
                         android:textColor="@color/white_dim"
                         android:textSize="@dimen/sp_11"
                         app:typeface="lato_regular" />

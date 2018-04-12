@@ -2,6 +2,8 @@ package in.sportscafe.nostragamus.module.privateContest.ui.createContest.dto;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.List;
+
 /**
  * Created by sc on 22/3/18.
  */
@@ -14,7 +16,7 @@ public class CreatePrivateContestInfo {
     @SerializedName("mode")
     private String mode;
 
-    @SerializedName("step")
+   /* @SerializedName("step")
     private String step;
 
     @SerializedName("spawn")
@@ -26,12 +28,12 @@ public class CreatePrivateContestInfo {
     @SerializedName("margin")
     private double margin;
 
-    @SerializedName("payout")
-    private CreatePrivateContestPayout payout;
+    @SerializedName("payoutList")
+    private List<CreatePrivateContestPayout> payoutList;
 
     @SerializedName("priority")
     private int priority;
-
+*/
     @SerializedName("config_name")
     private String configName;
 
@@ -41,7 +43,7 @@ public class CreatePrivateContestInfo {
     @SerializedName("private_code")
     private String privateCode;
 
-    @SerializedName("user_segment")
+    /*@SerializedName("user_segment")
     private String userSegment;
 
     @SerializedName("category_name")
@@ -54,7 +56,7 @@ public class CreatePrivateContestInfo {
     private int maxParticipants;
 
     @SerializedName("min_participants")
-    private int minParticipants;
+    private int minParticipants;*/
 
     public int getFee() {
         return fee;
@@ -72,7 +74,7 @@ public class CreatePrivateContestInfo {
         this.mode = mode;
     }
 
-    public String getStep() {
+    /*public String getStep() {
         return step;
     }
 
@@ -104,12 +106,12 @@ public class CreatePrivateContestInfo {
         this.margin = margin;
     }
 
-    public CreatePrivateContestPayout getPayout() {
-        return payout;
+    public List<CreatePrivateContestPayout> getPayoutList() {
+        return payoutList;
     }
 
-    public void setPayout(CreatePrivateContestPayout payout) {
-        this.payout = payout;
+    public void setPayoutList(List<CreatePrivateContestPayout> payoutList) {
+        this.payoutList = payoutList;
     }
 
     public int getPriority() {
@@ -118,7 +120,7 @@ public class CreatePrivateContestInfo {
 
     public void setPriority(int priority) {
         this.priority = priority;
-    }
+    }*/
 
     public String getConfigName() {
         return configName;
@@ -144,7 +146,7 @@ public class CreatePrivateContestInfo {
         this.privateCode = privateCode;
     }
 
-    public String getUserSegment() {
+    /*public String getUserSegment() {
         return userSegment;
     }
 
@@ -182,5 +184,5 @@ public class CreatePrivateContestInfo {
 
     public void setMinParticipants(int minParticipants) {
         this.minParticipants = minParticipants;
-    }
+    }*/
 }

@@ -12,23 +12,45 @@
         android:orientation="vertical"
         >
 
-        <com.jeeva.android.widgets.customfont.CustomTextView
-            android:id="@+id/private_contest_entries_textview"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/white"
-            android:text="ENTRIES"
-            android:textAllCaps="true"
-            android:textSize="@dimen/sp_12"
-            app:typeface="lato_regular"
-            android:layout_marginTop="@dimen/dim_20"
-            android:layout_marginLeft="@dimen/dim_10"/>
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:layout_marginTop="@dimen/dim_20">
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="@dimen/dim_1"
+                android:layout_weight="1"
+                android:background="@color/grey"/>
+
+            <com.jeeva.android.widgets.customfont.CustomTextView
+                android:id="@+id/private_contest_entries_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:text="Entries"
+                android:textAllCaps="false"
+                android:textSize="@dimen/sp_12"
+                app:typeface="lato_regular"
+                android:layout_marginLeft="@dimen/dim_10"
+                android:layout_marginRight="@dimen/dim_10"/>
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="@dimen/dim_1"
+                android:layout_weight="1"
+                android:background="@color/grey"/>
+
+        </LinearLayout>
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/private_contest_entries_recyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:paddingBottom="@dimen/dim_90"/>
+            android:paddingBottom="@dimen/dim_90"
+            android:layout_marginTop="@dimen/dim_10"/>
 
     </LinearLayout>
 

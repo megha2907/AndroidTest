@@ -1,9 +1,11 @@
 package in.sportscafe.nostragamus.module.privateContest.ui.joinPrivateContest.findContest;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.NostraBaseActivity;
+import in.sportscafe.nostragamus.module.popups.walletpopups.WalletBalancePopupActivity;
 import in.sportscafe.nostragamus.utils.FragmentHelper;
 
 public class JoinPrivateContestWithInviteCodeActivity extends NostraBaseActivity
@@ -33,5 +35,11 @@ public class JoinPrivateContestWithInviteCodeActivity extends NostraBaseActivity
     @Override
     public void onBackClicked() {
         finish();
+    }
+
+    @Override
+    public void onWalletBalClicked() {
+        Intent intent = new Intent(this, WalletBalancePopupActivity.class);
+        startActivity(intent);
     }
 }

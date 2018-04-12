@@ -79,6 +79,7 @@ public class CreateAndJoinPrivateContestHelper {
     private void payAndJoinChallenge(JoinContestData joinPrivateContestData, AppCompatActivity appCompatActivity) {
         if (joinPrivateContestData != null) {
             Log.d(TAG, "Entry fee : " + String.valueOf(joinPrivateContestData.getEntryFee()));
+
             if (WalletHelper.isSufficientBalAvailableInWallet(joinPrivateContestData.getEntryFee())) {
                 showJoinDialog(joinPrivateContestData, appCompatActivity);
 
@@ -139,9 +140,9 @@ public class CreateAndJoinPrivateContestHelper {
                 joinContestData.getChallengeId(),
                 joinContestData.getEntryFee(),
                 joinContestData.getContestName(),
-                2, /* Min 2 participants always */
                 joinContestData.getPrivateContestEntries(),
-                "up",
+                joinContestData.getPrivateContestTemplateId(),
+                joinContestData.isPrivateContestTop1Wins(),
                 mListener);
     }
 

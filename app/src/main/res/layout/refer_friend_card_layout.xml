@@ -52,7 +52,7 @@
                 android:id="@+id/refer_friend_btn"
                 android:layout_width="@dimen/dim_80"
                 android:layout_height="@dimen/dim_30"
-                android:background="@drawable/btn_refer_bg"
+                android:background="@drawable/transfer_powerup_btn_selector"
                 android:paddingBottom="@dimen/dim_3"
                 android:layout_alignParentRight="true"
                 android:text="Refer"

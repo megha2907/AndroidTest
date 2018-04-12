@@ -7,6 +7,7 @@ import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -75,6 +76,8 @@ public class JoinPrivateContestWithInviteCodeFragment extends BaseFragment imple
         mInviteCodeErrorTextView = (TextView) view.findViewById(R.id.invite_code_err_TextView) ;
 
         view.findViewById(R.id.back_btn).setOnClickListener(this);
+        view.findViewById(R.id.toolbar_wallet_linear_layout).setOnClickListener(this);
+        view.findViewById(R.id.invite_code_layout).setOnClickListener(this);
         mFindContestButton.setOnClickListener(this);
     }
 
@@ -97,6 +100,8 @@ public class JoinPrivateContestWithInviteCodeFragment extends BaseFragment imple
         if (getView() != null) {
             TextView walletAmtTextView = (TextView) getView().findViewById(R.id.toolbar_wallet_money);
             walletAmtTextView.setText(CodeSnippet.getFormattedAmount(WalletHelper.getTotalBalance()));
+
+            setInviteCodeActive();
         }
     }
 
@@ -111,8 +116,9 @@ public class JoinPrivateContestWithInviteCodeFragment extends BaseFragment imple
                     photoImageView.setImageUrl(mScreenData.getShareDetails().getUserPhotoUrl());
 
                     String name = (!TextUtils.isEmpty(mScreenData.getShareDetails().getUserNick())) ?
-                            mScreenData.getShareDetails().getUserNick() : "";
-                    String msg = name + " invite you in private contest. So, let's join & play the contest";
+                            mScreenData.getShareDetails().getUserNick() + " has invited you " :
+                            "You have been invited ";
+                    String msg = name + " to a private contest. Pay and join to play the private contest";
 
                     TextView msgTextView = (TextView) getView().findViewById(R.id.join_private_contest_header_msg_textView);
                     msgTextView.setText(msg);
@@ -146,9 +152,41 @@ public class JoinPrivateContestWithInviteCodeFragment extends BaseFragment imple
                 }
                 break;
 
+            case R.id.toolbar_wallet_linear_layout:
+                if (mFragmentListener != null) {
+                    mFragmentListener.onWalletBalClicked();
+                }
+                break;
+
+            case R.id.invite_code_layout:
+                mInviteCodeEditText.requestFocus();
+                showKeyBoard(mInviteCodeEditText);
+                setInviteCodeActive();
+                break;
+
             case R.id.find_pvt_contest_details_btn:
                 onFindContestClicked();
                 break;
+        }
+    }
+
+    private void setInviteCodeActive() {
+        if (getView() != null) {
+            TextView headerTextView = (TextView) getView().findViewById(R.id.pvt_contest_invite_code_heading_textView);
+            View lineView = getView().findViewById(R.id.pvt_contest_invite_code_line);
+
+            headerTextView.setTextColor(ContextCompat.getColor(headerTextView.getContext(), R.color.blue_008ae1));
+            lineView.setBackgroundColor(ContextCompat.getColor(lineView.getContext(), R.color.blue_008ae1));
+        }
+    }
+
+    private void setInviteCodeErrorState() {
+        if (getView() != null) {
+            TextView headerTextView = (TextView) getView().findViewById(R.id.pvt_contest_invite_code_heading_textView);
+            View lineView = getView().findViewById(R.id.pvt_contest_invite_code_line);
+
+            headerTextView.setTextColor(ContextCompat.getColor(headerTextView.getContext(), R.color.radical_red));
+            lineView.setBackgroundColor(ContextCompat.getColor(lineView.getContext(), R.color.radical_red));
         }
     }
 
@@ -167,10 +205,12 @@ public class JoinPrivateContestWithInviteCodeFragment extends BaseFragment imple
                 } else {
                     mInviteCodeErrorTextView.setText("Please enter valid invite code");
                     mInviteCodeErrorTextView.setVisibility(View.VISIBLE);
+                    setInviteCodeErrorState();
                 }
             } else {
                 mInviteCodeErrorTextView.setText("Please enter invite code");
                 mInviteCodeErrorTextView.setVisibility(View.VISIBLE);
+                setInviteCodeErrorState();
             }
         }
     }
@@ -212,6 +252,7 @@ public class JoinPrivateContestWithInviteCodeFragment extends BaseFragment imple
             case Constants.PrivateContests.ErrorCodes.INVALID_INVITE_PRIVATE_CODE:
                 mInviteCodeErrorTextView.setText("Please enter valid invite code");
                 mInviteCodeErrorTextView.setVisibility(View.VISIBLE);
+                setInviteCodeErrorState();
                 break;
 
             case Constants.PrivateContests.ErrorCodes.CHALLENGE_STARTED:
@@ -221,7 +262,37 @@ public class JoinPrivateContestWithInviteCodeFragment extends BaseFragment imple
             case Constants.PrivateContests.ErrorCodes.UNKNOWN_ERROR:
                 showUnknownErrorDialog();
                 break;
+
+            case Constants.PrivateContests.ErrorCodes.CONTEST_ALREADY_JOINED:
+                showContestAlreadyJoinedDialog();
+                break;
         }
+    }
+
+    private void showContestAlreadyJoinedDialog() {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if (JoinPrivateContestWithInviteCodeFragment.this.isVisible()) {
+
+                    String imgUrl = (mScreenData != null && mScreenData.getShareDetails() != null &&
+                            !TextUtils.isEmpty(mScreenData.getShareDetails().getUserPhotoUrl())) ?
+                            mScreenData.getShareDetails().getUserPhotoUrl() :
+                            "";
+
+                    TimerFinishDialogHelper.showPrivateContestAlreadyJoinedDialog(getChildFragmentManager(),
+                            imgUrl,
+                            new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    if (mFragmentListener != null) {
+                                        mFragmentListener.onBackClicked();
+                                    }
+                                }
+                            });
+                }
+            }
+        }, 500);
     }
 
     private void onChallengeStarted() {

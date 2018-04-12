@@ -120,7 +120,7 @@ public class PrivateContestEntriesFragment extends BaseFragment {
     private void showTotalEntries(int size) {
         if (size > 0 && getView() != null) {
             TextView entriesTextView = (TextView) getView().findViewById(R.id.private_contest_entries_textview);
-            entriesTextView.setText(size + " ENTRIES");
+            entriesTextView.setText(size + " Entries");
         }
     }
 

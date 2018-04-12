@@ -155,7 +155,7 @@
                     app:typeface="lato_regular" />
 
             </LinearLayout>
-            
+
             <View
                 android:id="@+id/navigation_refer_separator"
                 android:layout_width="match_parent"

@@ -26,6 +26,7 @@ import in.sportscafe.nostragamus.module.challengeRules.RulesFragment;
 import in.sportscafe.nostragamus.module.common.NostraBaseFragment;
 import in.sportscafe.nostragamus.module.contest.dto.PoolPrizeEstimationScreenData;
 import in.sportscafe.nostragamus.module.contest.dto.bumper.BumperPrizesEstimationScreenData;
+import in.sportscafe.nostragamus.module.newChallenges.helpers.DateTimeHelper;
 import in.sportscafe.nostragamus.module.privateContest.ui.PrivateContestInPlayInviteFragment;
 import in.sportscafe.nostragamus.module.contest.ui.bumperContest.BumperPrizesEstimationFragment;
 import in.sportscafe.nostragamus.module.contest.ui.poolContest.PoolPrizesEstimationFragment;
@@ -156,8 +157,12 @@ public class InPlayContestDetailsFragment extends NostraBaseFragment implements 
             RulesFragment rulesFragment = RulesFragment.newInstance(contestDto.getContestId());
             mViewPagerAdapter.addFragment(rulesFragment, Constants.ContestDetailsTabs.RULES);
 
+            /* If contest_type is private AND challenge not started AND share_tab is true then show INVITE tab */
             if (!TextUtils.isEmpty(contestDto.getContestType()) &&
-                    contestDto.getContestType().equalsIgnoreCase(Constants.ContestType.PRIVATE)) {
+                    contestDto.getContestType().equalsIgnoreCase(Constants.ContestType.PRIVATE) &&
+                    !TextUtils.isEmpty(contestDto.getChallengeStartTime()) &&
+                    !DateTimeHelper.isMatchStarted(contestDto.getChallengeStartTime()) &&
+                    contestDto.isShouldShowShareTab()) {
 
                 PrivateContestInPlayInviteFragment fragment = new PrivateContestInPlayInviteFragment();
                 fragment.setInplayContestDto(contestDto);

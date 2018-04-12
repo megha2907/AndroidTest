@@ -1,5 +1,6 @@
 package in.sportscafe.nostragamus.module.privateContest.adapter;
 
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -42,6 +43,16 @@ public class PrivateContestEntriesRecyclerAdapter extends RecyclerView.Adapter<R
 
             viewHolder.photoImageView.setImageUrl(entryDto.getUserPicUrl());
             viewHolder.nameTextView.setText(entryDto.getUserName());
+
+            if (entryDto.isPrivateContestCreator()) {
+                viewHolder.contestCreatorTextView.setVisibility(View.VISIBLE);
+                viewHolder.parentLayout.setBackgroundColor(ContextCompat.getColor(
+                        viewHolder.parentLayout.getContext(), R.color.contest_creator_entry_bg));
+            } else {
+                viewHolder.contestCreatorTextView.setVisibility(View.GONE);
+                viewHolder.parentLayout.setBackgroundColor(ContextCompat.getColor(
+                        viewHolder.parentLayout.getContext(), R.color.black));
+            }
 
         }
     }

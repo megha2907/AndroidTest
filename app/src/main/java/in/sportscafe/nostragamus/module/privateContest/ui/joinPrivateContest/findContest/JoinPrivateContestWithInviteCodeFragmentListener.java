@@ -6,4 +6,5 @@ package in.sportscafe.nostragamus.module.privateContest.ui.joinPrivateContest.fi
 
 public interface JoinPrivateContestWithInviteCodeFragmentListener {
     void onBackClicked();
+    void onWalletBalClicked();
 }

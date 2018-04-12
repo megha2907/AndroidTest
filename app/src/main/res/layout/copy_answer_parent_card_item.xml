@@ -85,7 +85,7 @@
                 android:id="@+id/copy_answer_use_button"
                 android:layout_width="@dimen/dim_44"
                 android:layout_height="@dimen/dim_26"
-                android:background="@drawable/light_blue_button_selector"
+                android:background="@drawable/green_button_selector"
                 android:paddingBottom="@dimen/dp_2"
                 android:text="Use"
                 android:textAllCaps="false"

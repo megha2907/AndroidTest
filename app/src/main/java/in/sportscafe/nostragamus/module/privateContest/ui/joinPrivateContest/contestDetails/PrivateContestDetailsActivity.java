@@ -27,9 +27,11 @@ import in.sportscafe.nostragamus.module.challengeRules.RulesFragment;
 import in.sportscafe.nostragamus.module.common.NostraBaseActivity;
 import in.sportscafe.nostragamus.module.contest.contestDetailsBeforeJoining.CompletePaymentDialogFragment;
 import in.sportscafe.nostragamus.module.contest.dto.JoinContestData;
+import in.sportscafe.nostragamus.module.contest.dto.PoolPrizeEstimationScreenData;
 import in.sportscafe.nostragamus.module.contest.dto.bumper.BumperPrizesEstimationScreenData;
 import in.sportscafe.nostragamus.module.contest.helper.JoinContestHelper;
 import in.sportscafe.nostragamus.module.contest.ui.bumperContest.BumperPrizesEstimationFragment;
+import in.sportscafe.nostragamus.module.contest.ui.poolContest.PoolPrizesEstimationFragment;
 import in.sportscafe.nostragamus.module.customViews.CustomSnackBar;
 import in.sportscafe.nostragamus.module.navigation.wallet.WalletHelper;
 import in.sportscafe.nostragamus.module.navigation.wallet.addMoney.lowBalance.AddMoneyOnLowBalanceActivity;
@@ -37,6 +39,7 @@ import in.sportscafe.nostragamus.module.newChallenges.helpers.DateTimeHelper;
 import in.sportscafe.nostragamus.module.nostraHome.helper.TimerHelper;
 import in.sportscafe.nostragamus.module.nostraHome.ui.NostraHomeActivity;
 import in.sportscafe.nostragamus.module.popups.timerPopup.TimerFinishDialogHelper;
+import in.sportscafe.nostragamus.module.popups.walletpopups.WalletBalancePopupActivity;
 import in.sportscafe.nostragamus.module.privateContest.ui.joinPrivateContest.dto.FindPrivateContestResponseContestData;
 import in.sportscafe.nostragamus.module.privateContest.ui.joinPrivateContest.dto.FindPrivateContestResponseData;
 import in.sportscafe.nostragamus.module.privateContest.ui.joinPrivateContest.dto.PrivateContestDetailsScreenData;
@@ -86,6 +89,7 @@ public class PrivateContestDetailsActivity extends NostraBaseActivity implements
         mPayAndJoinButton = (Button) findViewById(R.id.join_contest_btn);
 
         findViewById(R.id.back_btn).setOnClickListener(this);
+        findViewById(R.id.toolbar_wallet_linear_layout).setOnClickListener(this);
         mPayAndJoinButton.setOnClickListener(this);
     }
 
@@ -104,9 +108,21 @@ public class PrivateContestDetailsActivity extends NostraBaseActivity implements
                 /* Showing contest name */
                 if (!TextUtils.isEmpty(mScreenData.getPrivateContestDetailsResponse().getData().
                         getPrivateContestData().get(0).getConfigName())) {
+
+                    String contestName = mScreenData.getPrivateContestDetailsResponse().getData().
+                            getPrivateContestData().get(0).getConfigName();
+
                     TextView contestNameTextView = (TextView) findViewById(R.id.toolbar_heading_one);
-                    contestNameTextView.setText(mScreenData.getPrivateContestDetailsResponse().getData().
-                            getPrivateContestData().get(0).getConfigName());
+                    contestNameTextView.setText((contestName.length() > 26) ? contestName.substring(0, 26) + ".." : contestName);
+                }
+
+                /* Template Name/Id */
+                if (!TextUtils.isEmpty(mScreenData.getPrivateContestDetailsResponse().getData().
+                        getPrivateContestData().get(0).getSubtitle())) {
+
+                    TextView templateTextView = (TextView) findViewById(R.id.private_contest_prize_template_textView);
+                    templateTextView.setText("[" + mScreenData.getPrivateContestDetailsResponse().getData().
+                            getPrivateContestData().get(0).getSubtitle() + "]");
                 }
 
                 /* Show prize on pay button */
@@ -211,6 +227,11 @@ public class PrivateContestDetailsActivity extends NostraBaseActivity implements
 
             case R.id.back_btn:
                 finish();
+                break;
+
+            case R.id.toolbar_wallet_linear_layout:
+                Intent intent = new Intent(this, WalletBalancePopupActivity.class);
+                startActivity(intent);
                 break;
 
             case R.id.join_contest_btn:
@@ -320,7 +341,35 @@ public class PrivateContestDetailsActivity extends NostraBaseActivity implements
             case Constants.PrivateContests.ErrorCodes.UNKNOWN_ERROR:
                 showUnknownErrorDialog();
                 break;
+
+            case Constants.PrivateContests.ErrorCodes.CONTEST_ALREADY_JOINED:
+                showContestAlreadyJoinedDialog();
+                break;
         }
+    }
+
+    private void showContestAlreadyJoinedDialog() {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if (!isFinishing()) {
+
+                    String imgUrl = (mScreenData != null && mScreenData.getShareDetails() != null &&
+                            !TextUtils.isEmpty(mScreenData.getShareDetails().getUserPhotoUrl())) ?
+                            mScreenData.getShareDetails().getUserPhotoUrl() :
+                            "";
+
+                    TimerFinishDialogHelper.showPrivateContestAlreadyJoinedDialog(getSupportFragmentManager(),
+                            imgUrl,
+                            new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    onBackPressed();
+                                }
+                            });
+                }
+            }
+        }, 500);
     }
 
     private void showUnknownErrorDialog() {
@@ -472,7 +521,10 @@ public class PrivateContestDetailsActivity extends NostraBaseActivity implements
 
             mViewPagerAdapter.addFragment(getMatchesFragment(), Constants.ContestDetailsTabs.MATCHES);
             mViewPagerAdapter.addFragment(getEntriesFragment(), Constants.ContestDetailsTabs.ENTRIES);
-            mViewPagerAdapter.addFragment(getPrizeFragments(), Constants.ContestDetailsTabs.PRIZES);
+            Fragment fragment = getPrizeFragments();
+            if (fragment != null) {
+                mViewPagerAdapter.addFragment(fragment, Constants.ContestDetailsTabs.PRIZES);
+            }
             mViewPagerAdapter.addFragment(getRulesFragment(), Constants.ContestDetailsTabs.RULES);
 
             mViewPager.setAdapter(mViewPagerAdapter);
@@ -490,21 +542,48 @@ public class PrivateContestDetailsActivity extends NostraBaseActivity implements
         return RulesFragment.newInstance(contestId);
     }
 
-    private BumperPrizesEstimationFragment getPrizeFragments() {
-        Bundle args = new Bundle();
-        FindPrivateContestResponseContestData contestData = getPrivateContest();
+    private Fragment getPrizeFragments() {
+        Fragment fragment = null;
 
-        BumperPrizesEstimationScreenData screenData = new BumperPrizesEstimationScreenData();
-        if (contestData != null) {
-            screenData.setRewardScreenLauncherParent(RewardsLaunchedFrom.PRIVATE_CONTEST_DETAILS);
-            screenData.setRoomId(-1);
-            screenData.setConfigId(contestData.getConfigId());
-            screenData.setContestName(contestData.getConfigName());
+        if (mScreenData != null && mScreenData.getPrivateContestDetailsResponse() != null &&
+                mScreenData.getPrivateContestDetailsResponse().getData() != null &&
+                mScreenData.getPrivateContestDetailsResponse().getData().getPrivateContestData() != null &&
+                mScreenData.getPrivateContestDetailsResponse().getData().getPrivateContestData().get(0) != null &&
+                !TextUtils.isEmpty(mScreenData.getPrivateContestDetailsResponse().getData().getPrivateContestData().get(0).getMode())) {
+
+            Bundle args = new Bundle();
+            FindPrivateContestResponseContestData contestData = getPrivateContest();
+            String mode = mScreenData.getPrivateContestDetailsResponse().getData().getPrivateContestData().get(0).getMode();
+
+            if (mode.equalsIgnoreCase(Constants.ContestType.POOL)) {    // Pool contest
+
+                PoolPrizeEstimationScreenData screenData = new PoolPrizeEstimationScreenData();
+                if (contestData != null) {
+                    screenData.setRewardScreenLauncherParent(RewardsLaunchedFrom.PRIVATE_CONTEST_DETAILS);
+                    screenData.setRoomId(-1);
+                    screenData.setConfigId(contestData.getConfigId());
+                    screenData.setContestName(contestData.getConfigName());
+                }
+                args.putParcelable(Constants.BundleKeys.POOL_PRIZE_ESTIMATION_SCREEN_DATA, Parcels.wrap(screenData));
+
+                fragment = new PoolPrizesEstimationFragment();
+                fragment.setArguments(args);
+
+            } else if (mode.equalsIgnoreCase(Constants.ContestType.BUMPER)) {   // Bumper contest
+
+                BumperPrizesEstimationScreenData screenData = new BumperPrizesEstimationScreenData();
+                if (contestData != null) {
+                    screenData.setRewardScreenLauncherParent(RewardsLaunchedFrom.PRIVATE_CONTEST_DETAILS);
+                    screenData.setRoomId(-1);
+                    screenData.setConfigId(contestData.getConfigId());
+                    screenData.setContestName(contestData.getConfigName());
+                }
+                args.putParcelable(Constants.BundleKeys.BUMPER_PRIZE_ESTIMATION_SCREEN_DATA, Parcels.wrap(screenData));
+
+                fragment = new BumperPrizesEstimationFragment();
+                fragment.setArguments(args);
+            }
         }
-        args.putParcelable(Constants.BundleKeys.BUMPER_PRIZE_ESTIMATION_SCREEN_DATA, Parcels.wrap(screenData));
-
-        BumperPrizesEstimationFragment fragment = new BumperPrizesEstimationFragment();
-        fragment.setArguments(args);
 
         return fragment;
     }

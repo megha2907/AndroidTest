@@ -107,4 +107,15 @@ public class CodeSnippet {
         return amtStr;
     }
 
+    public static String getFormattedPercentage(float value) {
+        String amtStr = String.valueOf(value);
+        try {
+            DecimalFormat formatter = new DecimalFormat(Constants.PERCENTAGE_PATTERN);
+            amtStr = formatter.format(value);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return amtStr;
+    }
+
 }

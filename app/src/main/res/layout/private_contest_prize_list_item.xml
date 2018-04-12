@@ -12,9 +12,9 @@
 
     <com.jeeva.android.widgets.customfont.CustomTextView
         android:id="@+id/rank_textView"
-        android:layout_width="wrap_content"
+        android:layout_width="@dimen/dim_30"
         android:layout_height="wrap_content"
-        android:minWidth="@dimen/dim_17"
+        android:gravity="right"
         android:layout_gravity="center_vertical"
         android:textColor="@color/white_dim"
         android:textSize="@dimen/sp_12"
@@ -28,30 +28,29 @@
         android:textSize="@dimen/sp_12"
         android:text="-"
         app:typeface="lato_regular"
-        android:layout_marginLeft="@dimen/dim_10"
+        android:layout_marginLeft="@dimen/dim_20"
         android:layout_marginRight="@dimen/dim_16"/>
 
     <com.jeeva.android.widgets.customfont.CustomTextView
         android:id="@+id/share_percent_textView"
-        android:layout_width="wrap_content"
+        android:layout_width="@dimen/dim_50"
         android:layout_height="wrap_content"
-        android:gravity="right"
         android:minWidth="@dimen/dim_35"
         android:layout_gravity="center_vertical"
-        android:textColor="@color/white_dim"
+        android:textColor="@color/white"
         android:textSize="@dimen/sp_12"
         app:typeface="lato_regular"
         />
 
-    <com.jeeva.android.widgets.customfont.CustomTextView
+    <!--<com.jeeva.android.widgets.customfont.CustomTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
-        android:textColor="@color/white_dim"
+        android:textColor="@color/white"
         android:textSize="@dimen/sp_12"
         android:text="%"
         app:typeface="lato_regular"
-        android:layout_marginLeft="@dimen/dim_8"/>
+        android:layout_marginLeft="@dimen/dim_8"/>-->
 
     <com.jeeva.android.widgets.customfont.CustomTextView
         android:id="@+id/calculated_amt_textView"
@@ -62,7 +61,7 @@
         android:layout_gravity="center_vertical"
         android:textColor="@color/white"
         android:textSize="@dimen/sp_12"
-        android:text="1st"
+        android:text=""
         app:typeface="lato_regular"/>
 
 </LinearLayout>

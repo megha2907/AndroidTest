@@ -193,12 +193,19 @@ public class InAppNotificationService extends IntentService {
     private void sendNotification(InAppNotificationHelper notificationHelper,
                                   InPlayResponse inPlayResponse, InPlayContestDto inPlayContestDto,
                                   InPlayContestMatchDto matchDto) {
-
+        String title = matchDto.getParties();
         String msg = "Predict now and stay in the race to win " + inPlayResponse.getChallengeName();
         String subTitle = "The game starts at " + DateTimeHelper.getInAppMatchStartTime(matchDto.getStartTime());
 
+        /* Headless matches  */
+        if (inPlayContestDto != null && inPlayContestDto.isHeadlessState()) {
+            title = "The challenge start at " + DateTimeHelper.getInAppMatchStartTime(inPlayResponse.getChallengeStartTime());
+            msg = (inPlayResponse.getChallengeName() != null) ? inPlayResponse.getChallengeName() : "";
+            subTitle = "You haven't joined a contest yet! Join now to win cash.";
+        }
+
         notificationHelper.sendNotification(getApplicationContext(),
-                matchDto.getParties(), msg, subTitle, inPlayContestDto);
+                title, msg, subTitle, inPlayContestDto);
     }
 
     /**

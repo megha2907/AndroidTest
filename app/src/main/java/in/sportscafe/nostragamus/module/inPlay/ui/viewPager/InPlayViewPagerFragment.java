@@ -28,7 +28,6 @@ import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.contest.contestDetailsAfterJoining.InplayContestDetailsActivity;
 import in.sportscafe.nostragamus.module.contest.dto.ContestScreenData;
-import in.sportscafe.nostragamus.module.contest.dto.ContestType;
 import in.sportscafe.nostragamus.module.contest.dto.JoinContestData;
 import in.sportscafe.nostragamus.module.contest.ui.ContestsActivity;
 import in.sportscafe.nostragamus.module.customViews.CustomSnackBar;
@@ -112,9 +111,13 @@ public class InPlayViewPagerFragment extends BaseFragment {
         Bundle args = getArguments();
         if (args != null && mRecyclerView != null) {
             if (args.containsKey(Constants.BundleKeys.JOIN_CONTEST_DATA)) {
+
                 JoinContestData joinContestData = Parcels.unwrap(args.getParcelable(Constants.BundleKeys.JOIN_CONTEST_DATA));
 
                 if (joinContestData != null) {
+
+                    showMsgIfPrivateContestCreated(joinContestData);
+
                     InPlayRecyclerAdapter inPlayRecyclerAdapter = (InPlayRecyclerAdapter) mRecyclerView.getAdapter();
                     if (inPlayRecyclerAdapter != null) {
                         final int adapterPos = inPlayRecyclerAdapter.getAdapterPositionFromContestId(joinContestData.getContestId());
@@ -141,6 +144,13 @@ public class InPlayViewPagerFragment extends BaseFragment {
                     }
                 }
             }
+        }
+    }
+
+    private void showMsgIfPrivateContestCreated(JoinContestData joinContestData) {
+        if (joinContestData != null && joinContestData.isShouldShowPrivateContestCreatedMsg()) {
+            handleError(-1, "Private Contest Successfully Created");
+            joinContestData.setShouldShowPrivateContestCreatedMsg(false);   // set false as once msg shown
         }
     }
 
@@ -310,7 +320,7 @@ public class InPlayViewPagerFragment extends BaseFragment {
                 getActivity().startActivity(intent);
 
             } else {
-                handleError(Constants.DataStatus.NO_INTERNET);
+                handleError(Constants.DataStatus.NO_INTERNET, "");
             }
         }
     }
@@ -351,25 +361,31 @@ public class InPlayViewPagerFragment extends BaseFragment {
                         getActivity().startActivity(intent);
 
                     } else {
-                        handleError(Constants.DataStatus.NO_INTERNET);
+                        handleError(Constants.DataStatus.NO_INTERNET, "");
                     }
                 }
             } else {
-                handleError(-1);
+                handleError(-1, "");
             }
         }
     }
 
-    private void handleError(int status) {
+    private void handleError(int status, String msg) {
         if (getView() != null && getActivity() != null && !getActivity().isFinishing()) {
-            switch (status) {
-                case Constants.DataStatus.NO_INTERNET:
-                    CustomSnackBar.make(getView(), Constants.Alerts.NO_INTERNET_CONNECTION, CustomSnackBar.DURATION_LONG).show();
-                    break;
+            if (!TextUtils.isEmpty(msg)) {
 
-                default:
-                    CustomSnackBar.make(getView(), Constants.Alerts.SOMETHING_WRONG, CustomSnackBar.DURATION_LONG).show();
-                    break;
+                CustomSnackBar.make(getView(), msg, CustomSnackBar.DURATION_LONG).show();
+
+            } else {
+                switch (status) {
+                    case Constants.DataStatus.NO_INTERNET:
+                        CustomSnackBar.make(getView(), Constants.Alerts.NO_INTERNET_CONNECTION, CustomSnackBar.DURATION_LONG).show();
+                        break;
+
+                    default:
+                        CustomSnackBar.make(getView(), Constants.Alerts.SOMETHING_WRONG, CustomSnackBar.DURATION_LONG).show();
+                        break;
+                }
             }
         }
     }
@@ -385,7 +401,7 @@ public class InPlayViewPagerFragment extends BaseFragment {
                 getActivity().startActivity(intent);
             }
         } else {
-            handleError(Constants.DataStatus.NO_INTERNET);
+            handleError(Constants.DataStatus.NO_INTERNET, "");
         }
     }
 

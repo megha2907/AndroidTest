@@ -1,6 +1,7 @@
 package in.sportscafe.nostragamus.module.customViews;
 
 import android.content.Context;
+import android.support.v7.widget.AppCompatSpinner;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.widget.Spinner;
@@ -11,7 +12,7 @@ import java.lang.reflect.Field;
  * Created by sc on 2/4/18.
  */
 
-public class CustomSpinner extends Spinner {
+public class CustomSpinner extends AppCompatSpinner {
 
     private final String TAG = CustomSpinner.class.getSimpleName();
 
@@ -35,7 +36,7 @@ public class CustomSpinner extends Spinner {
 
     private void ignoreOldSelectionByReflection() {
         try {
-            Class<?> c = this.getClass().getSuperclass().getSuperclass().getSuperclass();
+            Class<?> c = this.getClass().getSuperclass().getSuperclass().getSuperclass().getSuperclass();
             Field reqField = c.getDeclaredField("mOldSelectedPosition");
             reqField.setAccessible(true);
             reqField.setInt(this, -1);

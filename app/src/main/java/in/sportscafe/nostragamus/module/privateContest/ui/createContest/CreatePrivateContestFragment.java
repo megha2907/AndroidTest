@@ -11,6 +11,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -20,16 +21,19 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.jeeva.android.BaseFragment;
 import com.jeeva.android.Log;
 import com.jeeva.android.widgets.CustomProgressbar;
+import com.jeeva.android.widgets.customfont.CustomEditText;
 
 import org.parceler.Parcels;
 
@@ -61,6 +65,7 @@ import in.sportscafe.nostragamus.module.privateContest.ui.createContest.dto.Priv
 import in.sportscafe.nostragamus.module.privateContest.ui.createContest.dto.PrivateContestPrizeSpinnerItemType;
 import in.sportscafe.nostragamus.module.privateContest.ui.createContest.dto.PrivateContestPrizeTemplateResponse;
 import in.sportscafe.nostragamus.module.privateContest.ui.createContest.dto.PrizeListItemDto;
+import in.sportscafe.nostragamus.utils.CodeSnippet;
 
 import static in.sportscafe.nostragamus.module.privateContest.helper.PrivateContestPrizeEstimationHelper.getDistributableTotalPrize;
 
@@ -76,20 +81,23 @@ public class CreatePrivateContestFragment extends BaseFragment implements
 
     private CreatePrivateContestFragmentListener mFragmentListener;
     private CreatePrivateContestScreenData mScreenData;
-    private PrivateContestPrizeListRecyclerAdapter mPrizeTemplateAdapter;
+    private PrivateContestPrizeListRecyclerAdapter mPrizeListAdapter;
+    private PrivateContestPrizeTemplateSpinnerAdapter mSpinnerAdapter;
     private PrivateContestPrizeTemplateResponse mSelectedPrizeTemplate;
 
     private Spinner mPrizeStructureSpinner;
     private Button mCreatePrivateContestButton;
     private EditText mContestNameEditText;
     private EditText mEntriesEditText;
-    private EditText mEntryFeeEditText;
+    private CustomEditText mEntryFeeEditText;
     private TextView mEntriesErrorTextView;
     private TextView mFeeErrorTextView;
     private TextView mPrizesErrorTextView;
     private TextView mSubHeaderTimerTextView;
     private TextView mMessageTextView;
     private RecyclerView mEstimatedPrizeRecyclerView;
+    private NestedScrollView mNestedScrollView;
+    private RadioButton mTop1WinRadio;
 
     private TextWatcher mEntriesTextWatcher = getEntriesTextWatcher();
     private TextWatcher mEntryFeeTextWatcher = getEntryFeeTextWatcher();
@@ -112,37 +120,62 @@ public class CreatePrivateContestFragment extends BaseFragment implements
                 validatePrizeStructureTemplate();
 
                 if (!TextUtils.isEmpty(mEntriesEditText.getText().toString())) {
-                    calculatePrizeEstimation();
+                    if (isEntriesValid()) {
+
+                        calculatePrizeEstimation();
+
+                        /* Remove error if was shown */
+                        if (mEntriesErrorTextView.getVisibility() == View.VISIBLE) {
+                            mEntriesErrorTextView.setVisibility(View.GONE);
+                        }
+                        if (getView() != null) {
+                            TextView titleTextView = (TextView) getView().findViewById(R.id.create_contest_entries_heading_TextView);
+                            View lineView = getView().findViewById(R.id.create_private_entries_line_view);
+                            setActiveState(titleTextView, lineView, true);
+                        }
+                    } else {
+                        handleEntriesValid(false, "");
+                    }
+                } else {
+                    setEmptyEstimationList();  // Set empty list
                 }
             }
         };
+    }
+
+    private void setEmptyEstimationList() {
+        setEstimatePrizeAdapter(new ArrayList<PrizeListItemDto>());
+        setTotalPrizeAmount(0);
     }
 
     private void validatePrizeStructureTemplate() {
         if (mSelectedPrizeTemplate != null &&
                 mSelectedPrizeTemplate.getTemplateType() == PrivateContestPrizeSpinnerItemType.ADVANCE_TEMPLATE) {
 
-            mPrizesErrorTextView.setText("Set new prize structure");
-            mPrizesErrorTextView.setVisibility(View.VISIBLE);
+            showSpinnerError(true, "Select different prize structure");
             // re-set ui
-            setEstimatePrizeAdapter(new ArrayList<PrizeListItemDto>());
+            setEmptyEstimationList();
         }
     }
 
     private void calculatePrizeEstimation() {
-        if (isEntryFeeValid()) {
-            handleEntryFeeValid(true);
+        if (!TextUtils.isEmpty(mEntriesEditText.getText().toString()) &&
+                !TextUtils.isEmpty(mEntryFeeEditText.getText().toString())) {
 
-            if (isEntriesValid()) {
-                handleEntriesValid(true, "");
+            if (isEntryFeeValid()) {
+                handleEntryFeeValid(true);
 
-                performEstimation(mSelectedPrizeTemplate, getEntryFee(), getEntries());
+                if (isEntriesValid()) {
+                    handleEntriesValid(true, "");
 
+                    performEstimation(mSelectedPrizeTemplate, getEntryFee(), getEntries());
+
+                } else {
+                    handleEntriesValid(false, "");
+                }
             } else {
-                handleEntriesValid(false, "");
+                handleEntryFeeValid(false);
             }
-        } else {
-            handleEntriesValid(false, "");
         }
     }
 
@@ -151,23 +184,35 @@ public class CreatePrivateContestFragment extends BaseFragment implements
         return new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
             }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-
             }
 
             @Override
             public void afterTextChanged(Editable s) {
-                double entryFee = getEntryFee();
-                if (entryFee < 1) {
-                    setSpinnerEnabled(false);
+                validatePrizeStructureTemplate();
+
+                if (!TextUtils.isEmpty(mEntryFeeEditText.getText().toString())) {
+                    if (isEntryFeeValid()) {
+
+                        calculatePrizeEstimation();
+
+                        /* Remove error if was shown */
+                        if (mFeeErrorTextView.getVisibility() == View.VISIBLE) {
+                            mFeeErrorTextView.setVisibility(View.GONE);
+                        }
+                        if (getView() != null) {
+                            TextView titleTextView = (TextView) getView().findViewById(R.id.create_contest_fee_heading_TextView);
+                            View lineView = getView().findViewById(R.id.create_private_fee_line_view);
+                            setActiveState(titleTextView, lineView, true);
+                        }
+                    } else {
+                        handleEntryFeeValid(false);
+                    }
                 } else {
-                    setSpinnerEnabled(true);
-                    validatePrizeStructureTemplate();
-                    calculatePrizeEstimation();
+                    setEmptyEstimationList();  // Set empty list
                 }
             }
         };
@@ -218,12 +263,14 @@ public class CreatePrivateContestFragment extends BaseFragment implements
         mCreatePrivateContestButton = (Button) view.findViewById(R.id.create_join_private_contest_btn);
         mContestNameEditText = (EditText) view.findViewById(R.id.create_contest_name_editText);
         mEntriesEditText = (EditText) view.findViewById(R.id.create_contest_entries_editText);
-        mEntryFeeEditText = (EditText) view.findViewById(R.id.create_contest_fee_editText);
+        mEntryFeeEditText = (CustomEditText) view.findViewById(R.id.create_contest_fee_editText);
         mEntriesErrorTextView = (TextView) view.findViewById(R.id.create_contest_entries_heading_err_TextView);
         mPrizesErrorTextView = (TextView) view.findViewById(R.id.create_contest_prize_structure_heading_err_TextView);
         mFeeErrorTextView = (TextView) view.findViewById(R.id.create_contest_fee_heading_err_TextView);
         mSubHeaderTimerTextView = (TextView) view.findViewById(R.id.toolbar_heading_two);
         mMessageTextView = (TextView) view.findViewById(R.id.create_private_contest_msg_textView);
+        mNestedScrollView = (NestedScrollView) view.findViewById(R.id.create_contest_nestedScrollView);
+        mTop1WinRadio = (RadioButton) view.findViewById(R.id.pvt_contest_top_1_win_radio);
 
         mEstimatedPrizeRecyclerView = (RecyclerView) view.findViewById(R.id.prize_estimation_recyclerView);
         mEstimatedPrizeRecyclerView.setHasFixedSize(true);
@@ -236,6 +283,7 @@ public class CreatePrivateContestFragment extends BaseFragment implements
         view.findViewById(R.id.pvt_contest_name_layout).setOnClickListener(this);
         view.findViewById(R.id.pvt_contest_entries_layout).setOnClickListener(this);
         view.findViewById(R.id.pvt_contest_entry_fee_layout).setOnClickListener(this);
+        view.findViewById(R.id.pvt_contest_spinner_layout).setOnClickListener(this);
 
         mContestNameEditText.setOnFocusChangeListener(this);
         mEntriesEditText.setOnFocusChangeListener(this);
@@ -243,6 +291,27 @@ public class CreatePrivateContestFragment extends BaseFragment implements
 
         mEntriesEditText.addTextChangedListener(mEntriesTextWatcher);
         mEntryFeeEditText.addTextChangedListener(mEntryFeeTextWatcher);
+
+        setKeyboardDismissListener();
+    }
+
+    private void setKeyboardDismissListener() {
+        try {
+            mEntryFeeEditText.setOnEditTextImeBackListener(new CustomEditText.EditTextImeBackListener() {
+                @Override
+                public void onImeBack(CustomEditText ctrl, String text) {}
+
+                @Override
+                public void onImeActionDoneClicked() {
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            mPrizeStructureSpinner.performClick();
+                        }
+                    }, 500);
+                }
+            });
+        } catch (Exception e) {}
     }
 
     @NonNull
@@ -251,14 +320,36 @@ public class CreatePrivateContestFragment extends BaseFragment implements
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 mSelectedPrizeTemplate = (PrivateContestPrizeTemplateResponse)mPrizeStructureSpinner.getSelectedItem();
-                if (mSelectedPrizeTemplate != null) {
+                mSpinnerAdapter.setSelectedTemplate(mSelectedPrizeTemplate);
+
+                showSpinnerError(false, "");
+                showMinEntryRadioIfRequired(mSelectedPrizeTemplate);
+
+                if (mSelectedPrizeTemplate != null && !TextUtils.isEmpty(mSelectedPrizeTemplate.getTemplateId()) &&
+                        !mSelectedPrizeTemplate.getTemplateId().equalsIgnoreCase(PrivateContestPrizeSpinnerItemType.DEFAULT_PRIZE_TEMPLATE_ID)) {
+
                     onPrizeTemplateSelected(mSelectedPrizeTemplate);
+
+//                    scrollNestedView();
+                } else {
+                    setEmptyEstimationList(); // Make list empty
                 }
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {}
         };
+    }
+
+    private void scrollNestedView() {
+        if (mNestedScrollView != null && mEstimatedPrizeRecyclerView != null) {
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    mNestedScrollView.smoothScrollTo(0, mEstimatedPrizeRecyclerView.getTop());
+                }
+            }, 500);
+        }
     }
 
     private void onPrizeTemplateSelected(PrivateContestPrizeTemplateResponse prizeResponse) {
@@ -280,6 +371,20 @@ public class CreatePrivateContestFragment extends BaseFragment implements
                 }
             } else {
                 handleEntriesValid(false, "");
+            }
+        }
+    }
+
+    private void showMinEntryRadioIfRequired(PrivateContestPrizeTemplateResponse prizeResponse) {
+        if (prizeResponse != null && getView() != null) {
+            LinearLayout linearLayout = (LinearLayout) getView().findViewById(R.id.pvt_contest_prize_spinner_radio_layout);
+
+            if (prizeResponse.getMinEntryRequired() > 0) {
+                TextView msgTextView = (TextView) getView().findViewById(R.id.pvt_contest_spinner_msg_textView);
+                msgTextView.setText("What if there are less than " + prizeResponse.getMinEntryRequired() + " entries in the contest?");
+                linearLayout.setVisibility(View.VISIBLE);
+            } else {
+                linearLayout.setVisibility(View.GONE);
             }
         }
     }
@@ -324,8 +429,12 @@ public class CreatePrivateContestFragment extends BaseFragment implements
 
     private void setEstimatePrizeAdapter(List<PrizeListItemDto> prizeListItemDtoList) {
         if (prizeListItemDtoList != null) {
-            mPrizeTemplateAdapter = new PrivateContestPrizeListRecyclerAdapter(prizeListItemDtoList);
-            mEstimatedPrizeRecyclerView.setAdapter(mPrizeTemplateAdapter);
+            mPrizeListAdapter = new PrivateContestPrizeListRecyclerAdapter(prizeListItemDtoList);
+            mEstimatedPrizeRecyclerView.setAdapter(mPrizeListAdapter);
+
+            if (prizeListItemDtoList.size() < 1) {
+                setTotalPrizeAmount(0);
+            }
         }
     }
 
@@ -344,13 +453,18 @@ public class CreatePrivateContestFragment extends BaseFragment implements
                     handleError(msg, -1);
                 }
             }
+
+            @Override
+            public void updateTotalAmount(double updatedTotalAmount) {
+                setTotalPrizeAmount(updatedTotalAmount);
+            }
         };
     }
 
     private void setTotalPrizeAmount(double totalPrizeAmount) {
-        if (totalPrizeAmount > 0 && getView() != null) {
+        if (getView() != null) {
             TextView totalPrizeTextView = (TextView) getView().findViewById(R.id.private_contest_total_prize_amt_textView);
-            totalPrizeTextView.setText(WalletHelper.getFormattedStringOfAmount(totalPrizeAmount));
+            totalPrizeTextView.setText(Constants.RUPEE_SYMBOL + CodeSnippet.getFormattedAmount(totalPrizeAmount));
         }
     }
 
@@ -370,6 +484,7 @@ public class CreatePrivateContestFragment extends BaseFragment implements
                 break;
 
             case R.id.create_join_private_contest_btn:
+                hideKeyBoard();
                 onCreateAndJoinContestClicked();
                 break;
 
@@ -387,60 +502,112 @@ public class CreatePrivateContestFragment extends BaseFragment implements
                 mEntryFeeEditText.requestFocus();
                 showKeyBoard(mEntriesEditText);
                 break;
+
+            case R.id.pvt_contest_spinner_layout:
+                mPrizeStructureSpinner.performClick();
+                break;
         }
     }
+
+    private void hideKeyBoard() {
+        if (getActivity() != null && getActivity().getCurrentFocus() != null) {
+            InputMethodManager inputMethodManager = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+            if (inputMethodManager != null) {
+                inputMethodManager.hideSoftInputFromWindow(getActivity().getCurrentFocus()
+                        .getApplicationWindowToken(), 0);
+            }
+        }
+    }
+
 
     private void onCreateAndJoinContestClicked() {
         if (mScreenData != null && mScreenData.getContestScreenData() != null &&
                 getActivity() != null && !getActivity().isFinishing()) {
 
-            /* Validate input again before joining */
-            if (isEntriesValid()) {
-                if (isEntryFeeValid()) {
-                    if (isProperTemplateSelected()) {
+            /* No error on scree visible */
+            if (mEntriesErrorTextView.getVisibility() != View.VISIBLE &&
+                    mFeeErrorTextView.getVisibility() != View.VISIBLE) {
 
-                        ContestScreenData contestScreenData = mScreenData.getContestScreenData();
-                        int entries = getEntries();
-                        double entryFee = getEntryFee();
-                        String contestName = mContestNameEditText.getText().toString();
 
-                        final JoinContestData joinPrivateContestData = new JoinContestData();
-                        joinPrivateContestData.setChallengeId(contestScreenData.getChallengeId());
-                        joinPrivateContestData.setChallengeName(contestScreenData.getChallengeName());
-                        joinPrivateContestData.setChallengeStartTime(contestScreenData.getChallengeStartTime());
-                        joinPrivateContestData.setEntryFee(entryFee);
-                        joinPrivateContestData.setContestName(contestName);
-                        joinPrivateContestData.setPrivateContestEntries(entries);
-                        joinPrivateContestData.setJoiContestDialogLaunchMode(CompletePaymentDialogFragment.DialogLaunchMode.JOINING_CHALLENGE_LAUNCH);
+                /* Validate input again before joining */
+                    if (isEntriesValid()) {
+                        if (isEntryFeeValid()) {
+                            if (!TextUtils.isEmpty(getSelectedPrizeTemplateId())) {
+                                if (mPrizeListAdapter != null && mPrizeListAdapter.getItemCount() > 0) {
 
-                        Bundle args = new Bundle();
-                        args.putParcelable(Constants.BundleKeys.JOIN_CONTEST_DATA, Parcels.wrap(joinPrivateContestData));
+                                    ContestScreenData contestScreenData = mScreenData.getContestScreenData();
+                                    int entries = getEntries();
+                                    double entryFee = getEntryFee();
+                                    String contestName = mContestNameEditText.getText().toString();
+                                    boolean shouldTop1Win = getPrizeStructureRadioChoice();
 
-                        performCreateAndJoin(args);
+                                    final JoinContestData joinPrivateContestData = new JoinContestData();
+                                    joinPrivateContestData.setPrivateContestTemplateId(getSelectedPrizeTemplateId());
+                                    joinPrivateContestData.setChallengeId(contestScreenData.getChallengeId());
+                                    joinPrivateContestData.setChallengeName(contestScreenData.getChallengeName());
+                                    joinPrivateContestData.setChallengeStartTime(contestScreenData.getChallengeStartTime());
+                                    joinPrivateContestData.setEntryFee(entryFee);
+                                    joinPrivateContestData.setContestName(contestName);
+                                    joinPrivateContestData.setPrivateContestEntries(entries);
+                                    joinPrivateContestData.setPrivateContestTop1Wins(shouldTop1Win);
+                                    joinPrivateContestData.setJoiContestDialogLaunchMode(CompletePaymentDialogFragment.DialogLaunchMode.JOINING_CHALLENGE_LAUNCH);
 
+                                    Bundle args = new Bundle();
+                                    args.putParcelable(Constants.BundleKeys.JOIN_CONTEST_DATA, Parcels.wrap(joinPrivateContestData));
+
+                                    performCreateAndJoin(args);
+
+                                } else {
+                                    showSpinnerError(true, "Select proper prize structure");
+                                }
+                            } else {
+                                showSpinnerError(true, "Select prize structure");
+                            }
+                        } else {
+                            handleEntryFeeValid(false);
+                        }
                     } else {
-                        handleError("Please set prize structure", -1);
+                        handleEntriesValid(false, "");
                     }
-                } else {
-                    handleEntryFeeValid(false);
                 }
-            } else {
-                handleEntriesValid(false, "");
-            }
         } else {
             handleError("", -1);
         }
     }
 
-    private boolean isProperTemplateSelected() {
-        boolean isProperTemplate = true;    //TODO: If Advance prize structure gets included , then verify
+    private boolean getPrizeStructureRadioChoice() {
+        boolean top1Win = true; // default chosen item
 
-        /*if (mSelectedPrizeTemplate != null &&
-                mSelectedPrizeTemplate.getTemplateType() == PrivateContestPrizeSpinnerItemType.ADVANCE_TEMPLATE) {
+        if (mSelectedPrizeTemplate != null && mSelectedPrizeTemplate.getMinEntryRequired() > 0) {
+            top1Win = mTop1WinRadio.isChecked();
+        } else {
+            top1Win = false;
+        }
 
-        }*/
+        return top1Win;
+    }
 
-        return isProperTemplate;
+    private void showSpinnerError(boolean isError, String text) {
+        if (isError) {
+            mPrizesErrorTextView.setText(text);
+            mPrizesErrorTextView.setVisibility(View.VISIBLE);
+        } else {
+            mPrizesErrorTextView.setText("Select prize structure");
+            mPrizesErrorTextView.setVisibility(View.GONE);
+        }
+    }
+
+    private String getSelectedPrizeTemplateId() {
+        String templateId = "";
+
+        if (mSelectedPrizeTemplate != null &&
+                !TextUtils.isEmpty(mSelectedPrizeTemplate.getTemplateId()) &&
+                !mSelectedPrizeTemplate.getTemplateId().equalsIgnoreCase(PrivateContestPrizeSpinnerItemType.DEFAULT_PRIZE_TEMPLATE_ID)) {
+
+            templateId = mSelectedPrizeTemplate.getTemplateId();
+        }
+
+        return templateId;
     }
 
     private void performCreateAndJoin(final Bundle args) {
@@ -566,6 +733,7 @@ public class CreatePrivateContestFragment extends BaseFragment implements
                 /* Add joinContestData to make it scroll to joined contest in inplay */
                 JoinContestData joinContestData = new JoinContestData();
                 joinContestData.setContestId(createPrivateContestResponse.getConfigId());
+                joinContestData.setShouldShowPrivateContestCreatedMsg(true);
 
                 Bundle args = new Bundle();
                 args.putParcelable(Constants.BundleKeys.JOIN_CONTEST_DATA, Parcels.wrap(joinContestData));
@@ -637,7 +805,7 @@ public class CreatePrivateContestFragment extends BaseFragment implements
         if (getView() != null) {
             /* Wallet amount */
             TextView walletAmtTextView = (TextView) getView().findViewById(R.id.toolbar_wallet_money);
-            walletAmtTextView.setText(String.valueOf((long) WalletHelper.getTotalBalance()));
+            walletAmtTextView.setText(CodeSnippet.getFormattedAmount(WalletHelper.getTotalBalance()));
 
             /* challenge name */
             if (mScreenData != null && mScreenData.getContestScreenData() != null
@@ -703,18 +871,19 @@ public class CreatePrivateContestFragment extends BaseFragment implements
     }
 
     private void loadPrizeTemplatesFromServer() {
-        CustomProgressbar.getProgressbar(getContext()).show();
+        showLoadingProgressBar();
 
-        new PrivateContestPrizeTemplatesApiModelImpl().fetchPrizeTemplates(new PrivateContestPrizeTemplatesApiModelImpl.PrivateContestDetailApiListener() {
+        new PrivateContestPrizeTemplatesApiModelImpl().fetchPrizeTemplates(
+                new PrivateContestPrizeTemplatesApiModelImpl.PrivateContestDetailApiListener() {
             @Override
             public void onSuccessResponse(int status, List<PrivateContestPrizeTemplateResponse> responseList) {
-                CustomProgressbar.getProgressbar(getContext()).dismissProgress();
+                hideLoadingProgressBar();
                 onPrizeStructureReceived(responseList);
             }
 
             @Override
             public void onError(int status) {
-                CustomProgressbar.getProgressbar(getContext()).dismissProgress();
+                hideLoadingProgressBar();
                 handleError("", status);
             }
         });
@@ -724,19 +893,27 @@ public class CreatePrivateContestFragment extends BaseFragment implements
         if (getView() != null && getActivity() != null && !getActivity().isFinishing() &&
                 responseList != null && responseList.size() > 0) {
 
+            /* Add Always first Selected item */
+            PrivateContestPrizeTemplateResponse defaultTemplate = new PrivateContestPrizeTemplateResponse();
+            defaultTemplate.setTemplateType(PrivateContestPrizeSpinnerItemType.DEFAULT_PRIZE_TEMPLATE);
+            defaultTemplate.setName(PrivateContestPrizeSpinnerItemType.DEFAULT_PRIZE_TEMPLATE_ID);  // name same as id
+            defaultTemplate.setTemplateId(PrivateContestPrizeSpinnerItemType.DEFAULT_PRIZE_TEMPLATE_ID);
+            responseList.add(0, defaultTemplate);
+
             /* Select top template as default */
             mSelectedPrizeTemplate = responseList.get(0);
 
             /* Add Advance Template */
-            PrivateContestPrizeTemplateResponse advanceTemplate = new PrivateContestPrizeTemplateResponse();
+            /*PrivateContestPrizeTemplateResponse advanceTemplate = new PrivateContestPrizeTemplateResponse();
             advanceTemplate.setTemplateType(PrivateContestPrizeSpinnerItemType.ADVANCE_TEMPLATE);
             advanceTemplate.setName("Advance");
-            responseList.add(advanceTemplate);
+            responseList.add(advanceTemplate);*/
 
-            PrivateContestPrizeTemplateSpinnerAdapter arrayAdapter =
-                    new PrivateContestPrizeTemplateSpinnerAdapter(getContext(), responseList);
+            mSpinnerAdapter = new PrivateContestPrizeTemplateSpinnerAdapter(
+                    getContext(), responseList, mSelectedPrizeTemplate);
+            mSpinnerAdapter.setDropDownViewResource(R.layout.pvt_contest_spinner_textview);
 
-            mPrizeStructureSpinner.setAdapter(arrayAdapter);
+            mPrizeStructureSpinner.setAdapter(mSpinnerAdapter);
             mPrizeStructureSpinner.setSelected(false);
             mPrizeStructureSpinner.setSelection(0, true);  // default item selected
             mPrizeStructureSpinner.setOnItemSelectedListener(getSpinnerItemSelectedListener());
@@ -753,7 +930,18 @@ public class CreatePrivateContestFragment extends BaseFragment implements
     }
 
     private void setActiveState(TextView titleTextView, View editTextUnderlineView, boolean shouldMakeActive) {
-        int colorState = (shouldMakeActive) ? R.color.blue_008ae1 : R.color.white;
+        int colorState = (shouldMakeActive) ? R.color.blue_008ae1 : R.color.white_999999;
+
+        if (titleTextView != null) {
+            titleTextView.setTextColor(ContextCompat.getColor(titleTextView.getContext(), colorState));
+        }
+        if (editTextUnderlineView != null) {
+            editTextUnderlineView.setBackgroundColor(ContextCompat.getColor(editTextUnderlineView.getContext(), colorState));
+        }
+    }
+
+    private void setErrorState(TextView titleTextView, View editTextUnderlineView, boolean isError) {
+        int colorState = (isError) ? R.color.radical_red : R.color.white_999999;
 
         if (titleTextView != null) {
             titleTextView.setTextColor(ContextCompat.getColor(titleTextView.getContext(), colorState));
@@ -786,10 +974,8 @@ public class CreatePrivateContestFragment extends BaseFragment implements
 
     private void EntryFeeFocusChanged(boolean hasFocus) {
         if (getView() != null) {
-            TextView titleTextView;
-            View lineView;
-            titleTextView = (TextView) getView().findViewById(R.id.create_contest_fee_heading_TextView);
-            lineView = getView().findViewById(R.id.create_private_fee_line_view);
+            TextView titleTextView = (TextView) getView().findViewById(R.id.create_contest_fee_heading_TextView);
+            View lineView = getView().findViewById(R.id.create_private_fee_line_view);
             setActiveState(titleTextView, lineView, hasFocus);
 
             if (!hasFocus && !TextUtils.isEmpty(mEntryFeeEditText.getText().toString())) {
@@ -806,10 +992,8 @@ public class CreatePrivateContestFragment extends BaseFragment implements
 
     private void entriesFocusChanged(boolean hasFocus) {
         if (getView() != null) {
-            TextView titleTextView;
-            View lineView;
-            titleTextView = (TextView) getView().findViewById(R.id.create_contest_entries_heading_TextView);
-            lineView = getView().findViewById(R.id.create_private_entries_line_view);
+            TextView titleTextView = (TextView) getView().findViewById(R.id.create_contest_entries_heading_TextView);
+            View lineView = getView().findViewById(R.id.create_private_entries_line_view);
             setActiveState(titleTextView, lineView, hasFocus);
 
             if (!hasFocus && !TextUtils.isEmpty(mEntriesEditText.getText().toString())) {
@@ -828,7 +1012,8 @@ public class CreatePrivateContestFragment extends BaseFragment implements
         boolean isValid = false;
         int entries = getEntries();
 
-        if (entries >= Constants.PrivateContests.MIN_ENTRIES && entries <= Constants.PrivateContests.MAX_ENTRIES) {
+        if (entries >= Constants.PrivateContests.MIN_ENTRIES &&
+                entries <= Constants.PrivateContests.MAX_ENTRIES) {
             isValid = true;
         }
 
@@ -836,15 +1021,20 @@ public class CreatePrivateContestFragment extends BaseFragment implements
     }
 
     private void handleEntriesValid(boolean isValid, String msg) {
-        if (mEntriesErrorTextView != null) {
+        if (getView() != null) {
+            TextView titleTextView = (TextView) getView().findViewById(R.id.create_contest_entries_heading_TextView);
+            View lineView = getView().findViewById(R.id.create_private_entries_line_view);
+
             if (isValid) {
                 mEntriesErrorTextView.setVisibility(View.GONE);
+                setActiveState(titleTextView, lineView, false);
             } else {
                 String str = "Enter a number between 2 and 40";
                 if (!TextUtils.isEmpty(msg)) {
                     str = msg;
                 }
 
+                setErrorState(titleTextView, lineView, true);
                 mEntriesErrorTextView.setText(str);
                 mEntriesErrorTextView.setVisibility(View.VISIBLE);
             }
@@ -865,21 +1055,30 @@ public class CreatePrivateContestFragment extends BaseFragment implements
 
     private boolean isEntryFeeValid() {
         boolean isValid = false;
-        double fee = getEntryFee();
 
-        if (fee >= 0 && fee <= Constants.PrivateContests.MAX_ENTRY_FEE) {
-            isValid = true;
+        if (!TextUtils.isEmpty(mEntryFeeEditText.getText().toString())) {
+
+            double fee = getEntryFee();
+            if (fee > 0 && fee <= Constants.PrivateContests.MAX_ENTRY_FEE) {
+                isValid = true;
+            }
         }
 
         return isValid;
     }
 
     private void handleEntryFeeValid(boolean isValid) {
-        if (mFeeErrorTextView != null) {
+        if (getView() != null) {
+            TextView titleTextView = (TextView) getView().findViewById(R.id.create_contest_fee_heading_TextView);
+            View lineView = getView().findViewById(R.id.create_private_fee_line_view);
+
             if (isValid) {
                 mFeeErrorTextView.setVisibility(View.GONE);
+                setActiveState(titleTextView, lineView, false);
+
             } else {
                 mFeeErrorTextView.setVisibility(View.VISIBLE);
+                setErrorState(titleTextView, lineView, true);
             }
         }
     }
@@ -896,4 +1095,17 @@ public class CreatePrivateContestFragment extends BaseFragment implements
         return fee;
     }
 
+    private void showLoadingProgressBar() {
+        if (getView() != null) {
+            getView().findViewById(R.id.pvt_contest_layouts).setVisibility(View.GONE);
+            getView().findViewById(R.id.loading_layout).setVisibility(View.VISIBLE);
+        }
+    }
+
+    private void hideLoadingProgressBar() {
+        if (getView() != null) {
+            getView().findViewById(R.id.loading_layout).setVisibility(View.GONE);
+            getView().findViewById(R.id.pvt_contest_layouts).setVisibility(View.VISIBLE);
+        }
+    }
 }
