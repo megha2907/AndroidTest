@@ -376,8 +376,8 @@
                                     android:layout_height="wrap_content"
                                     android:text=""
                                     android:textColor="@color/white_999999"
-                                    android:textSize="@dimen/sp_12"
-                                    app:typeface="lato_regular" />
+                                    android:textSize="@dimen/sp_13"
+                                    app:typeface="lato_bold" />
 
                                     <RadioGroup
                                         android:layout_width="match_parent"
@@ -420,7 +420,7 @@
                                 android:orientation="horizontal"
                                 android:layout_marginLeft="@dimen/dim_20"
                                 android:layout_marginRight="@dimen/dim_20"
-                                android:layout_marginTop="@dimen/dim_30">
+                                android:layout_marginTop="@dimen/dim_25">
 
                                 <com.jeeva.android.widgets.customfont.CustomTextView
                                     android:layout_width="wrap_content"
@@ -448,7 +448,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:orientation="horizontal"
-                                android:layout_marginTop="@dimen/dim_25"
+                                android:layout_marginTop="@dimen/dim_12"
                                 android:layout_marginLeft="@dimen/dim_20"
                                 android:layout_marginRight="@dimen/dim_20">
 
