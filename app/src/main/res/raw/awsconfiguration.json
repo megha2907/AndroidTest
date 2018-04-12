@@ -1,0 +1,33 @@
+{
+  "UserAgent": "MobileHub/1.0",
+  "Version": "1.0",
+  "CredentialsProvider": {
+    "CognitoIdentity": {
+      "Default": {
+        "PoolId": "ap-southeast-1:9b181389-3a74-4cc6-89c1-3c99a50e428d",
+        "Region": "ap-southeast-1"
+      }
+    }
+  },
+  "IdentityManager": {
+    "Default": {}
+  },
+  "ContentManager": {
+    "Default": {
+      "Bucket": "nostragamus-hosting-mobilehub-599008020",
+      "Region": "ap-southeast-1",
+      "CloudFrontURL": "https://d32qm8nbo6k5t0.cloudfront.net"
+    }
+  },
+  "PinpointAnalytics": {
+    "Default": {
+      "AppId": "2dbeb11bf7474761afac1a7e69a61e25",
+      "Region": "us-east-1"
+    }
+  },
+  "PinpointTargeting": {
+    "Default": {
+      "Region": "us-east-1"
+    }
+  }
+}

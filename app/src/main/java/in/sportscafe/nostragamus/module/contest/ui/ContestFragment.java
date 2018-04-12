@@ -435,7 +435,7 @@ public class ContestFragment extends NostraBaseFragment implements View.OnClickL
                                 }
 
                                 @Override
-                                public void joinContestSuccess(JoinContestData contestJoinedSuccessfully) {
+                                public void joinContestSuccess(JoinContestData contestJoinedSuccessfully, String orderId) {
 
                                     CustomProgressbar.getProgressbar(getContext()).dismissProgress();
                                     onContestJoinedSuccessfully(contestJoinedSuccessfully);
@@ -444,7 +444,7 @@ public class ContestFragment extends NostraBaseFragment implements View.OnClickL
                                             String.valueOf(contestJoinedSuccessfully.getContestId()));
 
                                     if (contestJoinedSuccessfully != null) {
-                                        sendContestJoinedDataToAmplitude(contestJoinedSuccessfully);
+                                        sendContestJoinedDataToAmplitude(contestJoinedSuccessfully,orderId);
                                     }
                                 }
 
@@ -527,11 +527,11 @@ public class ContestFragment extends NostraBaseFragment implements View.OnClickL
         }
     }
 
-    private void sendContestJoinedDataToAmplitude(JoinContestData contest) {
+    private void sendContestJoinedDataToAmplitude(JoinContestData contest,String orderId) {
 
         /* Joining a contest = Revenue */
         NostragamusAnalytics.getInstance().trackRevenue(contest.getEntryFee(), contest.getContestId(),
-                contest.getContestName(), contest.getContestType());
+                contest.getContestName(), contest.getContestType(),orderId);
 
         /* Send Contest Joined Details to Amplitude */
         Bundle activityBundle = null;
@@ -567,6 +567,10 @@ public class ContestFragment extends NostraBaseFragment implements View.OnClickL
 
                         case ContestsActivity.LaunchedFrom.IN_PLAY_JOIN_CONTEST:
                             screenName = "In Play Join Contest";
+                            break;
+
+                        case ContestsActivity.LaunchedFrom.SELECT_PAYMENT_MODE:
+                            screenName = "Wallet Low Balance";
                             break;
 
                     }

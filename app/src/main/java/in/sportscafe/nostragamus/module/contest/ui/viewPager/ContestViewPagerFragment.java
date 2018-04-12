@@ -284,7 +284,7 @@ public class ContestViewPagerFragment extends NostraBaseFragment {
                                 }
 
                                 @Override
-                                public void joinContestSuccess(JoinContestData contestJoinedSuccessfully) {
+                                public void joinContestSuccess(JoinContestData contestJoinedSuccessfully, String orderId) {
 
                                     CustomProgressbar.getProgressbar(getContext()).dismissProgress();
                                     onContestJoinedSuccessfully(contestJoinedSuccessfully);
@@ -293,7 +293,7 @@ public class ContestViewPagerFragment extends NostraBaseFragment {
                                             String.valueOf(contestJoinedSuccessfully.getContestId()));
 
                                     if (contestJoinedSuccessfully != null) {
-                                        sendContestJoinedDataToAmplitude(contestJoinedSuccessfully);
+                                        sendContestJoinedDataToAmplitude(contestJoinedSuccessfully,orderId);
                                     }
                                 }
 
@@ -423,11 +423,11 @@ public class ContestViewPagerFragment extends NostraBaseFragment {
         mContestScreenData = contestScreenData;
     }
 
-    private void sendContestJoinedDataToAmplitude(JoinContestData contest) {
+    private void sendContestJoinedDataToAmplitude(JoinContestData contest, String orderId) {
 
         /* Joining a contest = Revenue */
         NostragamusAnalytics.getInstance().trackRevenue(contest.getEntryFee(), contest.getContestId(),
-                contest.getContestName(), contest.getContestType());
+                contest.getContestName(), contest.getContestType(),orderId);
 
         /* Send Contest Joined Details to Amplitude */
         Bundle activityBundle = null;

@@ -17,6 +17,7 @@ import android.support.multidex.MultiDex;
 import android.telephony.TelephonyManager;
 
 import com.crashlytics.android.Crashlytics;
+import com.crashlytics.android.answers.Answers;
 import com.freshchat.consumer.sdk.Freshchat;
 import com.freshchat.consumer.sdk.FreshchatConfig;
 import com.google.firebase.FirebaseApp;
@@ -112,9 +113,6 @@ public class Nostragamus extends Application {
         // Initializing custom fonts
         initCustomFonts();
 
-        // Initializing the SportsCafe analytics
-        NostragamusAnalytics.getInstance().init(getApplicationContext()).autoTrack(this);
-
         // Here we are helping moEngage to track install/update count
         doInstallOrUpdateChanges();
 
@@ -131,7 +129,7 @@ public class Nostragamus extends Application {
         FirebaseOptions options = new FirebaseOptions.Builder()
                 .setApplicationId(getString(R.string.firebase_app_id)) // Required for Analytics.
                 .setApiKey(getString(R.string.firebase_api_key)) // Required for Auth.
-                .setGcmSenderId(getString(R.string.gcm_sender_id))
+                .setGcmSenderId(getString(R.string.firebase_gcm_sender_id))
                 .setDatabaseUrl(getString(R.string.firebase_url)) // Required for RTDB.
                 .build();
         FirebaseApp.initializeApp(this, options, "in.sportscafe.nostragamus${buildTypeSuffix}");
@@ -145,6 +143,9 @@ public class Nostragamus extends Application {
         // Moengage - Opt-out from Location Tracking and GeoFence
         MoEHelper.getInstance(getApplicationContext()).optOutOfLocationTracking(true);
         MoEHelper.getInstance(getApplicationContext()).optOutOfGeoFences(true);
+
+        // Initializing the SportsCafe analytics
+        NostragamusAnalytics.getInstance().init(getApplicationContext()).autoTrack(this);
     }
 
     @Override
