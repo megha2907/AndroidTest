@@ -169,6 +169,34 @@ public class ContestDetailsFragment extends NostraBaseFragment implements
             mViewPager.setOffscreenPageLimit(3);
 
             setTabLayout(mViewPager);
+
+            mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+                public void onPageScrollStateChanged(int state) {
+                }
+
+                public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                }
+
+                public void onPageSelected(int position) {
+                    switch (position) {
+                        case 0:
+                            // First TAB is Entries
+                            NostragamusAnalytics.getInstance().trackTabClicked(Constants.AnalyticsCategory.CONTEST_DETAILS,
+                                    Constants.AnalyticsClickLabels.ENTRIES);
+                            break;
+                        case 1:
+                            // Second TAB is Prizes
+                            NostragamusAnalytics.getInstance().trackTabClicked(Constants.AnalyticsCategory.CONTEST_DETAILS,
+                                    Constants.AnalyticsClickLabels.PRIZES);
+                            break;
+                        case 2:
+                            // Third TAB is Rules
+                            NostragamusAnalytics.getInstance().trackTabClicked(Constants.AnalyticsCategory.CONTEST_DETAILS,
+                                    Constants.AnalyticsClickLabels.RULES);
+                            break;
+                    }
+                }
+            });
         }
     }
 

@@ -15,8 +15,10 @@ import android.widget.TextView;
 import com.jeeva.android.BaseFragment;
 
 import in.sportscafe.nostragamus.BuildConfig;
+import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.R;
+import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -27,7 +29,8 @@ public class HelpFragment extends BaseFragment implements View.OnClickListener {
 
     private HelpFragmentListener mHelpFragmentListener;
 
-    public HelpFragment() {}
+    public HelpFragment() {
+    }
 
     @Override
     public void onAttach(Context context) {
@@ -71,24 +74,28 @@ public class HelpFragment extends BaseFragment implements View.OnClickListener {
             case R.id.help_rules_layout:
                 if (mHelpFragmentListener != null) {
                     mHelpFragmentListener.onRulesClicked();
+                    NostragamusAnalytics.getInstance().trackClickEvent(Constants.AnalyticsClickLabels.HELP, Constants.AnalyticsClickLabels.RULES);
                 }
                 break;
 
             case R.id.help_faq_layout:
                 if (mHelpFragmentListener != null) {
                     mHelpFragmentListener.onFaqClicked();
+                    NostragamusAnalytics.getInstance().trackClickEvent(Constants.AnalyticsClickLabels.HELP, Constants.AnalyticsClickLabels.FAQ);
                 }
                 break;
 
             case R.id.help_game_play_layout:
                 if (mHelpFragmentListener != null) {
                     mHelpFragmentListener.onGamePlayClicked();
+                    NostragamusAnalytics.getInstance().trackClickEvent(Constants.AnalyticsClickLabels.HELP, Constants.AnalyticsClickLabels.GAME_PLAY);
                 }
                 break;
 
             case R.id.help_sample_game_play_layout:
                 if (mHelpFragmentListener != null) {
                     mHelpFragmentListener.onPlaySampleGameClicked();
+                    NostragamusAnalytics.getInstance().trackClickEvent(Constants.AnalyticsClickLabels.HELP, Constants.AnalyticsCategory.DUMMY_GAME);
                 }
                 break;
             case R.id.settings_send_feedback_layout:
@@ -99,11 +106,13 @@ public class HelpFragment extends BaseFragment implements View.OnClickListener {
             case R.id.help_chat_layout:
                 if (mHelpFragmentListener != null) {
                     mHelpFragmentListener.onChatClicked();
+                    NostragamusAnalytics.getInstance().trackClickEvent(Constants.AnalyticsClickLabels.HELP, Constants.AnalyticsClickLabels.CHAT);
                 }
                 break;
             case R.id.help_how_to_play_layout:
                 if (mHelpFragmentListener != null) {
                     mHelpFragmentListener.onHowToPlayClicked();
+                    NostragamusAnalytics.getInstance().trackClickEvent(Constants.AnalyticsClickLabels.HELP, Constants.AnalyticsClickLabels.HOW_TO_PLAY);
                 }
                 break;
 

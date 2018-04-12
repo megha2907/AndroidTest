@@ -19,6 +19,7 @@ public class JoinContestData {
     private String contestName;
     private int privateContestEntries;
     private String challengeStartTime;
+    private int prizeMoney;
     private String privateContestTemplateId;
     private boolean privateContestTop1Wins;
 
@@ -120,6 +121,16 @@ public class JoinContestData {
     public void setChallengeStartTime(String challengeStartTime) {
         this.challengeStartTime = challengeStartTime;
     }
+
+    public int getPrizeMoney() {
+        return prizeMoney;
+    }
+
+    public void setPrizeMoney(int prizeMoney) {
+        this.prizeMoney = prizeMoney;
+    }
+
+
 
     public String getPrivateContestTemplateId() {
         return privateContestTemplateId;

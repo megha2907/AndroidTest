@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.jeeva.android.Log;
 import com.jeeva.android.widgets.HmImageView;
 
 import java.util.ArrayList;
@@ -50,7 +51,6 @@ public class NewChallengesViewPagerAdapter extends FragmentStatePagerAdapter {
         if (tabFragments != null && tabFragments.size() > position) {
             SportsTab sportsTab = tabFragments.get(position).getTabDetails();
             if (sportsTab != null) {
-
                 LinearLayout parentLayout = (LinearLayout) LayoutInflater.from(context).inflate(R.layout.challenge_tab, null);
 
                 TextView tabTextView = (TextView) parentLayout.findViewById(R.id.tab_name);

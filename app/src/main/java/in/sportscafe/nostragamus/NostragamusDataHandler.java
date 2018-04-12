@@ -387,6 +387,22 @@ public class NostragamusDataHandler extends AbstractDataHandler implements Const
         setSharedStringData(SharedKeys.DISCLAIMER_TEXT, disclaimerText);
     }
 
+    public String getKYCBenefitsOne() {
+        return getSharedStringData(SharedKeys.KYC_BENEFITS_ONE);
+    }
+
+    public void setKYCBenefitsOne(String kycBenefitsOne) {
+        setSharedStringData(SharedKeys.KYC_BENEFITS_ONE, kycBenefitsOne);
+    }
+
+    public String getKYCBenefitsTwo() {
+        return getSharedStringData(SharedKeys.KYC_BENEFITS_TWO);
+    }
+
+    public void setKYCBenefitsTwo(String kycBenefitsTwo) {
+        setSharedStringData(SharedKeys.KYC_BENEFITS_TWO, kycBenefitsTwo);
+    }
+
     public void setShowFAQ(boolean showFAQ) {
         setSharedBooleanData(SharedKeys.SHOW_FAQ, showFAQ);
     }

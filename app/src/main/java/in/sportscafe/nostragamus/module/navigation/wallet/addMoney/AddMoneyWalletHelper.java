@@ -337,6 +337,7 @@ public class AddMoneyWalletHelper {
                         SelectPaymentModeFragmentListener fragmentListener = ((SelectPaymentModeFragment) fragment).getFragmentListener();
                         if (fragmentListener != null) {
                             fragmentListener.onMoneyAddedToWalletSuccess();
+                            Log.i("inside","SelectPaymentModeFragment");
                         }
                     }
 

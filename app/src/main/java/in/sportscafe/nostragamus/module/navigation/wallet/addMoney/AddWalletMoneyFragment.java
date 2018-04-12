@@ -20,10 +20,11 @@ import in.sportscafe.nostragamus.module.navigation.wallet.addMoney.addByPaymentC
 import in.sportscafe.nostragamus.module.navigation.wallet.addMoney.addByPaymentCoupon.AddMoneyThroughPaymentCouponFragmentListener;
 import in.sportscafe.nostragamus.module.navigation.wallet.addMoney.addByPaytm.AddMoneyThroughPaytmFragment;
 import in.sportscafe.nostragamus.module.navigation.wallet.addMoney.addByPaytm.AddMoneyThroughPaytmFragmentListener;
+import in.sportscafe.nostragamus.module.navigation.wallet.addMoney.selectPaymentMode.SelectPaymentModeFragmentListener;
 import in.sportscafe.nostragamus.module.navigation.wallet.paytmAndBank.TransactionSuccessDialogFragment;
 
 public class AddWalletMoneyFragment extends BaseFragment implements View.OnClickListener,
-        AddMoneyThroughPaytmFragmentListener, AddMoneyThroughPaymentCouponFragmentListener {
+        AddMoneyThroughPaytmFragmentListener, AddMoneyThroughPaymentCouponFragmentListener ,SelectPaymentModeFragmentListener {
 
     private static final String TAG = AddWalletMoneyFragment.class.getSimpleName();
 
@@ -172,4 +173,15 @@ public class AddWalletMoneyFragment extends BaseFragment implements View.OnClick
         }
     }
 
+    @Override
+    public void onBackClicked() {
+        onBackPressed();
+    }
+
+    @Override
+    public void onMoneyAddedToWalletSuccess() {
+        if (mFragmentListener != null) {
+            mFragmentListener.onSuccess();
+        }
+    }
 }

@@ -350,25 +350,35 @@ public class InPlayMatchesPagerFragment extends NostraBaseFragment {
             public void onMatchActionClicked(int action, Bundle args) {
                 Log.d(TAG, "action button clicked : " + action);
 
-                NostragamusAnalytics.getInstance().trackClickEvent(Constants.AnalyticsCategory.IN_PLAY_GAMES, String.valueOf(action));
-
                 switch (action) {
                     case MatchesAdapterAction.COMING_UP:
                         /* Disabled - No action */
+                        NostragamusAnalytics.getInstance().trackClickEvent(Constants.AnalyticsCategory.IN_PLAY_GAMES, Constants.MatchStatusStrings.COMING_UP);
                         break;
 
                     case MatchesAdapterAction.PLAY:
                         handleOnPlayClicked(args);
+                        NostragamusAnalytics.getInstance().trackClickEvent(Constants.AnalyticsCategory.IN_PLAY_GAMES, Constants.MatchStatusStrings.PLAY);
                         break;
 
                     case MatchesAdapterAction.CONTINUE:
                         launchPlayScreen(args);
+                        NostragamusAnalytics.getInstance().trackClickEvent(Constants.AnalyticsCategory.IN_PLAY_GAMES, Constants.MatchStatusStrings.CONTINUE);
                         break;
 
                     case MatchesAdapterAction.ANSWER:
+                        launchResultsScreen(args);
+                        NostragamusAnalytics.getInstance().trackClickEvent(Constants.AnalyticsCategory.IN_PLAY_GAMES, Constants.MatchStatusStrings.ANSWER);
+                        break;
+
                     case MatchesAdapterAction.DID_NOT_PLAY:
+                        launchResultsScreen(args);
+                        NostragamusAnalytics.getInstance().trackClickEvent(Constants.AnalyticsCategory.IN_PLAY_GAMES, Constants.MatchStatusStrings.DID_NOT_PLAY);
+                        break;
+
                     case MatchesAdapterAction.POINTS:
                         launchResultsScreen(args);
+                        NostragamusAnalytics.getInstance().trackClickEvent(Constants.AnalyticsCategory.IN_PLAY_GAMES, Constants.MatchStatusStrings.POINTS);
                         break;
                 }
 

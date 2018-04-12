@@ -107,6 +107,10 @@ public class AddKYCDetailsActivity extends NostragamusActivity implements AddKYC
                             CustomSnackBar.make(view, Constants.Alerts.NO_NETWORK_CONNECTION, CustomSnackBar.DURATION_SECS_5).show();
                             break;
 
+                        case Constants.DataStatus.COULD_NOT_LOAD_IMAGE:
+                            CustomSnackBar.make(view, Constants.Alerts.COULD_NOT_LOAD_IMAGE, CustomSnackBar.DURATION_SECS_5).show();
+                            break;
+
                         default:
                             CustomSnackBar.make(view, Constants.Alerts.SOMETHING_WRONG, CustomSnackBar.DURATION_SECS_5).show();
                             break;

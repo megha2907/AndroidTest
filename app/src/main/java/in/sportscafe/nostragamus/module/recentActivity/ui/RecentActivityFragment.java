@@ -28,6 +28,7 @@ import java.util.List;
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.R;
+import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
 import in.sportscafe.nostragamus.module.common.NostraBaseFragment;
 import in.sportscafe.nostragamus.module.customViews.CustomSnackBar;
 import in.sportscafe.nostragamus.module.nostraHome.ui.NostraHomeActivityListener;
@@ -142,10 +143,6 @@ public class RecentActivityFragment extends NostraBaseFragment {
     }
 
     private void onDataReceived(int status, List<RecentActivity> recentActivityList) {
-        if (mFragmentListener != null) {
-            mFragmentListener.updateInplayCounter();
-        }
-
         switch (status) {
             case Constants.DataStatus.FROM_SERVER_API_SUCCESS:
                 showDataOnUi(recentActivityList, true);
@@ -309,6 +306,8 @@ public class RecentActivityFragment extends NostraBaseFragment {
                         String screenName = notification.getScreenName();
                         Log.d("Banner", "ScreenName : " + screenName);
 
+                        NostragamusAnalytics.getInstance().trackClickEvent(Constants.AnalyticsCategory.ACTIVITY, recentActivity.getActivityType());
+
                         if (screenName.equalsIgnoreCase(Constants.Notifications.SCREEN_NEW_CHALLENGE)) {
                             Bundle bundle = new Bundle();
                             if (notification != null) {
@@ -338,6 +337,7 @@ public class RecentActivityFragment extends NostraBaseFragment {
 
                         } else if (screenName.equalsIgnoreCase(Constants.Notifications.SCREEN_RESULTS)) {
                             startActivity(notificationHelper.getResultsScreenIntent(getContext(), notification));
+                            NostragamusAnalytics.getInstance().trackSource(Constants.AnalyticsCategory.RESULTS, Constants.AnalyticsClickLabels.RECENT_ACTIVITY);
 
                         } else if (screenName.equalsIgnoreCase(Constants.Notifications.SCREEN_CHALLENGE_HISTORY_WINNINGS)) {
                             startActivity(notificationHelper.getChallengeHistoryWinningsScreenIntent(getContext(), notification));
@@ -379,15 +379,29 @@ public class RecentActivityFragment extends NostraBaseFragment {
 
                         } else if (screenName.equalsIgnoreCase(Constants.Notifications.SCREEN_WEB_VIEW)) {
                             startActivity(notificationHelper.getWebViewScreenIntent(getContext(), notification));
+
                         } else if (screenName.equalsIgnoreCase(Constants.Notifications.SCREEN_SLIDES)) {
                             startActivity(notificationHelper.getSlidesScreenIntent(getContext(), notification));
+
                         } else if (screenName.equalsIgnoreCase(Constants.Notifications.SCREEN_ANNOUNCEMENT)) {
                             startActivity(notificationHelper.getAnnouncementScreenIntent(getContext(), notification));
+
                         } else if (screenName.equalsIgnoreCase(Constants.Notifications.SCREEN_WALLET_HOME)) {
                             startActivity(notificationHelper.getWalletHomeScreenIntent(getContext(), notification));
+
                         } else if (screenName.equalsIgnoreCase(Constants.Notifications.SCREEN_KYC_DETAILS)) {
                             startActivity(notificationHelper.getKYCScreenIntent(getContext(), notification));
-                        } else if (screenName.equalsIgnoreCase(Constants.Notifications.NONE)) {
+
+                        } else if (screenName.equalsIgnoreCase(Constants.Notifications.SCREEN_INPLAY_CONTEST)) {
+                            startActivity(notificationHelper.getInPlayContestScreenIntent(getContext(), notification));
+
+                        } else if (screenName.equalsIgnoreCase(Constants.Notifications.SCREEN_INPLAY_CONTEST_LEADERBOARDS)) {
+                            startActivity(notificationHelper.getInPlayContestLeaderBoardScreenIntent(getContext(), notification));
+
+                        } else if (screenName.equalsIgnoreCase(Constants.Notifications.SCREEN_POWERUP_TRANSACTION)) {
+                            startActivity(notificationHelper.getPowerUpTransactionScreenIntent(getContext(), notification));
+
+                        }else if (screenName.equalsIgnoreCase(Constants.Notifications.NONE)) {
                             /* NO CLICK EVENT SHOULD HAPPEN */
                         }
 

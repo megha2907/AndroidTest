@@ -209,11 +209,11 @@ public class PrivateContestDetailsActivity extends NostraBaseActivity implements
                             TimerFinishDialogHelper.showChallengeStartedTimerOutDialog(getSupportFragmentManager(),
                                     msg,
                                     new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-                                    finish();
-                                }
-                            });
+                                        @Override
+                                        public void onClick(View v) {
+                                            finish();
+                                        }
+                                    });
                         }
                     }
                 }, 500);
@@ -270,15 +270,12 @@ public class PrivateContestDetailsActivity extends NostraBaseActivity implements
                                 }
 
                                 @Override
-                                public void joinContestSuccess(JoinContestData contestJoinedSuccessfully) {
+                                public void joinContestSuccess(JoinContestData contestJoinedSuccessfully, String orderId) {
                                     CustomProgressbar.getProgressbar(PrivateContestDetailsActivity.this).dismissProgress();
                                     onContestJoinedSuccessfully(contestJoinedSuccessfully);
 
-                                    NostragamusAnalytics.getInstance().trackClickEvent(Constants.AnalyticsCategory.CONTEST_JOINED,
-                                            String.valueOf(contestJoinedSuccessfully.getContestId()));
-
                                     if (contestJoinedSuccessfully != null) {
-                                        sendContestJoinedDataToAmplitude(contestJoinedSuccessfully);
+                                        sendContestJoinedDataToAmplitude(contestJoinedSuccessfully,orderId);
                                     }
                                 }
 
@@ -413,7 +410,7 @@ public class PrivateContestDetailsActivity extends NostraBaseActivity implements
                             msg, new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
-                                   onBackPressed();
+                                    onBackPressed();
                                 }
                             });
                 }
@@ -478,6 +475,7 @@ public class PrivateContestDetailsActivity extends NostraBaseActivity implements
             joinContestData.setJoiContestDialogLaunchMode(CompletePaymentDialogFragment.DialogLaunchMode.JOINING_CHALLENGE_LAUNCH);
             joinContestData.setContestName(contestData.getConfigName());
             joinContestData.setContestType(contestData.getContestType());
+            joinContestData.setPrizeMoney(contestData.getPrizeMoney());
         }
 
         return joinContestData;
@@ -504,16 +502,15 @@ public class PrivateContestDetailsActivity extends NostraBaseActivity implements
         }
     }
 
-    private void sendContestJoinedDataToAmplitude(JoinContestData contest) {
+    private void sendContestJoinedDataToAmplitude(JoinContestData contest, String orderId) {
 
         /* Joining a contest = Revenue */
         NostragamusAnalytics.getInstance().trackRevenue(contest.getEntryFee(), contest.getContestId(),
-                contest.getContestName(), contest.getContestType());
+                contest.getContestName(), contest.getContestType(),orderId);
 
         /* Send Contest Joined Details to Amplitude */
-        NostragamusAnalytics.getInstance().trackContestJoined(contest.getContestId(),
-                contest.getContestName(), contest.getContestType(),
-                (int) contest.getEntryFee(), contest.getChallengeId(), "Private Contest Details - Join Contest");
+        NostragamusAnalytics.getInstance().trackContestJoined(contest.getContestName(), contest.getContestType(),
+                (int) contest.getEntryFee(),"Private Contest Details - Join Contest", contest.getChallengeName(), contest.getPrizeMoney());
 
     }
 
@@ -542,7 +539,7 @@ public class PrivateContestDetailsActivity extends NostraBaseActivity implements
         if (contestData != null) {
             contestId = contestData.getConfigId();
         }
-        return  RulesFragment.newInstance(contestId);
+        return RulesFragment.newInstance(contestId);
     }
 
     private Fragment getPrizeFragments() {

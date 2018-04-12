@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,6 +25,7 @@ import java.util.List;
 
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
+import in.sportscafe.nostragamus.module.common.NostraTagHandler;
 import in.sportscafe.nostragamus.module.newChallenges.helpers.DateTimeHelper;
 import in.sportscafe.nostragamus.module.recentActivity.dto.RecentActivity;
 
@@ -62,7 +64,7 @@ public class RecentActivityRecyclerAdapter extends RecyclerView.Adapter<RecentAc
             final RecentActivity recentActivity = recentActivityFilteredList.get(position);
             if (recentActivity != null) {
                 viewHolder.mTvActivityType.setText(recentActivity.getActivityType());
-                viewHolder.mTvActivityText.setText(recentActivity.getActivityText());
+                viewHolder.mTvActivityText.setText(noTrailingwhiteLines(Html.fromHtml(recentActivity.getActivityText(), null, new NostraTagHandler())));
 
                 String recentActivityType = recentActivity.getActivityType();
                 if (!TextUtils.isEmpty(recentActivityType)) {
@@ -99,6 +101,14 @@ public class RecentActivityRecyclerAdapter extends RecyclerView.Adapter<RecentAc
             }
 
         }
+    }
+
+    private CharSequence noTrailingwhiteLines(CharSequence text) {
+
+        while (text.charAt(text.length() - 1) == '\n') {
+            text = text.subSequence(0, text.length() - 1);
+        }
+        return text;
     }
 
     public class RecentActivityViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -140,7 +150,7 @@ public class RecentActivityRecyclerAdapter extends RecyclerView.Adapter<RecentAc
     @NonNull
     private Bundle getRecentActivityData(int adapterPos) {
         Bundle args = new Bundle();
-        args.putParcelable(Constants.BundleKeys.RECENT_ACTIVITY, Parcels.wrap(recentActivityList.get(adapterPos)));
+        args.putParcelable(Constants.BundleKeys.RECENT_ACTIVITY, Parcels.wrap(recentActivityFilteredList.get(adapterPos)));
         return args;
     }
 

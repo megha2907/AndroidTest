@@ -241,6 +241,7 @@ public class ContestViewPagerFragment extends NostraBaseFragment {
                     joinContestData.setEntryFee(contest.getEntryFee());
                     joinContestData.setJoiContestDialogLaunchMode(CompletePaymentDialogFragment.DialogLaunchMode.JOINING_CHALLENGE_LAUNCH);
                     joinContestData.setContestName(contest.getConfigName());
+                    joinContestData.setPrizeMoney(contest.getPrizes());
 
                     if (contest.getContestType() != null) {
                         joinContestData.setContestType(contest.getContestType().getCategoryName());
@@ -289,11 +290,8 @@ public class ContestViewPagerFragment extends NostraBaseFragment {
                                     CustomProgressbar.getProgressbar(getContext()).dismissProgress();
                                     onContestJoinedSuccessfully(contestJoinedSuccessfully);
 
-                                    NostragamusAnalytics.getInstance().trackClickEvent(Constants.AnalyticsCategory.CONTEST_JOINED,
-                                            String.valueOf(contestJoinedSuccessfully.getContestId()));
-
                                     if (contestJoinedSuccessfully != null) {
-                                        sendContestJoinedDataToAmplitude(contestJoinedSuccessfully,orderId);
+                                        sendContestJoinedDataToAmplitude(contestJoinedSuccessfully, orderId);
                                     }
                                 }
 
@@ -427,7 +425,7 @@ public class ContestViewPagerFragment extends NostraBaseFragment {
 
         /* Joining a contest = Revenue */
         NostragamusAnalytics.getInstance().trackRevenue(contest.getEntryFee(), contest.getContestId(),
-                contest.getContestName(), contest.getContestType(),orderId);
+                contest.getContestName(), contest.getContestType(), orderId);
 
         /* Send Contest Joined Details to Amplitude */
         Bundle activityBundle = null;
@@ -467,19 +465,23 @@ public class ContestViewPagerFragment extends NostraBaseFragment {
 
                     }
 
-                    NostragamusAnalytics.getInstance().trackContestJoined(contest.getContestId(),
+                    NostragamusAnalytics.getInstance().trackContestJoined(
                             contest.getContestName(), contest.getContestType(),
-                            (int)contest.getEntryFee(), contest.getChallengeId(), screenName);
+                            (int) contest.getEntryFee(), screenName,
+                            contest.getChallengeName(), contest.getPrizeMoney());
+
                 } else {
-                    NostragamusAnalytics.getInstance().trackContestJoined(contest.getContestId(),
+                    NostragamusAnalytics.getInstance().trackContestJoined(
                             contest.getContestName(), contest.getContestType(),
-                            (int)contest.getEntryFee(), contest.getChallengeId(), "contest");
+                            (int) contest.getEntryFee(), "contest",
+                            contest.getChallengeName(), contest.getPrizeMoney());
                 }
             }
         } else {
-            NostragamusAnalytics.getInstance().trackContestJoined(contest.getContestId(),
+            NostragamusAnalytics.getInstance().trackContestJoined(
                     contest.getContestName(), contest.getContestType(),
-                    (int)contest.getEntryFee(), contest.getChallengeId(), "contest");
+                    (int) contest.getEntryFee(), "contest",
+                    contest.getChallengeName(), contest.getPrizeMoney());
         }
     }
 

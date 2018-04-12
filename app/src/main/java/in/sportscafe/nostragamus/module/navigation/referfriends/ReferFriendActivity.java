@@ -117,8 +117,6 @@ public class ReferFriendActivity extends NostragamusActivity implements ReferFri
                     .addContentMetadata(Constants.BundleKeys.USER_REFERRAL_PHOTO, userInfo.getPhoto())
                     .addContentMetadata(Constants.BundleKeys.USER_REFERRAL_NAME, userInfo.getUserName());
 
-            NostragamusAnalytics.getInstance().trackFabricShareEvent(Constants.AnalyticsActions.REFERRAL, userInfo.getUserName(), "App Invite", referralCode);
-
         } else {
             buo = new BranchUniversalObject()
                     .setContentIndexingMode(BranchUniversalObject.CONTENT_INDEX_MODE.PUBLIC)

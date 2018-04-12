@@ -175,7 +175,7 @@ public class JoinContestApiImpl {
 
     public interface JoinContestApiListener {
         void onFailure(int dataStatus);
-        void onServerReturnedError(String msg);
+        void onServerReturnedError(String msg, int errorCode);
         void onSuccessResponse(VerifyJoinContestResponse verifyJoinContestResponse, String orderId);
     }
 }

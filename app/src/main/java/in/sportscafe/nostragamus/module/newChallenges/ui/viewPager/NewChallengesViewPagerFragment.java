@@ -97,7 +97,6 @@ public class NewChallengesViewPagerFragment extends BaseFragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         loadData();
-        loadBannerData();
     }
 
     private void loadData() {
@@ -110,6 +109,7 @@ public class NewChallengesViewPagerFragment extends BaseFragment {
         if (mSportsTab != null) {
             switch (mSportsTab.getSportsId()) {
                 case SportsDataProvider.FILTER_ALL_SPORTS_ID:
+                    loadBannerData();
                     showAdSection();
                     break;
             }
@@ -224,7 +224,7 @@ public class NewChallengesViewPagerFragment extends BaseFragment {
                     if (NostragamusDataHandler.getInstance().isLoggedInUser()) {
                         String screenName = notification.getScreenName();
                         Log.d("Banner", "ScreenName : " + screenName);
-                        NostragamusAnalytics.getInstance().trackBanners(String.valueOf(bannerResponseData.getBannerId()),notification.getScreenName());
+                        NostragamusAnalytics.getInstance().trackBanners("BannerName", bannerResponseData.getBannerName());
 
                         if (screenName.equalsIgnoreCase(Constants.Notifications.SCREEN_NEW_CHALLENGE)) {
                             Bundle bundle = new Bundle();
@@ -296,14 +296,28 @@ public class NewChallengesViewPagerFragment extends BaseFragment {
 
                         } else if (screenName.equalsIgnoreCase(Constants.Notifications.SCREEN_WEB_VIEW)) {
                             startActivity(notificationHelper.getWebViewScreenIntent(getContext(), notification));
+
                         } else if (screenName.equalsIgnoreCase(Constants.Notifications.SCREEN_SLIDES)) {
                             startActivity(notificationHelper.getSlidesScreenIntent(getContext(), notification));
+
                         } else if (screenName.equalsIgnoreCase(Constants.Notifications.SCREEN_ANNOUNCEMENT)) {
                             startActivity(notificationHelper.getAnnouncementScreenIntent(getContext(), notification));
+
                         } else if (screenName.equalsIgnoreCase(Constants.Notifications.SCREEN_WALLET_HOME)) {
                             startActivity(notificationHelper.getWalletHomeScreenIntent(getContext(), notification));
+
                         } else if (screenName.equalsIgnoreCase(Constants.Notifications.SCREEN_KYC_DETAILS)) {
                             startActivity(notificationHelper.getKYCScreenIntent(getContext(), notification));
+
+                        } else if (screenName.equalsIgnoreCase(Constants.Notifications.SCREEN_INPLAY_CONTEST)) {
+                            startActivity(notificationHelper.getInPlayContestScreenIntent(getContext(), notification));
+
+                        } else if (screenName.equalsIgnoreCase(Constants.Notifications.SCREEN_INPLAY_CONTEST_LEADERBOARDS)) {
+                            startActivity(notificationHelper.getInPlayContestLeaderBoardScreenIntent(getContext(), notification));
+
+                        } else if (screenName.equalsIgnoreCase(Constants.Notifications.SCREEN_POWERUP_TRANSACTION)) {
+                            startActivity(notificationHelper.getPowerUpTransactionScreenIntent(getContext(), notification));
+
                         } else if (screenName.equalsIgnoreCase(Constants.Notifications.NONE)) {
                             /* NO CLICK EVENT SHOULD HAPPEN */
                         }
