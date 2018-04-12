@@ -100,7 +100,7 @@ public class ReferFriendActivity extends NostragamusActivity implements ReferFri
     @Override
     public void onReferAFriendClicked(String referralCode, String walletInit, String downloadLink) {
         navigateToReferFriend(referralCode, walletInit, downloadLink);
-        NostragamusAnalytics.getInstance().trackReferralAction(Constants.AnalyticsLabels.REFER_FRIEND);
+        NostragamusAnalytics.getInstance().trackClickEvent(Constants.AnalyticsLabels.REFER_FRIEND, Constants.AnalyticsLabels.REFER_FRIEND_BUTTON);
     }
 
     private void navigateToReferFriend(final String referralCode, final String walletInit, final String downloadLink) {
@@ -116,6 +116,7 @@ public class ReferFriendActivity extends NostragamusActivity implements ReferFri
                     .addContentMetadata(Constants.BundleKeys.USER_REFERRAL_CODE, referralCode)
                     .addContentMetadata(Constants.BundleKeys.USER_REFERRAL_PHOTO, userInfo.getPhoto())
                     .addContentMetadata(Constants.BundleKeys.USER_REFERRAL_NAME, userInfo.getUserName());
+
         } else {
             buo = new BranchUniversalObject()
                     .setContentIndexingMode(BranchUniversalObject.CONTENT_INDEX_MODE.PUBLIC)
@@ -156,5 +157,7 @@ public class ReferFriendActivity extends NostragamusActivity implements ReferFri
                         }
                     }
                 });
+
+        NostragamusAnalytics.getInstance().trackInviteInFabric();
     }
 }

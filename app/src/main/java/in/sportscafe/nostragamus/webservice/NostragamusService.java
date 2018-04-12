@@ -428,7 +428,7 @@ public interface NostragamusService {
     Call<HowToPlayResponse> getHowToPlayData(@Query("slide_id") String slideId);
 
     @GET("v3/game/users/activities")
-    Call<RecentActivityResponse> getRecentActivityData(@Query("recent_interval") String interval);
+    Call<RecentActivityResponse> getRecentActivityData();
 
     @Multipart
     @POST("v3/game/upload")

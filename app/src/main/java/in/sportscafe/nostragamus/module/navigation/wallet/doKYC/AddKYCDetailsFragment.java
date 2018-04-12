@@ -1,17 +1,27 @@
 package in.sportscafe.nostragamus.module.navigation.wallet.doKYC;
 
+import android.Manifest;
+import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.PorterDuff;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.Toolbar;
 import android.text.InputFilter;
@@ -29,6 +39,8 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.jeeva.android.BaseFragment;
+import com.jeeva.android.Log;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -42,6 +54,7 @@ import java.util.regex.Pattern;
 
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Nostragamus;
+import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.navigation.wallet.doKYC.dto.KYCDetails;
 import in.sportscafe.nostragamus.module.permission.PermissionsActivity;
@@ -97,6 +110,24 @@ public class AddKYCDetailsFragment extends BaseFragment implements View.OnFocusC
         super.onActivityCreated(savedInstanceState);
 
         checkKYCStatus();
+        checkForPermissions();
+    }
+
+    private void checkForPermissions() {
+
+        if (getActivity() != null) {
+            // Check if we have write permission
+            int permission = ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE);
+
+            if (permission != PackageManager.PERMISSION_GRANTED) {
+                // We don't have permission so prompt the user
+                ActivityCompat.requestPermissions(
+                        getActivity(),
+                        Constants.AppPermissions.STORAGE,
+                        Constants.RequestCodes.STORAGE_PERMISSION
+                );
+            }
+        }
     }
 
 
@@ -176,10 +207,30 @@ public class AddKYCDetailsFragment extends BaseFragment implements View.OnFocusC
         mPANNumberEditText = (EditText) rootView.findViewById(R.id.add_kyc_details_pan_number_edittext);
         mDOBEditText = (EditText) rootView.findViewById(R.id.add_kyc_details_dob_edittext);
         mPanImageView = (ImageView) rootView.findViewById(R.id.add_kyc_details_show_pan_image);
+
         final RelativeLayout uploadPANLayout = (RelativeLayout) rootView.findViewById(R.id.add_kyc_details_upload_pan_layout);
         RelativeLayout uploadPANButton = (RelativeLayout) rootView.findViewById(R.id.add_kyc_details_upload_pan_btn);
         rootView.findViewById(R.id.add_kyc_details_save_btn).setOnClickListener(this);
         uploadPANButton.setOnClickListener(this);
+
+        mUserNameEditText.setOnFocusChangeListener(this);
+        mPANNumberEditText.setOnFocusChangeListener(this);
+        mDOBEditText.setOnFocusChangeListener(this);
+
+        TextView kycBenefitsOne = (TextView) rootView.findViewById(R.id.kyc_benefits_text_one);
+        if (!TextUtils.isEmpty(NostragamusDataHandler.getInstance().getKYCBenefitsOne())) {
+            kycBenefitsOne.setText(NostragamusDataHandler.getInstance().getKYCBenefitsOne());
+        } else {
+            kycBenefitsOne.setText("You have reached your transaction limit. Please update your KYC to make withdrawals");
+        }
+
+        TextView kycBenefitsTwo = (TextView) rootView.findViewById(R.id.kyc_benefits_text_two);
+        if (!TextUtils.isEmpty(NostragamusDataHandler.getInstance().getKYCBenefitsTwo())) {
+            kycBenefitsTwo.setText(NostragamusDataHandler.getInstance().getKYCBenefitsTwo());
+        } else {
+            kycBenefitsTwo.setText("On updating KYC, users will get 2 powerups each added to their powerup bank!");
+        }
+
 
         mPANNumberEditText.setFilters(new InputFilter[]{new InputFilter.AllCaps()});
         mPANNumberEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
@@ -194,8 +245,8 @@ public class AddKYCDetailsFragment extends BaseFragment implements View.OnFocusC
             }
         });
 
-        final Calendar dobCalendar = Calendar.getInstance();
 
+        final Calendar dobCalendar = Calendar.getInstance();
         final DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
 
             @Override
@@ -206,6 +257,11 @@ public class AddKYCDetailsFragment extends BaseFragment implements View.OnFocusC
                 dobCalendar.set(Calendar.MONTH, monthOfYear);
                 dobCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
                 updateLabel(dobCalendar, mDOBEditText);
+
+                TextView dobHeading = (TextView) getView().findViewById(R.id.add_kyc_details_dob_textview);
+                dobHeading.setTextColor(ContextCompat.getColor(getContext(), R.color.white_999999));
+                mDOBEditText.getBackground().setColorFilter(ContextCompat.getColor(getContext(), R.color.white_999999), PorterDuff.Mode.SRC_IN);
+
             }
 
         };
@@ -214,15 +270,24 @@ public class AddKYCDetailsFragment extends BaseFragment implements View.OnFocusC
 
             @Override
             public void onClick(View v) {
-                new DatePickerDialog(getContext(), date, dobCalendar
-                        .get(Calendar.YEAR), dobCalendar.get(Calendar.MONTH),
-                        dobCalendar.get(Calendar.DAY_OF_MONTH)).show();
+                mUserNameEditText.clearFocus();
+                mPANNumberEditText.clearFocus();
+                mDOBEditText.requestFocus();
+                TextView dobHeading = (TextView) getView().findViewById(R.id.add_kyc_details_dob_textview);
+                dobHeading.setTextColor(ContextCompat.getColor(getContext(), R.color.blue_008ae1));
+                mDOBEditText.getBackground().setColorFilter(ContextCompat.getColor(getContext(), R.color.blue_008ae1), PorterDuff.Mode.SRC_IN);
+
+                DatePickerDialog dialog = new DatePickerDialog(getContext(), date,
+                        dobCalendar.get(Calendar.YEAR),
+                        dobCalendar.get(Calendar.MONTH),
+                        dobCalendar.get(Calendar.DAY_OF_MONTH));
+
+                dialog.getDatePicker().setMaxDate(System.currentTimeMillis());
+                dialog.show();
+
             }
         });
 
-        mUserNameEditText.setOnFocusChangeListener(this);
-        mPANNumberEditText.setOnFocusChangeListener(this);
-        mDOBEditText.setOnFocusChangeListener(this);
     }
 
     private void updateLabel(Calendar dobCalendar, EditText DOBEditText) {
@@ -275,6 +340,13 @@ public class AddKYCDetailsFragment extends BaseFragment implements View.OnFocusC
         } else {
             navigateToAddPhoto(ADD_PHOTO_REQUEST_CODE);
         }
+
+        if (getView() != null) {
+            TextView panImageHeading = (TextView) getView().findViewById(R.id.add_kyc_details_upload_pan_textview);
+            panImageHeading.setTextColor(ContextCompat.getColor(getContext(), R.color.white_999999));
+            TextView uploadPanErrorTextView = (TextView) getView().findViewById(R.id.add_kyc_details_upload_pan_error_textview);
+            uploadPanErrorTextView.setVisibility(View.GONE);
+        }
     }
 
     @Override
@@ -293,10 +365,12 @@ public class AddKYCDetailsFragment extends BaseFragment implements View.OnFocusC
 
     public void onGetImage(Intent imageData) {
         String imagePath = imageData.getStringExtra(Constants.BundleKeys.ADDED_NEW_IMAGE_PATH);
-        panCardFile = new File(imagePath);
-        mPanImageView.setImageURI(Uri.fromFile(panCardFile));
-        showImageView();
-        scrollView();
+        if (!TextUtils.isEmpty(imagePath)) {
+            panCardFile = new File(imagePath);
+            mPanImageView.setImageURI(Uri.fromFile(panCardFile));
+            showImageView();
+            scrollView();
+        }
     }
 
     private void showImageView() {
@@ -312,6 +386,7 @@ public class AddKYCDetailsFragment extends BaseFragment implements View.OnFocusC
         if (getActivity() != null) {
             GetKYCDetailsDataProvider dataProvider = new GetKYCDetailsDataProvider();
             dataProvider.getKYCDetails(getContext(), getKYCDetailsCallBackListener());
+            showLoadingProgressBar();
         }
     }
 
@@ -333,28 +408,42 @@ public class AddKYCDetailsFragment extends BaseFragment implements View.OnFocusC
 
             @Override
             public void onImageData(int status, @Nullable ResponseBody body) {
-                if (body != null && mPanImageView != null) {
-                    // display the image data in a ImageView
-                    Bitmap bm = BitmapFactory.decodeStream(body.byteStream());
-                    mPanImageView.setImageBitmap(bm);
-                    persistImage(body.byteStream());
-                    showImageView();
+                if (body != null) {
+                    if (DownloadImage(body)) {
+                        setPanCardImage();
+                    } else {
+                        onCouldNotLoadImage();
+                    }
+                } else {
+                    onCouldNotLoadImage();
                 }
+            }
+
+            @Override
+            public void onImageFailed() {
+                onCouldNotLoadImage();
             }
 
             @Override
             public void onNoInternet() {
                 if (mFragmentListener != null) {
-                    mFragmentListener.handleError("", Constants.DataStatus.NO_INTERNET);
+                    mFragmentListener.handleError("", Constants.DataStatus.FROM_SERVER_API_FAILED);
                 }
             }
         };
     }
 
+    private void onCouldNotLoadImage() {
+        hideLoadingProgressBar();
+        if (mFragmentListener != null) {
+            mFragmentListener.handleError("", Constants.DataStatus.COULD_NOT_LOAD_IMAGE);
+        }
+    }
+
 
     private void setKYCDetails(KYCDetails kycDetails) {
 
-        if (kycDetails != null) {
+        if (kycDetails != null && getView() != null) {
             if (!TextUtils.isEmpty(kycDetails.getUserName())) {
                 mUserNameEditText.setText(kycDetails.getUserName());
             }
@@ -373,49 +462,66 @@ public class AddKYCDetailsFragment extends BaseFragment implements View.OnFocusC
 
     }
 
-    private void persistImage(InputStream inputStream) {
-        FileOutputStream out = null;
-        try {
-            panCardFile = getExternalRandomFile();
-            out = new FileOutputStream(panCardFile);
-            copyStream(inputStream, out);
-            out.close();
 
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
+    private boolean DownloadImage(ResponseBody body) {
+
+        try {
+            Log.d("DownloadImage", "Reading and writing file");
+            InputStream in = null;
+            FileOutputStream out = null;
+
             try {
+                in = body.byteStream();
+                out = new FileOutputStream(Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + "/Nostragamus");
+                // Transfer bytes from in to out
+                byte[] buf = new byte[1024];
+                int len;
+                while ((len = in.read(buf)) > 0) {
+                    out.write(buf, 0, len);
+                }
+
+            } catch (IOException e) {
+                Log.d("DownloadImage", e.toString());
+                return false;
+            } finally {
+                if (in != null) {
+                    in.close();
+                }
                 if (out != null) {
                     out.close();
                 }
-            } catch (IOException e) {
-                e.printStackTrace();
             }
+
+            return true;
+
+        } catch (IOException e) {
+            Log.d("DownloadImage", e.toString());
+            onCouldNotLoadImage();
+            return false;
         }
     }
 
-    private File getExternalRandomFile() {
-        File dir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
-                .getAbsolutePath() + "/Nostragamus");
-        dir.mkdirs();
+    private void setPanCardImage() {
 
-        if (dir.exists()) {
-            try {
-                return File.createTempFile("IMG_" + Calendar.getInstance().getTimeInMillis(), ".png", dir);
-            } catch (IOException e) {
-                e.printStackTrace();
+        if (mPanImageView != null) {
+            int width, height;
+            panCardFile = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + "/Nostragamus");
+            Bitmap bMap = BitmapFactory.decodeFile(Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + "/Nostragamus");
+            if (bMap != null) {
+                width = bMap.getWidth();
+                height = bMap.getHeight();
+                Bitmap bMap2 = Bitmap.createScaledBitmap(bMap, width, height, false);
+                mPanImageView.setImageBitmap(bMap2);
+                showImageView();
+                hideLoadingProgressBar();
+            } else {
+                onCouldNotLoadImage();
             }
+        } else {
+            onCouldNotLoadImage();
         }
-        return null;
     }
 
-    public static void copyStream(InputStream in, OutputStream out) throws IOException {
-        byte[] buffer = new byte[1024];
-        int read;
-        while ((read = in.read(buffer)) != -1) {
-            out.write(buffer, 0, read);
-        }
-    }
 
     public void onAddKYCDetailsSaveClicked() {
 
@@ -433,28 +539,48 @@ public class AddKYCDetailsFragment extends BaseFragment implements View.OnFocusC
             TextView uploadPanErrorTextView = (TextView) getView().findViewById(R.id.add_kyc_details_upload_pan_error_textview);
             ImageView panImageView = (ImageView) getView().findViewById(R.id.add_kyc_details_show_pan_image);
 
+            EditText userNameEditText = (EditText) getView().findViewById(R.id.add_kyc_details_name_edittext);
+            EditText panNumberEditText = (EditText) getView().findViewById(R.id.add_kyc_details_pan_number_edittext);
+            EditText dobEditText = (EditText) getView().findViewById(R.id.add_kyc_details_dob_edittext);
+
+            TextView userNameHeading = (TextView) getView().findViewById(R.id.add_kyc_details_name_textview);
+            TextView panNumberHeading = (TextView) getView().findViewById(R.id.add_kyc_details_pan_number_textview);
+            TextView dobHeading = (TextView) getView().findViewById(R.id.add_kyc_details_dob_textview);
+            TextView panImageHeading = (TextView) getView().findViewById(R.id.add_kyc_details_upload_pan_textview);
+
             //Verify if PAN Number is correct
             Pattern pattern = Pattern.compile("[A-Z]{5}[0-9]{4}[A-Z]{1}");
             Matcher matcher = pattern.matcher(panNumber);
 
+            userNameEditText.clearFocus();
+            panNumberEditText.clearFocus();
+            dobEditText.clearFocus();
+
             // check if name exist
             if (name.length() == 0) {
                 nameErrorTextView.setVisibility(View.VISIBLE);
+                userNameHeading.setTextColor(ContextCompat.getColor(getContext(), R.color.radical_red));
+                userNameEditText.getBackground().setColorFilter(ContextCompat.getColor(getContext(), R.color.radical_red), PorterDuff.Mode.SRC_IN);
             }  // check if PAN number is correct
             else if (panNumber.length() != 10 && !matcher.matches()) {
                 panCardErrorTextView.setVisibility(View.VISIBLE);
                 nameErrorTextView.setVisibility(View.GONE);
+                panNumberHeading.setTextColor(ContextCompat.getColor(getContext(), R.color.radical_red));
+                panNumberEditText.getBackground().setColorFilter(ContextCompat.getColor(getContext(), R.color.radical_red), PorterDuff.Mode.SRC_IN);
             } // check if DOB exist
             else if (dob.length() == 0) {
                 dobErrorTextView.setVisibility(View.VISIBLE);
                 panCardErrorTextView.setVisibility(View.GONE);
                 nameErrorTextView.setVisibility(View.GONE);
+                dobHeading.setTextColor(ContextCompat.getColor(getContext(), R.color.radical_red));
+                dobEditText.getBackground().setColorFilter(ContextCompat.getColor(getContext(), R.color.radical_red), PorterDuff.Mode.SRC_IN);
             } // check if Pan card image uploaded
-            else if (!hasImage(panImageView) && panCardFile != null && !TextUtils.isEmpty(panCardFile.getName())) {
+            else if (!hasImage(panImageView)) {
                 uploadPanErrorTextView.setVisibility(View.VISIBLE);
                 panCardErrorTextView.setVisibility(View.GONE);
                 nameErrorTextView.setVisibility(View.GONE);
                 dobErrorTextView.setVisibility(View.GONE);
+                panImageHeading.setTextColor(ContextCompat.getColor(getContext(), R.color.radical_red));
             } // send all details to api
             else {
                 uploadPanErrorTextView.setVisibility(View.GONE);
@@ -518,31 +644,50 @@ public class AddKYCDetailsFragment extends BaseFragment implements View.OnFocusC
     @Override
     public void onFocusChange(View v, boolean hasFocus) {
         if (getActivity() != null && getView() != null && getContext() != null) {
+
+            TextView nameErrorTextView = (TextView) getView().findViewById(R.id.add_kyc_details_name_error_textview);
+            TextView panCardErrorTextView = (TextView) getView().findViewById(R.id.add_kyc_details_pan_number_error_textview);
+            TextView dobErrorTextView = (TextView) getView().findViewById(R.id.add_kyc_details_dob_error_textview);
+            TextView uploadPanErrorTextView = (TextView) getView().findViewById(R.id.add_kyc_details_upload_pan_error_textview);
+            uploadPanErrorTextView.setVisibility(View.GONE);
+            panCardErrorTextView.setVisibility(View.GONE);
+            nameErrorTextView.setVisibility(View.GONE);
+            dobErrorTextView.setVisibility(View.GONE);
+
             switch (v.getId()) {
                 case R.id.add_kyc_details_name_edittext:
                     TextView textView = (TextView) getView().findViewById(R.id.add_kyc_details_name_textview);
+                    EditText userNameEditText = (EditText) getView().findViewById(R.id.add_kyc_details_name_edittext);
                     if (hasFocus) {
                         textView.setTextColor(ContextCompat.getColor(getContext(), R.color.blue_008ae1));
+                        userNameEditText.getBackground().setColorFilter(ContextCompat.getColor(getContext(), R.color.blue_008ae1), PorterDuff.Mode.SRC_IN);
                     } else {
                         textView.setTextColor(ContextCompat.getColor(getContext(), R.color.white_999999));
+                        userNameEditText.getBackground().setColorFilter(ContextCompat.getColor(getContext(), R.color.white_999999), PorterDuff.Mode.SRC_IN);
                     }
                     break;
 
                 case R.id.add_kyc_details_pan_number_edittext:
                     textView = (TextView) getView().findViewById(R.id.add_kyc_details_pan_number_textview);
+                    EditText panNumberEditText = (EditText) getView().findViewById(R.id.add_kyc_details_pan_number_edittext);
                     if (hasFocus) {
                         textView.setTextColor(ContextCompat.getColor(getContext(), R.color.blue_008ae1));
+                        panNumberEditText.getBackground().setColorFilter(ContextCompat.getColor(getContext(), R.color.blue_008ae1), PorterDuff.Mode.SRC_IN);
                     } else {
                         textView.setTextColor(ContextCompat.getColor(getContext(), R.color.white_999999));
+                        panNumberEditText.getBackground().setColorFilter(ContextCompat.getColor(getContext(), R.color.white_999999), PorterDuff.Mode.SRC_IN);
                     }
                     break;
 
                 case R.id.add_kyc_details_dob_edittext:
                     textView = (TextView) getView().findViewById(R.id.add_kyc_details_dob_textview);
+                    EditText dobEditText = (EditText) getView().findViewById(R.id.add_kyc_details_dob_edittext);
                     if (hasFocus) {
                         textView.setTextColor(ContextCompat.getColor(getContext(), R.color.blue_008ae1));
+                        dobEditText.getBackground().setColorFilter(ContextCompat.getColor(getContext(), R.color.blue_008ae1), PorterDuff.Mode.SRC_IN);
                     } else {
                         textView.setTextColor(ContextCompat.getColor(getContext(), R.color.white_999999));
+                        dobEditText.getBackground().setColorFilter(ContextCompat.getColor(getContext(), R.color.white_999999), PorterDuff.Mode.SRC_IN);
                     }
                     break;
             }

@@ -76,7 +76,7 @@ public class AppUpdateActivity extends NostragamusActivity implements OnDismissL
             case NAVIGATE_TO_HOME:
                 if (NostragamusDataHandler.getInstance().isLoggedInUser()) {
                     navigateToHome();
-                }else {
+                } else {
                     navigateToLogin();
                 }
                 break;
@@ -117,11 +117,13 @@ public class AppUpdateActivity extends NostragamusActivity implements OnDismissL
     @Override
     public void onBackPressed() {
 
-        if (getIntent().getExtras() != null) {
-            if (getIntent().getExtras().getString(Constants.BundleKeys.SCREEN).equals(Constants.ScreenNames.APP_FORCE_UPDATE)) {
-                handleDoubleBackPressLogicToExit();
+        Bundle args = getIntent().getExtras();
 
-            } else if (getIntent().getExtras().getString(Constants.BundleKeys.SCREEN).equals(Constants.ScreenNames.APP_UPDATE)) {
+        if (args != null && args.containsKey(Constants.BundleKeys.SCREEN)) {
+
+            if (args.getString(Constants.BundleKeys.SCREEN).equals(Constants.ScreenNames.APP_FORCE_UPDATE)) {
+                handleDoubleBackPressLogicToExit();
+            } else if (args.getString(Constants.BundleKeys.SCREEN).equals(Constants.ScreenNames.APP_UPDATE)) {
                 if (NostragamusDataHandler.getInstance().isLoggedInUser()) {
                     navigateToHome();
                 } else {

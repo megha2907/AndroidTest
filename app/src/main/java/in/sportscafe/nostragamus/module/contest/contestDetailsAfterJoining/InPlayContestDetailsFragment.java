@@ -169,7 +169,7 @@ public class InPlayContestDetailsFragment extends NostraBaseFragment implements 
 
             setTabLayout(mViewPager);
 
-            mViewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
                 public void onPageScrollStateChanged(int state) {
                 }
 
@@ -180,28 +180,28 @@ public class InPlayContestDetailsFragment extends NostraBaseFragment implements 
                     switch (position) {
                         case 0:
                             // First TAB is Games
-                            NostragamusAnalytics.getInstance().trackScreenShown(Constants.AnalyticsCategory.IN_PLAY_CONTEST_DETAILS,
+                            NostragamusAnalytics.getInstance().trackTabClicked(Constants.AnalyticsCategory.IN_PLAY_CONTEST_DETAILS,
                                     Constants.AnalyticsClickLabels.GAMES);
                             break;
                         case 1:
                             // Second TAB is Leaderboard
-                            NostragamusAnalytics.getInstance().trackScreenShown(Constants.AnalyticsCategory.IN_PLAY_CONTEST_DETAILS,
+                            NostragamusAnalytics.getInstance().trackTabClicked(Constants.AnalyticsCategory.IN_PLAY_CONTEST_DETAILS,
                                     Constants.AnalyticsClickLabels.LEADERBOARD);
                             break;
                         case 2:
                             // Third TAB is Prizes
-                            NostragamusAnalytics.getInstance().trackScreenShown(Constants.AnalyticsCategory.IN_PLAY_CONTEST_DETAILS,
+                            NostragamusAnalytics.getInstance().trackTabClicked(Constants.AnalyticsCategory.IN_PLAY_CONTEST_DETAILS,
                                     Constants.AnalyticsClickLabels.PRIZES);
                             break;
                         case 3:
                             // Fourth TAB is Rules
-                            NostragamusAnalytics.getInstance().trackScreenShown(Constants.AnalyticsCategory.IN_PLAY_CONTEST_DETAILS,
+                            NostragamusAnalytics.getInstance().trackTabClicked(Constants.AnalyticsCategory.IN_PLAY_CONTEST_DETAILS,
                                     Constants.AnalyticsClickLabels.RULES);
                             break;
 
                         case 4:
                             // Fifth TAB is Invite
-                            NostragamusAnalytics.getInstance().trackScreenShown(Constants.AnalyticsCategory.IN_PLAY_CONTEST_DETAILS,
+                            NostragamusAnalytics.getInstance().trackTabClicked(Constants.AnalyticsCategory.IN_PLAY_CONTEST_DETAILS,
                                     Constants.AnalyticsClickLabels.INVITE_PRIVATE_CONTEST);
                             break;
                     }
@@ -230,8 +230,7 @@ public class InPlayContestDetailsFragment extends NostraBaseFragment implements 
             fragment = new PoolPrizesEstimationFragment();
             fragment.setArguments(args);
 
-        }   /* BumperEstimation fragment for Bumper Contest AND if challenge-not started */
-        else if (contestDto!=null &&
+        }   /* BumperEstimation fragment for Bumper Contest AND if challenge-not started */ else if (contestDto != null &&
                 !TextUtils.isEmpty(contestDto.getContestMode()) &&
                 contestDto.getContestMode().equalsIgnoreCase(Constants.ContestType.BUMPER)) {
 

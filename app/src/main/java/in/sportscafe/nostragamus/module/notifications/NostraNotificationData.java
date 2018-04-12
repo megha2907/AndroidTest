@@ -4,8 +4,13 @@ import com.google.gson.annotations.SerializedName;
 
 import org.parceler.Parcel;
 
+import java.util.HashMap;
+
+import in.sportscafe.nostragamus.Constants;
+import in.sportscafe.nostragamus.module.contest.dto.PowerUpInfo;
 import in.sportscafe.nostragamus.module.inPlay.dto.InPlay;
 import in.sportscafe.nostragamus.module.inPlay.dto.InPlayContestDto;
+import in.sportscafe.nostragamus.module.navigation.powerupbank.earnmorepowerups.PowerUp;
 import in.sportscafe.nostragamus.webservice.UserReferralInfo;
 
 /**
@@ -65,6 +70,9 @@ public class NostraNotificationData {
     /* This is used for InApp Notification , where notification redirect to appropriate game screen */
     @SerializedName("inPlayContestDto")
     private InPlayContestDto inPlayContestDto;
+
+    @SerializedName("powerups")
+    private HashMap<String, Integer> powerUps = new HashMap<>();
 
     public int getChallengeId() {
         return challengeId;
@@ -201,4 +209,13 @@ public class NostraNotificationData {
     public void setAnnouncementTime(String announcementTime) {
         this.announcementTime = announcementTime;
     }
+
+    public HashMap<String, Integer> getPowerUps() {
+        return powerUps;
+    }
+
+    public void setPowerUps(HashMap<String, Integer> powerUps) {
+        this.powerUps = powerUps;
+    }
+
 }

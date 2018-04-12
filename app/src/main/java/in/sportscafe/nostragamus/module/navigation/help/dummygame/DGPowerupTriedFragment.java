@@ -24,7 +24,9 @@ import android.widget.TextView;
 import com.jeeva.android.BaseFragment;
 import com.jeeva.android.widgets.customfont.Typefaces;
 
+import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
+import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -59,6 +61,7 @@ public class DGPowerupTriedFragment extends BaseFragment implements View.OnClick
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_dgpowerup_tried, container, false);
         initView(view);
+        NostragamusAnalytics.getInstance().trackDummyGame(Constants.AnalyticsActions.COMPLETED);
         return view;
     }
 

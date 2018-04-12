@@ -69,6 +69,8 @@ public class AppSettingsModelImpl implements AppSettingsModel {
             dataHandler.setDownloadPaidApp(settingsDetails.getDownloadPaidText());
             dataHandler.setAskFriendText(settingsDetails.getAskFriendText());
             dataHandler.setDisclaimerText(settingsDetails.getDisclaimerText());
+            dataHandler.setKYCBenefitsOne(settingsDetails.getKycBenefitsOne());
+            dataHandler.setKYCBenefitsTwo(settingsDetails.getKycBenefitsTwo());
 
             if (settingsDetails.isShowFaq()!=null && settingsDetails.isShowFaq()) {
                 dataHandler.setShowFAQ(true);

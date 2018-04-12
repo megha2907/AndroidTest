@@ -1,9 +1,18 @@
 package in.sportscafe.nostragamus.module.navigation.wallet.doKYC;
 
 import android.content.Context;
+import android.os.AsyncTask;
+import android.os.Environment;
 import android.support.annotation.Nullable;
 
 import com.jeeva.android.Log;
+
+import java.io.BufferedInputStream;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.URL;
+import java.net.URLConnection;
 
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Nostragamus;
@@ -71,6 +80,8 @@ public class GetKYCDetailsDataProvider {
                     Log.d(TAG, "Server response success");
                     if (listener != null) {
                         listener.onImageData(Constants.DataStatus.FROM_SERVER_API_SUCCESS, response.body());
+                    } else {
+                        listener.onImageFailed();
                     }
                 } else {
                     Log.d(TAG, "Server response null");
@@ -81,9 +92,13 @@ public class GetKYCDetailsDataProvider {
             public void onFailure(Call<ResponseBody> call, Throwable t) {
                 super.onFailure(call, t);
                 Log.d(TAG, "Server response Failed");
+                if (listener != null) {
+                  listener.onImageFailed();
+                }
             }
         });
     }
+
 
     public interface GetKYCDetailsDataProviderListener {
         void onData(int status, @Nullable KYCDetails kycDetails);
@@ -91,6 +106,8 @@ public class GetKYCDetailsDataProvider {
         void onError(int status);
 
         void onImageData(int status, @Nullable ResponseBody body);
+
+        void onImageFailed();
 
         void onNoInternet();
     }

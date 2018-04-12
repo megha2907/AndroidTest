@@ -5,6 +5,9 @@ import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.FirebaseInstanceIdService;
 import com.jeeva.android.Log;
 
+import in.sportscafe.nostragamus.Nostragamus;
+import in.sportscafe.nostragamus.module.analytics.awsAnalytics.NotificationEndPointRequest;
+
 /**
  * Created by deepanshi on 1/16/18.
  */
@@ -13,6 +16,13 @@ public class NostraFireBaseInstanceIDService extends FirebaseInstanceIdService {
 
 
     private static final String TAG = NostraFireBaseInstanceIDService.class.getSimpleName();
+
+    private static NostraFireBaseInstanceIDService nostraFireBaseInstanceIDService = new NostraFireBaseInstanceIDService();
+
+    public static NostraFireBaseInstanceIDService getInstance() {
+        return nostraFireBaseInstanceIDService;
+    }
+
 
     @Override
     public void onTokenRefresh() {
@@ -37,6 +47,7 @@ public class NostraFireBaseInstanceIDService extends FirebaseInstanceIdService {
     private void sendRegistrationToServer(String token) {
         // Send Token to Freshchat
         Freshchat.getInstance(this).setPushRegistrationToken(token);
+        Nostragamus.getInstance().getServerDataManager().setGcmDeviceToken(token);
     }
 
 }

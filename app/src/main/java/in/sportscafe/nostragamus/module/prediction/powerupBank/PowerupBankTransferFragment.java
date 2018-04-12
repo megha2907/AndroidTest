@@ -457,34 +457,42 @@ public class PowerupBankTransferFragment extends BaseFragment implements View.On
         switch (view.getId()) {
             case R.id.powerup_bank_add_double_button:
                 addDoubler();
+                NostragamusAnalytics.getInstance().trackClickEvent(Constants.AnalyticsCategory.POWER_BANK, Constants.AnalyticsClickLabels.ADD_DOUBLER);
                 break;
 
             case R.id.powerup_bank_add_no_negative_button:
                 addNoNegative();
+                NostragamusAnalytics.getInstance().trackClickEvent(Constants.AnalyticsCategory.POWER_BANK, Constants.AnalyticsClickLabels.ADD_NO_NEGATIVE);
                 break;
 
             case R.id.powerup_bank_add_audience_poll_button:
                 addAudiencePoll();
+                NostragamusAnalytics.getInstance().trackClickEvent(Constants.AnalyticsCategory.POWER_BANK, Constants.AnalyticsClickLabels.ADD_AUDIENCE_POLL);
                 break;
 
             case R.id.powerup_bank_reset_button:
                 resetUi();
+                NostragamusAnalytics.getInstance().trackClickEvent(Constants.AnalyticsCategory.POWER_BANK, Constants.AnalyticsClickLabels.RESET_POWERUP);
                 break;
 
             case R.id.powerup_bank_transfer_to_challenge_button:
                 onTransferClicked();
+                NostragamusAnalytics.getInstance().trackClickEvent(Constants.AnalyticsCategory.POWER_BANK, Constants.AnalyticsClickLabels.TRANSFER_TO_CHALLENGE);
                 break;
 
             case R.id.powerup_bank_buy_double_button:
                 onBuyDoublerClicked();
+                NostragamusAnalytics.getInstance().trackClickEvent(Constants.AnalyticsCategory.POWER_BANK, Constants.AnalyticsClickLabels.BUY_DOUBLER);
                 break;
 
             case R.id.powerup_bank_buy_no_negative_button:
                 onBuyNoNegativeClicked();
+                NostragamusAnalytics.getInstance().trackClickEvent(Constants.AnalyticsCategory.POWER_BANK, Constants.AnalyticsClickLabels.BUY_NO_NEGATIVE);
                 break;
 
             case R.id.powerup_bank_buy_audience_poll_button:
                 onBuyAudiencePollClicked();
+                NostragamusAnalytics.getInstance().trackClickEvent(Constants.AnalyticsCategory.POWER_BANK, Constants.AnalyticsClickLabels.BUY_AUDIENCE_POLL);
                 break;
         }
     }

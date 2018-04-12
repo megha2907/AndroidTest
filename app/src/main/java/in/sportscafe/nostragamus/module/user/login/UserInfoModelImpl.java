@@ -1,13 +1,17 @@
 package in.sportscafe.nostragamus.module.user.login;
 
+import android.text.TextUtils;
+
 import com.jeeva.android.Log;
 
 import java.util.HashMap;
 
 import in.sportscafe.nostragamus.BuildConfig;
+import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Constants.Powerups;
 import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
+import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
 import in.sportscafe.nostragamus.module.user.login.dto.UserInfo;
 import in.sportscafe.nostragamus.module.user.login.dto.UserLoginInResponse;
 import in.sportscafe.nostragamus.module.user.myprofile.dto.UserInfoResponse;
@@ -68,6 +72,10 @@ public class UserInfoModelImpl {
 
             NostragamusDataHandler nostragamusDataHandler = NostragamusDataHandler.getInstance();
             Nostragamus.getInstance().getServerDataManager().setUserInfo(userInfo);
+
+            if (!TextUtils.isEmpty(userInfo.getMostPlayedSport())) {
+                NostragamusAnalytics.getInstance().logUserProperties(userInfo);
+            }
 
             HashMap<String, Integer> powerUpMap = userInfo.getPowerUps();
 
