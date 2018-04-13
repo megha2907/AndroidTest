@@ -57,6 +57,8 @@ import in.sportscafe.nostragamus.module.newChallenges.ui.viewPager.NewChallenges
 import in.sportscafe.nostragamus.module.nostraHome.ui.NostraHomeActivityListener;
 import in.sportscafe.nostragamus.module.notifications.NostraNotification;
 import in.sportscafe.nostragamus.module.popups.walletpopups.WalletBalancePopupActivity;
+import in.sportscafe.nostragamus.module.user.login.UserInfoModelImpl;
+import in.sportscafe.nostragamus.module.user.login.dto.UserInfo;
 import in.sportscafe.nostragamus.module.user.myprofile.verify.VerifyPhoneNumberFragment;
 import in.sportscafe.nostragamus.utils.CodeSnippet;
 
@@ -123,6 +125,7 @@ public class NewChallengesFragment extends NostraBaseFragment implements View.On
 
         fetchWalletBalFromServer();
         loadData();
+        fetchUserInfo();
     }
 
     @Override
@@ -147,6 +150,27 @@ public class NewChallengesFragment extends NostraBaseFragment implements View.On
                     setWalletBalanceAmt();
                 }
             }).performApiCall();
+        }
+    }
+
+    private void fetchUserInfo() {
+        if (Nostragamus.getInstance().hasNetworkConnection()) {
+            UserInfoModelImpl.newInstance(new UserInfoModelImpl.OnGetUserInfoModelListener() {
+                @Override
+                public void onSuccessGetUpdatedUserInfo(UserInfo updatedUserInfo) {
+                    if (mFragmentListener != null) {
+                        mFragmentListener.updateRecentActivityUnReadCounter(updatedUserInfo);
+                    }
+                }
+
+                @Override
+                public void onFailedGetUpdateUserInfo(String message) {}
+
+                @Override
+                public void onNoInternet() {}
+            }).getUserInfo();
+        } else {
+            Log.i(TAG, "No internet");
         }
     }
 

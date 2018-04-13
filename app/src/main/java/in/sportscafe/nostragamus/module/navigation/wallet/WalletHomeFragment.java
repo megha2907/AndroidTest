@@ -210,12 +210,12 @@ public class WalletHomeFragment extends BaseFragment implements View.OnClickList
 
         switch (kycStatusFromServer) {
             case Constants.KYCStatus.NOT_REQUIRED:
-                kycStatus = "Get free powerups and unlimited withdrawals!";
+                kycStatus = "Get unlimited withdrawals";
                 kycStatusTv.setTextColor(ContextCompat.getColor(getContext(), R.color.white_dim));
                 break;
 
             case Constants.KYCStatus.REQUIRED:
-                kycStatus = "Get free powerups and unlimited withdrawals!";
+                kycStatus = "Verify to make withdrawals";
                 kycStatusTv.setTextColor(ContextCompat.getColor(getContext(), R.color.blue_008ae1));
                 break;
 
@@ -238,7 +238,9 @@ public class WalletHomeFragment extends BaseFragment implements View.OnClickList
                 break;
 
             case Constants.KYCStatus.BLOCKED:
-                kycStatus = "KYC blocked, Please contact customer care";
+                kycTv.setText("KYC Blocked");
+                kycTv.setTextColor(ContextCompat.getColor(getContext(), R.color.radical_red));
+                kycStatus = "Please contact customer care for more details";
                 kycStatusTv.setTextColor(ContextCompat.getColor(getContext(), R.color.radical_red));
                 tickIcon.setVisibility(View.GONE);
                 break;
@@ -390,7 +392,7 @@ public class WalletHomeFragment extends BaseFragment implements View.OnClickList
 
             case Constants.KYCStatus.BLOCKED:
                 if (mFragmentListener != null) {
-                    // No click on blocked
+                    mFragmentListener.onOpenKYCBlockedPopup();
                 }
                 break;
 
@@ -452,7 +454,7 @@ public class WalletHomeFragment extends BaseFragment implements View.OnClickList
             case Constants.KYCStatus.BLOCKED:
                 if (mFragmentListener != null) {
                     if (withdrawBlocked) {
-                        // No click on blocked
+                        mFragmentListener.onOpenKYCBlockedPopup();
                     } else {
                         mFragmentListener.onWithdrawMoneyClicked();
                     }
