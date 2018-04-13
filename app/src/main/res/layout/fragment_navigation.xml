@@ -113,7 +113,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/dim_10"
                     android:layout_toRightOf="@id/wallet_tv"
-                    android:text="(Add &amp; Withdraw)"
+                    android:text="(Deposit &amp; Withdraw)"
                     android:textColor="@color/white_999999"
                     android:textSize="@dimen/sp_12"
                     android:layout_marginTop="@dimen/dim_2"

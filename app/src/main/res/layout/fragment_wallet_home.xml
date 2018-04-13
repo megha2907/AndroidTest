@@ -266,7 +266,7 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="@dimen/wallet_home_button_height"
                                         android:gravity="center"
-                                        android:text="Add Money"
+                                        android:text="Deposit"
                                         android:textAllCaps="false"
                                         android:textColor="@color/white"
                                         android:textSize="@dimen/sp_12"

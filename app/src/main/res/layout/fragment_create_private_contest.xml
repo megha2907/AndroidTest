@@ -118,7 +118,8 @@
                     android:background="@color/grey_1f1f1f"
                     android:layout_marginTop="@dimen/dim_12"
                     android:layout_marginLeft="@dimen/dim_12"
-                    android:layout_marginRight="@dimen/dim_12">
+                    android:layout_marginRight="@dimen/dim_12"
+                    android:paddingBottom="@dimen/dim_5">
 
                     <com.jeeva.android.widgets.customfont.CustomTextView
                         android:layout_width="wrap_content"
@@ -482,7 +483,6 @@
                             android:background="@color/grey_1f1f1f"
                             android:layout_marginLeft="@dimen/dim_12"
                             android:layout_marginRight="@dimen/dim_12"
-                            android:paddingTop="@dimen/dim_3"
                             android:nestedScrollingEnabled="false"/>
 
                         <!-- Message & button section -->
