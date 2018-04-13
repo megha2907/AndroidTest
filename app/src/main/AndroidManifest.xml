@@ -64,6 +64,11 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.PopupTheme" />
 
+        <activity
+            android:name=".module.navigation.wallet.doKYC.KYCBlockedPopup"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.PopupTheme" />
+
         <!--
             <activity
             android:name=".module.navigation.submitquestion.matchlist.MatchListFragment"

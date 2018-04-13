@@ -7,6 +7,7 @@ import android.animation.LayoutTransition;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -15,12 +16,14 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SnapHelper;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.animation.TranslateAnimation;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 
 import com.jeeva.android.BaseFragment;
 import com.jeeva.android.Log;
@@ -151,7 +154,7 @@ public class NewChallengesViewPagerFragment extends BaseFragment {
         }
     }
 
-    private void setBannersOnUi(List<BannerResponseData> bannerResponseDataList) {
+    private void setBannersOnUi(final List<BannerResponseData> bannerResponseDataList) {
 
         if (bannerResponseDataList != null && bannerResponseDataList.size() > 0 && getView() != null) {
             RecyclerView mRcvHorizontal = (RecyclerView) getView().findViewById(R.id.challenges_rcv_horizontal);
@@ -166,11 +169,13 @@ public class NewChallengesViewPagerFragment extends BaseFragment {
 
             SnapHelper snapHelper = new NostraSnapHelper();
             snapHelper.attachToRecyclerView(mRcvHorizontal);
+
         } else {
             hideBanners();
         }
 
     }
+
 
     private void handleBannerError(int status) {
         hideBanners();

@@ -106,7 +106,7 @@
                 <com.jeeva.android.widgets.customfont.CustomTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="FAQ"
+                    android:text="FAQs"
                     android:textColor="@color/white"
                     android:textSize="@dimen/sp_14"
                     android:layout_marginLeft="@dimen/dp_20"

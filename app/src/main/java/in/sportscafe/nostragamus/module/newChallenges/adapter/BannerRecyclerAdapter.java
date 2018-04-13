@@ -2,14 +2,14 @@ package in.sportscafe.nostragamus.module.newChallenges.adapter;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
-import com.jeeva.android.Log;
 import com.jeeva.android.widgets.HmImageView;
 
 import org.parceler.Parcels;
@@ -17,13 +17,8 @@ import org.parceler.Parcels;
 import java.util.List;
 
 import in.sportscafe.nostragamus.Constants;
-import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.R;
-import in.sportscafe.nostragamus.module.contest.adapter.ContestAdapterItemType;
-import in.sportscafe.nostragamus.module.contest.adapter.ContestAdapterListener;
 import in.sportscafe.nostragamus.module.newChallenges.dto.BannerResponseData;
-import in.sportscafe.nostragamus.module.notifications.NostraNotification;
-import in.sportscafe.nostragamus.module.notifications.NotificationHelper;
 
 
 /**
@@ -36,7 +31,6 @@ public class BannerRecyclerAdapter extends RecyclerView.Adapter<BannerRecyclerAd
     private BannerAdapterListener mBannerAdapterListener;
     Context context;
 
-
     public BannerRecyclerAdapter(List<BannerResponseData> bannerResponseDataList, Context context,
                                  @NonNull BannerAdapterListener listener) {
         mBannerResponseDataList = bannerResponseDataList;
@@ -48,7 +42,7 @@ public class BannerRecyclerAdapter extends RecyclerView.Adapter<BannerRecyclerAd
     public BannerViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.banner_item_layout, parent, false);
 
-        return new BannerViewHolder(itemView,mBannerAdapterListener);
+        return new BannerViewHolder(itemView, mBannerAdapterListener);
     }
 
     @Override
@@ -59,6 +53,7 @@ public class BannerRecyclerAdapter extends RecyclerView.Adapter<BannerRecyclerAd
             final BannerResponseData bannerResponseData = mBannerResponseDataList.get(position);
 
             holder.bannerImage.setImageUrl(bannerResponseData.getBannerImageUrl());
+
         }
     }
 
@@ -67,7 +62,7 @@ public class BannerRecyclerAdapter extends RecyclerView.Adapter<BannerRecyclerAd
         HmImageView bannerImage;
         private BannerAdapterListener clickListener;
 
-        public BannerViewHolder(View view,@NonNull BannerAdapterListener listener) {
+        public BannerViewHolder(View view, @NonNull BannerAdapterListener listener) {
             super(view);
             this.clickListener = listener;
             bannerImage = (HmImageView) view.findViewById(R.id.banner_image);
@@ -98,6 +93,4 @@ public class BannerRecyclerAdapter extends RecyclerView.Adapter<BannerRecyclerAd
     public int getItemCount() {
         return mBannerResponseDataList.size();
     }
-
-
 }
