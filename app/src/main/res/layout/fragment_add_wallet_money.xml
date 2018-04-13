@@ -38,7 +38,7 @@
             <com.jeeva.android.widgets.customfont.CustomTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Add Money"
+                android:text="Deposit Money"
                 android:textColor="@color/white"
                 android:textSize="@dimen/sp_16"
                 app:typeface="lato_regular"

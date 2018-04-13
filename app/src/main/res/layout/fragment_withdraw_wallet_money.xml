@@ -31,7 +31,7 @@
             <com.jeeva.android.widgets.customfont.CustomTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Withdraw Amount"
+                android:text="Withdraw Money"
                 android:textAllCaps="false"
                 android:textColor="@color/white"
                 android:textSize="@dimen/sp_16"
