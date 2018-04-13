@@ -1036,14 +1036,17 @@ public class PredictionFragment extends NostraBaseFragment implements View.OnCli
      * On success full completion of choice for all the answers
      */
     private void onMatchCompleted() {
-        /* AdWords conversion Report, on match completed */
-        AdWordsConversionReporter.reportWithConversionId(getContext().getApplicationContext(),
-                "934797470", "tIBCCIK8pHEQnsHfvQM", "1.00", true);
 
-        Log.d(TAG, "Match Completed");
+        if (getContext() != null && getContext().getApplicationContext() != null) {
+        /* AdWords conversion Report, on match completed */
+            AdWordsConversionReporter.reportWithConversionId(getContext().getApplicationContext(),
+                    "934797470", "tIBCCIK8pHEQnsHfvQM", "1.00", true);
+
+            Log.d(TAG, "Match Completed");
 
         /* Fetch Inplay data and save into DB */
-        new CacheManagementHelper().fetchInplayDataAndSaveIntoDb(getContext().getApplicationContext());
+            new CacheManagementHelper().fetchInplayDataAndSaveIntoDb(getContext().getApplicationContext());
+        }
 
         ResultsScreenDataDto data = new ResultsScreenDataDto();
         if (mPlayScreenData != null) {

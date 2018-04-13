@@ -18,13 +18,16 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/dim_45"
         android:layout_alignParentBottom="true"
-        android:background="@drawable/flat_blue_btn_selector"
+        android:background="@drawable/blue_button_selector"
         android:onClick="onClick"
         android:text="Verify"
         android:textAllCaps="false"
         android:textColor="@color/white"
         android:textSize="@dimen/sp_15"
-        app:typeface="lato_bold" />
+        app:typeface="lato_bold"
+        android:layout_marginLeft="@dimen/dim_14"
+        android:layout_marginRight="@dimen/dim_14"
+        android:layout_marginBottom="@dimen/dim_14"/>
 
     </FrameLayout>
 

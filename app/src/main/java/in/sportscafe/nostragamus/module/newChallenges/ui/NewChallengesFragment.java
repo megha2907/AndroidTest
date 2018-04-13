@@ -57,6 +57,8 @@ import in.sportscafe.nostragamus.module.newChallenges.ui.viewPager.NewChallenges
 import in.sportscafe.nostragamus.module.nostraHome.ui.NostraHomeActivityListener;
 import in.sportscafe.nostragamus.module.notifications.NostraNotification;
 import in.sportscafe.nostragamus.module.popups.walletpopups.WalletBalancePopupActivity;
+import in.sportscafe.nostragamus.module.user.login.UserInfoModelImpl;
+import in.sportscafe.nostragamus.module.user.login.dto.UserInfo;
 import in.sportscafe.nostragamus.module.user.myprofile.verify.VerifyPhoneNumberFragment;
 import in.sportscafe.nostragamus.utils.CodeSnippet;
 
@@ -123,6 +125,7 @@ public class NewChallengesFragment extends NostraBaseFragment implements View.On
 
         fetchWalletBalFromServer();
         loadData();
+        fetchUserInfo();
     }
 
     @Override
@@ -147,6 +150,27 @@ public class NewChallengesFragment extends NostraBaseFragment implements View.On
                     setWalletBalanceAmt();
                 }
             }).performApiCall();
+        }
+    }
+
+    private void fetchUserInfo() {
+        if (Nostragamus.getInstance().hasNetworkConnection()) {
+            UserInfoModelImpl.newInstance(new UserInfoModelImpl.OnGetUserInfoModelListener() {
+                @Override
+                public void onSuccessGetUpdatedUserInfo(UserInfo updatedUserInfo) {
+                    if (mFragmentListener != null) {
+                        mFragmentListener.updateRecentActivityUnReadCounter(updatedUserInfo);
+                    }
+                }
+
+                @Override
+                public void onFailedGetUpdateUserInfo(String message) {}
+
+                @Override
+                public void onNoInternet() {}
+            }).getUserInfo();
+        } else {
+            Log.i(TAG, "No internet");
         }
     }
 
@@ -224,7 +248,7 @@ public class NewChallengesFragment extends NostraBaseFragment implements View.On
     private void showDataOnUi(List<NewChallengesResponse> newChallengesResponseData) {
         if (getView() != null && getActivity() != null) {
 
-            TabLayout challengesTabLayout = (TabLayout) getView().findViewById(R.id.challenge_tabs);
+            final TabLayout challengesTabLayout = (TabLayout) getView().findViewById(R.id.challenge_tabs);
             final ViewPager challengesViewPager = (ViewPager) getView().findViewById(R.id.challenge_viewPager);
             challengesViewPager.setOffscreenPageLimit(4);
 
@@ -238,9 +262,9 @@ public class NewChallengesFragment extends NostraBaseFragment implements View.On
             List<SportsTab> sportsTabList = sportsDataProvider.getSportsList();
 
             if (newChallengesResponseData != null && newChallengesResponseData.size() > 0) {
-                mTvTBarNumberOfChallenges.setText("(" + String.valueOf(newChallengesResponseData.size()) + ")");
+                //mTvTBarNumberOfChallenges.setText("(" + String.valueOf(newChallengesResponseData.size()) + ")");
 
-                ArrayList<NewChallengesViewPagerFragment> fragmentList = new ArrayList<>();
+                final ArrayList<NewChallengesViewPagerFragment> fragmentList = new ArrayList<>();
                 NewChallengesFilterHelper filterHelper = new NewChallengesFilterHelper();
                 NewChallengesViewPagerFragment tabFragment = null;
 
@@ -315,6 +339,22 @@ public class NewChallengesFragment extends NostraBaseFragment implements View.On
                 /* If launched from notification, the handle further flow */
                 handleNotification(challengesViewPager, fragmentList);
 
+                /* Send on tab selected event to analytics */
+                challengesViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+                    public void onPageScrollStateChanged(int state) {
+                    }
+
+                    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                    }
+
+                    public void onPageSelected(int position) {
+                        if (!fragmentList.isEmpty() && fragmentList != null && fragmentList.get(position) != null) {
+                            NostragamusAnalytics.getInstance().trackTabClicked(Constants.AnalyticsCategory.NEW_CHALLENGES,
+                                    fragmentList.get(position).getTabDetails().getSportsName());
+                        }
+                    }
+                });
+
             } else {
                 showEmptyScreen(challengesViewPager, challengesTabLayout, sportsTabList);
             }
@@ -363,7 +403,6 @@ public class NewChallengesFragment extends NostraBaseFragment implements View.On
             }
         }
     }
-
 
 
     private void showLoadingProgressBar() {

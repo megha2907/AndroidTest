@@ -117,6 +117,7 @@ public class ContestDetailsActivity extends NostraBaseActivity implements Contes
                     joinContestData.setEntryFee(contest.getEntryFee());
                     joinContestData.setJoiContestDialogLaunchMode(CompletePaymentDialogFragment.DialogLaunchMode.JOINING_CHALLENGE_LAUNCH);
                     joinContestData.setContestName(contest.getConfigName());
+                    joinContestData.setPrizeMoney(contest.getPrizes());
 
                     if (contest.getContestType() != null) {
                         joinContestData.setContestType(contest.getContestType().getCategoryName());
@@ -165,11 +166,8 @@ public class ContestDetailsActivity extends NostraBaseActivity implements Contes
                                         CustomProgressbar.getProgressbar(ContestDetailsActivity.this).dismissProgress();
                                         onContestJoinedSuccessfully(contestJoinedSuccessfully);
 
-                                        NostragamusAnalytics.getInstance().trackClickEvent(Constants.AnalyticsCategory.CONTEST_JOINED,
-                                                String.valueOf(contestJoinedSuccessfully.getContestId()));
-
                                         if (contestJoinedSuccessfully != null) {
-                                            sendContestJoinedDataToAmplitude(contestJoinedSuccessfully,orderId);
+                                            sendContestJoinedDataToAmplitude(contestJoinedSuccessfully, orderId);
                                         }
                                     }
 
@@ -180,7 +178,7 @@ public class ContestDetailsActivity extends NostraBaseActivity implements Contes
                                     }
 
                                     @Override
-                                    public void onServerReturnedError(String msg) {
+                                    public void onServerReturnedError(String msg, int errorCode) {
                                         CustomProgressbar.getProgressbar(ContestDetailsActivity.this).dismissProgress();
                                         if (TextUtils.isEmpty(msg)) {
                                             msg = Constants.Alerts.SOMETHING_WRONG;
@@ -261,21 +259,30 @@ public class ContestDetailsActivity extends NostraBaseActivity implements Contes
             if (!TextUtils.isEmpty(msg)) {
                 CustomSnackBar.make(view, msg, CustomSnackBar.DURATION_LONG).show();
             } else {
-                CustomSnackBar.make(view, Constants.Alerts.SOMETHING_WRONG, CustomSnackBar.DURATION_LONG).show();
+                switch (status) {
+                    case Constants.DataStatus.NO_INTERNET:
+                        CustomSnackBar.make(view, Constants.Alerts.NO_INTERNET_CONNECTION, CustomSnackBar.DURATION_LONG).show();
+                        break;
+
+                    default:
+                        CustomSnackBar.make(view, Constants.Alerts.SOMETHING_WRONG, CustomSnackBar.DURATION_LONG).show();
+                        break;
+                }
             }
         }
     }
 
-    private void sendContestJoinedDataToAmplitude(JoinContestData contest,String orderId) {
+    private void sendContestJoinedDataToAmplitude(JoinContestData contest, String orderId) {
 
         /* Joining a contest = Revenue */
         NostragamusAnalytics.getInstance().trackRevenue(contest.getEntryFee(), contest.getContestId(),
-                contest.getContestName(), contest.getContestType(),orderId);
+                contest.getContestName(), contest.getContestType(), orderId);
 
         /* Send Contest Joined Details to Amplitude */
-        NostragamusAnalytics.getInstance().trackContestJoined(contest.getContestId(),
+        NostragamusAnalytics.getInstance().trackContestJoined(
                 contest.getContestName(), contest.getContestType(),
-                (int) contest.getEntryFee(), contest.getChallengeId(), "Contest Details - Join Contest");
+                (int) contest.getEntryFee(), "Contest Details - Join Contest",
+                contest.getChallengeName(), contest.getPrizeMoney());
 
     }
 

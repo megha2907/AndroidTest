@@ -16,4 +16,5 @@ public interface DetailScreensLaunchRequest {
     int MATCHES_LEADER_BOARD_SCREEN = -311;
     int MATCHES_REWARDS_SCREEN = -312;
     int MATCHES_RULES_SCREEN = -313;
+    int MATCHES_INVITE_PRIVATE_CONTEST_SCREEN = -314;
 }

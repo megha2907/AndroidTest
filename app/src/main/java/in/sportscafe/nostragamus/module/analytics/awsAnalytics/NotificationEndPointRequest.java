@@ -13,11 +13,15 @@ import com.amazonaws.services.pinpoint.model.GetEndpointRequest;
 import com.amazonaws.services.pinpoint.model.GetEndpointResult;
 import com.amazonaws.services.pinpoint.model.UpdateEndpointRequest;
 import com.amazonaws.services.pinpoint.model.UpdateEndpointResult;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.jeeva.android.Log;
 
+import java.lang.reflect.Type;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Nostragamus;
@@ -77,13 +81,17 @@ public class NotificationEndPointRequest {
 
         UserInfo userInfo = Nostragamus.getInstance().getServerDataManager().getUserInfo();
         if (userInfo != null) {
-            customAttributes.put(Constants.UserProperties.COUNT_REFERRALS, Arrays.asList(new String[]{String.valueOf(userInfo.getReferralCount())}));
-            customAttributes.put(Constants.UserProperties.HAS_REFERRED, Arrays.asList(new String[]{String.valueOf(userInfo.isHasReferred())}));
-            customAttributes.put(Constants.UserProperties.HAS_DEPOSITED, Arrays.asList(new String[]{String.valueOf(userInfo.isHasDeposited())}));
-            customAttributes.put(Constants.UserProperties.COUNT_DEPOSITS, Arrays.asList(new String[]{String.valueOf(userInfo.getDepositCount())}));
-            customAttributes.put(Constants.UserProperties.COUNT_CONTESTS_JOINED, Arrays.asList(new String[]{String.valueOf(userInfo.getContestJoinedCount())}));
-            customAttributes.put(Constants.UserProperties.COUNT_PAID_CONTESTS_JOINED, Arrays.asList(new String[]{String.valueOf(userInfo.getPaidContestJoinedCount())}));
-            customAttributes.put(Constants.UserProperties.MOST_PLAYED_SPORT, Arrays.asList(new String[]{String.valueOf(userInfo.getMostPlayedSport())}));
+
+            if (userInfo.getUserPropertyInfo() != null) {
+                Gson gson = new Gson();
+                String json = gson.toJson(userInfo.getUserPropertyInfo());
+                Type type = new TypeToken<Map<String, String>>() {
+                }.getType();
+                Map<String, String> map = gson.fromJson(json, type);
+                for (String key : map.keySet()) {
+                    customAttributes.put(key, Arrays.asList(new String[]{String.valueOf(map.get(key))}));
+                }
+            }
 
             EndpointDemographic demographic = new EndpointDemographic()
                     .withAppVersion(Nostragamus.getInstance().getAppVersionName());

@@ -7,6 +7,7 @@ import android.text.TextUtils;
 import android.view.View;
 
 import in.sportscafe.nostragamus.Constants;
+import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.nostraHome.ui.NostraHomeActivity;
 import in.sportscafe.nostragamus.module.nostraHome.helper.TimerHelper;
 
@@ -43,8 +44,45 @@ public class TimerFinishDialogHelper {
         screenData.setRequestCode(Constants.TimerOutDialogRequestCode.CHALLENGE_STARTED);
         screenData.setDialogTitle("Challenge Started");
         screenData.setMessage("Oops! Time is up!");
+        screenData.setSubMessage("This challenge has already started. Please join another challenge");
+        screenData.setButtonText("Ok");
+
+        return screenData;
+    }
+
+    private static TimerFinishDialogScreenData getPrivateContestFullScreenData(String subMessage) {
+        TimerFinishDialogScreenData screenData = new TimerFinishDialogScreenData();
+        screenData.setRequestCode(Constants.TimerOutDialogRequestCode.PRIVATE_CONTEST_FULL);
+        screenData.setDialogTitle("Contest Full");
+        screenData.setMessage("Private Contest Full");
         screenData.setSubMessage(subMessage);
         screenData.setButtonText("Ok");
+        screenData.setIconResource(R.drawable.private_contest_error_dialog_icon);
+
+        return screenData;
+    }
+
+    private static TimerFinishDialogScreenData getPrivateContestUnknownErrorScreenData(String subMessage) {
+        TimerFinishDialogScreenData screenData = new TimerFinishDialogScreenData();
+        screenData.setRequestCode(Constants.TimerOutDialogRequestCode.PRIVATE_CONTEST_UNKNOWN_ERROR);
+        screenData.setDialogTitle("Private Contest");
+        screenData.setMessage("Unknown Error");
+        screenData.setSubMessage(subMessage);
+        screenData.setButtonText("Ok");
+        screenData.setIconResource(R.drawable.private_contest_error_dialog_icon);
+
+        return screenData;
+    }
+
+    private static TimerFinishDialogScreenData getPrivateContestAlreadyJoinedScreenData(String imgUrl) {
+        TimerFinishDialogScreenData screenData = new TimerFinishDialogScreenData();
+        screenData.setRequestCode(Constants.TimerOutDialogRequestCode.PRIVATE_CONTEST_ALREADY_JOINED);
+        screenData.setDialogTitle("Private Contest Joined");
+        screenData.setMessage("You Already Joined");
+        screenData.setSubMessage("You have already joined this private contest. Play this contest from inplay or join another contest.");
+        screenData.setButtonText("Ok");
+        screenData.setIconResource(0);
+        screenData.setIconImageUrl(imgUrl);
 
         return screenData;
     }
@@ -119,5 +157,61 @@ public class TimerFinishDialogHelper {
         dialogFragment.showDialogAllowingStateLoss(fragmentManager, dialogFragment, dialogFragment.getClass().getSimpleName());
     }
 
+    public static void showPrivateContestFullDialog(FragmentManager fragmentManager, String subMessage,
+                                                          final View.OnClickListener onClickListener) {
+
+        TimerFinishedDialogFragment dialogFragment =
+                TimerFinishedDialogFragment.newInstance(getPrivateContestFullScreenData(subMessage),
+                new TimerFinishedDialogFragment.TimerFinishedFragmentListener() {
+                    @Override
+                    public void onActionButtonClicked() {
+                        if (onClickListener != null) {
+                            onClickListener.onClick(null);
+                        }
+                    }
+                }
+        );
+
+        dialogFragment.showDialogAllowingStateLoss(fragmentManager,
+                dialogFragment, dialogFragment.getClass().getSimpleName());
+    }
+
+    public static void showPrivateContestUnknownErrorDialog(FragmentManager fragmentManager, String subMessage,
+                                                    final View.OnClickListener onClickListener) {
+
+        TimerFinishedDialogFragment dialogFragment =
+                TimerFinishedDialogFragment.newInstance(getPrivateContestUnknownErrorScreenData(subMessage),
+                        new TimerFinishedDialogFragment.TimerFinishedFragmentListener() {
+                            @Override
+                            public void onActionButtonClicked() {
+                                if (onClickListener != null) {
+                                    onClickListener.onClick(null);
+                                }
+                            }
+                        }
+                );
+
+        dialogFragment.showDialogAllowingStateLoss(fragmentManager,
+                dialogFragment, dialogFragment.getClass().getSimpleName());
+    }
+
+    public static void showPrivateContestAlreadyJoinedDialog(FragmentManager fragmentManager, String imageUrl,
+                                                            final View.OnClickListener onClickListener) {
+
+        TimerFinishedDialogFragment dialogFragment =
+                TimerFinishedDialogFragment.newInstance(getPrivateContestAlreadyJoinedScreenData(imageUrl),
+                        new TimerFinishedDialogFragment.TimerFinishedFragmentListener() {
+                            @Override
+                            public void onActionButtonClicked() {
+                                if (onClickListener != null) {
+                                    onClickListener.onClick(null);
+                                }
+                            }
+                        }
+                );
+
+        dialogFragment.showDialogAllowingStateLoss(fragmentManager,
+                dialogFragment, dialogFragment.getClass().getSimpleName());
+    }
 
 }

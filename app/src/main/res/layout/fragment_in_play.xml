@@ -74,8 +74,7 @@
                 android:id="@+id/inplay_empty_screen"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                layout="@layout/in_play_empty_screen"
-                android:visibility="gone"/>
+                layout="@layout/in_play_empty_screen"/>
 
         </LinearLayout>
 

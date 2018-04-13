@@ -30,9 +30,11 @@ import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Constants.AppPermissions;
 import in.sportscafe.nostragamus.Constants.BundleKeys;
 import in.sportscafe.nostragamus.Constants.RequestCodes;
+import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.NostragamusDataHandler;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.addphoto.AddPhotoActivity;
+import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
 import in.sportscafe.nostragamus.module.common.NostragamusActivity;
 import in.sportscafe.nostragamus.module.common.WordUtils;
 import in.sportscafe.nostragamus.module.navigation.referfriends.SuccessfulReferralActivity;
@@ -357,6 +359,7 @@ public class EditProfileActivity extends NostragamusActivity implements EditProf
 
     @Override
     public void navigateToOTPVerification(boolean successfulReferral) {
+        NostragamusAnalytics.getInstance().trackPostSignUp(Constants.AnalyticsActions.EDITED_PROFILE);
         Intent intent = new Intent(this, VerifyProfileActivity.class);
         intent.putExtra(Constants.BundleKeys.SUCCESSFUL_REFERRAL,successfulReferral);
         startActivity(intent);

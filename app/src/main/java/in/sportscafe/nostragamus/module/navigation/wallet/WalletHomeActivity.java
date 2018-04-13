@@ -10,11 +10,17 @@ import android.widget.TextView;
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.common.NostragamusActivity;
+import in.sportscafe.nostragamus.module.customViews.CustomSnackBar;
 import in.sportscafe.nostragamus.module.navigation.referfriends.ReferFriendActivity;
 import in.sportscafe.nostragamus.module.navigation.wallet.addMoney.AddWalletMoneyActivity;
+import in.sportscafe.nostragamus.module.navigation.wallet.doKYC.AddKYCDetailsActivity;
+import in.sportscafe.nostragamus.module.navigation.wallet.doKYC.KYCBlockedPopup;
+import in.sportscafe.nostragamus.module.navigation.wallet.doKYC.KYCVerificationInProgressPopup;
 import in.sportscafe.nostragamus.module.navigation.wallet.payoutDetails.PayoutWalletHomeActivity;
 import in.sportscafe.nostragamus.module.navigation.wallet.walletHistory.WalletHistoryActivity;
 import in.sportscafe.nostragamus.module.navigation.wallet.withdrawMoney.WithdrawWalletMoneyActivity;
+import in.sportscafe.nostragamus.module.permission.PermissionsActivity;
+import in.sportscafe.nostragamus.module.play.myresults.MyResultsActivity;
 import in.sportscafe.nostragamus.utils.FragmentHelper;
 
 public class WalletHomeActivity extends NostragamusActivity implements WalletHomeFragmentListener {
@@ -23,6 +29,8 @@ public class WalletHomeActivity extends NostragamusActivity implements WalletHom
     public String getScreenName() {
         return Constants.Notifications.SCREEN_WALLET_HOME;
     }
+
+    public static final int ADD_KYC_ACTIVITY_REQUEST_CODE = 1516;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +56,14 @@ public class WalletHomeActivity extends NostragamusActivity implements WalletHom
             ((WalletHomeFragment) fragment).refreshWalletDetails();
         }
     }
+
+    private void notifyWalletHomeFragmentAndUpdateKYCStatus() {
+        Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.fragment_container);
+        if (fragment != null &&  fragment instanceof WalletHomeFragment) {
+            ((WalletHomeFragment) fragment).refreshKYCStatus();
+        }
+    }
+
 
     private void initToolbar() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.wallet_toolbar);
@@ -107,4 +123,48 @@ public class WalletHomeActivity extends NostragamusActivity implements WalletHom
         Intent intent = new Intent(this, PayoutWalletHomeActivity.class);
         startActivity(intent);
     }
+
+    @Override
+    public void onKYCClicked() {
+        Intent intent = new Intent(this, AddKYCDetailsActivity.class);
+        startActivityForResult(intent, ADD_KYC_ACTIVITY_REQUEST_CODE);
+    }
+
+    @Override
+    public void onOpenKYCRequiredPopup() {
+        Intent intent = new Intent(this, KYCVerificationInProgressPopup.class);
+        startActivity(intent);
+    }
+
+    @Override
+    public void onOpenKYCBlockedPopup() {
+        Intent intent = new Intent(this, KYCBlockedPopup.class);
+        startActivity(intent);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == ADD_KYC_ACTIVITY_REQUEST_CODE) {
+            switch (resultCode) {
+                case RESULT_OK:
+                    // KYC Uploaded, re create screen as kyc status needs to be updated
+                    notifyWalletHomeFragmentAndUpdateKYCStatus();
+                    showSnackbarMessage(R.drawable.edit_answer_success_snackbar_icn, "Your KYC details were uploaded successfully!");
+                    break;
+            }
+        }
+    }
+
+    private void showSnackbarMessage(int imgResource, String msg) {
+        final CustomSnackBar snackBar = CustomSnackBar.make(findViewById(R.id.wallet_home_root_layout), msg, CustomSnackBar.DURATION_SECS_5);
+
+        if (imgResource > 0) {
+            snackBar.setImageResource(imgResource);
+        }
+        snackBar.setAction("GOT IT", null);
+        snackBar.show();
+    }
+
 }

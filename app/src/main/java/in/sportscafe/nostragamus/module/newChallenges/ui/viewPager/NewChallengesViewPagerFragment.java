@@ -7,6 +7,7 @@ import android.animation.LayoutTransition;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -15,6 +16,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SnapHelper;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
@@ -56,6 +58,7 @@ import in.sportscafe.nostragamus.module.notifications.NotificationHelper;
 public class NewChallengesViewPagerFragment extends BaseFragment {
 
     private static final String TAG = NewChallengesViewPagerFragment.class.getSimpleName();
+    public static final int TIME_FOR_BANNER = 5000;
 
     private NostraHomeActivityListener mFragmentListener;
 
@@ -63,7 +66,10 @@ public class NewChallengesViewPagerFragment extends BaseFragment {
     private SportsTab mSportsTab;
     private List<NewChallengesResponse> mFilteredChallenges;
 
-    BannerRecyclerAdapter bannerRecyclerAdapter;
+    private BannerRecyclerAdapter bannerRecyclerAdapter;
+    private RecyclerView mBannerRecyclerView;
+    private LinearLayoutManager mBannerLinerLayoutMgr;
+    private int mCurrentBannerPosition = -1;
 
     public NewChallengesViewPagerFragment() {
     }
@@ -97,7 +103,6 @@ public class NewChallengesViewPagerFragment extends BaseFragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         loadData();
-        loadBannerData();
     }
 
     private void loadData() {
@@ -110,6 +115,7 @@ public class NewChallengesViewPagerFragment extends BaseFragment {
         if (mSportsTab != null) {
             switch (mSportsTab.getSportsId()) {
                 case SportsDataProvider.FILTER_ALL_SPORTS_ID:
+                    loadBannerData();
                     showAdSection();
                     break;
             }
@@ -151,25 +157,42 @@ public class NewChallengesViewPagerFragment extends BaseFragment {
         }
     }
 
-    private void setBannersOnUi(List<BannerResponseData> bannerResponseDataList) {
-
+    private void setBannersOnUi(final List<BannerResponseData> bannerResponseDataList) {
         if (bannerResponseDataList != null && bannerResponseDataList.size() > 0 && getView() != null) {
-            RecyclerView mRcvHorizontal = (RecyclerView) getView().findViewById(R.id.challenges_rcv_horizontal);
-            mRcvHorizontal.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+            mBannerRecyclerView = (RecyclerView) getView().findViewById(R.id.challenges_rcv_horizontal);
 
-            bannerRecyclerAdapter = new BannerRecyclerAdapter(bannerResponseDataList, getContext(), getBannerAdapterListener());
-            mRcvHorizontal.setAdapter(bannerRecyclerAdapter);
+            mBannerLinerLayoutMgr = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
+            mBannerRecyclerView.setLayoutManager(mBannerLinerLayoutMgr);
 
-            if (mRcvHorizontal.getOnFlingListener() != null) {
-                mRcvHorizontal.setOnFlingListener(null);
+            bannerRecyclerAdapter = new BannerRecyclerAdapter(bannerResponseDataList,
+                    getContext(), getBannerAdapterListener());
+            mBannerRecyclerView.setAdapter(bannerRecyclerAdapter);
+
+            if (mBannerRecyclerView.getOnFlingListener() != null) {
+                mBannerRecyclerView.setOnFlingListener(null);
             }
 
+            mBannerRecyclerView.setOnTouchListener(new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
+                    if (event.getAction() == MotionEvent.ACTION_MOVE) {
+                        try {
+                            mCountDownTimer.cancel();
+                            mCountDownTimer.start();
+                        } catch (Exception ex) {}
+                    }
+                    return false;
+                }
+            });
+
             SnapHelper snapHelper = new NostraSnapHelper();
-            snapHelper.attachToRecyclerView(mRcvHorizontal);
+            snapHelper.attachToRecyclerView(mBannerRecyclerView);
+
+            autoScrollBanner();
+
         } else {
             hideBanners();
         }
-
     }
 
     private void handleBannerError(int status) {
@@ -224,7 +247,7 @@ public class NewChallengesViewPagerFragment extends BaseFragment {
                     if (NostragamusDataHandler.getInstance().isLoggedInUser()) {
                         String screenName = notification.getScreenName();
                         Log.d("Banner", "ScreenName : " + screenName);
-                        NostragamusAnalytics.getInstance().trackBanners(String.valueOf(bannerResponseData.getBannerId()),notification.getScreenName());
+                        NostragamusAnalytics.getInstance().trackBanners("BannerName", bannerResponseData.getBannerName());
 
                         if (screenName.equalsIgnoreCase(Constants.Notifications.SCREEN_NEW_CHALLENGE)) {
                             Bundle bundle = new Bundle();
@@ -271,6 +294,9 @@ public class NewChallengesViewPagerFragment extends BaseFragment {
                         } else if (screenName.equalsIgnoreCase(Constants.Notifications.SCREEN_APP_UPDATE)) {
                             startActivity(notificationHelper.getAppUpdateScreenIntent(getContext(), notification));
 
+                        } else if (screenName.equalsIgnoreCase(Constants.Notifications.SCREEN_WHATS_NEW)) {
+                            startActivity(notificationHelper.getWhatsNewScreenIntent(getContext(), notification));
+
                         } else if (screenName.equalsIgnoreCase(Constants.Notifications.SCREEN_WALLET_HISTORY)) {
                             startActivity(notificationHelper.getWalletHistoryScreenIntent(getContext(), notification));
 
@@ -288,10 +314,35 @@ public class NewChallengesViewPagerFragment extends BaseFragment {
                         } else if (screenName.equalsIgnoreCase(Constants.Notifications.SCREEN_CHALLENGE_HISTORY_GAMES)) {
                             startActivity(notificationHelper.getChallengeHistoryMatchesScreenIntent(getContext(), notification));
 
+                        } else if (screenName.equalsIgnoreCase(Constants.Notifications.SCREEN_CHALLENGE_HISTORY_LEADERBOARDS)) {
+                            startActivity(notificationHelper.getChallengeHistoryLeaderBoardsScreenIntent(getContext(), notification));
+
                         } else if (screenName.equalsIgnoreCase(Constants.Notifications.SCREEN_WEB_VIEW)) {
                             startActivity(notificationHelper.getWebViewScreenIntent(getContext(), notification));
+
                         } else if (screenName.equalsIgnoreCase(Constants.Notifications.SCREEN_SLIDES)) {
                             startActivity(notificationHelper.getSlidesScreenIntent(getContext(), notification));
+
+                        } else if (screenName.equalsIgnoreCase(Constants.Notifications.SCREEN_ANNOUNCEMENT)) {
+                            startActivity(notificationHelper.getAnnouncementScreenIntent(getContext(), notification));
+
+                        } else if (screenName.equalsIgnoreCase(Constants.Notifications.SCREEN_WALLET_HOME)) {
+                            startActivity(notificationHelper.getWalletHomeScreenIntent(getContext(), notification));
+
+                        } else if (screenName.equalsIgnoreCase(Constants.Notifications.SCREEN_KYC_DETAILS)) {
+                            startActivity(notificationHelper.getKYCScreenIntent(getContext(), notification));
+
+                        } else if (screenName.equalsIgnoreCase(Constants.Notifications.SCREEN_INPLAY_CONTEST)) {
+                            startActivity(notificationHelper.getInPlayContestScreenIntent(getContext(), notification));
+
+                        } else if (screenName.equalsIgnoreCase(Constants.Notifications.SCREEN_INPLAY_CONTEST_LEADERBOARDS)) {
+                            startActivity(notificationHelper.getInPlayContestLeaderBoardScreenIntent(getContext(), notification));
+
+                        } else if (screenName.equalsIgnoreCase(Constants.Notifications.SCREEN_POWERUP_TRANSACTION)) {
+                            startActivity(notificationHelper.getPowerUpTransactionScreenIntent(getContext(), notification));
+
+                        } else if (screenName.equalsIgnoreCase(Constants.Notifications.NONE)) {
+                            /* NO CLICK EVENT SHOULD HAPPEN */
                         }
 
                     }
@@ -385,5 +436,46 @@ public class NewChallengesViewPagerFragment extends BaseFragment {
         }
     }
 
+    /* --------- All tab banner timer ------ */
+    private void autoScrollBanner() {
+        if (mBannerRecyclerView != null &&
+                mBannerRecyclerView.getScrollState() == RecyclerView.SCROLL_STATE_IDLE) {
+
+            mBannerRecyclerView.smoothScrollToPosition(getNextScrollPosition());
+            mCountDownTimer.start();
+        }
+    }
+
+    private CountDownTimer mCountDownTimer = new CountDownTimer(TIME_FOR_BANNER, TIME_FOR_BANNER) {
+        @Override
+        public void onTick(long millisUntilFinished) {
+        }
+
+        @Override
+        public void onFinish() {
+            autoScrollBanner();
+        }
+    };
+
+    private int getNextScrollPosition() {
+        if (bannerRecyclerAdapter != null && mBannerLinerLayoutMgr != null &&
+                bannerRecyclerAdapter.getItemCount() > 0) {
+
+            /* Get current position of visible item (User could have scrolled) */
+            int current = mBannerLinerLayoutMgr.findFirstCompletelyVisibleItemPosition();
+            if (current >= 0 && current < bannerRecyclerAdapter.getItemCount()) {
+                mCurrentBannerPosition = current;
+            }
+
+            /* update scrolling position */
+            if (mCurrentBannerPosition == bannerRecyclerAdapter.getItemCount() - 1) {
+                mCurrentBannerPosition = 0;
+            } else {
+                mCurrentBannerPosition++;
+            }
+        }
+
+        return mCurrentBannerPosition;  // Updated banner pos to be scrolled
+    }
 
 }

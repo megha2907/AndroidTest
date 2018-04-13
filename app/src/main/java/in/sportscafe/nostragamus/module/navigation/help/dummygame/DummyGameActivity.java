@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentTransaction;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.google.gson.Gson;
+import com.jeeva.android.Log;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -25,7 +26,7 @@ import in.sportscafe.nostragamus.webservice.MyWebService;
 
 public class DummyGameActivity extends NostragamusActivity implements DGPlayFragment.OnDGPlayActionListener,
         DGTextFragment.OnDGTextActionListener, DGPowerUpInfoFragment.DGPowerupInfoFragmentListener,
-        DGPowerupTriedFragment.DgPowerUpTriedFragmentListener{
+        DGPowerupTriedFragment.DgPowerUpTriedFragmentListener {
 
     public static final int DELAY_TO_PERFORM_BACK_PRESS = 1000;
 
@@ -395,10 +396,10 @@ public class DummyGameActivity extends NostragamusActivity implements DGPlayFrag
 
     @Override
     public void onBackPressed() {
-        if (mLastReadInstruction == mInstructionList.size()) {
+        if (mLastReadInstruction + 1 == mInstructionList.size()) {
             NostragamusAnalytics.getInstance().trackDummyGame(AnalyticsActions.COMPLETED);
         } else {
-            NostragamusAnalytics.getInstance().trackDummyGame(AnalyticsActions.SKIPPED, mLastReadInstruction);
+            NostragamusAnalytics.getInstance().trackDummyGame(AnalyticsActions.SKIPPED);
         }
 
         if (!mIsBackAlreadyPressed) {

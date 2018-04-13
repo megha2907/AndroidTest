@@ -1,6 +1,7 @@
 package in.sportscafe.nostragamus.module.navigation;
 
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -38,7 +39,9 @@ import in.sportscafe.nostragamus.module.navigation.wallet.WalletHomeActivity;
 import in.sportscafe.nostragamus.module.navigation.wallet.addMoney.addByCashFree.CashFreeSampleActivity;
 import in.sportscafe.nostragamus.module.navigation.wallet.addMoney.selectPaymentMode.SelectPaymentModeActivity;
 import in.sportscafe.nostragamus.module.navigation.wallet.dto.UserWalletResponse;
+import in.sportscafe.nostragamus.module.nostraHome.ui.NostraHomeActivityListener;
 import in.sportscafe.nostragamus.module.popups.challengepopups.ContestDetailsPopupActivity;
+import in.sportscafe.nostragamus.module.privateContest.ui.joinPrivateContest.findContest.JoinPrivateContestWithInviteCodeActivity;
 import in.sportscafe.nostragamus.module.settings.app.dto.AppSettingsResponse;
 import in.sportscafe.nostragamus.module.settings.app.dto.AppUpdateInfo;
 import in.sportscafe.nostragamus.module.store.StoreActivity;
@@ -50,8 +53,19 @@ public class NavigationFragment extends NostraBaseFragment implements View.OnCli
 
     private static final String TAG = NavigationFragment.class.getSimpleName();
 
+    private NostraHomeActivityListener mFragmentListener;
+
     public NavigationFragment() {
     }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof NostraHomeActivityListener) {
+            mFragmentListener = (NostraHomeActivityListener) context;
+        }
+    }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -75,6 +89,7 @@ public class NavigationFragment extends NostraBaseFragment implements View.OnCli
         view.findViewById(R.id.navigation_settings_layout).setOnClickListener(this);
         view.findViewById(R.id.navigation_app_update_layout).setOnClickListener(this);
         view.findViewById(R.id.navigation_refer_layout).setOnClickListener(this);
+        view.findViewById(R.id.navigation_join_private_contest_layout).setOnClickListener(this);
     }
 
     @Override
@@ -227,6 +242,18 @@ public class NavigationFragment extends NostraBaseFragment implements View.OnCli
                 onUpdateAppClicked();
                 break;
 
+            case R.id.navigation_join_private_contest_layout:
+                NostragamusAnalytics.getInstance().trackClickEvent(Constants.AnalyticsCategory.NAVIGATION_SCREEN, Constants.AnalyticsClickLabels.JOIN_PRIVATE_CONTEST);
+                onJoinPrivateContestClicked();
+                break;
+
+        }
+    }
+
+    private void onJoinPrivateContestClicked() {
+        if (getActivity() != null) {
+            Intent intent = new Intent(getActivity(), JoinPrivateContestWithInviteCodeActivity.class);
+            startActivity(intent);
         }
     }
 
@@ -349,7 +376,11 @@ public class NavigationFragment extends NostraBaseFragment implements View.OnCli
         if (Nostragamus.getInstance().hasNetworkConnection()) {
             UserInfoModelImpl.newInstance(new UserInfoModelImpl.OnGetUserInfoModelListener() {
                 @Override
-                public void onSuccessGetUpdatedUserInfo(UserInfo updatedUserInfo) {}
+                public void onSuccessGetUpdatedUserInfo(UserInfo updatedUserInfo) {
+                    if (mFragmentListener != null) {
+                        mFragmentListener.updateRecentActivityUnReadCounter(updatedUserInfo);
+                    }
+                }
 
                 @Override
                 public void onFailedGetUpdateUserInfo(String message) {}

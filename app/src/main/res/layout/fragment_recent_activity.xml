@@ -1,0 +1,124 @@
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/new_challenge_frgmnt_parent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black"
+    android:orientation="vertical"
+    tools:context="in.sportscafe.nostragamus.module.recentActivity.ui.RecentActivityFragment">
+
+    <!-- Heading layout -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <!-- Heading layout -->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dim_40"
+            android:background="@drawable/toolbar_bg">
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_centerInParent="true"
+                android:layout_marginLeft="@dimen/dim_16">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true">
+
+                    <com.jeeva.android.widgets.customfont.CustomTextView
+                        android:id="@+id/toolbar_heading_one"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="Recent Activity"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/sp_14"
+                        app:typeface="lato_regular" />
+
+                    <com.jeeva.android.widgets.customfont.CustomTextView
+                        android:id="@+id/toolbar_heading_two"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/dim_3"
+                        android:textColor="@color/white_60"
+                        android:textSize="@dimen/sp_13"
+                        app:typeface="lato_regular" />
+
+                </LinearLayout>
+
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/recentActivityContentLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:visibility="visible">
+
+            <android.support.v7.widget.AppCompatSpinner
+                android:id="@+id/recent_activity_sp_activityType"
+                style="@style/recentActivitySpinnerItemStyle"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dim_30"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:clipToPadding="false"
+                android:overlapAnchor="true"
+                android:popupElevation="0dp"
+                android:visibility="gone" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recent_activity_recyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+            <!-- Empty msg -->
+            <com.jeeva.android.widgets.customfont.CustomTextView
+                android:id="@+id/empty_recent_activity_list_textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/dim_20"
+                android:textColor="@color/grey_999999"
+                android:textSize="@dimen/sp_11"
+                android:visibility="gone"
+                app:typeface="lato_regular" />
+
+            <!-- Empty screen -->
+            <include
+                android:id="@+id/recent_activity_empty_screen"
+                layout="@layout/recent_activity_empty_screen"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone" />
+
+        </LinearLayout>
+
+        <!-- Loading View -->
+        <LinearLayout
+            android:id="@+id/recentActivityProgressBarLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <in.sportscafe.nostragamus.utils.loadingAnim.LoadingIndicatorView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:indicatorColor="@color/loading_animation_color" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</android.support.design.widget.CoordinatorLayout>

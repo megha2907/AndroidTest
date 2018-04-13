@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:minHeight="@dimen/dim_40"
+    android:orientation="vertical"
+    android:gravity="center_vertical"
+    android:id="@+id/spinner_item_parent"
+    android:background="@drawable/private_contest_spinner_selector">
+
+    <com.jeeva.android.widgets.customfont.CustomTextView
+        android:id="@+id/spinner_item_textView"
+        style="@style/spinnerDropDownItemStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textColor="@color/white"
+        android:textSize="@dimen/sp_14"
+        app:typeface="lato_regular"
+        />
+
+</LinearLayout>
+

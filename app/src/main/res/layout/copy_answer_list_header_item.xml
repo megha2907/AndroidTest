@@ -61,7 +61,7 @@
             android:id="@+id/copy_answer_use_powerup_checkbox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:buttonTint="#0098a6"
+            android:buttonTint="#1EA669"
             android:paddingLeft="-0.5mm"
             android:paddingRight="@dimen/dim_20"
             android:layout_below="@id/copy_answer_desc_textView"

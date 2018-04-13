@@ -10,21 +10,34 @@ import com.jeeva.android.Log;
 
 import org.parceler.Parcels;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.module.challengeCompleted.dto.CompletedContestDto;
 import in.sportscafe.nostragamus.module.common.WebViewActivity;
+import in.sportscafe.nostragamus.module.contest.contestDetailsAfterJoining.InplayContestDetailsActivity;
 import in.sportscafe.nostragamus.module.contest.contestDetailsCompletedChallenges.ChallengeHistoryContestDetailsActivity;
 import in.sportscafe.nostragamus.module.contest.ui.DetailScreensLaunchRequest;
+import in.sportscafe.nostragamus.module.inPlay.dto.InPlayContestDto;
 import in.sportscafe.nostragamus.module.inPlay.ui.ResultsScreenDataDto;
+import in.sportscafe.nostragamus.module.inPlay.ui.headless.dto.HeadLessMatchScreenData;
+import in.sportscafe.nostragamus.module.inPlay.ui.headless.matches.InPlayHeadLessMatchActivity;
 import in.sportscafe.nostragamus.module.navigation.appupdate.AppUpdateActivity;
 import in.sportscafe.nostragamus.module.navigation.help.howtoplay.HowToPlayActivity;
+import in.sportscafe.nostragamus.module.navigation.powerupbank.earnmorepowerups.PowerUp;
+import in.sportscafe.nostragamus.module.navigation.powerupbank.powerupbanktransaction.PBTransactionActivity;
 import in.sportscafe.nostragamus.module.navigation.referfriends.ReferFriendActivity;
 import in.sportscafe.nostragamus.module.navigation.referfriends.referralcredits.ReferralCreditActivity;
+import in.sportscafe.nostragamus.module.navigation.wallet.WalletHomeActivity;
 import in.sportscafe.nostragamus.module.navigation.wallet.addMoney.AddWalletMoneyActivity;
+import in.sportscafe.nostragamus.module.navigation.wallet.doKYC.AddKYCDetailsActivity;
 import in.sportscafe.nostragamus.module.navigation.wallet.walletHistory.WalletHistoryActivity;
 import in.sportscafe.nostragamus.module.newChallenges.dto.NewChallengeMatchesScreenData;
 import in.sportscafe.nostragamus.module.newChallenges.ui.matches.NewChallengesMatchActivity;
 import in.sportscafe.nostragamus.module.play.myresults.MyResultsActivity;
+import in.sportscafe.nostragamus.module.recentActivity.announcement.AnnouncementActivity;
+import in.sportscafe.nostragamus.module.recentActivity.announcement.AnnouncementScreenData;
 import in.sportscafe.nostragamus.module.store.StoreActivity;
 
 /**
@@ -39,7 +52,7 @@ public class NotificationHelper {
         NostraNotification nostraNotification = null;
 
         if (intent != null && intent.getExtras() != null) {
-            Bundle args =intent.getExtras();
+            Bundle args = intent.getExtras();
             if (args.containsKey(Constants.Notifications.IS_LAUNCHED_FROM_NOTIFICATION)) {
                 boolean isFromNotification = args.getBoolean(Constants.Notifications.IS_LAUNCHED_FROM_NOTIFICATION, false);
 
@@ -78,6 +91,7 @@ public class NotificationHelper {
         if (notification != null && notification.getData() != null) {
             screenData.setChallengeId(notification.getData().getChallengeId());
             screenData.setChallengeName(notification.getData().getChallengeName());
+            screenData.setStartTime(notification.getData().getChallengeStartTime());
 
             args.putBoolean(Constants.Notifications.IS_LAUNCHED_FROM_NOTIFICATION, true);
             args.putParcelable(Constants.Notifications.NOSTRA_NOTIFICATION, Parcels.wrap(notification));
@@ -136,6 +150,29 @@ public class NotificationHelper {
     }
 
     @NonNull
+    public Intent getChallengeHistoryLeaderBoardsScreenIntent(Context context, NostraNotification notification) {
+        Bundle args = new Bundle();
+        CompletedContestDto completedContestDto = new CompletedContestDto();
+
+        if (notification != null && notification.getData() != null) {
+            completedContestDto.setChallengeId(notification.getData().getChallengeId());
+            completedContestDto.setRoomId(notification.getData().getRoomId());
+            completedContestDto.setContestId(notification.getData().getContestId());
+            completedContestDto.setContestName(notification.getData().getContestName());
+            completedContestDto.setChallengeName(notification.getData().getChallengeName());
+
+            args.putBoolean(Constants.Notifications.IS_LAUNCHED_FROM_NOTIFICATION, true);
+            args.putParcelable(Constants.Notifications.NOSTRA_NOTIFICATION, Parcels.wrap(notification));
+            args.putInt(Constants.BundleKeys.SCREEN_LAUNCH_REQUEST, DetailScreensLaunchRequest.MATCHES_LEADER_BOARD_SCREEN);
+        }
+        args.putParcelable(Constants.BundleKeys.COMPLETED_CONTEST, Parcels.wrap(completedContestDto));
+
+        Intent intent = new Intent(context, ChallengeHistoryContestDetailsActivity.class);
+        intent.putExtras(args);
+        return intent;
+    }
+
+    @NonNull
     public Intent getReferFriendScreenIntent(Context context, NostraNotification notification) {
         Bundle args = new Bundle();
         if (notification != null) {
@@ -183,6 +220,20 @@ public class NotificationHelper {
         if (notification != null) {
             args.putBoolean(Constants.Notifications.IS_LAUNCHED_FROM_NOTIFICATION, true);
             args.putParcelable(Constants.Notifications.NOSTRA_NOTIFICATION, Parcels.wrap(notification));
+        }
+
+        Intent intent = new Intent(context, AppUpdateActivity.class);
+        intent.putExtras(args);
+        return intent;
+    }
+
+    @NonNull
+    public Intent getWhatsNewScreenIntent(Context context, NostraNotification notification) {
+        Bundle args = new Bundle();
+        if (notification != null) {
+            args.putBoolean(Constants.Notifications.IS_LAUNCHED_FROM_NOTIFICATION, true);
+            args.putParcelable(Constants.Notifications.NOSTRA_NOTIFICATION, Parcels.wrap(notification));
+            args.putString(Constants.BundleKeys.SCREEN, Constants.ScreenNames.WHATS_NEW);
         }
 
         Intent intent = new Intent(context, AppUpdateActivity.class);
@@ -284,5 +335,177 @@ public class NotificationHelper {
         Intent intent = new Intent(context, HowToPlayActivity.class);
         intent.putExtras(args);
         return intent;
+    }
+
+    @NonNull
+    public Intent getAnnouncementScreenIntent(Context context, NostraNotification notification) {
+        Bundle args = new Bundle();
+        AnnouncementScreenData announcementScreenData = new AnnouncementScreenData();
+
+        if (notification != null && notification.getData() != null) {
+            announcementScreenData.setAnnouncementTitle(notification.getData().getAnnouncementTitle());
+            announcementScreenData.setAnnouncementDesc(notification.getData().getAnnouncementDesc());
+            announcementScreenData.setAnnouncementDate(notification.getData().getAnnouncementTime());
+
+            args.putBoolean(Constants.Notifications.IS_LAUNCHED_FROM_NOTIFICATION, true);
+            args.putParcelable(Constants.Notifications.NOSTRA_NOTIFICATION, Parcels.wrap(notification));
+            args.putParcelable(Constants.BundleKeys.ANNOUNCEMENT_SCREEN_DATA, Parcels.wrap(announcementScreenData));
+        }
+
+        Intent intent = new Intent(context, AnnouncementActivity.class);
+        intent.putExtras(args);
+        return intent;
+    }
+
+    @NonNull
+    public Intent getWalletHomeScreenIntent(Context context, NostraNotification notification) {
+        Bundle args = new Bundle();
+        if (notification != null) {
+            args.putBoolean(Constants.Notifications.IS_LAUNCHED_FROM_NOTIFICATION, true);
+            args.putParcelable(Constants.Notifications.NOSTRA_NOTIFICATION, Parcels.wrap(notification));
+        }
+
+        Intent intent = new Intent(context, WalletHomeActivity.class);
+        intent.putExtras(args);
+        return intent;
+    }
+
+    @NonNull
+    public Intent getKYCScreenIntent(Context context, NostraNotification notification) {
+        Bundle args = new Bundle();
+        if (notification != null) {
+            args.putBoolean(Constants.Notifications.IS_LAUNCHED_FROM_NOTIFICATION, true);
+            args.putParcelable(Constants.Notifications.NOSTRA_NOTIFICATION, Parcels.wrap(notification));
+        }
+
+        Intent intent = new Intent(context, AddKYCDetailsActivity.class);
+        intent.putExtras(args);
+        return intent;
+    }
+
+    @NonNull
+    public Intent getPowerUpTransactionScreenIntent(Context context, NostraNotification notification) {
+        Bundle args = new Bundle();
+        if (notification != null && notification.getData() != null && notification.getData().getPowerUps() != null) {
+
+            args.putBoolean(Constants.Notifications.IS_LAUNCHED_FROM_NOTIFICATION, true);
+            args.putParcelable(Constants.Notifications.NOSTRA_NOTIFICATION, Parcels.wrap(notification));
+
+            HashMap<String, PowerUp> powerUpMap = getPowerUpMap(notification.getData().getPowerUps());
+            args.putParcelable(Constants.BundleKeys.POWERUPS, Parcels.wrap(powerUpMap));
+
+        }
+
+        Intent intent = new Intent(context, PBTransactionActivity.class);
+        intent.putExtras(args);
+        return intent;
+    }
+
+    private HashMap<String, PowerUp> getPowerUpMap(HashMap<String, Integer> powerUps) {
+        HashMap<String, PowerUp> powerUpMaps = new HashMap<>();
+        if (powerUps != null && !powerUps.isEmpty()) {
+            for (Map.Entry<String, Integer> entry : powerUps.entrySet()) {
+                if (entry.getKey() != null && entry.getValue() != null) {
+                    powerUpMaps.put(entry.getKey(), new PowerUp(entry.getKey(), entry.getValue()));
+                }
+            }
+        }
+        return powerUpMaps;
+    }
+
+
+    @NonNull
+    public Intent getInPlayContestScreenIntent(Context context, NostraNotification notification) {
+
+        Bundle args = new Bundle();
+        Intent intent = null;
+        if (notification != null && notification.getData() != null) {
+
+            args.putBoolean(Constants.Notifications.IS_LAUNCHED_FROM_NOTIFICATION, true);
+            args.putParcelable(Constants.Notifications.NOSTRA_NOTIFICATION, Parcels.wrap(notification));
+
+            if (notification.getData().getInPlayContestDto() != null) {
+                InPlayContestDto inPlayContestDto = notification.getData().getInPlayContestDto();
+
+                if (inPlayContestDto.isHeadlessState()) {       /* HeadLess Games screen */
+
+                    HeadLessMatchScreenData data = new HeadLessMatchScreenData();
+                    data.setChallengeName(inPlayContestDto.getChallengeName());
+                    data.setChallengeId(inPlayContestDto.getChallengeId());
+                    data.setPowerUp(inPlayContestDto.getPowerUp());
+                    data.setContestName(inPlayContestDto.getContestName());
+                    data.setRoomId(inPlayContestDto.getRoomId());
+                    data.setPlayingPseudoGame(false);
+                    data.setInPlayContestDto(inPlayContestDto);
+                    data.setStartTime(inPlayContestDto.getChallengeStartTime());
+
+                    Bundle bundle = new Bundle();
+                    bundle.putParcelable(Constants.BundleKeys.HEADLESS_MATCH_SCREEN_DATA, Parcels.wrap(data));
+
+                    intent = new Intent(context, InPlayHeadLessMatchActivity.class);
+                    intent.putExtras(args);
+
+                } else {    /* Joined Games screen */
+
+                    args.putParcelable(Constants.BundleKeys.INPLAY_CONTEST, Parcels.wrap(inPlayContestDto));
+                    intent = new Intent(context, InplayContestDetailsActivity.class);
+                    intent.putExtras(args);
+                }
+
+            }
+        }
+
+        return intent;
+
+    }
+
+    @NonNull
+    public Intent getInPlayContestLeaderBoardScreenIntent(Context context, NostraNotification notification) {
+
+        Bundle args = new Bundle();
+        Intent intent = null;
+        if (notification != null) {
+
+            args.putBoolean(Constants.Notifications.IS_LAUNCHED_FROM_NOTIFICATION, true);
+            args.putParcelable(Constants.Notifications.NOSTRA_NOTIFICATION, Parcels.wrap(notification));
+
+            if (notification.getData().getInPlayContestDto() != null) {
+
+                InPlayContestDto inPlayContestDto = notification.getData().getInPlayContestDto();
+                inPlayContestDto.setChallengeId(notification.getData().getChallengeId());
+                inPlayContestDto.setChallengeName(notification.getData().getChallengeName());
+                inPlayContestDto.setChallengeStartTime(notification.getData().getChallengeStartTime());
+
+                if (inPlayContestDto.isHeadlessState()) {       /* HeadLess Games screen */
+
+                    HeadLessMatchScreenData data = new HeadLessMatchScreenData();
+                    data.setChallengeName(inPlayContestDto.getChallengeName());
+                    data.setChallengeId(inPlayContestDto.getChallengeId());
+                    data.setPowerUp(inPlayContestDto.getPowerUp());
+                    data.setContestName(inPlayContestDto.getContestName());
+                    data.setRoomId(inPlayContestDto.getRoomId());
+                    data.setPlayingPseudoGame(false);
+                    data.setInPlayContestDto(inPlayContestDto);
+                    data.setStartTime(inPlayContestDto.getChallengeStartTime());
+
+                    Bundle bundle = new Bundle();
+                    bundle.putParcelable(Constants.BundleKeys.HEADLESS_MATCH_SCREEN_DATA, Parcels.wrap(data));
+
+                    intent = new Intent(context, InPlayHeadLessMatchActivity.class);
+                    intent.putExtras(args);
+
+                } else {    /* Joined Games screen */
+
+                    args.putParcelable(Constants.BundleKeys.INPLAY_CONTEST, Parcels.wrap(inPlayContestDto));
+                    args.putInt(Constants.BundleKeys.SCREEN_LAUNCH_REQUEST, DetailScreensLaunchRequest.MATCHES_LEADER_BOARD_SCREEN);
+                    intent = new Intent(context, InplayContestDetailsActivity.class);
+                    intent.putExtras(args);
+                }
+
+            }
+        }
+
+        return intent;
+
     }
 }

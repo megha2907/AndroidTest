@@ -402,6 +402,7 @@ public class ContestRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                     if (clickListener != null) {
                         clickListener.onJoinContestClicked(getContestBundle(getAdapterPosition()));
                     }
+                    NostragamusAnalytics.getInstance().trackClickEvent(Constants.AnalyticsCategory.CONTEST, Constants.AnalyticsClickLabels.JOIN_BUTTON);
                     break;
 
                 case R.id.pool_rl_layout:

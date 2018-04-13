@@ -247,7 +247,7 @@
                                 android:id="@+id/pool_row_btn_join"
                                 android:layout_width="@dimen/dim_80"
                                 android:layout_height="@dimen/dim_28"
-                                android:background="@drawable/light_blue_button_selector"
+                                android:background="@drawable/green_button_selector"
                                 android:onClick="onClick"
                                 android:paddingBottom="@dimen/dp_4"
                                 android:text="Join"

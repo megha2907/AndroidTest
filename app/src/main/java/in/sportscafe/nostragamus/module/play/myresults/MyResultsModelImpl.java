@@ -4,7 +4,10 @@ import android.content.Context;
 import android.os.Bundle;
 import android.text.TextUtils;
 
+import com.crashlytics.android.Crashlytics;
+import com.google.gson.Gson;
 import com.jeeva.android.ExceptionTracker;
+import com.jeeva.android.Log;
 
 import org.parceler.Parcels;
 
@@ -49,9 +52,9 @@ public class MyResultsModelImpl implements MyResultsModel, MyResultsAdapter.OnMy
 
     private MyResultsAdapter mResultAdapter;
 
-    private InPlayContestDto mInPlayContest=null;
+    private InPlayContestDto mInPlayContest = null;
 
-    private CompletedContestDto mCompletedContestDto =null;
+    private CompletedContestDto mCompletedContestDto = null;
 
     private Match match;
 
@@ -90,8 +93,8 @@ public class MyResultsModelImpl implements MyResultsModel, MyResultsAdapter.OnMy
                 /* Check for Awaiting Results to Change Toolbar Heading */
                 if (!TextUtils.isEmpty(matchStatus) && (
                         matchStatus.equalsIgnoreCase(Constants.MatchStatusStrings.ANSWER)
-                        || matchStatus.equalsIgnoreCase(Constants.MatchStatusStrings.CONTINUE)
-                        || matchStatus.equalsIgnoreCase(Constants.MatchStatusStrings.PLAY))) {
+                                || matchStatus.equalsIgnoreCase(Constants.MatchStatusStrings.CONTINUE)
+                                || matchStatus.equalsIgnoreCase(Constants.MatchStatusStrings.PLAY))) {
 
                     mResultsModelListener.setToolbarHeading("Awaiting Results");
                 }
@@ -102,12 +105,14 @@ public class MyResultsModelImpl implements MyResultsModel, MyResultsAdapter.OnMy
                 }
             }
 
-            if (bundle.containsKey(BundleKeys.INPLAY_CONTEST)){
-                 mInPlayContest = Parcels.unwrap(bundle.getParcelable(Constants.BundleKeys.INPLAY_CONTEST));
+            if (bundle.containsKey(BundleKeys.INPLAY_CONTEST)) {
+                mInPlayContest = Parcels.unwrap(bundle.getParcelable(Constants.BundleKeys.INPLAY_CONTEST));
+                NostragamusAnalytics.getInstance().trackSource(Constants.AnalyticsCategory.RESULTS, Constants.AnalyticsClickLabels.IN_PLAY);
             }
 
-            if (bundle.containsKey(BundleKeys.COMPLETED_CONTEST)){
+            if (bundle.containsKey(BundleKeys.COMPLETED_CONTEST)) {
                 mCompletedContestDto = Parcels.unwrap(bundle.getParcelable(BundleKeys.COMPLETED_CONTEST));
+                NostragamusAnalytics.getInstance().trackSource(Constants.AnalyticsCategory.RESULTS, Constants.AnalyticsClickLabels.HISTORY);
             }
 
         } else {
@@ -236,7 +241,7 @@ public class MyResultsModelImpl implements MyResultsModel, MyResultsAdapter.OnMy
     @Override
     public String getMatchName() {
         String challengeName = (!TextUtils.isEmpty(match.getChallengeName())) ? match.getChallengeName() : "";
-        String contestNameStr = (!TextUtils.isEmpty(contestName)) ? " - "+contestName : "";
+        String contestNameStr = (!TextUtils.isEmpty(contestName)) ? " - " + contestName : "";
         return challengeName + contestNameStr;
     }
 
@@ -355,7 +360,7 @@ public class MyResultsModelImpl implements MyResultsModel, MyResultsAdapter.OnMy
     }
 
     @Override
-    public void saveUpdatedAnswer(int matchId,int QuestionId, int AnswerId, int roomId) {
+    public void saveUpdatedAnswer(int matchId, int QuestionId, int AnswerId, int roomId) {
 //        callChangeAnswerApi(matchId,QuestionId, AnswerId, roomId);
     }
 

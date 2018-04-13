@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/content"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/announcement_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/color_toolbar_two"
+        android:elevation="4dp"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark">
+
+        <com.jeeva.android.widgets.customfont.CustomTextView
+            android:id="@+id/announcement_toolbar_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center"
+            android:textColor="@color/white"
+            android:textSize="@dimen/dp_16"
+            app:typeface="lato_regular" />
+
+    </android.support.v7.widget.Toolbar>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/black"
+        android:fitsSystemWindows="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/black"
+            android:orientation="vertical"
+            android:paddingLeft="@dimen/dim_22"
+            android:paddingRight="@dimen/dim_12"
+            android:paddingBottom="@dimen/dim_50">
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dim_12"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/announcement_icon"
+                    android:layout_width="@dimen/dim_14"
+                    android:layout_height="@dimen/dim_14"
+                    android:src="@drawable/activity_announcement" />
+
+                <com.jeeva.android.widgets.customfont.CustomTextView
+                    android:id="@+id/announcement_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dim_9"
+                    android:layout_toRightOf="@+id/announcement_icon"
+                    android:text="Announcement"
+                    android:textAllCaps="true"
+                    android:textColor="@color/white_999999"
+                    android:textSize="@dimen/sp_10"
+                    app:typeface="lato_regular" />
+
+                <com.jeeva.android.widgets.customfont.CustomTextView
+                    android:id="@+id/announcement_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:ellipsize="end"
+                    android:gravity="center"
+                    android:maxLines="1"
+                    android:text="Today"
+                    android:textColor="@color/white_999999"
+                    android:textSize="@dimen/sp_10"
+                    app:typeface="lato_regular" />
+
+
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dim_10"
+                android:orientation="vertical">
+
+                <com.jeeva.android.widgets.customfont.CustomTextView
+                    android:id="@+id/announcement_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@+id/announcement_icon"
+                    android:gravity="left"
+                    android:textColor="@color/white_eeeeee"
+                    android:textSize="@dimen/sp_14"
+                    app:typeface="lato_regular" />
+
+                <com.jeeva.android.widgets.customfont.CustomTextView
+                    android:id="@+id/announcement_desc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dim_15"
+                    android:layout_toRightOf="@+id/announcement_icon"
+                    android:gravity="left"
+                    android:textColor="@color/white_999999"
+                    android:textSize="@dimen/sp_13"
+                    app:typeface="lato_regular" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+
+</LinearLayout>

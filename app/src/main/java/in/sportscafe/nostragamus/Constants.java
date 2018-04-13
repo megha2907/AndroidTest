@@ -36,7 +36,6 @@ public interface Constants {
         String SCREEN_RESULTS = "results"; /* Results Screen */
         String SCREEN_RESULTS_PEEK = "results_peek"; /* Compare Results Screen */
         String SCREEN_AVERAGE_SCORE = "average_score";  /* Average Score Screen */
-        String SCREEN_WALLET_HOME = "wallet"; /* Wallet Home Screen */
         String SCREEN_WALLET_ADD_MONEY = "addMoney"; /* Add money to wallet */
         String SCREEN_WALLET_HISTORY = "walletHistory"; /* Wallet History Screen */
         String SCREEN_WALLET_PAYOUT_HOME = "walletPayoutHome"; /* Withdrawal Details Screen ( Paytm & Bank account) */
@@ -44,11 +43,20 @@ public interface Constants {
         String SCREEN_REFER_FRIEND = "ReferFriend"; /* Refer a Friend Screen */
         String SCREEN_REFERRAL_CREDITS = "referralCredits";  /* Referral History Screen */
         String SCREEN_STORE = "Store";  /* Store - Buy Powerups */
-        String SCREEN_APP_UPDATE = "appUpdate"; /* Update the App screen & What's New Screen */
+        String SCREEN_APP_UPDATE = "appUpdate"; /* Update the App screen */
         String SCREEN_WEB_VIEW = "webView";
         String SCREEN_EDIT_ANSWER = "editAnswer";
         String SCREEN_NEW_CHALLENGE_GAMES = "newChallengeGames"; /* New Challenges Games Screen  */
         String SCREEN_SLIDES = "slides"; /* How To Play Screen & How to use powerup screen in slide design */
+        String SCREEN_ANNOUNCEMENT = "announcementDetails"; /* Activity Details / Announcement  */
+        String SCREEN_KYC_DETAILS = "KYCDetails"; /* Add KYC Details */
+        String SCREEN_CHALLENGE_HISTORY_LEADERBOARDS = "ChallengeHistoryLeaderboard"; /* Contest Details with Leaderboards tab open for Completed */
+        String SCREEN_WHATS_NEW = "whatsNew"; /* What's New Screen */
+        String SCREEN_WALLET_HOME = "walletHome"; /* Open Wallet Home  */
+        String NONE = "NONE"; /* open nothing on click  */
+        String SCREEN_INPLAY_CONTEST = "InPlayContest"; /* open inPlayContest Screen  */
+        String SCREEN_INPLAY_CONTEST_LEADERBOARDS = "inPlayLeaderboardGames"; /* open inPlayContest Screen Leaderboards TAB */
+        String SCREEN_POWERUP_TRANSACTION = "PowerupBankHistory"; /* open Powerup Transaction screen  */
     }
 
     interface SharedKeys {
@@ -118,6 +126,8 @@ public interface Constants {
         String DOWNLOAD_PAID_APP = "downloadPaidApp";
         String ASK_FRIEND = "askFriendText";
         String DISCLAIMER_TEXT = "disclaimerText";
+        String KYC_BENEFITS_ONE = "KYCBenefitsOne";
+        String KYC_BENEFITS_TWO = "KYCBenefitsTwo";
         String PAYMENT_DETAILS_SCREEN_SHOWN_ONCE_ON_HOME = "paymentDetailsShownOnHome";
         String IS_PROFILE_DISCLAIMER_ACCEPTED = "isProfileDisclaimerAccepted";
         String INSTALL_REFERRAL_CAMPAIGN_KEY = "installReferralCampaignKey";
@@ -133,6 +143,7 @@ public interface Constants {
         String POWERUP_TRANSFER_FROM_BANK_ATTEMPTED = "powerupTransferFromBankAttempted";
         String POWERUP_TRANSFER_FROM_BANK_SCREEN_SHOWN = "powerupTransferScreenShown";
         String SHOW_FAQ = "showFAQ";
+        String PRIVATE_CONTEST_INVITATION_CODE = "privateContestInvitationCode";
     }
 
     interface Alerts {
@@ -227,6 +238,7 @@ public interface Constants {
         String COULD_NOT_FETCH_DATA_FROM_SERVER = "Could not fetch data from Server!";
         String CHALLENGE_STARTED_ALERT_FOR_TIMER = "Please join other challenges as %s already started";
         String NO_MORE_HISTORY = "No more history available";
+        String COULD_NOT_LOAD_IMAGE = "Could not load image! Try again!";
 
         /*--- Paytm Msg ---*/
         String PAYTM_AUTHENTICATION_FAILED = "Could not transact, please try again";
@@ -357,6 +369,7 @@ public interface Constants {
         String EDIT_ANSWER_SCREEN_DATA = "editAnswerScreenData";
         String COPY_ANSWER_POWERUP_COPIED = "copyAnswerPowerupCopied";
         String BANNER = "banner";
+        String RECENT_ACTIVITY = "recentActivity";
 
         /* Wallet */
         String WALLET_WITHDRAWAL_AMT = "walletWithdrawAmt";
@@ -398,6 +411,12 @@ public interface Constants {
         String IN_APP_NOSTRA_NOTIFICATION_DETAILS = "inAppNostraNotification";
         String COPY_ANSWER_SCREEN_DATA = "copyAnswerScreenData";
         String SLIDE_ID = "SlideId";
+        String ANNOUNCEMENT_SCREEN_DATA = "announcementScreenData";
+        String PRIVATE_CONTEST_SCREEN_DATA = "privateContestScreeenData";
+        String PRIVATE_CONTEST_ADVANCE_PRIZE_STRUCTURE_SCREEN_DATA = "privateContestAdvancePrizeScreenData";
+        String PRIVATE_CONTEST_ADVANCE_PRIZE_LIST = "privateContestAdvancePrizeList";
+        String PRIVATE_CONTEST_DETAILS_SCREEN_DATA = "privateContestScreenData";
+        String JOIN_PRIVATE_CONTEST_WITH_INVITATION_CODE_SCREEN_DATA = "joinPvtContestWithInvitationCodeScreenData";
     }
 
     interface DateFormats {
@@ -518,6 +537,14 @@ public interface Constants {
         String PLAY = "Play";
         String POWERUP_BANK_SCREEN = "Powerup Bank Screen";
         String ADD_MONEY = "Add Money";
+        String MATCH_REMINDER = "Match Reminder";
+        String ACTIVITY = "Activity";
+        String WALLET_MENU = "Wallet Menu";
+
+        String KYC = "KYC";
+        String KYC_STATUS = "KYC Status";
+        String POST_SIGN_UP = "Post SignUp";
+        String RULES = "Rules";
     }
 
     interface AnalyticsClickLabels {
@@ -534,12 +561,13 @@ public interface Constants {
         String STORE = "Store";
         String BUY_PRODUCT = "Buy Product";
         String PRODUCT_PURCHASED = "Product Purchased";
+        String JOIN_PRIVATE_CONTEST = "Join Private Contest";
 
         /* Home */
         String NEW_CHALLENGES = "New Challenges";
         String IN_PLAY = "In Play";
         String HISTORY = "History";
-        String GROUPS = "Groups";
+        String RECENT_ACTIVITY = "Recent Activity";
         String NAVIGATION = "Navigation";
 
         /* Wallet */
@@ -548,6 +576,7 @@ public interface Constants {
         String WITHDRAW = "Withdraw";
         String TRANSACTION_HISTORY = "Transaction History";
         String ADD_EDIT_WITHDRAWAL_DETAILS = "Add/Edit Withdraw Details";
+        String KYC = "KYC";
 
         /* Refer */
         String REFER_NOW = "Refer Now";
@@ -557,13 +586,14 @@ public interface Constants {
 
         /* Contest */
         String CARD = "Card";
-        String PRIZES = "Prizes";
         String MAX_ENTRIES = "Max Entries";
         String ENTRY_FEE = "Entry Fee";
         String MODE = "Mode";
         String CONTEST_JOIN_POPUP = "Join Popup";
         String CONTEST_LOW_MONEY = "Low Money";
         String CONTEST_MODES_POPUP = "Contest Modes Popup";
+        String INVITE_PRIVATE_CONTEST = "Invite Private Contest";
+        String JOIN_BUTTON = "Join Button";
 
         /* in play */
         String HEADLESS_CARD = "Headless Card";
@@ -573,7 +603,6 @@ public interface Constants {
         /* in play contest details */
         String GAMES = "Games";
         String LEADERBOARD = "Leaderboard";
-        String RULES = "Rules";
 
         /* Play */
         String PSEUDO_GAME_FLOW = "Pseudo Game Flow";
@@ -590,6 +619,17 @@ public interface Constants {
         String HOW_TO_USE_POWERUP_BANK = "How to use powerup bank";
         String TRANSACTION_FAILED = "Transaction Failed";
         String TRANSACTION_SUCCESS = "Transaction Success";
+
+        String ENTRIES = "Entries";
+        String PRIZES = "Prizes";
+        String RULES = "Rules";
+
+        String FAQ = "FAQ";
+        String GAME_PLAY = "GamePlay";
+        String FEEDBACK = "Feedback";
+        String CHAT = "Chat";
+        String HOW_TO_PLAY = "How To Play";
+        String NOTIFICATIONS = "Notifications";
     }
 
     interface AnalyticsActions {
@@ -631,6 +671,13 @@ public interface Constants {
         String VIEW_OTHERS_ANSWERS = "View Other's Answers";
         String OTHERS_RESULTS_WAITING = "Other's Results Waiting";
         String CONTEST_JOINED = "Contest Joined";
+        String TAB_CLICKED = "tab_clicked";
+        String SEND = "SEND";
+        String OPENED_FROM = "Opened From";
+        String EDITED_PROFILE = "Edited Profile";
+        String ENTERED_MOBILE = "Entered Mobile";
+        String VERIFIED_OTP = "Verified OTP";
+        String SOURCE = "Source";
     }
 
     interface AnalyticsLabels {
@@ -672,6 +719,7 @@ public interface Constants {
         String HAS_REFERRED = "has_referred";
         String COUNT_REFERRALS = "count_referrals";
         String COUNT_DEPOSITS = "count_deposits";
+        String PAID_CONTESTS_JOINED = "paid_contests_joined";
     }
 
     interface AppType {
@@ -738,6 +786,7 @@ public interface Constants {
         String POOL_CONTEST_REWARD_CALCULATION = "poolContestRewardCalculation";
         String HOW_TO_PLAY = "HowToPlay";
         String SELECT_PAYMENT_MODE = "selectPaymentMode";
+        String ANNOUNCEMENT = "Announcement";
     }
 
     interface InAppPopups {
@@ -927,6 +976,7 @@ public interface Constants {
         String WINNERS = "Winners";
         String RULES = "Rules";
         String LEADERBOARDS = "Leaderboard";
+        String INVITE = "Invite";
     }
 
     interface ContestType {
@@ -934,6 +984,7 @@ public interface Constants {
         String NON_GUARANTEED = "ng";
         String POOL = "p";
         String BUMPER = "b";
+        String PRIVATE = "private";
     }
 
     interface WebPageUrls {
@@ -971,6 +1022,7 @@ public interface Constants {
     String AMOUNT_DECIMAL_PATTERN = "##,##,##0.00";
     String RUPEE_SYMBOL = "₹ ";
     String INDIAN_CURRENCY_CODE = "INR";
+    String PERCENTAGE_PATTERN = "##.##";
 
     interface FaceBookAnalyticsEvents {
         String MATCH_PLAY_COMPLETED = "Played";
@@ -985,6 +1037,7 @@ public interface Constants {
         int NO_INTERNET = 6;
         int NO_MORE_DATA_WHILE_LOAD_MORE = 7;
         int FROM_DATABASE_CACHED_DATA = 8;
+        int COULD_NOT_LOAD_IMAGE = 9;
     }
 
     interface MatchStatusStrings {
@@ -1022,11 +1075,68 @@ public interface Constants {
         int CAN_NOT_JOIN = 3111;
         int CAN_NOT_PLAY_GAME = 3112;
         int CHALLENGE_STARTED = 3113;
+        int PRIVATE_CONTEST_FULL = 3114;
+        int PRIVATE_CONTEST_UNKNOWN_ERROR = 3115;
+        int PRIVATE_CONTEST_ALREADY_JOINED = 3116;
     }
 
     interface ScreenDetails {
         int DPI = 21;
         int HEIGHT = 22;
         int WIDTH = 23;
+    }
+
+    interface RecentActivityTypes {
+        /* Synced with server as they come in api response */
+        String ALL = "ALL";
+        String ANNOUNCEMENT = "ANNOUNCEMENT";
+        String RESULT = "RESULT";
+        String PROMOTION = "PROMOTION";
+    }
+
+    interface KYCStatus {
+        /* Synced with server as they come in api response */
+        String NOT_REQUIRED = "not_required";
+        String REQUIRED = "required";
+        String UPLOADED = "uploaded";
+        String FAILED = "failed";
+        String VERIFIED = "verified";
+        String BLOCKED = "blocked";
+    }
+
+    interface PrivateContests {
+
+        double MAX_ENTRY_FEE = 20000;   // User is allowed to enter max entry fee
+        int MAX_ENTRIES = 40;           // User is allowed to enter max contest entries
+        int MIN_ENTRIES = 2;
+
+        int PRIVATE_CODE_LENGTH = 5;
+        float ADVANCE_TEMPLATE_PROFIT_MARGIN = 0.1f;
+
+        /* ALERT : Synced with server response */
+        interface ErrorCodes {
+            int INVALID_INVITE_PRIVATE_CODE = 11;
+            int CONTEST_FULL = 12;
+            int UNKNOWN_ERROR = 13;  // Generic error
+            int CHALLENGE_STARTED = 14;
+            int CONTEST_ALREADY_JOINED = 15;
+        }
+
+        interface PrizeEstimationTemplateType {
+            String PERCENT = "percent";
+            String RANK = "rank";
+        }
+
+        interface BranchLink {
+            String LINKED_PROPERTIES_CHANNEL = "App";
+            String LINKED_PROPERTIES_FEATURE = "privateContest";
+            String LINKED_PROPERTIES_CAMPAIGN = "AppPrivateCampaign";
+            String LINKED_PATH = "app/privateContest";
+
+            String USER_NICK = "userNick";
+            String USER_PHOTO_URL = "userPhotoUrl";
+
+            String PRIVATE_CONTEST_INVITATION_CODE = "private_contest_invitation_code";
+        }
     }
 }

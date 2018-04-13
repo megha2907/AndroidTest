@@ -111,9 +111,13 @@ public class InPlayViewPagerFragment extends BaseFragment {
         Bundle args = getArguments();
         if (args != null && mRecyclerView != null) {
             if (args.containsKey(Constants.BundleKeys.JOIN_CONTEST_DATA)) {
+
                 JoinContestData joinContestData = Parcels.unwrap(args.getParcelable(Constants.BundleKeys.JOIN_CONTEST_DATA));
 
                 if (joinContestData != null) {
+
+                    showMsgIfPrivateContestCreated(joinContestData);
+
                     InPlayRecyclerAdapter inPlayRecyclerAdapter = (InPlayRecyclerAdapter) mRecyclerView.getAdapter();
                     if (inPlayRecyclerAdapter != null) {
                         final int adapterPos = inPlayRecyclerAdapter.getAdapterPositionFromContestId(joinContestData.getContestId());
@@ -140,6 +144,13 @@ public class InPlayViewPagerFragment extends BaseFragment {
                     }
                 }
             }
+        }
+    }
+
+    private void showMsgIfPrivateContestCreated(JoinContestData joinContestData) {
+        if (joinContestData != null && joinContestData.isShouldShowPrivateContestCreatedMsg()) {
+            handleError(-1, "Private Contest Successfully Created");
+            joinContestData.setShouldShowPrivateContestCreatedMsg(false);   // set false as once msg shown
         }
     }
 
@@ -187,6 +198,11 @@ public class InPlayViewPagerFragment extends BaseFragment {
 
                             if (contestDto.isHeadlessState()) {
                                 listItem.setInPlayAdapterItemType(InPlayAdapterItemType.HEADLESS_CONTEST);
+
+                            } else if (!TextUtils.isEmpty(contestDto.getContestType()) &&
+                                    contestDto.getContestType().equalsIgnoreCase(Constants.ContestType.PRIVATE)) {
+                                listItem.setInPlayAdapterItemType(InPlayAdapterItemType.JOINED_PRIVATE_CONTEST);
+
                             } else {
                                 listItem.setInPlayAdapterItemType(InPlayAdapterItemType.JOINED_CONTEST);
                             }
@@ -274,6 +290,11 @@ public class InPlayViewPagerFragment extends BaseFragment {
             public void onContestModeClicked(Bundle args) {
                 goToNewMatchesTimeline(args);
             }
+
+            @Override
+            public void onInviteFriendsButtonClicked(Bundle args) {
+                goToNewMatchesTimeline(args);
+            }
         };
     }
 
@@ -299,7 +320,7 @@ public class InPlayViewPagerFragment extends BaseFragment {
                 getActivity().startActivity(intent);
 
             } else {
-                handleError(Constants.DataStatus.NO_INTERNET);
+                handleError(Constants.DataStatus.NO_INTERNET, "");
             }
         }
     }
@@ -340,25 +361,31 @@ public class InPlayViewPagerFragment extends BaseFragment {
                         getActivity().startActivity(intent);
 
                     } else {
-                        handleError(Constants.DataStatus.NO_INTERNET);
+                        handleError(Constants.DataStatus.NO_INTERNET, "");
                     }
                 }
             } else {
-                handleError(-1);
+                handleError(-1, "");
             }
         }
     }
 
-    private void handleError(int status) {
+    private void handleError(int status, String msg) {
         if (getView() != null && getActivity() != null && !getActivity().isFinishing()) {
-            switch (status) {
-                case Constants.DataStatus.NO_INTERNET:
-                    CustomSnackBar.make(getView(), Constants.Alerts.NO_INTERNET_CONNECTION, CustomSnackBar.DURATION_LONG).show();
-                    break;
+            if (!TextUtils.isEmpty(msg)) {
 
-                default:
-                    CustomSnackBar.make(getView(), Constants.Alerts.SOMETHING_WRONG, CustomSnackBar.DURATION_LONG).show();
-                    break;
+                CustomSnackBar.make(getView(), msg, CustomSnackBar.DURATION_LONG).show();
+
+            } else {
+                switch (status) {
+                    case Constants.DataStatus.NO_INTERNET:
+                        CustomSnackBar.make(getView(), Constants.Alerts.NO_INTERNET_CONNECTION, CustomSnackBar.DURATION_LONG).show();
+                        break;
+
+                    default:
+                        CustomSnackBar.make(getView(), Constants.Alerts.SOMETHING_WRONG, CustomSnackBar.DURATION_LONG).show();
+                        break;
+                }
             }
         }
     }
@@ -374,7 +401,7 @@ public class InPlayViewPagerFragment extends BaseFragment {
                 getActivity().startActivity(intent);
             }
         } else {
-            handleError(Constants.DataStatus.NO_INTERNET);
+            handleError(Constants.DataStatus.NO_INTERNET, "");
         }
     }
 

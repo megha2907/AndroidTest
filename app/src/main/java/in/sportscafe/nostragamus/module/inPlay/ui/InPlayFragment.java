@@ -29,6 +29,7 @@ import in.sportscafe.nostragamus.BuildConfig;
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.R;
+import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
 import in.sportscafe.nostragamus.module.common.NostraBaseFragment;
 import in.sportscafe.nostragamus.module.contest.contestDetailsAfterJoining.InplayContestDetailsActivity;
 import in.sportscafe.nostragamus.module.contest.dto.JoinContestData;
@@ -408,6 +409,8 @@ public class InPlayFragment extends NostraBaseFragment implements View.OnClickLi
 
                     if (nostraNotification != null && nostraNotification.getData().getInPlayContestDto() != null) {
                         InPlayContestDto inPlayContestDto = nostraNotification.getData().getInPlayContestDto();
+
+                        NostragamusAnalytics.getInstance().trackInAppNotifications(Constants.AnalyticsActions.CLICKED, inPlayContestDto.getContestName());
 
                         if (inPlayContestDto.isHeadlessState()) {       /* HeadLess Games screen */
 

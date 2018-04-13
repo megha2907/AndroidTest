@@ -1,0 +1,113 @@
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/black"
+    tools:context="in.sportscafe.nostragamus.module.privateContest.ui.PrivateContestInPlayInviteFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center_horizontal">
+
+        <ImageView
+            android:layout_width="@dimen/dim_190"
+            android:layout_height="@dimen/dim_156"
+            android:src="@drawable/private_contest_img"
+            android:layout_marginTop="@dimen/dim_55"/>
+
+        <com.jeeva.android.widgets.customfont.CustomTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Invite Your Friends"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp_16"
+            app:typeface="lato_bold"
+            android:layout_marginTop="@dimen/dim_20"/>
+
+        <com.jeeva.android.widgets.customfont.CustomTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:text="Players can only join this contest with a invite link or code. Share the code with your friends to let them join."
+            android:textColor="@color/white_60"
+            android:textSize="@dimen/sp_12"
+            app:typeface="lato_regular"
+            android:layout_marginLeft="@dimen/dim_20"
+            android:layout_marginRight="@dimen/dim_20"
+            android:layout_marginTop="@dimen/dim_6"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_marginLeft="@dimen/dim_20"
+            android:layout_marginRight="@dimen/dim_20"
+            android:layout_marginTop="@dimen/dim_14">
+
+            <com.jeeva.android.widgets.customfont.CustomTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Your Invitation Code : "
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp_11"
+                app:typeface="lato_regular"/>
+
+            <com.jeeva.android.widgets.customfont.CustomTextView
+                android:id="@+id/private_contest_invitation_code"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/paid_entry_tv_color"
+                android:textSize="@dimen/sp_11"
+                app:typeface="lato_bold"
+                android:layout_marginLeft="@dimen/dim_7"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="@dimen/dim_320"
+            android:layout_height="@dimen/dim_40"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:background="@drawable/btn_refer_code_bg"
+            android:layout_marginTop="@dimen/dim_14">
+
+            <com.jeeva.android.widgets.customfont.CustomTextView
+                android:id="@+id/private_contest_invitation_share_link_textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/paid_entry_tv_color"
+                android:textSize="@dimen/sp_11"
+                app:typeface="lato_bold"
+                android:layout_marginLeft="@dimen/dim_7"
+                android:layout_marginBottom="@dimen/dim_3"/>
+
+        </LinearLayout>
+
+        <com.jeeva.android.widgets.customfont.CustomButton
+            android:id="@+id/private_contest_share_btn"
+            android:layout_width="@dimen/dim_320"
+            android:layout_height="@dimen/dim_40"
+            android:layout_marginTop="@dimen/dim_20"
+            android:layout_marginLeft="@dimen/dim_20"
+            android:layout_marginRight="@dimen/dim_20"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/blue_008ae1_button_selector"
+            android:gravity="center"
+            android:minWidth="@dimen/dim_72"
+            android:paddingBottom="@dimen/dim_2"
+            android:paddingLeft="@dimen/dim_15"
+            android:paddingRight="@dimen/dim_15"
+            android:paddingTop="@dimen/dp_0"
+            android:text="Share"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp_13"
+            app:typeface="lato_bold"/>
+
+    </LinearLayout>
+
+</android.support.design.widget.CoordinatorLayout>

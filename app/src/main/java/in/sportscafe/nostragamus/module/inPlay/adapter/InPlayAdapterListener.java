@@ -22,4 +22,7 @@ public interface InPlayAdapterListener {
     void onHeadLessContestCardClicked(Bundle args, InPlayContestDto inPlayContestDto);
 
     void onContestModeClicked(Bundle args);
+
+    /* Private Contest */
+    void onInviteFriendsButtonClicked(Bundle args);
 }

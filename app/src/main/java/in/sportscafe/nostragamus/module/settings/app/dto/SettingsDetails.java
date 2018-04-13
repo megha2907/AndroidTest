@@ -39,6 +39,12 @@ public class SettingsDetails {
     @SerializedName("show_faq")
     private Boolean showFaq;
 
+    @SerializedName("kyc_benefits_one")
+    private String kycBenefitsOne;
+
+    @SerializedName("kyc_benefits_two")
+    private String kycBenefitsTwo;
+
     @SerializedName("forceUpdateVersion")
     public Version getForceUpdateVersion() {
         return forceUpdateVersion;
@@ -136,6 +142,22 @@ public class SettingsDetails {
 
     public void setShowFaq(Boolean showFaq) {
         this.showFaq = showFaq;
+    }
+
+    public String getKycBenefitsOne() {
+        return kycBenefitsOne;
+    }
+
+    public void setKycBenefitsOne(String kycBenefitsOne) {
+        this.kycBenefitsOne = kycBenefitsOne;
+    }
+
+    public String getKycBenefitsTwo() {
+        return kycBenefitsTwo;
+    }
+
+    public void setKycBenefitsTwo(String kycBenefitsTwo) {
+        this.kycBenefitsTwo = kycBenefitsTwo;
     }
 
 }

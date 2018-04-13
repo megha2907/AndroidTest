@@ -53,7 +53,10 @@ import com.google.android.gms.analytics.Tracker;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.google.android.gms.iid.InstanceID;
 import com.google.firebase.FirebaseApp;
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.jeeva.android.Log;
 import com.moe.pushlibrary.MoEHelper;
 import com.moe.pushlibrary.PayloadBuilder;
@@ -61,6 +64,7 @@ import com.moe.pushlibrary.PayloadBuilder;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.lang.reflect.Type;
 import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.Currency;
@@ -79,6 +83,7 @@ import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.analytics.awsAnalytics.EMAILEndPointRequest;
 import in.sportscafe.nostragamus.module.analytics.awsAnalytics.NotificationEndPointRequest;
 import in.sportscafe.nostragamus.module.analytics.awsAnalytics.SMSEndPointRequest;
+import in.sportscafe.nostragamus.module.common.NostraFireBaseInstanceIDService;
 import in.sportscafe.nostragamus.module.newChallenges.dataProvider.SportsDataProvider;
 import in.sportscafe.nostragamus.module.newChallenges.dto.SportsTab;
 import in.sportscafe.nostragamus.module.user.login.dto.UserInfo;
@@ -126,6 +131,8 @@ public class NostragamusAnalytics {
 
     private String AWS_APP_ID = "2dbeb11bf7474761afac1a7e69a61e25";
 
+    private FirebaseAnalytics mFirebaseAnalytics;
+
     public IdentityManager getIdentityManager() {
         return identityManager;
     }
@@ -158,6 +165,10 @@ public class NostragamusAnalytics {
 
             //Tracking events on fabric
             Fabric.with(context, new Answers());
+            Fabric.with(context, new Crashlytics());
+
+            // Obtain the FirebaseAnalytics instance.
+            mFirebaseAnalytics = FirebaseAnalytics.getInstance(context);
 
             // Facebook Analytics
             FacebookSdk.sdkInitialize(context);
@@ -188,7 +199,7 @@ public class NostragamusAnalytics {
 
             }
 
-           new Thread(new Runnable() {
+            new Thread(new Runnable() {
                 @Override
                 public void run() {
                     try {
@@ -217,7 +228,7 @@ public class NostragamusAnalytics {
      * @param openingFrom - launcher, notification
      */
     public void trackAppOpening(String openingFrom) {
-        if (!mAppOpeningTracked) {
+        if (!mAppOpeningTracked && !BuildConfig.DEBUG) {
             track(AnalyticsCategory.APP_OPENING, null, openingFrom, null);
             mAppOpeningTracked = true;
 
@@ -235,7 +246,7 @@ public class NostragamusAnalytics {
      */
     public void trackAppClosing() {
         // Stop the session with Pinpoint
-        if (pinpointManager != null && pinpointManager.getSessionClient() != null) {
+        if (pinpointManager != null && pinpointManager.getSessionClient() != null && !BuildConfig.DEBUG) {
             pinpointManager.getSessionClient().stopSession();
         }
     }
@@ -255,14 +266,19 @@ public class NostragamusAnalytics {
      * @param loginVia - Google Plus, Facebook
      */
     public void trackLogIn(String actions, String loginVia) {
-        track(AnalyticsCategory.LOGIN, actions, loginVia, null);
+        if (!BuildConfig.DEBUG) {
+            track(AnalyticsCategory.LOGIN, actions, loginVia, null);
+            trackEvent(AnalyticsCategory.LOGIN, actions, loginVia);
+        }
     }
 
     /**
      * track logout
      */
     public void trackLogOut() {
-        track(AnalyticsCategory.LOGOUT, null, null, null);
+        if (!BuildConfig.DEBUG) {
+            trackEvent(AnalyticsCategory.LOGOUT, null, null);
+        }
     }
 
     /**
@@ -271,10 +287,10 @@ public class NostragamusAnalytics {
      * @param actions - Started, Done
      */
     public void trackDummyGame(String actions) {
-        track(AnalyticsCategory.DUMMY_GAME, actions, null, null);
-        trackAWSEvent(AnalyticsCategory.DUMMY_GAME, "Action", actions);
-        trackFabricEvent(AnalyticsCategory.DUMMY_GAME, "Action", actions);
-        logFbEvents(AnalyticsCategory.DUMMY_GAME, "Action", actions);
+        if (!BuildConfig.DEBUG) {
+            track(AnalyticsCategory.DUMMY_GAME, actions, null, null);
+            trackEvent(AnalyticsCategory.DUMMY_GAME, "Action", actions);
+        }
     }
 
     /**
@@ -321,8 +337,10 @@ public class NostragamusAnalytics {
      * @param label   - channels like facebook, twitter
      */
     public void trackNewUsers(String actions, String label) {
-        track(AnalyticsCategory.NEW_USERS, actions, label, null);
-        trackSignUpFabric(AnalyticsCategory.NEW_USERS + "-" + actions);
+        if (!BuildConfig.DEBUG) {
+            track(AnalyticsCategory.NEW_USERS, actions, label, null);
+            trackSignUpFabric(AnalyticsCategory.NEW_USERS + "-" + actions);
+        }
     }
 
     /**
@@ -455,7 +473,10 @@ public class NostragamusAnalytics {
      * @param label   - Actual time spent in OnBoarding from Edit Profile to Home
      */
     public void trackOnBoarding(String actions, String label, long timeSpentInS) {
-        track(AnalyticsCategory.ONBOARDING_TIME, actions, label, timeSpentInS);
+        if (!BuildConfig.DEBUG) {
+            track(AnalyticsCategory.ONBOARDING_TIME, actions, label, timeSpentInS);
+            trackEvent(AnalyticsCategory.ONBOARDING, AnalyticsCategory.ONBOARDING_TIME, String.valueOf(timeSpentInS));
+        }
     }
 
 
@@ -514,38 +535,41 @@ public class NostragamusAnalytics {
     }
 
     private void track(String category, String action, String label, Long value) {
-        if (null == mMoEHelper) {
-            return;
-        }
 
-        // Google Analytics
-        HitBuilders.EventBuilder gaEventBuilder = new HitBuilders.EventBuilder();
+        if (!BuildConfig.DEBUG) {
 
-        // MoEngage Analytics
-        PayloadBuilder moeEventBuilder = new PayloadBuilder();
+            if (null == mMoEHelper) {
+                return;
+            }
 
-        // category
-        gaEventBuilder.setCategory(category);
+            // Google Analytics
+            HitBuilders.EventBuilder gaEventBuilder = new HitBuilders.EventBuilder();
 
-        // action
-        if (null != action) {
-            gaEventBuilder.setAction(action);
-            moeEventBuilder.putAttrString(ACTION, action);
-        }
+            // MoEngage Analytics
+            PayloadBuilder moeEventBuilder = new PayloadBuilder();
 
-        // label
-        if (null != label) {
-            gaEventBuilder.setLabel(label);
-            moeEventBuilder.putAttrString(LABEL, label);
-        }
+            // category
+            gaEventBuilder.setCategory(category);
 
-        // value
-        if (null != value) {
-            gaEventBuilder.setValue(value);
-            moeEventBuilder.putAttrLong(VALUE, value);
-        }
+            // action
+            if (null != action) {
+                gaEventBuilder.setAction(action);
+                moeEventBuilder.putAttrString(ACTION, action);
+            }
 
-        JSONObject jsonObject = moeEventBuilder.build();
+            // label
+            if (null != label) {
+                gaEventBuilder.setLabel(label);
+                moeEventBuilder.putAttrString(LABEL, label);
+            }
+
+            // value
+            if (null != value) {
+                gaEventBuilder.setValue(value);
+                moeEventBuilder.putAttrLong(VALUE, value);
+            }
+
+            JSONObject jsonObject = moeEventBuilder.build();
 
           /* Stopped tracking events on MoEngage
         mMoEHelper.trackEvent(category, jsonObject); */
@@ -559,9 +583,11 @@ public class NostragamusAnalytics {
             ExceptionTracker.track(e);
         }*/
 
-        mAmplitude.logEvent(category, jsonObject);
+            mAmplitude.logEvent(category, jsonObject);
 
-        mTracker.send(gaEventBuilder.build());
+            mTracker.send(gaEventBuilder.build());
+
+        }
     }
 
     public void trackOtherEvents(String category, Map<String, String> values) {
@@ -603,7 +629,7 @@ public class NostragamusAnalytics {
      * If Null / empty value is set for property, then it won't be sent
      */
     public void setUserProperties() {
-        if (null != mAmplitude) {
+        if (null != mAmplitude && !BuildConfig.DEBUG) {
             try {
                 JSONObject userProperties = new JSONObject();
 
@@ -648,7 +674,7 @@ public class NostragamusAnalytics {
 
 
     public void setMoEngageUserProperties(Context context) {
-        if (null != mMoEHelper) {
+        if (null != mMoEHelper && !BuildConfig.DEBUG) {
 
             if (BuildConfig.IS_PAID_VERSION) {
                 mMoEHelper.setUserAttribute(UserProperties.PRO_APP, true);
@@ -711,7 +737,7 @@ public class NostragamusAnalytics {
      * @param amount     - amount of transaction
      */
     public void trackWalletTransaction(boolean isAddMoney, double amount) {
-        if (BuildConfig.IS_PAID_VERSION) {
+        if (BuildConfig.IS_PAID_VERSION && !BuildConfig.DEBUG) {
 
             JSONObject jsonObject = new JSONObject();
             try {
@@ -732,7 +758,6 @@ public class NostragamusAnalytics {
                 mMoEHelper.trackEvent(category, jsonObject);
             }
 
-            updateEndPointProfile(UserProperties.HAS_DEPOSITED, "true");
         }
     }
 
@@ -745,7 +770,7 @@ public class NostragamusAnalytics {
      * @param userId
      */
     public void setMoengageUniqueId(String userId) {
-        if (mMoEHelper != null) {
+        if (mMoEHelper != null && !BuildConfig.DEBUG) {
             mMoEHelper.setUniqueId(userId);
         } else {
             Log.e("Analytics", "Could not set UniqueId for MoEngage");
@@ -758,10 +783,10 @@ public class NostragamusAnalytics {
      * @param category
      */
     public void trackClickEvent(@NonNull String category, String label) {
-        track(category, AnalyticsActions.CLICKED, label, null);
-        trackAWSEvent(category, AnalyticsActions.CLICKED, label);
-        trackFabricEvent(category, AnalyticsActions.CLICKED, label);
-        logFbEvents(category, AnalyticsActions.CLICKED, label);
+        if (!BuildConfig.DEBUG) {
+            track(category, AnalyticsActions.CLICKED, label, null);
+            trackEvent(category, AnalyticsActions.CLICKED, label);
+        }
     }
 
     /**
@@ -770,25 +795,38 @@ public class NostragamusAnalytics {
      * @param category
      */
     public void trackScreenShown(@NonNull String category, String label) {
-        track(category, AnalyticsActions.OPENED, label, null);
-        trackAWSEvent(category, AnalyticsActions.OPENED, label);
-        trackFabricEvent(category, AnalyticsActions.OPENED, label);
-        logFbEvents(category, AnalyticsActions.OPENED, label);
+        if (!BuildConfig.DEBUG) {
+            track(category, AnalyticsActions.OPENED, label, null);
+            trackEvent(category, AnalyticsActions.OPENED, label);
+        }
+    }
+
+    /**
+     * Tracks source
+     *
+     * @param category
+     */
+    public void trackSource(@NonNull String category, String label) {
+        if (!BuildConfig.DEBUG) {
+            track(category, AnalyticsActions.SOURCE, label, null);
+            trackEvent(category, AnalyticsActions.SOURCE, label);
+        }
+    }
+
+
+    /**
+     * Tracks tab clicked
+     *
+     * @param category
+     */
+    public void trackTabClicked(@NonNull String category, String label) {
+        if (!BuildConfig.DEBUG) {
+            trackEvent(category, AnalyticsActions.TAB_CLICKED, label);
+        }
     }
 
     public void trackReferralBenefitScreenShown() {
         track(AnalyticsCategory.REFERRAL_BENEFIT, AnalyticsActions.OPENED, AnalyticsLabels.SCREENS_SEEN, null);
-    }
-
-    /**
-     * Logs Facebook Play completed event
-     *
-     * @param args
-     */
-    public void logFbPlayCompleted(@Nullable Bundle args) {
-        if (sFaceBookAppEventLogger != null) {
-            sFaceBookAppEventLogger.logEvent(Constants.FaceBookAnalyticsEvents.MATCH_PLAY_COMPLETED, args);
-        }
     }
 
     /**
@@ -802,7 +840,7 @@ public class NostragamusAnalytics {
      */
     public void trackNewChallenges(int challengeId, String challengeName, int[] sportId, int prizes, String challengeStartTime, String category) {
 
-        if (BuildConfig.IS_PAID_VERSION && mAmplitude != null) {
+        if (BuildConfig.IS_PAID_VERSION && mAmplitude != null && !BuildConfig.DEBUG) {
 
             String sportsName = "";
             JSONObject sportsJson = null;
@@ -843,14 +881,11 @@ public class NostragamusAnalytics {
             }
 
 
-              /* Send Contest Joining Data to aws pinpoint */
+              /* Send New challenges Data to aws pinpoint */
             if (pinpointManager != null && pinpointManager.getAnalyticsClient() != null) {
 
                 final AnalyticsEvent event = pinpointManager.getAnalyticsClient().createEvent(AnalyticsCategory.NEW_CHALLENGES)
-                        .withAttribute("challengeId", String.valueOf(challengeId))
                         .withAttribute("challengeName", challengeName)
-                        .withAttribute("prizeMoney", String.valueOf(prizes))
-                        .withAttribute("challengeStartTime", challengeStartTime)
                         .withAttribute("sportName", sportsName);
 
                 pinpointManager.getAnalyticsClient().recordEvent(event);
@@ -858,27 +893,26 @@ public class NostragamusAnalytics {
 
             }
 
-              /* Send Contest Joining Data to Fabric */
+              /* Send New challenges Data to Fabric */
             Answers.getInstance().logCustom(new CustomEvent(AnalyticsCategory.NEW_CHALLENGES)
-                    .putCustomAttribute("challengeId", String.valueOf(challengeId))
                     .putCustomAttribute("challengeName", challengeName)
-                    .putCustomAttribute("prizeMoney", String.valueOf(prizes))
-                    .putCustomAttribute("challengeStartTime", challengeStartTime)
                     .putCustomAttribute("sportName", sportsName));
 
 
-            /* Send Contest Joining Data to Fb Analytics */
+            /* Send New challenges Data to Fb Analytics */
             Bundle contestBundle = new Bundle();
-            contestBundle.putInt("challengeId", challengeId);
             contestBundle.putString("challengeName", challengeName);
-            contestBundle.putString("challengeStartTime", challengeStartTime);
-            contestBundle.putInt("prizeMoney", prizes);
             contestBundle.putString("sportName", sportsName);
 
             if (sFaceBookAppEventLogger != null) {
                 sFaceBookAppEventLogger.logEvent(AnalyticsCategory.NEW_CHALLENGES, contestBundle);
             }
 
+             /* Send New challenges Data to Firebase
+               NOTE : Event Name with space not allowed */
+            if (mFirebaseAnalytics != null) {
+                mFirebaseAnalytics.logEvent("NEW_CHALLENGES", contestBundle);
+            }
 
         } else {
             Log.d("App", "Can't log revenue, Amplitude null!");
@@ -889,25 +923,24 @@ public class NostragamusAnalytics {
     /**
      * Tracks Contest Joined
      *
-     * @param contestId
      * @param contestName
      * @param contestType
      * @param entryFee
-     * @param challengeId
+     * @param challengeName
      * @param screenName
      */
-    public void trackContestJoined(int contestId, String contestName, String contestType, int entryFee, int challengeId, String screenName) {
+    public void trackContestJoined(String contestName, String contestType, int entryFee, String screenName, String challengeName, int prizeMoney) {
 
-        if (BuildConfig.IS_PAID_VERSION && mAmplitude != null) {
+        if (BuildConfig.IS_PAID_VERSION && mAmplitude != null && !BuildConfig.DEBUG) {
 
             JSONObject jsonObject = new JSONObject();
             try {
-                jsonObject.put("contestId", contestId);
                 jsonObject.put("contestName", contestName);
                 jsonObject.put("contestType", contestType);
                 jsonObject.put("contestEntryFee", entryFee);
-                jsonObject.put("contestChallengeId", challengeId);
+                jsonObject.put("contestChallengeName", challengeName);
                 jsonObject.put("screenJoinedFrom", screenName);
+                jsonObject.put("prizeMoney", prizeMoney);
             } catch (JSONException ex) {
                 ex.printStackTrace();
             }
@@ -921,40 +954,48 @@ public class NostragamusAnalytics {
                 mMoEHelper.trackEvent(category, jsonObject);
             }
 
+             /* Send Contest Joining Data to Aws Pinpoint */
             if (pinpointManager != null && pinpointManager.getAnalyticsClient() != null) {
 
                 final AnalyticsEvent event = pinpointManager.getAnalyticsClient().createEvent(AnalyticsCategory.CONTEST_JOINED)
-                        .withAttribute("contestId", String.valueOf(contestId))
                         .withAttribute("contestName", contestName)
                         .withAttribute("contestType", contestType)
                         .withAttribute("contestEntryFee", String.valueOf(entryFee))
-                        .withAttribute("contestChallengeId", String.valueOf(challengeId))
-                        .withAttribute("screenJoinedFrom", screenName);
+                        .withAttribute("contestChallengeName", String.valueOf(challengeName))
+                        .withAttribute("screenJoinedFrom", screenName)
+                        .withAttribute("prizeMoney", String.valueOf(prizeMoney));
 
                 pinpointManager.getAnalyticsClient().recordEvent(event);
                 pinpointManager.getAnalyticsClient().submitEvents();
 
             }
 
+             /* Send Contest Joining Data to Fabric */
             Answers.getInstance().logCustom(new CustomEvent(AnalyticsCategory.CONTEST_JOINED)
-                    .putCustomAttribute("contestId", String.valueOf(contestId))
                     .putCustomAttribute("contestName", contestName)
                     .putCustomAttribute("contestType", contestType)
                     .putCustomAttribute("contestEntryFee", String.valueOf(entryFee))
-                    .putCustomAttribute("contestChallengeId", String.valueOf(challengeId))
-                    .putCustomAttribute("screenJoinedFrom", screenName));
+                    .putCustomAttribute("contestChallengeName", String.valueOf(challengeName))
+                    .putCustomAttribute("screenJoinedFrom", screenName)
+                    .putCustomAttribute("prizeMoney", String.valueOf(prizeMoney)));
 
             /* Send Contest Joining Data to Fb Analytics */
             Bundle contestBundle = new Bundle();
-            contestBundle.putInt("contestId", contestId);
             contestBundle.putString("contestName", contestName);
             contestBundle.putString("contestType", contestType);
             contestBundle.putInt("contestEntryFee", entryFee);
-            contestBundle.putInt("contestChallengeId", challengeId);
+            contestBundle.putString("contestChallengeName", challengeName);
             contestBundle.putString("screenJoinedFrom", screenName);
+            contestBundle.putInt("prizeMoney", prizeMoney);
 
             if (sFaceBookAppEventLogger != null) {
                 sFaceBookAppEventLogger.logEvent(AnalyticsCategory.CONTEST_JOINED, contestBundle);
+            }
+
+             /* Send Contest Joining Data to Firebase
+               NOTE : Event Name with space not allowed */
+            if (mFirebaseAnalytics != null) {
+                mFirebaseAnalytics.logEvent("CONTEST_JOINED", contestBundle);
             }
 
         } else {
@@ -969,7 +1010,7 @@ public class NostragamusAnalytics {
      * @param price
      */
     public void trackRevenue(double price, int contestId, String contestName, String contestType, String orderId) {
-        if (BuildConfig.IS_PAID_VERSION && mAmplitude != null) {
+        if (BuildConfig.IS_PAID_VERSION && mAmplitude != null && !BuildConfig.DEBUG) {
             JSONObject eventPropertiesJson = new JSONObject();
             try {
                 eventPropertiesJson.put("contestId", contestId);
@@ -1003,40 +1044,54 @@ public class NostragamusAnalytics {
 
         /* Send Revenue Data to Aws Pinpoint */
         trackAWSMonetizationEvent(price, AnalyticsActions.CONTEST_JOINED, orderId);
+
+        /* Send Revenue Data to Fabric */
         trackFabricPurchaseEvent(price, AnalyticsActions.CONTEST_JOINED, orderId);
-        updateEndPointProfile(UserProperties.HAS_SPENT, "true");
-    }
 
-    /**
-     * Logs Facebook revenue event
-     *
-     * @param amount
-     * @param args
-     */
-    public void logFbRevenue(double amount, @NonNull Bundle args) {
-        if (sFaceBookAppEventLogger != null) {
-            try {
-                BigDecimal values = BigDecimal.valueOf(amount);
-                sFaceBookAppEventLogger.logPurchase(values, Currency.getInstance(Constants.INDIAN_CURRENCY_CODE), args);
-            } catch (NumberFormatException ex) {
-                ex.printStackTrace();
-            }
-        }
-    }
+        /* Send Revenue Data to FireBase */
+        trackFireBasePurchaseEvent(price, contestName, orderId);
 
+    }
 
     /**
      * Tracks Banners
      *
-     * @param bannerId
-     * @param bannerRedirectScreen
+     * @param bannerKey
+     * @param bannerName
      */
-    public void trackBanners(String bannerId, String bannerRedirectScreen) {
-        trackAWSEvent(AnalyticsCategory.BANNERS, bannerId, bannerRedirectScreen);
-        trackFabricEvent(AnalyticsCategory.BANNERS, bannerId, bannerRedirectScreen);
-        logFbEvents(AnalyticsCategory.BANNERS, bannerId, bannerRedirectScreen);
+    public void trackBanners(String bannerKey, String bannerName) {
+        if (!BuildConfig.DEBUG) {
+            trackEvent(AnalyticsCategory.BANNERS, bannerKey, bannerName);
+        }
     }
 
+    /**
+     * Tracks In App Notifications for match results
+     *
+     * @param notificationAction
+     * @param contestName
+     */
+    public void trackInAppNotifications(String notificationAction, String contestName) {
+        if (!BuildConfig.DEBUG) {
+            trackEvent(AnalyticsCategory.MATCH_REMINDER, notificationAction, contestName);
+        }
+    }
+
+    /**
+     * Tracks POST SIGN UP
+     *
+     * @param screenName
+     *
+     */
+    public void trackPostSignUp(String screenName) {
+        if (!BuildConfig.DEBUG) {
+            trackEvent(AnalyticsCategory.POST_SIGN_UP, "Stage", screenName);
+        }
+    }
+
+    /**
+     * Set FreshChat User Properties
+     */
     public void setFreshChatUserProperties(Context context) {
 
         /* Set UserInfo  */
@@ -1059,7 +1114,9 @@ public class NostragamusAnalytics {
         }
     }
 
-
+    /**
+     * Set Crashlytics User Properties
+     */
     public void setCrashlyticsUserProperties(Context context) {
 
         // Set up Crashlytics, disabled for debug builds
@@ -1082,6 +1139,8 @@ public class NostragamusAnalytics {
             }
         }
     }
+
+    /******* METHODS TO TRACK EVENTS ON AWS PINPOINT ***************/
 
     public void trackAWSEvent(String eventName, String eventAttribute, String eventAttributeValue) {
 
@@ -1114,33 +1173,6 @@ public class NostragamusAnalytics {
         }
     }
 
-
-    public void updateEndPointProfile(String endPoint, String endPointValue) {
-        if (pinpointManager != null && pinpointManager.getTargetingClient() != null) {
-            TargetingClient targetingClient = this.pinpointManager.getTargetingClient();
-            targetingClient.addAttribute(endPoint, Arrays.asList(new String[]{endPointValue}));
-            targetingClient.updateEndpointProfile();
-        }
-    }
-
-    public void updateEndPointUserProperties() {
-
-        UserInfo userInfo = Nostragamus.getInstance().getServerDataManager().getUserInfo();
-
-        if (pinpointManager != null && pinpointManager.getTargetingClient() != null
-                && userInfo != null) {
-            TargetingClient targetingClient = this.pinpointManager.getTargetingClient();
-            targetingClient.addAttribute(UserProperties.COUNT_REFERRALS, Arrays.asList(new String[]{String.valueOf(userInfo.getReferralCount())}));
-            targetingClient.addAttribute(UserProperties.HAS_REFERRED, Arrays.asList(new String[]{String.valueOf(userInfo.isHasReferred())}));
-            targetingClient.addAttribute(UserProperties.HAS_DEPOSITED, Arrays.asList(new String[]{String.valueOf(userInfo.isHasDeposited())}));
-            targetingClient.addAttribute(UserProperties.COUNT_DEPOSITS, Arrays.asList(new String[]{String.valueOf(userInfo.getDepositCount())}));
-            targetingClient.addAttribute(UserProperties.COUNT_CONTESTS_JOINED, Arrays.asList(new String[]{String.valueOf(userInfo.getContestJoinedCount())}));
-            targetingClient.addAttribute(UserProperties.COUNT_PAID_CONTESTS_JOINED, Arrays.asList(new String[]{String.valueOf(userInfo.getPaidContestJoinedCount())}));
-            targetingClient.addAttribute(UserProperties.MOST_PLAYED_SPORT, Arrays.asList(new String[]{String.valueOf(userInfo.getMostPlayedSport())}));
-            targetingClient.updateEndpointProfile();
-        }
-    }
-
     public void setAwsPinPointUserProperties() {
         UserInfo userInfo = Nostragamus.getInstance().getServerDataManager().getUserInfo();
         if (userInfo != null && pinpointManager != null && pinpointManager.getTargetingClient() != null) {
@@ -1154,49 +1186,70 @@ public class NostragamusAnalytics {
         }
     }
 
+    /******* END METHODS TO TRACK EVENTS ON AWS PINPOINT ***************/
+
+
+    /******* METHODS TO TRACK EVENTS ON FABRIC ***************/
 
     public void trackFabricEvent(String eventName, String eventAttribute, String eventAttributeValue) {
-        Answers.getInstance().logCustom(new CustomEvent(eventName)
-                .putCustomAttribute(eventAttribute, eventAttributeValue));
+        if (!BuildConfig.DEBUG) {
+            Answers.getInstance().logCustom(new CustomEvent(eventName)
+                    .putCustomAttribute(eventAttribute, eventAttributeValue));
+        }
     }
 
     public void trackFabricPurchaseEvent(Double price, String productId, String transactionID) {
-        Answers.getInstance().logPurchase(new PurchaseEvent()
-                .putItemPrice(BigDecimal.valueOf(price))
-                .putCurrency(Currency.getInstance("INR"))
-                .putItemName(productId)
-                .putItemType("Contest")
-                .putItemId(transactionID)
-                .putSuccess(true));
+        if (!BuildConfig.DEBUG) {
+            Answers.getInstance().logPurchase(new PurchaseEvent()
+                    .putItemPrice(BigDecimal.valueOf(price))
+                    .putCurrency(Currency.getInstance("INR"))
+                    .putItemName(productId)
+                    .putItemType("Contest")
+                    .putItemId(transactionID)
+                    .putSuccess(true));
+        }
     }
 
 
     public void trackFabricContentRealTimeEvent(String contentName, String contentType, String contentId) {
-        Answers.getInstance().logContentView(new ContentViewEvent()
-                .putContentName(contentName)
-                .putContentType(contentType)
-                .putContentId(contentId));
+        if (!BuildConfig.DEBUG) {
+            Answers.getInstance().logContentView(new ContentViewEvent()
+                    .putContentName(contentName)
+                    .putContentType(contentType)
+                    .putContentId(contentId));
+        }
     }
 
 
     public void trackFabricShareEvent(String method, String contentName, String contentType, String contentId) {
-        Answers.getInstance().logShare(new ShareEvent()
-                .putMethod(method)
-                .putContentName(contentName)
-                .putContentType(contentType)
-                .putContentId(contentId));
+        if (!BuildConfig.DEBUG) {
+            Answers.getInstance().logShare(new ShareEvent()
+                    .putMethod(method)
+                    .putContentName(contentName)
+                    .putContentType(contentType)
+                    .putContentId(contentId));
+        }
     }
 
     public void trackInviteInFabric() {
-        Answers.getInstance().logInvite(new InviteEvent()
-                .putMethod("AppInvite"));
+        if (!BuildConfig.DEBUG) {
+            Answers.getInstance().logInvite(new InviteEvent()
+                    .putMethod("AppInvite"));
+        }
     }
 
     public void trackSignUpFabric(String source) {
-        Answers.getInstance().logSignUp(new SignUpEvent()
-                .putMethod(source)
-                .putSuccess(true));
+        if (!BuildConfig.DEBUG) {
+            Answers.getInstance().logSignUp(new SignUpEvent()
+                    .putMethod(source)
+                    .putSuccess(true));
+        }
     }
+
+    /******* END METHODS TO TRACK EVENTS ON FABRIC ***************/
+
+
+    /******* METHODS TO TRACK EVENTS ON FACEBOOK ***************/
 
     /**
      * Logs Facebook events
@@ -1215,16 +1268,18 @@ public class NostragamusAnalytics {
 
     public void logFbUserProperties(UserInfo userInfo) {
 
-        if (userInfo != null ) {
+        if (userInfo != null && userInfo.getUserPropertyInfo() != null) {
 
             Bundle user_props = new Bundle();
-            user_props.putInt(UserProperties.COUNT_REFERRALS, userInfo.getReferralCount());
-            user_props.putBoolean(UserProperties.HAS_REFERRED, userInfo.isHasReferred());
-            user_props.putBoolean(UserProperties.HAS_DEPOSITED, userInfo.isHasDeposited());
-            user_props.putInt(UserProperties.COUNT_DEPOSITS, userInfo.getDepositCount());
-            user_props.putInt(UserProperties.COUNT_CONTESTS_JOINED, userInfo.getContestJoinedCount());
-            user_props.putInt(UserProperties.COUNT_PAID_CONTESTS_JOINED, userInfo.getPaidContestJoinedCount());
-            user_props.putString(UserProperties.MOST_PLAYED_SPORT, userInfo.getMostPlayedSport());
+
+            Gson gson = new Gson();
+            String json = gson.toJson(userInfo.getUserPropertyInfo());
+            Type type = new TypeToken<Map<String, String>>() {
+            }.getType();
+            Map<String, String> map = gson.fromJson(json, type);
+            for (String key : map.keySet()) {
+                user_props.putString(key, String.valueOf(map.get(key)));
+            }
 
             if (sFaceBookAppEventLogger != null) {
 
@@ -1241,20 +1296,105 @@ public class NostragamusAnalytics {
 
     }
 
+    /**
+     * Logs Facebook revenue event
+     *
+     * @param amount
+     * @param args
+     */
+    public void logFbRevenue(double amount, @NonNull Bundle args) {
+        if (sFaceBookAppEventLogger != null) {
+            try {
+                BigDecimal values = BigDecimal.valueOf(amount);
+                sFaceBookAppEventLogger.logPurchase(values, Currency.getInstance(Constants.INDIAN_CURRENCY_CODE), args);
+            } catch (NumberFormatException ex) {
+                ex.printStackTrace();
+            }
+        }
+    }
+
+    /**
+     * Logs Facebook Play completed event
+     *
+     * @param args
+     */
+    public void logFbPlayCompleted(@Nullable Bundle args) {
+        if (sFaceBookAppEventLogger != null) {
+            sFaceBookAppEventLogger.logEvent(Constants.FaceBookAnalyticsEvents.MATCH_PLAY_COMPLETED, args);
+        }
+    }
+
+
+    /******* END METHODS TO TRACK EVENTS ON FACEBOOK **************/
+
+
+    public void logFireBaseEvents(String eventName, String eventAttribute, String eventAttributeValue) {
+        Bundle args = new Bundle();
+        args.putString(eventAttribute, eventAttributeValue);
+        if (mFirebaseAnalytics != null) {
+            mFirebaseAnalytics.logEvent(eventName.replaceAll("\\s+", ""), args);
+        }
+    }
+
+
+    public void logFireBaseUserProperties(UserInfo userInfo) {
+
+        if (userInfo != null && mFirebaseAnalytics != null) {
+            mFirebaseAnalytics.setUserProperty(UserProperties.COUNT_REFERRALS, String.valueOf(userInfo.getReferralCount()));
+            mFirebaseAnalytics.setUserProperty(UserProperties.HAS_REFERRED, String.valueOf(userInfo.isHasReferred()));
+            mFirebaseAnalytics.setUserProperty(UserProperties.HAS_DEPOSITED, String.valueOf(userInfo.isHasDeposited()));
+            mFirebaseAnalytics.setUserProperty(UserProperties.COUNT_DEPOSITS, String.valueOf(userInfo.getDepositCount()));
+            mFirebaseAnalytics.setUserProperty(UserProperties.COUNT_CONTESTS_JOINED, String.valueOf(userInfo.getContestJoinedCount()));
+            mFirebaseAnalytics.setUserProperty(UserProperties.PAID_CONTESTS_JOINED, String.valueOf(userInfo.getPaidContestJoinedCount()));
+            mFirebaseAnalytics.setUserProperty(UserProperties.MOST_PLAYED_SPORT, userInfo.getMostPlayedSport());
+        }
+    }
+
+
+    private void trackFireBasePurchaseEvent(double price, String contestName, String orderId) {
+        Bundle args = new Bundle();
+        args.putString("currency", "INR");
+        args.putDouble("value", price);
+        args.putString("transaction_id", orderId);
+
+        if (mFirebaseAnalytics != null) {
+            mFirebaseAnalytics.logEvent("ecommerce_purchase", args);
+        }
+    }
+
+
+    /******* tracking events on AWS , FABRIC , FACEBOOK , FIREBASE ***************/
+    public void trackEvent(String eventName, String eventAttribute, String eventAttributeValue) {
+        trackAWSEvent(eventName, eventAttribute, eventAttributeValue);
+        trackFabricEvent(eventName, eventAttribute, eventAttributeValue);
+        logFbEvents(eventName, eventAttribute, eventAttributeValue);
+        logFireBaseEvents(eventName, eventAttribute, eventAttributeValue);
+    }
+
     public void logUserProperties(UserInfo userInfo) {
 
+        /* log FB User Properties */
         logFbUserProperties(userInfo);
 
+        /* log FireBase User Properties */
+        logFireBaseUserProperties(userInfo);
+
+        /* log Aws Pinpoint Endpoints */
         if (getIdentityManager() != null) {
+
             final AWSCredentialsProvider cp = getIdentityManager().getCredentialsProvider();
             AmazonPinpointClient client = new AmazonPinpointClient(cp);
-            SMSEndPointRequest.getInstance().createEndpoint(client,AWS_APP_ID);
-            EMAILEndPointRequest.getInstance().createEndpoint(client,AWS_APP_ID);
+            SMSEndPointRequest.getInstance().createEndpoint(client, AWS_APP_ID);
+            EMAILEndPointRequest.getInstance().createEndpoint(client, AWS_APP_ID);
 
-            if (!TextUtils.isEmpty(Nostragamus.getInstance().getServerDataManager().getGcmDeviceToken())) {
-                 NotificationEndPointRequest.getInstance().createEndpoint(client,AWS_APP_ID);
+            if (TextUtils.isEmpty(Nostragamus.getInstance().getServerDataManager().getGcmDeviceToken())) {
+                NostraFireBaseInstanceIDService.getInstance().onTokenRefresh();
+                NotificationEndPointRequest.getInstance().createEndpoint(client, AWS_APP_ID);
+            } else {
+                NotificationEndPointRequest.getInstance().createEndpoint(client, AWS_APP_ID);
             }
         }
 
     }
+
 }

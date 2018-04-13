@@ -8,6 +8,7 @@ import org.parceler.Parcel;
 import java.util.ArrayList;
 import java.util.List;
 
+import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.module.user.badges.Badge;
 import in.sportscafe.nostragamus.module.user.group.allgroups.AllGroups;
 import in.sportscafe.nostragamus.module.user.login.dto.BasicUserInfo;
@@ -32,6 +33,9 @@ public class PlayerInfo extends BasicUserInfo {
     @SerializedName("payment_info")
     private UserPaymentInfo userPaymentInfo;
 
+    @SerializedName("pinpoint")
+    private UserPropertyInfo userPropertyInfo;
+
     @SerializedName("count_matches")
     private Integer totalMatchesPlayed = 0;
 
@@ -52,6 +56,9 @@ public class PlayerInfo extends BasicUserInfo {
 
     @SerializedName("otp_number")
     private String otpMobileNumber;
+
+    @SerializedName("has_unread_activities")
+    private boolean hasUnreadActivities = false;
 
     @SerializedName("count_deposits")
     private int depositCount;
@@ -76,6 +83,7 @@ public class PlayerInfo extends BasicUserInfo {
 
     @SerializedName("mutual_groups")
     private List<AllGroups> mutualGroups = new ArrayList<>();
+
 
     @SerializedName("user_photo")
     public String getPhoto() {
@@ -122,7 +130,7 @@ public class PlayerInfo extends BasicUserInfo {
 
     @SerializedName("total_points")
     public Long getTotalPoints() {
-        if(null == points) {
+        if (null == points) {
             return 0L;
         }
         return points;
@@ -145,7 +153,7 @@ public class PlayerInfo extends BasicUserInfo {
 
     @SerializedName("mutual_groups")
     public List<AllGroups> getMutualGroups() {
-        if(null == mutualGroups) {
+        if (null == mutualGroups) {
             mutualGroups = new ArrayList<>();
         }
         return mutualGroups;
@@ -163,7 +171,7 @@ public class PlayerInfo extends BasicUserInfo {
 
     @SerializedName("count_predictions")
     public Integer getPredictionCount() {
-        if(null == predictionCount) {
+        if (null == predictionCount) {
             predictionCount = 0;
         }
         return predictionCount;
@@ -176,7 +184,7 @@ public class PlayerInfo extends BasicUserInfo {
 
     @SerializedName("accuracy")
     public Integer getAccuracy() {
-        if(null == accuracy) {
+        if (null == accuracy) {
             accuracy = 0;
         }
         return accuracy;
@@ -215,6 +223,16 @@ public class PlayerInfo extends BasicUserInfo {
     @SerializedName("otp_number")
     public void setOtpMobileNumber(String otpMobileNumber) {
         this.otpMobileNumber = otpMobileNumber;
+    }
+
+    @SerializedName("has_unread_activities")
+    public boolean isHasUnreadActivities() {
+        return hasUnreadActivities;
+    }
+
+    @SerializedName("has_unread_activities")
+    public void setHasUnreadActivities(boolean hasUnreadActivities) {
+        this.hasUnreadActivities = hasUnreadActivities;
     }
 
     public int getDepositCount() {
@@ -272,5 +290,14 @@ public class PlayerInfo extends BasicUserInfo {
     public void setHasDeposited(boolean hasDeposited) {
         this.hasDeposited = hasDeposited;
     }
+
+    public UserPropertyInfo getUserPropertyInfo() {
+        return userPropertyInfo;
+    }
+
+    public void setUserPropertyInfo(UserPropertyInfo userPropertyInfo) {
+        this.userPropertyInfo = userPropertyInfo;
+    }
+
 
 }

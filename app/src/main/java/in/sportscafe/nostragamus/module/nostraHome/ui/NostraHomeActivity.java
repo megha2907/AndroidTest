@@ -21,8 +21,14 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.crashlytics.android.Crashlytics;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.jeeva.android.Log;
+
+import org.parceler.Parcels;
+
+import java.lang.reflect.Type;
+import java.util.Map;
 
 import in.sportscafe.nostragamus.BuildConfig;
 import in.sportscafe.nostragamus.Constants;
@@ -43,6 +49,10 @@ import in.sportscafe.nostragamus.module.nostraHome.helper.BottomBarCountHelper;
 import in.sportscafe.nostragamus.module.notifications.NostraNotification;
 import in.sportscafe.nostragamus.module.notifications.NotificationHelper;
 import in.sportscafe.nostragamus.module.notifications.inApp.InAppNotificationHelper;
+import in.sportscafe.nostragamus.module.recentActivity.ui.RecentActivityFragment;
+import in.sportscafe.nostragamus.module.privateContest.ui.branchShare.ShareDetailsDto;
+import in.sportscafe.nostragamus.module.privateContest.ui.joinPrivateContest.dto.JoinPrivateContestWithInviteCodeScreenData;
+import in.sportscafe.nostragamus.module.privateContest.ui.joinPrivateContest.findContest.JoinPrivateContestWithInviteCodeActivity;
 import in.sportscafe.nostragamus.module.user.group.allgroups.AllGroupsFragment;
 import in.sportscafe.nostragamus.module.user.login.UserInfoModelImpl;
 import in.sportscafe.nostragamus.module.user.login.dto.UserInfo;
@@ -60,16 +70,17 @@ public class NostraHomeActivity extends NostraBaseActivity implements View.OnCli
         int SHOW_NEW_CHALLENGES = -111;
         int SHOW_IN_PLAY = -112;
         int SHOW_COMPLETED = -113;
-        int SHOW_GROUPS = -114;
+        int SHOW_RECENT_ACTIVITY = -114;
         int SHOW_NAVIGATION = -115;
     }
 
     private LinearLayout mNewChallengesBottomButton;
     private LinearLayout mInPlayBottomButton;
     private LinearLayout mCompletedChallengeBottomButton;
-    private LinearLayout mGroupBottomButton;
+    private LinearLayout mRecentActivityBottomButton;
     private LinearLayout mProfileBottomButton;
     private TextView mUnPlayedMatchCounterTextView;
+    private TextView mUnReadRecentActivityIcon;
 
     private boolean mIsFirstBackPressed = false;
     private int mUnPlayedMatchCount = 0;
@@ -228,8 +239,8 @@ public class NostraHomeActivity extends NostraBaseActivity implements View.OnCli
                         onHistoryClicked(intent.getExtras());
                         break;
 
-                    case LaunchedFrom.SHOW_GROUPS:
-                        onGroupClicked(intent.getExtras());
+                    case LaunchedFrom.SHOW_RECENT_ACTIVITY:
+                        onRecentActivityClicked(intent.getExtras());
                         break;
 
                     case LaunchedFrom.SHOW_NAVIGATION:
@@ -241,11 +252,12 @@ public class NostraHomeActivity extends NostraBaseActivity implements View.OnCli
     }
 
     private void handleNotifications() {
-        NotificationHelper notificationHelper = new NotificationHelper();
-        NostraNotification notification = notificationHelper.getNotificationIfToBeSent(getIntent());
+        if (NostragamusDataHandler.getInstance().isLoggedInUser()) {
 
-        if (notification != null && !TextUtils.isEmpty(notification.getScreenName())) {
-            if (NostragamusDataHandler.getInstance().isLoggedInUser()) {
+            NotificationHelper notificationHelper = new NotificationHelper();
+            NostraNotification notification = notificationHelper.getNotificationIfToBeSent(getIntent());
+            if (notification != null && !TextUtils.isEmpty(notification.getScreenName())) {
+
                 String screenName = notification.getScreenName();
                 Log.d("Notification", "ScreenName : " + screenName);
 
@@ -263,6 +275,7 @@ public class NostraHomeActivity extends NostraBaseActivity implements View.OnCli
 
                 } else if (screenName.equalsIgnoreCase(Constants.Notifications.SCREEN_RESULTS)) {
                     startActivity(notificationHelper.getResultsScreenIntent(this, notification));
+                    NostragamusAnalytics.getInstance().trackSource(Constants.AnalyticsCategory.RESULTS, Constants.AnalyticsClickLabels.NOTIFICATIONS);
 
                 } else if (screenName.equalsIgnoreCase(Constants.Notifications.SCREEN_CHALLENGE_HISTORY_WINNINGS)) {
                     startActivity(notificationHelper.getChallengeHistoryWinningsScreenIntent(this, notification));
@@ -279,6 +292,9 @@ public class NostraHomeActivity extends NostraBaseActivity implements View.OnCli
                 } else if (screenName.equalsIgnoreCase(Constants.Notifications.SCREEN_APP_UPDATE)) {
                     startActivity(notificationHelper.getAppUpdateScreenIntent(this, notification));
 
+                } else if (screenName.equalsIgnoreCase(Constants.Notifications.SCREEN_WHATS_NEW)) {
+                    startActivity(notificationHelper.getWhatsNewScreenIntent(this, notification));
+
                 } else if (screenName.equalsIgnoreCase(Constants.Notifications.SCREEN_WALLET_HISTORY)) {
                     startActivity(notificationHelper.getWalletHistoryScreenIntent(this, notification));
 
@@ -291,15 +307,81 @@ public class NostraHomeActivity extends NostraBaseActivity implements View.OnCli
                 } else if (screenName.equalsIgnoreCase(Constants.Notifications.SCREEN_CHALLENGE_HISTORY_GAMES)) {
                     startActivity(notificationHelper.getChallengeHistoryMatchesScreenIntent(this, notification));
 
+                } else if (screenName.equalsIgnoreCase(Constants.Notifications.SCREEN_CHALLENGE_HISTORY_LEADERBOARDS)) {
+                    startActivity(notificationHelper.getChallengeHistoryLeaderBoardsScreenIntent(this, notification));
+
                 } else if (screenName.equalsIgnoreCase(Constants.Notifications.SCREEN_WEB_VIEW)) {
                     startActivity(notificationHelper.getWebViewScreenIntent(this, notification));
 
                 } else if (screenName.equalsIgnoreCase(Constants.Notifications.SCREEN_SLIDES)) {
                     startActivity(notificationHelper.getSlidesScreenIntent(this, notification));
+
+                } else if (screenName.equalsIgnoreCase(Constants.Notifications.SCREEN_ANNOUNCEMENT)) {
+                    startActivity(notificationHelper.getAnnouncementScreenIntent(this, notification));
+
+                } else if (screenName.equalsIgnoreCase(Constants.Notifications.SCREEN_WALLET_HOME)) {
+                    startActivity(notificationHelper.getWalletHomeScreenIntent(this, notification));
+
+                } else if (screenName.equalsIgnoreCase(Constants.Notifications.SCREEN_KYC_DETAILS)) {
+                    startActivity(notificationHelper.getKYCScreenIntent(this, notification));
+
+                } else if (screenName.equalsIgnoreCase(Constants.Notifications.SCREEN_INPLAY_CONTEST)) {
+                    startActivity(notificationHelper.getInPlayContestScreenIntent(this, notification));
+
+                } else if (screenName.equalsIgnoreCase(Constants.Notifications.SCREEN_INPLAY_CONTEST_LEADERBOARDS)) {
+                    startActivity(notificationHelper.getInPlayContestLeaderBoardScreenIntent(this, notification));
+
+                } else if (screenName.equalsIgnoreCase(Constants.Notifications.SCREEN_POWERUP_TRANSACTION)) {
+                    startActivity(notificationHelper.getPowerUpTransactionScreenIntent(this, notification));
+
+                } else if (screenName.equalsIgnoreCase(Constants.Notifications.NONE)) {
+                            /* NO CLICK EVENT SHOULD HAPPEN */
                 }
 
-            } else {
-                Log.d("Notification", "User Logged out, can not launch Home!");
+            } else {    // Keep this always into else part
+                checkForPrivateContest();
+            }
+        } else {
+            Log.d("Notification", "User Logged out, can not launch Home!");
+        }
+    }
+
+    private void checkForPrivateContest() {
+        if (!TextUtils.isEmpty(NostragamusDataHandler.getInstance().getPrivateContestInvitationCode()) &&
+                NostragamusDataHandler.getInstance().isLoggedInUser()) {
+
+            /* If Getting disclaimerAccepted AND otpVerified to true; then only launch private contest */
+            UserInfo userInfo = Nostragamus.getInstance().getServerDataManager().getUserInfo();
+            if (userInfo != null && userInfo.getInfoDetails() != null &&
+                    userInfo.getInfoDetails().getDisclaimerAccepted() != null && userInfo.getInfoDetails().getDisclaimerAccepted() &&
+                    userInfo.getInfoDetails().getOtpVerified() != null && userInfo.getInfoDetails().getOtpVerified() &&
+                    !Nostragamus.getInstance().getServerDataManager().isNewUser() /* Totally NewUser from server and first time only */) {
+
+            /* Get dataDto  */
+                ShareDetailsDto shareDetailsDto = new Gson().fromJson(
+                        NostragamusDataHandler.getInstance().getPrivateContestInvitationCode(), ShareDetailsDto.class);
+
+                if (shareDetailsDto != null && !TextUtils.isEmpty(shareDetailsDto.getPrivateCode())) {
+
+                    Log.d(TAG, "Code Private contest Invitation code : " + shareDetailsDto.getPrivateCode());
+
+                    JoinPrivateContestWithInviteCodeScreenData privateCodeScreenData = new JoinPrivateContestWithInviteCodeScreenData();
+                    privateCodeScreenData.setPrivateCode(shareDetailsDto.getPrivateCode());
+                    privateCodeScreenData.setShareDetails(shareDetailsDto);
+
+                    Bundle bundle = new Bundle();
+                    bundle.putParcelable(Constants.BundleKeys.JOIN_PRIVATE_CONTEST_WITH_INVITATION_CODE_SCREEN_DATA,
+                            Parcels.wrap(privateCodeScreenData));
+
+                    Intent intent = new Intent(this, JoinPrivateContestWithInviteCodeActivity.class);
+                    intent.putExtras(bundle);
+                    startActivity(intent);
+
+                /* As private contest action is going to be taken now, remove this data ;
+                    so that next time the same action not be taken */
+                    NostragamusDataHandler.getInstance().setPrivateContestInvitationCode("");
+
+                }
             }
         }
     }
@@ -316,14 +398,15 @@ public class NostraHomeActivity extends NostraBaseActivity implements View.OnCli
         mNewChallengesBottomButton = (LinearLayout) findViewById(R.id.home_challenges_tab_layout);
         mInPlayBottomButton = (LinearLayout) findViewById(R.id.home_inPlay_tab_layout);
         mCompletedChallengeBottomButton = (LinearLayout) findViewById(R.id.home_completed_tab_layout);
-        mGroupBottomButton = (LinearLayout) findViewById(R.id.home_group_tab_layout);
+        mRecentActivityBottomButton = (LinearLayout) findViewById(R.id.home_recent_activity_tab_layout);
         mProfileBottomButton = (LinearLayout) findViewById(R.id.home_profile_tab_layout);
         mUnPlayedMatchCounterTextView = (TextView) findViewById(R.id.home_inPlay_matches_count);
+        mUnReadRecentActivityIcon = (TextView) findViewById(R.id.home_unready_recent_activity);
 
         mNewChallengesBottomButton.setOnClickListener(this);
         mInPlayBottomButton.setOnClickListener(this);
         mCompletedChallengeBottomButton.setOnClickListener(this);
-        mGroupBottomButton.setOnClickListener(this);
+        mRecentActivityBottomButton.setOnClickListener(this);
         mProfileBottomButton.setOnClickListener(this);
     }
 
@@ -342,8 +425,8 @@ public class NostraHomeActivity extends NostraBaseActivity implements View.OnCli
                 onHistoryClicked(getIntent().getExtras());
                 break;
 
-            case R.id.home_group_tab_layout:
-                onGroupClicked(getIntent().getExtras());
+            case R.id.home_recent_activity_tab_layout:
+                onRecentActivityClicked(getIntent().getExtras());
                 break;
 
             case R.id.home_profile_tab_layout:
@@ -356,7 +439,7 @@ public class NostraHomeActivity extends NostraBaseActivity implements View.OnCli
         mNewChallengesBottomButton.setSelected(true);
         mInPlayBottomButton.setSelected(false);
         mCompletedChallengeBottomButton.setSelected(false);
-        mGroupBottomButton.setSelected(false);
+        mRecentActivityBottomButton.setSelected(false);
         mProfileBottomButton.setSelected(false);
     }
 
@@ -364,7 +447,7 @@ public class NostraHomeActivity extends NostraBaseActivity implements View.OnCli
         mInPlayBottomButton.setSelected(true);
         mNewChallengesBottomButton.setSelected(false);
         mCompletedChallengeBottomButton.setSelected(false);
-        mGroupBottomButton.setSelected(false);
+        mRecentActivityBottomButton.setSelected(false);
         mProfileBottomButton.setSelected(false);
     }
 
@@ -372,12 +455,12 @@ public class NostraHomeActivity extends NostraBaseActivity implements View.OnCli
         mInPlayBottomButton.setSelected(false);
         mNewChallengesBottomButton.setSelected(false);
         mCompletedChallengeBottomButton.setSelected(true);
-        mGroupBottomButton.setSelected(false);
+        mRecentActivityBottomButton.setSelected(false);
         mProfileBottomButton.setSelected(false);
     }
 
     protected void setGroupSelected() {
-        mGroupBottomButton.setSelected(true);
+        mRecentActivityBottomButton.setSelected(true);
         mNewChallengesBottomButton.setSelected(false);
         mCompletedChallengeBottomButton.setSelected(false);
         mInPlayBottomButton.setSelected(false);
@@ -389,8 +472,18 @@ public class NostraHomeActivity extends NostraBaseActivity implements View.OnCli
         mNewChallengesBottomButton.setSelected(false);
         mCompletedChallengeBottomButton.setSelected(false);
         mInPlayBottomButton.setSelected(false);
-        mGroupBottomButton.setSelected(false);
+        mRecentActivityBottomButton.setSelected(false);
     }
+
+    private void setRecentActivitySelected() {
+        mRecentActivityBottomButton.setSelected(true);
+        mNewChallengesBottomButton.setSelected(false);
+        mCompletedChallengeBottomButton.setSelected(false);
+        mInPlayBottomButton.setSelected(false);
+        mProfileBottomButton.setSelected(false);
+        hideRecentActivityUnreadIcon();
+    }
+
 
     private void onNavigationClicked(Bundle args) {
         setProfileSelected();
@@ -398,11 +491,12 @@ public class NostraHomeActivity extends NostraBaseActivity implements View.OnCli
         NostragamusAnalytics.getInstance().trackScreenShown(Constants.AnalyticsCategory.HOME_SCREEN, Constants.AnalyticsClickLabels.NAVIGATION);
     }
 
-    private void onGroupClicked(Bundle args) {
-        setGroupSelected();
-        loadGroupFragment(args);
-        NostragamusAnalytics.getInstance().trackScreenShown(Constants.AnalyticsCategory.HOME_SCREEN, Constants.AnalyticsClickLabels.GROUPS);
+    private void onRecentActivityClicked(Bundle args) {
+        setRecentActivitySelected();
+        loadRecentActivityFragment(args);
+        NostragamusAnalytics.getInstance().trackScreenShown(Constants.AnalyticsCategory.HOME_SCREEN, Constants.AnalyticsClickLabels.RECENT_ACTIVITY);
     }
+
 
     private void onInPlayClicked(Bundle args) {
         setInPlaySelected();
@@ -444,6 +538,14 @@ public class NostraHomeActivity extends NostraBaseActivity implements View.OnCli
             newChallengesFragment.setArguments(args);
         }
         FragmentHelper.replaceFragment(this, R.id.fragment_container, newChallengesFragment);
+    }
+
+    private void loadRecentActivityFragment(Bundle args) {
+        RecentActivityFragment recentActivityFragment = new RecentActivityFragment();
+        if (args != null) {
+            recentActivityFragment.setArguments(args);
+        }
+        FragmentHelper.replaceFragment(this, R.id.fragment_container, recentActivityFragment);
     }
 
     private void loadHistoryFragment(Bundle args) {
@@ -545,17 +647,7 @@ public class NostraHomeActivity extends NostraBaseActivity implements View.OnCli
 
                     com.jeeva.android.Log.d(TAG, "[onBoard] Paid app..");
                     performOnBoardFlow(userInfo);
-
-                    /* Get Moengage details JsonObject from server and Send Key/Value to Moengage  */
-                    /*  Gson gson = new Gson();
-                    String json = gson.toJson(userInfo.getUserPaymentInfo().getBank());
-
-                    // Convert JSON string back to Map.
-                    Type type = new TypeToken<Map<String, String>>(){}.getType();
-                    Map<String, String> map = gson.fromJson(json, type);
-                    for (String key : map.keySet()) {
-                        System.out.println(key + " = " + map.get(key));
-                    } */
+                    updateRecentActivityCounter(userInfo);
 
                 } else {
                     Log.d(TAG, "[onBoard] User Payment info null");
@@ -590,6 +682,8 @@ public class NostraHomeActivity extends NostraBaseActivity implements View.OnCli
                     Boolean otpVerified = userInfo.getInfoDetails().getOtpVerified();
                     if (otpVerified == null || !otpVerified) {
                         launchVerifyOTP();
+                    } else {
+                        checkForPrivateContest();
                     }
                 }
             }
@@ -657,6 +751,46 @@ public class NostraHomeActivity extends NostraBaseActivity implements View.OnCli
     public void updateInplayCounter() {
         updateUnPlayedMatchCount();
     }
+
+    @Override
+    public void updateRecentActivityUnReadCounter(UserInfo updatedUserInfo) {
+        updateRecentActivityCounter(updatedUserInfo);
+    }
+
+    private void updateRecentActivityCounter(UserInfo userInfo) {
+        if (userInfo != null) {
+            if (userInfo.isHasUnreadActivities()) {
+                Animation anim = new ScaleAnimation(0f, 1f, 0f, 1f,
+                        Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+                anim.setFillAfter(true);
+                anim.setDuration(NAV_BAR_COUNTER_BADGE_ANIM_TIME);
+                mUnReadRecentActivityIcon.startAnimation(anim);
+                mUnReadRecentActivityIcon.setVisibility(View.VISIBLE);
+            } else {
+                if (mUnReadRecentActivityIcon.getVisibility() == View.VISIBLE) {
+                    Animation anim = new ScaleAnimation(1f, 0f, 1f, 0f,
+                            Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+                    anim.setDuration(NAV_BAR_COUNTER_BADGE_ANIM_TIME);
+                    mUnReadRecentActivityIcon.startAnimation(anim);
+                }
+
+                mUnReadRecentActivityIcon.setVisibility(View.INVISIBLE);
+            }
+        }
+    }
+
+    private void hideRecentActivityUnreadIcon() {
+
+        if (mUnReadRecentActivityIcon.getVisibility() == View.VISIBLE) {
+            Animation anim = new ScaleAnimation(1f, 0f, 1f, 0f,
+                    Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+            anim.setDuration(NAV_BAR_COUNTER_BADGE_ANIM_TIME);
+            mUnReadRecentActivityIcon.startAnimation(anim);
+        }
+
+        mUnReadRecentActivityIcon.setVisibility(View.INVISIBLE);
+    }
+
 
     private final BroadcastReceiver notificationReceiver = new BroadcastReceiver() {
         @Override

@@ -1,6 +1,9 @@
 package in.sportscafe.nostragamus.webservice;
 
 
+import com.google.android.gms.common.api.Api;
+
+import java.io.File;
 import java.util.List;
 
 import in.sportscafe.nostragamus.module.challengeCompleted.dto.CompletedMatchesResponse;
@@ -8,7 +11,9 @@ import in.sportscafe.nostragamus.module.challengeCompleted.dto.CompletedResponse
 import in.sportscafe.nostragamus.module.challengeRewards.dto.RewardsResponse;
 import in.sportscafe.nostragamus.module.challengeRules.dto.RulesResponse;
 import in.sportscafe.nostragamus.module.common.ApiResponse;
-import in.sportscafe.nostragamus.module.navigation.help.howtoplay.dto.HowToPlayDetails;
+import in.sportscafe.nostragamus.module.privateContest.ui.createContest.dto.PrivateContestPrizeTemplateResponse;
+import in.sportscafe.nostragamus.module.privateContest.ui.createContest.dto.CreatePrivateContestRequest;
+import in.sportscafe.nostragamus.module.privateContest.ui.createContest.dto.CreatePrivateContestResponse;
 import in.sportscafe.nostragamus.module.navigation.help.howtoplay.dto.HowToPlayResponse;
 import in.sportscafe.nostragamus.module.navigation.wallet.addMoney.dto.AddMoneyPaymentCouponRequest;
 import in.sportscafe.nostragamus.module.navigation.wallet.addMoney.dto.AddMoneyPaymentCouponResponse;
@@ -17,6 +22,8 @@ import in.sportscafe.nostragamus.module.navigation.wallet.addMoney.dto.CashFreeG
 import in.sportscafe.nostragamus.module.navigation.wallet.addMoney.dto.VerifyPaymentCouponRequest;
 import in.sportscafe.nostragamus.module.navigation.wallet.addMoney.dto.VerifyPaymentCouponResponse;
 import in.sportscafe.nostragamus.module.navigation.wallet.addMoney.dto.VerifyPaymentResponse;
+import in.sportscafe.nostragamus.module.navigation.wallet.doKYC.dto.KYCPANImageResponse;
+import in.sportscafe.nostragamus.module.navigation.wallet.doKYC.dto.KYCResponse;
 import in.sportscafe.nostragamus.module.newChallenges.dto.BannerResponseData;
 import in.sportscafe.nostragamus.module.nostraHome.dto.TimeResponse;
 import in.sportscafe.nostragamus.module.common.dto.MatchesResponse;
@@ -65,6 +72,8 @@ import in.sportscafe.nostragamus.module.prediction.powerupBank.dto.PowerUpBankSt
 import in.sportscafe.nostragamus.module.prediction.powerupBank.dto.PowerupBankStatusRequest;
 import in.sportscafe.nostragamus.module.prediction.powerupBank.dto.TransferPowerUpFromBankRequest;
 import in.sportscafe.nostragamus.module.prediction.powerupBank.dto.TransferPowerUpFromBankResponse;
+import in.sportscafe.nostragamus.module.recentActivity.dto.RecentActivityResponse;
+import in.sportscafe.nostragamus.module.privateContest.ui.joinPrivateContest.dto.FindPrivateContestResponse;
 import in.sportscafe.nostragamus.module.settings.app.dto.AppSettingsResponse;
 import in.sportscafe.nostragamus.module.store.buy.BuyRequest;
 import in.sportscafe.nostragamus.module.store.buy.BuyResponse;
@@ -91,6 +100,7 @@ import in.sportscafe.nostragamus.module.user.myprofile.edit.VerifyReferralCodeRe
 import in.sportscafe.nostragamus.module.user.playerprofile.dto.PlayerInfoResponse;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
@@ -169,7 +179,7 @@ public interface NostragamusService {
     Call<AllGroupsResponse> getAllGroups();
 
     @GET("v1/setting/getSettingsBody")
-    Call<AppSettingsResponse> getAppSettings(@Query("unique_id") String uniqueId,@Query("app_type") String flavor);
+    Call<AppSettingsResponse> getAppSettings(@Query("unique_id") String uniqueId, @Query("app_type") String flavor);
 
     /*@POST("v2/game/users/poll")
     Call<AudiencePollResponse> getAudiencePoll(@Body AudiencePollRequest request);*/
@@ -303,7 +313,7 @@ public interface NostragamusService {
     Call<UserReferralResponse> getUserReferralInfo(@Query("app_type") String flavor);
 
     @GET("v2/game/getReferralTransactions")
-    Call<UserReferralHistoryResponse> getUserReferralHistory(@Query("app_type") String flavor,@Query("transaction_type")  String transactionType);
+    Call<UserReferralHistoryResponse> getUserReferralHistory(@Query("app_type") String flavor, @Query("transaction_type") String transactionType);
 
     @GET("v2/game/verifyReferralCode")
     Call<VerifyReferralCodeResponse> verifyReferralCode(@Query("referral_code") String referralCode);
@@ -351,7 +361,7 @@ public interface NostragamusService {
     Call<List<InPlayResponse>> getInPlayChallenges();
 
     @GET("v3/game/challenges/rewards")
-    Call<RewardsResponse> getRewardDetails(@Query("room_id") Integer roomId,@Query("config_id") Integer configId);
+    Call<RewardsResponse> getRewardDetails(@Query("room_id") Integer roomId, @Query("config_id") Integer configId);
 
     @GET("v3/game/challenges/contestRooms")
     Call<ContestEntriesResponse> getContestEntries(@Query("config_id") Integer contestId);
@@ -416,4 +426,26 @@ public interface NostragamusService {
 
     @GET("v3/game/slides")
     Call<HowToPlayResponse> getHowToPlayData(@Query("slide_id") String slideId);
+
+    @GET("v3/game/users/activities")
+    Call<RecentActivityResponse> getRecentActivityData();
+
+    @Multipart
+    @POST("v3/game/upload")
+    Call<ApiResponse> addUserPANCardDetails(@Part MultipartBody.Part file, @Part("panNumber") RequestBody panNumber, @Part("fullName") RequestBody userName, @Part("dateOfBirth") RequestBody dob);
+
+    @GET("v3/game/getStatus")
+    Call<KYCResponse> getKYCUserDetails();
+
+    @GET("v3/game/getUploadedDoc")
+    Call<ResponseBody> getKYCPANImage();
+
+    @POST("/v3/game/challenges/createPvtContest")
+    Call<CreatePrivateContestResponse> createPrivateContest(@Body CreatePrivateContestRequest request);
+
+    @GET("/v3/game/challenges/getPvtTemplates")
+    Call<List<PrivateContestPrizeTemplateResponse>> getPrivateContestPrizeTemplates();
+
+    @GET("/v3/game/challenges/getPvtContest")
+    Call<FindPrivateContestResponse> getPrivateContestDetails(@Query("private_code") String privateCode);
 }

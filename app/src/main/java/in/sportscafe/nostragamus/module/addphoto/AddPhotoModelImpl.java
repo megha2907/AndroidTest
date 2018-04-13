@@ -28,7 +28,7 @@ public class AddPhotoModelImpl implements AddPhotoModel, ImageHandler.ProcessIma
 
     private static final String KEY_CAMERA_DATA = "data";
 
-    private static final int PROFILE_PIC_MAX_SIZE = 500;
+    private static final int PROFILE_PIC_MAX_SIZE = 1000;
 
     private OnAddPhotoModelListener mAddPhotoModelListener;
 

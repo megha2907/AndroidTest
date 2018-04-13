@@ -4,8 +4,13 @@ import com.google.gson.annotations.SerializedName;
 
 import org.parceler.Parcel;
 
+import java.util.HashMap;
+
+import in.sportscafe.nostragamus.Constants;
+import in.sportscafe.nostragamus.module.contest.dto.PowerUpInfo;
 import in.sportscafe.nostragamus.module.inPlay.dto.InPlay;
 import in.sportscafe.nostragamus.module.inPlay.dto.InPlayContestDto;
+import in.sportscafe.nostragamus.module.navigation.powerupbank.earnmorepowerups.PowerUp;
 import in.sportscafe.nostragamus.webservice.UserReferralInfo;
 
 /**
@@ -53,9 +58,21 @@ public class NostraNotificationData {
     @SerializedName("slide_id")
     private String slideId;
 
+    @SerializedName("announcement_title")
+    private String announcementTitle;
+
+    @SerializedName("announcement_desc")
+    private String announcementDesc;
+
+    @SerializedName("announcement_time")
+    private String announcementTime;
+
     /* This is used for InApp Notification , where notification redirect to appropriate game screen */
     @SerializedName("inPlayContestDto")
     private InPlayContestDto inPlayContestDto;
+
+    @SerializedName("powerups")
+    private HashMap<String, Integer> powerUps = new HashMap<>();
 
     public int getChallengeId() {
         return challengeId;
@@ -168,4 +185,37 @@ public class NostraNotificationData {
     public void setSlideId(String slideId) {
         this.slideId = slideId;
     }
+
+    public String getAnnouncementTitle() {
+        return announcementTitle;
+    }
+
+    public void setAnnouncementTitle(String announcementTitle) {
+        this.announcementTitle = announcementTitle;
+    }
+
+    public String getAnnouncementDesc() {
+        return announcementDesc;
+    }
+
+    public void setAnnouncementDesc(String announcementDesc) {
+        this.announcementDesc = announcementDesc;
+    }
+
+    public String getAnnouncementTime() {
+        return announcementTime;
+    }
+
+    public void setAnnouncementTime(String announcementTime) {
+        this.announcementTime = announcementTime;
+    }
+
+    public HashMap<String, Integer> getPowerUps() {
+        return powerUps;
+    }
+
+    public void setPowerUps(HashMap<String, Integer> powerUps) {
+        this.powerUps = powerUps;
+    }
+
 }

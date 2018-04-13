@@ -196,7 +196,7 @@
                         android:layout_height="@dimen/dim_40"
                         android:layout_alignParentRight="true"
                         android:layout_marginLeft="@dimen/dim_10"
-                        android:background="@drawable/blue_button_selector"
+                        android:background="@drawable/green_button_selector"
                         android:gravity="center"
                         android:paddingBottom="@dimen/dim_3"
                         android:paddingTop="@dimen/dp_0"

@@ -14,6 +14,9 @@ public class ContestRoomEntryDto {
     @SerializedName("user_photo")
     private String userPicUrl;
 
+    @SerializedName("creator")
+    private boolean isPrivateContestCreator = false;
+
     public String getUserName() {
         return userName;
     }
@@ -28,5 +31,13 @@ public class ContestRoomEntryDto {
 
     public void setUserPicUrl(String userPicUrl) {
         this.userPicUrl = userPicUrl;
+    }
+
+    public boolean isPrivateContestCreator() {
+        return isPrivateContestCreator;
+    }
+
+    public void setPrivateContestCreator(boolean privateContestCreator) {
+        isPrivateContestCreator = privateContestCreator;
     }
 }

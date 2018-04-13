@@ -36,6 +36,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Contest Available"
+                android:maxLength="30"
+                android:ellipsize="end"
                 android:textColor="@color/white"
                 android:textSize="@dimen/sp_14"
                 app:typeface="lato_regular" />
@@ -45,7 +47,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/toolbar_heading_one"
-                android:text="India vs Australia T20 Challenge"
+                android:text=""
+                android:maxLength="25"
+                android:ellipsize="end"
                 android:textColor="@color/white_60"
                 android:textSize="@dimen/sp_12"
                 app:typeface="lato_regular" />

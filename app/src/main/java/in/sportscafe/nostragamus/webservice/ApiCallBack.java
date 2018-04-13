@@ -1,5 +1,9 @@
 package in.sportscafe.nostragamus.webservice;
 
+import com.crashlytics.android.Crashlytics;
+import com.google.gson.Gson;
+import com.jeeva.android.Log;
+
 import in.sportscafe.nostragamus.Nostragamus;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -26,6 +30,16 @@ public abstract class ApiCallBack<T> implements Callback<T> {
 
             default:
                 break;
+        }
+
+        try {
+            if (response.isSuccessful() && response.body() != null && response.body() != null && call != null) {
+                Crashlytics.log("Api Call:-->" + String.valueOf(call.request().url()) +
+                        "\nTimeStamp:-->" + Nostragamus.getInstance().getServerTime()
+                        + "\nResponse:-->" + new Gson().toJson(response.body()));
+            }
+        } catch (Exception e) {
+            Log.e("Error", "Something went wrong with Crashlytics log");
         }
     }
 

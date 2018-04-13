@@ -35,7 +35,7 @@ public class JoinContestHelper {
         void lowWalletBalance(JoinContestData joinContestData);
         void joinContestSuccess(JoinContestData joinContestData, String orderId);
         void onApiFailure();
-        void onServerReturnedError(String msg);
+        void onServerReturnedError(String msg, int errorCode);
         void hideProgressBar();
         void showProgressBar();
     }
@@ -144,9 +144,9 @@ public class JoinContestHelper {
             }
 
             @Override
-            public void onServerReturnedError(String msg) {
+            public void onServerReturnedError(String msg, int errorCode) {
                 if (mListener != null) {
-                    mListener.onServerReturnedError(msg);
+                    mListener.onServerReturnedError(msg, errorCode);
                 }
             }
 

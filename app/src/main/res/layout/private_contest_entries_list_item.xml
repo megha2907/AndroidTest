@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/dim_30"
+    android:id="@+id/private_contest_list_item_parent"
+    android:paddingLeft="@dimen/dim_12"
+    android:paddingRight="@dimen/dim_12"
+    android:gravity="center_vertical">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_alignParentLeft="true">
+
+        <com.jeeva.android.widgets.HmImageView
+            android:id="@+id/entry_user_photo"
+            android:layout_width="@dimen/dim_20"
+            android:layout_height="@dimen/dim_20"
+            android:layout_marginLeft="@dimen/dim_12"/>
+
+        <com.jeeva.android.widgets.customfont.CustomTextView
+            android:id="@+id/entry_user_nick_textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:textSize="@dimen/sp_12"
+            app:typeface="lato_regular"
+            android:layout_marginLeft="@dimen/dim_10"/>
+
+    </LinearLayout>
+
+    <com.jeeva.android.widgets.customfont.CustomTextView
+        android:id="@+id/entry_user_creator_textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/white"
+        android:gravity="center"
+        android:text="Contest Creator"
+        android:layout_gravity="center"
+        android:textSize="@dimen/sp_12"
+        app:typeface="lato_regular"
+        android:layout_alignParentRight="true"
+        android:visibility="gone"/>
+
+</RelativeLayout>

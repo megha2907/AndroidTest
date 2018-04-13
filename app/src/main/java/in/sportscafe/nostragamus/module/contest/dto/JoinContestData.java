@@ -17,8 +17,14 @@ public class JoinContestData {
     private int pseudoRoomId;
     private String contestType;
     private String contestName;
+    private int privateContestEntries;
+    private String challengeStartTime;
+    private int prizeMoney;
+    private String privateContestTemplateId;
+    private boolean privateContestTop1Wins;
 
     private boolean shouldScrollContestsInPlay = true;
+    private boolean shouldShowPrivateContestCreatedMsg = false;
 
     public int getChallengeId() {
         return challengeId;
@@ -100,5 +106,53 @@ public class JoinContestData {
         this.contestName = contestName;
     }
 
+    public int getPrivateContestEntries() {
+        return privateContestEntries;
+    }
 
+    public void setPrivateContestEntries(int privateContestEntries) {
+        this.privateContestEntries = privateContestEntries;
+    }
+
+    public String getChallengeStartTime() {
+        return challengeStartTime;
+    }
+
+    public void setChallengeStartTime(String challengeStartTime) {
+        this.challengeStartTime = challengeStartTime;
+    }
+
+    public int getPrizeMoney() {
+        return prizeMoney;
+    }
+
+    public void setPrizeMoney(int prizeMoney) {
+        this.prizeMoney = prizeMoney;
+    }
+
+
+
+    public String getPrivateContestTemplateId() {
+        return privateContestTemplateId;
+    }
+
+    public void setPrivateContestTemplateId(String privateContestTemplateId) {
+        this.privateContestTemplateId = privateContestTemplateId;
+    }
+
+    public boolean isShouldShowPrivateContestCreatedMsg() {
+        return shouldShowPrivateContestCreatedMsg;
+    }
+
+    public void setShouldShowPrivateContestCreatedMsg(boolean shouldShowPrivateContestCreatedMsg) {
+        this.shouldShowPrivateContestCreatedMsg = shouldShowPrivateContestCreatedMsg;
+    }
+
+    public boolean isPrivateContestTop1Wins() {
+        return privateContestTop1Wins;
+    }
+
+    public void setPrivateContestTop1Wins(boolean privateContestTop1Wins) {
+        this.privateContestTop1Wins = privateContestTop1Wins;
+    }
 }

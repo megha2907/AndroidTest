@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -13,6 +14,7 @@ import java.util.ArrayList;
 
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.contest.dto.ContestType;
+import in.sportscafe.nostragamus.module.privateContest.ui.PrivateContestViewPagerFragment;
 
 /**
  * Created by sandip on 01/09/17.
@@ -20,9 +22,9 @@ import in.sportscafe.nostragamus.module.contest.dto.ContestType;
 
 public class ContestViewPagerAdapter extends FragmentStatePagerAdapter {
 
-    ArrayList<ContestViewPagerFragment> mContestFragmentList;
+    ArrayList<Fragment> mContestFragmentList;
 
-    public ContestViewPagerAdapter(FragmentManager fm, ArrayList<ContestViewPagerFragment> fragments) {
+    public ContestViewPagerAdapter(FragmentManager fm, ArrayList<Fragment> fragments) {
         super(fm);
         mContestFragmentList = fragments;
     }
@@ -42,15 +44,29 @@ public class ContestViewPagerAdapter extends FragmentStatePagerAdapter {
 
     public View getTabView(Context context, int position) {
         if (mContestFragmentList != null && mContestFragmentList.size() > position) {
-            ContestType contestType = mContestFragmentList.get(position).getContestType();
-            if (contestType != null) {
-                LinearLayout parentLayout = (LinearLayout) LayoutInflater.from(context).inflate(R.layout.contest_tab, null);
+            ContestType contestType = null;
+            LinearLayout parentLayout = null;
 
-                TextView contestCountTextView = (TextView) parentLayout.findViewById(R.id.contest_tab_count_textView);
-                contestCountTextView.setText(String.valueOf(contestType.getContestCount()));
+            if (mContestFragmentList.get(position) instanceof ContestViewPagerFragment) {
+                contestType = ((ContestViewPagerFragment) mContestFragmentList.get(position)).getContestType();
+                parentLayout = (LinearLayout) LayoutInflater.from(context).inflate(R.layout.contest_tab, null);
 
-                TextView contestTypeTextView = (TextView) parentLayout.findViewById(R.id.contest_type_tab_textView);
-                contestTypeTextView.setText(contestType.getCategoryName());
+            } else if (mContestFragmentList.get(position) instanceof PrivateContestViewPagerFragment) {
+                contestType = ((PrivateContestViewPagerFragment) mContestFragmentList.get(position)).getContestType();
+                parentLayout = (LinearLayout) LayoutInflater.from(context).inflate(R.layout.private_contest_tab, null);
+
+            }
+
+            if (contestType != null && parentLayout != null) {
+                if (contestType.getContestCount() > 0) {
+                    TextView contestCountTextView = (TextView) parentLayout.findViewById(R.id.contest_tab_count_textView);
+                    contestCountTextView.setText(String.valueOf(contestType.getContestCount()));
+                }
+
+                if (!TextUtils.isEmpty(contestType.getCategoryName())) {
+                    TextView contestTypeTextView = (TextView) parentLayout.findViewById(R.id.contest_type_tab_textView);
+                    contestTypeTextView.setText(contestType.getCategoryName());
+                }
 
                 return parentLayout;
             }

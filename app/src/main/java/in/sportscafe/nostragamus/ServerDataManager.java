@@ -14,6 +14,7 @@ public class ServerDataManager {
     private UserInfo userInfo;
     private AppSettingsResponse appSettingsResponse;
     private String gcmDeviceToken="";
+    private boolean isNewUser = false;
 
     public UserWalletResponse getUserWalletResponse() {
         return userWalletResponse;
@@ -47,5 +48,11 @@ public class ServerDataManager {
         this.gcmDeviceToken = gcmDeviceToken;
     }
 
+    public boolean isNewUser() {
+        return isNewUser;
+    }
 
+    public void setNewUser(boolean newUser) {
+        isNewUser = newUser;
+    }
 }

@@ -26,12 +26,13 @@ import in.sportscafe.nostragamus.module.challengeRules.RulesFragment;
 import in.sportscafe.nostragamus.module.common.NostraBaseFragment;
 import in.sportscafe.nostragamus.module.contest.dto.PoolPrizeEstimationScreenData;
 import in.sportscafe.nostragamus.module.contest.dto.bumper.BumperPrizesEstimationScreenData;
+import in.sportscafe.nostragamus.module.newChallenges.helpers.DateTimeHelper;
+import in.sportscafe.nostragamus.module.privateContest.ui.PrivateContestInPlayInviteFragment;
 import in.sportscafe.nostragamus.module.contest.ui.bumperContest.BumperPrizesEstimationFragment;
 import in.sportscafe.nostragamus.module.contest.ui.poolContest.PoolPrizesEstimationFragment;
 import in.sportscafe.nostragamus.module.contest.ui.DetailScreensLaunchRequest;
 import in.sportscafe.nostragamus.module.inPlay.dto.InPlayContestDto;
 import in.sportscafe.nostragamus.module.inPlay.ui.InPlayMatchesPagerFragment;
-import in.sportscafe.nostragamus.module.newChallenges.helpers.DateTimeHelper;
 import in.sportscafe.nostragamus.module.user.leaderboard.LeaderBoardFragment;
 
 /**
@@ -129,6 +130,10 @@ public class InPlayContestDetailsFragment extends NostraBaseFragment implements 
                     case DetailScreensLaunchRequest.MATCHES_RULES_SCREEN:
                         mViewPager.setCurrentItem(3);   // Fourth TAB is rules
                         break;
+
+                    case DetailScreensLaunchRequest.MATCHES_INVITE_PRIVATE_CONTEST_SCREEN:
+                        mViewPager.setCurrentItem(4);   // Fifth TAB is Invite tab for Private contests
+                        break;
                 }
             }
         }
@@ -152,12 +157,24 @@ public class InPlayContestDetailsFragment extends NostraBaseFragment implements 
             RulesFragment rulesFragment = RulesFragment.newInstance(contestDto.getContestId());
             mViewPagerAdapter.addFragment(rulesFragment, Constants.ContestDetailsTabs.RULES);
 
+            /* If contest_type is private AND challenge not started AND share_tab is true then show INVITE tab */
+            if (!TextUtils.isEmpty(contestDto.getContestType()) &&
+                    contestDto.getContestType().equalsIgnoreCase(Constants.ContestType.PRIVATE) &&
+                    !TextUtils.isEmpty(contestDto.getChallengeStartTime()) &&
+                    !DateTimeHelper.isMatchStarted(contestDto.getChallengeStartTime()) &&
+                    contestDto.isShouldShowShareTab()) {
+
+                PrivateContestInPlayInviteFragment fragment = new PrivateContestInPlayInviteFragment();
+                fragment.setInplayContestDto(contestDto);
+                mViewPagerAdapter.addFragment(fragment, Constants.ContestDetailsTabs.INVITE);
+            }
+
             mViewPager.setAdapter(mViewPagerAdapter);
             mViewPager.setOffscreenPageLimit(4);
 
             setTabLayout(mViewPager);
 
-            mViewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
                 public void onPageScrollStateChanged(int state) {
                 }
 
@@ -168,23 +185,29 @@ public class InPlayContestDetailsFragment extends NostraBaseFragment implements 
                     switch (position) {
                         case 0:
                             // First TAB is Games
-                            NostragamusAnalytics.getInstance().trackScreenShown(Constants.AnalyticsCategory.IN_PLAY_CONTEST_DETAILS,
+                            NostragamusAnalytics.getInstance().trackTabClicked(Constants.AnalyticsCategory.IN_PLAY_CONTEST_DETAILS,
                                     Constants.AnalyticsClickLabels.GAMES);
                             break;
                         case 1:
                             // Second TAB is Leaderboard
-                            NostragamusAnalytics.getInstance().trackScreenShown(Constants.AnalyticsCategory.IN_PLAY_CONTEST_DETAILS,
+                            NostragamusAnalytics.getInstance().trackTabClicked(Constants.AnalyticsCategory.IN_PLAY_CONTEST_DETAILS,
                                     Constants.AnalyticsClickLabels.LEADERBOARD);
                             break;
                         case 2:
                             // Third TAB is Prizes
-                            NostragamusAnalytics.getInstance().trackScreenShown(Constants.AnalyticsCategory.IN_PLAY_CONTEST_DETAILS,
+                            NostragamusAnalytics.getInstance().trackTabClicked(Constants.AnalyticsCategory.IN_PLAY_CONTEST_DETAILS,
                                     Constants.AnalyticsClickLabels.PRIZES);
                             break;
                         case 3:
                             // Fourth TAB is Rules
-                            NostragamusAnalytics.getInstance().trackScreenShown(Constants.AnalyticsCategory.IN_PLAY_CONTEST_DETAILS,
+                            NostragamusAnalytics.getInstance().trackTabClicked(Constants.AnalyticsCategory.IN_PLAY_CONTEST_DETAILS,
                                     Constants.AnalyticsClickLabels.RULES);
+                            break;
+
+                        case 4:
+                            // Fifth TAB is Invite
+                            NostragamusAnalytics.getInstance().trackTabClicked(Constants.AnalyticsCategory.IN_PLAY_CONTEST_DETAILS,
+                                    Constants.AnalyticsClickLabels.INVITE_PRIVATE_CONTEST);
                             break;
                     }
                 }
@@ -212,8 +235,7 @@ public class InPlayContestDetailsFragment extends NostraBaseFragment implements 
             fragment = new PoolPrizesEstimationFragment();
             fragment.setArguments(args);
 
-        }   /* BumperEstimation fragment for Bumper Contest AND if challenge-not started */
-        else if (contestDto!=null &&
+        }   /* BumperEstimation fragment for Bumper Contest AND if challenge-not started */ else if (contestDto != null &&
                 !TextUtils.isEmpty(contestDto.getContestMode()) &&
                 contestDto.getContestMode().equalsIgnoreCase(Constants.ContestType.BUMPER)) {
 

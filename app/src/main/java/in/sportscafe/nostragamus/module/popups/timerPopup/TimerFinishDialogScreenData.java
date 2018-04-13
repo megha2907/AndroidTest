@@ -13,6 +13,8 @@ public class TimerFinishDialogScreenData {
     private String message;
     private String subMessage;
     private String buttonText;
+    private int iconResource = 0;
+    private String iconImageUrl = "";
 
     public int getRequestCode() {
         return requestCode;
@@ -52,5 +54,21 @@ public class TimerFinishDialogScreenData {
 
     public void setButtonText(String buttonText) {
         this.buttonText = buttonText;
+    }
+
+    public int getIconResource() {
+        return iconResource;
+    }
+
+    public void setIconResource(int iconResource) {
+        this.iconResource = iconResource;
+    }
+
+    public String getIconImageUrl() {
+        return iconImageUrl;
+    }
+
+    public void setIconImageUrl(String iconImageUrl) {
+        this.iconImageUrl = iconImageUrl;
     }
 }

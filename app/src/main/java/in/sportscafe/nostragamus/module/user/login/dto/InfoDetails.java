@@ -49,6 +49,12 @@ public class InfoDetails {
     @SerializedName("wallet_created")
     private boolean isWalletCreated;
 
+    @SerializedName("kyc_status")
+    private String kycStatus;
+
+    @SerializedName("wallet_withdrawal_blocked")
+    private boolean withdrawalBlocked = false;
+
     @SerializedName("powerups")
     public HashMap<String, Integer> getPowerUps() {
         return powerUps;
@@ -157,6 +163,23 @@ public class InfoDetails {
     @SerializedName("otp_verified")
     public void setOtpVerified(Boolean otpVerified) {
         this.otpVerified = otpVerified;
+    }
+
+    @SerializedName("kyc_status")
+    public String getKycStatus() {
+        return kycStatus;
+    }
+    @SerializedName("kyc_status")
+    public void setKycStatus(String kycStatus) {
+        this.kycStatus = kycStatus;
+    }
+
+    public boolean isWithdrawalBlocked() {
+        return withdrawalBlocked;
+    }
+
+    public void setWithdrawalBlocked(boolean withdrawalBlocked) {
+        this.withdrawalBlocked = withdrawalBlocked;
     }
 
 

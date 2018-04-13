@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
 import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -16,7 +15,6 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.jeeva.android.Log;
@@ -42,15 +40,13 @@ import in.sportscafe.nostragamus.module.contest.dto.ContestType;
 import in.sportscafe.nostragamus.module.contest.dto.JoinContestData;
 import in.sportscafe.nostragamus.module.contest.helper.ContestFilterHelper;
 import in.sportscafe.nostragamus.module.contest.helper.JoinContestHelper;
+import in.sportscafe.nostragamus.module.privateContest.ui.PrivateContestViewPagerFragment;
 import in.sportscafe.nostragamus.module.contest.ui.viewPager.ContestViewPagerAdapter;
 import in.sportscafe.nostragamus.module.contest.ui.viewPager.ContestViewPagerFragment;
 import in.sportscafe.nostragamus.module.customViews.CustomSnackBar;
-import in.sportscafe.nostragamus.module.navigation.referfriends.ReferFriendActivity;
-import in.sportscafe.nostragamus.module.navigation.referfriends.ReferFriendFragmentListener;
 import in.sportscafe.nostragamus.module.navigation.wallet.WalletHelper;
 import in.sportscafe.nostragamus.module.navigation.wallet.addMoney.lowBalance.AddMoneyOnLowBalanceActivity;
 import in.sportscafe.nostragamus.module.newChallenges.helpers.DateTimeHelper;
-import in.sportscafe.nostragamus.module.newChallenges.ui.matches.NewChallengesMatchesFragment;
 import in.sportscafe.nostragamus.module.nostraHome.helper.TimerHelper;
 import in.sportscafe.nostragamus.module.nostraHome.ui.NostraHomeActivity;
 import in.sportscafe.nostragamus.module.popups.timerPopup.TimerFinishDialogHelper;
@@ -186,51 +182,68 @@ public class ContestFragment extends NostraBaseFragment implements View.OnClickL
         }
     }
 
-    private void showOnUi(List<ContestType> contestTypeList, List<Contest> contestList, int maxPowerUpTransferLimit) {
+    private void showOnUi(final List<ContestType> contestTypeList, final List<Contest> contestList, int maxPowerUpTransferLimit) {
         if (getView() != null && getActivity() != null && mContestScreenData != null) {
             if (contestTypeList != null && contestTypeList.size() > 0
                     && contestList != null && contestList.size() > 0) {
 
                 addChallengeDetailsIntoContest(contestList);
-                addReferCardIntoContestList(contestList);
 
                 TabLayout contestTabLayout = (TabLayout) getView().findViewById(R.id.contest_tabs);
-                ViewPager challengesViewPager = (ViewPager) getView().findViewById(R.id.contest_viewPager);
+                ViewPager contestViewPager = (ViewPager) getView().findViewById(R.id.contest_viewPager);
 
-                ArrayList<ContestViewPagerFragment> fragmentList = new ArrayList<>();
+                final ArrayList<Fragment> fragmentList = new ArrayList<>();
                 ContestFilterHelper filterHelper = new ContestFilterHelper();
                 ContestViewPagerFragment tabFragment = null;
 
                 /* For all the tabs */
                 for (int temp = 0; temp < contestTypeList.size(); temp++) {
                     ContestType contestType = contestTypeList.get(temp);
-                    tabFragment = new ContestViewPagerFragment();
-                    List<Contest> contestFiltered = null;
 
-                    if (contestType.getCategoryName().equalsIgnoreCase(ContestFilterHelper.JOINED_CONTEST)) {
-                        contestFiltered = filterHelper.getJoinedContests(contestList);
+                    if (contestType != null && !TextUtils.isEmpty(contestType.getCategoryName())) {
 
-                    } else {
-                        contestFiltered = filterHelper.getFilteredContestByType(contestType.getCategoryName(), contestList);
-                    }
+                        /* Filter list for each tab */
+                        if (contestType.getCategoryName().equalsIgnoreCase(ContestFilterHelper.PRIVATE_CONTEST_STR)) {
 
-                    if (contestFiltered != null) {
-                        int contestCount = getContestCounter(contestFiltered);
-                        if (contestCount > 0) {
-                            contestType.setContestCount(contestCount);
-                            tabFragment.onContestData(contestFiltered, mContestScreenData);
-                            tabFragment.setContestType(contestType);
-                            tabFragment.setMaxPowerupTransferLimit(maxPowerUpTransferLimit);
-                            fragmentList.add(tabFragment);
+                            /* NOTE : No filtered list required for this tab */
+
+                            contestType.setContestCount(0);
+
+                            PrivateContestViewPagerFragment privateFragment = new PrivateContestViewPagerFragment();
+                            privateFragment.setContestScreenData(mContestScreenData);
+                            privateFragment.setContestType(contestType);
+                            privateFragment.setMaxPowerupTransferLimit(maxPowerUpTransferLimit);
+                            fragmentList.add(privateFragment);
+
+                        } else {
+                            List<Contest> contestFiltered = null;
+                            tabFragment = new ContestViewPagerFragment();
+
+                            if (contestType.getCategoryName().equalsIgnoreCase(ContestFilterHelper.JOINED_CONTEST)) {
+                                contestFiltered = filterHelper.getJoinedContests(contestList);
+                            } else {
+                                contestFiltered = filterHelper.getFilteredContestByType(contestType.getCategoryName(), contestList);
+                            }
+
+                            if (contestFiltered != null && contestFiltered.size() > 0) {
+
+                                addReferCardIntoContestList(contestFiltered);
+
+                                contestType.setContestCount(getContestCounter(contestFiltered));
+                                tabFragment.onContestData(contestFiltered, mContestScreenData);
+                                tabFragment.setContestType(contestType);
+                                tabFragment.setMaxPowerupTransferLimit(maxPowerUpTransferLimit);
+                                fragmentList.add(tabFragment);
+                            }
                         }
                     }
                 }
 
                 ContestViewPagerAdapter viewPagerAdapter = new ContestViewPagerAdapter(
                         getActivity().getSupportFragmentManager(), fragmentList);
-                challengesViewPager.setAdapter(viewPagerAdapter);
+                contestViewPager.setAdapter(viewPagerAdapter);
 
-                contestTabLayout.setupWithViewPager(challengesViewPager);
+                contestTabLayout.setupWithViewPager(contestViewPager);
 
                 for (int temp = 0; temp < contestTabLayout.getTabCount(); temp++) {
                     TabLayout.Tab tab = contestTabLayout.getTabAt(temp);
@@ -239,7 +252,26 @@ public class ContestFragment extends NostraBaseFragment implements View.OnClickL
                     }
                 }
 
+                if (fragmentList.size() > 1) {
+                    contestViewPager.setCurrentItem(1);  // default tab should be non-Private contest tab
+                }
                 setValues(contestList);
+
+                /* track click event on contest type tabs */
+                contestViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+                    public void onPageScrollStateChanged(int state) {
+                    }
+
+                    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                    }
+
+                    public void onPageSelected(int position) {
+                        if (!contestTypeList.isEmpty() && contestTypeList != null && contestTypeList.get(position) != null) {
+                            NostragamusAnalytics.getInstance().trackTabClicked(Constants.AnalyticsCategory.CONTEST,
+                                    contestTypeList.get(position).getCategoryName());
+                        }
+                    }
+                });
 
             } else {
                 handleError(-1);
@@ -263,6 +295,7 @@ public class ContestFragment extends NostraBaseFragment implements View.OnClickL
         if (contestList.size() >= 1) {
             Contest referContest = new Contest();
             referContest.setContestItemType(ContestAdapterItemType.REFER_FRIEND_AD);
+            referContest.setPriority(-99999);   // Lowest ever
             contestList.add(referContest);
         }
     }
@@ -375,6 +408,7 @@ public class ContestFragment extends NostraBaseFragment implements View.OnClickL
                     joinContestData.setEntryFee(contest.getEntryFee());
                     joinContestData.setJoiContestDialogLaunchMode(CompletePaymentDialogFragment.DialogLaunchMode.JOINING_CHALLENGE_LAUNCH);
                     joinContestData.setContestName(contest.getConfigName());
+                    joinContestData.setPrizeMoney(contest.getPrizes());
 
                     if (contest.getContestType() != null) {
                         joinContestData.setContestType(contest.getContestType().getCategoryName());
@@ -423,11 +457,8 @@ public class ContestFragment extends NostraBaseFragment implements View.OnClickL
                                     CustomProgressbar.getProgressbar(getContext()).dismissProgress();
                                     onContestJoinedSuccessfully(contestJoinedSuccessfully);
 
-                                    NostragamusAnalytics.getInstance().trackClickEvent(Constants.AnalyticsCategory.CONTEST_JOINED,
-                                            String.valueOf(contestJoinedSuccessfully.getContestId()));
-
                                     if (contestJoinedSuccessfully != null) {
-                                        sendContestJoinedDataToAmplitude(contestJoinedSuccessfully,orderId);
+                                        sendContestJoinedDataToAmplitude(contestJoinedSuccessfully, orderId);
                                     }
                                 }
 
@@ -438,7 +469,7 @@ public class ContestFragment extends NostraBaseFragment implements View.OnClickL
                                 }
 
                                 @Override
-                                public void onServerReturnedError(String msg) {
+                                public void onServerReturnedError(String msg, int errorCode) {
                                     CustomProgressbar.getProgressbar(getContext()).dismissProgress();
                                     if (TextUtils.isEmpty(msg)) {
                                         msg = Constants.Alerts.SOMETHING_WRONG;
@@ -510,11 +541,11 @@ public class ContestFragment extends NostraBaseFragment implements View.OnClickL
         }
     }
 
-    private void sendContestJoinedDataToAmplitude(JoinContestData contest,String orderId) {
+    private void sendContestJoinedDataToAmplitude(JoinContestData contest, String orderId) {
 
         /* Joining a contest = Revenue */
         NostragamusAnalytics.getInstance().trackRevenue(contest.getEntryFee(), contest.getContestId(),
-                contest.getContestName(), contest.getContestType(),orderId);
+                contest.getContestName(), contest.getContestType(), orderId);
 
         /* Send Contest Joined Details to Amplitude */
         Bundle activityBundle = null;
@@ -558,19 +589,23 @@ public class ContestFragment extends NostraBaseFragment implements View.OnClickL
 
                     }
 
-                    NostragamusAnalytics.getInstance().trackContestJoined(contest.getContestId(),
+                    NostragamusAnalytics.getInstance().trackContestJoined(
                             contest.getContestName(), contest.getContestType(),
-                            (int) contest.getEntryFee(), contest.getChallengeId(), screenName);
+                            (int) contest.getEntryFee(), screenName,
+                            contest.getChallengeName(), contest.getPrizeMoney());
                 } else {
-                    NostragamusAnalytics.getInstance().trackContestJoined(contest.getContestId(),
+                    NostragamusAnalytics.getInstance().trackContestJoined(
                             contest.getContestName(), contest.getContestType(),
-                            (int) contest.getEntryFee(), contest.getChallengeId(), "contest");
+                            (int) contest.getEntryFee(), "contest",
+                            contest.getChallengeName(), contest.getPrizeMoney());
+
                 }
             }
         } else {
-            NostragamusAnalytics.getInstance().trackContestJoined(contest.getContestId(),
+            NostragamusAnalytics.getInstance().trackContestJoined(
                     contest.getContestName(), contest.getContestType(),
-                    (int) contest.getEntryFee(), contest.getChallengeId(), "contest");
+                    (int) contest.getEntryFee(), "contest",
+                    contest.getChallengeName(), contest.getPrizeMoney());
         }
     }
 
