@@ -14,6 +14,7 @@ import in.sportscafe.nostragamus.module.customViews.CustomSnackBar;
 import in.sportscafe.nostragamus.module.navigation.referfriends.ReferFriendActivity;
 import in.sportscafe.nostragamus.module.navigation.wallet.addMoney.AddWalletMoneyActivity;
 import in.sportscafe.nostragamus.module.navigation.wallet.doKYC.AddKYCDetailsActivity;
+import in.sportscafe.nostragamus.module.navigation.wallet.doKYC.KYCBlockedPopup;
 import in.sportscafe.nostragamus.module.navigation.wallet.doKYC.KYCVerificationInProgressPopup;
 import in.sportscafe.nostragamus.module.navigation.wallet.payoutDetails.PayoutWalletHomeActivity;
 import in.sportscafe.nostragamus.module.navigation.wallet.walletHistory.WalletHistoryActivity;
@@ -137,7 +138,8 @@ public class WalletHomeActivity extends NostragamusActivity implements WalletHom
 
     @Override
     public void onOpenKYCBlockedPopup() {
-
+        Intent intent = new Intent(this, KYCBlockedPopup.class);
+        startActivity(intent);
     }
 
     @Override

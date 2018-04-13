@@ -381,10 +381,10 @@
                                         android:gravity="center"
                                         android:text="Withdraw"
                                         android:textAllCaps="false"
-                                        android:textColor="@color/white"
+                                        android:textColor="#0E1F53"
                                         android:textSize="@dimen/sp_12"
                                         app:typeface="lato_regular"
-                                        android:background="@drawable/wallet_home_button_bg"
+                                        android:background="@drawable/wallet_withdraw_button_bg"
                                         android:elevation="@dimen/dp_6"
                                         android:translationZ="@dimen/dp_6"
                                         android:stateListAnimator="@null"/>
@@ -601,6 +601,7 @@
                             android:layout_height="wrap_content"
                             android:textColor="@color/white_dim"
                             android:textSize="@dimen/sp_12"
+                            android:layout_marginRight="@dimen/dim_10"
                             app:typeface="lato_regular"/>
 
                     </LinearLayout>

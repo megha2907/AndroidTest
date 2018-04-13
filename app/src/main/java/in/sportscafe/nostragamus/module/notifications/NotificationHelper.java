@@ -470,7 +470,11 @@ public class NotificationHelper {
             args.putParcelable(Constants.Notifications.NOSTRA_NOTIFICATION, Parcels.wrap(notification));
 
             if (notification.getData().getInPlayContestDto() != null) {
+
                 InPlayContestDto inPlayContestDto = notification.getData().getInPlayContestDto();
+                inPlayContestDto.setChallengeId(notification.getData().getChallengeId());
+                inPlayContestDto.setChallengeName(notification.getData().getChallengeName());
+                inPlayContestDto.setChallengeStartTime(notification.getData().getChallengeStartTime());
 
                 if (inPlayContestDto.isHeadlessState()) {       /* HeadLess Games screen */
 

@@ -55,7 +55,7 @@ public interface Constants {
         String SCREEN_WALLET_HOME = "walletHome"; /* Open Wallet Home  */
         String NONE = "NONE"; /* open nothing on click  */
         String SCREEN_INPLAY_CONTEST = "InPlayContest"; /* open inPlayContest Screen  */
-        String SCREEN_INPLAY_CONTEST_LEADERBOARDS = "InPlayContestLeaderBoards"; /* open inPlayContest Screen Leaderboards TAB */
+        String SCREEN_INPLAY_CONTEST_LEADERBOARDS = "inPlayLeaderboardGames"; /* open inPlayContest Screen Leaderboards TAB */
         String SCREEN_POWERUP_TRANSACTION = "PowerupBankHistory"; /* open Powerup Transaction screen  */
     }
 

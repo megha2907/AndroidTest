@@ -221,16 +221,8 @@ public class AddKYCDetailsFragment extends BaseFragment implements View.OnFocusC
         if (!TextUtils.isEmpty(NostragamusDataHandler.getInstance().getKYCBenefitsOne())) {
             kycBenefitsOne.setText(NostragamusDataHandler.getInstance().getKYCBenefitsOne());
         } else {
-            kycBenefitsOne.setText("You have reached your transaction limit. Please update your KYC to make withdrawals");
+            kycBenefitsOne.setText("Please update your KYC to make withdrawals without any limits!");
         }
-
-        TextView kycBenefitsTwo = (TextView) rootView.findViewById(R.id.kyc_benefits_text_two);
-        if (!TextUtils.isEmpty(NostragamusDataHandler.getInstance().getKYCBenefitsTwo())) {
-            kycBenefitsTwo.setText(NostragamusDataHandler.getInstance().getKYCBenefitsTwo());
-        } else {
-            kycBenefitsTwo.setText("On updating KYC, users will get 2 powerups each added to their powerup bank!");
-        }
-
 
         mPANNumberEditText.setFilters(new InputFilter[]{new InputFilter.AllCaps()});
         mPANNumberEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
