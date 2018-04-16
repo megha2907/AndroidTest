@@ -1108,6 +1108,7 @@ public interface Constants {
     interface PrivateContests {
 
         double MAX_ENTRY_FEE = 20000;   // User is allowed to enter max entry fee
+        double MIN_ENTRY_FEE = 5;
         int MAX_ENTRIES = 40;           // User is allowed to enter max contest entries
         int MIN_ENTRIES = 2;
 
