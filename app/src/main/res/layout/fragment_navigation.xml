@@ -111,7 +111,7 @@
                 <com.jeeva.android.widgets.customfont.CustomTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/dim_10"
+                    android:layout_marginLeft="@dimen/dim_5"
                     android:layout_toRightOf="@id/wallet_tv"
                     android:text="(Deposit &amp; Withdraw)"
                     android:textColor="@color/white_999999"

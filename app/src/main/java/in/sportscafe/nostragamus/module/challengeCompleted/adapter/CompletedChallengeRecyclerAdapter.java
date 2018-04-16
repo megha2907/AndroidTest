@@ -280,7 +280,10 @@ public class CompletedChallengeRecyclerAdapter extends RecyclerView.Adapter<Recy
         if (contest != null && contest.getMatches() != null) {
             CompletedContestItemViewHolder viewHolder = (CompletedContestItemViewHolder) holder;
 
-            viewHolder.contestTitleTextView.setText(contest.getContestName());
+            String contestName = contest.getContestName();
+            if (!TextUtils.isEmpty(contestName)) {
+                viewHolder.contestTitleTextView.setText(contestName.length() > 11 ? contestName.substring(0, 11) + ".." : contestName);
+            }
             viewHolder.entryFeeTextView.setText(Constants.RUPEE_SYMBOL + String.valueOf(contest.getEntryFee()));
             viewHolder.prizesTextView.setText(Constants.RUPEE_SYMBOL + CodeSnippet.getFormattedAmount(contest.getWinningAmount()));
 
