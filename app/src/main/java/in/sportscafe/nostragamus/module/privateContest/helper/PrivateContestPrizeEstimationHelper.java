@@ -63,20 +63,24 @@ public class PrivateContestPrizeEstimationHelper {
                             prizeListItemDto = new PrizeListItemDto();
 
                             double prizeAmountDouble = distributableTotalPrizeAmt * prizeResponse.getSharePercentage();
-                            long prizeAmount = (long) (distributableTotalPrizeAmt * prizeResponse.getSharePercentage());
-                            fractionTotalSum = fractionTotalSum + (prizeAmountDouble - prizeAmount);
+                            int prizeAmountInt = (int) (distributableTotalPrizeAmt * prizeResponse.getSharePercentage());
+                            double fraction = prizeAmountDouble - prizeAmountInt;
+                            int winningPrize =  (fraction >= 0.55) ? prizeAmountInt++ : prizeAmountInt;   // Rounding prizes
 
-                            prizeListItemDto.setWinnerRank(prizeResponse.getWinnerRank());
-                            prizeListItemDto.setAmount(prizeAmount);
+                            fractionTotalSum = fractionTotalSum + fraction;     // Used to update ui to round total winning amount
+
+                            prizeListItemDto.setWinnerRank(winningPrize);
+                            prizeListItemDto.setAmount(prizeAmountInt);
                             prizeListItemDto.setSharePercent(prizeResponse.getSharePercentage() * 100);
 
                             prizeListItemDtoList.add(prizeListItemDto);
                         }
                     }
 
-                    if (fractionTotalSum > 0 && distributableTotalPrizeAmt > fractionTotalSum && listener != null) {
+                    // Update on ui if fraction amount for total prizes
+                    /*if (fractionTotalSum > 0 && distributableTotalPrizeAmt > fractionTotalSum && listener != null) {
                         listener.updateTotalAmount(distributableTotalPrizeAmt - fractionTotalSum);
-                    }
+                    }*/
                 } else {
                     if (listener != null) {
                         listener.onError("Entries should be more than winners",
@@ -87,13 +91,14 @@ public class PrivateContestPrizeEstimationHelper {
             } else if (prizeTemplate.getShareType().equalsIgnoreCase(Constants.PrivateContests.PrizeEstimationTemplateType.PERCENT)) {
 
                 PrizeListItemDto prizeListItemDto = null;
+                int listCounter = 1;
                 for (PrivateContestPrizeResponse prizeResponse : prizeTemplate.getPrizes()) {
                     if (prizeResponse.getWinningPercentage() >= 0 && prizeResponse.getSharePercentage() >= 0) {
 
                         double fractionTotalSum = 0;
                         int usersCount = 0;
-                        double winningMoney = 0;
-                        long prizeAmount = 0;
+                        double winningMoneyMapDouble = 0;
+                        int prizeAmountInt = 0, winningMoneyMapInt = 0;
 
                     /* Percentage-of-users out of total participants who should be considered
                     combined for a share in payout-level(this iteration) */
@@ -104,27 +109,39 @@ public class PrivateContestPrizeEstimationHelper {
 
                     /* Percentage-of-prizeTemplate out of total prizeTemplate which is to be shared equally for
                      * countable-users in payout-level(this iteration)  */
-                        winningMoney = distributableTotalPrizeAmt * prizeResponse.getSharePercentage();
-                        if (winningMoney > 0 && usersCount > 0) {
-                            double prizeAmountDouble = winningMoney / usersCount;
-                            prizeAmount = (long) (winningMoney / usersCount);
+                        winningMoneyMapDouble = distributableTotalPrizeAmt * prizeResponse.getSharePercentage();
+                        if (winningMoneyMapDouble > 0 && usersCount > 0) {
+
+                            /* Round Total amount to distribute this payout-map */
+                            double fraction = winningMoneyMapDouble - ((int)winningMoneyMapDouble);
+                            if (fraction >= 0.55) {
+                                winningMoneyMapInt = (int)winningMoneyMapDouble + 1;
+                            } else {
+                                winningMoneyMapInt = (int)winningMoneyMapDouble;
+                            }
+
+                            /* Round each winners' winning mount */
+                            double prizeAmountDouble = winningMoneyMapInt / usersCount;
+                            prizeAmountInt = (int) (winningMoneyMapInt / usersCount);
+                            fraction = prizeAmountDouble - prizeAmountInt;
+                            int winningPrize =  (fraction >= 0.55) ? prizeAmountInt++ : prizeAmountInt;   // Rounding prizes
 
                         /* For every countable-user */
                         float sharePercentage = (prizeResponse.getSharePercentage() * 100) / usersCount;
-                            for (int count = 1; count <= usersCount; count++) {
+                            for (int c = 1; c <= usersCount; c++) {
                                 prizeListItemDto = new PrizeListItemDto();
-                                prizeListItemDto.setWinnerRank(count);
-                                prizeListItemDto.setAmount(prizeAmount);
+                                prizeListItemDto.setWinnerRank(listCounter++);
+                                prizeListItemDto.setAmount(winningPrize);
                                 prizeListItemDto.setSharePercent(sharePercentage);
 
-                                fractionTotalSum = fractionTotalSum + (prizeAmountDouble - prizeAmount);
+                                fractionTotalSum = fractionTotalSum + fraction;
 
                                 prizeListItemDtoList.add(prizeListItemDto);
                             }
 
-                            if (fractionTotalSum > 0 && distributableTotalPrizeAmt > fractionTotalSum && listener != null) {
+                            /*if (fractionTotalSum > 0 && distributableTotalPrizeAmt > fractionTotalSum && listener != null) {
                                 listener.updateTotalAmount(distributableTotalPrizeAmt - fractionTotalSum);
-                            }
+                            }*/
                         }
 
                         Log.d(TAG, "\n ----------- \n" +
@@ -135,11 +152,32 @@ public class PrivateContestPrizeEstimationHelper {
                                 "\n %-of-user(percent) : " + participantsRation + "("+prizeResponse.getWinningPercentage()+")" +
                                 "\n countable-user (based on %) :" + usersCount +
                                 "\n step/rounding : " + "" +
-                                "\n %-of-prizeTemplate (share) : " + winningMoney + "("+prizeResponse.getSharePercentage()+")" +
-                                "\n prizeAmountPerUser : " + prizeAmount);
+                                "\n %-of-prizeTemplate (share) : " + winningMoneyMapDouble + "("+prizeResponse.getSharePercentage()+")" +
+                                "\n prizeAmountPerUser : " + prizeAmountInt);
                     }
                 }
 
+                /* Sorting pool winners' list based on prize-amount */
+                if (prizeListItemDtoList.size() > 1) {
+                    try {
+                        for (int i = 0; i < prizeListItemDtoList.size(); ++i) {
+                            for (int j = 0; j < prizeListItemDtoList.size() - i - 1; ++j) {
+
+                                if (prizeListItemDtoList.get(j).getAmount() < prizeListItemDtoList.get(j + 1).getAmount()) {
+
+                                    PrizeListItemDto tmp = prizeListItemDtoList.get(j);
+                                    prizeListItemDtoList.set(j, prizeListItemDtoList.get(j + 1));
+                                    prizeListItemDtoList.set(j + 1, tmp);
+                                }
+                            }
+                        }
+                    } catch (Exception ex) {}
+
+                    /* Re-assign ranks as list sorted */
+                    for (int rankCount = 0; rankCount < prizeListItemDtoList.size(); rankCount++) {
+                        prizeListItemDtoList.get(rankCount).setWinnerRank(rankCount + 1);
+                    }
+                }
             }
         }
 
