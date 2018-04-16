@@ -81,6 +81,17 @@ public class PrivateContestPrizeEstimationHelper {
                     /*if (fractionTotalSum > 0 && distributableTotalPrizeAmt > fractionTotalSum && listener != null) {
                         listener.updateTotalAmount(distributableTotalPrizeAmt - fractionTotalSum);
                     }*/
+
+                    /* Update total amount on UI */
+                    double totalAmount = 0;
+                    for (int temp = 0; temp < prizeListItemDtoList.size(); temp++) {
+                        totalAmount = totalAmount + prizeListItemDtoList.get(temp).getAmount();
+                    }
+
+                    if (totalAmount >= 0 && listener != null) {
+                        listener.updateTotalAmount(totalAmount);
+                    }
+
                 } else {
                     if (listener != null) {
                         listener.onError("Entries should be more than winners",
@@ -174,8 +185,15 @@ public class PrivateContestPrizeEstimationHelper {
                     } catch (Exception ex) {}
 
                     /* Re-assign ranks as list sorted */
+                    double totalAmount = 0;
                     for (int rankCount = 0; rankCount < prizeListItemDtoList.size(); rankCount++) {
                         prizeListItemDtoList.get(rankCount).setWinnerRank(rankCount + 1);
+                        totalAmount = totalAmount + prizeListItemDtoList.get(rankCount).getAmount();
+                    }
+
+                    /* Update total amount on UI */
+                    if (listener != null && totalAmount >= 0) {
+                        listener.updateTotalAmount(totalAmount);
                     }
                 }
             }
