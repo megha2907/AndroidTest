@@ -187,6 +187,7 @@ public class RecentActivityFragment extends NostraBaseFragment {
             categories.add(Constants.RecentActivityTypes.ANNOUNCEMENT);
             categories.add(Constants.RecentActivityTypes.RESULT);
             categories.add(Constants.RecentActivityTypes.PROMOTION);
+            categories.add(Constants.RecentActivityTypes.REFUNDS);
 
 
             ArrayAdapter dataAdapter = new ArrayAdapter(getContext(), R.layout.simple_spinner_list, categories) {

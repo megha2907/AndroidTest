@@ -74,6 +74,8 @@ public class RecentActivityRecyclerAdapter extends RecyclerView.Adapter<RecentAc
                         viewHolder.mIvActivityType.setImageResource(R.drawable.activity_promo);
                     } else if (recentActivityType.equalsIgnoreCase(Constants.RecentActivityTypes.RESULT)) {
                         viewHolder.mIvActivityType.setImageResource(R.drawable.activity_result);
+                    } else if (recentActivityType.equalsIgnoreCase(Constants.RecentActivityTypes.REFUNDS)) {
+                        viewHolder.mIvActivityType.setImageResource(R.drawable.activity_refund);
                     } else {
                         viewHolder.mIvActivityType.setImageResource(R.drawable.activity_announcement);
                     }
@@ -141,6 +143,12 @@ public class RecentActivityRecyclerAdapter extends RecyclerView.Adapter<RecentAc
                 case R.id.recent_activity_item_root_layout:
                     if (clickListener != null) {
                         clickListener.handleItemOnClick(getRecentActivityData(getAdapterPosition()));
+
+                        /* make it item read onclick of item */
+                        if (recentActivityFilteredList != null && recentActivityFilteredList.size() > getAdapterPosition()) {
+                            recentActivityFilteredList.get(getAdapterPosition()).setUnread(false);
+                            notifyItemChanged(getAdapterPosition());
+                        }
                     }
                     break;
             }
