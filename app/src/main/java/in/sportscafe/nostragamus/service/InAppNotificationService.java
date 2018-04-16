@@ -199,8 +199,8 @@ public class InAppNotificationService extends IntentService {
 
         /* Headless matches  */
         if (inPlayContestDto != null && inPlayContestDto.isHeadlessState()) {
-            title = "The challenge start at " + DateTimeHelper.getInAppMatchStartTime(inPlayResponse.getChallengeStartTime());
-            msg = (inPlayResponse.getChallengeName() != null) ? inPlayResponse.getChallengeName() : "";
+            title = (inPlayResponse.getChallengeName() != null) ? inPlayResponse.getChallengeName() : "";
+            msg = "The challenge start at " + DateTimeHelper.getInAppMatchStartTime(inPlayResponse.getChallengeStartTime());
             subTitle = "You haven't joined a contest yet! Join now to win cash.";
         }
 

@@ -53,7 +53,8 @@
                             android:ellipsize="end"
                             android:includeFontPadding="false"
                             android:maxLines="1"
-                            android:text="Daily Double Up"
+                            android:maxLength="13"
+                            android:text=""
                             android:textColor="@color/white"
                             android:textSize="@dimen/sp_13"
                             app:typeface="lato_regular" />
