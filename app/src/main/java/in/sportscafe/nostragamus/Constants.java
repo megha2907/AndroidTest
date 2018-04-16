@@ -1092,6 +1092,7 @@ public interface Constants {
         String ANNOUNCEMENT = "ANNOUNCEMENT";
         String RESULT = "RESULT";
         String PROMOTION = "PROMOTION";
+        String REFUNDS = "REFUND";
     }
 
     interface KYCStatus {
