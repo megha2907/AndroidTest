@@ -24,6 +24,7 @@ import org.parceler.Parcels;
 
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
+import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
 import in.sportscafe.nostragamus.module.customViews.CustomSnackBar;
 import in.sportscafe.nostragamus.module.navigation.wallet.WalletHelper;
 import in.sportscafe.nostragamus.module.popups.timerPopup.TimerFinishDialogHelper;
@@ -166,6 +167,7 @@ public class JoinPrivateContestWithInviteCodeFragment extends BaseFragment imple
 
             case R.id.find_pvt_contest_details_btn:
                 onFindContestClicked();
+                NostragamusAnalytics.getInstance().trackClickEvent(Constants.AnalyticsCategory.JOIN_PRIVATE_CONTEST, Constants.AnalyticsClickLabels.FIND_PRIVATE_CONTEST);
                 break;
         }
     }

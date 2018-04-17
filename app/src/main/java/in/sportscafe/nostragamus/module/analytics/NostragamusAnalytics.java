@@ -931,7 +931,7 @@ public class NostragamusAnalytics {
      */
     public void trackContestJoined(String contestName, String contestType, int entryFee, String screenName, String challengeName, int prizeMoney) {
 
-        if (BuildConfig.IS_PAID_VERSION && mAmplitude != null && !BuildConfig.DEBUG) {
+        if (BuildConfig.IS_PAID_VERSION && !BuildConfig.DEBUG) {
 
             JSONObject jsonObject = new JSONObject();
             try {

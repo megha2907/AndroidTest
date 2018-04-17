@@ -508,9 +508,9 @@ public class PrivateContestDetailsActivity extends NostraBaseActivity implements
         NostragamusAnalytics.getInstance().trackRevenue(contest.getEntryFee(), contest.getContestId(),
                 contest.getContestName(), contest.getContestType(),orderId);
 
-        /* Send Contest Joined Details to Amplitude */
-        NostragamusAnalytics.getInstance().trackContestJoined(contest.getContestName(), contest.getContestType(),
-                (int) contest.getEntryFee(),"Private Contest Details - Join Contest", contest.getChallengeName(), contest.getPrizeMoney());
+        /* Send Contest Joined Details to Analytics */
+        NostragamusAnalytics.getInstance().trackContestJoined(contest.getContestName(), "Private Contest - Invite",
+                (int) contest.getEntryFee(),"Private Contest - Join Contest", contest.getChallengeName(), contest.getPrizeMoney());
 
     }
 

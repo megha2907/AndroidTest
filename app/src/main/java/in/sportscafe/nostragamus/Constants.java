@@ -545,6 +545,8 @@ public interface Constants {
         String KYC_STATUS = "KYC Status";
         String POST_SIGN_UP = "Post SignUp";
         String RULES = "Rules";
+        String JOIN_PRIVATE_CONTEST = "Join Private Contest";
+        String CREATE_PRIVATE_CONTEST = "Create Private Contest";
     }
 
     interface AnalyticsClickLabels {
@@ -630,6 +632,10 @@ public interface Constants {
         String CHAT = "Chat";
         String HOW_TO_PLAY = "How To Play";
         String NOTIFICATIONS = "Notifications";
+        String CREATE_CONTEST = "Create Private Contest";
+        String JOIN_CONTEST_WITH_INVITE = "Join Contest with Invite";
+        String SHARE_PRIVATE_CONTEST_CODE = "Share Private contest code";
+        String FIND_PRIVATE_CONTEST = "Find Private Contest";
     }
 
     interface AnalyticsActions {
