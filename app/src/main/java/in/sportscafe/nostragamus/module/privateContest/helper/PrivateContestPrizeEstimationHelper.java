@@ -69,8 +69,8 @@ public class PrivateContestPrizeEstimationHelper {
 
                             fractionTotalSum = fractionTotalSum + fraction;     // Used to update ui to round total winning amount
 
-                            prizeListItemDto.setWinnerRank(winningPrize);
-                            prizeListItemDto.setAmount(prizeAmountInt);
+                            prizeListItemDto.setWinnerRank(prizeResponse.getWinnerRank());
+                            prizeListItemDto.setAmount(winningPrize);
                             prizeListItemDto.setSharePercent(prizeResponse.getSharePercentage() * 100);
 
                             prizeListItemDtoList.add(prizeListItemDto);
