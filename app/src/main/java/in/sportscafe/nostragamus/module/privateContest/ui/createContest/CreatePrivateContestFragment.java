@@ -42,6 +42,7 @@ import java.util.List;
 
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
+import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
 import in.sportscafe.nostragamus.module.contest.contestDetailsBeforeJoining.CompletePaymentDialogFragment;
 import in.sportscafe.nostragamus.module.contest.dto.ContestScreenData;
 import in.sportscafe.nostragamus.module.contest.dto.JoinContestData;
@@ -299,7 +300,8 @@ public class CreatePrivateContestFragment extends BaseFragment implements
         try {
             mEntryFeeEditText.setOnEditTextImeBackListener(new CustomEditText.EditTextImeBackListener() {
                 @Override
-                public void onImeBack(CustomEditText ctrl, String text) {}
+                public void onImeBack(CustomEditText ctrl, String text) {
+                }
 
                 @Override
                 public void onImeActionDoneClicked() {
@@ -311,7 +313,8 @@ public class CreatePrivateContestFragment extends BaseFragment implements
                     }, 500);
                 }
             });
-        } catch (Exception e) {}
+        } catch (Exception e) {
+        }
     }
 
     @NonNull
@@ -319,7 +322,7 @@ public class CreatePrivateContestFragment extends BaseFragment implements
         return new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                mSelectedPrizeTemplate = (PrivateContestPrizeTemplateResponse)mPrizeStructureSpinner.getSelectedItem();
+                mSelectedPrizeTemplate = (PrivateContestPrizeTemplateResponse) mPrizeStructureSpinner.getSelectedItem();
                 mSpinnerAdapter.setSelectedTemplate(mSelectedPrizeTemplate);
 
                 showSpinnerError(false, "");
@@ -337,7 +340,8 @@ public class CreatePrivateContestFragment extends BaseFragment implements
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> parent) {}
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
         };
     }
 
@@ -486,6 +490,7 @@ public class CreatePrivateContestFragment extends BaseFragment implements
             case R.id.create_join_private_contest_btn:
                 hideKeyBoard();
                 onCreateAndJoinContestClicked();
+                NostragamusAnalytics.getInstance().trackClickEvent(Constants.AnalyticsCategory.CREATE_PRIVATE_CONTEST, Constants.AnalyticsClickLabels.CREATE_CONTEST);
                 break;
 
             case R.id.pvt_contest_name_layout:
@@ -530,46 +535,46 @@ public class CreatePrivateContestFragment extends BaseFragment implements
 
 
                 /* Validate input again before joining */
-                    if (isEntriesValid()) {
-                        if (isEntryFeeValid()) {
-                            if (!TextUtils.isEmpty(getSelectedPrizeTemplateId())) {
-                                if (mPrizeListAdapter != null && mPrizeListAdapter.getItemCount() > 0) {
+                if (isEntriesValid()) {
+                    if (isEntryFeeValid()) {
+                        if (!TextUtils.isEmpty(getSelectedPrizeTemplateId())) {
+                            if (mPrizeListAdapter != null && mPrizeListAdapter.getItemCount() > 0) {
 
-                                    ContestScreenData contestScreenData = mScreenData.getContestScreenData();
-                                    int entries = getEntries();
-                                    double entryFee = getEntryFee();
-                                    String contestName = mContestNameEditText.getText().toString();
-                                    boolean shouldTop1Win = getPrizeStructureRadioChoice();
+                                ContestScreenData contestScreenData = mScreenData.getContestScreenData();
+                                int entries = getEntries();
+                                double entryFee = getEntryFee();
+                                String contestName = mContestNameEditText.getText().toString();
+                                boolean shouldTop1Win = getPrizeStructureRadioChoice();
 
-                                    final JoinContestData joinPrivateContestData = new JoinContestData();
-                                    joinPrivateContestData.setPrivateContestTemplateId(getSelectedPrizeTemplateId());
-                                    joinPrivateContestData.setChallengeId(contestScreenData.getChallengeId());
-                                    joinPrivateContestData.setChallengeName(contestScreenData.getChallengeName());
-                                    joinPrivateContestData.setChallengeStartTime(contestScreenData.getChallengeStartTime());
-                                    joinPrivateContestData.setEntryFee(entryFee);
-                                    joinPrivateContestData.setContestName(contestName);
-                                    joinPrivateContestData.setPrivateContestEntries(entries);
-                                    joinPrivateContestData.setPrivateContestTop1Wins(shouldTop1Win);
-                                    joinPrivateContestData.setJoiContestDialogLaunchMode(CompletePaymentDialogFragment.DialogLaunchMode.JOINING_CHALLENGE_LAUNCH);
+                                final JoinContestData joinPrivateContestData = new JoinContestData();
+                                joinPrivateContestData.setPrivateContestTemplateId(getSelectedPrizeTemplateId());
+                                joinPrivateContestData.setChallengeId(contestScreenData.getChallengeId());
+                                joinPrivateContestData.setChallengeName(contestScreenData.getChallengeName());
+                                joinPrivateContestData.setChallengeStartTime(contestScreenData.getChallengeStartTime());
+                                joinPrivateContestData.setEntryFee(entryFee);
+                                joinPrivateContestData.setContestName(contestName);
+                                joinPrivateContestData.setPrivateContestEntries(entries);
+                                joinPrivateContestData.setPrivateContestTop1Wins(shouldTop1Win);
+                                joinPrivateContestData.setJoiContestDialogLaunchMode(CompletePaymentDialogFragment.DialogLaunchMode.JOINING_CHALLENGE_LAUNCH);
 
-                                    Bundle args = new Bundle();
-                                    args.putParcelable(Constants.BundleKeys.JOIN_CONTEST_DATA, Parcels.wrap(joinPrivateContestData));
+                                Bundle args = new Bundle();
+                                args.putParcelable(Constants.BundleKeys.JOIN_CONTEST_DATA, Parcels.wrap(joinPrivateContestData));
 
-                                    performCreateAndJoin(args);
+                                performCreateAndJoin(args);
 
-                                } else {
-                                    showSpinnerError(true, "Select proper prize structure");
-                                }
                             } else {
-                                showSpinnerError(true, "Select prize structure");
+                                showSpinnerError(true, "Select proper prize structure");
                             }
                         } else {
-                            handleEntryFeeValid(false);
+                            showSpinnerError(true, "Select prize structure");
                         }
                     } else {
-                        handleEntriesValid(false, "");
+                        handleEntryFeeValid(false);
                     }
+                } else {
+                    handleEntriesValid(false, "");
                 }
+            }
         } else {
             handleError("", -1);
         }
@@ -613,7 +618,7 @@ public class CreatePrivateContestFragment extends BaseFragment implements
     private void performCreateAndJoin(final Bundle args) {
         if (args != null && args.containsKey(Constants.BundleKeys.JOIN_CONTEST_DATA)) {
 
-            JoinContestData joinPrivateContestData =
+            final JoinContestData joinPrivateContestData =
                     Parcels.unwrap(args.getParcelable(Constants.BundleKeys.JOIN_CONTEST_DATA));
 
             if (joinPrivateContestData != null &&
@@ -639,6 +644,11 @@ public class CreatePrivateContestFragment extends BaseFragment implements
                             public void joinPrivateContestSuccess(int status, CreatePrivateContestResponse createPrivateContestResponse) {
                                 CustomProgressbar.getProgressbar(getContext()).dismissProgress();
                                 onContestJoinedSuccessfulResponse(createPrivateContestResponse);
+
+                                if (createPrivateContestResponse != null) {
+                                    sendContestJoinedDataToAmplitude(createPrivateContestResponse, joinPrivateContestData);
+                                }
+
                             }
 
                             @Override
@@ -744,6 +754,21 @@ public class CreatePrivateContestFragment extends BaseFragment implements
                 clearTaskIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 startActivity(clearTaskIntent);
             }
+        }
+
+    }
+
+    private void sendContestJoinedDataToAmplitude(CreatePrivateContestResponse createPrivateContestResponse, JoinContestData joinPrivateContestData) {
+
+        if (createPrivateContestResponse != null && joinPrivateContestData != null && createPrivateContestResponse.getInfo() != null) {
+        /* Joining a contest = Revenue */
+            NostragamusAnalytics.getInstance().trackRevenue(createPrivateContestResponse.getInfo().getFee(), createPrivateContestResponse.getConfigId(),
+                    createPrivateContestResponse.getInfo().getConfigName(), "Private Contest - Create", String.valueOf(createPrivateContestResponse.getId()));
+
+        /* Send Contest Joined Details to Analytics */
+            NostragamusAnalytics.getInstance().trackContestJoined(createPrivateContestResponse.getInfo().getConfigName(),
+                    "Private Contest - Create", createPrivateContestResponse.getInfo().getFee(), "Private Contest - Create", joinPrivateContestData.getChallengeName(), 0);
+
         }
 
     }
@@ -875,18 +900,18 @@ public class CreatePrivateContestFragment extends BaseFragment implements
 
         new PrivateContestPrizeTemplatesApiModelImpl().fetchPrizeTemplates(
                 new PrivateContestPrizeTemplatesApiModelImpl.PrivateContestDetailApiListener() {
-            @Override
-            public void onSuccessResponse(int status, List<PrivateContestPrizeTemplateResponse> responseList) {
-                hideLoadingProgressBar();
-                onPrizeStructureReceived(responseList);
-            }
+                    @Override
+                    public void onSuccessResponse(int status, List<PrivateContestPrizeTemplateResponse> responseList) {
+                        hideLoadingProgressBar();
+                        onPrizeStructureReceived(responseList);
+                    }
 
-            @Override
-            public void onError(int status) {
-                hideLoadingProgressBar();
-                handleError("", status);
-            }
-        });
+                    @Override
+                    public void onError(int status) {
+                        hideLoadingProgressBar();
+                        handleError("", status);
+                    }
+                });
     }
 
     private void onPrizeStructureReceived(List<PrivateContestPrizeTemplateResponse> responseList) {

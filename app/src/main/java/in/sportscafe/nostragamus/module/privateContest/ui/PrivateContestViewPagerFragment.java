@@ -15,6 +15,7 @@ import org.parceler.Parcels;
 
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
+import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
 import in.sportscafe.nostragamus.module.contest.dto.ContestScreenData;
 import in.sportscafe.nostragamus.module.contest.dto.ContestType;
 import in.sportscafe.nostragamus.module.privateContest.ui.createContest.dto.CreatePrivateContestScreenData;
@@ -81,10 +82,12 @@ public class PrivateContestViewPagerFragment extends BaseFragment implements Vie
         switch (view.getId()) {
             case R.id.create_private_contest_btn:
                 onCreateContestClicked();
+                NostragamusAnalytics.getInstance().trackClickEvent(Constants.AnalyticsCategory.CONTEST, Constants.AnalyticsClickLabels.CREATE_CONTEST);
                 break;
 
             case R.id.private_contest_join_with_invite_code_btn:
                 onJoinPrivateContestClicked();
+                NostragamusAnalytics.getInstance().trackClickEvent(Constants.AnalyticsCategory.CONTEST, Constants.AnalyticsClickLabels.JOIN_CONTEST_WITH_INVITE);
                 break;
         }
     }
