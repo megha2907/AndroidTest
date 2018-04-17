@@ -18,6 +18,7 @@ import in.sportscafe.nostragamus.AppSnippet;
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.Nostragamus;
 import in.sportscafe.nostragamus.R;
+import in.sportscafe.nostragamus.module.analytics.NostragamusAnalytics;
 import in.sportscafe.nostragamus.module.customViews.CustomSnackBar;
 import in.sportscafe.nostragamus.module.inPlay.dto.InPlayContestDto;
 import in.sportscafe.nostragamus.module.user.login.dto.UserInfo;
@@ -138,6 +139,7 @@ public class PrivateContestInPlayInviteFragment extends BaseFragment implements 
         switch (view.getId()) {
             case R.id.private_contest_share_btn:
                 onShareButtonClicked();
+                NostragamusAnalytics.getInstance().trackClickEvent(Constants.AnalyticsCategory.IN_PLAY_GAMES, Constants.AnalyticsClickLabels.SHARE_PRIVATE_CONTEST_CODE);
                 break;
         }
     }
