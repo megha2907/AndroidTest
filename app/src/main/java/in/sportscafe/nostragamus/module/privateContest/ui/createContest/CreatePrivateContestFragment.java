@@ -1084,7 +1084,7 @@ public class CreatePrivateContestFragment extends BaseFragment implements
         if (!TextUtils.isEmpty(mEntryFeeEditText.getText().toString())) {
 
             double fee = getEntryFee();
-            if (fee > 0 && fee <= Constants.PrivateContests.MAX_ENTRY_FEE) {
+            if (fee >= Constants.PrivateContests.MIN_ENTRY_FEE && fee <= Constants.PrivateContests.MAX_ENTRY_FEE) {
                 isValid = true;
             }
         }
