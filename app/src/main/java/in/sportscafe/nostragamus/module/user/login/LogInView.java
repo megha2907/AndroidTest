@@ -14,7 +14,7 @@ public interface LogInView extends View {
 
     void navigateToHome();
 
-    void signOut();
+    void signOut(boolean shouldBackPress);
 
     void showProgressDialog();
 
