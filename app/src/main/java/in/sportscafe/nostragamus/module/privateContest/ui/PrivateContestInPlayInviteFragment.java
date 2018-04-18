@@ -151,7 +151,7 @@ public class PrivateContestInPlayInviteFragment extends BaseFragment implements 
                     mInplayContestDto.getContestName();
 
             String socialMsg = String.format("Think you know sports better than me? Beat me at my own game and prove it!\n" +
-                            "Join and Play the ₹%1$s %2$s - %3$s contest with me on Nostra Pro live sports predictions game to win ₹%4$s\n" +
+                            "Join my Private Group to play the ₹%1$s %2$s - %3$s contest with me on Nostra Pro - The Live Sports Predictions game to win ₹%4$s\n" +
                             "by clicking on the %5$s\n" +
                             "or by using the following code %6$s",
                     mInplayContestDto.getEntryFee(), mInplayContestDto.getChallengeName(), pvtContestName,
