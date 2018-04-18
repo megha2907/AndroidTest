@@ -105,7 +105,7 @@ public class LogInActivity extends NostragamusActivity implements LogInView, Vie
                 .addConnectionCallbacks(new GoogleApiClient.ConnectionCallbacks() {
                     @Override
                     public void onConnected(Bundle bundle) {
-                        signOut();
+                        signOut(false);
                     }
 
                     @Override
@@ -155,6 +155,7 @@ public class LogInActivity extends NostragamusActivity implements LogInView, Vie
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+
         if (requestCode == RC_SIGN_IN) {
             GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
             handleSignInResult(result);
@@ -169,10 +170,12 @@ public class LogInActivity extends NostragamusActivity implements LogInView, Vie
                     profileUrl = "";
                     personPhoto = String.valueOf(acct.getPhotoUrl());
                 }
-            }
 
-            int statusCode = result.getStatus().getStatusCode();
-            Log.i("status", String.valueOf(statusCode));
+                if (result.getStatus() != null) {
+                    int statusCode = result.getStatus().getStatusCode();
+                    Log.i("status", String.valueOf(statusCode));
+                }
+            }
         } else {
             mLogInPresenter.onActivityResult(requestCode, resultCode, data);
         }
@@ -285,24 +288,34 @@ public class LogInActivity extends NostragamusActivity implements LogInView, Vie
 
     @Override
     public void onBackPressed() {
-        signOut();
-        super.onBackPressed();
+        signOut(true);
     }
 
     @Override
-    public void signOut() {
+    public void signOut(final boolean shouldBackPress) {
         try {
             if (mGoogleApiClient.isConnected()) {
                 Auth.GoogleSignInApi.signOut(mGoogleApiClient).setResultCallback(
                         new ResultCallback<Status>() {
                             @Override
                             public void onResult(Status status) {
-
+                                if (shouldBackPress) {
+                                    LogInActivity.super.onBackPressed();
+                                }
                             }
                         });
+
+            } else {
+                if (shouldBackPress) {
+                    LogInActivity.super.onBackPressed();
+                }
             }
         } catch (Exception e) {
             ExceptionTracker.track(e);
+
+            if (shouldBackPress) {
+                LogInActivity.super.onBackPressed();
+            }
         }
     }
 
