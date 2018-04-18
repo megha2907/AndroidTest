@@ -1,6 +1,9 @@
 package in.sportscafe.nostragamus.module.newChallenges.adapter;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.annotation.NonNull;
@@ -19,6 +22,8 @@ import java.util.List;
 import in.sportscafe.nostragamus.Constants;
 import in.sportscafe.nostragamus.R;
 import in.sportscafe.nostragamus.module.newChallenges.dto.BannerResponseData;
+import in.sportscafe.nostragamus.utils.BitmapMemoryLruCache;
+import in.sportscafe.nostragamus.utils.CodeSnippet;
 
 
 /**
@@ -29,13 +34,21 @@ public class BannerRecyclerAdapter extends RecyclerView.Adapter<BannerRecyclerAd
 
     private List<BannerResponseData> mBannerResponseDataList;
     private BannerAdapterListener mBannerAdapterListener;
-    Context context;
+    private Context context;
+    private BitmapMemoryLruCache mMemoryLruCache;
 
     public BannerRecyclerAdapter(List<BannerResponseData> bannerResponseDataList, Context context,
                                  @NonNull BannerAdapterListener listener) {
+        mMemoryLruCache = new BitmapMemoryLruCache();
         mBannerResponseDataList = bannerResponseDataList;
         this.context = context;
         mBannerAdapterListener = listener;
+    }
+
+    @Override
+    public void onViewAttachedToWindow(BannerViewHolder holder) {
+        holder.setIsRecyclable(false);
+        super.onViewAttachedToWindow(holder);
     }
 
     @Override
@@ -47,12 +60,18 @@ public class BannerRecyclerAdapter extends RecyclerView.Adapter<BannerRecyclerAd
 
     @Override
     public void onBindViewHolder(final BannerViewHolder holder, final int position) {
-
         if (mBannerResponseDataList != null && mBannerResponseDataList.size() > position) {
 
             final BannerResponseData bannerResponseData = mBannerResponseDataList.get(position);
 
-            holder.bannerImage.setImageUrl(bannerResponseData.getBannerImageUrl());
+            String url = CodeSnippet.formatUrl(bannerResponseData.getBannerImageUrl());
+            if (mMemoryLruCache.contains(url)) {
+                Drawable drawable = new BitmapDrawable(context.getResources(),
+                        Bitmap.createBitmap(mMemoryLruCache.getBitmap(url)));
+                holder.bannerImage.setBackground(drawable);
+            } else {
+                holder.bannerImage.setImageUrl(bannerResponseData.getBannerImageUrl());
+            }
 
         }
     }
@@ -64,9 +83,18 @@ public class BannerRecyclerAdapter extends RecyclerView.Adapter<BannerRecyclerAd
 
         public BannerViewHolder(View view, @NonNull BannerAdapterListener listener) {
             super(view);
+            setIsRecyclable(false);
+
             this.clickListener = listener;
             bannerImage = (HmImageView) view.findViewById(R.id.banner_image);
             bannerImage.setOnClickListener(this);
+
+            bannerImage.setImageLoadedListener(new HmImageView.OnImageLoadedListener() {
+                @Override
+                public void onImageLoaded(String url, Bitmap bitmap) {
+                    mMemoryLruCache.putBitmap(url, bitmap);
+                }
+            });
         }
 
         @Override
